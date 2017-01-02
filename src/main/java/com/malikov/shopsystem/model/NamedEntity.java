@@ -1,4 +1,4 @@
-package ua.com.malikov.shopsystem.model;
+package com.malikov.shopsystem.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
 

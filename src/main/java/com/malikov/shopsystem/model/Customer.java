@@ -1,4 +1,4 @@
-package ua.com.malikov.shopsystem.model;
+package com.malikov.shopsystem.model;
 
 public class Customer extends NamedEntity {
 
@@ -8,7 +8,7 @@ public class Customer extends NamedEntity {
 
     private String city;
 
-    private int novaPoshtaDepartmentNumber;
+    private String novaPoshtaDepartmentNumber;
 
     private String email;
 

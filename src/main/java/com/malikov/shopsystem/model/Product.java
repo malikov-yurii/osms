@@ -1,4 +1,6 @@
-package ua.com.malikov.shopsystem.model;
+package com.malikov.shopsystem.model;
+
+import java.util.Set;
 
 public class Product extends NamedEntity{
 
@@ -6,6 +8,8 @@ public class Product extends NamedEntity{
     private float price;
 
     private int quantity;
+
+    private Set<ProductCategory> categories;
 
 //    private int productCode;
 

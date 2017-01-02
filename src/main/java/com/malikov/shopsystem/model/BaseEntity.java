@@ -1,4 +1,4 @@
-package ua.com.malikov.shopsystem.model;
+package com.malikov.shopsystem.model;
 
 import org.hibernate.Hibernate;
 import org.springframework.data.domain.Persistable;
