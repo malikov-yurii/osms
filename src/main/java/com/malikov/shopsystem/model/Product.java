@@ -1,5 +1,8 @@
 package com.malikov.shopsystem.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,8 +13,9 @@ import java.util.stream.Collectors;
 @NamedQueries({
         @NamedQuery(name = Product.DELETE, query = "DELETE FROM Product p WHERE p.id=:id"),
         @NamedQuery(name = Product.BY_CATEGORY_ID, query =
-                "SELECT p FROM Product p JOIN p.categories WHERE p.categories.id=:categoryId"),
-        @NamedQuery(name = Product.QUANTITY_LESS_THAN, query = "SELECT p FROM Product p WHERE p.quantity < :quantity"),
+                "SELECT p FROM Product p JOIN p.categories c WHERE c.id=:categoryId"),
+        @NamedQuery(name = Product.QUANTITY_LESS_THAN, query =
+                "SELECT p FROM Product p WHERE p.quantity < :quantity"),
         @NamedQuery(name = Product.ALL_SORTED, query = "SELECT p FROM Product p ORDER BY p.price"),
 })
 @Entity
@@ -30,12 +34,13 @@ public class Product extends NamedEntity {
     @Column(name = "quantity")
     private Integer quantity;
 
+    @ManyToMany
+    @Fetch(FetchMode.JOIN)
     @JoinTable(
             name = "products_to_categories",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-
     private Set<ProductCategory> categories;
 
     public Product(Integer id, String name, Float price, int quantity, ProductCategory... categories) {

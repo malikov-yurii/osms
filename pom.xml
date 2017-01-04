@@ -114,6 +114,14 @@
     </build>
 
     <dependencies>
+
+        <!--!!!!!!!!!!!!!!!!!!!DONT FORGET TO REMOVE IT-->
+        <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.5.2</version>
+        </dependency>
+
         <!-- Logging with SLF4J & LogBack -->
         <dependency>
             <groupId>org.slf4j</groupId>

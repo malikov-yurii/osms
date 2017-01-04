@@ -40,7 +40,7 @@ public class JpaOrderRepositoryImpl implements OrderRepository {
 
     @Override
     public Collection<Order> getAll() {
-        return em.createNamedQuery(Order.ALL_SORTED, Order.class).getResultList();
+        return em.createNamedQuery(Order.ALL, Order.class).getResultList();
     }
 
     @Override

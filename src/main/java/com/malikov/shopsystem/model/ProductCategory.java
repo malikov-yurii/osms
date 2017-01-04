@@ -14,8 +14,8 @@ import javax.persistence.Table;
 @Table(name = "categories")
 public class ProductCategory extends NamedEntity {
 
-    public static final String DELETE = "Product.delete";
-    public static final String ALL_SORTED = "Product.getAllSorted";
+    public static final String DELETE = "ProductCategory.delete";
+    public static final String ALL_SORTED = "ProductCategory.getAllSorted";
 
     public ProductCategory() {
     }

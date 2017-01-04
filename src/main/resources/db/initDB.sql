@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS products_to_categories;
 DROP TABLE IF EXISTS products_to_orders;
-DROP TABLE IF EXISTS users_roles;
+DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS customers;
