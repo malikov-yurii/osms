@@ -36,10 +36,23 @@ public class Customer extends NamedEntity {
     private String city;
 
     @Column(name = "nova_poshta")
-    private String novaPoshtaDepartmentNumber;
+    private String novaPoshta;
 
     @Column(name = "email", unique = true)
     private String email;
+
+    public Customer() {
+    }
+
+    public Customer(int id, String name, String lastName, String phoneNumber, String city, String novaPoshta, String email) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.city = city;
+        this.novaPoshta = novaPoshta;
+        this.email = email;
+    }
 
     public String getLastName() {
         return lastName;
@@ -69,7 +82,7 @@ public class Customer extends NamedEntity {
         if (phoneNumber != null ? !phoneNumber.equals(customer.phoneNumber) : customer.phoneNumber != null)
             return false;
         if (city != null ? !city.equals(customer.city) : customer.city != null) return false;
-        if (novaPoshtaDepartmentNumber != null ? !novaPoshtaDepartmentNumber.equals(customer.novaPoshtaDepartmentNumber) : customer.novaPoshtaDepartmentNumber != null)
+        if (novaPoshta != null ? !novaPoshta.equals(customer.novaPoshta) : customer.novaPoshta != null)
             return false;
         return email != null ? email.equals(customer.email) : customer.email == null;
 
@@ -81,7 +94,7 @@ public class Customer extends NamedEntity {
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
-        result = 31 * result + (novaPoshtaDepartmentNumber != null ? novaPoshtaDepartmentNumber.hashCode() : 0);
+        result = 31 * result + (novaPoshta != null ? novaPoshta.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }
@@ -94,12 +107,12 @@ public class Customer extends NamedEntity {
         this.city = city;
     }
 
-    public String getNovaPoshtaDepartmentNumber() {
-        return novaPoshtaDepartmentNumber;
+    public String getNovaPoshta() {
+        return novaPoshta;
     }
 
-    public void setNovaPoshtaDepartmentNumber(String novaPoshtaDepartmentNumber) {
-        this.novaPoshtaDepartmentNumber = novaPoshtaDepartmentNumber;
+    public void setNovaPoshta(String novaPoshta) {
+        this.novaPoshta = novaPoshta;
     }
 
     public String getEmail() {
@@ -116,7 +129,7 @@ public class Customer extends NamedEntity {
                 "lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", city='" + city + '\'' +
-                ", novaPoshtaDepartmentNumber='" + novaPoshtaDepartmentNumber + '\'' +
+                ", novaPoshta='" + novaPoshta + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

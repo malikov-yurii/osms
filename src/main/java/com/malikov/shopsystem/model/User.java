@@ -1,6 +1,8 @@
 package com.malikov.shopsystem.model;
 
 import javax.persistence.*;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 @NamedQueries({
@@ -24,6 +26,14 @@ public class User extends NamedEntity {
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
+
+    public User(int id, String name, String password, Role... roles) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.roles = new HashSet<>();
+        Collections.addAll(this.roles, roles);
+    }
 
     public String getPassword() {
         return password;

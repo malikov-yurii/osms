@@ -1,23 +1,18 @@
-package com.malikov.shopsystem.repository;
+package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.model.Customer;
 
 import java.util.Collection;
 
-public interface CustomerRepository extends Repository<Customer> {
+public interface CustomerService extends Service<Customer> {
 
-    // null if not found
     Collection<Customer> getByName(String name);
 
-    // null if not found
     Collection<Customer> getByLastName(String lastName);
 
-    // null if not found
     Collection<Customer> getByCity(String city);
 
-    // null if not found
     Customer getByEmail(String email);
 
-    // null if not found
     Customer getByPhoneNumber(String phoneNumber);
 }

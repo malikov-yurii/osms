@@ -15,7 +15,7 @@ CREATE TABLE users
   CONSTRAINT users_unique_name_idx UNIQUE (name)
 );
 
-CREATE TABLE users_roles
+CREATE TABLE user_roles
 (
   user_id INTEGER NOT NULL,
   role    VARCHAR NOT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE orders (
   id          SERIAL PRIMARY KEY,
   customer_id INTEGER NOT NULL,
   user_id     INTEGER NOT NULL,
-  date_placed TIMESTAMP DEFAULT now(),
+--   date_placed TIMESTAMP DEFAULT now(),
   FOREIGN KEY (customer_id) REFERENCES customers (id),
   FOREIGN KEY (user_id) REFERENCES users (id)
 );

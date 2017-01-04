@@ -1,9 +1,11 @@
 package com.malikov.shopsystem.model;
 
-import org.springframework.transaction.annotation.Propagation;
-
 import javax.persistence.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @NamedQueries({
         @NamedQuery(name = Product.DELETE, query = "DELETE FROM Product p WHERE p.id=:id"),
@@ -35,6 +37,15 @@ public class Product extends NamedEntity {
     )
 
     private Set<ProductCategory> categories;
+
+    public Product(int id, String name, int price, int quantity, ProductCategory... categories) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.categories = new HashSet<>();
+        Collections.addAll(this.categories, categories);
+    }
 
 //    private int productCode;
 

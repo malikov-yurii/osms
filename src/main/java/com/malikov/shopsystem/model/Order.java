@@ -4,7 +4,8 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 @NamedQueries({
@@ -23,6 +24,17 @@ public class Order extends BaseEntity {
     public static final String BY_CUSTOMER_ID = "Order.getByCustomerId";
     public static final String BY_PRODUCT_ID = "Order.getByProductId";
 
+    @ManyToOne
+    @Fetch(FetchMode.JOIN)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+
+    @ManyToOne
+    @Fetch(FetchMode.JOIN)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @ManyToMany
     @Fetch(FetchMode.JOIN)
     @JoinTable(
@@ -32,16 +44,16 @@ public class Order extends BaseEntity {
     )
     private Set<Product> products;
 
+    public Order() {
+    }
 
-    @ManyToOne
-    @Fetch(FetchMode.JOIN)
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-
-    @ManyToOne
-    @Fetch(FetchMode.JOIN)
-    @JoinColumn(name = "user_id")
-    private User user;
+    public Order(int id, Customer customer, User user, Product... products) {
+        this.id = id;
+        this.customer = customer;
+        this.user = user;
+        this.products = new HashSet<>();
+        Collections.addAll(this.products, products);
+    }
 
 //    @Column(name = "date_placed")
 //    private LocalDate datePlaced;

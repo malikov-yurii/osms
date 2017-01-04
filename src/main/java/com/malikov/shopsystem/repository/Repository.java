@@ -4,7 +4,7 @@ import com.malikov.shopsystem.model.BaseEntity;
 
 import java.util.Collection;
 
-public interface AbstractRepository<T extends BaseEntity> {
+public interface Repository<T extends BaseEntity> {
 
     T save(T t);
 

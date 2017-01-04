@@ -1,0 +1,63 @@
+package com.malikov.shopsystem.service;
+
+import com.malikov.shopsystem.model.Customer;
+import com.malikov.shopsystem.repository.CustomerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Collection;
+
+public class CustomerServiceImpl implements CustomerService {
+
+    @Autowired
+    private CustomerRepository repository;
+
+    @Override
+    public Customer save(Customer customer) {
+        return repository.save(customer);
+    }
+
+    @Override
+    public Customer update(Customer customer) {
+        return repository.save(customer);
+    }
+
+    @Override
+    public Customer get(int id) {
+        return repository.get(id);
+    }
+
+    @Override
+    public Collection<Customer> getAll() {
+        return repository.getAll();
+    }
+
+    @Override
+    public void delete(int id) {
+        repository.delete(id);
+    }
+
+    @Override
+    public Collection<Customer> getByName(String name) {
+        return repository.getByName(name);
+    }
+
+    @Override
+    public Collection<Customer> getByLastName(String lastName) {
+        return repository.getByLastName(lastName);
+    }
+
+    @Override
+    public Collection<Customer> getByCity(String city) {
+        return repository.getByCity(city);
+    }
+
+    @Override
+    public Customer getByEmail(String email) {
+        return repository.getByEmail(email);
+    }
+
+    @Override
+    public Customer getByPhoneNumber(String phoneNumber) {
+        return repository.getByPhoneNumber(phoneNumber);
+    }
+}

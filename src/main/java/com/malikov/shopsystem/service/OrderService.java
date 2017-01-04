@@ -1,13 +1,12 @@
-package com.malikov.shopsystem.repository;
+package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.model.Order;
 
 import java.util.Collection;
 
-public interface OrderRepository extends Repository<Order> {
+public interface OrderService extends Service<Order> {
 
     Collection<Order> getByCustomerId(int customerId);
 
     Collection<Order> getByProductId(int productId);
-
 }

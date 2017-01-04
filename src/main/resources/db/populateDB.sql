@@ -17,7 +17,7 @@ INSERT INTO users_roles (role, user_id) VALUES
   ('ROLE_USER', 2);
 
 INSERT INTO products (name, price, quantity) VALUES
-  ('Shellac', 235, 22),
+  ('Shellac Manetti', 235, 22),
   ('Potal Nazionale', 385, 11),
   ('Ferrario klej rozovyj', 220, 33),
   ('Potal Kitaj', 145, 11);
@@ -38,11 +38,21 @@ INSERT INTO customers (name, last_name, phone_number, city, nova_poshta, email) 
   ('Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 'goltvyanskyy@gmail.com'),
   ('Elena', 'Dunovskaya', '0984231204', 'Sumy', '7', 'katerina.tcherednichenko@yandex.ru');
 
-INSERT INTO orders (customer_id, user_id, date_placed) VALUES
-  (2, 2, '2016-09-15 09:00:00'),
-  (2, 2, '2016-11-17 10:00:00'),
-  (1, 2, '2016-10-11 17:00:00'),
-  (3, 2, '2016-12-22 16:00:00');
+INSERT INTO orders (customer_id, user_id
+--   , date_placed
+) VALUES
+  (2, 2
+--     , '2016-09-15 09:00:00'
+  ),
+  (2, 2
+--     , '2016-11-17 10:00:00'
+  ),
+  (1, 2
+--     , '2016-10-11 17:00:00'
+  ),
+  (3, 2
+--     , '2016-12-22 16:00:00'
+  );
 
 INSERT INTO products_to_orders (product_id, order_id) VALUES
   (2, 1),
