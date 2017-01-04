@@ -2,12 +2,15 @@ package com.malikov.shopsystem.repository.jpa;
 
 import com.malikov.shopsystem.model.ProductCategory;
 import com.malikov.shopsystem.repository.ProductCategoryRepository;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Collection;
 
+@Repository
+@Transactional(readOnly = true)
 public class JpaProductCategoryImpl implements ProductCategoryRepository {
 
     @PersistenceContext

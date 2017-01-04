@@ -10,10 +10,10 @@ import static com.malikov.shopsystem.ProductCategoryTestData.*;
 
 public class ProductTestData {
 
-    public static final Product SHELLAC_MANETTI = new Product(1, "Shellac Manetti", 235, 22, CATEGORY_LAKI);
-    public static final Product POTAL_NAZIONALE = new Product(2, "Potal Nazionale", 385, 11, CATEGORY_POTAL_I_ZOLOTO);
-    public static final Product FERRARIO_ROZOVYJ = new Product(3, "Ferrario klej rozovyj", 220, 33, CATEGORY_KLEI);
-    public static final Product POTAL_KITAJ = new Product(4, "Potal Kitaj", 145, 11, CATEGORY_POTAL_I_ZOLOTO);
+    public static final Product SHELLAC_MANETTI = new Product(1, "Shellac Manetti", 235f, 22, CATEGORY_LAKI);
+    public static final Product POTAL_NAZIONALE = new Product(2, "Potal Nazionale", 385f, 44, CATEGORY_POTAL_I_ZOLOTO);
+    public static final Product FERRARIO_ROZOVYJ = new Product(3, "Ferrario klej rozovyj", 220f, 33, CATEGORY_KLEI);
+    public static final Product POTAL_KITAJ = new Product(4, "Potal Kitaj", 145f, 11, CATEGORY_POTAL_I_ZOLOTO);
 
     public static final ModelMatcher<Product> MATCHER = ModelMatcher.of(Product.class,
             (expected, actual) -> expected == actual ||

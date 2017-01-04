@@ -20,8 +20,16 @@ public class ProductCategory extends NamedEntity {
     public ProductCategory() {
     }
 
-    public ProductCategory(int id, String name) {
+    public ProductCategory(Integer id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public ProductCategory(String name) {
+        this(null, name);
+    }
+
+    public ProductCategory(ProductCategory pc){
+        this(pc.getId(), pc.getName());
     }
 }

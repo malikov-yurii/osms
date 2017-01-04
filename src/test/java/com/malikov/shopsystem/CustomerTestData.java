@@ -6,11 +6,11 @@ import com.malikov.shopsystem.model.Customer;
 import java.util.Objects;
 
 public class CustomerTestData {
-    public static final Customer CUSTOMER_DROGICHINSKIJ      = new Customer(
+    public static final Customer CUSTOMER_DROGOV = new Customer(
             1, "Alex", "Drogichinskij", "0674861352", "Ilichevsk", "3", "drogychynsky@gmail.com");
-    public static final Customer CUSTOMER_GOLOTVJANSKIJ      = new Customer(
+    public static final Customer CUSTOMER_GOLOV = new Customer(
             2, "Sergei", "Goltvjanskij", "0938754590", "Kiev", "31", "goltvyanskyy@gmail.com");
-    public static final Customer CUSTOMER_DUNOVSKAJA      = new Customer(
+    public static final Customer CUSTOMER_DUNOV      = new Customer(
             3, "Elena", "Dunovskaya", "0984231204", "Sumy", "7", "katerina.tcherednichenko@yandex.ru");
 
     public static final ModelMatcher<Customer> MATCHER = ModelMatcher.of(Customer.class,

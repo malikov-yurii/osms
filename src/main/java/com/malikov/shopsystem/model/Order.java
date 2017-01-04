@@ -47,12 +47,20 @@ public class Order extends BaseEntity {
     public Order() {
     }
 
-    public Order(int id, Customer customer, User user, Product... products) {
+    public Order(Integer id, Customer customer, User user, Product... products) {
         this.id = id;
         this.customer = customer;
         this.user = user;
         this.products = new HashSet<>();
         Collections.addAll(this.products, products);
+    }
+
+    public Order(Customer customer, User user, Product... products) {
+        this(null, customer, user, products);
+    }
+
+    public Order(Order o) {
+        this(o.getId(), o.getCustomer(), o.getUser(), (Product[]) o.getProducts().toArray());
     }
 
 //    @Column(name = "date_placed")

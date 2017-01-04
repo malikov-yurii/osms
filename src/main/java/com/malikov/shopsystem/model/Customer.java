@@ -44,7 +44,7 @@ public class Customer extends NamedEntity {
     public Customer() {
     }
 
-    public Customer(int id, String name, String lastName, String phoneNumber, String city, String novaPoshta, String email) {
+    public Customer(Integer id, String name, String lastName, String phoneNumber, String city, String novaPoshta, String email) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -52,6 +52,14 @@ public class Customer extends NamedEntity {
         this.city = city;
         this.novaPoshta = novaPoshta;
         this.email = email;
+    }
+
+    public Customer(String name, String lastName, String phoneNumber, String city, String novaPoshta, String email) {
+        this(null, name, lastName, phoneNumber, city, novaPoshta, email);
+    }
+
+    public Customer(Customer c) {
+        this(c.getId(), c.getName(), c.getLastName(), c.getPhoneNumber(), c.getCity(), c.getNovaPoshta(), c.getEmail());
     }
 
     public String getLastName() {

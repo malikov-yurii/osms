@@ -27,12 +27,20 @@ public class User extends NamedEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    public User(int id, String name, String password, Role... roles) {
+    public User(Integer id, String name, String password, Role... roles) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.roles = new HashSet<>();
         Collections.addAll(this.roles, roles);
+    }
+
+    public User(String name, String password, Role... roles) {
+        this(null, name, password, roles);
+    }
+
+    public User(User u){
+        this(u.getId(), u.getName(), u.getPassword (), (Role[]) u.getRoles().toArray());
     }
 
     public String getPassword() {

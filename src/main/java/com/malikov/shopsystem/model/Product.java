@@ -25,10 +25,10 @@ public class Product extends NamedEntity {
     public static final String ALL_SORTED = "Product.getAllSorted";
 
     @Column(name = "price")
-    private float price;
+    private Float price;
 
     @Column(name = "quantity")
-    private int quantity;
+    private Integer quantity;
 
     @JoinTable(
             name = "products_to_categories",
@@ -38,13 +38,21 @@ public class Product extends NamedEntity {
 
     private Set<ProductCategory> categories;
 
-    public Product(int id, String name, int price, int quantity, ProductCategory... categories) {
+    public Product(Integer id, String name, Float price, int quantity, ProductCategory... categories) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.categories = new HashSet<>();
         Collections.addAll(this.categories, categories);
+    }
+
+    public Product(String name, Float price, int quantity, ProductCategory... categories) {
+        this(null, name, price, quantity, categories);
+    }
+
+    public Product(Product p) {
+        this(p.getId(), p.getName(), p.getPrice(), p.getQuantity(), (ProductCategory[]) p.getCategories().toArray());
     }
 
 //    private int productCode;
