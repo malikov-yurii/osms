@@ -1,13 +1,38 @@
 package com.malikov.shopsystem.model;
 
+import org.springframework.transaction.annotation.Propagation;
+
+import javax.persistence.*;
 import java.util.Set;
 
-public class Product extends NamedEntity{
+@NamedQueries({
+        @NamedQuery(name = Product.DELETE, query = "DELETE FROM Product p WHERE p.id=:id"),
+        @NamedQuery(name = Product.BY_CATEGORY_ID, query =
+                "SELECT p FROM Product p JOIN p.categories WHERE p.categories.id=:categoryId"),
+        @NamedQuery(name = Product.QUANTITY_LESS_THAN, query = "SELECT p FROM Product p WHERE p.quantity < :quantity"),
+        @NamedQuery(name = Product.ALL_SORTED, query = "SELECT p FROM Product p ORDER BY p.price"),
+})
+@Entity
+@Table(name = "products")
+public class Product extends NamedEntity {
 
 
+    public static final String DELETE = "Product.delete";
+    public static final String BY_CATEGORY_ID = "Product.getByCategoryId";
+    public static final String QUANTITY_LESS_THAN = "Product.getQuantityLessThan";
+    public static final String ALL_SORTED = "Product.getAllSorted";
+
+    @Column(name = "price")
     private float price;
 
+    @Column(name = "quantity")
     private int quantity;
+
+    @JoinTable(
+            name = "products_to_categories",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
 
     private Set<ProductCategory> categories;
 
@@ -16,4 +41,61 @@ public class Product extends NamedEntity{
 //    private boolean unlimited;
 
 //    private boolean priceInEuro;
+
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Set<ProductCategory> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<ProductCategory> categories) {
+        this.categories = categories;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        if (!super.equals(o)) return false;
+
+        Product product = (Product) o;
+
+        if (Float.compare(product.price, price) != 0) return false;
+        if (quantity != product.quantity) return false;
+        return categories != null ? categories.equals(product.categories) : product.categories == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (price != +0.0f ? Float.floatToIntBits(price) : 0);
+        result = 31 * result + quantity;
+        result = 31 * result + (categories != null ? categories.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "price=" + price +
+                ", quantity=" + quantity +
+                ", categories=" + categories +
+                '}';
+    }
 }
