@@ -60,7 +60,7 @@ public class Order extends BaseEntity {
     }
 
     public Order(Order o) {
-        this(o.getId(), o.getCustomer(), o.getUser(), (Product[]) o.getProducts().toArray());
+        this(o.getId(), o.getCustomer(), o.getUser(), o.getProducts().toArray(new Product[0]));
     }
 
 //    @Column(name = "date_placed")

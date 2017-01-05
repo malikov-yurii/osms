@@ -27,6 +27,9 @@ public class User extends NamedEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
+    public User() {
+    }
+
     public User(Integer id, String name, String password, Role... roles) {
         this.id = id;
         this.name = name;
@@ -40,7 +43,7 @@ public class User extends NamedEntity {
     }
 
     public User(User u){
-        this(u.getId(), u.getName(), u.getPassword (), (Role[]) u.getRoles().toArray());
+        this(u.getId(), u.getName(), u.getPassword (), u.getRoles().toArray(new Role[0]));
     }
 
     public String getPassword() {
@@ -83,7 +86,7 @@ public class User extends NamedEntity {
     @Override
     public String toString() {
         return "User{" +
-                "password='" + password + '\'' +
+                "login='" + name + '\'' +
                 ", roles=" + roles +
                 '}';
     }

@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.model;
 
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.domain.Persistable;
 import javax.persistence.*;
 
@@ -11,8 +12,8 @@ public class BaseEntity implements Persistable<Integer> {
     public static final int START_SEQ = 100000;
 
     @Id
-    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     // PROPERTY access for id due to bug: https://hibernate.atlassian.net/browse/HHH-3718
     @Access(value = AccessType.PROPERTY)
     protected Integer id;

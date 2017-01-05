@@ -22,7 +22,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
         User created = service.save(newUser);
         newUser.setId(created.getId());
         MATCHER.assertCollectionEquals(
-                Arrays.asList(USER, ADMIN, newUser),
+                Arrays.asList(ADMIN, newUser, USER),
                 service.getAll());
     }
 
@@ -49,7 +49,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     @Test
     public void testGetAll() throws Exception {
         Collection<User> all = service.getAll();
-        MATCHER.assertCollectionEquals(Arrays.asList(USER, ADMIN), all);
+        MATCHER.assertCollectionEquals(Arrays.asList(ADMIN, USER), all);
     }
 
     @Test

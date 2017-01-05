@@ -18,7 +18,7 @@ INSERT INTO user_roles (role, user_id) VALUES
 
 INSERT INTO products (name, price, quantity) VALUES
   ('Shellac Manetti', 235, 22),
-  ('Potal Nazionale', 385, 11),
+  ('Potal Nazionale', 385, 44),
   ('Ferrario klej rozovyj', 220, 33),
   ('Potal Kitaj', 145, 11);
 
@@ -36,7 +36,8 @@ INSERT INTO products_to_categories (product_id, category_id) VALUES
 INSERT INTO customers (name, last_name, phone_number, city, nova_poshta, email) VALUES
   ('Alex', 'Drogichinskij', '0674861352', 'Ilichevsk', '3', 'drogychynsky@gmail.com'),
   ('Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 'goltvyanskyy@gmail.com'),
-  ('Elena', 'Dunovskaya', '0984231204', 'Sumy', '7', 'katerina.tcherednichenko@yandex.ru');
+  ('Elena', 'Dunovskaya', '0984231204', 'Sumy', '7', 'katerina.tcherednichenko@yandex.ru'),
+  ('WithNoOrderName', 'WithNoOrderLastName', '0980000000', 'ZeroTown', '0', 'zero@yandex.ru');
 
 INSERT INTO orders (customer_id, user_id
 --   , date_placed

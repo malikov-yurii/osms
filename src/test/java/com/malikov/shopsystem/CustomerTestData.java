@@ -12,6 +12,8 @@ public class CustomerTestData {
             2, "Sergei", "Goltvjanskij", "0938754590", "Kiev", "31", "goltvyanskyy@gmail.com");
     public static final Customer CUSTOMER_DUNOV      = new Customer(
             3, "Elena", "Dunovskaya", "0984231204", "Sumy", "7", "katerina.tcherednichenko@yandex.ru");
+    public static final Customer CUSTOMER_WITHOUT_ANY_ORDER      = new Customer(
+            4, "WithNoOrderName", "WithNoOrderLastName", "0980000000", "ZeroTown", "0", "zero@yandex.ru");
 
     public static final ModelMatcher<Customer> MATCHER = ModelMatcher.of(Customer.class,
             (expected, actual) -> expected == actual ||

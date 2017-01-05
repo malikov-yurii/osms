@@ -20,7 +20,7 @@ public abstract class AbstractProductCategoryServiceTest extends AbstractService
         ProductCategory created = service.save(newProductCategory);
         newProductCategory.setId(created.getId());
         MATCHER.assertCollectionEquals(
-                Arrays.asList(CATEGORY_KLEI, CATEGORY_LAKI, CATEGORY_POTAL_I_ZOLOTO, newProductCategory),
+                Arrays.asList(CATEGORY_KLEI, CATEGORY_LAKI, newProductCategory, CATEGORY_POTAL_I_ZOLOTO),
                 service.getAll());
     }
 
@@ -41,8 +41,8 @@ public abstract class AbstractProductCategoryServiceTest extends AbstractService
     @Test
     public void testGetAll() throws Exception {
         Collection<ProductCategory> all = service.getAll();
-        MATCHER.assertCollectionEquals(Arrays.asList(CATEGORY_POTAL_I_ZOLOTO,
-                CATEGORY_LAKI, CATEGORY_KLEI), all);
+        MATCHER.assertCollectionEquals(Arrays.asList(CATEGORY_KLEI,
+                CATEGORY_LAKI, CATEGORY_POTAL_I_ZOLOTO), all);
     }
 
     @Test

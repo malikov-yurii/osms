@@ -22,9 +22,8 @@ public abstract class AbstractCustomerServiceTest extends AbstractServiceTest {
         Customer created = service.save(newCustomer);
         newCustomer.setId(created.getId());
         MATCHER.assertCollectionEquals(
-                Arrays.asList(CUSTOMER_DROGOV, CUSTOMER_GOLOV,
-                        CUSTOMER_DUNOV, newCustomer),
-                service.getAll());
+                Arrays.asList(CUSTOMER_DROGOV, CUSTOMER_DUNOV,
+                        CUSTOMER_GOLOV, newCustomer, CUSTOMER_WITHOUT_ANY_ORDER), service.getAll());
     }
 
     @Test
@@ -49,37 +48,38 @@ public abstract class AbstractCustomerServiceTest extends AbstractServiceTest {
 
     @Test
     public void testGetByLastName() throws Exception {
-        Collection<Customer> allByLastName = service.getByLastName(CUSTOMER_GOLOV.getName());
+        Collection<Customer> allByLastName = service.getByLastName(CUSTOMER_GOLOV.getLastName());
         MATCHER.assertCollectionEquals(Collections.singletonList(CUSTOMER_GOLOV), allByLastName);
     }
 
     @Test
     public void testGetByCity() throws Exception {
-        Collection<Customer> allByCity = service.getByLastName(CUSTOMER_DROGOV.getName());
+        Collection<Customer> allByCity = service.getByCity(CUSTOMER_DROGOV.getCity());
         MATCHER.assertCollectionEquals(Collections.singletonList(CUSTOMER_DROGOV), allByCity);
     }
 
     @Test
     public void testGetByEmail() throws Exception {
-        Collection<Customer> allByEmail = service.getByLastName(CUSTOMER_DROGOV.getName());
-        MATCHER.assertCollectionEquals(Collections.singletonList(CUSTOMER_DROGOV), allByEmail);
+        Customer customer = service.getByEmail(CUSTOMER_DROGOV.getEmail());
+        MATCHER.assertEquals(CUSTOMER_DROGOV, customer);
     }
 
     @Test
     public void testGetByPhoneNumber() throws Exception {
-        Collection<Customer> allByPhoneNumber = service.getByLastName(CUSTOMER_DUNOV.getName());
-        MATCHER.assertCollectionEquals(Collections.singletonList(CUSTOMER_DUNOV), allByPhoneNumber);
+        Customer customer = service.getByPhoneNumber(CUSTOMER_DUNOV.getPhoneNumber());
+        MATCHER.assertEquals(CUSTOMER_DUNOV, customer);
     }
 
     @Test
     public void testGetAll() throws Exception {
         Collection<Customer> all = service.getAll();
-        MATCHER.assertCollectionEquals(Arrays.asList(CUSTOMER_DROGOV, CUSTOMER_DUNOV, CUSTOMER_GOLOV), all);
+        MATCHER.assertCollectionEquals(Arrays.asList(CUSTOMER_DROGOV, CUSTOMER_DUNOV,
+                CUSTOMER_GOLOV, CUSTOMER_WITHOUT_ANY_ORDER), all);
     }
 
     @Test
     public void testDelete() throws Exception {
-        service.delete(CUSTOMER_GOLOV.getId());
-        MATCHER.assertCollectionEquals(Arrays.asList(CUSTOMER_DUNOV, CUSTOMER_DROGOV), service.getAll());
+        service.delete(CUSTOMER_WITHOUT_ANY_ORDER.getId());
+        MATCHER.assertCollectionEquals(Arrays.asList(CUSTOMER_DROGOV, CUSTOMER_DUNOV, CUSTOMER_GOLOV), service.getAll());
     }
 }

@@ -43,6 +43,9 @@ public class Product extends NamedEntity {
     )
     private Set<ProductCategory> categories;
 
+    public Product() {
+    }
+
     public Product(Integer id, String name, Float price, int quantity, ProductCategory... categories) {
         this.id = id;
         this.name = name;
@@ -57,10 +60,11 @@ public class Product extends NamedEntity {
     }
 
     public Product(Product p) {
-        this(p.getId(), p.getName(), p.getPrice(), p.getQuantity(), (ProductCategory[]) p.getCategories().toArray());
+        this(p.getId(), p.getName(), p.getPrice(), p.getQuantity(), p.getCategories().toArray(new ProductCategory[0]));
     }
 
 //    private int productCode;
+
 
 //    private boolean unlimited;
 
