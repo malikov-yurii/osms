@@ -2,12 +2,12 @@ package com.malikov.shopsystem.model;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @NamedQueries({
@@ -43,15 +43,13 @@ public class Product extends NamedEntity {
     )
     private Set<ProductCategory> categories;
 
-    //  1 - true (should replace with boolean after testing)
-//  0 - false
     @Column(name = "different_prices")
-    private int variationsAvailable;
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private Boolean variationsAvailable;
 
-    //  1 - true (should replace with boolean after testing)
-//  0 - false
     @Column(name = "unlimited")
-    private int unlimited;
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private Boolean unlimited;
 
     //????????????????????  why i should replace it with bidirectional relationship
 //    http://stackoverflow.com/questions/1307203/hibernate-unidirectional-one-to-many-association-why-is-a-join-table-better
@@ -62,8 +60,8 @@ public class Product extends NamedEntity {
     public Product() {
     }
 
-    public Product(Integer id, String name, Integer price, int unlimited, int quantity,
-                   Integer variationsAvailable, Collection<ProductCategory> categories, Collection<ProductVariation> productVariations) {
+    public Product(Integer id, String name, Integer price, boolean unlimited, int quantity,
+                   boolean variationsAvailable, Collection<ProductCategory> categories, Collection<ProductVariation> productVariations) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -71,11 +69,11 @@ public class Product extends NamedEntity {
         this.quantity = quantity;
         this.categories = new HashSet<>(categories);
         this.variationsAvailable = variationsAvailable;
-        if (variationsAvailable == 1)
+        if (variationsAvailable)
             this.variations = new HashSet<>(productVariations);
     }
 
-    public Product(String name, Integer price, int unlimited, int quantity, int variationsAvailable,
+    public Product(String name, Integer price, boolean unlimited, int quantity, boolean variationsAvailable,
                    Collection<ProductCategory> categories, Collection<ProductVariation> variations) {
         this(null, name, price, unlimited, quantity, variationsAvailable, categories, variations);
     }
@@ -117,19 +115,19 @@ public class Product extends NamedEntity {
         this.categories = categories;
     }
 
-    public int getVariationsAvailable() {
+    public Boolean getVariationsAvailable() {
         return variationsAvailable;
     }
 
-    public void setVariationsAvailable(int variationsAvailable) {
+    public void setVariationsAvailable(Boolean variationsAvailable) {
         this.variationsAvailable = variationsAvailable;
     }
 
-    public int getUnlimited() {
+    public Boolean getUnlimited() {
         return unlimited;
     }
 
-    public void setUnlimited(int unlimited) {
+    public void setUnlimited(Boolean unlimited) {
         this.unlimited = unlimited;
     }
 
@@ -146,28 +144,18 @@ public class Product extends NamedEntity {
         if (this == o) return true;
         if (!(o instanceof Product)) return false;
         if (!super.equals(o)) return false;
-
         Product product = (Product) o;
-
-        if (variationsAvailable != product.variationsAvailable) return false;
-        if (unlimited != product.unlimited) return false;
-        if (price != null ? !price.equals(product.price) : product.price != null) return false;
-        if (quantity != null ? !quantity.equals(product.quantity) : product.quantity != null) return false;
-        if (categories != null ? !categories.equals(product.categories) : product.categories != null) return false;
-        return variations != null ? variations.equals(product.variations) : product.variations == null;
-
+        return Objects.equals(price, product.price) &&
+                Objects.equals(quantity, product.quantity) &&
+                Objects.equals(categories, product.categories) &&
+                Objects.equals(variationsAvailable, product.variationsAvailable) &&
+                Objects.equals(unlimited, product.unlimited) &&
+                Objects.equals(variations, product.variations);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
-        result = 31 * result + (categories != null ? categories.hashCode() : 0);
-        result = 31 * result + variationsAvailable;
-        result = 31 * result + unlimited;
-        result = 31 * result + (variations != null ? variations.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), price, quantity, categories, variationsAvailable, unlimited, variations);
     }
 
     @Override

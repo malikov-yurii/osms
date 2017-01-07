@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "attr_values")
@@ -42,18 +43,13 @@ public class VariationValue extends NamedEntity {
         if (this == o) return true;
         if (!(o instanceof VariationValue)) return false;
         if (!super.equals(o)) return false;
-
         VariationValue that = (VariationValue) o;
-
-        return variationType != null ? variationType.equals(that.variationType) : that.variationType == null;
-
+        return Objects.equals(variationType, that.variationType);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (variationType != null ? variationType.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), variationType);
     }
 
     @Override

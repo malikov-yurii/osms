@@ -3,6 +3,7 @@ package com.malikov.shopsystem.model;
 import javax.persistence.*;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @NamedQueries({
@@ -67,20 +68,14 @@ public class User extends NamedEntity {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         if (!super.equals(o)) return false;
-
         User user = (User) o;
-
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        return roles != null ? roles.equals(user.roles) : user.roles == null;
-
+        return Objects.equals(password, user.password) &&
+                Objects.equals(roles, user.roles);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (roles != null ? roles.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), password, roles);
     }
 
     @Override

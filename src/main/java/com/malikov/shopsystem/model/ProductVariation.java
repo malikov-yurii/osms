@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "products_attr")
@@ -61,22 +62,15 @@ public class ProductVariation extends BaseEntity{
         if (this == o) return true;
         if (!(o instanceof ProductVariation)) return false;
         if (!super.equals(o)) return false;
-
         ProductVariation that = (ProductVariation) o;
-
-        if (price != that.price) return false;
-        if (quantity != that.quantity) return false;
-        return variationValue != null ? variationValue.equals(that.variationValue) : that.variationValue == null;
-
+        return price == that.price &&
+                quantity == that.quantity &&
+                Objects.equals(variationValue, that.variationValue);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + price;
-        result = 31 * result + quantity;
-        result = 31 * result + (variationValue != null ? variationValue.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), price, quantity, variationValue);
     }
 
     @Override

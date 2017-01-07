@@ -32,19 +32,19 @@ public class ProductTestData {
     public static final ProductVariation POTAL_KITAJ_100 = new ProductVariation(7, 145, 55, BOOKLET_100_LEAVES);
     public static final ProductVariation POTAL_KITAJ_500 = new ProductVariation(8, 585, 56, BOOKLET_500_LEAVES);
 
-    public static final Product SHELLAC_MANETTI = new Product(1, "Shellac Manetti", 235, 1, 22, 1,
+    public static final Product SHELLAC_MANETTI = new Product(1, "Shellac Manetti", 235, true, 22, true,
             Collections.singleton(CATEGORY_LAKI), Arrays.asList(SHELLAC_MANETTI_100ML, SHELLAC_MANETTI_250ML));
 
-    public static final Product POTAL_NAZIONALE = new Product(2, "Potal Nazionale", 385, 0, 44, 1,
+    public static final Product POTAL_NAZIONALE = new Product(2, "Potal Nazionale", 385, false, 44, true,
             Collections.singleton(CATEGORY_POTAL_I_ZOLOTO), Arrays.asList(POTAL_NAZIONALE_100, POTAL_NAZIONALE_500));
 
-    public static final Product FERRARIO_ROZOVYJ = new Product(3, "Ferrario klej rozovyj", 220, 1, 33, 1,
+    public static final Product FERRARIO_ROZOVYJ = new Product(3, "Ferrario klej rozovyj", 220, true, 33, true,
             Collections.singleton(CATEGORY_KLEI), Arrays.asList(FERRARIO_ROZOVYJ_100ML, FERRARIO_ROZOVYJ_250ML));
 
-    public static final Product POTAL_KITAJ = new Product(4, "Potal Kitaj", 145, 0, 11, 1,
+    public static final Product POTAL_KITAJ = new Product(4, "Potal Kitaj", 145, false, 11, true,
             Collections.singleton(CATEGORY_POTAL_I_ZOLOTO), Arrays.asList(POTAL_KITAJ_100, POTAL_KITAJ_500));
 
-    public static final Product BITUM_DIVOLO = new Product(5, "Divolo Bitum Vosk", 570, 0, 1, 0,
+    public static final Product BITUM_DIVOLO = new Product(5, "Divolo Bitum Vosk", 570, false, 1, false,
             Collections.singleton(CATEGORY_LAKI), null);
 
     public static final ModelMatcher<Product> MATCHER = ModelMatcher.of(Product.class,
