@@ -4,11 +4,11 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.Arrays;
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @NamedQueries({
         @NamedQuery(name = Product.DELETE, query = "DELETE FROM Product p WHERE p.id=:id"),
@@ -29,7 +29,7 @@ public class Product extends NamedEntity {
     public static final String ALL_SORTED = "Product.getAllSorted";
 
     @Column(name = "price")
-    private Float price;
+    private Integer price;
 
     @Column(name = "quantity")
     private Integer quantity;
@@ -43,24 +43,43 @@ public class Product extends NamedEntity {
     )
     private Set<ProductCategory> categories;
 
+    //  1 - true (should replace with boolean after testing)
+//  0 - false
+    @Column(name = "different_prices")
+    private int variationsAvailable;
+
+    //  1 - true (should replace with boolean after testing)
+//  0 - false
+    @Column(name = "unlimited")
+    private int unlimited;
+
+    @OneToMany(mappedBy = "products_attr")
+    @Fetch(FetchMode.JOIN)
+    private Set<ProductVariation> variations;
+
     public Product() {
     }
 
-    public Product(Integer id, String name, Float price, int quantity, ProductCategory... categories) {
+    public Product(Integer id, String name, Integer price, int unlimited, int quantity,
+                    int variationsAvailable, Collection<ProductCategory> categories, Collection<ProductVariation> productVariations) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.quantity = quantity;
-        this.categories = new HashSet<>();
-        Collections.addAll(this.categories, categories);
+        if (unlimited == 0)
+            this.quantity = quantity;
+        this.categories = new HashSet<>(categories);
+        if (variationsAvailable == 1)
+            this.variations = new HashSet<>(productVariations);
     }
 
-    public Product(String name, Float price, int quantity, ProductCategory... categories) {
-        this(null, name, price, quantity, categories);
+    public Product(String name, Integer price, int unlimited, int quantity, int variationsAvailable,
+                   Collection<ProductCategory> categories, Collection<ProductVariation> variations) {
+        this(null, name, price, unlimited, quantity, variationsAvailable, categories, variations);
     }
 
     public Product(Product p) {
-        this(p.getId(), p.getName(), p.getPrice(), p.getQuantity(), p.getCategories().toArray(new ProductCategory[0]));
+        this(p.getId(), p.getName(), p.getPrice(), p.getUnlimited(), p.getQuantity(), p.getVariationsAvailable(),
+                p.getCategories(), p.getVariations());
     }
 
 //    private int productCode;
@@ -71,19 +90,19 @@ public class Product extends NamedEntity {
 //    private boolean priceInEuro;
 
 
-    public float getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -95,6 +114,30 @@ public class Product extends NamedEntity {
         this.categories = categories;
     }
 
+    public int getVariationsAvailable() {
+        return variationsAvailable;
+    }
+
+    public void setVariationsAvailable(int variationsAvailable) {
+        this.variationsAvailable = variationsAvailable;
+    }
+
+    public int getUnlimited() {
+        return unlimited;
+    }
+
+    public void setUnlimited(int unlimited) {
+        this.unlimited = unlimited;
+    }
+
+    public Set<ProductVariation> getVariations() {
+        return variations;
+    }
+
+    public void setVariations(Set<ProductVariation> variations) {
+        this.variations = variations;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -103,18 +146,24 @@ public class Product extends NamedEntity {
 
         Product product = (Product) o;
 
-        if (Float.compare(product.price, price) != 0) return false;
-        if (quantity != product.quantity) return false;
-        return categories != null ? categories.equals(product.categories) : product.categories == null;
+        if (variationsAvailable != product.variationsAvailable) return false;
+        if (unlimited != product.unlimited) return false;
+        if (price != null ? !price.equals(product.price) : product.price != null) return false;
+        if (quantity != null ? !quantity.equals(product.quantity) : product.quantity != null) return false;
+        if (categories != null ? !categories.equals(product.categories) : product.categories != null) return false;
+        return variations != null ? variations.equals(product.variations) : product.variations == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (price != +0.0f ? Float.floatToIntBits(price) : 0);
-        result = 31 * result + quantity;
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         result = 31 * result + (categories != null ? categories.hashCode() : 0);
+        result = 31 * result + variationsAvailable;
+        result = 31 * result + unlimited;
+        result = 31 * result + (variations != null ? variations.hashCode() : 0);
         return result;
     }
 
@@ -124,6 +173,9 @@ public class Product extends NamedEntity {
                 "price=" + price +
                 ", quantity=" + quantity +
                 ", categories=" + categories +
+                ", variationsAvailable=" + variationsAvailable +
+                ", unlimited=" + unlimited +
+                ", variations=" + variations +
                 '}';
     }
 }

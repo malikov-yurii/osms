@@ -39,10 +39,12 @@ CREATE TABLE customers (
 );
 
 CREATE TABLE products (
-  id       SERIAL PRIMARY KEY,
-  name     VARCHAR,
-  price    INTEGER DEFAULT 0,
-  quantity INTEGER DEFAULT 0,
+  id               SERIAL PRIMARY KEY,
+  name             VARCHAR,
+  price            INTEGER DEFAULT 0,
+  quantity         INTEGER DEFAULT 0,
+  unlimited        INTEGER DEFAULT 0,
+  different_prices INTEGER DEFAULT 0,
   CONSTRAINT products_name_idx UNIQUE (name)
 );
 

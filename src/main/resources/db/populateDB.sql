@@ -19,20 +19,20 @@ INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_ADMIN', 2),
   ('ROLE_USER', 2);
 
-INSERT INTO products (name, price, quantity) VALUES
-  ('Shellac Manetti', 235, 22),
-  ('Potal Nazionale', 385, 44),
-  ('Ferrario klej rozovyj', 220, 33),
-  ('Potal Kitaj', 145, 11),
-  ('Divolo Bitum Vosk', 570, 1);
+INSERT INTO products (name, price, unlimited, quantity, different_prices) VALUES
+  ('Shellac Manetti', 235, 1, 22, 1),
+  ('Potal Nazionale', 385, 0, 44, 1),
+  ('Ferrario klej rozovyj', 220, 1, 33, 1),
+  ('Potal Kitaj', 145, 0, 11, 1),
+  ('Divolo Bitum Vosk', 570, 0, 1, 0);
 
 INSERT INTO attr (name) VALUES
   ('Container'),
   ('Leaves quantity');
 
 INSERT INTO attr_values (attr_id, name) VALUES
-  (1, '0.1 (plastic)'),
-  (1, '0.25 (plastic)'),
+  (1, '0.1L (plastic)'),
+  (1, '0.25L (plastic)'),
   (2, '100 leaves'),
   (2, '500 leaves');
 
@@ -55,7 +55,8 @@ INSERT INTO products_to_categories (product_id, category_id) VALUES
   (1, 1),
   (2, 3),
   (3, 2),
-  (4, 3);
+  (4, 3),
+  (5, 1);
 
 INSERT INTO customers (name, last_name, phone_number, city, nova_poshta, email) VALUES
   ('Alex', 'Drogichinskij', '0674861352', 'Ilichevsk', '3', 'drogychynsky@gmail.com'),
