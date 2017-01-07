@@ -6,6 +6,9 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS customers;
 DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS products_attr;
+DROP TABLE IF EXISTS attr_values;
+DROP TABLE IF EXISTS attr;
 
 CREATE TABLE users
 (
@@ -43,6 +46,29 @@ CREATE TABLE products (
   CONSTRAINT products_name_idx UNIQUE (name)
 );
 
+--attribute categories  name_ru-Ru!! should be but hyphen is not ok in postgres
+CREATE TABLE attr (
+  attr_id SERIAL PRIMARY KEY,
+  name    VARCHAR
+);
+
+--attribute categories  name_ru-Ru!! should be but hyphen is not ok in postgres
+CREATE TABLE attr_values (
+  value_id SERIAL PRIMARY KEY,
+  attr_id  INTEGER NOT NULL,
+  name     VARCHAR,
+  FOREIGN KEY (attr_id) REFERENCES attr (attr_id)
+);
+
+CREATE TABLE products_attr (
+  product_attr_id SERIAL PRIMARY KEY,
+  product_id      INTEGER,
+  price           INTEGER,
+  count           INTEGER, --count is current available quantity of product
+  attr_value_id   INTEGER,
+  FOREIGN KEY (attr_value_id) REFERENCES attr_values (value_id)
+);
+
 CREATE TABLE categories (
   id   SERIAL PRIMARY KEY,
   name VARCHAR,
@@ -61,7 +87,7 @@ CREATE TABLE orders (
   id          SERIAL PRIMARY KEY,
   customer_id INTEGER NOT NULL,
   user_id     INTEGER NOT NULL,
---   date_placed TIMESTAMP DEFAULT now(),
+  --   date_placed TIMESTAMP DEFAULT now(),
   FOREIGN KEY (customer_id) REFERENCES customers (id),
   FOREIGN KEY (user_id) REFERENCES users (id)
 );
