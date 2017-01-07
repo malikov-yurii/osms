@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "products_attr")
+@AttributeOverride(name = "id", column = @Column(name = "product_attr_id"))
 public class ProductVariation extends BaseEntity{
 
     @Column(name = "price")

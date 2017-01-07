@@ -53,21 +53,24 @@ public class Product extends NamedEntity {
     @Column(name = "unlimited")
     private int unlimited;
 
-    @OneToMany(mappedBy = "products_attr")
-    @Fetch(FetchMode.JOIN)
+    //????????????????????  why i should replace it with bidirectional relationship
+//    http://stackoverflow.com/questions/1307203/hibernate-unidirectional-one-to-many-association-why-is-a-join-table-better
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id")
     private Set<ProductVariation> variations;
 
     public Product() {
     }
 
     public Product(Integer id, String name, Integer price, int unlimited, int quantity,
-                    int variationsAvailable, Collection<ProductCategory> categories, Collection<ProductVariation> productVariations) {
+                   Integer variationsAvailable, Collection<ProductCategory> categories, Collection<ProductVariation> productVariations) {
         this.id = id;
         this.name = name;
         this.price = price;
-        if (unlimited == 0)
-            this.quantity = quantity;
+        this.unlimited = unlimited;
+        this.quantity = quantity;
         this.categories = new HashSet<>(categories);
+        this.variationsAvailable = variationsAvailable;
         if (variationsAvailable == 1)
             this.variations = new HashSet<>(productVariations);
     }

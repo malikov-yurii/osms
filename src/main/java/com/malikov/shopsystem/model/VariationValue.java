@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "attr_values")
+@AttributeOverride(name = "id", column = @Column(name = "value_id"))
 public class VariationValue extends NamedEntity {
 
     @ManyToOne(cascade = CascadeType.ALL)

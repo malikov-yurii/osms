@@ -40,8 +40,8 @@ public abstract class AbstractOrderServiceTest extends AbstractServiceTest {
 
     @Test
     public void testGet() throws Exception {
-        Order customer = service.get(ORDER_2.getId());
-        OrderTestData.MATCHER.assertEquals(ORDER_2, customer);
+        Order order = service.get(ORDER_2.getId());
+        OrderTestData.MATCHER.assertEquals(ORDER_2, order);
     }
 
     @Test

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 import static com.malikov.shopsystem.ProductCategoryTestData.CATEGORY_KLEI;
 import static com.malikov.shopsystem.ProductCategoryTestData.CATEGORY_POTAL_I_ZOLOTO;
@@ -19,7 +20,7 @@ public abstract class AbstractProductServiceTest extends AbstractServiceTest {
 
     @Test
     public void testSave() throws Exception {
-        Product newProduct = new Product("newProductName", 100f, 111, CATEGORY_KLEI);
+        Product newProduct = new Product("newProductName", 100, 0, 111, 0, Collections.singleton(CATEGORY_KLEI), null);
         Product created = service.save(newProduct);
         newProduct.setId(created.getId());
         ProductTestData.MATCHER.assertCollectionEquals(

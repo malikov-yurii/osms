@@ -12,4 +12,7 @@ public class VariationType extends NamedEntity {
     public VariationType(Integer id, String name) {
         super(id, name);
     }
+
+    public VariationType() {
+    }
 }
