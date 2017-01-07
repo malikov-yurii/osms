@@ -82,7 +82,8 @@ public class ProductVariation extends BaseEntity{
     @Override
     public String toString() {
         return "ProductVariation{" +
-                "price=" + price +
+                "id='" + id + '\'' +
+                ", price=" + price +
                 ", quantity=" + quantity +
                 ", variationValue=" + variationValue +
                 '}';

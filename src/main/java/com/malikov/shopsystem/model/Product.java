@@ -173,7 +173,9 @@ public class Product extends NamedEntity {
     @Override
     public String toString() {
         return "Product{" +
-                "price=" + price +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", price=" + price +
                 ", quantity=" + quantity +
                 ", categories=" + categories +
                 ", variationsAvailable=" + variationsAvailable +

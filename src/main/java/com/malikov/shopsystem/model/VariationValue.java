@@ -58,8 +58,8 @@ public class VariationValue extends NamedEntity {
 
     @Override
     public String toString() {
-        return "VariationValue{" +
-                "variationType=" + variationType +
+        return "{variationValueName=" + name +
+                ", type=" + variationType +
                 '}';
     }
 }

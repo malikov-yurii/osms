@@ -15,4 +15,9 @@ public class VariationType extends NamedEntity {
 
     public VariationType() {
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

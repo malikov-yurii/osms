@@ -134,7 +134,9 @@ public class Customer extends NamedEntity {
     @Override
     public String toString() {
         return "Customer{" +
-                "lastName='" + lastName + '\'' +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", city='" + city + '\'' +
                 ", novaPoshta='" + novaPoshta + '\'' +

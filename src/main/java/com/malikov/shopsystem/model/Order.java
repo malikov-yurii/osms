@@ -115,10 +115,13 @@ public class Order extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Order{" +
-                "products=" + products +
-                ", customer=" + customer +
-                ", user=" + user +
-                '}';
+        StringBuilder sb = new StringBuilder("Order{" +
+                "id='" + id +
+                ",\n       " + customer +
+                ",\n       " + user);
+        for (Product product : products)
+            sb.append("\n       " + product);
+        return sb.append("\n}").toString();
     }
 }
+
