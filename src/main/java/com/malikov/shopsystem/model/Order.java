@@ -24,19 +24,16 @@ public class Order extends BaseEntity {
     public static final String BY_CUSTOMER_ID = "Order.getByCustomerId";
     public static final String BY_PRODUCT_ID = "Order.getByProductId";
 
-    @ManyToOne
-    @Fetch(FetchMode.JOIN)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
 
-    @ManyToOne
-    @Fetch(FetchMode.JOIN)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany
-    @Fetch(FetchMode.JOIN)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "products_to_orders",
             joinColumns = @JoinColumn(name = "order_id"),

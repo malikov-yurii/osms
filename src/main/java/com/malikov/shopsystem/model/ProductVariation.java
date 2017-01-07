@@ -15,7 +15,7 @@ public class ProductVariation extends BaseEntity{
     private int quantity;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "attr_value_id")
     private VariationValue variationValue;
 

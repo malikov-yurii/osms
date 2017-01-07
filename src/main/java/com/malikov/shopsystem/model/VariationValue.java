@@ -8,7 +8,7 @@ import java.util.Objects;
 @AttributeOverride(name = "id", column = @Column(name = "value_id"))
 public class VariationValue extends NamedEntity {
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "attr_id")
     private VariationType variationType;
 

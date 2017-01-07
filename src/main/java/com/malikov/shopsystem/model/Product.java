@@ -34,8 +34,7 @@ public class Product extends NamedEntity {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @ManyToMany
-    @Fetch(FetchMode.JOIN)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "products_to_categories",
             joinColumns = @JoinColumn(name = "product_id"),
