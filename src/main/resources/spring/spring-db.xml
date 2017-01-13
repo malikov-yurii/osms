@@ -20,24 +20,37 @@
 
     <tx:annotation-driven/>
 
-    <beans profile="postgres">
+    <!--<beans profile="postgres">-->
         <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
+
+
+        <bean id="dataSource"
+              class="org.apache.tomcat.jdbc.pool.DataSource"
+              p:driverClassName="org.postgresql.Driver"
+              p:url="${database.url}"
+              p:username="${database.username}"
+              p:password="${database.password}"/>
 
         <!--!!!!!!!!!!!!!!!! DONT FORGET CHANGE TO TOMCAT DATASOURCE-->
 
-        <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-            <property name="driverClass" value="${jdbc.driver.class}"/>
-            <property name="jdbcUrl" value="${database.url}"/>
-            <property name="user" value="${database.username}"/>
-            <property name="password" value="${database.password}"/>
-            <property name="maxPoolSize" value="${jdbc.max.connections}"/>
-            <property name="minPoolSize" value="${jdbc.min.connections}"/>
-            <property name="acquireIncrement" value="${jdbc.acquire.increment}"/>
+        <!--<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
+        <!--<property name="driverClass" value="${jdbc.driver.class}"/>-->
+        <!--<property name="jdbcUrl" value="${database.url}"/>-->
+        <!--<property name="user" value="${database.username}"/>-->
+        <!--<property name="password" value="${database.password}"/>-->
+        <!--<property name="maxPoolSize" value="${jdbc.max.connections}"/>-->
+        <!--<property name="minPoolSize" value="${jdbc.min.connections}"/>-->
+        <!--<property name="acquireIncrement" value="${jdbc.acquire.increment}"/>-->
+        <!--</bean>-->
+    <!--</beans>-->
 
-        </bean>
-    </beans>
+    <!--<beans profile="tomcat">-->
+        <!--??????????????????????????????????-->
+        <!--<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/topjava"/>-->
+        <context:property-placeholder location="classpath:db/tomcat.properties" system-properties-mode="OVERRIDE"/>
+    <!--</beans>-->
 
-    <beans profile="jpa">
+    <!--<beans profile="jpa">-->
         <context:component-scan base-package="com.malikov.shopsystem.repository.jpa"/>
 
         <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
@@ -63,5 +76,5 @@
               p:entityManagerFactory-ref="entityManagerFactory"/>
 
         <!--<bean class="com.malikov.shopsystem.repository.JpaUtil"/>-->
-    </beans>
+    <!--</beans>-->
 </beans>

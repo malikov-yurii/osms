@@ -30,7 +30,7 @@
         <!--<csrf disabled="true"/>-->
     </http>
 
-    <beans:bean class="ru.javawebinar.topjava.util.PasswordUtil" id="passwordEncoder" factory-method="getPasswordEncoder"/>
+    <beans:bean class="com.malikov.shopsystem.util.PasswordUtil" id="passwordEncoder" factory-method="getPasswordEncoder"/>
 
     <authentication-manager>
         <authentication-provider user-service-ref="userService">

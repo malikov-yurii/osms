@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Access(AccessType.FIELD)
 //@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, isGetterVisibility = NONE, setterVisibility = NONE)
 public class BaseEntity implements Persistable<Integer> {
-    public static final int START_SEQ = 100000;
 
     @Id
     @GeneratedValue(generator = "increment")
