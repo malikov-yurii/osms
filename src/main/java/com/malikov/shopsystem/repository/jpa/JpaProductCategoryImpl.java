@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Collection;
+import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
@@ -40,7 +40,7 @@ public class JpaProductCategoryImpl implements ProductCategoryRepository {
     }
 
     @Override
-    public Collection<ProductCategory> getAll() {
+    public List<ProductCategory> getAll() {
         return em.createNamedQuery(ProductCategory.ALL_SORTED, ProductCategory.class)
                 .getResultList();
     }

@@ -23,7 +23,7 @@ public class RootController {
 
     @GetMapping("/")
     public String root() {
-        return "redirect:meals";
+        return "redirect:products";
     }
 
     //    @Secured("ROLE_ADMIN")
@@ -42,9 +42,9 @@ public class RootController {
         return "login";
     }
 
-    @GetMapping("/meals")
-    public String meals() {
-        return "meals";
+    @GetMapping("/products")
+    public String products() {
+        return "products";
     }
 
     @GetMapping("/profile")
@@ -61,7 +61,7 @@ public class RootController {
             service.update(userTo);
             AuthorizedUser.get().update(userTo);
             status.setComplete();
-            return "redirect:meals";
+            return "redirect:products";
         }
     }
 

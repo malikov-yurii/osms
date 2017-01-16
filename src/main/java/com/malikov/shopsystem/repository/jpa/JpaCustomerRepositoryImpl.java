@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Collection;
+import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
@@ -39,24 +39,24 @@ public class JpaCustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public Collection<Customer> getAll() {
+    public List<Customer> getAll() {
         return em.createNamedQuery(Customer.ALL_SORTED, Customer.class).getResultList();
     }
 
     @Override
-    public Collection<Customer> getByName(String name) {
+    public List<Customer> getByName(String name) {
         return em.createNamedQuery(Customer.BY_NAME, Customer.class)
                 .setParameter("name", name).getResultList();
     }
 
     @Override
-    public Collection<Customer> getByLastName(String lastName) {
+    public List<Customer> getByLastName(String lastName) {
         return em.createNamedQuery(Customer.BY_LAST_NAME, Customer.class)
                 .setParameter("lastName", lastName).getResultList();
     }
 
     @Override
-    public Collection<Customer> getByCity(String city) {
+    public List<Customer> getByCity(String city) {
         return em.createNamedQuery(Customer.BY_CITY, Customer.class)
                 .setParameter("city", city).getResultList();
     }

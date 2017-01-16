@@ -2,7 +2,7 @@ package com.malikov.shopsystem.repository;
 
 import com.malikov.shopsystem.model.BaseEntity;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface Repository<T extends BaseEntity> {
 
@@ -14,5 +14,5 @@ public interface Repository<T extends BaseEntity> {
     // null if not found
     T get(int id);
 
-    Collection<T> getAll();
+    List<T> getAll();
 }

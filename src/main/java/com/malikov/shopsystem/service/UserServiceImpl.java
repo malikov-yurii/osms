@@ -12,9 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
 import static com.malikov.shopsystem.util.UserUtil.prepareToSave;
 import static com.malikov.shopsystem.util.UserUtil.updateFromTo;
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public Collection<User> getAll() {
+    public List<User> getAll() {
         return repository.getAll();
     }
 

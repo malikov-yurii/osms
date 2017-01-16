@@ -1,6 +1,6 @@
 package com.malikov.shopsystem.service;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface Service<T> {
 
@@ -10,7 +10,7 @@ public interface Service<T> {
 
     T get(int id);
 
-    Collection<T> getAll();
+    List<T> getAll();
 
     void delete(int id);
 

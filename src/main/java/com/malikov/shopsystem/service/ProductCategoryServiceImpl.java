@@ -5,7 +5,7 @@ import com.malikov.shopsystem.repository.ProductCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService {
@@ -29,7 +29,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     @Override
-    public Collection<ProductCategory> getAll() {
+    public List<ProductCategory> getAll() {
         return repository.getAll();
     }
 

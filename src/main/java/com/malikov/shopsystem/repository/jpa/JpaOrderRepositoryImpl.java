@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
@@ -39,7 +40,7 @@ public class JpaOrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public Collection<Order> getAll() {
+    public List<Order> getAll() {
         return em.createNamedQuery(Order.ALL, Order.class).getResultList();
     }
 
