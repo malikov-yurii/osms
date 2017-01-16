@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
-    <display-name>i-shop-system</display-name>
+    <display-name>Topjava</display-name>
 
     <context-param>
         <param-name>spring.profiles.default</param-name>

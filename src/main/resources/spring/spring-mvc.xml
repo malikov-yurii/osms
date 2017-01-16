@@ -52,7 +52,7 @@
           p:prefix="/WEB-INF/jsp/"
           p:suffix=".jsp"/>
 
-    <!--
+
         <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
               p:cacheSeconds="60"
               p:defaultEncoding="UTF-8">
@@ -63,12 +63,12 @@
                 </list>
             </property>
         </bean>
-    -->
-    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
-          p:cacheSeconds="60"
-          p:defaultEncoding="UTF-8">
-        <property name="basenames" value="file:///#{systemEnvironment['SHOP_SYSTEM_ROOT']}/config/messages/app"/>
-    </bean>
+
+    <!--<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"-->
+          <!--p:cacheSeconds="60"-->
+          <!--p:defaultEncoding="UTF-8">-->
+        <!--<property name="basenames" value="file:///#{systemEnvironment['SHOP_SYSTEM_ROOT']}/config/messages/app"/>-->
+    <!--</bean>-->
 
     <mvc:interceptors>
         <bean class="com.malikov.shopsystem.web.interceptor.ModelInterceptor"/>
