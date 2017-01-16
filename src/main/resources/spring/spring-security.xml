@@ -30,11 +30,31 @@
         <!--<csrf disabled="true"/>-->
     </http>
 
-    <beans:bean class="com.malikov.shopsystem.util.PasswordUtil" id="passwordEncoder" factory-method="getPasswordEncoder"/>
+
+
+
+    <!--<authentication-manager alias="authenticationManager">-->
+        <!--<authentication-provider user-service-ref="userDetailsServiceImpl">-->
+            <!--<password-encoder ref="encoder"/>-->
+        <!--</authentication-provider>-->
+    <!--</authentication-manager>-->
+
+    <!--<beans:bean id="userDetailsServiceImpl"-->
+                <!--class="com.malikov.productmanager.service.UserDetailsServiceImpl"/>-->
+
+    <beans:bean id="encoder"
+                class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <beans:constructor-arg name="strength" value="11"/>
+    </beans:bean>
+
+
+    <!--<beans:bean class="com.malikov.shopsystem.util.PasswordUtil" id="passwordEncoder" factory-method="getPasswordEncoder"/>-->
+
+
 
     <authentication-manager>
         <authentication-provider user-service-ref="userService">
-            <password-encoder ref="passwordEncoder"/>
+            <password-encoder ref="encoder"/>
 
             <!--
                         <jdbc-user-service data-source-ref="dataSource"

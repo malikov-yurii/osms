@@ -1,22 +1,29 @@
 package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.AuthorizedUser;
+import com.malikov.shopsystem.model.Role;
 import com.malikov.shopsystem.model.User;
 import com.malikov.shopsystem.repository.UserRepository;
 import com.malikov.shopsystem.to.UserTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 
 import static com.malikov.shopsystem.util.UserUtil.prepareToSave;
 import static com.malikov.shopsystem.util.UserUtil.updateFromTo;
 
 @Service("userService")
 public class UserServiceImpl implements UserService, UserDetailsService {
+
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     @Autowired
     UserRepository repository;
@@ -32,6 +39,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User save(User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
+        user.setRoles(new HashSet<>(Collections.singletonList(Role.ROLE_USER)));
         return repository.save(user);
     }
 
