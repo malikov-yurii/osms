@@ -109,20 +109,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="unlimited" class="control-label col-xs-3"><fmt:message key="products.unlimited"/></label>
-
-                        <div class="col-xs-9">
-                            <input type="checkbox" class="form-control" id="unlimited" name="unlimited"                                   >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="different_prices" class="control-label col-xs-3"><fmt:message key="products.different_prices"/></label>
-
-                        <div class="col-xs-9">
-                            <input type="checkbox" class="form-control" id="different_prices" name="hasVariations"                                   >
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
                             <button class="btn btn-primary" type="button" onclick="save()"><fmt:message key="common.save"/></button>
                         </div>

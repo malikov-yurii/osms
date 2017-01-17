@@ -1,66 +1,92 @@
 package com.malikov.shopsystem.to;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import java.io.Serializable;
 
 public class ProductTo implements Serializable {
 
-    private final Integer id;
+    private Integer id;
 
-    @NotEmpty
-    private final String name;
+    private String name;
 
-    private final Integer price;
+    private Integer price;
 
-    private final Integer quantity;
+    private Integer quantity;
 
-    private final Boolean unlimited;
-
-    private final Boolean hasVariations;
+//    private Boolean unlimited;
+//
+//    private Boolean hasVariations;
 
     public ProductTo(@JsonProperty("id") Integer id,
                      @JsonProperty("name") String name,
                      @JsonProperty("price") Integer price,
-                     @JsonProperty("quantity") Integer quantity,
-                     @JsonProperty("unlimited") Boolean unlimited,
-                     @JsonProperty("hasVariations") Boolean hasVariations) {
+                     @JsonProperty("quantity") Integer quantity
+//            , @JsonProperty("unlimited") Boolean unlimited,
+//                     @JsonProperty("hasVariations") Boolean hasVariations
+    ) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
-        this.unlimited = unlimited;
-        this.hasVariations = hasVariations;
+//        this.unlimited = unlimited;
+//        this.hasVariations = hasVariations;
     }
 
-    public boolean isNew() {
-        return id == null;
+    public ProductTo() {
     }
 
     public Integer getId() {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getPrice() {
         return price;
     }
 
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
     public Integer getQuantity() {
         return quantity;
     }
 
-    public Boolean getUnlimited() {
-        return unlimited;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
-    public Boolean getHasVariations() {
-        return hasVariations;
+    public boolean isNew() {
+        return id == null;
     }
+
+    //    public Boolean getUnlimited() {
+//        return unlimited;
+//    }
+//
+//    public void setUnlimited(Boolean unlimited) {
+//        this.unlimited = unlimited;
+//    }
+//
+//    public Boolean getHasVariations() {
+//        return hasVariations;
+//    }
+//
+//    public void setHasVariations(Boolean hasVariations) {
+//        this.hasVariations = hasVariations;
+//    }
 
     @Override
     public String toString() {
@@ -69,8 +95,8 @@ public class ProductTo implements Serializable {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
-                ", unlimited=" + unlimited +
-                ", hasVariations=" + hasVariations +
+//                ", unlimited=" + unlimited +
+//                ", hasVariations=" + hasVariations +
                 '}';
     }
 }
