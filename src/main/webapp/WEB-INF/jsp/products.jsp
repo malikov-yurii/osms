@@ -59,6 +59,8 @@
                         <th><fmt:message key="products.name"/></th>
                         <th><fmt:message key="products.price"/></th>
                         <th><fmt:message key="products.quantity"/></th>
+                        <th><fmt:message key="products.unlimited"/></th>
+                        <th><fmt:message key="products.different_prices"/></th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -82,28 +84,42 @@
                     <input type="hidden" id="id" name="id">
 
                     <div class="form-group">
-                        <label for="dateTime" class="control-label col-xs-3"><fmt:message key="products.dateTime"/></label>
+                        <label for="name" class="control-label col-xs-3"><fmt:message
+                                key="products.name"/></label>
 
                         <div class="col-xs-9">
-                            <input class="form-control" id="dateTime"
-                                   name="dateTime" placeholder="<fmt:message key="products.dateTime"/>">
+                            <input type="text" class="form-control" id="name" name="name"
+                                   placeholder="<fmt:message key="products.name"/>">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="description" class="control-label col-xs-3"><fmt:message
-                                key="products.description"/></label>
+                        <label for="price" class="control-label col-xs-3"><fmt:message key="products.price"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="description" name="description"
-                                   placeholder="<fmt:message key="products.description"/>">
+                            <input type="number" class="form-control" id="price" name="price"
+                                   placeholder="0">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="calories" class="control-label col-xs-3"><fmt:message key="products.price"/></label>
+                        <label for="quantity" class="control-label col-xs-3"><fmt:message key="products.quantity"/></label>
 
                         <div class="col-xs-9">
-                            <input type="number" class="form-control" id="calories" name="calories"
-                                   placeholder="1000">
+                            <input type="number" class="form-control" id="quantity" name="quantity"
+                                   placeholder="1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="unlimited" class="control-label col-xs-3"><fmt:message key="products.unlimited"/></label>
+
+                        <div class="col-xs-9">
+                            <input type="checkbox" class="form-control" id="unlimited" name="unlimited"                                   >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="different_prices" class="control-label col-xs-3"><fmt:message key="products.different_prices"/></label>
+
+                        <div class="col-xs-9">
+                            <input type="checkbox" class="form-control" id="different_prices" name="hasVariations"                                   >
                         </div>
                     </div>
                     <div class="form-group">

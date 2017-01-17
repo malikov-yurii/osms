@@ -29,6 +29,24 @@ $(function () {
                 "data": "quantity"
             },
             {
+                "data": "unlimited",
+                "render": function (data, type, row) {
+                    if (type == 'display') {
+                        return '<input type="checkbox" ' + (data ? 'checked' : '') + ' onclick="enable($(this),' + row.id + ');"/>';
+                    }
+                    return data;
+                }
+            },
+            {
+                "data": "hasVariations",
+                "render": function (data, type, row) {
+                    if (type == 'display') {
+                        return '<input type="checkbox" ' + (data ? 'checked' : '') + ' onclick="enable($(this),' + row.id + ');"/>';
+                    }
+                    return data;
+                }
+            },
+            {
                 "defaultContent": "",
                 "orderable": false,
                 "render": renderEditBtn

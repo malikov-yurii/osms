@@ -1,7 +1,5 @@
 package com.malikov.shopsystem.model;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -44,7 +42,7 @@ public class Product extends NamedEntity {
 
     @Column(name = "different_prices")
     @Type(type = "org.hibernate.type.NumericBooleanType")
-    private Boolean variationsAvailable;
+    private Boolean hasVariations;
 
     @Column(name = "unlimited")
     @Type(type = "org.hibernate.type.NumericBooleanType")
@@ -60,25 +58,25 @@ public class Product extends NamedEntity {
     }
 
     public Product(Integer id, String name, Integer price, boolean unlimited, int quantity,
-                   boolean variationsAvailable, Collection<ProductCategory> categories, Collection<ProductVariation> productVariations) {
+                   boolean hasVariations, Collection<ProductCategory> categories, Collection<ProductVariation> productVariations) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.unlimited = unlimited;
         this.quantity = quantity;
         this.categories = new HashSet<>(categories);
-        this.variationsAvailable = variationsAvailable;
-        if (variationsAvailable)
+        this.hasVariations = hasVariations;
+        if (hasVariations)
             this.variations = new HashSet<>(productVariations);
     }
 
-    public Product(String name, Integer price, boolean unlimited, int quantity, boolean variationsAvailable,
+    public Product(String name, Integer price, boolean unlimited, int quantity, boolean hasVariations,
                    Collection<ProductCategory> categories, Collection<ProductVariation> variations) {
-        this(null, name, price, unlimited, quantity, variationsAvailable, categories, variations);
+        this(null, name, price, unlimited, quantity, hasVariations, categories, variations);
     }
 
     public Product(Product p) {
-        this(p.getId(), p.getName(), p.getPrice(), p.getUnlimited(), p.getQuantity(), p.getVariationsAvailable(),
+        this(p.getId(), p.getName(), p.getPrice(), p.getUnlimited(), p.getQuantity(), p.getHasVariations(),
                 p.getCategories(), p.getVariations());
     }
 
@@ -114,12 +112,12 @@ public class Product extends NamedEntity {
         this.categories = categories;
     }
 
-    public Boolean getVariationsAvailable() {
-        return variationsAvailable;
+    public Boolean getHasVariations() {
+        return hasVariations;
     }
 
-    public void setVariationsAvailable(Boolean variationsAvailable) {
-        this.variationsAvailable = variationsAvailable;
+    public void setHasVariations(Boolean hasVariations) {
+        this.hasVariations = hasVariations;
     }
 
     public Boolean getUnlimited() {
@@ -147,14 +145,14 @@ public class Product extends NamedEntity {
         return Objects.equals(price, product.price) &&
                 Objects.equals(quantity, product.quantity) &&
                 Objects.equals(categories, product.categories) &&
-                Objects.equals(variationsAvailable, product.variationsAvailable) &&
+                Objects.equals(hasVariations, product.hasVariations) &&
                 Objects.equals(unlimited, product.unlimited) &&
                 Objects.equals(variations, product.variations);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), price, quantity, categories, variationsAvailable, unlimited, variations);
+        return Objects.hash(super.hashCode(), price, quantity, categories, hasVariations, unlimited, variations);
     }
 
     @Override
@@ -165,7 +163,7 @@ public class Product extends NamedEntity {
                 ", price=" + price +
                 ", quantity=" + quantity +
                 ", categories=" + categories +
-                ", variationsAvailable=" + variationsAvailable +
+                ", hasVariations=" + hasVariations +
                 ", unlimited=" + unlimited +
                 ", variations=" + variations +
                 '}';

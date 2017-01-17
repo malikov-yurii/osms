@@ -37,9 +37,9 @@
         </c:if>
         <p>
 
-        <p>User login: <b>user@yandex.ru / password</b></p>
+        <p>User login: <b>user</b> password: <b>1111</b></p>
 
-        <p>Admin login: <b>admin@gmail.com / admin</b></p>
+        <p>Admin login: <b>admin</b> password: <b>1111</b></p>
 
         <p><a class="btn btn-primary btn-lg" role="button" href="register"><fmt:message key="app.register"/> &raquo;</a></p>
         <p>Стек технологий: <a href="http://projects.spring.io/spring-security/">Spring Security</a>,

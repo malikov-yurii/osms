@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ua.com.malikov</groupId>
-    <artifactId>shopsystem</artifactId>
+    <artifactId>shop-system</artifactId>
     <packaging>war</packaging>
 
     <version>1.0-SNAPSHOT</version>
@@ -49,7 +49,7 @@
     </properties>
 
     <build>
-        <finalName>topjava</finalName>
+        <finalName>shop-system</finalName>
         <defaultGoal>package</defaultGoal>
         <plugins>
             <plugin>
@@ -115,7 +115,9 @@
 
     <dependencies>
 
-        <!--!!!!!!!!!!!!!!!!!!!DONT FORGET TO REMOVE IT-->
+
+
+        <!--!!!!!!!!!!!!!!!!!!!   //TODO  DONT FORGET TO REMOVE IT-->
         <dependency>
             <groupId>com.mchange</groupId>
             <artifactId>c3p0</artifactId>

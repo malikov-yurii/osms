@@ -8,7 +8,7 @@
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <!--<bean class="??????????" id="objectMapper" factory-method="getMapper"/>-->
+    <bean class="com.malikov.shopsystem.web.json.JacksonObjectMapper" id="objectMapper" factory-method="getMapper"/>
 
     <!-- serve static resources (*.html, ...) from src/main/webapp/ -->
     <mvc:default-servlet-handler/>
@@ -17,9 +17,9 @@
 
     <mvc:annotation-driven conversion-service="conversionService">
         <mvc:message-converters>
-            <!--<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
-                <!--<property name="objectMapper" ref="objectMapper"/>-->
-            <!--</bean>-->
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper" ref="objectMapper"/>
+            </bean>
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>

@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public class JpaProductCategoryImpl implements ProductCategoryRepository {
+public class JpaProductCategoryRepositoryImpl implements ProductCategoryRepository {
 
     @PersistenceContext
     EntityManager em;
