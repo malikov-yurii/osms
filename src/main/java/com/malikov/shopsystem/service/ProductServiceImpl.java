@@ -48,4 +48,18 @@ public class ProductServiceImpl implements ProductService {
     public Collection<Product> getAllQuantityLessThan(int quantity) {
         return repository.getAllQuantityLessThan(quantity);
     }
+
+    @Override
+    public void enableUnlimited(int id, boolean unlimited){
+        Product product = get(id);
+        product.setUnlimited(unlimited);
+        update(product);
+    }
+
+    @Override
+    public void enableHasVariations(int id, boolean hasVariations){
+        Product product = get(id);
+        product.setHasVariations(hasVariations);
+        update(product);
+    }
 }

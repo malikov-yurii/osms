@@ -59,4 +59,14 @@ public class ProductAjaxController extends AbstractProductController {
             @RequestParam(value = "endTime", required = false) LocalTime endTime) {
         return super.getBetween(startDate, startTime, endDate, endTime);
     }
+
+    @PostMapping(value = "/{id}/change-unlimited")
+    public void changeUnlimited(@PathVariable("id") int id, @RequestParam("unlimited") boolean unlimited) {
+        super.enableUnlimited(id, unlimited);
+    }
+
+    @PostMapping(value = "/{id}/change-variations")
+    public void changeHasVariations(@PathVariable("id") int id, @RequestParam("hasVariations") boolean hasVariations) {
+        super.enableHasVariations(id, hasVariations);
+    }
 }

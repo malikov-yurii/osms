@@ -9,4 +9,7 @@ public interface ProductService extends Service<Product> {
 
     Collection<Product> getAllQuantityLessThan(int quantity);
 
+    void enableUnlimited(int id, boolean unlimited);
+
+    void enableHasVariations(int id, boolean hasVariations);
 }

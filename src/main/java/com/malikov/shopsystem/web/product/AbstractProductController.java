@@ -49,4 +49,12 @@ public abstract class AbstractProductController {
         // TODO: 1/16/2017 I NEED IMPLEMENT THIS METHOD
         return getAll();
     }
+
+    public void enableUnlimited(int id, boolean unlimited) {
+        service.enableUnlimited(id, unlimited);
+    }
+
+    public void enableHasVariations(int id, boolean hasVariations) {
+        service.enableHasVariations(id, hasVariations);
+    }
 }

@@ -52,9 +52,9 @@ public abstract class AbstractUserController {
         return service.getByLogin(login);
     }
 
-    // TODO: 1/16/2017 Consider necessity of enable/disable user feature
-//    public void enable(int id, boolean enabled) {
-//        log.info((enabled ? "enable " : "disable ") + id);
-//        service.enable(id, enabled);
+    // TODO: 1/16/2017 Consider necessity of enableUnlimited/disable user feature
+//    public void enableUnlimited(int id, boolean enabled) {
+//        log.info((enabled ? "enableUnlimited " : "disable ") + id);
+//        service.enableUnlimited(id, enabled);
 //    }
 }

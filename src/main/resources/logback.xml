@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
 
-    <!-- To enable JMX Management -->
+    <!-- To enableUnlimited JMX Management -->
     <jmxConfigurator/>
 
     <!--<appender name="file" class="ch.qos.logback.core.FileAppender">-->

@@ -32,7 +32,7 @@ $(function () {
                 "data": "unlimited",
                 "render": function (data, type, row) {
                     if (type == 'display') {
-                        return '<input type="checkbox" ' + (data ? 'checked' : '') + ' onclick="enable($(this),' + row.id + ');"/>';
+                        return '<input type="checkbox" ' + (data ? 'checked' : '') + ' onclick="enableUnlimited($(this),' + row.id + ');"/>';
                     }
                     return data;
                 }
@@ -41,7 +41,7 @@ $(function () {
                 "data": "hasVariations",
                 "render": function (data, type, row) {
                     if (type == 'display') {
-                        return '<input type="checkbox" ' + (data ? 'checked' : '') + ' onclick="enable($(this),' + row.id + ');"/>';
+                        return '<input type="checkbox" ' + (data ? 'checked' : '') + ' onclick="enableHasVariations($(this),' + row.id + ');"/>';
                     }
                     return data;
                 }
