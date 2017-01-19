@@ -24,7 +24,7 @@
                     <tr>
                         <th><fmt:message key="customers.firstName"/></th>
                         <th><fmt:message key="customers.lastName"/></th>
-                        <th><fmt:message key="customers.phone"/></th>
+                        <th><fmt:message key="customers.phoneNumber"/></th>
                         <th><fmt:message key="customers.city"/></th>
                         <th><fmt:message key="customers.novaPoshta"/></th>
                         <th><fmt:message key="customers.email"/></th>
@@ -55,7 +55,7 @@
                                 key="customers.firstName"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="firstName" name="firstName"
+                            <input type="text" class="form-control" id="firstName" name="name"
                                    placeholder="<fmt:message key="customers.firstName"/>">
                         </div>
                     </div>
@@ -69,12 +69,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="phone" class="control-label col-xs-3"><fmt:message
-                                key="customers.phone"/></label>
+                        <label for="phoneNumber" class="control-label col-xs-3"><fmt:message
+                                key="customers.phoneNumber"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="phone" name="phone"
-                                   placeholder="<fmt:message key="customers.phone"/>">
+                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                                   placeholder="<fmt:message key="customers.phoneNumber"/>">
                         </div>
                     </div>
 

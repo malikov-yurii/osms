@@ -8,11 +8,11 @@ public class CustomerTo implements Serializable {
 
     private Integer id;
 
-    private String firstName;
+    private String name;
 
     private String lastName;
 
-    private String phone;
+    private String phoneNumber;
 
     private String city;
 
@@ -21,17 +21,17 @@ public class CustomerTo implements Serializable {
     private String email;
 
     public CustomerTo(@JsonProperty("id") Integer id,
-                      @JsonProperty("firstName") String firstName,
+                      @JsonProperty("name") String name,
                       @JsonProperty("lastName") String lastName,
-                      @JsonProperty("phone") String phone,
+                      @JsonProperty("phoneNumber") String phoneNumber,
                       @JsonProperty("city") String city,
                       @JsonProperty("novaPoshta") String novaPoshta,
                       @JsonProperty("email") String email
     ) {
         this.id = id;
-        this.firstName = firstName;
+        this.name = name;
         this.lastName = lastName;
-        this.phone = phone;
+        this.phoneNumber = phoneNumber;
         this.city = city;
         this.novaPoshta = novaPoshta;
         this.email = email;
@@ -52,12 +52,12 @@ public class CustomerTo implements Serializable {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLastName() {
@@ -68,12 +68,12 @@ public class CustomerTo implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getCity() {
@@ -104,9 +104,9 @@ public class CustomerTo implements Serializable {
     public String toString() {
         return "CustomerTo{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
+                ", firstName='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", phone='" + phone + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", city='" + city + '\'' +
                 ", novaPoshta='" + novaPoshta + '\'' +
                 ", email='" + email + '\'' +

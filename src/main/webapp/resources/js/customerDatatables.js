@@ -11,13 +11,13 @@ $(function () {
         "info": true,
         "columns": [
             {
-                "data": "firstName"
+                "data": "name"
             },
             {
                 "data": "lastName"
             },
             {
-                "data": "phone"
+                "data": "phoneNumber"
             },
             {
                 "data": "city"
