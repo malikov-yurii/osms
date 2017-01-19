@@ -47,6 +47,11 @@ public class RootController {
         return "products";
     }
 
+    @GetMapping("/orders")
+    public String orders() {
+        return "orders";
+    }
+
     @GetMapping("/customers")
     public String customers() {
         return "customers";

@@ -15,12 +15,12 @@ public abstract class AbstractCustomerController {
     private CustomerService service;
 
     public Customer get(int id) {
-        LOG.info("get customer {}", id);
+        LOG.info("get order {}", id);
         return service.get(id);
     }
 
     public void delete(int id) {
-        LOG.info("delete customer {}", id);
+        LOG.info("delete order {}", id);
         service.delete(id);
     }
 
@@ -31,13 +31,13 @@ public abstract class AbstractCustomerController {
 
     public void update(Customer customer, int id) {
         customer.setId(id);
-        LOG.info("update customer{}", customer);
+        LOG.info("update order{}", customer);
         service.update(customer);
     }
 
     public Customer create(Customer customer) {
         customer.setId(null);
-        LOG.info("create customer{}", customer);
+        LOG.info("create order{}", customer);
         return service.save(customer);
     }
 }
