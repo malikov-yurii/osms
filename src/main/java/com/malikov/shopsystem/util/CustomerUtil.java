@@ -6,7 +6,7 @@ import com.malikov.shopsystem.to.CustomerTo;
 public class CustomerUtil {
 
     public static Customer createNewFromTo(CustomerTo customerTo) {
-        return new Customer(null, customerTo.getName(), customerTo.getLastName(), customerTo.getPhone(),
+        return new Customer(null, customerTo.getFirstName(), customerTo.getLastName(), customerTo.getPhone(),
                 customerTo.getCity(), customerTo.getNovaPoshta(), customerTo.getEmail());
     }
 
@@ -16,7 +16,7 @@ public class CustomerUtil {
     }
 
     public static Customer updateFromTo(Customer customer, CustomerTo customerTo) {
-        customer.setName(customerTo.getName());
+        customer.setName(customerTo.getFirstName());
         customer.setLastName(customerTo.getLastName());
         customer.setPhoneNumber(customerTo.getPhone());
         customer.setCity(customerTo.getCity());

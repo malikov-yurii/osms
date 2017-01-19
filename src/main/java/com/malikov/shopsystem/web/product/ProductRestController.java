@@ -35,13 +35,13 @@ public class ProductRestController extends AbstractProductController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody Product meal, @PathVariable("id") int id) {
-        super.update(meal, id);
+    public void update(@RequestBody Product product, @PathVariable("id") int id) {
+        super.update(product, id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Product> createWithLocation(@RequestBody Product meal) {
-        Product created = super.create(meal);
+    public ResponseEntity<Product> createWithLocation(@RequestBody Product product) {
+        Product created = super.create(product);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")

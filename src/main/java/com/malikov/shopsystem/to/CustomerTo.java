@@ -8,7 +8,7 @@ public class CustomerTo implements Serializable {
 
     private Integer id;
 
-    private String name;
+    private String firstName;
 
     private String lastName;
 
@@ -21,7 +21,7 @@ public class CustomerTo implements Serializable {
     private String email;
 
     public CustomerTo(@JsonProperty("id") Integer id,
-                      @JsonProperty("firstName") String name,
+                      @JsonProperty("firstName") String firstName,
                       @JsonProperty("lastName") String lastName,
                       @JsonProperty("phone") String phone,
                       @JsonProperty("city") String city,
@@ -29,7 +29,7 @@ public class CustomerTo implements Serializable {
                       @JsonProperty("email") String email
     ) {
         this.id = id;
-        this.name = name;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.city = city;
@@ -52,12 +52,12 @@ public class CustomerTo implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -104,7 +104,7 @@ public class CustomerTo implements Serializable {
     public String toString() {
         return "CustomerTo{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", city='" + city + '\'' +

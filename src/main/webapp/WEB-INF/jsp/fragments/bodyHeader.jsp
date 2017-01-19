@@ -11,6 +11,7 @@
         <div class="collapse navbar-collapse">
             <form:form class="navbar-form navbar-right" action="logout" method="post">
                 <sec:authorize access="isAuthenticated()">
+                    <a class="btn btn-info" role="button" href="customers"><fmt:message key="customers.title"/></a>
                     <sec:authorize access="hasRole('ROLE_ADMIN')">
                         <a class="btn btn-info" role="button" href="users"><fmt:message key="users.title"/></a>
                     </sec:authorize>
