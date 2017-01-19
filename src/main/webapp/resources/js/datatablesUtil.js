@@ -49,7 +49,6 @@ function enableUnlimited(chkbox, id) {
         type: 'POST',
         data: 'unlimited=' + enabled,
         success: function () {
-            chkbox.closest('tr').fadeTo(300, enabled ? 1 : 0.3);
             successNoty(enabled ? 'common.enabled' : 'common.disabled');
         }
     });
@@ -62,7 +61,6 @@ function enableHasVariations(chkbox, id) {
         type: 'POST',
         data: 'hasVariations=' + enabled,
         success: function () {
-            chkbox.closest('tr').fadeTo(300, enabled ? 1 : 0.3);
             successNoty(enabled ? 'common.enabled' : 'common.disabled');
         }
     });
