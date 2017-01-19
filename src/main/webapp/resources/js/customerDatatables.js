@@ -1,6 +1,10 @@
 var ajaxUrl = 'ajax/profile/customers/';
 var datatableApi;
 
+function updateTable() {
+    $.get(ajaxUrl, updateTableByData);
+}
+
 $(function () {
     datatableApi = $('#datatable').DataTable({
         "ajax": {
