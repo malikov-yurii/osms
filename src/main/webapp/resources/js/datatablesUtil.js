@@ -48,7 +48,7 @@ function enableUnlimited(chkbox, id) {
         url: ajaxUrl + id +'/change-unlimited',
         type: 'POST',
         data: 'unlimited=' + enabled,
-        success: function () { /* this is for test */
+        success: function () { //test 2nd
             successNoty(enabled ? 'common.enabled' : 'common.disabled');
         }
     });
