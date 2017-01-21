@@ -1,12 +1,14 @@
 package com.malikov.shopsystem.model;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+//import javax.persistence.*;
 
 @NamedQueries({
         @NamedQuery(name = Order.DELETE, query = "DELETE FROM Order o WHERE o.id=:id"),
@@ -33,42 +35,79 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_type")
+    private PaymentType paymentType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private OrderStatus status;
+
+    @Column(name = "date_placed")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate datePlaced;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "products_to_orders",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
+            name = "products_to_orders"
+            ,joinColumns = @JoinColumn(name = "order_id")
+            ,inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    private Set<Product> products;
+    @MapKeyJoinColumn(name = "product_id")
+    @Column(name = "product_quantity")
+    private Map<Product, Integer> productQuantityMap;
 
     public Order() {
     }
 
-    public Order(Integer id, Customer customer, User user, Product... products) {
+    public Order(Integer id, Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, LocalDate datePlaced, Map<Product, Integer> productQuantityMap) {
         this.id = id;
         this.customer = customer;
         this.user = user;
-        this.products = new HashSet<>();
-        Collections.addAll(this.products, products);
+        this.paymentType = paymentType;
+        this.status = orderStatus;
+        this.datePlaced = datePlaced;
+        this.productQuantityMap = new HashMap<>(productQuantityMap);
     }
 
-    public Order(Customer customer, User user, Product... products) {
-        this(null, customer, user, products);
+    public Order(Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, Map<Product, Integer> productQuantityMap) {
+        this(null, customer, user,  paymentType, orderStatus, null, productQuantityMap);
     }
 
     public Order(Order o) {
-        this(o.getId(), o.getCustomer(), o.getUser(), o.getProducts().toArray(new Product[0]));
+        this(o.getId(), o.getCustomer(), o.getUser(), o.getPaymentType(), o.getStatus(), o.getDatePlaced(), o.getProductQuantityMap());
     }
 
-//    @Column(name = "date_placed")
-//    private LocalDate datePlaced;
-
-    public Set<Product> getProducts() {
-        return products;
+    public LocalDate getDatePlaced() {
+        return datePlaced;
     }
 
-    public void setProducts(Set<Product> products) {
-        this.products = products;
+    public void setDatePlaced(LocalDate datePlaced) {
+        this.datePlaced = datePlaced;
+    }
+
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public Map<Product, Integer> getProductQuantityMap() {
+        return productQuantityMap;
+    }
+
+    public void setProductQuantityMap(Map<Product, Integer> productQuantityMap) {
+        this.productQuantityMap = productQuantityMap;
     }
 
     public Customer getCustomer() {
@@ -92,33 +131,30 @@ public class Order extends BaseEntity {
         if (this == o) return true;
         if (!(o instanceof Order)) return false;
         if (!super.equals(o)) return false;
-
         Order order = (Order) o;
-
-        if (products != null ? !products.equals(order.products) : order.products != null) return false;
-        if (customer != null ? !customer.equals(order.customer) : order.customer != null) return false;
-        return user != null ? user.equals(order.user) : order.user == null;
-
+        return Objects.equals(customer, order.customer) &&
+                Objects.equals(user, order.user) &&
+                Objects.equals(productQuantityMap, order.productQuantityMap) &&
+                paymentType == order.paymentType &&
+                status == order.status &&
+                Objects.equals(datePlaced, order.datePlaced);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (products != null ? products.hashCode() : 0);
-        result = 31 * result + (customer != null ? customer.hashCode() : 0);
-        result = 31 * result + (user != null ? user.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), customer, user, productQuantityMap, paymentType, status, datePlaced);
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Order{" +
-                "id='" + id +
-                ",\n       " + customer +
-                ",\n       " + user);
-        for (Product product : products)
-            sb.append("\n       " + product);
-        return sb.append("\n}").toString();
+        return "Order{" +
+                "customer=" + customer +
+                ", user=" + user +
+                ", productQuantityMap=" + productQuantityMap +
+                ", paymentType=" + paymentType +
+                ", status=" + status +
+                ", datePlaced=" + datePlaced +
+                '}';
     }
 }
 
