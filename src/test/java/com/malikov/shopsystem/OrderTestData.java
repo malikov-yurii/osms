@@ -1,68 +1,66 @@
 package com.malikov.shopsystem;
 
+import com.malikov.shopsystem.matcher.ModelMatcher;
+import com.malikov.shopsystem.model.Order;
+import com.malikov.shopsystem.model.OrderItem;
+import com.malikov.shopsystem.model.OrderStatus;
+import com.malikov.shopsystem.model.PaymentType;
+
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Objects;
+
+import static com.malikov.shopsystem.CustomerTestData.*;
+import static com.malikov.shopsystem.ProductTestData.*;
+import static com.malikov.shopsystem.UserTestData.ADMIN;
+
 public class OrderTestData {
 
-//    public static final Order ORDER_1 = new Order(1, CUSTOMER_GOLOV, ADMIN,
-//            PaymentType.PRIVAT_CARD,
-//            OrderStatus.AWAITING_FOR_PAYMENT,
-//            LocalDate.of(2016, 9, 15),
-//            createOrder1ProductQuantityMap());
-//
-//    public static Map<Product, Integer> createOrder1ProductQuantityMap() {
-//        Map<Product, Integer> map = new HashMap<>();
-//        map.put(POTAL_NAZIONALE, 1);
-//        map.put(FERRARIO_ROZOVYJ, 2);
-//        return map;
-//    }
-//
-//    public static final Order ORDER_2 = new Order(2, CUSTOMER_GOLOV, ADMIN,
-//            PaymentType.CASH_ON_DELIVERY,
-//            OrderStatus.READY_FOR_SHIPMENT,
-//            LocalDate.of(2016, 11, 17),
-//            createOrder2ProductQuantityMap());
-//
-//    public static Map<Product, Integer> createOrder2ProductQuantityMap() {
-//        Map<Product, Integer> map = new HashMap<>();
-//        map.put(POTAL_KITAJ, 3);
-//        map.put(SHELLAC_MANETTI, 4);
-//        return map;
-//    }
-//
-//    public static final Order ORDER_3 = new Order(3, CUSTOMER_DROGOV, ADMIN,
-//            PaymentType.PRIVAT_CARD,
-//            OrderStatus.READY_FOR_SHIPMENT,
-//            LocalDate.of(2016, 10, 11),
-//            createOrder3ProductQuantityMap());
-//
-//    public static Map<Product, Integer> createOrder3ProductQuantityMap() {
-//        Map<Product, Integer> map = new HashMap<>();
-//        map.put(POTAL_KITAJ, 5);
-//        return map;
-//    }
-//
-//    public static final Order ORDER_4 = new Order(4, CUSTOMER_DUNOV, ADMIN,
-//            PaymentType.CASH_ON_DELIVERY,
-//            OrderStatus.READY_FOR_SHIPMENT,
-//            LocalDate.of(2016, 12, 22),
-//            createOrder4ProductQuantityMap());
-//
-//    public static Map<Product, Integer> createOrder4ProductQuantityMap() {
-//        Map<Product, Integer> map = new HashMap<>();
-//        map.put(FERRARIO_ROZOVYJ, 7);
-//        map.put(POTAL_NAZIONALE, 6);
-//        map.put(SHELLAC_MANETTI, 8);
-//        return map;
-//    }
-//
-//    public static final ModelMatcher<Order> MATCHER = ModelMatcher.of(Order.class,
-//            (expected, actual) -> expected == actual ||
-//                    (Objects.equals(expected.getId(), actual.getId())
-//                            && Objects.equals(expected.getCustomer(), actual.getCustomer())
-//                            && Objects.equals(expected.getUser(), actual.getUser())
-//                            && Objects.equals(expected.getPaymentType(), actual.getPaymentType())
-//                            && Objects.equals(expected.getStatus(), actual.getStatus())
-//                            && Objects.equals(expected.getDatePlaced(), actual.getDatePlaced())
-//                            && Objects.equals(expected.getProductQuantityMap(), actual.getProductQuantityMap())
-//                    )
-//    );
+    public static final Order ORDER_1 = new Order(1, CUSTOMER_GOLOV, ADMIN,
+            PaymentType.PRIVAT_CARD,
+            OrderStatus.AWAITING_FOR_PAYMENT,
+            LocalDate.of(2016, 9, 15),
+            Arrays.asList(
+                    new OrderItem(1, POTAL_NAZIONALE.getId(), POTAL_NAZIONALE.getName(), POTAL_NAZIONALE.getPrice(), 1),
+                    new OrderItem(2, FERRARIO_ROZOVYJ.getId(), FERRARIO_ROZOVYJ.getName(), FERRARIO_ROZOVYJ.getPrice(), 2)
+            ));
+    public static final Order ORDER_2 = new Order(2, CUSTOMER_GOLOV, ADMIN,
+            PaymentType.CASH_ON_DELIVERY,
+            OrderStatus.READY_FOR_SHIPMENT,
+            LocalDate.of(2016, 11, 17),
+            Arrays.asList(
+                    new OrderItem(3, POTAL_KITAJ.getId(), POTAL_KITAJ.getName(), POTAL_KITAJ.getPrice(), 3),
+                    new OrderItem(4, SHELLAC_MANETTI.getId(), SHELLAC_MANETTI.getName(), SHELLAC_MANETTI.getPrice(), 4)
+            ));
+
+    public static final Order ORDER_3 = new Order(3, CUSTOMER_DROGOV, ADMIN,
+            PaymentType.PRIVAT_CARD,
+            OrderStatus.READY_FOR_SHIPMENT,
+            LocalDate.of(2016, 10, 11),
+            Collections.singletonList(
+                    new OrderItem(5, POTAL_KITAJ.getId(), POTAL_KITAJ.getName(), POTAL_KITAJ.getPrice(), 5)
+            ));
+
+    public static final Order ORDER_4 = new Order(4, CUSTOMER_DUNOV, ADMIN,
+            PaymentType.CASH_ON_DELIVERY,
+            OrderStatus.READY_FOR_SHIPMENT,
+            LocalDate.of(2016, 12, 22),
+            Arrays.asList(
+                    new OrderItem(6, SHELLAC_MANETTI.getId(), SHELLAC_MANETTI.getName(), SHELLAC_MANETTI.getPrice(), 6),
+                    new OrderItem(7, POTAL_NAZIONALE.getId(), POTAL_NAZIONALE.getName(), POTAL_NAZIONALE.getPrice(), 7),
+                    new OrderItem(8, FERRARIO_ROZOVYJ.getId(), FERRARIO_ROZOVYJ.getName(), FERRARIO_ROZOVYJ.getPrice(), 8)
+            ));
+
+    public static final ModelMatcher<Order> MATCHER = ModelMatcher.of(Order.class,
+            (expected, actual) -> expected == actual ||
+                    (Objects.equals(expected.getId(), actual.getId())
+                            && Objects.equals(expected.getCustomer(), actual.getCustomer())
+                            && Objects.equals(expected.getUser(), actual.getUser())
+                            && Objects.equals(expected.getPaymentType(), actual.getPaymentType())
+                            && Objects.equals(expected.getStatus(), actual.getStatus())
+                            && Objects.equals(expected.getDatePlaced(), actual.getDatePlaced())
+                            && Objects.equals(expected.getOrderItems(), actual.getOrderItems())
+                    )
+    );
 }

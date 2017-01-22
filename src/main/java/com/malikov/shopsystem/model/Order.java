@@ -79,7 +79,7 @@ public class Order extends BaseEntity {
 //    @Column(name = "product_quantity")
 //    private Map<Product, Integer> productQuantityMap;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
     private List<OrderItem> orderItems;
 

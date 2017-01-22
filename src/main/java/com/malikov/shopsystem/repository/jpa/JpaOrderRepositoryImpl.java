@@ -24,6 +24,10 @@ public class JpaOrderRepositoryImpl implements OrderRepository {
             em.persist(order);
             return order;
         } else {
+//            // TODO: 1/22/2017 I should refactor it
+//            em.createNamedQuery(Order.DELETE).setParameter("id", order.getId()).executeUpdate();
+//            em.persist(order);
+//            return order;
             return em.merge(order);
         }
     }
