@@ -6,7 +6,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
 //@RestResource(exported = false)
-public class ProductToForOrderTo implements Serializable {
+public class OrderItemTo implements Serializable {
+
+    private Integer orderItemId;
+
+    private Integer orderProductId;
 
     private String name;
 
@@ -15,17 +19,22 @@ public class ProductToForOrderTo implements Serializable {
     private Integer quantity;
 
     @JsonCreator
-    public ProductToForOrderTo(
+    public OrderItemTo(
+            @JsonProperty("order_item_id") Integer orderItemId,
+            @JsonProperty("order_product_id") Integer orderProductId,
             @JsonProperty("name") String name,
             @JsonProperty("price") Integer price,
             @JsonProperty("quantity") Integer quantity
     ) {
+
+        this.orderItemId = orderItemId;
+        this.orderProductId = orderProductId;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
     }
 
-    public ProductToForOrderTo() {
+    public OrderItemTo() {
     }
 
     public String getName() {
@@ -52,9 +61,27 @@ public class ProductToForOrderTo implements Serializable {
         this.quantity = quantity;
     }
 
+    public Integer getOrderItemId() {
+        return orderItemId;
+    }
+
+    public void setOrderItemId(Integer orderItemId) {
+        this.orderItemId = orderItemId;
+    }
+
+    public Integer getOrderProductId() {
+        return orderProductId;
+    }
+
+    public void setOrderProductId(Integer orderProductId) {
+        this.orderProductId = orderProductId;
+    }
+
     @Override
     public String toString() {
-        return "ProductTo{" +
+        return "OrderItemTo{" +
+                "orderItemId=" + orderItemId +
+                ", orderProductId=" + orderProductId +
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +

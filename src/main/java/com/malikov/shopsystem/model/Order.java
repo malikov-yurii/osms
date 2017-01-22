@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -31,6 +32,20 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @Column(name = "customer_name")
+    private String customerName;
+
+    @Column(name = "customer_last_name")
+    private String customerLastName;
+
+    @Column(name = "customer_phone_number")
+    private String customerPhoneNumber;
+
+    @Column(name = "customer_city")
+    private String customerCity;
+
+    @Column(name = "customer_nova_poshta")
+    private String customerNovaPoshta;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -48,41 +63,85 @@ public class Order extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate datePlaced;
 
+//    Old solution:
 //  Variation 1
-    @ElementCollection(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "products_to_orders"
-            ,joinColumns = @JoinColumn(name = "order_id")
-    )
-    @MapKeyJoinColumn(name = "product_id")
-    @Column(name = "product_quantity")
-
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "products_to_orders"
+//            ,joinColumns = @JoinColumn(name = "order_id")
+//    )
+//    @MapKeyJoinColumn(name = "product_id")
+//    @Column(name = "product_quantity")
 //  Variation 2
 //    @ElementCollection(fetch = FetchType.EAGER)
 //    @CollectionTable(name = "products_to_orders")
 //    @MapKeyJoinColumn(name = "product_id")
 //    @Column(name = "product_quantity")
-    private Map<Product, Integer> productQuantityMap;
+//    private Map<Product, Integer> productQuantityMap;
+
+    @OneToMany
+    @JoinColumn(name = "order_id")
+    private List<OrderItem> orderItems;
 
     public Order() {
     }
 
-    public Order(Integer id, Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, LocalDate datePlaced, Map<Product, Integer> productQuantityMap) {
+    public Order(Integer id, Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, LocalDate datePlaced, List<OrderItem> orderItems) {
         this.id = id;
         this.customer = customer;
         this.user = user;
         this.paymentType = paymentType;
         this.status = orderStatus;
         this.datePlaced = datePlaced;
-        this.productQuantityMap = new HashMap<>(productQuantityMap);
+        this.orderItems = orderItems;
     }
 
-    public Order(Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, Map<Product, Integer> productQuantityMap) {
-        this(null, customer, user, paymentType, orderStatus, null, productQuantityMap);
+    public Order(Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, List<OrderItem> orderItems) {
+        this(null, customer, user, paymentType, orderStatus, null, orderItems);
     }
 
     public Order(Order o) {
-        this(o.getId(), o.getCustomer(), o.getUser(), o.getPaymentType(), o.getStatus(), o.getDatePlaced(), o.getProductQuantityMap());
+        this(o.getId(), o.getCustomer(), o.getUser(), o.getPaymentType(), o.getStatus(), o.getDatePlaced(), o.getOrderItems());
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerLastName() {
+        return customerLastName;
+    }
+
+    public void setCustomerLastName(String customerLastName) {
+        this.customerLastName = customerLastName;
+    }
+
+    public String getCustomerPhoneNumber() {
+        return customerPhoneNumber;
+    }
+
+    public void setCustomerPhoneNumber(String customerPhoneNumber) {
+        this.customerPhoneNumber = customerPhoneNumber;
+    }
+
+    public String getCustomerCity() {
+        return customerCity;
+    }
+
+    public void setCustomerCity(String customerCity) {
+        this.customerCity = customerCity;
+    }
+
+    public String getCustomerNovaPoshta() {
+        return customerNovaPoshta;
+    }
+
+    public void setCustomerNovaPoshta(String customerNovaPoshta) {
+        this.customerNovaPoshta = customerNovaPoshta;
     }
 
     public LocalDate getDatePlaced() {
@@ -109,12 +168,12 @@ public class Order extends BaseEntity {
         this.status = status;
     }
 
-    public Map<Product, Integer> getProductQuantityMap() {
-        return productQuantityMap;
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
-    public void setProductQuantityMap(Map<Product, Integer> productQuantityMap) {
-        this.productQuantityMap = productQuantityMap;
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     public Customer getCustomer() {
@@ -140,28 +199,37 @@ public class Order extends BaseEntity {
         if (!super.equals(o)) return false;
         Order order = (Order) o;
         return Objects.equals(customer, order.customer) &&
+                Objects.equals(customerName, order.customerName) &&
+                Objects.equals(customerLastName, order.customerLastName) &&
+                Objects.equals(customerPhoneNumber, order.customerPhoneNumber) &&
+                Objects.equals(customerCity, order.customerCity) &&
+                Objects.equals(customerNovaPoshta, order.customerNovaPoshta) &&
                 Objects.equals(user, order.user) &&
-                Objects.equals(productQuantityMap, order.productQuantityMap) &&
                 paymentType == order.paymentType &&
                 status == order.status &&
-                Objects.equals(datePlaced, order.datePlaced);
+                Objects.equals(datePlaced, order.datePlaced) &&
+                Objects.equals(orderItems, order.orderItems);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), customer, user, productQuantityMap, paymentType, status, datePlaced);
+        return Objects.hash(super.hashCode(), customer, customerName, customerLastName, customerPhoneNumber, customerCity, customerNovaPoshta, user, paymentType, status, datePlaced, orderItems);
     }
 
     @Override
     public String toString() {
         return "Order{" +
-                "id=" + id +
                 "customer=" + customer +
+                ", customerName='" + customerName + '\'' +
+                ", customerLastName='" + customerLastName + '\'' +
+                ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
+                ", customerCity='" + customerCity + '\'' +
+                ", customerNovaPoshta='" + customerNovaPoshta + '\'' +
                 ", user=" + user +
-                ", productQuantityMap=" + productQuantityMap +
                 ", paymentType=" + paymentType +
                 ", status=" + status +
                 ", datePlaced=" + datePlaced +
+                ", orderItems=" + orderItems +
                 '}';
     }
 }

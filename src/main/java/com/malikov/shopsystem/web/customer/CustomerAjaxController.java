@@ -34,7 +34,6 @@ public class CustomerAjaxController extends AbstractCustomerController {
 
     @PostMapping
     public ResponseEntity<String> updateOrCreate(@Valid CustomerTo customerTo, BindingResult result) {
-        // TODO change to exception handler
         if (result.hasErrors()) {
             StringBuilder sb = new StringBuilder();
             result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
