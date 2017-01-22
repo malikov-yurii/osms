@@ -14,7 +14,8 @@ import java.util.Objects;
         @NamedQuery(name = Order.DELETE, query = "DELETE FROM Order o WHERE o.id=:id"),
         @NamedQuery(name = Order.BY_CUSTOMER_ID, query = "SELECT o FROM Order o JOIN o.customer c WHERE c.id=:customerId"),
 //Order.BY_PRODUCT_ID query may be wrong!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-        @NamedQuery(name = Order.BY_PRODUCT_ID, query = "SELECT o FROM Order o JOIN o.products p WHERE p.id=:productId"),
+        // TODO: 1/22/2017 implement it using not as set, but as map
+//        @NamedQuery(name = Order.BY_PRODUCT_ID, query = "SELECT o FROM Order o JOIN o.products p WHERE p.id=:productId"),
         @NamedQuery(name = Order.ALL, query = "SELECT o FROM Order o"),
 })
 @Entity
@@ -24,7 +25,7 @@ public class Order extends BaseEntity {
     public static final String DELETE = "Order.delete";
     public static final String ALL = "Order.getAllSorted";
     public static final String BY_CUSTOMER_ID = "Order.getByCustomerId";
-    public static final String BY_PRODUCT_ID = "Order.getByProductId";
+//    public static final String BY_PRODUCT_ID = "Order.getByProductId";
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
@@ -47,14 +48,20 @@ public class Order extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate datePlaced;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+//  Variation 1
+    @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(
             name = "products_to_orders"
             ,joinColumns = @JoinColumn(name = "order_id")
-            ,inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     @MapKeyJoinColumn(name = "product_id")
     @Column(name = "product_quantity")
+
+//  Variation 2
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    @CollectionTable(name = "products_to_orders")
+//    @MapKeyJoinColumn(name = "product_id")
+//    @Column(name = "product_quantity")
     private Map<Product, Integer> productQuantityMap;
 
     public Order() {
@@ -71,7 +78,7 @@ public class Order extends BaseEntity {
     }
 
     public Order(Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, Map<Product, Integer> productQuantityMap) {
-        this(null, customer, user,  paymentType, orderStatus, null, productQuantityMap);
+        this(null, customer, user, paymentType, orderStatus, null, productQuantityMap);
     }
 
     public Order(Order o) {
@@ -90,16 +97,16 @@ public class Order extends BaseEntity {
         return paymentType;
     }
 
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
+    }
+
     public OrderStatus getStatus() {
         return status;
     }
 
     public void setStatus(OrderStatus status) {
         this.status = status;
-    }
-
-    public void setPaymentType(PaymentType paymentType) {
-        this.paymentType = paymentType;
     }
 
     public Map<Product, Integer> getProductQuantityMap() {

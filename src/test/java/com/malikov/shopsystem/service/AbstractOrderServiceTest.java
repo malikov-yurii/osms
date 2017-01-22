@@ -69,9 +69,9 @@ public abstract class AbstractOrderServiceTest extends AbstractServiceTest {
         OrderTestData.MATCHER.assertCollectionEquals(Arrays.asList(ORDER_1, ORDER_2), allByCustomerId);
     }
 
-    @Test
-    public void testGetByProductId() throws Exception {
-        Collection<Order> allByProductId = service.getByProductId(POTAL_KITAJ.getId());
-        OrderTestData.MATCHER.assertCollectionEquals(Arrays.asList(ORDER_2, ORDER_3), allByProductId);
-    }
+//    @Test
+//    public void testGetByProductId() throws Exception {
+//        Collection<Order> allByProductId = service.getByProductId(POTAL_KITAJ.getId());
+//        OrderTestData.MATCHER.assertCollectionEquals(Arrays.asList(ORDER_2, ORDER_3), allByProductId);
+//    }
 }
