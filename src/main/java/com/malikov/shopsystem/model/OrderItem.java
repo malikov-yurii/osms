@@ -36,6 +36,11 @@ public class OrderItem extends BaseEntity {
         this.productQuantity = productQuantity;
     }
 
+    public OrderItem(Integer orderItemId, Integer productId, String productName, Integer productPrice, Integer productQuantity) {
+        this(productId, productName, productPrice, productQuantity);
+        this.id = orderItemId;
+    }
+
     public Integer getProductId() {
         return productId;
     }
@@ -66,5 +71,15 @@ public class OrderItem extends BaseEntity {
 
     public void setProductQuantity(Integer productQuantity) {
         this.productQuantity = productQuantity;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "productId=" + productId +
+                ", productName='" + productName + '\'' +
+                ", productPrice=" + productPrice +
+                ", productQuantity=" + productQuantity +
+                '}';
     }
 }

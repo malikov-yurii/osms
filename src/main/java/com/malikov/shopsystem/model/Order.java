@@ -79,7 +79,7 @@ public class Order extends BaseEntity {
 //    @Column(name = "product_quantity")
 //    private Map<Product, Integer> productQuantityMap;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
     private List<OrderItem> orderItems;
 
@@ -89,6 +89,10 @@ public class Order extends BaseEntity {
     public Order(Integer id, Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, LocalDate datePlaced, List<OrderItem> orderItems) {
         this.id = id;
         this.customer = customer;
+        this.customerName = customer.getName();
+        this.customerLastName = customer.getLastName();
+        this.customerCity = customer.getCity();
+        this.customerNovaPoshta = customer.getNovaPoshta();
         this.user = user;
         this.paymentType = paymentType;
         this.status = orderStatus;
@@ -219,16 +223,17 @@ public class Order extends BaseEntity {
     @Override
     public String toString() {
         return "Order{" +
-                "customer=" + customer +
-                ", customerName='" + customerName + '\'' +
+                "id=" + id +
+//                ", customer=" + customer +
+//                ", customerName='" + customerName + '\'' +
                 ", customerLastName='" + customerLastName + '\'' +
-                ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
-                ", customerCity='" + customerCity + '\'' +
-                ", customerNovaPoshta='" + customerNovaPoshta + '\'' +
-                ", user=" + user +
-                ", paymentType=" + paymentType +
-                ", status=" + status +
-                ", datePlaced=" + datePlaced +
+//                ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
+//                ", customerCity='" + customerCity + '\'' +
+//                ", customerNovaPoshta='" + customerNovaPoshta + '\'' +
+//                ", user=" + user +
+//                ", paymentType=" + paymentType +
+//                ", status=" + status +
+//                ", datePlaced=" + datePlaced +
                 ", orderItems=" + orderItems +
                 '}';
     }
