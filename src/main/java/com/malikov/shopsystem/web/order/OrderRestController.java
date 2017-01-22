@@ -17,8 +17,8 @@ public class OrderRestController extends AbstractOrderController {
     static final String REST_URL = "/rest/profile/orders";
 
     @GetMapping("/{id}")
-    public Order get(@PathVariable("id") int id) {
-        return super.get(id);
+    public OrderTo get(@PathVariable("id") int id) {
+        return super.getOrderTo(id);
     }
 
     @DeleteMapping("/{id}")
