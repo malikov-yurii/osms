@@ -87,7 +87,7 @@ public class OrderTo {
         this.paymentType = paymentType;
         this.datePlaced = datePlaced;
         this.status = status;
-        this.totalSum = 0;
+        this.totalSum = products.stream().mapToInt(p -> (p.getPrice() * p.getQuantity())).sum();
         this.products = products;
     }
 

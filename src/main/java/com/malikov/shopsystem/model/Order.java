@@ -155,6 +155,7 @@ public class Order extends BaseEntity {
     @Override
     public String toString() {
         return "Order{" +
+                "id=" + id +
                 "customer=" + customer +
                 ", user=" + user +
                 ", productQuantityMap=" + productQuantityMap +

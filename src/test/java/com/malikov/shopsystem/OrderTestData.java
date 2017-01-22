@@ -63,8 +63,8 @@ public class OrderTestData {
 
     public static Map<Product, Integer> createOrder4ProductQuantityMap() {
         Map<Product, Integer> map = new HashMap<>();
-        map.put(POTAL_NAZIONALE, 6);
         map.put(FERRARIO_ROZOVYJ, 7);
+        map.put(POTAL_NAZIONALE, 6);
         map.put(SHELLAC_MANETTI, 8);
         return map;
     }
