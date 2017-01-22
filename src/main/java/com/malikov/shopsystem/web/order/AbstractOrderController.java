@@ -24,7 +24,12 @@ public abstract class AbstractOrderController {
 
 
 
-    public Order get(int id) {
+    public OrderTo getOrderTo(int id) {
+        LOG.info("get order {}", id);
+        return OrderUtil.asTo(orderService.get(id));
+    }
+
+    public Order getOrder(int id) {
         LOG.info("get order {}", id);
         return orderService.get(id);
     }

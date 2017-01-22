@@ -22,8 +22,8 @@ public class OrderAjaxController extends AbstractOrderController {
     }
 
     @GetMapping(value = "/{id}")
-    public Order get(@PathVariable("id") int id) {
-        return super.get(id);
+    public OrderTo get(@PathVariable("id") int id) {
+        return super.getOrderTo(id);
     }
 
 
@@ -42,7 +42,7 @@ public class OrderAjaxController extends AbstractOrderController {
         if (orderTo.isNew()) {
             super.create(OrderUtil.createNewFromTo(orderTo));
         } else {
-            Order order = super.get(orderTo.getId());
+            Order order = super.getOrder(orderTo.getId());
             super.update(OrderUtil.updateFromTo(order, orderTo), orderTo.getId());
         }
         return new ResponseEntity<>(HttpStatus.OK);
