@@ -11,7 +11,7 @@ ALTER SEQUENCE products_id_seq RESTART WITH 1;
 ALTER SEQUENCE users_id_seq RESTART WITH 1;
 
 INSERT INTO users (name, password) VALUES
-  ('user', '$2a$11$bRQR2FxnBrKnr/PS0eaDUeEQzO2ZtYJllGPIkdekZ0q6rJVJrCmXm'),  -- password = '1111'
+  ('user', '$2a$11$bRQR2FxnBrKnr/PS0eaDUeEQzO2ZtYJllGPIkdekZ0q6rJVJrCmXm'), -- password = '1111'
   ('admin', '$2a$11$bRQR2FxnBrKnr/PS0eaDUeEQzO2ZtYJllGPIkdekZ0q6rJVJrCmXm'); -- password = '1111'
 
 INSERT INTO user_roles (role, user_id) VALUES
@@ -64,29 +64,20 @@ INSERT INTO customers (name, last_name, phone_number, city, nova_poshta, email) 
   ('Elena', 'Dunovskaya', '0984231204', 'Sumy', '7', 'katerina.tcherednichenko@yandex.ru'),
   ('WithNoOrderName', 'WithNoOrderLastName', '0980000000', 'ZeroTown', '0', 'zero@yandex.ru');
 
-INSERT INTO orders (customer_id, user_id
-                    --   , date_placed
+INSERT INTO orders (customer_id, user_id, payment_type, status, date_placed
 ) VALUES
-  (2, 2
-   --     , '2016-09-15 09:00:00'
-  ),
-  (2, 2
-   --     , '2016-11-17 10:00:00'
-  ),
-  (1, 2
-   --     , '2016-10-11 17:00:00'
-  ),
-  (3, 2
-   --     , '2016-12-22 16:00:00'
-  );
+  (2, 2, 'PRIVAT_CARD', 'AWAITING_FOR_PAYMENT', '2016-09-15'),
+  (2, 2, 'CASH_ON_DELIVERY', 'READY_FOR_SHIPMENT', '2016-11-17'),
+  (1, 2, 'PRIVAT_CARD', 'READY_FOR_SHIPMENT', '2016-10-11'),
+  (3, 2, 'CASH_ON_DELIVERY', 'READY_FOR_SHIPMENT', '2016-12-22');
 
-INSERT INTO products_to_orders (product_id, order_id) VALUES
-  (2, 1),
-  (3, 1),
-  (1, 2),
-  (4, 2),
-  (4, 3),
-  (1, 4),
-  (2, 4),
-  (3, 4);
+INSERT INTO products_to_orders (product_id, order_id, product_quantity) VALUES
+  (2, 1, 1),
+  (3, 1, 2),
+  (1, 2, 3),
+  (4, 2, 4),
+  (4, 3, 5),
+  (1, 4, 6),
+  (2, 4, 7),
+  (3, 4, 8);
 

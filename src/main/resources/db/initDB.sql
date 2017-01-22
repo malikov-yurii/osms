@@ -86,10 +86,12 @@ CREATE TABLE products_to_categories (
 );
 
 CREATE TABLE orders (
-  id          SERIAL PRIMARY KEY,
-  customer_id INTEGER NOT NULL,
-  user_id     INTEGER NOT NULL,
-  --   date_placed TIMESTAMP DEFAULT now(),
+  id           SERIAL PRIMARY KEY,
+  customer_id  INTEGER NOT NULL,
+  user_id      INTEGER NOT NULL,
+  payment_type VARCHAR,
+  status       VARCHAR,
+  date_placed  DATE DEFAULT now(),
   FOREIGN KEY (customer_id) REFERENCES customers (id),
   FOREIGN KEY (user_id) REFERENCES users (id)
 );
@@ -97,6 +99,7 @@ CREATE TABLE orders (
 CREATE TABLE products_to_orders (
   product_id INTEGER NOT NULL,
   order_id   INTEGER NOT NULL,
+  product_quantity   INTEGER NOT NULL,
   PRIMARY KEY (product_id, order_id),
   FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE,
   FOREIGN KEY (order_id) REFERENCES orders (id) ON DELETE CASCADE

@@ -50,9 +50,9 @@ public class JpaOrderRepositoryImpl implements OrderRepository {
                 .setParameter("customerId", customerId).getResultList();
     }
 
-    @Override
-    public Collection<Order> getByProductId(int productId) {
-        return em.createNamedQuery(Order.BY_PRODUCT_ID, Order.class)
-                .setParameter("productId", productId).getResultList();
-    }
+//    @Override
+//    public Collection<Order> getByProductId(int productId) {
+//        return em.createNamedQuery(Order.BY_PRODUCT_ID, Order.class)
+//                .setParameter("productId", productId).getResultList();
+//    }
 }

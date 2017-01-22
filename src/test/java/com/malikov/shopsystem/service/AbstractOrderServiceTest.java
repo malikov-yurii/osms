@@ -3,12 +3,13 @@ package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.OrderTestData;
 import com.malikov.shopsystem.model.Order;
+import com.malikov.shopsystem.model.OrderStatus;
+import com.malikov.shopsystem.model.PaymentType;
+import com.malikov.shopsystem.model.Product;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.*;
 
 import static com.malikov.shopsystem.CustomerTestData.CUSTOMER_DROGOV;
 import static com.malikov.shopsystem.CustomerTestData.CUSTOMER_GOLOV;
@@ -23,7 +24,10 @@ public abstract class AbstractOrderServiceTest extends AbstractServiceTest {
 
     @Test
     public void testSave() throws Exception {
-        Order newOrder = new Order(CUSTOMER_DROGOV, ADMIN, FERRARIO_ROZOVYJ, POTAL_KITAJ);
+        Map<Product, Integer> map = new HashMap<>();
+        map.put(POTAL_NAZIONALE, 11);
+        map.put(SHELLAC_MANETTI, 88);
+        Order newOrder = new Order(CUSTOMER_DROGOV, ADMIN, PaymentType.PRIVAT_CARD, OrderStatus.READY_FOR_SHIPMENT, map);
         Order created = service.save(newOrder);
         newOrder.setId(created.getId());
         OrderTestData.MATCHER.assertCollectionEquals(
@@ -33,15 +37,18 @@ public abstract class AbstractOrderServiceTest extends AbstractServiceTest {
     @Test
     public void testUpdate() throws Exception {
         Order updated = new Order(ORDER_1);
-        updated.setProducts(new HashSet<>(Arrays.asList(POTAL_KITAJ, POTAL_NAZIONALE)));
+        Map<Product, Integer> map = new HashMap<>();
+        map.put(POTAL_KITAJ, 33);
+        map.put(FERRARIO_ROZOVYJ, 22);
+        updated.setProductQuantityMap(map);
         service.update(updated);
         OrderTestData.MATCHER.assertEquals(updated, service.get(ORDER_1.getId()));
     }
 
     @Test
     public void testGet() throws Exception {
-        Order order = service.get(ORDER_2.getId());
-        OrderTestData.MATCHER.assertEquals(ORDER_2, order);
+        Order order = service.get(ORDER_3.getId());
+        OrderTestData.MATCHER.assertEquals(ORDER_3, order);
     }
 
     @Test
@@ -62,9 +69,9 @@ public abstract class AbstractOrderServiceTest extends AbstractServiceTest {
         OrderTestData.MATCHER.assertCollectionEquals(Arrays.asList(ORDER_1, ORDER_2), allByCustomerId);
     }
 
-    @Test
-    public void testGetByProductId() throws Exception {
-        Collection<Order> allByProductId = service.getByProductId(POTAL_KITAJ.getId());
-        OrderTestData.MATCHER.assertCollectionEquals(Arrays.asList(ORDER_2, ORDER_3), allByProductId);
-    }
+//    @Test
+//    public void testGetByProductId() throws Exception {
+//        Collection<Order> allByProductId = service.getByProductId(POTAL_KITAJ.getId());
+//        OrderTestData.MATCHER.assertCollectionEquals(Arrays.asList(ORDER_2, ORDER_3), allByProductId);
+//    }
 }

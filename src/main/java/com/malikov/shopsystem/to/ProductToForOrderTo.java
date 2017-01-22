@@ -1,13 +1,12 @@
 package com.malikov.shopsystem.to;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
 //@RestResource(exported = false)
-public class ProductTo implements Serializable {
-
-    private Integer id;
+public class ProductToForOrderTo implements Serializable {
 
     private String name;
 
@@ -15,27 +14,18 @@ public class ProductTo implements Serializable {
 
     private Integer quantity;
 
-    public ProductTo(
-            @JsonProperty("id") Integer id,
+    @JsonCreator
+    public ProductToForOrderTo(
             @JsonProperty("name") String name,
             @JsonProperty("price") Integer price,
             @JsonProperty("quantity") Integer quantity
     ) {
-        this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
     }
 
-    public ProductTo() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public ProductToForOrderTo() {
     }
 
     public String getName() {
@@ -62,14 +52,9 @@ public class ProductTo implements Serializable {
         this.quantity = quantity;
     }
 
-    public boolean isNew() {
-        return id == null;
-    }
-
     @Override
     public String toString() {
         return "ProductTo{" +
-                "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
