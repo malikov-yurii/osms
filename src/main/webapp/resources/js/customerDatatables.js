@@ -14,24 +14,12 @@ $(function () {
         "paging": false,
         "info": true,
         "columns": [
-            {
-                "data": "name"
-            },
-            {
-                "data": "lastName"
-            },
-            {
-                "data": "phoneNumber"
-            },
-            {
-                "data": "city"
-            },
-            {
-                "data": "novaPoshta"
-            },
-            {
-                "data": "email"
-            },
+            { "data": "name" },
+            { "data": "lastName" },
+            { "data": "phoneNumber" },
+            { "data": "city" },
+            { "data": "novaPoshta" },
+            { "data": "email" },
             {
                 "defaultContent": "",
                 "orderable": false,
@@ -41,7 +29,6 @@ $(function () {
                 "defaultContent": "",
                 "orderable": false,
                 "render": renderDeleteBtn
-
             }
         ],
         "order": [

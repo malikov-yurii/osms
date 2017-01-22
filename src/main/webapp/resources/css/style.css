@@ -1,38 +1,112 @@
 .normal {
     color: green;
 }
-
 .exceeded {
     color: red;
 }
-
 .footer {
     padding-bottom: 15px;
 }
-
 .error, .message {
     padding: 10px;
     margin-bottom: 20px;
     border-radius: 4px;
     font-size: 16px;
 }
-
 .error {
     color: #a94442;
     background-color: #f2dede;
     border: 1px solid #ebccd1;
 }
-
 .message {
     color: #2f9635;
     background-color: #c6fbc2;
     border: 1px solid #9feba6;
 }
-
 header, footer {
     background: none repeat scroll 0 0 #A6C9E2;
     color: #2E6E9E;
     font-size: 20px;
     padding: 5px 20px;
     margin: 6px 0;
+}
+table.table th,
+table.table td {
+    vertical-align: middle !important;
+    font-size: 14px;
+}
+.order-product-table {
+    display: inline-block;
+    margin: -8px 0 0 17px;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+    box-shadow: 0 4px 6px 1px rgba(0, 0, 0, 0.36);
+}
+.order-product-table th,
+.order-product-table td {
+    padding: 4px 20px;
+    border-right: 1px solid #d9d9d9;
+    border-bottom: 1px solid #d9d9d9;
+    font-size: 13px;
+    text-align: center;
+}
+.order-product-table thead tr:first-child th {
+    background: #fff;
+    border-top: none;
+}
+.order-product-table tr th:last-child,
+.order-product-table tr td:last-child {
+    border-right: none;
+}
+.order-product-table tr:last-child td {
+    border-bottom: none;
+}
+.order-product-table tr th:first-child,
+.order-product-table tr td:first-child {
+    min-width: 200px;
+    width: 50%;
+    padding-left: 15px;
+    text-align: left;
+    border-left: none;
+}
+.order-product-table tr:nth-child(even) td {
+    background: #f7f7f7;
+}
+
+/* */
+.table th.order-moar {
+    max-width: 70px !important;
+}
+td.order-moar {
+    position: relative;
+    cursor: pointer;
+}
+td.order-moar:before,
+td.order-moar:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 46%;
+    left: 30px;
+    width: 18px;
+    height: 4px;
+    background: #1eb10c;
+    backface-visibility: hidden;
+    border-radius: 25%;
+    transition: transform .5s cubic-bezier(0.68, -0.55, 0.27, 1.55), background .5s cubic-bezier(0.67, 0.01, 0.19, 0.84);
+    transform-origin: 50% 50%;
+}
+td.order-moar:after {
+    transform: rotate(90deg);
+}
+.opened td.order-moar:before,
+.opened td.order-moar:after {
+    background: #c70d0d;
+}
+.opened td.order-moar:before {
+    transform: rotate(225deg);
+}
+.opened td.order-moar:after {
+    transform: rotate(-45deg);
 }

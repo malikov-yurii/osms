@@ -23,6 +23,7 @@ function updateRow(id) {
     $('#modalTitle').html(edit_title);
     $.get(ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
+            console.log(data);
             form.find("input[name='" + key + "']").val(
                 key === "dateTime" ? value.replace('T', ' ').substr(0, 16) : value
             );

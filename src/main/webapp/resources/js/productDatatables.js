@@ -19,15 +19,9 @@ $(function () {
         "paging": false,
         "info": true,
         "columns": [
-            {
-                "data": "name"
-            },
-            {
-                "data": "price"
-            },
-            {
-                "data": "quantity"
-            },
+            { "data": "name" },
+            { "data": "price" },
+            { "data": "quantity" },
             {
                 "data": "unlimited",
                 "render": function (data, type, row) {

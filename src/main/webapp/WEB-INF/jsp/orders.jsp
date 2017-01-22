@@ -23,10 +23,17 @@
                 <table class="table table-striped display" id="datatable">
                     <thead>
                     <tr>
-                        <th>id of order</th>
+                        <th>Скрыть/Показать</th>
+                        <th>ID</th>
                         <th><fmt:message key="customers.firstName"/></th>
                         <th><fmt:message key="customers.lastName"/></th>
-                        <th>ProductsOneString</th>
+                        <th><fmt:message key="customers.phoneNumber"/></th>
+                        <th><fmt:message key="customers.city"/></th>
+                        <th><fmt:message key="customers.novaPoshta"/></th>
+                        <th><fmt:message key="orders.paymentType"/></th>
+                        <th><fmt:message key="orders.totalSum"/></th>
+                        <th>Товар</th>
+                        <th><fmt:message key="orders.orderDate"/></th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -38,87 +45,87 @@
 </div>
 <jsp:include page="fragments/footer.jsp"/>
 
-<%--<div class="modal fade" id="editRow">--%>
-    <%--<div class="modal-dialog">--%>
-        <%--<div class="modal-content">--%>
-            <%--<div class="modal-header">--%>
-                <%--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>--%>
-                <%--<h2 class="modal-title" id="modalTitle"></h2>--%>
-            <%--</div>--%>
-            <%--<div class="modal-body">--%>
-                <%--<form:form class="form-horizontal" method="post" id="detailsForm">--%>
-                    <%--<input type="hidden" id="id" name="id">--%>
+<div class="modal fade" id="editRow">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title" id="modalTitle"></h2>
+            </div>
+            <div class="modal-body">
+                <form:form class="form-horizontal" method="post" id="detailsForm">
+                    <input type="hidden" id="id" name="id">
 
-                    <%--<div class="form-group">--%>
-                        <%--<label for="firstName" class="control-label col-xs-3"><fmt:message--%>
-                                <%--key="customers.firstName"/></label>--%>
+                    <div class="form-group">
+                        <label for="firstName" class="control-label col-xs-3"><fmt:message
+                                key="customers.firstName"/></label>
 
-                        <%--<div class="col-xs-9">--%>
-                            <%--<input type="text" class="form-control" id="firstName" name="name"--%>
-                                   <%--placeholder="<fmt:message key="customers.firstName"/>">--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                    <%--<div class="form-group">--%>
-                        <%--<label for="lastName" class="control-label col-xs-3"><fmt:message--%>
-                                <%--key="customers.lastName"/></label>--%>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" id="firstName" name="name"
+                                   placeholder="<fmt:message key="customers.firstName"/>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName" class="control-label col-xs-3"><fmt:message
+                                key="customers.lastName"/></label>
 
-                        <%--<div class="col-xs-9">--%>
-                            <%--<input type="text" class="form-control" id="lastName" name="lastName"--%>
-                                   <%--placeholder="<fmt:message key="customers.lastName"/>">--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                    <%--<div class="form-group">--%>
-                        <%--<label for="phoneNumber" class="control-label col-xs-3"><fmt:message--%>
-                                <%--key="customers.phoneNumber"/></label>--%>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" id="lastName" name="lastName"
+                                   placeholder="<fmt:message key="customers.lastName"/>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber" class="control-label col-xs-3"><fmt:message
+                                key="customers.phoneNumber"/></label>
 
-                        <%--<div class="col-xs-9">--%>
-                            <%--<input type="text" class="form-control" id="phoneNumber" name="phoneNumber"--%>
-                                   <%--placeholder="<fmt:message key="customers.phoneNumber"/>">--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                                   placeholder="<fmt:message key="customers.phoneNumber"/>">
+                        </div>
+                    </div>
 
-                    <%--<div class="form-group">--%>
-                        <%--<label for="city" class="control-label col-xs-3"><fmt:message--%>
-                                <%--key="customers.city"/></label>--%>
+                    <div class="form-group">
+                        <label for="city" class="control-label col-xs-3"><fmt:message
+                                key="customers.city"/></label>
 
-                        <%--<div class="col-xs-9">--%>
-                            <%--<input type="text" class="form-control" id="city" name="city"--%>
-                                   <%--placeholder="<fmt:message key="customers.city"/>">--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                    <%--<div class="form-group">--%>
-                        <%--<label for="novaPoshta" class="control-label col-xs-3"><fmt:message--%>
-                                <%--key="customers.novaPoshta"/></label>--%>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" id="city" name="city"
+                                   placeholder="<fmt:message key="customers.city"/>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="novaPoshta" class="control-label col-xs-3"><fmt:message
+                                key="customers.novaPoshta"/></label>
 
-                        <%--<div class="col-xs-9">--%>
-                            <%--<input type="text" class="form-control" id="novaPoshta" name="novaPoshta"--%>
-                                   <%--placeholder="<fmt:message key="customers.novaPoshta"/>">--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                    <%--<div class="form-group">--%>
-                        <%--<label for="email" class="control-label col-xs-3"><fmt:message--%>
-                                <%--key="customers.email"/></label>--%>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" id="novaPoshta" name="novaPoshta"
+                                   placeholder="<fmt:message key="customers.novaPoshta"/>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="control-label col-xs-3"><fmt:message
+                                key="customers.email"/></label>
 
-                        <%--<div class="col-xs-9">--%>
-                            <%--<input type="text" class="form-control" id="email" name="email"--%>
-                                   <%--placeholder="<fmt:message key="customers.email"/>">--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                    <%--<div class="form-group">--%>
-                        <%--<div class="col-xs-offset-3 col-xs-9">--%>
-                            <%--<button class="btn btn-primary" type="button" onclick="save()"><fmt:message key="common.save"/></button>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                <%--</form:form>--%>
-            <%--</div>--%>
-        <%--</div>--%>
-    <%--</div>--%>
-<%--</div>--%>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" id="email" name="email"
+                                   placeholder="<fmt:message key="customers.email"/>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-offset-3 col-xs-9">
+                            <button class="btn btn-primary" type="button" onclick="save()"><fmt:message key="common.save"/></button>
+                        </div>
+                    </div>
+                </form:form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 </body>
 <script type="text/javascript">
-    var edit_title ='<fmt:message key="customers.edit"/>';
+    var edit_title ='<fmt:message key="orders.edit"/>';
 </script>
 <script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
 <script type="text/javascript" src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
