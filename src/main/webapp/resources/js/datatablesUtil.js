@@ -3,6 +3,7 @@ var form;
 function makeEditable() {
     form = $('#detailsForm');
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
+        console.log(jqXHR);
         failNoty(event, jqXHR, options, jsExc);
     });
 
@@ -23,7 +24,6 @@ function updateRow(id) {
     $('#modalTitle').html(edit_title);
     $.get(ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
-            console.log(data);
             form.find("input[name='" + key + "']").val(
                 key === "dateTime" ? value.replace('T', ' ').substr(0, 16) : value
             );
@@ -49,7 +49,7 @@ function enableUnlimited(chkbox, id) {
         url: ajaxUrl + id +'/change-unlimited',
         type: 'POST',
         data: 'unlimited=' + enabled,
-        success: function () { //test 2nd
+        success: function () {
             successNoty(enabled ? 'common.enabled' : 'common.disabled');
         }
     });
@@ -68,6 +68,7 @@ function enableHasVariations(chkbox, id) {
 }
 
 function updateTableByData(data) {
+    // console.log(data);
     datatableApi.clear().rows.add(data).draw();
 }
 
@@ -77,6 +78,7 @@ function save() {
         url: ajaxUrl,
         data: form.serialize(),
         success: function () {
+            console.log(form.serialize());
             $('#editRow').modal('hide');
             updateTable();
             successNoty('common.saved');
@@ -124,3 +126,19 @@ function renderDeleteBtn(data, type, row) {
         return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">'+i18n['common.delete']+'</a>';
     }
 }
+
+function simpleFailNoty() {
+    closeNoty();
+    failedNote = noty({
+        text: 'Введите корректные значения',
+        type: 'error',
+        layout: 'bottomRight',
+        timeout: 1000
+    });
+}
+
+$.extend(true, $.fn.dataTable.defaults, {
+    language : {
+        "CASH_ON_DELIVERY": "опч"
+    }
+})

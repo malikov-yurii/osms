@@ -10,7 +10,7 @@
 
 <script type="text/javascript">
     var i18n = [];
-    <c:forEach var='key' items='<%=new String[]{"common.update","common.delete","common.deleted","common.saved","common.enabled","common.disabled","common.failed"}%>'>
+    <c:forEach var='key' items='<%=new String[]{"common.update","common.delete","common.deleted","common.saved","common.enabled","common.disabled","common.failed","orders.paymentPrivat","orders.paymentCash","orders.statusReady","orders.statusPaymentAwaiting"}%>'>
     i18n['${key}'] = '<fmt:message key="${key}"/>';
     </c:forEach>
 </script>

@@ -23,6 +23,9 @@
     background-color: #c6fbc2;
     border: 1px solid #9feba6;
 }
+td.error:focus {
+    outline-color: rgba(173, 76, 74, 0.54);
+}
 header, footer {
     background: none repeat scroll 0 0 #A6C9E2;
     color: #2E6E9E;
@@ -91,7 +94,7 @@ td.order-moar:after {
     left: 30px;
     width: 18px;
     height: 4px;
-    background: #1eb10c;
+    background: #209e11;
     backface-visibility: hidden;
     border-radius: 25%;
     transition: transform .5s cubic-bezier(0.68, -0.55, 0.27, 1.55), background .5s cubic-bezier(0.67, 0.01, 0.19, 0.84);
@@ -102,7 +105,7 @@ td.order-moar:after {
 }
 .opened td.order-moar:before,
 .opened td.order-moar:after {
-    background: #c70d0d;
+    background: #2d2bca;
 }
 .opened td.order-moar:before {
     transform: rotate(225deg);

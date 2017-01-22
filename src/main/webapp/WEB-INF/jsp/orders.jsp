@@ -23,7 +23,7 @@
                 <table class="table table-striped display" id="datatable">
                     <thead>
                     <tr>
-                        <th>Скрыть/Показать</th>
+                        <th><fmt:message key="orders.showHide"/></th>
                         <th>ID</th>
                         <th><fmt:message key="customers.firstName"/></th>
                         <th><fmt:message key="customers.lastName"/></th>
@@ -32,8 +32,8 @@
                         <th><fmt:message key="customers.novaPoshta"/></th>
                         <th><fmt:message key="orders.paymentType"/></th>
                         <th><fmt:message key="orders.totalSum"/></th>
-                        <th>Товар</th>
-                        <th><fmt:message key="orders.orderDate"/></th>
+                        <th><fmt:message key="orders.status"/></th>
+                        <th><fmt:message key="orders.date"/></th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -57,29 +57,29 @@
                     <input type="hidden" id="id" name="id">
 
                     <div class="form-group">
-                        <label for="firstName" class="control-label col-xs-3"><fmt:message
+                        <label for="first_name" class="control-label col-xs-3"><fmt:message
                                 key="customers.firstName"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="firstName" name="name"
+                            <input type="text" class="form-control" id="first_name" name="first_name"
                                    placeholder="<fmt:message key="customers.firstName"/>">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="lastName" class="control-label col-xs-3"><fmt:message
+                        <label for="last_name" class="control-label col-xs-3"><fmt:message
                                 key="customers.lastName"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="lastName" name="lastName"
+                            <input type="text" class="form-control" id="last_name" name="last_name"
                                    placeholder="<fmt:message key="customers.lastName"/>">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="phoneNumber" class="control-label col-xs-3"><fmt:message
+                        <label for="phone" class="control-label col-xs-3"><fmt:message
                                 key="customers.phoneNumber"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                            <input type="text" class="form-control" id="phone" name="phone"
                                    placeholder="<fmt:message key="customers.phoneNumber"/>">
                         </div>
                     </div>
@@ -94,21 +94,48 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="novaPoshta" class="control-label col-xs-3"><fmt:message
+                        <label for="nova_poshta" class="control-label col-xs-3"><fmt:message
                                 key="customers.novaPoshta"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="novaPoshta" name="novaPoshta"
+                            <input type="text" class="form-control" id="nova_poshta" name="nova_poshta"
                                    placeholder="<fmt:message key="customers.novaPoshta"/>">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="email" class="control-label col-xs-3"><fmt:message
-                                key="customers.email"/></label>
+                        <label for="payment_type" class="control-label col-xs-3"><fmt:message
+                                key="orders.paymentType"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="email" name="email"
-                                   placeholder="<fmt:message key="customers.email"/>">
+                            <input type="text" class="form-control" id="payment_type" name="payment_type"
+                                   placeholder="<fmt:message key="orders.paymentType"/>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="total_sum" class="control-label col-xs-3"><fmt:message
+                                key="orders.totalSum"/></label>
+
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" id="total_sum" name="total_sum"
+                                   placeholder="<fmt:message key="orders.totalSum"/>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="status" class="control-label col-xs-3"><fmt:message
+                                key="orders.status"/></label>
+
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" id="status" name="status"
+                                   placeholder="<fmt:message key="orders.status"/>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="date" class="control-label col-xs-3"><fmt:message
+                                key="orders.date"/></label>
+
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" id="date" name="date"
+                                   placeholder="<fmt:message key="orders.date"/>">
                         </div>
                     </div>
                     <div class="form-group">
