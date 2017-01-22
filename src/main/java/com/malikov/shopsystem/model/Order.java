@@ -4,10 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 //import javax.persistence.*;
 
@@ -79,9 +76,12 @@ public class Order extends BaseEntity {
 //    @Column(name = "product_quantity")
 //    private Map<Product, Integer> productQuantityMap;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    // TODO: 1/22/2017 solve this Set List douling problem
+        @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
-    private List<OrderItem> orderItems;
+//        @OrderBy("?? DESC")
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "order")
+    private Set<OrderItem> orderItems;
 
     public Order() {
     }
@@ -97,7 +97,7 @@ public class Order extends BaseEntity {
         this.paymentType = paymentType;
         this.status = orderStatus;
         this.datePlaced = datePlaced;
-        this.orderItems = orderItems;
+        this.orderItems = new HashSet<>(orderItems);
     }
 
     public Order(Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, List<OrderItem> orderItems) {
@@ -105,7 +105,7 @@ public class Order extends BaseEntity {
     }
 
     public Order(Order o) {
-        this(o.getId(), o.getCustomer(), o.getUser(), o.getPaymentType(), o.getStatus(), o.getDatePlaced(), o.getOrderItems());
+        this(o.getId(), o.getCustomer(), o.getUser(), o.getPaymentType(), o.getStatus(), o.getDatePlaced(), new ArrayList<OrderItem>(o.getOrderItems()));
     }
 
     public String getCustomerName() {
@@ -173,11 +173,11 @@ public class Order extends BaseEntity {
     }
 
     public List<OrderItem> getOrderItems() {
-        return orderItems;
+        return new ArrayList<>(orderItems);
     }
 
     public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
+        this.orderItems = new HashSet<>(orderItems);
     }
 
     public Customer getCustomer() {

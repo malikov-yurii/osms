@@ -105,8 +105,8 @@ CREATE TABLE orders (
 
 CREATE TABLE order_items (
   id SERIAL PRIMARY KEY,
-  order_id   INTEGER NOT NULL,
-  product_id INTEGER NOT NULL,
+  order_id   INTEGER,
+  product_id INTEGER,
   product_name VARCHAR,
   product_price INTEGER,
   product_quantity   INTEGER NOT NULL,
