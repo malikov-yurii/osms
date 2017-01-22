@@ -29,9 +29,10 @@ public abstract class AbstractOrderServiceTest extends AbstractServiceTest {
                 PaymentType.PRIVAT_CARD,
                 OrderStatus.READY_FOR_SHIPMENT,
                 Arrays.asList(
-                        new OrderItem(11, FERRARIO_ROZOVYJ.getId(), FERRARIO_ROZOVYJ.getName(), FERRARIO_ROZOVYJ.getPrice(), 7),
-                        new OrderItem(12, POTAL_NAZIONALE.getId(), POTAL_NAZIONALE.getName(), POTAL_NAZIONALE.getPrice(), 6),
-                        new OrderItem(13, SHELLAC_MANETTI.getId(), SHELLAC_MANETTI.getName(), SHELLAC_MANETTI.getPrice(), 8)
+                        new OrderItem(POTAL_NAZIONALE.getId(), POTAL_NAZIONALE.getName(), POTAL_NAZIONALE.getPrice(), 6),
+                        new OrderItem(FERRARIO_ROZOVYJ.getId(), FERRARIO_ROZOVYJ.getName(), FERRARIO_ROZOVYJ.getPrice(), 7),
+                        new OrderItem(SHELLAC_MANETTI.getId(), SHELLAC_MANETTI.getName(), SHELLAC_MANETTI.getPrice(), 8)
+
                 ));
         Order created = service.save(newOrder);
         newOrder.setId(created.getId());

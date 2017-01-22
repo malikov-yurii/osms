@@ -30,8 +30,9 @@ public class OrderTestData {
             OrderStatus.READY_FOR_SHIPMENT,
             LocalDate.of(2016, 11, 17),
             Arrays.asList(
-                    new OrderItem(3, POTAL_KITAJ.getId(), POTAL_KITAJ.getName(), POTAL_KITAJ.getPrice(), 3),
-                    new OrderItem(4, SHELLAC_MANETTI.getId(), SHELLAC_MANETTI.getName(), SHELLAC_MANETTI.getPrice(), 4)
+                    new OrderItem(3, SHELLAC_MANETTI.getId(), SHELLAC_MANETTI.getName(), SHELLAC_MANETTI.getPrice(), 3),
+                    new OrderItem(4, POTAL_KITAJ.getId(), POTAL_KITAJ.getName(), POTAL_KITAJ.getPrice(), 4)
+
             ));
 
     public static final Order ORDER_3 = new Order(3, CUSTOMER_DROGOV, ADMIN,

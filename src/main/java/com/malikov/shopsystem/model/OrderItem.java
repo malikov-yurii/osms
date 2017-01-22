@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 
 @NamedQueries({
@@ -13,6 +14,18 @@ public class OrderItem extends BaseEntity {
 
     public static final String DELETE = "OrderItem.delete";
     public static final String ALL = "OrderItem.getAll";
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "order_id")
+//    private Order order;
+//
+//    public Order getOrder() {
+//        return order;
+//    }
+//
+//    public void setOrder(Order order) {
+//        this.order = order;
+//    }
 
     @Column(name = "product_id")
     private Integer productId;
@@ -71,6 +84,23 @@ public class OrderItem extends BaseEntity {
 
     public void setProductQuantity(Integer productQuantity) {
         this.productQuantity = productQuantity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof OrderItem)) return false;
+        if (!super.equals(o)) return false;
+        OrderItem orderItem = (OrderItem) o;
+        return Objects.equals(productId, orderItem.productId) &&
+                Objects.equals(productName, orderItem.productName) &&
+                Objects.equals(productPrice, orderItem.productPrice) &&
+                Objects.equals(productQuantity, orderItem.productQuantity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), productId, productName, productPrice, productQuantity);
     }
 
     @Override
