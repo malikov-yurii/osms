@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS products_attr;
 DROP TABLE IF EXISTS attr_values;
 DROP TABLE IF EXISTS attr;
 
+
 CREATE TABLE users
 (
   id       SERIAL PRIMARY KEY,
