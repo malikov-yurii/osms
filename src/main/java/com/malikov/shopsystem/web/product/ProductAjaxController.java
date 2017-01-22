@@ -36,7 +36,6 @@ public class ProductAjaxController extends AbstractProductController {
 
     @PostMapping
     public ResponseEntity<String> updateOrCreate(@Valid ProductTo productTo, BindingResult result) {
-        // TODO change to exception handler
         if (result.hasErrors()) {
             StringBuilder sb = new StringBuilder();
             result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));

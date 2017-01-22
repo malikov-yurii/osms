@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS products_to_categories;
-DROP TABLE IF EXISTS products_to_orders;
+DROP TABLE IF EXISTS order_items;
 DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS users;
@@ -88,6 +88,12 @@ CREATE TABLE products_to_categories (
 CREATE TABLE orders (
   id           SERIAL PRIMARY KEY,
   customer_id  INTEGER NOT NULL,
+  customer_name         VARCHAR,
+  customer_last_name    VARCHAR,
+  customer_phone_number VARCHAR,
+  customer_city         VARCHAR,
+  customer_nova_poshta  VARCHAR,
+  total_sum INTEGER,
   user_id      INTEGER NOT NULL,
   payment_type VARCHAR,
   status       VARCHAR,
@@ -96,12 +102,13 @@ CREATE TABLE orders (
   FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
-CREATE TABLE products_to_orders (
-  product_id INTEGER NOT NULL,
+CREATE TABLE order_items (
+  id SERIAL PRIMARY KEY,
   order_id   INTEGER NOT NULL,
+  product_id INTEGER NOT NULL,
+  product_name VARCHAR,
+  product_price INTEGER,
   product_quantity   INTEGER NOT NULL,
-  PRIMARY KEY (product_id, order_id),
-  FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE,
   FOREIGN KEY (order_id) REFERENCES orders (id) ON DELETE CASCADE
 );
 

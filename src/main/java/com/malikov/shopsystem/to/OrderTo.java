@@ -37,7 +37,7 @@ public class OrderTo {
 
     private OrderStatus status;
 
-    private List<ProductToForOrderTo> products;
+    private List<OrderItemTo> products;
 
     @JsonCreator
     public OrderTo(
@@ -76,7 +76,7 @@ public class OrderTo {
             ,PaymentType paymentType
             ,LocalDate datePlaced
             ,OrderStatus status
-            ,List<ProductToForOrderTo> products
+            ,List<OrderItemTo> products
     ) {
         this.id = id;
         this.firstName = firstName;
@@ -104,7 +104,6 @@ public class OrderTo {
     ) {
         this(id, firstName, lastName, phoneNumber, city, novaPoshta, paymentType, datePlaced, status, new ArrayList<>());
         this.totalSum = 0;
-
     }
 
     public OrderTo() {
@@ -115,9 +114,9 @@ public class OrderTo {
         return id == null;
     }
 
-    public void addProduct(ProductToForOrderTo productToForOrderTo) {
-        products.add(productToForOrderTo);
-        this.totalSum += productToForOrderTo.getPrice();
+    public void addProduct(OrderItemTo orderItemTo) {
+        products.add(orderItemTo);
+        this.totalSum += orderItemTo.getPrice();
     }
 
     @JsonProperty("id")
@@ -216,11 +215,11 @@ public class OrderTo {
         this.status = status;
     }
 
-    public List<ProductToForOrderTo> getProducts() {
+    public List<OrderItemTo> getProducts() {
         return products;
     }
 
-    public void setProducts(List<ProductToForOrderTo> products) {
+    public void setProducts(List<OrderItemTo> products) {
         this.products = products;
     }
 

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.model.PaymentType;
 import com.malikov.shopsystem.to.OrderTo;
-import com.malikov.shopsystem.to.ProductToForOrderTo;
+import com.malikov.shopsystem.to.OrderItemTo;
 
 import java.time.LocalDate;
 
@@ -28,8 +28,8 @@ public class Main {
 //            zoo.addAnimal(elephant).add(lion);
 
             OrderTo orderTo = new OrderTo(2, "Alla", "Kozlovskaya", "(098)12-12-343", "Rovno", "33", PaymentType.PRIVAT_CARD, LocalDate.now(), OrderStatus.READY_FOR_SHIPMENT);
-            orderTo.addProduct(new ProductToForOrderTo("Potal kitay 100", 145, 3));
-            orderTo.addProduct(new ProductToForOrderTo("Shellac Man", 235, 1));
+            orderTo.addProduct(new OrderItemTo(1, 4, "Potal kitay 100", 145, 3));
+            orderTo.addProduct(new OrderItemTo(2,1,"Shellac Man", 235, 1));
             ObjectMapper mapper = new ObjectMapper();
             mapper.writeValue(System.out, orderTo);
 
