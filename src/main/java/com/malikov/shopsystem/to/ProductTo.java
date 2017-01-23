@@ -1,7 +1,5 @@
 package com.malikov.shopsystem.to;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.io.Serializable;
 
 //@RestResource(exported = false)
@@ -16,10 +14,10 @@ public class ProductTo implements Serializable {
     private Integer quantity;
 
     public ProductTo(
-            @JsonProperty("id") Integer id,
-            @JsonProperty("name") String name,
-            @JsonProperty("price") Integer price,
-            @JsonProperty("quantity") Integer quantity
+            Integer id,
+            String name,
+            Integer price,
+            Integer quantity
     ) {
         this.id = id;
         this.name = name;

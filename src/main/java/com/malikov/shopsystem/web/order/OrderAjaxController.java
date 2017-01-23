@@ -3,6 +3,7 @@ package com.malikov.shopsystem.web.order;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.to.OrderTo;
 import com.malikov.shopsystem.util.OrderUtil;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,8 @@ public class OrderAjaxController extends AbstractOrderController {
     }
 
     @PostMapping
-    public ResponseEntity<String> updateOrCreate(@Valid OrderTo orderTo, BindingResult result) {
+    public ResponseEntity<String> updateOrCreate(@Valid OrderTo orderTo, BindingResult result, HttpEntity<String> httpEntity) {
+        String json = httpEntity.getBody();
         if (result.hasErrors()) {
             StringBuilder sb = new StringBuilder();
             result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));

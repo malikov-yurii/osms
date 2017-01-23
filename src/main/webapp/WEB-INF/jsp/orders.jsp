@@ -57,11 +57,11 @@
                     <input type="hidden" id="id" name="id">
 
                     <div class="form-group">
-                        <label for="first_name" class="control-label col-xs-3"><fmt:message
+                        <label for="firstName" class="control-label col-xs-3"><fmt:message
                                 key="customers.firstName"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="first_name" name="first_name"
+                            <input type="text" class="form-control" id="firstName" name="firstName"
                                    placeholder="<fmt:message key="customers.firstName"/>">
                         </div>
                     </div>
