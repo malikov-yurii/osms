@@ -21,13 +21,13 @@ $(function () {
                 "orderable": false
             },
             { "data": "id" },
-            { "data": "first_name", "orderable": false },
-            { "data": "last_name", "orderable": false },
+            { "data": "firstName", "orderable": false },
+            { "data": "lastName", "orderable": false },
             { "data": "phone", "orderable": false },
             { "data": "city", "orderable": false },
-            { "data": "nova_poshta", "orderable": false },
-            { "data" : "payment_type", "orderable": false },
-            { "data": "total_sum", "orderable": false },
+            { "data": "novaPoshta", "orderable": false },
+            { "data" : "paymentType", "orderable": false },
+            { "data": "totalSum", "orderable": false },
             { "data": "status", "orderable": false },
             { "data": "date", "orderable": false },
             {

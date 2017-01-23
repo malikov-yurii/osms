@@ -57,20 +57,20 @@
                     <input type="hidden" id="id" name="id">
 
                     <div class="form-group">
-                        <label for="first_name" class="control-label col-xs-3"><fmt:message
+                        <label for="firstName" class="control-label col-xs-3"><fmt:message
                                 key="customers.firstName"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="first_name" name="first_name"
+                            <input type="text" class="form-control" id="firstName" name="firstName"
                                    placeholder="<fmt:message key="customers.firstName"/>">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="last_name" class="control-label col-xs-3"><fmt:message
+                        <label for="lastName" class="control-label col-xs-3"><fmt:message
                                 key="customers.lastName"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="last_name" name="last_name"
+                            <input type="text" class="form-control" id="lastName" name="lastName"
                                    placeholder="<fmt:message key="customers.lastName"/>">
                         </div>
                     </div>
@@ -94,29 +94,29 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="nova_poshta" class="control-label col-xs-3"><fmt:message
+                        <label for="novaPoshta" class="control-label col-xs-3"><fmt:message
                                 key="customers.novaPoshta"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="nova_poshta" name="nova_poshta"
+                            <input type="text" class="form-control" id="novaPoshta" name="novaPoshta"
                                    placeholder="<fmt:message key="customers.novaPoshta"/>">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="payment_type" class="control-label col-xs-3"><fmt:message
+                        <label for="paymentType" class="control-label col-xs-3"><fmt:message
                                 key="orders.paymentType"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="payment_type" name="payment_type"
+                            <input type="text" class="form-control" id="paymentType" name="paymentType"
                                    placeholder="<fmt:message key="orders.paymentType"/>">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="total_sum" class="control-label col-xs-3"><fmt:message
+                        <label for="totalSum" class="control-label col-xs-3"><fmt:message
                                 key="orders.totalSum"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="total_sum" name="total_sum"
+                            <input type="text" class="form-control" id="totalSum" name="totalSum"
                                    placeholder="<fmt:message key="orders.totalSum"/>">
                         </div>
                     </div>
