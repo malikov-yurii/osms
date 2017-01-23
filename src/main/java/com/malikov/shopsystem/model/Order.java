@@ -60,13 +60,15 @@ public class Order extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate datePlaced;
 
-    // TODO: 1/22/2017 solve this Set List douling problem
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "order_id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "order")
     @Fetch(FetchMode.SELECT)
-    @JoinColumn(name = "order_id")
     @OrderBy("id ASC")
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "order")
     private List<OrderItem> orderItems;
+
+    @Column(name = "total_sum")
+    private Integer totalSum;
 
     public Order() {
     }
@@ -179,6 +181,14 @@ public class Order extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Integer getTotalSum() {
+        return totalSum;
+    }
+
+    public void setTotalSum(Integer totalSum) {
+        this.totalSum = totalSum;
     }
 
     @Override

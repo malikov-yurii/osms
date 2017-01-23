@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.model.PaymentType;
+import com.malikov.shopsystem.util.OrderUtil;
 import com.malikov.shopsystem.util.serializers.LocalDateDeserializer;
 import com.malikov.shopsystem.util.serializers.LocalDateSerializer;
 
@@ -21,7 +22,7 @@ public class OrderTo {
 
     private String lastName;
 
-    private String phoneNumber;
+    private String phone;
 
     private String city;
 
@@ -45,7 +46,7 @@ public class OrderTo {
             Integer id
             ,String firstName
             ,String lastName
-            ,String phoneNumber
+            ,String phone
             ,String city
             ,String novaPoshta
             ,PaymentType paymentType
@@ -56,13 +57,13 @@ public class OrderTo {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
+        this.phone = phone;
         this.city = city;
         this.novaPoshta = novaPoshta;
         this.paymentType = paymentType;
         this.date = date;
         this.status = status;
-        this.totalSum = products.stream().mapToInt(p -> (p.getPrice() * p.getQuantity())).sum();
+        this.totalSum = OrderUtil.calculateTotalSumOfTos(products);
         this.products = products;
     }
 
@@ -70,14 +71,14 @@ public class OrderTo {
             Integer id
             ,String firstName
             ,String lastName
-            ,String phoneNumber
+            ,String phone
             ,String city
             ,String novaPoshta
             ,PaymentType paymentType
             ,LocalDate date
             ,OrderStatus status
     ) {
-        this(id, firstName, lastName, phoneNumber, city, novaPoshta, paymentType, date, status, new ArrayList<>());
+        this(id, firstName, lastName, phone, city, novaPoshta, paymentType, date, status, new ArrayList<>());
         this.totalSum = 0;
     }
 
@@ -118,12 +119,12 @@ public class OrderTo {
         this.lastName = lastName;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getCity() {

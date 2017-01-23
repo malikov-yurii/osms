@@ -1,5 +1,8 @@
 package com.malikov.shopsystem.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -15,17 +18,10 @@ public class OrderItem extends BaseEntity {
     public static final String DELETE = "OrderItem.delete";
     public static final String ALL = "OrderItem.getAll";
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "order_id")
-//    private Order order;
-//
-//    public Order getOrder() {
-//        return order;
-//    }
-//
-//    public void setOrder(Order order) {
-//        this.order = order;
-//    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
+    @JoinColumn(name = "order_id")
+    private Order order;
 
     @Column(name = "product_id")
     private Integer productId;
@@ -60,6 +56,14 @@ public class OrderItem extends BaseEntity {
 
     public void setProductId(Integer productId) {
         this.productId = productId;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public String getProductName() {

@@ -56,7 +56,7 @@ public class OrderAjaxController extends AbstractOrderController {
     }
 
     @PostMapping(value = "{itemId}/change-price")
-    public void changeprice(@PathVariable("itemId") int itemId, @RequestParam("price") int price) {
+    public void changePrice(@PathVariable("itemId") int itemId, @RequestParam("price") int price) {
         super.changeOrderItemProductPrice(itemId, price);
     }
 

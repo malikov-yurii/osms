@@ -64,11 +64,17 @@ public abstract class AbstractOrderController {
     public void changeOrderItemProductPrice(int itemId, int price) {
         OrderItem orderItem = orderItemService.get(itemId);
         orderItem.setProductPrice(price);
+        Order order = orderItem.getOrder();
+        order.setTotalSum(OrderUtil.calculateTotalSum(order.getOrderItems()));
+        orderService.update(order);
         orderItemService.update(orderItem);
     }
     public void changeOrderItemProductQuantity(int itemId, int quantity) {
         OrderItem orderItem = orderItemService.get(itemId);
         orderItem.setProductQuantity(quantity);
+        Order order = orderItem.getOrder();
+        order.setTotalSum(OrderUtil.calculateTotalSum(order.getOrderItems()));
+        orderService.update(order);
         orderItemService.update(orderItem);
     }
 }
