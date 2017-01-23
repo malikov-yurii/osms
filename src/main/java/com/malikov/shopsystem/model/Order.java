@@ -1,5 +1,7 @@
 package com.malikov.shopsystem.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -60,28 +62,13 @@ public class Order extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate datePlaced;
 
-//    Old solution:
-//  Variation 1
-//    @ElementCollection(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "products_to_orders"
-//            ,joinColumns = @JoinColumn(name = "order_id")
-//    )
-//    @MapKeyJoinColumn(name = "product_id")
-//    @Column(name = "product_quantity")
-//  Variation 2
-//    @ElementCollection(fetch = FetchType.EAGER)
-//    @CollectionTable(name = "products_to_orders")
-//    @MapKeyJoinColumn(name = "product_id")
-//    @Column(name = "product_quantity")
-//    private Map<Product, Integer> productQuantityMap;
-
     // TODO: 1/22/2017 solve this Set List douling problem
-        @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "order_id")
-//        @OrderBy("?? DESC")
+    @OrderBy("id ASC")
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "order")
-    private Set<OrderItem> orderItems;
+    private List<OrderItem> orderItems;
 
     public Order() {
     }
@@ -97,7 +84,7 @@ public class Order extends BaseEntity {
         this.paymentType = paymentType;
         this.status = orderStatus;
         this.datePlaced = datePlaced;
-        this.orderItems = new HashSet<>(orderItems);
+        this.orderItems = orderItems;
     }
 
     public Order(Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, List<OrderItem> orderItems) {
@@ -177,7 +164,7 @@ public class Order extends BaseEntity {
     }
 
     public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = new HashSet<>(orderItems);
+        this.orderItems = orderItems;
     }
 
     public Customer getCustomer() {
