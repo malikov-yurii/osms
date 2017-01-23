@@ -26,21 +26,14 @@ $(function () {
             { "data": "phone", "orderable": false },
             { "data": "city", "orderable": false },
             { "data": "nova_poshta", "orderable": false },
-            {
-                "defaultContent": "",
-                "render" : renderPaymentType,
-                "orderable": false
-            },
+            { "data" : "payment_type", "orderable": false },
             { "data": "total_sum", "orderable": false },
-            {
-                "render": renderOrderStatus,
-                "orderable": false
-            },
+            { "data": "status", "orderable": false },
             { "data": "date", "orderable": false },
             {
                 "defaultContent": "",
                 "orderable": false,
-                "render": renderOrderEditBtn
+                "render": renderEditBtn
             },
             {
                 "defaultContent": "",
@@ -55,7 +48,7 @@ $(function () {
                 "desc"
             ]
         ],
-        "initComplete": orderTableInitComplete
+        "initComplete": makeEditable
     });
 
     datatableApi.on('click', '.order-moar', function() {
@@ -95,7 +88,7 @@ $(function () {
         if ($this.hasClass('error')) $this.removeClass('error');
 
         if (currentVal == '') {
-            // At first checking if cell isn't empty
+            // At first check if cell isn't empty
 
             simpleFailNoty();
             $this.text(initVal).focus().addClass('error');
@@ -109,38 +102,38 @@ $(function () {
             data: key + '=' + currentVal,
             success: function() {
                     successNoty('common.saved');
-                    $this.removeClass('error');
+
                 }
             });
         }
 
     });
 
-});
 
-function orderTableInitComplete(settings, json) {
-    makeEditable();
-
+  datatableApi.on('draw.dt', function() {
     showOrderProds();
-}
+  });
+
+});
 
 function showOrderProds() {
     datatableApi.rows().every(function( rowIdx, tableLoop, rowLoop ) {
         var row = this;
         var tr = row.node();
         var products = row.data().products;
+        var orderId = row.data().id;
 
         console.log(row.data());
 
-        row.child( buildOrderProductList(products) ).show();
-
+        row.child( buildOrderProductList(products, orderId) ).show();
         $(tr).addClass('opened');
+
     });
 }
 
-function buildOrderProductList(products) {
+function buildOrderProductList(products, orderId) {
     var orderProdList =
-        '<table class="order-product-table">\
+        '<table class="order-product-table" data-order-id="'+orderId+'">\
             <thead>\
                 <tr><th>Product Name</th><th>Quantity</th><th>Price</th></tr>\
             </thead>\
@@ -159,41 +152,4 @@ function buildOrderProductList(products) {
 
     return orderProdList;
 
-}
-
-function renderOrderEditBtn(data, type, row) {
-    if (type == 'display') {
-        return '<a class="btn btn-xs btn-primary" onclick="updateOrderRow(' + row.id + ');">'+i18n['common.update']+'</a>';
-    }
-}
-
-function updateOrderRow(id) {
-    $('#modalTitle').html(edit_title);
-    $.get(ajaxUrl + id, function (data) {
-
-        console.log(data);
-        $.each(data, function (key, value) {
-            form.find("input[name='" + key + "']").val(
-                key === "dateTime" ? value.replace('T', ' ').substr(0, 16) : value
-            );
-        });
-
-        $('#editRow').modal();
-    });
-}
-
-function renderPaymentType(data, type, row) {
-    if (row.payment_type == "PRIVAT_CARD") {
-        return i18n['orders.paymentPrivat'];
-    } else if (row.payment_type == "CASH_ON_DELIVERY") {
-        return i18n['orders.paymentCash'];
-    }
-}
-
-function renderOrderStatus(data, type, row) {
-    if (row.status == "READY_FOR_SHIPMENT") {
-        return i18n['orders.statusReady'];
-    } else if (row.status == "AWAITING_FOR_PAYMENT") {
-        return i18n['orders.statusPaymentAwaiting'];
-    }
 }

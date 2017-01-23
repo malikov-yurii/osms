@@ -12,6 +12,7 @@ function makeEditable() {
     $(document).ajaxSend(function(e, xhr, options) {
         xhr.setRequestHeader(header, token);
     });
+
 }
 
 function add(add_title) {
@@ -136,9 +137,3 @@ function simpleFailNoty() {
         timeout: 1000
     });
 }
-
-$.extend(true, $.fn.dataTable.defaults, {
-    language : {
-        "CASH_ON_DELIVERY": "опч"
-    }
-})
