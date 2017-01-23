@@ -43,8 +43,8 @@ public class OrderServiceImpl implements OrderService {
         return repository.getByCustomerId(customerId);
     }
 
-//    @Override
-//    public Collection<Order> getByProductId(int productId) {
-//        return repository.getByProductId(productId);
-//    }
+    @Override
+    public Collection<Order> getByProductId(int productId) {
+        return repository.getByProductId(productId);
+    }
 }

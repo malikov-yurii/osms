@@ -124,6 +124,7 @@ public class OrderTo {
         return id;
     }
 
+    @JsonProperty("id")
     public void setId(Integer id) {
         this.id = id;
     }
@@ -133,6 +134,7 @@ public class OrderTo {
         return firstName;
     }
 
+    @JsonProperty("first_name")
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -142,6 +144,7 @@ public class OrderTo {
         return lastName;
     }
 
+    @JsonProperty("last_name")
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -151,6 +154,7 @@ public class OrderTo {
         return phoneNumber;
     }
 
+    @JsonProperty("phone")
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -158,6 +162,11 @@ public class OrderTo {
     @JsonProperty("city")
     public String getCity() {
         return city;
+    }
+
+    @JsonProperty("city")
+    public void setCity(String city) {
+        this.city = city;
     }
 
     @JsonProperty("nova_poshta")
@@ -170,6 +179,7 @@ public class OrderTo {
         return totalSum;
     }
 
+    @JsonProperty("total_sum")
     public void setTotalSum(Integer totalSum) {
         this.totalSum = totalSum;
     }
@@ -195,22 +205,23 @@ public class OrderTo {
         return status;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
+    @JsonProperty("date")
+//    @JsonDeserialize(using = LocalDateDeserializer.class)
     public void setDatePlaced(LocalDate datePlaced) {
+
         this.datePlaced = datePlaced;
     }
-
+    @JsonProperty("nova_poshta")
     public void setNovaPoshta(String novaPoshta) {
         this.novaPoshta = novaPoshta;
     }
 
+    @JsonProperty("payment_type")
     public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
     }
 
+    @JsonProperty("status")
     public void setStatus(OrderStatus status) {
         this.status = status;
     }

@@ -8,5 +8,5 @@ public interface OrderService extends Service<Order> {
 
     Collection<Order> getByCustomerId(int customerId);
 
-//    Collection<Order> getByProductId(int productId);
+    Collection<Order> getByProductId(int productId);
 }
