@@ -8,6 +8,6 @@ public interface OrderRepository extends Repository<Order> {
 
     Collection<Order> getByCustomerId(int customerId);
 
-//    Collection<Order> getByProductId(int productId);
+    Collection<Order> getByProductId(int productId);
 
 }
