@@ -1,12 +1,11 @@
 package com.malikov.shopsystem.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @NamedQueries({
         @NamedQuery(name = Product.DELETE, query = "DELETE FROM Product p WHERE p.id=:id"),
@@ -51,8 +50,10 @@ public class Product extends NamedEntity {
     //????????????????????  why i should replace it with bidirectional relationship
 //    http://stackoverflow.com/questions/1307203/hibernate-unidirectional-one-to-many-association-why-is-a-join-table-better
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "product_id")
-    private Set<ProductVariation> variations;
+    @OrderBy("id DESC")
+    private List<ProductVariation> variations;
 
     public Product() {
     }
@@ -67,7 +68,7 @@ public class Product extends NamedEntity {
         this.categories = new HashSet<>(categories);
         this.hasVariations = hasVariations;
         if (hasVariations)
-            this.variations = new HashSet<>(productVariations);
+            this.variations = new ArrayList<>(productVariations);
     }
 
     public Product(String name, Integer price, boolean unlimited, int quantity, boolean hasVariations,
@@ -128,11 +129,11 @@ public class Product extends NamedEntity {
         this.unlimited = unlimited;
     }
 
-    public Set<ProductVariation> getVariations() {
+    public List<ProductVariation> getVariations() {
         return variations;
     }
 
-    public void setVariations(Set<ProductVariation> variations) {
+    public void setVariations(List<ProductVariation> variations) {
         this.variations = variations;
     }
 

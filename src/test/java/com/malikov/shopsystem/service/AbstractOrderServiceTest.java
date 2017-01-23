@@ -29,10 +29,9 @@ public abstract class AbstractOrderServiceTest extends AbstractServiceTest {
                 PaymentType.PRIVAT_CARD,
                 OrderStatus.READY_FOR_SHIPMENT,
                 Arrays.asList(
-                        new OrderItem(POTAL_NAZIONALE.getId(), POTAL_NAZIONALE.getName(), POTAL_NAZIONALE.getPrice(), 6),
+                        new OrderItem(SHELLAC_MANETTI.getId(), SHELLAC_MANETTI.getName(), SHELLAC_MANETTI.getPrice(), 8),
                         new OrderItem(FERRARIO_ROZOVYJ.getId(), FERRARIO_ROZOVYJ.getName(), FERRARIO_ROZOVYJ.getPrice(), 7),
-                        new OrderItem(SHELLAC_MANETTI.getId(), SHELLAC_MANETTI.getName(), SHELLAC_MANETTI.getPrice(), 8)
-
+                        new OrderItem(POTAL_NAZIONALE.getId(), POTAL_NAZIONALE.getName(), POTAL_NAZIONALE.getPrice(), 6)
                 ));
         Order created = service.save(newOrder);
         newOrder.setId(created.getId());
@@ -43,12 +42,7 @@ public abstract class AbstractOrderServiceTest extends AbstractServiceTest {
     @Test
     public void testUpdate() throws Exception {
         Order updated = new Order(ORDER_1);
-        updated.setOrderItems(
-                Arrays.asList(
-                        new OrderItem(9, POTAL_KITAJ.getId(), POTAL_KITAJ.getName(), POTAL_KITAJ.getPrice(), 33),
-                        new OrderItem(10, FERRARIO_ROZOVYJ.getId(), FERRARIO_ROZOVYJ.getName(), FERRARIO_ROZOVYJ.getPrice(), 22)
-                )
-        );
+        updated.setCustomerPhoneNumber("upd_phone_number");
         service.update(updated);
         OrderTestData.MATCHER.assertEquals(updated, service.get(ORDER_1.getId()));
     }

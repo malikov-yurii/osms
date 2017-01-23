@@ -32,7 +32,6 @@ public class OrderTestData {
             Arrays.asList(
                     new OrderItem(3, SHELLAC_MANETTI.getId(), SHELLAC_MANETTI.getName(), SHELLAC_MANETTI.getPrice(), 3),
                     new OrderItem(4, POTAL_KITAJ.getId(), POTAL_KITAJ.getName(), POTAL_KITAJ.getPrice(), 4)
-
             ));
 
     public static final Order ORDER_3 = new Order(3, CUSTOMER_DROGOV, ADMIN,
