@@ -3,9 +3,11 @@ package com.malikov.shopsystem.to;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.model.PaymentType;
+import com.malikov.shopsystem.util.serializers.LocalDateDeserializer;
 import com.malikov.shopsystem.util.serializers.LocalDateSerializer;
 
 import java.sql.Timestamp;
@@ -15,26 +17,38 @@ import java.util.List;
 
 public class OrderTo {
 
+    @JsonProperty("id")
     private Integer id;
 
+    @JsonProperty("first_name")
     private String firstName;
 
+    @JsonProperty("last_name")
     private String lastName;
 
+    @JsonProperty("phone")
     private String phoneNumber;
 
+    @JsonProperty("city")
     private String city;
 
+    @JsonProperty("nova_poshta")
     private String novaPoshta;
 
+    @JsonProperty("total_sum")
     private Integer totalSum;
 
+    @JsonProperty("payment_type")
     private PaymentType paymentType;
 
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonProperty("date")
     private LocalDate datePlaced;
 
     private Timestamp timestamp;
 
+    @JsonProperty("status")
     private OrderStatus status;
 
     private List<OrderItemTo> products;
@@ -206,7 +220,7 @@ public class OrderTo {
     }
 
     @JsonProperty("date")
-//    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     public void setDatePlaced(LocalDate datePlaced) {
 
         this.datePlaced = datePlaced;
