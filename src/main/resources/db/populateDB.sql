@@ -69,7 +69,7 @@ INSERT INTO customers (name, last_name, phone_number, city, nova_poshta, email) 
 INSERT INTO orders (customer_id, customer_name, customer_last_name, customer_phone_number, customer_city, customer_nova_poshta, total_sum, user_id, payment_type, status, date_placed
 ) VALUES
   (2, 'Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 825, 2, 'PRIVAT_CARD', 'AWAITING_FOR_PAYMENT', '2016-09-15'),
-  (2, 'Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 185, 2, 'CASH_ON_DELIVERY', 'READY_FOR_SHIPMENT', '2016-11-17'),
+  (2, 'Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 1285, 2, 'CASH_ON_DELIVERY', 'READY_FOR_SHIPMENT', '2016-11-17'),
   (1, 'Alex', 'Drogichinskij', '0674861352', 'Ilichevsk', '3', 725, 2, 'PRIVAT_CARD', 'READY_FOR_SHIPMENT', '2016-10-11'),
   (3, 'Elena', 'Dunovskaya', '0984231204', 'Sumy', '7', 5865, 2, 'CASH_ON_DELIVERY', 'READY_FOR_SHIPMENT', '2016-12-22');
 

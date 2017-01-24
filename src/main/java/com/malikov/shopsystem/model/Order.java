@@ -1,5 +1,6 @@
 package com.malikov.shopsystem.model;
 
+import com.malikov.shopsystem.util.OrderUtil;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -78,6 +79,7 @@ public class Order extends BaseEntity {
         this.customer = customer;
         this.customerName = customer.getName();
         this.customerLastName = customer.getLastName();
+        this.customerPhoneNumber = customer.getPhoneNumber();
         this.customerCity = customer.getCity();
         this.customerNovaPoshta = customer.getNovaPoshta();
         this.user = user;
@@ -85,6 +87,8 @@ public class Order extends BaseEntity {
         this.status = orderStatus;
         this.datePlaced = datePlaced;
         this.orderItems = orderItems;
+        this.orderItems.forEach(orderItem -> orderItem.setOrder(this));
+        this.totalSum = OrderUtil.calculateTotalSum(orderItems);
     }
 
     public Order(Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, List<OrderItem> orderItems) {
@@ -92,7 +96,7 @@ public class Order extends BaseEntity {
     }
 
     public Order(Order o) {
-        this(o.getId(), o.getCustomer(), o.getUser(), o.getPaymentType(), o.getStatus(), o.getDatePlaced(), new ArrayList<OrderItem>(o.getOrderItems()));
+        this(o.getId(), o.getCustomer(), o.getUser(), o.getPaymentType(), o.getStatus(), o.getDatePlaced(), o.getOrderItems());
     }
 
     public String getCustomerName() {
@@ -160,7 +164,7 @@ public class Order extends BaseEntity {
     }
 
     public List<OrderItem> getOrderItems() {
-        return new ArrayList<>(orderItems);
+        return orderItems;
     }
 
     public void setOrderItems(List<OrderItem> orderItems) {
@@ -219,17 +223,18 @@ public class Order extends BaseEntity {
     public String toString() {
         return "Order{" +
                 "id=" + id +
-//                ", customer=" + customer +
-//                ", customerName='" + customerName + '\'' +
+                ", customer=" + customer +
+                ", customerName='" + customerName + '\'' +
                 ", customerLastName='" + customerLastName + '\'' +
-//                ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
-//                ", customerCity='" + customerCity + '\'' +
-//                ", customerNovaPoshta='" + customerNovaPoshta + '\'' +
-//                ", user=" + user +
-//                ", paymentType=" + paymentType +
-//                ", status=" + status +
-//                ", datePlaced=" + datePlaced +
+                ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
+                ", customerCity='" + customerCity + '\'' +
+                ", customerNovaPoshta='" + customerNovaPoshta + '\'' +
+                ", user=" + user +
+                ", paymentType=" + paymentType +
+                ", status=" + status +
+                ", datePlaced=" + datePlaced +
                 ", orderItems=" + orderItems +
+                ", totalSum=" + totalSum +
                 '}';
     }
 }

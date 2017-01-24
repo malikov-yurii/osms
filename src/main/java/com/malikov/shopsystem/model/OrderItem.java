@@ -38,6 +38,11 @@ public class OrderItem extends BaseEntity {
     public OrderItem() {
     }
 
+    public OrderItem(Order order, Integer productId, String productName, Integer productPrice, Integer productQuantity) {
+        this(productId, productName, productPrice, productQuantity);
+        this.order = order;
+    }
+
     public OrderItem(Integer productId, String productName, Integer productPrice, Integer productQuantity) {
         this.productId = productId;
         this.productName = productName;
@@ -111,6 +116,7 @@ public class OrderItem extends BaseEntity {
     public String toString() {
         return "OrderItem{" +
                 "id=" + id +
+                ", orderId=" + order.getId() +
                 ", productId=" + productId +
                 ", productName='" + productName + '\'' +
                 ", productPrice=" + productPrice +
