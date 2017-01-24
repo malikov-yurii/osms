@@ -18,11 +18,12 @@
         <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
     </jdbc:initialize-database>
 
+    <!-- Choose profile from (heroku, postgres) and (jpa)-->
+
     <tx:annotation-driven/>
 
-    <!--<beans profile="postgres">-->
+    <beans profile="postgres">
         <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
-
 
         <bean id="dataSource"
               class="org.apache.tomcat.jdbc.pool.DataSource"
@@ -30,29 +31,39 @@
               p:url="${database.url}"
               p:username="${database.username}"
               p:password="${database.password}"/>
+    </beans>
 
-        <!--!!!!!!!!!!!!!!!! DONT FORGET CHANGE TO TOMCAT DATASOURCE-->
-
-        <!--<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
-        <!--<property name="driverClass" value="${jdbc.driver.class}"/>-->
-        <!--<property name="jdbcUrl" value="${database.url}"/>-->
-        <!--<property name="user" value="${database.username}"/>-->
-        <!--<property name="password" value="${database.password}"/>-->
-        <!--<property name="maxPoolSize" value="${jdbc.max.connections}"/>-->
-        <!--<property name="minPoolSize" value="${jdbc.min.connections}"/>-->
-        <!--<property name="acquireIncrement" value="${jdbc.acquire.increment}"/>-->
-        <!--</bean>-->
-    <!--</beans>-->
-
-    <!--<beans profile="tomcat">-->
-        <!--??????????????????????????????????-->
-        <!--<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/topjava"/>-->
+    <beans profile="tomcat">
+        <jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/shopsystem"/>
         <context:property-placeholder location="classpath:db/tomcat.properties" system-properties-mode="OVERRIDE"/>
-    <!--</beans>-->
+    </beans>
 
-    <!--<beans profile="jpa">-->
-        <context:component-scan base-package="com.malikov.shopsystem.repository.jpa"/>
+    <beans profile="heroku">
+        <context:property-placeholder location="classpath:/db/heroku.properties" system-properties-mode="OVERRIDE"/>
 
+        <bean class="java.net.URI" id="dbUrl">
+            <!--todo ${DATABASE_URL}???????????????????????????????-->
+            <constructor-arg value="${DATABASE_URL}"/>
+        </bean>
+        <bean id="dataSource"
+              class="org.apache.tomcat.jdbc.pool.DataSource"
+              p:url="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + @dbUrl.getPath() }"
+              p:username="#{ @dbUrl.getUserInfo().split(':')[0] }"
+              p:password="#{ @dbUrl.getUserInfo().split(':')[1] }"
+              p:driverClassName="org.postgresql.Driver"
+              p:validationQuery="SELECT 1 FROM users"
+              p:maxActive="10"
+              p:minIdle="2"
+              p:maxWait="20000"
+              p:initialSize="2"
+              p:maxIdle="5"
+              p:testOnBorrow="true"
+              p:removeAbandoned="true"
+              p:testOnConnect="true"
+              p:testWhileIdle="true"/>
+    </beans>
+
+    <beans profile="jpa">
         <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
               p:dataSource-ref="dataSource"
               p:packagesToScan="com.malikov.**.model">
@@ -61,6 +72,10 @@
                     <entry key="#{T(org.hibernate.cfg.AvailableSettings).FORMAT_SQL}" value="${hibernate.format_sql}"/>
                     <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SQL_COMMENTS}"
                            value="${hibernate.use_sql_comments}"/>
+                    <!--<entry key="#{T(org.hibernate.cfg.AvailableSettings).CACHE_REGION_FACTORY}" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory"/>-->
+                    <!--<entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SECOND_LEVEL_CACHE}" value="true"/>-->
+                    <!--<entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_QUERY_CACHE}" value="false"/> &lt;!&ndash;default&ndash;&gt;-->
+                    <!--<entry key="#{T(org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory).NET_SF_EHCACHE_CONFIGURATION_RESOURCE_NAME}" value="cache/ehcache.xml"/>-->
                 </map>
             </property>
 
@@ -75,6 +90,8 @@
         <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
               p:entityManagerFactory-ref="entityManagerFactory"/>
 
-        <!--<bean class="com.malikov.shopsystem.repository.JpaUtil"/>-->
-    <!--</beans>-->
+        <bean class="com.malikov.shopsystem.repository.JpaUtil"/>
+
+        <context:component-scan base-package="com.malikov.shopsystem.repository.jpa"/>
+    </beans>
 </beans>

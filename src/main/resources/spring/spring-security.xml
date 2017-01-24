@@ -30,43 +30,14 @@
         <!--<csrf disabled="true"/>-->
     </http>
 
-
-
-
-    <!--<authentication-manager alias="authenticationManager">-->
-        <!--<authentication-provider user-service-ref="userDetailsServiceImpl">-->
-            <!--<password-encoder ref="encoder"/>-->
-        <!--</authentication-provider>-->
-    <!--</authentication-manager>-->
-
-    <!--<beans:bean id="userDetailsServiceImpl"-->
-                <!--class="com.malikov.productmanager.service.UserDetailsServiceImpl"/>-->
-
     <beans:bean id="encoder"
                 class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
         <beans:constructor-arg name="strength" value="11"/>
     </beans:bean>
 
-
-    <!--<beans:bean class="com.malikov.shopsystem.util.PasswordUtil" id="passwordEncoder" factory-method="getPasswordEncoder"/>-->
-
-
-
     <authentication-manager>
         <authentication-provider user-service-ref="userService">
             <password-encoder ref="encoder"/>
-
-            <!--
-                        <jdbc-user-service data-source-ref="dataSource"
-                                           users-by-username-query="SELECT email, password, enabled FROM users WHERE email = ?"
-                                           authorities-by-username-query="
-                                                                   SELECT u.email, r.role FROM users u, user_roles r WHERE u.id = r.user_id AND u.email = ?"
-                        />
-                        <user-service>
-                            <user name="user@yandex.ru" password="password" authorities="ROLE_USER"/>
-                            <user name="admin@gmail.com" password="admin" authorities="ROLE_ADMIN"/>
-                        </user-service>
-            -->
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

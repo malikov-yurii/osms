@@ -9,5 +9,5 @@
 
     <context:annotation-config/>
 
-    <context:component-scan base-package="com.malikov.shopsystem"/>
+    <context:component-scan base-package="com.malikov.**.service"/>
 </beans>
