@@ -102,18 +102,14 @@ $(function () {
             data: key + '=' + currentVal,
             success: function() {
                     successNoty('common.saved');
-
                 }
             });
         }
-
     });
-
 
   datatableApi.on('draw.dt', function() {
     showOrderProds();
   });
-
 });
 
 function showOrderProds() {

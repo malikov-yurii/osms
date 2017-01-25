@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://topjava.javawebinar.ru/functions" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
@@ -28,8 +29,10 @@
                         <th><fmt:message key="customers.city"/></th>
                         <th><fmt:message key="customers.novaPoshta"/></th>
                         <th><fmt:message key="customers.email"/></th>
-                        <th></th>
-                        <th></th>
+                        <sec:authorize access="hasRole('ROLE_ADMIN')">
+                            <th></th>
+                            <th></th>
+                        </sec:authorize>
                     </tr>
                     </thead>
                 </table>

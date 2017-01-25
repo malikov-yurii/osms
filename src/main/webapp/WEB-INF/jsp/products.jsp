@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://topjava.javawebinar.ru/functions" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
@@ -20,26 +21,30 @@
             <div class="view-box">
                 <form:form method="post" class="form-horizontal" role="form" id="filter">
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="startDate"><fmt:message key="products.startDate"/>:</label>
+                        <label class="control-label col-sm-2" for="startDate"><fmt:message
+                                key="products.startDate"/>:</label>
 
                         <div class="col-sm-2">
                             <input class="form-control" name="startDate" id="startDate">
                         </div>
 
-                        <label class="control-label col-sm-2" for="endDate"><fmt:message key="products.endDate"/>:</label>
+                        <label class="control-label col-sm-2" for="endDate"><fmt:message
+                                key="products.endDate"/>:</label>
 
                         <div class="col-sm-2">
                             <input class="form-control" name="endDate" id="endDate">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="startTime"><fmt:message key="products.startTime"/>:</label>
+                        <label class="control-label col-sm-2" for="startTime"><fmt:message
+                                key="products.startTime"/>:</label>
 
                         <div class="col-sm-1">
                             <input class="form-control" name="startTime" id="startTime">
                         </div>
 
-                        <label class="control-label col-sm-3" for="endTime"><fmt:message key="products.endTime"/>:</label>
+                        <label class="control-label col-sm-3" for="endTime"><fmt:message
+                                key="products.endTime"/>:</label>
 
                         <div class="col-sm-1">
                             <input class="form-control" name="endTime" id="endTime">
@@ -48,11 +53,17 @@
                     <div class="form-group">
                         <div class="col-sm-6"></div>
                         <div class="col-sm-1">
-                            <button class="btn btn-primary"  type="button" onclick="updateTable()"><fmt:message key="products.filter"/></button>
+                            <button class="btn btn-primary" type="button" onclick="updateTable()"><fmt:message
+                                    key="products.filter"/></button>
                         </div>
                     </div>
                 </form:form>
-                <a class="btn btn-sm btn-info" onclick="add('<fmt:message key="products.add"/>')"><fmt:message key="products.add"/></a>
+                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                    <a class="btn btn-sm btn-info" onclick="add('<fmt:message key="products.add"/>')"><fmt:message
+                            key="products.add"/></a>
+                </sec:authorize>
+
+                <sec:authorize access="hasRole('ROLE_ADMIN')" var="hasRoleAdmin"></sec:authorize>
                 <table class="table table-striped display" id="datatable">
                     <thead>
                     <tr>
@@ -61,8 +72,10 @@
                         <th><fmt:message key="products.quantity"/></th>
                         <th><fmt:message key="products.unlimited"/></th>
                         <th><fmt:message key="products.different_prices"/></th>
-                        <th></th>
-                        <th></th>
+                        <%--<sec:authorize access="hasRole('ROLE_ADMIN')">--%>
+                            <th></th>
+                            <th></th>
+                        <%--</sec:authorize>--%>
                     </tr>
                     </thead>
                 </table>
@@ -101,7 +114,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="quantity" class="control-label col-xs-3"><fmt:message key="products.quantity"/></label>
+                        <label for="quantity" class="control-label col-xs-3"><fmt:message
+                                key="products.quantity"/></label>
 
                         <div class="col-xs-9">
                             <input type="number" class="form-control" id="quantity" name="quantity"
@@ -110,7 +124,8 @@
                     </div>
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
-                            <button class="btn btn-primary" type="button" onclick="save()"><fmt:message key="common.save"/></button>
+                            <button class="btn btn-primary" type="button" onclick="save()"><fmt:message
+                                    key="common.save"/></button>
                         </div>
                     </div>
                 </form:form>
@@ -120,7 +135,7 @@
 </div>
 </body>
 <script type="text/javascript">
-    var edit_title ='<fmt:message key="products.edit"/>';
+    var edit_title = '<fmt:message key="products.edit"/>';
 </script>
 <script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
 <script type="text/javascript" src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
