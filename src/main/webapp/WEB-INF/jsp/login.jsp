@@ -67,14 +67,12 @@
 </div>
 <div class="container">
     <div class="lead">
-        &nbsp;&nbsp;&nbsp;<a href="https://github.com/JavaOPs/topjava">Java Enterprise проект</a> с
-        регистрацией/авторизацией и интерфейсом на основе ролей (USER, ADMIN).
-        Администратор может создавать/редактировать/удалять/пользователей, а пользователь - управлять своим
-        профилем и данными (день, еда, калории) через UI (по AJAX) и по REST интерфейсу с базовой авторизацией.
-        Возможна фильтрация данных по датам и времени, при этом цвет записи таблицы еды зависит от того, превышает ли
-        сумма
-        калорий за день норму (редактируемый параметр в профиле пользователя).
-        Весь REST интерфейс покрывается JUnit тестами, используя Spring MVC Test и Spring Security Test.
+        &nbsp;&nbsp;&nbsp;<a href="https://github.com/malikov-yurii/online-shop-management-system">Java Enterprise проект</a> with
+        registration/authorization and interface based on roles (USER, ADMIN).
+        Administrator has full rights to create and change all entities (order, product, user, etc.).
+        User has only read access.
+        Interaction with system is implemented with UI (AJAX) and through REST interface with basic authorization.
+        JUnit test implemented by Spring MVC Test and Spring Security Test.
     </div>
 </div>
 <jsp:include page="fragments/footer.jsp"/>
