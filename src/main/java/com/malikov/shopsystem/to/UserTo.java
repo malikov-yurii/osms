@@ -13,7 +13,7 @@ public class UserTo implements Serializable {
     @NotEmpty
     private String name;
 
-    @Size(min = 5, max = 64, message = " must between 5 and 64 characters")
+    @Size(min = 4, max = 64, message = " must between 4 and 64 characters")
     private String password;
 
     public UserTo() {
