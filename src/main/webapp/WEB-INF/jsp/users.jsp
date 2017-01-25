@@ -21,11 +21,8 @@
                 <table class="table table-striped display" id="datatable">
                     <thead>
                     <tr>
+                        <th>ID</th>
                         <th><fmt:message key="users.name"/></th>
-                        <th><fmt:message key="users.email"/></th>
-                        <th><fmt:message key="users.roles"/></th>
-                        <th><fmt:message key="users.active"/></th>
-                        <th><fmt:message key="users.registered"/></th>
                         <th></th>
                         <th></th>
                     </tr>

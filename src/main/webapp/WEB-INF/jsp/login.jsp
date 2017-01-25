@@ -42,7 +42,7 @@
         <p>Admin login: <b>admin</b> password: <b>1111</b></p>
 
         <p><a class="btn btn-primary btn-lg" role="button" href="register"><fmt:message key="app.register"/> &raquo;</a></p>
-        <p>Стек технологий: <a href="http://projects.spring.io/spring-security/">Spring Security</a>,
+        <p>Used technologies: <a href="http://projects.spring.io/spring-security/">Spring Security</a>,
             <a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html">Spring MVC</a>,
             <a href="http://projects.spring.io/spring-data-jpa/">Spring Data JPA</a>,
             <a href="http://spring.io/blog/2014/05/07/preview-spring-security-test-method-security">Spring Security
@@ -67,7 +67,7 @@
 </div>
 <div class="container">
     <div class="lead">
-        &nbsp;&nbsp;&nbsp;<a href="https://github.com/malikov-yurii/online-shop-management-system">Java Enterprise проект</a> with
+        &nbsp;&nbsp;&nbsp;<a href="https://github.com/malikov-yurii/online-shop-management-system">Java Enterprise project</a> with
         registration/authorization and interface based on roles (USER, ADMIN).
         Administrator has full rights to create and change all entities (order, product, user, etc.).
         User has only read access.
