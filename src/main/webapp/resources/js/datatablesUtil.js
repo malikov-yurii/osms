@@ -117,19 +117,17 @@ function failNoty(event, jqXHR, options, jsExc) {
 }
 
 function renderEditBtn(data, type, row) {
-    if (type == 'display') {
-        return '<sec:authorize access="hasRole(\'ROLE_ADMIN\')">' +
-        '<a class="btn btn-xs btn-primary" onclick="updateRow(' + row.id + ');">'+i18n['common.update']+'</a>'
-        + '</sec:authorize>';
+    if (type == 'display' && $('#hasRoleAdmin').val()) {
+        return '<a class="btn btn-xs btn-primary" onclick="updateRow(' + row.id + ');">'+i18n['common.update']+'</a>';
     }
 }
 
 function renderDeleteBtn(data, type, row) {
-    if (type == 'display') {
-        return '<sec:authorize access="hasRole(\'ROLE_ADMIN\')">' +
-            '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">'+i18n['common.delete']+'</a>'
-            + '</sec:authorize>';
+
+    if (type == 'display' && $('#hasRoleAdmin').val()) {
+        return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">'+i18n['common.delete']+'</a>';
     }
+
 }
 
 function simpleFailNoty() {

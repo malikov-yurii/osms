@@ -15,6 +15,7 @@
                     <a class="btn btn-info" role="button" href="orders"><fmt:message key="orders.title"/></a>
                     <a class="btn btn-info" role="button" href="customers"><fmt:message key="customers.title"/></a>
                     <sec:authorize access="hasRole('ROLE_ADMIN')">
+                        <input type="hidden" id="hasRoleAdmin" value="1" >
                         <a class="btn btn-info" role="button" href="users"><fmt:message key="users.title"/></a>
                     </sec:authorize>
                     <a class="btn btn-info" role="button" href="profile">${userTo.name} <fmt:message key="app.profile"/></a>

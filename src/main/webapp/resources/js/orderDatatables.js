@@ -26,7 +26,7 @@ $(function () {
             { "data": "phone", "orderable": false },
             { "data": "city", "orderable": false },
             { "data": "novaPoshta", "orderable": false },
-            { "data" : "paymentType", "orderable": false },
+            { "data": "paymentType", "orderable": false },
             { "data": "totalSum", "orderable": false },
             { "data": "status", "orderable": false },
             { "data": "date", "orderable": false },
@@ -68,9 +68,12 @@ $(function () {
     datatableApi.on('focusin', '.order-product-table td', function() {
         $(this).data('value', $(this).text());
 
-        //Preventing ENTER button from being fired
+        // Making element to focus out on ENTER keybutton
         $(this).keypress(function(e) {
-            return e.which != 13;
+            if (e.which == 13) {
+                e.preventDefault();
+                $(this).blur();
+            }
         });
     });
 

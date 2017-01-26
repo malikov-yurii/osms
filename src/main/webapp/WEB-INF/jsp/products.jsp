@@ -58,12 +58,12 @@
                         </div>
                     </div>
                 </form:form>
+
                 <sec:authorize access="hasRole('ROLE_ADMIN')">
                     <a class="btn btn-sm btn-info" onclick="add('<fmt:message key="products.add"/>')"><fmt:message
                             key="products.add"/></a>
                 </sec:authorize>
 
-                <sec:authorize access="hasRole('ROLE_ADMIN')" var="hasRoleAdmin"></sec:authorize>
                 <table class="table table-striped display" id="datatable">
                     <thead>
                     <tr>

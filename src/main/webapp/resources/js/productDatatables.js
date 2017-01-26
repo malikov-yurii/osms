@@ -11,6 +11,7 @@ function updateTable() {
 }
 
 $(function () {
+
     datatableApi = $('#datatable').DataTable({
         "ajax": {
             "url": ajaxUrl,
@@ -49,7 +50,6 @@ $(function () {
                 "defaultContent": "",
                 "orderable": false,
                 "render": renderDeleteBtn
-
             }
         ],
         "order": [
@@ -92,4 +92,6 @@ $(function () {
     $('#dateTime').datetimepicker({
         format: 'Y-m-d H:i'
     });
+
+
 });

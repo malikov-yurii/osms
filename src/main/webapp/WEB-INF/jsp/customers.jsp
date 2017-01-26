@@ -29,10 +29,10 @@
                         <th><fmt:message key="customers.city"/></th>
                         <th><fmt:message key="customers.novaPoshta"/></th>
                         <th><fmt:message key="customers.email"/></th>
-                        <sec:authorize access="hasRole('ROLE_ADMIN')">
+                        <%--<sec:authorize access="hasRole('ROLE_ADMIN')">--%>
                             <th></th>
                             <th></th>
-                        </sec:authorize>
+                        <%--</sec:authorize>--%>
                     </tr>
                     </thead>
                 </table>
