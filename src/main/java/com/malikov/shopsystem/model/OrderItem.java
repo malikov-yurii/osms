@@ -23,6 +23,11 @@ public class OrderItem extends BaseEntity {
     @JoinColumn(name = "order_id")
     private Order order;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
+    @JoinColumn(name = "product_attr_id")
+    private ProductVariation productVariation;
+
     @Column(name = "product_id")
     private Integer productId;
 
@@ -53,6 +58,14 @@ public class OrderItem extends BaseEntity {
     public OrderItem(Integer orderItemId, Integer productId, String productName, Integer productPrice, Integer productQuantity) {
         this(productId, productName, productPrice, productQuantity);
         this.id = orderItemId;
+    }
+
+    public ProductVariation getProductVariation() {
+        return productVariation;
+    }
+
+    public void setProductVariation(ProductVariation productVariation) {
+        this.productVariation = productVariation;
     }
 
     public Integer getProductId() {
