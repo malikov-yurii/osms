@@ -71,15 +71,18 @@ INSERT INTO orders (customer_id, customer_name, customer_last_name, customer_pho
   (2, 'Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 825, 2, 'PRIVAT_CARD', 'AWAITING_FOR_PAYMENT', '2016-09-15'),
   (2, 'Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 1285, 2, 'CASH_ON_DELIVERY', 'READY_FOR_SHIPMENT', '2016-11-17'),
   (1, 'Alex', 'Drogichinskij', '0674861352', 'Ilichevsk', '3', 725, 2, 'PRIVAT_CARD', 'READY_FOR_SHIPMENT', '2016-10-11'),
-  (3, 'Elena', 'Dunovskaya', '0984231204', 'Sumy', '7', 5865, 2, 'CASH_ON_DELIVERY', 'READY_FOR_SHIPMENT', '2016-12-22');
+  (3, 'Elena', 'Dunovskaya', '0984231204', 'Sumy', '7', 5865, 2, 'CASH_ON_DELIVERY', 'READY_FOR_SHIPMENT', '2016-12-22'),
+  (1, 'Alex', 'Drogichinskij', '0674861352', 'Ilichevsk', '3', 570, 2, 'PRIVAT_CARD', 'AWAITING_FOR_PAYMENT', '2016-02-22');
 
-INSERT INTO order_items (order_id, product_id, product_name, product_price, product_quantity) VALUES
-  (1, 2, 'Potal Nazionale', 385, 1),
-  (1, 3, 'Ferrario klej rozovyj', 220, 2),
-  (2, 1, 'Shellac Manetti', 235, 3),
-  (2, 4, 'Potal Kitaj', 145, 4),
-  (3, 4, 'Potal Kitaj', 145, 5),
-  (4, 1, 'Shellac Manetti', 235, 6),
-  (4, 2, 'Potal Nazionale', 385, 7),
-  (4, 3, 'Ferrario klej rozovyj', 220, 8);
+INSERT INTO order_items (order_id, product_attr_id, product_id, product_name, product_price, product_quantity) VALUES
+  (1, 3, 2, 'Potal Nazionale', 385, 1),
+  (1, 6, 3, 'Ferrario klej rozovyj', 220, 2),
+  (2, 2, 1, 'Shellac Manetti', 235, 3),
+  (2, 7, 4, 'Potal Kitaj', 145, 4),
+  (3, 7, 4, 'Potal Kitaj', 145, 5),
+  (4, 2, 1, 'Shellac Manetti', 235, 6),
+  (4, 3, 2, 'Potal Nazionale', 385, 7),
+  (4, 6, 3, 'Ferrario klej rozovyj', 220, 8),
+  (5, 0, 5, 'Divolo Bitum Vosk', 570, 1)
+;
 

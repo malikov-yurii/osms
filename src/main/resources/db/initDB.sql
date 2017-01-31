@@ -106,10 +106,12 @@ CREATE TABLE orders (
 CREATE TABLE order_items (
   id SERIAL PRIMARY KEY,
   order_id   INTEGER,
+  product_attr_id INTEGER,
   product_id INTEGER,
   product_name VARCHAR,
   product_price INTEGER,
   product_quantity   INTEGER NOT NULL,
   FOREIGN KEY (order_id) REFERENCES orders (id) ON DELETE CASCADE
+--   ,FOREIGN KEY (product_attr_id) REFERENCES products_attr (product_attr_id) ON DELETE CASCADE
 );
 
