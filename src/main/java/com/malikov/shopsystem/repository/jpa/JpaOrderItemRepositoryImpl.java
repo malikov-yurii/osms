@@ -44,14 +44,14 @@ public class JpaOrderItemRepositoryImpl implements OrderItemRepository {
     }
 
 //    @Override
-//    public Collection<OrderItem> getByCustomerId(int customerId) {
-//        return em.createNamedQuery(OrderItem.BY_CUSTOMER_ID, OrderItem.class)
+//    public Collection<OrderItemExtended> getByCustomerId(int customerId) {
+//        return em.createNamedQuery(OrderItemExtended.BY_CUSTOMER_ID, OrderItemExtended.class)
 //                .setParameter("customerId", customerId).getResultList();
 //    }
 
 //    @Override
-//    public Collection<OrderItem> getByProductId(int productId) {
-//        return em.createNamedQuery(OrderItem.BY_PRODUCT_ID, OrderItem.class)
+//    public Collection<OrderItemExtended> getByProductId(int productId) {
+//        return em.createNamedQuery(OrderItemExtended.BY_PRODUCT_ID, OrderItemExtended.class)
 //                .setParameter("productId", productId).getResultList();
 //    }
 }

@@ -38,12 +38,12 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
 //    @Override
-//    public Collection<OrderItem> getByCustomerId(int customerId) {
+//    public Collection<OrderItemExtended> getByCustomerId(int customerId) {
 //        return repository.getByCustomerId(customerId);
 //    }
 
 //    @Override
-//    public Collection<OrderItem> getByProductId(int productId) {
+//    public Collection<OrderItemExtended> getByProductId(int productId) {
 //        return repository.getByProductId(productId);
 //    }
 }

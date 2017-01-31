@@ -2,6 +2,8 @@ package com.malikov.shopsystem.model;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -15,8 +17,8 @@ import java.util.Objects;
 @Table(name = "order_items")
 public class OrderItem extends BaseEntity {
 
-    public static final String DELETE = "OrderItem.delete";
-    public static final String ALL = "OrderItem.getAll";
+    public static final String DELETE = "OrderItemExtended.delete";
+    public static final String ALL = "OrderItemExtended.getAll";
 
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
@@ -26,6 +28,7 @@ public class OrderItem extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "product_attr_id")
+    @NotFound(action = NotFoundAction.IGNORE)
     private ProductVariation productVariation;
 
     @Column(name = "product_id")
@@ -55,9 +58,10 @@ public class OrderItem extends BaseEntity {
         this.productQuantity = productQuantity;
     }
 
-    public OrderItem(Integer orderItemId, Integer productId, String productName, Integer productPrice, Integer productQuantity) {
+    public OrderItem(Integer orderItemId, Integer productId, ProductVariation productVariation, String productName, Integer productPrice, Integer productQuantity) {
         this(productId, productName, productPrice, productQuantity);
         this.id = orderItemId;
+        this.productVariation = productVariation;
     }
 
     public ProductVariation getProductVariation() {
@@ -128,8 +132,9 @@ public class OrderItem extends BaseEntity {
     @Override
     public String toString() {
         return "OrderItem{" +
-                "id=" + id +
-                ", orderId=" + order.getId() +
+                " id=" + id +
+                ", order_id=" + order.getId() +
+                ", productVariation=" + productVariation +
                 ", productId=" + productId +
                 ", productName='" + productName + '\'' +
                 ", productPrice=" + productPrice +

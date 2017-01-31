@@ -25,9 +25,9 @@ public abstract class AbstractOrderServiceTest extends AbstractServiceTest {
 //                PaymentType.PRIVAT_CARD,
 //                OrderStatus.READY_FOR_SHIPMENT,
 //                Arrays.asList(
-//                        new OrderItem(SHELLAC_MANETTI.getId(), SHELLAC_MANETTI.getName(), SHELLAC_MANETTI.getPrice(), 8),
-//                        new OrderItem(FERRARIO_ROZOVYJ.getId(), FERRARIO_ROZOVYJ.getName(), FERRARIO_ROZOVYJ.getPrice(), 7),
-//                        new OrderItem(POTAL_NAZIONALE.getId(), POTAL_NAZIONALE.getName(), POTAL_NAZIONALE.getPrice(), 6)
+//                        new OrderItemExtended(SHELLAC_MANETTI.getId(), SHELLAC_MANETTI.getName(), SHELLAC_MANETTI.getPrice(), 8),
+//                        new OrderItemExtended(FERRARIO_ROZOVYJ.getId(), FERRARIO_ROZOVYJ.getName(), FERRARIO_ROZOVYJ.getPrice(), 7),
+//                        new OrderItemExtended(POTAL_NAZIONALE.getId(), POTAL_NAZIONALE.getName(), POTAL_NAZIONALE.getPrice(), 6)
 //                ));
 //        Order created = service.save(newOrder);
 //        newOrder.setId(created.getId());
@@ -52,13 +52,13 @@ public abstract class AbstractOrderServiceTest extends AbstractServiceTest {
     @Test
     public void testGetAll() throws Exception {
         Collection<Order> all = service.getAll();
-        OrderTestData.MATCHER.assertCollectionEquals(Arrays.asList(ORDER_1, ORDER_2, ORDER_3, ORDER_4), all);
+        OrderTestData.MATCHER.assertCollectionEquals(Arrays.asList(ORDER_1, ORDER_2, ORDER_3, ORDER_4, ORDER_5), all);
     }
 
     @Test
     public void testDelete() throws Exception {
         service.delete(ORDER_2.getId());
-        OrderTestData.MATCHER.assertCollectionEquals(Arrays.asList(ORDER_1, ORDER_3, ORDER_4), service.getAll());
+        OrderTestData.MATCHER.assertCollectionEquals(Arrays.asList(ORDER_1, ORDER_3, ORDER_4, ORDER_5), service.getAll());
     }
 
     @Test
