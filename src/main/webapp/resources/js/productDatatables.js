@@ -20,6 +20,8 @@ $(function () {
         "paging": false,
         "info": true,
         "columns": [
+            { "data": "productId" },
+            { "data": "productVariationId" },
             { "data": "name" },
             { "data": "price" },
             { "data": "quantity" },
@@ -32,15 +34,15 @@ $(function () {
                     return data;
                 }
             },
-            {
-                "data": "hasVariations",
-                "render": function (data, type, row) {
-                    if (type == 'display') {
-                        return '<input type="checkbox" ' + (data ? 'checked' : '') + ' onclick="enableHasVariations($(this),' + row.id + ');"/>';
-                    }
-                    return data;
-                }
-            },
+            // {
+            //     "data": "hasVariations",
+            //     "render": function (data, type, row) {
+            //         if (type == 'display') {
+            //             return '<input type="checkbox" ' + (data ? 'checked' : '') + ' onclick="enableHasVariations($(this),' + row.id + ');"/>';
+            //         }
+            //         return data;
+            //     }
+            // },
             {
                 "defaultContent": "",
                 "orderable": false,

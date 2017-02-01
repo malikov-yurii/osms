@@ -59,9 +59,12 @@ public class OrderItem extends BaseEntity {
     }
 
     public OrderItem(Integer orderItemId, Integer productId, ProductVariation productVariation, String productName, Integer productPrice, Integer productQuantity) {
-        this(productId, productName, productPrice, productQuantity);
-        this.id = orderItemId;
+        this.productId = productId;
         this.productVariation = productVariation;
+        this.productName = productVariation != null ? productName + productVariation.getVariationValue().getName() : productName;
+        this.productPrice = productPrice;
+        this.productQuantity = productQuantity;
+        this.id = orderItemId;
     }
 
     public ProductVariation getProductVariation() {

@@ -67,11 +67,13 @@
                 <table class="table table-striped display" id="datatable">
                     <thead>
                     <tr>
+                        <th>Product ID</th>
+                        <th>Product Variation Id</th>
                         <th><fmt:message key="products.name"/></th>
                         <th><fmt:message key="products.price"/></th>
                         <th><fmt:message key="products.quantity"/></th>
                         <th><fmt:message key="products.unlimited"/></th>
-                        <th><fmt:message key="products.different_prices"/></th>
+                        <%--<th><fmt:message key="products.different_prices"/></th>--%>
                         <%--<sec:authorize access="hasRole('ROLE_ADMIN')">--%>
                             <th></th>
                             <th></th>

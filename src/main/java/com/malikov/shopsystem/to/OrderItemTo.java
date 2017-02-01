@@ -1,7 +1,6 @@
 package com.malikov.shopsystem.to;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
@@ -20,11 +19,11 @@ public class OrderItemTo implements Serializable {
 
     @JsonCreator
     public OrderItemTo(
-            @JsonProperty("order_item_id") Integer orderItemId,
-            @JsonProperty("order_product_id") Integer orderProductId,
-            @JsonProperty("name") String name,
-            @JsonProperty("price") Integer price,
-            @JsonProperty("quantity") Integer quantity
+            Integer orderItemId,
+            Integer orderProductId,
+            String name,
+            Integer price,
+            Integer quantity
     ) {
 
         this.orderItemId = orderItemId;

@@ -83,6 +83,6 @@ INSERT INTO order_items (order_id, product_attr_id, product_id, product_name, pr
   (4, 2, 1, 'Shellac Manetti', 235, 6),
   (4, 3, 2, 'Potal Nazionale', 385, 7),
   (4, 6, 3, 'Ferrario klej rozovyj', 220, 8),
-  (5, 0, 5, 'Divolo Bitum Vosk', 570, 1)
+  (5, NULL , 5, 'Divolo Bitum Vosk', 570, 1)
 ;
 

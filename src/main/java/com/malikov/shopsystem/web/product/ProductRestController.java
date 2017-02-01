@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.web.product;
 
 import com.malikov.shopsystem.model.Product;
+import com.malikov.shopsystem.to.ProductTo;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class ProductRestController extends AbstractProductController {
     }
 
     @GetMapping
-    public List<Product> getAll() {
+    public List<ProductTo> getAll() {
         return super.getAll();
     }
 
@@ -52,14 +53,14 @@ public class ProductRestController extends AbstractProductController {
     }
 
     @GetMapping(value = "/between")
-    public List<Product> getBetween(
+    public List<ProductTo> getBetween(
             @RequestParam(value = "startDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDateTime,
             @RequestParam(value = "endDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDateTime) {
         return super.getBetween(startDateTime.toLocalDate(), startDateTime.toLocalTime(), endDateTime.toLocalDate(), endDateTime.toLocalTime());
     }
 
     @RequestMapping(value = "/filter", method = RequestMethod.GET)
-    public List<Product> getBetween(
+    public List<ProductTo> getBetween(
             @RequestParam(value = "startDate", required = false) LocalDate startDate, @RequestParam(value = "startTime", required = false) LocalTime startTime,
             @RequestParam(value = "endDate", required = false) LocalDate endDate, @RequestParam(value = "endTime", required = false) LocalTime endTime) {
         return super.getBetween(startDate, startTime, endDate, endTime);

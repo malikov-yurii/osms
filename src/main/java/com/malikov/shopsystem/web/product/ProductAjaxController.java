@@ -19,7 +19,7 @@ import java.util.List;
 public class ProductAjaxController extends AbstractProductController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Product> getAll() {
+    public List<ProductTo> getAll() {
         return super.getAll();
     }
 
@@ -44,14 +44,14 @@ public class ProductAjaxController extends AbstractProductController {
         if (productTo.isNew()) {
             super.create(ProductUtil.createNewFromTo(productTo));
         } else {
-            Product product = super.get(productTo.getId());
-            super.update(ProductUtil.updateFromTo(product, productTo), productTo.getId());
+            Product product = super.get(productTo.getProductVariationId());
+            super.update(ProductUtil.updateFromTo(product, productTo), productTo.getProductVariationId());
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Product> getBetween(
+    public List<ProductTo> getBetween(
             @RequestParam(value = "startDate", required = false) LocalDate startDate,
             @RequestParam(value = "startTime", required = false) LocalTime startTime,
             @RequestParam(value = "endDate", required = false) LocalDate endDate,

@@ -5,7 +5,9 @@ import java.io.Serializable;
 //@RestResource(exported = false)
 public class ProductTo implements Serializable {
 
-    private Integer id;
+    private Integer productId;
+
+    private Integer productVariationId;
 
     private String name;
 
@@ -13,27 +15,41 @@ public class ProductTo implements Serializable {
 
     private Integer quantity;
 
+    private Boolean unlimited;
+
     public ProductTo(
-            Integer id,
+            Integer productId,
+            Integer productVariationId,
             String name,
             Integer price,
-            Integer quantity
+            Integer quantity,
+            Boolean unlimited
     ) {
-        this.id = id;
+        this.productId = productId;
+        this.productVariationId = productVariationId;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.unlimited = unlimited;
     }
 
     public ProductTo() {
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getProductVariationId() {
+        return productVariationId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setProductVariationId(Integer productVariationId) {
+        this.productVariationId = productVariationId;
+    }
+
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
 
     public String getName() {
@@ -61,16 +77,26 @@ public class ProductTo implements Serializable {
     }
 
     public boolean isNew() {
-        return id == null;
+        return productVariationId == null;
+    }
+
+    public Boolean getUnlimited() {
+        return unlimited;
+    }
+
+    public void setUnlimited(Boolean unlimited) {
+        this.unlimited = unlimited;
     }
 
     @Override
     public String toString() {
         return "ProductTo{" +
-                "id=" + id +
+                "productId=" + productId +
+                ", productVariationId=" + productVariationId +
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
+                ", unlimited=" + unlimited +
                 '}';
     }
 }

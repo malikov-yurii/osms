@@ -40,7 +40,7 @@ public class OrderTo {
 
     private OrderStatus status;
 
-    private List<OrderItemTo> products;
+    private List<OrderItemTo> orderItemTos;
 
     public OrderTo(
             Integer id
@@ -52,7 +52,7 @@ public class OrderTo {
             ,PaymentType paymentType
             ,LocalDate date
             ,OrderStatus status
-            ,List<OrderItemTo> products
+            ,List<OrderItemTo> orderItemTos
     ) {
         this.id = id;
         this.firstName = firstName;
@@ -63,8 +63,8 @@ public class OrderTo {
         this.paymentType = paymentType;
         this.date = date;
         this.status = status;
-        this.totalSum = OrderUtil.calculateTotalSumOfTos(products);
-        this.products = products;
+        this.totalSum = OrderUtil.calculateTotalSumOfTos(orderItemTos);
+        this.orderItemTos = orderItemTos;
     }
 
     public OrderTo(
@@ -91,7 +91,7 @@ public class OrderTo {
     }
 
     public void addProduct(OrderItemTo orderItemTo) {
-        products.add(orderItemTo);
+        orderItemTos.add(orderItemTo);
         this.totalSum += orderItemTo.getPrice();
     }
 
@@ -181,12 +181,12 @@ public class OrderTo {
         this.status = status;
     }
 
-    public List<OrderItemTo> getProducts() {
-        return products;
+    public List<OrderItemTo> getOrderItemTos() {
+        return orderItemTos;
     }
 
-    public void setProducts(List<OrderItemTo> products) {
-        this.products = products;
+    public void setOrderItemTos(List<OrderItemTo> orderItemTos) {
+        this.orderItemTos = orderItemTos;
     }
 
 }
