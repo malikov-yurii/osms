@@ -1,11 +1,11 @@
 package com.malikov.shopsystem.web.order;
 
-import com.malikov.shopsystem.model.Customer;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderItem;
 import com.malikov.shopsystem.service.CustomerService;
 import com.malikov.shopsystem.service.OrderItemService;
 import com.malikov.shopsystem.service.OrderService;
+import com.malikov.shopsystem.to.LastNameAutocompleteTo;
 import com.malikov.shopsystem.to.OrderTo;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.slf4j.Logger;
@@ -81,7 +81,9 @@ public abstract class AbstractOrderController {
         orderItemService.update(orderItem);
     }
 
-    public List<String> getLastNamesListForAutocomplete(String lastNameMask) {
-        return customerService.getByLastNameMask(lastNameMask).stream().map(Customer::getLastName).collect(Collectors.toList());
+    public List<LastNameAutocompleteTo> getLastNamesAutocompleteTosFor(String lastNameMask) {
+        return customerService
+                .getByLastNameMask(lastNameMask).stream().map(customer -> new LastNameAutocompleteTo(customer.getLastName(), customer.getName(), customer.getPhoneNumber()))
+                .collect(Collectors.toList());
     }
 }

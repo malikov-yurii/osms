@@ -35,12 +35,18 @@ function add(add_title) {
                 }
             });
         }
-        // ,
-        // select : function(event, ui){
-        //
-        // }
 
-
+        ,select: function(event, ui) {
+            debugger;
+            $('#lastName').val(ui.item.label);
+            $('#firstName').val(ui.item.value);
+            $('#phone').val(ui.item.phoneNumber);
+            return false; // Prevent the widget from inserting the value.
+        },
+        focus: function(event, ui) {
+            $("#lastName").val(ui.item.label);
+            return false; // Prevent the widget from inserting the value.
+        }
     });
 
 }

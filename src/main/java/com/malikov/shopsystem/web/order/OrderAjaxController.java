@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.web.order;
 
 import com.malikov.shopsystem.model.Order;
+import com.malikov.shopsystem.to.LastNameAutocompleteTo;
 import com.malikov.shopsystem.to.OrderTo;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.springframework.http.HttpEntity;
@@ -66,7 +67,7 @@ public class OrderAjaxController extends AbstractOrderController {
     }
 
     @PostMapping(value = "/autocomplete-last-name", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<String> changeQuantity(@RequestParam("term") String lastNameMask) {
-        return super.getLastNamesListForAutocomplete(lastNameMask);
+    public List<LastNameAutocompleteTo> changeQuantity(@RequestParam("term") String lastNameMask) {
+        return super.getLastNamesAutocompleteTosFor(lastNameMask);
     }
 }
