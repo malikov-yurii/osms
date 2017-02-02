@@ -7,6 +7,7 @@ import java.util.Objects;
         @NamedQuery(name = Customer.DELETE, query = "DELETE FROM Customer c WHERE c.id=:id"),
         @NamedQuery(name = Customer.BY_NAME, query = "SELECT c FROM Customer c WHERE c.name=:name"),
         @NamedQuery(name = Customer.BY_LAST_NAME, query = "SELECT c FROM Customer c WHERE c.lastName=:lastName"),
+        @NamedQuery(name = Customer.BY_LAST_NAME_MASK, query = "SELECT c FROM Customer c WHERE lower(c.lastName) LIKE lower(:lastNameMask)"),
         @NamedQuery(name = Customer.BY_CITY, query = "SELECT c FROM Customer c WHERE c.city=:city"),
         @NamedQuery(name = Customer.BY_EMAIL, query = "SELECT c FROM Customer c WHERE c.email=:email"),
         @NamedQuery(name = Customer.BY_PHONE, query = "SELECT c FROM Customer c WHERE c.phoneNumber=:phoneNumber"),
@@ -25,6 +26,7 @@ public class Customer extends NamedEntity {
     public static final String BY_PHONE = "Customer.getByPhone";
     public static final String BY_NAME = "Customer.getByName";
     public static final String BY_LAST_NAME = "Customer.getByLastName";
+    public static final String BY_LAST_NAME_MASK = "Customer.getByLastNameMask";
     public static final String BY_CITY = "Customer.getByCity";
 
     @Column(name = "last_name")

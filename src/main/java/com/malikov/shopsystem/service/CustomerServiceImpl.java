@@ -50,6 +50,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public Collection<Customer> getByLastNameMask(String lastNameMask) {
+        return repository.getByLastNameMask(lastNameMask);
+    }
+
+    @Override
     public Collection<Customer> getByCity(String city) {
         return repository.getByCity(city);
     }

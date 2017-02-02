@@ -67,7 +67,7 @@ table.table td {
 }
 .order-product-table tr th:first-child,
 .order-product-table tr td:first-child {
-    min-width: 200px;
+    min-width: 250px;
     width: 50%;
     padding-left: 15px;
     text-align: left;

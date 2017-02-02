@@ -111,44 +111,44 @@ $(function () {
     });
 
   datatableApi.on('draw.dt', function() {
-    showOrderProds();
+    showOrderItems();
   });
 });
 
-function showOrderProds() {
+function showOrderItems() {
     datatableApi.rows().every(function( rowIdx, tableLoop, rowLoop ) {
         var row = this;
         var tr = row.node();
-        var products = row.data().products;
+        var orderItemTos = row.data().orderItemTos;
         var orderId = row.data().id;
 
         console.log(row.data());
 
-        row.child( buildOrderProductList(products, orderId) ).show();
+        row.child( buildOrderItemList(orderItemTos, orderId) ).show();
         $(tr).addClass('opened');
 
     });
 }
 
-function buildOrderProductList(products, orderId) {
-    var orderProdList =
+function buildOrderItemList(orderItemTos, orderId) {
+    var orderItemsList =
         '<table class="order-product-table" data-order-id="'+orderId+'">\
             <thead>\
-                <tr><th>Product Name</th><th>Quantity</th><th>Price</th></tr>\
+                <tr><th>Item Name</th><th>Quantity</th><th>Price</th></tr>\
             </thead>\
             <tbody>';
 
-    for (var i = 0; i < products.length; i++) {
-        orderProdList +=
-            '<tr class="order-product-row" data-order-item-id="'+ products[i].orderItemId +'" data-order-product-id="'+ products[i].orderProductId +'">\
+    for (var i = 0; i < orderItemTos.length; i++) {
+        orderItemsList +=
+            '<tr class="order-product-row" data-order-item-id="'+ orderItemTos[i].orderItemId +'" data-order-product-id="'+ orderItemTos[i].orderItemId +'">\
             <td class="order-product-name" data-key="name" contenteditable="true">' +
-            products[i].name + '</td><td class="order-product-qty" data-key="quantity" contenteditable="true">' +
-            products[i].quantity + '</td><td class="order-product-price" data-key="price" contenteditable="true">' +
-            products[i].price + '</td></tr>'
+            orderItemTos[i].name + '</td><td class="order-product-qty" data-key="quantity" contenteditable="true">' +
+            orderItemTos[i].quantity + '</td><td class="order-product-price" data-key="price" contenteditable="true">' +
+            orderItemTos[i].price + '</td></tr>'
     }
 
-    orderProdList += '</tbody></table>';
+    orderItemsList += '</tbody></table>';
 
-    return orderProdList;
+    return orderItemsList;
 
 }

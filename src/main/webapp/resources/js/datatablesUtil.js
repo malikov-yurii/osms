@@ -19,6 +19,30 @@ function add(add_title) {
     $('#modalTitle').html(add_title);
     form.find(":input").val("");
     $('#editRow').modal();
+    $("#lastName").autocomplete({
+        source :
+            function(request, response) {
+            $.ajax({
+                url : ajaxUrl + 'autocomplete-last-name',
+                type : "POST",
+                data : {
+                    term : request.term
+                },
+                dataType : "json",
+                success : function(data) {
+                    // debugger;
+                    response(data);
+                }
+            });
+        }
+        // ,
+        // select : function(event, ui){
+        //
+        // }
+
+
+    });
+
 }
 
 function updateRow(id) {

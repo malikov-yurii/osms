@@ -64,4 +64,9 @@ public class OrderAjaxController extends AbstractOrderController {
     public void changeQuantity(@PathVariable("itemId") int itemId, @RequestParam("quantity") int quantity) {
         super.changeOrderItemProductQuantity(itemId, quantity);
     }
+
+    @PostMapping(value = "/autocomplete-last-name", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<String> changeQuantity(@RequestParam("term") String lastNameMask) {
+        return super.getLastNamesListForAutocomplete(lastNameMask);
+    }
 }

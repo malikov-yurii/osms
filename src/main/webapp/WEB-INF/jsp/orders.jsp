@@ -22,7 +22,7 @@
 
             <div class="view-box">
 
-                <%--<a class="btn btn-sm btn-info" onclick="add('<fmt:message key="orders.add"/>')"><fmt:message key="orders.add"/></a>--%>
+                <a class="btn btn-sm btn-info" onclick="add('<fmt:message key="orders.add"/>')"><fmt:message key="orders.add"/></a>
                 <table class="table table-striped display" id="datatable">
                     <thead>
                     <tr>
@@ -64,8 +64,11 @@
                                 key="customers.firstName"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="firstName" name="firstName"
-                                   placeholder="<fmt:message key="customers.firstName"/>">
+                            <input type="text"
+                                   class="form-control"
+                                   id="firstName" name="firstName"
+                                   placeholder="<fmt:message key="customers.firstName"/>"
+                            >
                         </div>
                     </div>
                     <div class="form-group">
@@ -73,7 +76,9 @@
                                 key="customers.lastName"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="lastName" name="lastName"
+                            <input type="text"
+                                   class="form-control"
+                                   id="lastName" name="lastName"
                                    placeholder="<fmt:message key="customers.lastName"/>">
                         </div>
                     </div>
@@ -157,8 +162,16 @@
 <script type="text/javascript">
     var edit_title ='<fmt:message key="orders.edit"/>';
 </script>
+
+
 <script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
+
+
+<script type="text/javascript" src="webjars/jquery-ui/1.11.4/jquery-ui.js"></script>
+
 <script type="text/javascript" src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+
+
 <script type="text/javascript" src="webjars/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="webjars/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="webjars/noty/2.3.8/js/noty/packaged/jquery.noty.packaged.min.js"></script>

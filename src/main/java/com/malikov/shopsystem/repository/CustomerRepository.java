@@ -12,6 +12,8 @@ public interface CustomerRepository extends Repository<Customer> {
     // null if not found
     List<Customer> getByLastName(String lastName);
 
+    List<Customer> getByLastNameMask(String lastNameMask);
+
     // null if not found
     List<Customer> getByCity(String city);
 

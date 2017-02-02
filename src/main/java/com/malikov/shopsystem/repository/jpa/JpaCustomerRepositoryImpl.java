@@ -56,6 +56,12 @@ public class JpaCustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
+    public List<Customer> getByLastNameMask(String lastNameMask) {
+        return em.createNamedQuery(Customer.BY_LAST_NAME_MASK, Customer.class)
+                .setParameter("lastNameMask", "%" + lastNameMask + "%").getResultList();
+    }
+
+    @Override
     public List<Customer> getByCity(String city) {
         return em.createNamedQuery(Customer.BY_CITY, Customer.class)
                 .setParameter("city", city).getResultList();
@@ -72,4 +78,6 @@ public class JpaCustomerRepositoryImpl implements CustomerRepository {
         return em.createNamedQuery(Customer.BY_PHONE, Customer.class)
                 .setParameter("phoneNumber", phoneNumber).getSingleResult();
     }
+
+
 }

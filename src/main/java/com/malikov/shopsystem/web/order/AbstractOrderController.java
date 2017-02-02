@@ -1,7 +1,9 @@
 package com.malikov.shopsystem.web.order;
 
+import com.malikov.shopsystem.model.Customer;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderItem;
+import com.malikov.shopsystem.service.CustomerService;
 import com.malikov.shopsystem.service.OrderItemService;
 import com.malikov.shopsystem.service.OrderService;
 import com.malikov.shopsystem.to.OrderTo;
@@ -22,7 +24,8 @@ public abstract class AbstractOrderController {
     @Autowired
     private OrderItemService orderItemService;
 
-
+    @Autowired
+    private CustomerService customerService;
 
     public OrderTo getOrderTo(int id) {
         LOG.info("get order {}", id);
@@ -76,5 +79,9 @@ public abstract class AbstractOrderController {
         order.setTotalSum(OrderUtil.calculateTotalSum(order.getOrderItems()));
         orderService.update(order);
         orderItemService.update(orderItem);
+    }
+
+    public List<String> getLastNamesListForAutocomplete(String lastNameMask) {
+        return customerService.getByLastNameMask(lastNameMask).stream().map(Customer::getLastName).collect(Collectors.toList());
     }
 }

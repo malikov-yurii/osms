@@ -64,7 +64,10 @@ INSERT INTO customers (name, last_name, phone_number, city, nova_poshta, email) 
   ('Alex', 'Drogichinskij', '0674861352', 'Ilichevsk', '3', 'drogychynsky@gmail.com'),
   ('Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 'goltvyanskyy@gmail.com'),
   ('Elena', 'Dunovskaya', '0984231204', 'Sumy', '7', 'katerina.tcherednichenko@yandex.ru'),
-  ('WithNoOrderName', 'WithNoOrderLastName', '0980000000', 'ZeroTown', '0', 'zero@yandex.ru');
+  ('WithNoOrderName', 'WithNoOrderLastName', '0980000000', 'ZeroTown', '0', 'zero@yandex.ru'),
+  ('Dname1', 'DLastName1', '11111111111', '111111', '1', '111zero@yandex.ru'),
+  ('Dname2', 'DLastName2', '22222222222', '222222', '2','2zero@yandex.ru'),
+  ('Dname3', 'DLastName3', '33333333333', '333333', '3','3zero@yandex.ru');
 
 INSERT INTO orders (customer_id, customer_name, customer_last_name, customer_phone_number, customer_city, customer_nova_poshta, total_sum, user_id, payment_type, status, date_placed
 ) VALUES
@@ -75,14 +78,14 @@ INSERT INTO orders (customer_id, customer_name, customer_last_name, customer_pho
   (1, 'Alex', 'Drogichinskij', '0674861352', 'Ilichevsk', '3', 570, 2, 'PRIVAT_CARD', 'AWAITING_FOR_PAYMENT', '2016-02-22');
 
 INSERT INTO order_items (order_id, product_attr_id, product_id, product_name, product_price, product_quantity) VALUES
-  (1, 3, 2, 'Potal Nazionale', 385, 1),
-  (1, 6, 3, 'Ferrario klej rozovyj', 220, 2),
-  (2, 2, 1, 'Shellac Manetti', 235, 3),
-  (2, 7, 4, 'Potal Kitaj', 145, 4),
-  (3, 7, 4, 'Potal Kitaj', 145, 5),
-  (4, 2, 1, 'Shellac Manetti', 235, 6),
-  (4, 3, 2, 'Potal Nazionale', 385, 7),
-  (4, 6, 3, 'Ferrario klej rozovyj', 220, 8),
-  (5, NULL , 5, 'Divolo Bitum Vosk', 570, 1)
+  (1, 3, 2, 'Potal Nazionale 100 leaves', 385, 1),
+  (1, 6, 3, 'Ferrario klej rozovyj 0.25L (plastic)', 220, 2),
+  (2, 2, 1, 'Shellac Manetti 0.25L (plastic)', 235, 3),
+  (2, 7, 4, 'Potal Kitaj 100 leaves', 145, 4),
+  (3, 7, 4, 'Potal Kitaj 100 leaves', 145, 5),
+  (4, 2, 1, 'Shellac Manetti 0.25L (plastic)', 235, 6),
+  (4, 3, 2, 'Potal Nazionale 100 leaves', 385, 7),
+  (4, 6, 3, 'Ferrario klej rozovyj 0.25L (plastic)', 220, 8),
+  (5, 0 , 5, 'Divolo Bitum Vosk', 333, 1)
 ;
 

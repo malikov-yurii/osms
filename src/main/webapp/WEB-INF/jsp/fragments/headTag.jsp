@@ -15,4 +15,10 @@
     <link rel="stylesheet" href="resources/css/style.css">
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css">
     <link rel="shortcut icon" href="resources/images/icon-main.png">
+
+    <%--todo Do I already have it in dependencies?--%>
+    <link rel="stylesheet"   href="webjars/jquery-ui/1.11.4/jquery-ui.css" >
+    <%--K:\Users\Malikov\.m2\repository\org\webjars\jquery-ui\1.11.4\jquery-ui-1.11.4.jar!\META-INF\resources\webjars\jquery-ui\1.11.4\jquery-ui.css--%>
+
+    <link rel="stylesheet"   href="resources/css/my-overriding.css">
 </head>
