@@ -2,6 +2,8 @@ package com.malikov.shopsystem.web.order;
 
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderItem;
+import com.malikov.shopsystem.model.OrderStatus;
+import com.malikov.shopsystem.model.PaymentType;
 import com.malikov.shopsystem.service.CustomerService;
 import com.malikov.shopsystem.service.OrderItemService;
 import com.malikov.shopsystem.service.OrderService;
@@ -131,5 +133,13 @@ public abstract class AbstractOrderController {
                                 customer.getCity(),
                                 customer.getPostOffice()))
                 .collect(Collectors.toList());
+    }
+
+    public PaymentType[] getPaymentTypeAutocomplete() {
+        return PaymentType.values();
+    }
+
+    public OrderStatus[] getOrderStatusAutocomplete() {
+        return OrderStatus.values();
     }
 }

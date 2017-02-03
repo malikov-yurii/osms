@@ -131,7 +131,48 @@ function add(add_title) {
             return false; // Prevent the widget from inserting the value.
         }
     });
-
+   $("#paymentType").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: ajaxUrl + 'autocomplete-payment-type',
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    response(data);
+                }
+            });
+        }
+       , focus: function (event, ui) {
+           this.value = ui.item.value;
+       }
+        ,minLength: 0
+    }).bind("focus", function() {
+           console.log(this.value);
+           if (this.value === '') {
+               $(this).autocomplete("search", "");
+           }
+       });
+    $("#status").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: ajaxUrl + 'autocomplete-status',
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    response(data);
+                }
+            });
+        }
+        ,focus: function (event, ui) {
+            this.value = ui.item.value;
+        }
+        ,minLength: 0
+    }).bind("focus", function() {
+            console.log(this.value);
+            if (this.value === '') {
+                $(this).autocomplete("search", "");
+            }
+        });
 }
 
 function updateRow(id) {

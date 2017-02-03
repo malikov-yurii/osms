@@ -11,13 +11,6 @@ import java.util.stream.Collectors;
 
 public class OrderUtil {
 
-    public static Order createNewFromTo(OrderTo orderTo) {
-// TODO: 1/19/2017 implement this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//        this must work for "create new order" button
-
-        return new Order(null);
-    }
-
     public static OrderTo asTo(Order order) {
 
         List<OrderItemTo> OrderItemTos = order.getOrderItems()
@@ -25,7 +18,7 @@ public class OrderUtil {
                 .map(oi -> new OrderItemTo(oi.getId(), oi.getProductId(), oi.getProductName(), oi.getProductPrice(), oi.getProductQuantity()))
                 .collect(Collectors.toList());
         return new OrderTo(order.getId(), order.getCustomerName(), order.getCustomerLastName(),
-                order.getCustomerPhoneNumber(), order.getCustomerCity(), order.getCustomerNovaPoshta(),
+                order.getCustomerPhoneNumber(), order.getCustomerCity(), order.getCustomerPostOffice(),
                 order.getPaymentType(), order.getDatePlaced(), order.getStatus(), OrderItemTos);
     }
 
@@ -34,7 +27,7 @@ public class OrderUtil {
         order.setCustomerLastName(orderTo.getLastName());
         order.setCustomerPhoneNumber(orderTo.getPhoneNumber());
         order.setCustomerCity(orderTo.getCity());
-        order.setCustomerNovaPoshta(orderTo.getNovaPoshta());
+        order.setCustomerPostOffice(orderTo.getPostOffice());
         order.setTotalSum(orderTo.getTotalSum());
         return order;
     }

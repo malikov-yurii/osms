@@ -98,7 +98,7 @@ CREATE TABLE orders (
   user_id      INTEGER NOT NULL,
   payment_type VARCHAR,
   status       VARCHAR,
-  date_placed  DATE DEFAULT now(),
+  date_placed  TIMESTAMP DEFAULT now(),
   FOREIGN KEY (customer_id) REFERENCES customers (id),
   FOREIGN KEY (user_id) REFERENCES users (id)
 );

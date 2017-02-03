@@ -25,7 +25,7 @@ $(function () {
             { "data": "lastName", "orderable": false },
             { "data": "phoneNumber", "orderable": false },
             { "data": "city", "orderable": false },
-            { "data": "novaPoshta", "orderable": false },
+            { "data": "postOffice", "orderable": false },
             { "data": "paymentType", "orderable": false },
             { "data": "totalSum", "orderable": false },
             { "data": "status", "orderable": false },

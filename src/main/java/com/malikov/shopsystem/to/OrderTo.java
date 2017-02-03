@@ -26,7 +26,7 @@ public class OrderTo {
 
     private String city;
 
-    private String novaPoshta;
+    private String postOffice;
 
     private Integer totalSum;
 
@@ -48,7 +48,7 @@ public class OrderTo {
             ,String lastName
             ,String phoneNumber
             ,String city
-            ,String novaPoshta
+            ,String postOffice
             ,PaymentType paymentType
             ,LocalDate date
             ,OrderStatus status
@@ -59,7 +59,7 @@ public class OrderTo {
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.city = city;
-        this.novaPoshta = novaPoshta;
+        this.postOffice = postOffice;
         this.paymentType = paymentType;
         this.date = date;
         this.status = status;
@@ -73,12 +73,12 @@ public class OrderTo {
             ,String lastName
             ,String phoneNumber
             ,String city
-            ,String novaPoshta
+            ,String postOffice
             ,PaymentType paymentType
             ,LocalDate date
             ,OrderStatus status
     ) {
-        this(id, firstName, lastName, phoneNumber, city, novaPoshta, paymentType, date, status, new ArrayList<>());
+        this(id, firstName, lastName, phoneNumber, city, postOffice, paymentType, date, status, new ArrayList<>());
         this.totalSum = 0;
     }
 
@@ -135,8 +135,8 @@ public class OrderTo {
         this.city = city;
     }
 
-    public String getNovaPoshta() {
-        return novaPoshta;
+    public String getPostOffice() {
+        return postOffice;
     }
 
     public Integer getTotalSum() {
@@ -169,8 +169,8 @@ public class OrderTo {
 
         this.date = date;
     }
-    public void setNovaPoshta(String novaPoshta) {
-        this.novaPoshta = novaPoshta;
+    public void setPostOffice(String postOffice) {
+        this.postOffice = postOffice;
     }
 
     public void setPaymentType(PaymentType paymentType) {

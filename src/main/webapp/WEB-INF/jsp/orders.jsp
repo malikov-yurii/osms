@@ -120,23 +120,23 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="totalSum" class="control-label col-xs-3"><fmt:message
-                                key="orders.totalSum"/></label>
-
-                        <div class="col-xs-9">
-                            <input type="text" class="form-control" id="totalSum" name="totalSum"
-                                   placeholder="<fmt:message key="orders.totalSum"/>">
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label for="status" class="control-label col-xs-3"><fmt:message
-                                key="orders.status"/></label>
+                            key="orders.status"/></label>
 
                         <div class="col-xs-9">
                             <input type="text" class="form-control" id="status" name="status"
                                    placeholder="<fmt:message key="orders.status"/>">
                         </div>
                     </div>
+                    <%--<div class="form-group">--%>
+                        <%--<label for="totalSum" class="control-label col-xs-3"><fmt:message--%>
+                                <%--key="orders.totalSum"/></label>--%>
+
+                        <%--<div class="col-xs-9">--%>
+                            <%--<input type="text" class="form-control" id="totalSum" name="totalSum"--%>
+                                   <%--placeholder="<fmt:message key="orders.totalSum"/>">--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
                     <%--<div class="form-group">--%>
                         <%--<label for="date" class="control-label col-xs-3"><fmt:message--%>
                                 <%--key="orders.date"/></label>--%>
@@ -159,6 +159,7 @@
 
 
 </body>
+
 <script type="text/javascript">
     var edit_title ='<fmt:message key="orders.edit"/>';
 </script>

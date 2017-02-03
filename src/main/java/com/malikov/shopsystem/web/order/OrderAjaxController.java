@@ -1,13 +1,18 @@
 package com.malikov.shopsystem.web.order;
 
 import com.malikov.shopsystem.model.Order;
+import com.malikov.shopsystem.model.OrderStatus;
+import com.malikov.shopsystem.model.PaymentType;
+import com.malikov.shopsystem.service.CustomerService;
+import com.malikov.shopsystem.service.UserService;
 import com.malikov.shopsystem.to.CustomerAutocompleteTo;
 import com.malikov.shopsystem.to.OrderTo;
-import com.malikov.shopsystem.util.OrderUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +22,12 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/ajax/profile/orders")
 public class OrderAjaxController extends AbstractOrderController {
+
+    @Autowired
+    CustomerService customerService;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<OrderTo> getAll() {
@@ -35,21 +46,41 @@ public class OrderAjaxController extends AbstractOrderController {
     }
 
     @PostMapping
-    public ResponseEntity<String> updateOrCreate(@Valid OrderTo orderTo, BindingResult result, HttpEntity<String> httpEntity) {
+    public ResponseEntity<String> create(@Valid OrderTo orderTo, BindingResult result, HttpEntity<String> httpEntity) {
         String json = httpEntity.getBody();
         if (result.hasErrors()) {
             StringBuilder sb = new StringBuilder();
             result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
             return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        if (orderTo.isNew()) {
-            super.create(OrderUtil.createNewFromTo(orderTo));
-        } else {
-            Order order = super.getOrder(orderTo.getId());
-            super.update(OrderUtil.updateFromTo(order, orderTo), orderTo.getId());
-        }
+
+        Order newOrder = new Order(customerService.getByPhoneNumber(orderTo.getPhoneNumber()),
+                userService.getByLogin(SecurityContextHolder.getContext().getAuthentication().getName()),
+                orderTo.getPaymentType(),
+                orderTo.getStatus(),
+                null);
+
+        super.create(newOrder);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+//    @PostMapping
+//    public ResponseEntity<String> updateOrCreate(@Valid OrderTo orderTo, BindingResult result, HttpEntity<String> httpEntity) {
+//        String json = httpEntity.getBody();
+//        if (result.hasErrors()) {
+//            StringBuilder sb = new StringBuilder();
+//            result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
+//            return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
+//        }
+//        if (orderTo.isNew()) {
+//            super.create(OrderUtil.createNewFromTo(orderTo));
+//        } else {
+//            Order order = super.getOrder(orderTo.getId());
+//            super.update(OrderUtil.updateFromTo(order, orderTo), orderTo.getId());
+//        }
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
     @PostMapping(value = "{itemId}/change-name")
     public void changeName(@PathVariable("itemId") int itemId, @RequestParam("name") String name) {
@@ -84,5 +115,14 @@ public class OrderAjaxController extends AbstractOrderController {
     @PostMapping(value = "/autocomplete-city", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CustomerAutocompleteTo> autocompleteCity(@RequestParam("term") String cityMask) {
         return super.getCustomerAutocompleteTosByCityMask(cityMask);
+    }
+
+    @PostMapping(value = "/autocomplete-payment-type", produces = MediaType.APPLICATION_JSON_VALUE)
+    public PaymentType[] autocompletePaymentType() {
+        return super.getPaymentTypeAutocomplete();
+    }
+    @PostMapping(value = "/autocomplete-status", produces = MediaType.APPLICATION_JSON_VALUE)
+    public OrderStatus[] autocompleteOrderStatus() {
+        return super.getOrderStatusAutocomplete();
     }
 }

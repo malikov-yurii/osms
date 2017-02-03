@@ -43,7 +43,7 @@ public class Order extends BaseEntity {
     private String customerCity;
 
     @Column(name = "customer_nova_poshta")
-    private String customerNovaPoshta;
+    private String customerPostOffice;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -57,9 +57,13 @@ public class Order extends BaseEntity {
     @Column(name = "status")
     private OrderStatus status;
 
-    @Column(name = "date_placed")
+//    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date_placed"
+            , columnDefinition = "timestamp default now()"
+//            , insertable=false
+    )
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate datePlaced;
+    private LocalDate datePlaced = LocalDate.now();
 
     //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JoinColumn(name = "order_id")
@@ -81,14 +85,20 @@ public class Order extends BaseEntity {
         this.customerLastName = customer.getLastName();
         this.customerPhoneNumber = customer.getPhoneNumber();
         this.customerCity = customer.getCity();
-        this.customerNovaPoshta = customer.getPostOffice();
+        this.customerPostOffice = customer.getPostOffice();
         this.user = user;
         this.paymentType = paymentType;
         this.status = orderStatus;
-        this.datePlaced = datePlaced;
-        this.orderItems = orderItems;
-        this.orderItems.forEach(orderItem -> orderItem.setOrder(this));
-        this.totalSum = OrderUtil.calculateTotalSum(orderItems);
+        if (datePlaced != null) {
+            this.datePlaced = datePlaced;
+        }
+        if (orderItems != null) {
+            this.orderItems = orderItems;
+            this.orderItems.forEach(orderItem -> orderItem.setOrder(this));
+            this.totalSum = OrderUtil.calculateTotalSum(orderItems);
+        } else {
+            this.totalSum = 0;
+        }
     }
 
     public Order(Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, List<OrderItem> orderItems) {
@@ -131,12 +141,12 @@ public class Order extends BaseEntity {
         this.customerCity = customerCity;
     }
 
-    public String getCustomerNovaPoshta() {
-        return customerNovaPoshta;
+    public String getCustomerPostOffice() {
+        return customerPostOffice;
     }
 
-    public void setCustomerNovaPoshta(String customerNovaPoshta) {
-        this.customerNovaPoshta = customerNovaPoshta;
+    public void setCustomerPostOffice(String customerPostOffice) {
+        this.customerPostOffice = customerPostOffice;
     }
 
     public LocalDate getDatePlaced() {
@@ -206,7 +216,7 @@ public class Order extends BaseEntity {
                 Objects.equals(customerLastName, order.customerLastName) &&
                 Objects.equals(customerPhoneNumber, order.customerPhoneNumber) &&
                 Objects.equals(customerCity, order.customerCity) &&
-                Objects.equals(customerNovaPoshta, order.customerNovaPoshta) &&
+                Objects.equals(customerPostOffice, order.customerPostOffice) &&
                 Objects.equals(user, order.user) &&
                 paymentType == order.paymentType &&
                 status == order.status &&
@@ -216,7 +226,7 @@ public class Order extends BaseEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), customer, customerName, customerLastName, customerPhoneNumber, customerCity, customerNovaPoshta, user, paymentType, status, datePlaced, orderItems);
+        return Objects.hash(super.hashCode(), customer, customerName, customerLastName, customerPhoneNumber, customerCity, customerPostOffice, user, paymentType, status, datePlaced, orderItems);
     }
 
     @Override
@@ -228,7 +238,7 @@ public class Order extends BaseEntity {
                 ", customerLastName='" + customerLastName + '\'' +
                 ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
                 ", customerCity='" + customerCity + '\'' +
-                ", customerNovaPoshta='" + customerNovaPoshta + '\'' +
+                ", customerPostOffice='" + customerPostOffice + '\'' +
                 ", user=" + user +
                 ", paymentType=" + paymentType +
                 ", status=" + status +
