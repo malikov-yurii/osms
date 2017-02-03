@@ -5,7 +5,7 @@ import com.malikov.shopsystem.model.OrderItem;
 import com.malikov.shopsystem.service.CustomerService;
 import com.malikov.shopsystem.service.OrderItemService;
 import com.malikov.shopsystem.service.OrderService;
-import com.malikov.shopsystem.to.LastNameAutocompleteTo;
+import com.malikov.shopsystem.to.CustomerAutocompleteTo;
 import com.malikov.shopsystem.to.OrderTo;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.slf4j.Logger;
@@ -81,9 +81,55 @@ public abstract class AbstractOrderController {
         orderItemService.update(orderItem);
     }
 
-    public List<LastNameAutocompleteTo> getLastNamesAutocompleteTosFor(String lastNameMask) {
+    public List<CustomerAutocompleteTo> getCustomerAutocompleteTosByFirstNameMask(String firstNameMask) {
         return customerService
-                .getByLastNameMask(lastNameMask).stream().map(customer -> new LastNameAutocompleteTo(customer.getLastName(), customer.getName(), customer.getPhoneNumber()))
+                .getByFirstNameMask(firstNameMask).stream().map(customer ->
+                        new CustomerAutocompleteTo(
+                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
+                                customer.getName(),
+                                customer.getLastName(),
+                                customer.getPhoneNumber(),
+                                customer.getCity(),
+                                customer.getPostOffice()))
+                .collect(Collectors.toList());
+    }
+
+    public List<CustomerAutocompleteTo> getCustomerAutocompleteTosByLastNameMask(String lastNameMask) {
+        return customerService
+                .getByLastNameMask(lastNameMask).stream().map(customer ->
+                        new CustomerAutocompleteTo(
+                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
+                                customer.getName(),
+                                customer.getLastName(),
+                                customer.getPhoneNumber(),
+                                customer.getCity(),
+                                customer.getPostOffice()))
+                .collect(Collectors.toList());
+    }
+
+    public List<CustomerAutocompleteTo> getCustomerAutocompleteTosByPhoneNumberMask(String phoneNumberMask) {
+        return customerService
+                .getByPhoneNumberMask(phoneNumberMask).stream().map(customer ->
+                        new CustomerAutocompleteTo(
+                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
+                                customer.getName(),
+                                customer.getLastName(),
+                                customer.getPhoneNumber(),
+                                customer.getCity(),
+                                customer.getPostOffice()))
+                .collect(Collectors.toList());
+    }
+
+    public List<CustomerAutocompleteTo> getCustomerAutocompleteTosByCityMask(String cityMask) {
+        return customerService
+                .getByCityMask(cityMask).stream().map(customer ->
+                        new CustomerAutocompleteTo(
+                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
+                                customer.getName(),
+                                customer.getLastName(),
+                                customer.getPhoneNumber(),
+                                customer.getCity(),
+                                customer.getPostOffice()))
                 .collect(Collectors.toList());
     }
 }

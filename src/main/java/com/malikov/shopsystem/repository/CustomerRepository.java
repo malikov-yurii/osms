@@ -12,7 +12,10 @@ public interface CustomerRepository extends Repository<Customer> {
     // null if not found
     List<Customer> getByLastName(String lastName);
 
+    List<Customer> getByFirstNameMask(String firstNameMask);
     List<Customer> getByLastNameMask(String lastNameMask);
+    List<Customer> getByPhoneNumberMask(String phoneNumberMask);
+    List<Customer> getByCityMask(String cityMask);
 
     // null if not found
     List<Customer> getByCity(String city);

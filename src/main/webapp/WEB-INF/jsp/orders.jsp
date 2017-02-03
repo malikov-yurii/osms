@@ -32,7 +32,7 @@
                         <th><fmt:message key="customers.lastName"/></th>
                         <th><fmt:message key="customers.phoneNumber"/></th>
                         <th><fmt:message key="customers.city"/></th>
-                        <th><fmt:message key="customers.novaPoshta"/></th>
+                        <th><fmt:message key="customers.postOffice"/></th>
                         <th><fmt:message key="orders.paymentType"/></th>
                         <th><fmt:message key="orders.totalSum"/></th>
                         <th><fmt:message key="orders.status"/></th>
@@ -83,11 +83,11 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="phone" class="control-label col-xs-3"><fmt:message
+                        <label for="phoneNumber" class="control-label col-xs-3"><fmt:message
                                 key="customers.phoneNumber"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="phone" name="phone"
+                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
                                    placeholder="<fmt:message key="customers.phoneNumber"/>">
                         </div>
                     </div>
@@ -102,12 +102,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="novaPoshta" class="control-label col-xs-3"><fmt:message
-                                key="customers.novaPoshta"/></label>
+                        <label for="postOffice" class="control-label col-xs-3"><fmt:message
+                                key="customers.postOffice"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="novaPoshta" name="novaPoshta"
-                                   placeholder="<fmt:message key="customers.novaPoshta"/>">
+                            <input type="text" class="form-control" id="postOffice" name="postOffice"
+                                   placeholder="<fmt:message key="customers.postOffice"/>">
                         </div>
                     </div>
                     <div class="form-group">
@@ -137,15 +137,15 @@
                                    placeholder="<fmt:message key="orders.status"/>">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="date" class="control-label col-xs-3"><fmt:message
-                                key="orders.date"/></label>
+                    <%--<div class="form-group">--%>
+                        <%--<label for="date" class="control-label col-xs-3"><fmt:message--%>
+                                <%--key="orders.date"/></label>--%>
 
-                        <div class="col-xs-9">
-                            <input type="text" class="form-control" id="date" name="date"
-                                   placeholder="<fmt:message key="orders.date"/>">
-                        </div>
-                    </div>
+                        <%--<div class="col-xs-9">--%>
+                            <%--<input type="text" class="form-control" id="date" name="date"--%>
+                                   <%--placeholder="<fmt:message key="orders.date"/>">--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
                             <button class="btn btn-primary" type="button" onclick="save()"><fmt:message key="common.save"/></button>

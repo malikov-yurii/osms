@@ -12,7 +12,7 @@ public class CustomerUtil {
 
     public static CustomerTo asTo(Customer customer){
         return new CustomerTo(customer.getId(), customer.getName(), customer.getLastName(),
-                customer.getPhoneNumber(), customer.getCity(), customer.getNovaPoshta(), customer.getEmail());
+                customer.getPhoneNumber(), customer.getCity(), customer.getPostOffice(), customer.getEmail());
     }
 
     public static Customer updateFromTo(Customer customer, CustomerTo customerTo) {
@@ -20,7 +20,7 @@ public class CustomerUtil {
         customer.setLastName(customerTo.getLastName());
         customer.setPhoneNumber(customerTo.getPhoneNumber());
         customer.setCity(customerTo.getCity());
-        customer.setNovaPoshta(customerTo.getNovaPoshta());
+        customer.setPostOffice(customerTo.getNovaPoshta());
         customer.setEmail(customerTo.getEmail());
         return customer;
     }

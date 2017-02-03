@@ -1,7 +1,7 @@
 package com.malikov.shopsystem.web.order;
 
 import com.malikov.shopsystem.model.Order;
-import com.malikov.shopsystem.to.LastNameAutocompleteTo;
+import com.malikov.shopsystem.to.CustomerAutocompleteTo;
 import com.malikov.shopsystem.to.OrderTo;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.springframework.http.HttpEntity;
@@ -66,8 +66,23 @@ public class OrderAjaxController extends AbstractOrderController {
         super.changeOrderItemProductQuantity(itemId, quantity);
     }
 
+    @PostMapping(value = "/autocomplete-first-name", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CustomerAutocompleteTo> autocompleteFirstName(@RequestParam("term") String firstNameMask) {
+        return super.getCustomerAutocompleteTosByFirstNameMask(firstNameMask);
+    }
+
     @PostMapping(value = "/autocomplete-last-name", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<LastNameAutocompleteTo> changeQuantity(@RequestParam("term") String lastNameMask) {
-        return super.getLastNamesAutocompleteTosFor(lastNameMask);
+    public List<CustomerAutocompleteTo> autocompleteLastName(@RequestParam("term") String lastNameMask) {
+        return super.getCustomerAutocompleteTosByLastNameMask(lastNameMask);
+    }
+
+    @PostMapping(value = "/autocomplete-phone-number", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CustomerAutocompleteTo> autocompletePhoneNumber(@RequestParam("term") String phoneNumberMask) {
+        return super.getCustomerAutocompleteTosByPhoneNumberMask(phoneNumberMask);
+    }
+
+    @PostMapping(value = "/autocomplete-city", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CustomerAutocompleteTo> autocompleteCity(@RequestParam("term") String cityMask) {
+        return super.getCustomerAutocompleteTosByCityMask(cityMask);
     }
 }

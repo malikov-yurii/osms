@@ -9,7 +9,7 @@ function makeEditable() {
 
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-    $(document).ajaxSend(function(e, xhr, options) {
+    $(document).ajaxSend(function (e, xhr, options) {
         xhr.setRequestHeader(header, token);
     });
 
@@ -19,32 +19,115 @@ function add(add_title) {
     $('#modalTitle').html(add_title);
     form.find(":input").val("");
     $('#editRow').modal();
-    $("#lastName").autocomplete({
-        source :
-            function(request, response) {
+    $("#firstName").autocomplete({
+        source: function (request, response) {
             $.ajax({
-                url : ajaxUrl + 'autocomplete-last-name',
-                type : "POST",
-                data : {
-                    term : request.term
+                url: ajaxUrl + 'autocomplete-first-name',
+                type: "POST",
+                data: {
+                    term: request.term
                 },
-                dataType : "json",
-                success : function(data) {
+                dataType: "json",
+                success: function (data) {
                     // debugger;
                     response(data);
                 }
             });
         }
-
-        ,select: function(event, ui) {
-            debugger;
-            $('#lastName').val(ui.item.label);
-            $('#firstName').val(ui.item.value);
-            $('#phone').val(ui.item.phoneNumber);
+        , select: function (event, ui) {
+            $('#firstName').val(ui.item.firstName);
+            $('#lastName').val(ui.item.lastName);
+            $('#phoneNumber').val(ui.item.phoneNumber);
+            $('#city').val(ui.item.city);
+            $('#postOffice').val(ui.item.postOffice);
             return false; // Prevent the widget from inserting the value.
-        },
-        focus: function(event, ui) {
+        }
+        , focus: function (event, ui) {
+            $("#firstName").val(ui.item.label);
+            return false; // Prevent the widget from inserting the value.
+        }
+    });
+    $("#lastName").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: ajaxUrl + 'autocomplete-last-name',
+                type: "POST",
+                data: {
+                    term: request.term
+                },
+                dataType: "json",
+                success: function (data) {
+                    // debugger;
+                    response(data);
+                }
+            });
+        }
+        , select: function (event, ui) {
+            $('#firstName').val(ui.item.firstName);
+            $('#lastName').val(ui.item.lastName);
+            $('#phoneNumber').val(ui.item.phoneNumber);
+            $('#city').val(ui.item.city);
+            $('#postOffice').val(ui.item.postOffice);
+            return false; // Prevent the widget from inserting the value.
+        }
+        , focus: function (event, ui) {
             $("#lastName").val(ui.item.label);
+            return false; // Prevent the widget from inserting the value.
+        }
+    });
+    $("#city").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: ajaxUrl + 'autocomplete-city',
+                type: "POST",
+                data: {
+                    term: request.term
+                },
+                dataType: "json",
+                success: function (data) {
+                    // debugger;
+                    response(data);
+                }
+            });
+        }
+        , select: function (event, ui) {
+            $('#firstName').val(ui.item.firstName);
+            $('#lastName').val(ui.item.lastName);
+            $('#phoneNumber').val(ui.item.phoneNumber);
+            $('#city').val(ui.item.city);
+            $('#postOffice').val(ui.item.postOffice);
+            return false; // Prevent the widget from inserting the value.
+        }
+        , focus: function (event, ui) {
+            $("#city").val(ui.item.label);
+            return false; // Prevent the widget from inserting the value.
+        }
+    });
+    $("#phoneNumber").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: ajaxUrl + 'autocomplete-phone-number',
+                type: "POST",
+                data: {
+                    term: request.term
+                },
+                dataType: "json",
+                success: function (data) {
+                    // debugger;
+                    response(data);
+                }
+            });
+        }
+        , select: function (event, ui) {
+            $('#firstName').val(ui.item.firstName);
+            $('#lastName').val(ui.item.lastName);
+            $('#phoneNumber').val(ui.item.phoneNumber);
+            $('#city').val(ui.item.city);
+            $('#postOffice').val(ui.item.postOffice);
+            return false; // Prevent the widget from inserting the value.
+        }
+        , focus: function (event, ui) {
+            $("#phoneNumber").val(ui.item.label);
             return false; // Prevent the widget from inserting the value.
         }
     });
@@ -77,7 +160,7 @@ function deleteRow(id) {
 function enableUnlimited(chkbox, id) {
     var enabled = chkbox.is(":checked");
     $.ajax({
-        url: ajaxUrl + id +'/change-unlimited',
+        url: ajaxUrl + id + '/change-unlimited',
         type: 'POST',
         data: 'unlimited=' + enabled,
         success: function () {
@@ -89,7 +172,7 @@ function enableUnlimited(chkbox, id) {
 function enableHasVariations(chkbox, id) {
     var enabled = chkbox.is(":checked");
     $.ajax({
-        url: ajaxUrl + id  +'/change-variations',
+        url: ajaxUrl + id + '/change-variations',
         type: 'POST',
         data: 'hasVariations=' + enabled,
         success: function () {
@@ -140,7 +223,7 @@ function failNoty(event, jqXHR, options, jsExc) {
     closeNoty();
     var errorInfo = $.parseJSON(jqXHR.responseText);
     failedNote = noty({
-        text: i18n['common.failed'] + ': ' + jqXHR.statusText + "<br>"+ errorInfo.cause + "<br>" + errorInfo.detail,
+        text: i18n['common.failed'] + ': ' + jqXHR.statusText + "<br>" + errorInfo.cause + "<br>" + errorInfo.detail,
         type: 'error',
         layout: 'bottomRight'
     });
@@ -148,14 +231,14 @@ function failNoty(event, jqXHR, options, jsExc) {
 
 function renderEditBtn(data, type, row) {
     if (type == 'display' && $('#hasRoleAdmin').val()) {
-        return '<a class="btn btn-xs btn-primary" onclick="updateRow(' + row.id + ');">'+i18n['common.update']+'</a>';
+        return '<a class="btn btn-xs btn-primary" onclick="updateRow(' + row.id + ');">' + i18n['common.update'] + '</a>';
     }
 }
 
 function renderDeleteBtn(data, type, row) {
 
     if (type == 'display' && $('#hasRoleAdmin').val()) {
-        return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">'+i18n['common.delete']+'</a>';
+        return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">' + i18n['common.delete'] + '</a>';
     }
 
 }

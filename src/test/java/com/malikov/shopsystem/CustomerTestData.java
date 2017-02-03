@@ -22,7 +22,7 @@ public class CustomerTestData {
                             && Objects.equals(expected.getLastName(), actual.getLastName())
                             && Objects.equals(expected.getPhoneNumber(), actual.getPhoneNumber())
                             && Objects.equals(expected.getCity(), actual.getCity())
-                            && Objects.equals(expected.getNovaPoshta(), actual.getNovaPoshta())
+                            && Objects.equals(expected.getPostOffice(), actual.getPostOffice())
                             && Objects.equals(expected.getEmail(), actual.getEmail())
                     )
     );

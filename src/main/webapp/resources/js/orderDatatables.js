@@ -23,7 +23,7 @@ $(function () {
             { "data": "id" },
             { "data": "firstName", "orderable": false },
             { "data": "lastName", "orderable": false },
-            { "data": "phone", "orderable": false },
+            { "data": "phoneNumber", "orderable": false },
             { "data": "city", "orderable": false },
             { "data": "novaPoshta", "orderable": false },
             { "data": "paymentType", "orderable": false },

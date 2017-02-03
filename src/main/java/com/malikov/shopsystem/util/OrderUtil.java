@@ -32,7 +32,7 @@ public class OrderUtil {
     public static Order updateFromTo(Order order, OrderTo orderTo) {
         order.setCustomerName(orderTo.getFirstName());
         order.setCustomerLastName(orderTo.getLastName());
-        order.setCustomerPhoneNumber(orderTo.getPhone());
+        order.setCustomerPhoneNumber(orderTo.getPhoneNumber());
         order.setCustomerCity(orderTo.getCity());
         order.setCustomerNovaPoshta(orderTo.getNovaPoshta());
         order.setTotalSum(orderTo.getTotalSum());

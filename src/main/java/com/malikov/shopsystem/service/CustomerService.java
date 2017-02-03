@@ -10,7 +10,13 @@ public interface CustomerService extends Service<Customer> {
 
     Collection<Customer> getByLastName(String lastName);
 
+    Collection<Customer> getByFirstNameMask(String firstNameMask);
+
     Collection<Customer> getByLastNameMask(String lastNameMask);
+
+    Collection<Customer> getByPhoneNumberMask(String phoneNumberMask);
+
+    Collection<Customer> getByCityMask(String cityMask);
 
     Collection<Customer> getByCity(String city);
 

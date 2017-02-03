@@ -22,7 +22,7 @@ public class OrderTo {
 
     private String lastName;
 
-    private String phone;
+    private String phoneNumber;
 
     private String city;
 
@@ -46,7 +46,7 @@ public class OrderTo {
             Integer id
             ,String firstName
             ,String lastName
-            ,String phone
+            ,String phoneNumber
             ,String city
             ,String novaPoshta
             ,PaymentType paymentType
@@ -57,7 +57,7 @@ public class OrderTo {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phone = phone;
+        this.phoneNumber = phoneNumber;
         this.city = city;
         this.novaPoshta = novaPoshta;
         this.paymentType = paymentType;
@@ -71,14 +71,14 @@ public class OrderTo {
             Integer id
             ,String firstName
             ,String lastName
-            ,String phone
+            ,String phoneNumber
             ,String city
             ,String novaPoshta
             ,PaymentType paymentType
             ,LocalDate date
             ,OrderStatus status
     ) {
-        this(id, firstName, lastName, phone, city, novaPoshta, paymentType, date, status, new ArrayList<>());
+        this(id, firstName, lastName, phoneNumber, city, novaPoshta, paymentType, date, status, new ArrayList<>());
         this.totalSum = 0;
     }
 
@@ -119,12 +119,12 @@ public class OrderTo {
         this.lastName = lastName;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getCity() {

@@ -27,7 +27,7 @@
                         <th><fmt:message key="customers.lastName"/></th>
                         <th><fmt:message key="customers.phoneNumber"/></th>
                         <th><fmt:message key="customers.city"/></th>
-                        <th><fmt:message key="customers.novaPoshta"/></th>
+                        <th><fmt:message key="customers.postOffice"/></th>
                         <th><fmt:message key="customers.email"/></th>
                         <%--<sec:authorize access="hasRole('ROLE_ADMIN')">--%>
                             <th></th>
@@ -91,12 +91,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="novaPoshta" class="control-label col-xs-3"><fmt:message
-                                key="customers.novaPoshta"/></label>
+                        <label for="postOffice" class="control-label col-xs-3"><fmt:message
+                                key="customers.postOffice"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="novaPoshta" name="novaPoshta"
-                                   placeholder="<fmt:message key="customers.novaPoshta"/>">
+                            <input type="text" class="form-control" id="postOffice" name="postOffice"
+                                   placeholder="<fmt:message key="customers.postOffice"/>">
                         </div>
                     </div>
                     <div class="form-group">

@@ -81,7 +81,7 @@ public class Order extends BaseEntity {
         this.customerLastName = customer.getLastName();
         this.customerPhoneNumber = customer.getPhoneNumber();
         this.customerCity = customer.getCity();
-        this.customerNovaPoshta = customer.getNovaPoshta();
+        this.customerNovaPoshta = customer.getPostOffice();
         this.user = user;
         this.paymentType = paymentType;
         this.status = orderStatus;
