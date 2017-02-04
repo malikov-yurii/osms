@@ -43,7 +43,7 @@ function add(add_title) {
             return false; // Prevent the widget from inserting the value.
         }
         , focus: function (event, ui) {
-            $("#firstName").val(ui.item.label);
+            $("#firstName").val(ui.item.lastName + ' ' + ui.item.phoneNumber + ' ' + ui.item.city + ' ' + ui.item.postOffice);
             return false; // Prevent the widget from inserting the value.
         }
     });
@@ -71,7 +71,7 @@ function add(add_title) {
             return false; // Prevent the widget from inserting the value.
         }
         , focus: function (event, ui) {
-            $("#lastName").val(ui.item.label);
+            $("#lastName").val(ui.item.lastName + ' ' + ui.item.phoneNumber + ' ' + ui.item.city + ' ' + ui.item.postOffice);
             return false; // Prevent the widget from inserting the value.
         }
     });
@@ -99,7 +99,7 @@ function add(add_title) {
             return false; // Prevent the widget from inserting the value.
         }
         , focus: function (event, ui) {
-            $("#city").val(ui.item.label);
+            $("#city").val(ui.item.lastName + ' ' + ui.item.phoneNumber + ' ' + ui.item.city + ' ' + ui.item.postOffice);
             return false; // Prevent the widget from inserting the value.
         }
     });
@@ -127,7 +127,7 @@ function add(add_title) {
             return false; // Prevent the widget from inserting the value.
         }
         , focus: function (event, ui) {
-            $("#phoneNumber").val(ui.item.label);
+            $("#phoneNumber").val(ui.item.lastName + ' ' + ui.item.phoneNumber + ' ' + ui.item.city + ' ' + ui.item.postOffice);
             return false; // Prevent the widget from inserting the value.
         }
     });
@@ -194,6 +194,17 @@ function deleteRow(id) {
         success: function () {
             updateTable();
             successNoty('common.deleted');
+        }
+    });
+}
+
+function addOrderItem(id) {
+    $.ajax({
+        url: 'ajax/profile/orders/' + id + '/add-order-item',
+        type: 'POST',
+        success: function () {
+            updateTable();
+            successNoty('common.saved');
         }
     });
 }
@@ -282,6 +293,12 @@ function renderDeleteBtn(data, type, row) {
         return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">' + i18n['common.delete'] + '</a>';
     }
 
+}
+
+function renderAddOrderItemBtn(data, type, row) {
+    if (type == 'display' && $('#hasRoleAdmin').val()) {
+        return '<a class="btn btn-xs btn-primary" onclick="addOrderItem(' + row.id + ');">' + i18n['orders.addOrderItem'] + '</a>';
+    }
 }
 
 function simpleFailNoty() {

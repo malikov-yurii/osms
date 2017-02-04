@@ -14,6 +14,7 @@ import java.util.*;
         @NamedQuery(name = Product.QUANTITY_LESS_THAN, query =
                 "SELECT p FROM Product p WHERE p.quantity < :quantity"),
         @NamedQuery(name = Product.ALL_SORTED, query = "SELECT p FROM Product p ORDER BY p.price"),
+        @NamedQuery(name = Product.BY_PRODUCT_NAME_MASK, query = "SELECT p FROM Product p WHERE lower(p.name) LIKE lower(:productNameMask)"),
 })
 @Entity
 @Table(name = "products")
@@ -24,6 +25,7 @@ public class Product extends NamedEntity {
     public static final String BY_CATEGORY_ID = "Product.getByCategoryId";
     public static final String QUANTITY_LESS_THAN = "Product.getQuantityLessThan";
     public static final String ALL_SORTED = "Product.getAllSorted";
+    public static final String BY_PRODUCT_NAME_MASK = "OrderItem.byProductNameMask";
 
     @Column(name = "price")
     private Integer price;

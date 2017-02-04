@@ -6,6 +6,7 @@ import com.malikov.shopsystem.model.PaymentType;
 import com.malikov.shopsystem.service.CustomerService;
 import com.malikov.shopsystem.service.UserService;
 import com.malikov.shopsystem.to.CustomerAutocompleteTo;
+import com.malikov.shopsystem.to.OrderItemAutocompleteTo;
 import com.malikov.shopsystem.to.OrderTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -121,8 +122,19 @@ public class OrderAjaxController extends AbstractOrderController {
     public PaymentType[] autocompletePaymentType() {
         return super.getPaymentTypeAutocomplete();
     }
+
     @PostMapping(value = "/autocomplete-status", produces = MediaType.APPLICATION_JSON_VALUE)
     public OrderStatus[] autocompleteOrderStatus() {
         return super.getOrderStatusAutocomplete();
+    }
+
+    @PostMapping(value = "/autocomplete-order-item-name", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<OrderItemAutocompleteTo> autocompleteOrderItemName(@RequestParam("term") String productNameMask) {
+        return super.getOrderItemAutocompleteTosByProductMask(productNameMask);
+    }
+
+    @PostMapping(value = "/{id}/add-order-item", produces = MediaType.APPLICATION_JSON_VALUE)
+    public void addOrderItem(@PathVariable("id") int orderId) {
+        super.addOrderItem(orderId);
     }
 }

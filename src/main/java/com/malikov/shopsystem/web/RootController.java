@@ -23,7 +23,7 @@ public class RootController {
 
     @GetMapping("/")
     public String root() {
-        return "redirect:products";
+        return "redirect:orders";
     }
 
     //    @Secured("ROLE_ADMIN")

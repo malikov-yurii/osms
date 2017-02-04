@@ -39,6 +39,7 @@
                         <th><fmt:message key="orders.date"/></th>
                         <th></th>
                         <th></th>
+                        <th></th>
                     </tr>
                     </thead>
                 </table>

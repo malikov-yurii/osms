@@ -1,19 +1,19 @@
 package com.malikov.shopsystem.web.order;
 
-import com.malikov.shopsystem.model.Order;
-import com.malikov.shopsystem.model.OrderItem;
-import com.malikov.shopsystem.model.OrderStatus;
-import com.malikov.shopsystem.model.PaymentType;
+import com.malikov.shopsystem.model.*;
 import com.malikov.shopsystem.service.CustomerService;
 import com.malikov.shopsystem.service.OrderItemService;
 import com.malikov.shopsystem.service.OrderService;
+import com.malikov.shopsystem.service.ProductService;
 import com.malikov.shopsystem.to.CustomerAutocompleteTo;
+import com.malikov.shopsystem.to.OrderItemAutocompleteTo;
 import com.malikov.shopsystem.to.OrderTo;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +28,9 @@ public abstract class AbstractOrderController {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private ProductService productService;
 
     public OrderTo getOrderTo(int id) {
         LOG.info("get order {}", id);
@@ -66,6 +69,7 @@ public abstract class AbstractOrderController {
         orderItem.setProductName(name);
         orderItemService.update(orderItem);
     }
+
     public void changeOrderItemProductPrice(int itemId, int price) {
         OrderItem orderItem = orderItemService.get(itemId);
         orderItem.setProductPrice(price);
@@ -74,6 +78,7 @@ public abstract class AbstractOrderController {
         orderService.update(order);
         orderItemService.update(orderItem);
     }
+
     public void changeOrderItemProductQuantity(int itemId, int quantity) {
         OrderItem orderItem = orderItemService.get(itemId);
         orderItem.setProductQuantity(quantity);
@@ -87,7 +92,7 @@ public abstract class AbstractOrderController {
         return customerService
                 .getByFirstNameMask(firstNameMask).stream().map(customer ->
                         new CustomerAutocompleteTo(
-                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
+//                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
                                 customer.getName(),
                                 customer.getLastName(),
                                 customer.getPhoneNumber(),
@@ -100,7 +105,7 @@ public abstract class AbstractOrderController {
         return customerService
                 .getByLastNameMask(lastNameMask).stream().map(customer ->
                         new CustomerAutocompleteTo(
-                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
+//                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
                                 customer.getName(),
                                 customer.getLastName(),
                                 customer.getPhoneNumber(),
@@ -113,7 +118,7 @@ public abstract class AbstractOrderController {
         return customerService
                 .getByPhoneNumberMask(phoneNumberMask).stream().map(customer ->
                         new CustomerAutocompleteTo(
-                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
+//                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
                                 customer.getName(),
                                 customer.getLastName(),
                                 customer.getPhoneNumber(),
@@ -126,7 +131,7 @@ public abstract class AbstractOrderController {
         return customerService
                 .getByCityMask(cityMask).stream().map(customer ->
                         new CustomerAutocompleteTo(
-                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
+//                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
                                 customer.getName(),
                                 customer.getLastName(),
                                 customer.getPhoneNumber(),
@@ -141,5 +146,33 @@ public abstract class AbstractOrderController {
 
     public OrderStatus[] getOrderStatusAutocomplete() {
         return OrderStatus.values();
+    }
+
+    public List<OrderItemAutocompleteTo> getOrderItemAutocompleteTosByProductMask(String productNameMask) {
+        List<OrderItemAutocompleteTo> orderItemAutocompleteTos = new ArrayList<>();
+        productService.getByProductNameMask(productNameMask).forEach(product -> {
+            if (product.getHasVariations()) {
+                for (ProductVariation productVariation : product.getVariations()) {
+                    orderItemAutocompleteTos.add(
+                            new OrderItemAutocompleteTo(
+                                    product.getName() + productVariation.getVariationValue(),
+                                    productVariation.getPrice()
+                            )
+                    );
+                }
+            } else {
+                orderItemAutocompleteTos.add(
+                        new OrderItemAutocompleteTo(
+                                product.getName(),
+                                product.getPrice()
+                        )
+                );
+            }
+        });
+        return orderItemAutocompleteTos;
+    }
+
+    public void addOrderItem(int orderId) {
+        orderItemService.save(new OrderItem(orderService.get(orderId), null, "", 0, 0));
     }
 }

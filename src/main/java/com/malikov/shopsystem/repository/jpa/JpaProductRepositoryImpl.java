@@ -57,4 +57,10 @@ public class JpaProductRepositoryImpl implements ProductRepository {
         return em.createNamedQuery(Product.ALL_SORTED, Product.class)
                 .getResultList();
     }
+
+    @Override
+    public List<Product> getByProductNameMask(String productNameMask) {
+        return em.createNamedQuery(Product.BY_PRODUCT_NAME_MASK, Product.class)
+                .setParameter("productNameMask", "%" + productNameMask + "%").getResultList();
+    }
 }

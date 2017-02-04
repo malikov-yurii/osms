@@ -43,7 +43,9 @@ public class JpaOrderItemRepositoryImpl implements OrderItemRepository {
         return em.createNamedQuery(OrderItem.ALL, OrderItem.class).getResultList();
     }
 
-//    @Override
+
+
+    //    @Override
 //    public Collection<OrderItemExtended> getByCustomerId(int customerId) {
 //        return em.createNamedQuery(OrderItemExtended.BY_CUSTOMER_ID, OrderItemExtended.class)
 //                .setParameter("customerId", customerId).getResultList();

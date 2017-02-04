@@ -20,16 +20,21 @@ $(function () {
                 "defaultContent": "",
                 "orderable": false
             },
-            { "data": "id" },
-            { "data": "firstName", "orderable": false },
-            { "data": "lastName", "orderable": false },
-            { "data": "phoneNumber", "orderable": false },
-            { "data": "city", "orderable": false },
-            { "data": "postOffice", "orderable": false },
-            { "data": "paymentType", "orderable": false },
-            { "data": "totalSum", "orderable": false },
-            { "data": "status", "orderable": false },
-            { "data": "date", "orderable": false },
+            {"data": "id"},
+            {"data": "firstName", "orderable": false},
+            {"data": "lastName", "orderable": false},
+            {"data": "phoneNumber", "orderable": false},
+            {"data": "city", "orderable": false},
+            {"data": "postOffice", "orderable": false},
+            {"data": "paymentType", "orderable": false},
+            {"data": "totalSum", "orderable": false},
+            {"data": "status", "orderable": false},
+            {"data": "date", "orderable": false},
+            {
+                "defaultContent": "",
+                "orderable": false,
+                "render": renderAddOrderItemBtn
+            },
             {
                 "defaultContent": "",
                 "orderable": false,
@@ -51,11 +56,11 @@ $(function () {
         "initComplete": makeEditable
     });
 
-    datatableApi.on('click', '.order-moar', function() {
+    datatableApi.on('click', '.order-moar', function () {
         var tr = $(this).closest('tr');
         var row = datatableApi.row(tr);
 
-        if ( row.child.isShown() ) {
+        if (row.child.isShown()) {
             row.child.hide();
             tr.removeClass('opened');
         } else {
@@ -65,11 +70,11 @@ $(function () {
     });
 
     // Storing initial value of order-item-cell on getting focus
-    datatableApi.on('focusin', '.order-product-table td', function() {
+    datatableApi.on('focusin', '.order-product-table td', function () {
         $(this).data('value', $(this).text());
 
         // Making element to focus out on ENTER keybutton
-        $(this).keypress(function(e) {
+        $(this).keypress(function (e) {
             if (e.which == 13) {
                 e.preventDefault();
                 $(this).blur();
@@ -78,7 +83,7 @@ $(function () {
     });
 
     // Storing current values of order-item-cell
-    datatableApi.on('focusout', '.order-product-table td', function() {
+    datatableApi.on('focusout', '.order-product-table td', function () {
 
         var $this = $(this);
         var orderItemId = $this.closest('tr').data('order-item-id');
@@ -100,23 +105,24 @@ $(function () {
             // if value has changed then send it
 
             $.ajax({
-            url: ajaxUrl + orderItemId + '/change-' + key,
-            type: 'POST',
-            data: key + '=' + currentVal,
-            success: function() {
+                url: ajaxUrl + orderItemId + '/change-' + key,
+                type: 'POST',
+                data: key + '=' + currentVal,
+                success: function () {
                     successNoty('common.saved');
                 }
             });
         }
     });
 
-  datatableApi.on('draw.dt', function() {
-    showOrderItems();
-  });
+    datatableApi.on('draw.dt', function () {
+        showOrderItems();
+
+    });
 });
 
 function showOrderItems() {
-    datatableApi.rows().every(function( rowIdx, tableLoop, rowLoop ) {
+    datatableApi.rows().every(function (rowIdx, tableLoop, rowLoop) {
         var row = this;
         var tr = row.node();
         var orderItemTos = row.data().orderItemTos;
@@ -124,31 +130,58 @@ function showOrderItems() {
 
         console.log(row.data());
 
-        row.child( buildOrderItemList(orderItemTos, orderId) ).show();
+        row.child(buildOrderItemList(orderItemTos, orderId)).show();
         $(tr).addClass('opened');
+        // addAutocompleteToOrderItems(orderItemTos, orderId);
+        var $firstTd = row.child().find('table td:first-child');
+        var $lastTd = row.child().find('table td:last-child');
 
-    });
+        $firstTd.autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: ajaxUrl + 'autocomplete-order-item-name',
+                    type: "POST",
+                    data: {
+                        term: request.term
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        response(data);
+                    }
+                });
+            }
+            , select: function (event, ui) {
+                $firstTd.val(ui.item.orderItemName);
+                $lastTd.val(ui.item.orderItemPrice);
+                return false; // Prevent the widget from inserting the value.
+            }
+            , focus: function (event, ui) {
+                $firstTd.val(ui.item.orderItemName + ' ' + ui.item.orderItemPrice);
+                return false; // Prevent the widget from inserting the value.
+            }
+        });
+    })
 }
 
-function buildOrderItemList(orderItemTos, orderId) {
-    var orderItemsList =
-        '<table class="order-product-table" data-order-id="'+orderId+'">\
+    function buildOrderItemList(orderItemTos, orderId) {
+        var orderItemsList =
+            '<table class="order-product-table" data-order-id="' + orderId + '">\
             <thead>\
                 <tr><th>Item Name</th><th>Quantity</th><th>Price</th></tr>\
             </thead>\
             <tbody>';
 
-    for (var i = 0; i < orderItemTos.length; i++) {
-        orderItemsList +=
-            '<tr class="order-product-row" data-order-item-id="'+ orderItemTos[i].orderItemId +'" data-order-product-id="'+ orderItemTos[i].orderItemId +'">\
+        for (var i = 0; i < orderItemTos.length; i++) {
+            orderItemsList +=
+                '<tr class="order-product-row" data-order-item-id="' + orderItemTos[i].orderItemId + '" data-order-product-id="' + orderItemTos[i].orderItemId + '">\
             <td class="order-product-name" data-key="name" contenteditable="true">' +
-            orderItemTos[i].name + '</td><td class="order-product-qty" data-key="quantity" contenteditable="true">' +
-            orderItemTos[i].quantity + '</td><td class="order-product-price" data-key="price" contenteditable="true">' +
-            orderItemTos[i].price + '</td></tr>'
+                orderItemTos[i].name + '</td><td class="order-product-qty" data-key="quantity" contenteditable="true">' +
+                orderItemTos[i].quantity + '</td><td class="order-product-price" data-key="price" contenteditable="true">' +
+                orderItemTos[i].price + '</td></tr>'
+        }
+
+        orderItemsList += '</tbody></table>';
+
+        return orderItemsList;
+
     }
-
-    orderItemsList += '</tbody></table>';
-
-    return orderItemsList;
-
-}

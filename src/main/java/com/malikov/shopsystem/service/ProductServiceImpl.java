@@ -62,4 +62,9 @@ public class ProductServiceImpl implements ProductService {
         product.setHasVariations(hasVariations);
         update(product);
     }
+
+    @Override
+    public List<Product> getByProductNameMask(String productNameMask) {
+        return repository.getByProductNameMask(productNameMask);
+    }
 }
