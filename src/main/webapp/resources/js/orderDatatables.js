@@ -180,13 +180,23 @@ function showOrderItems() {
     })
 }
 
+function renderDeleteOrderItemBtn(orderItemId) {
+
+    // if (type == 'display' && $('#hasRoleAdmin').val()) {
+    return '<a class="btn btn-xs btn-danger" onclick="deleteOrderItem(' + orderItemId + ');">' + i18n['common.delete'] + '</a>';
+    // }
+
+}
+
 function buildOrderItemList(orderItemTos, orderId) {
     var orderItemsList =
         '<table class="order-product-table" data-order-id="' + orderId + '">\
             <thead>\
-                <tr><th>Item Name</th><th>Quantity</th><th>Price</th></tr>\
+                <tr><th>Item Name</th><th>Quantity</th><th>Price</th><th></th></tr>\
             </thead>\
             <tbody>';
+
+    // debugger;
 
     for (var i = 0; i < orderItemTos.length; i++) {
         orderItemsList +=
@@ -194,11 +204,22 @@ function buildOrderItemList(orderItemTos, orderId) {
             <td class="order-product-name" data-key="name" contenteditable="true">' +
             orderItemTos[i].name + '</td><td class="order-product-qty" data-key="quantity" contenteditable="true">' +
             orderItemTos[i].quantity + '</td><td class="order-product-price" data-key="price" contenteditable="true">' +
-            orderItemTos[i].price + '</td></tr>'
+            orderItemTos[i].price + '</td><td>' + renderDeleteOrderItemBtn(orderItemTos[i].orderItemId) + '</td></tr>'
     }
 
     orderItemsList += '</tbody></table>';
 
     return orderItemsList;
 
+}
+
+function deleteOrderItem(id) {
+    $.ajax({
+        url: ajaxUrl + 'order-item/' + id,
+        type: 'DELETE',
+        success: function () {
+            updateTable();
+            successNoty('common.deleted');
+        }
+    });
 }

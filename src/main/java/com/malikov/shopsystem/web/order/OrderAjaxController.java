@@ -160,4 +160,9 @@ public class OrderAjaxController extends AbstractOrderController {
     public void addOrderItem(@PathVariable("id") int orderId) {
         super.addOrderItem(orderId);
     }
+
+    @DeleteMapping(value = "/order-item/{orderItemId}")
+    public void deleteOrderItem(@PathVariable("orderItemId") int orderItemId) {
+        super.deleteOrderItem(orderItemId);
+    }
 }

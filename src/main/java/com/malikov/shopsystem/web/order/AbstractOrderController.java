@@ -193,4 +193,8 @@ public abstract class AbstractOrderController {
     public void addOrderItem(int orderId) {
         orderItemService.save(new OrderItem(orderService.get(orderId), null, "", 0, 0));
     }
+
+    public void deleteOrderItem(int orderItemId) {
+        orderItemService.delete(orderItemId);
+    }
 }
