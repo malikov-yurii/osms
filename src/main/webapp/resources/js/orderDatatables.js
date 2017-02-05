@@ -134,7 +134,8 @@ function showOrderItems() {
         $(tr).addClass('opened');
         // addAutocompleteToOrderItems(orderItemTos, orderId);
         var $firstTd = row.child().find('table td:first-child');
-        var $lastTd = row.child().find('table td:last-child');
+        // var $firstTd = row.child().find('table td:first-child');
+        // var $lastTd = row.child().find('table td:last-child');
 
         $firstTd.autocomplete({
             source: function (request, response) {
@@ -151,12 +152,21 @@ function showOrderItems() {
                 });
             }
             , select: function (event, ui) {
-                $firstTd.val(ui.item.orderItemName);
-                $lastTd.val(ui.item.orderItemPrice);
+                console.log(this);
+                // debugger;
+                console.log(ui);
+                $(this).html(ui.item.orderItemName);
+                $(this).nextAll('.order-product-price').html(ui.item.orderItemPrice);
+                // $firstTd.val(ui.item.orderItemName);
+                // row.child().find('td:first-child').val(ui.item.orderItemName);
+                // this.find('td:last-child').val(ui.item.orderItemPrice);
                 return false; // Prevent the widget from inserting the value.
             }
             , focus: function (event, ui) {
-                $firstTd.val(ui.item.orderItemName + ' ' + ui.item.orderItemPrice);
+                // this.find('td:first-child').val(ui.item.label);
+
+                $(this).html(ui.item.orderItemName);
+                // $(this).nextAll('.order-product-price').html(ui.item.orderItemPrice);
                 return false; // Prevent the widget from inserting the value.
             }
         });

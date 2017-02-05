@@ -70,10 +70,10 @@ function add(add_title) {
             $('#postOffice').val(ui.item.postOffice);
             return false; // Prevent the widget from inserting the value.
         }
-        , focus: function (event, ui) {
-            $("#lastName").val(ui.item.lastName + ' ' + ui.item.phoneNumber + ' ' + ui.item.city + ' ' + ui.item.postOffice);
-            return false; // Prevent the widget from inserting the value.
-        }
+        // , focus: function (event, ui) {
+        //     $("#lastName").val(ui.item.lastName + ' ' + ui.item.phoneNumber + ' ' + ui.item.city + ' ' + ui.item.postOffice);
+        //     return false; // Prevent the widget from inserting the value.
+        // }
     });
     $("#city").autocomplete({
         source: function (request, response) {

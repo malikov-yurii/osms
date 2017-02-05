@@ -92,7 +92,7 @@ public abstract class AbstractOrderController {
         return customerService
                 .getByFirstNameMask(firstNameMask).stream().map(customer ->
                         new CustomerAutocompleteTo(
-//                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
+                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
                                 customer.getName(),
                                 customer.getLastName(),
                                 customer.getPhoneNumber(),
@@ -105,7 +105,7 @@ public abstract class AbstractOrderController {
         return customerService
                 .getByLastNameMask(lastNameMask).stream().map(customer ->
                         new CustomerAutocompleteTo(
-//                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
+                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
                                 customer.getName(),
                                 customer.getLastName(),
                                 customer.getPhoneNumber(),
@@ -118,7 +118,7 @@ public abstract class AbstractOrderController {
         return customerService
                 .getByPhoneNumberMask(phoneNumberMask).stream().map(customer ->
                         new CustomerAutocompleteTo(
-//                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
+                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
                                 customer.getName(),
                                 customer.getLastName(),
                                 customer.getPhoneNumber(),
@@ -131,7 +131,7 @@ public abstract class AbstractOrderController {
         return customerService
                 .getByCityMask(cityMask).stream().map(customer ->
                         new CustomerAutocompleteTo(
-//                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
+                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
                                 customer.getName(),
                                 customer.getLastName(),
                                 customer.getPhoneNumber(),
@@ -155,7 +155,9 @@ public abstract class AbstractOrderController {
                 for (ProductVariation productVariation : product.getVariations()) {
                     orderItemAutocompleteTos.add(
                             new OrderItemAutocompleteTo(
-                                    product.getName() + productVariation.getVariationValue(),
+                                    product.getName() + " " + productVariation.getVariationValue().getName() + " " +
+                                    productVariation.getPrice(),
+                                    product.getName() + " " + productVariation.getVariationValue().getName(),
                                     productVariation.getPrice()
                             )
                     );
@@ -163,6 +165,7 @@ public abstract class AbstractOrderController {
             } else {
                 orderItemAutocompleteTos.add(
                         new OrderItemAutocompleteTo(
+                                product.getName() + " " + product.getPrice(),
                                 product.getName(),
                                 product.getPrice()
                         )

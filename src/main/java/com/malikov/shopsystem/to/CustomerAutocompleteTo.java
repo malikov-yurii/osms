@@ -2,7 +2,8 @@ package com.malikov.shopsystem.to;
 
 public class CustomerAutocompleteTo {
 
-//    private String label;
+//    get rid of label  - use concatenation instead
+    private String label;
 
     private String firstName;
 
@@ -15,9 +16,9 @@ public class CustomerAutocompleteTo {
     private String postOffice;
 
     public CustomerAutocompleteTo(
-//            String label,
+            String label,
             String firstName, String lastName, String phoneNumber, String city, String postOffice) {
-//        this.label = label;
+        this.label = label;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -25,13 +26,13 @@ public class CustomerAutocompleteTo {
         this.postOffice = postOffice;
     }
 
-//    public String getLabel() {
-//        return label;
-//    }
+    public String getLabel() {
+        return label;
+    }
 
-//    public void setLabel(String label) {
-//        this.label = label;
-//    }
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
     public String getFirstName() {
         return firstName;
