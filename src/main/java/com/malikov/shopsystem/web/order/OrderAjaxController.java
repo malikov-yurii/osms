@@ -83,19 +83,42 @@ public class OrderAjaxController extends AbstractOrderController {
 //        return new ResponseEntity<>(HttpStatus.OK);
 //    }
 
-    @PostMapping(value = "{itemId}/change-name")
-    public void changeName(@PathVariable("itemId") int itemId, @RequestParam("name") String name) {
-        super.changeOrderItemProductName(itemId, name);
+    // TODO: 2/5/2017 chang it to PUT
+    @PostMapping(value = "{itemId}/update-name")
+    public void updateOrderItemName(@PathVariable("itemId") int itemId, @RequestParam("name") String name) {
+        super.updateOrderItemProductName(itemId, name);
     }
 
-    @PostMapping(value = "{itemId}/change-price")
-    public void changePrice(@PathVariable("itemId") int itemId, @RequestParam("price") int price) {
-        super.changeOrderItemProductPrice(itemId, price);
+    // TODO: 2/5/2017 chang it to PUT
+    @PostMapping(value = "{itemId}/update-price")
+    public void updateOrderItemPrice(@PathVariable("itemId") int itemId, @RequestParam("price") int price) {
+        super.updateOrderItemPrice(itemId, price);
     }
 
-    @PostMapping(value = "{itemId}/change-quantity")
-    public void changeQuantity(@PathVariable("itemId") int itemId, @RequestParam("quantity") int quantity) {
-        super.changeOrderItemProductQuantity(itemId, quantity);
+//    @PutMapping(value = "{itemId}/change-order-item-after-order-item-name-autocomplete", consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public void changeOrderItemAfterOrderItemNameAutocomplete(@PathVariable("itemId") int itemId
+//            , @RequestBody String json
+//    ) {
+//        JSONObject jsonObject = JSONObject.fromObject(json);
+//        String m = jsonObject.get("message").toString();
+//        String t = jsonObject.get("time").toString();
+//        String n = jsonObject.get("name").toString();
+//        super.updateOrderItemPriceProductIdProductVariationId(itemId, price, productId, productVariationId);
+//    }
+
+    // TODO: 2/5/2017 chang it to PUT
+    @PostMapping(value = "{itemId}/update-order-item-after-order-item-name-autocomplete")
+    public void updateOrderItemAfterOrderItemNameAutocomplete(@PathVariable("itemId") int itemId
+            , @RequestParam("price") int price
+    , @RequestParam("productId") int productId
+    , @RequestParam("productVariationId") int productVariationId
+    ) {
+        super.updateOrderItemPriceProductIdProductVariationId(itemId, price, productId, productVariationId);
+    }
+
+    @PostMapping(value = "{itemId}/update-quantity")
+    public void updateOrderItemQuantity(@PathVariable("itemId") int itemId, @RequestParam("quantity") int quantity) {
+        super.updateOrderItemProductQuantity(itemId, quantity);
     }
 
     @PostMapping(value = "/autocomplete-first-name", produces = MediaType.APPLICATION_JSON_VALUE)

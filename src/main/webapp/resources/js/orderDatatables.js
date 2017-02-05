@@ -105,7 +105,7 @@ $(function () {
             // if value has changed then send it
 
             $.ajax({
-                url: ajaxUrl + orderItemId + '/change-' + key,
+                url: ajaxUrl + orderItemId + '/update-' + key,
                 type: 'POST',
                 data: key + '=' + currentVal,
                 success: function () {
@@ -152,14 +152,21 @@ function showOrderItems() {
                 });
             }
             , select: function (event, ui) {
-                console.log(this);
-                // debugger;
-                console.log(ui);
-                $(this).html(ui.item.orderItemName);
+                var $this = $(this);
+                $this.html(ui.item.orderItemName);
                 $(this).nextAll('.order-product-price').html(ui.item.orderItemPrice);
-                // $firstTd.val(ui.item.orderItemName);
-                // row.child().find('td:first-child').val(ui.item.orderItemName);
-                // this.find('td:last-child').val(ui.item.orderItemPrice);
+                var orderItemId = $this.closest('tr').data('order-item-id');
+
+                $.ajax({
+                    url: ajaxUrl + orderItemId + '/update-order-item-after-order-item-name-autocomplete',
+                    type: 'POST',
+                    data: 'price=' + ui.item.orderItemPrice + '&productId=' + ui.item.productId + '&productVariationId=' + ui.item.productVariationId
+                    // todo need PUT for rest??
+                    // contentType: "application/json",
+                    // type: "PUT",
+                    // dataType: "json",
+                    // data: JSON.stringify({'price' : ui.item.orderItemPrice, 'productId': ui.item.productId, 'productVariationId' : ui.item.productVariationId}),
+                });
                 return false; // Prevent the widget from inserting the value.
             }
             , focus: function (event, ui) {
@@ -173,25 +180,25 @@ function showOrderItems() {
     })
 }
 
-    function buildOrderItemList(orderItemTos, orderId) {
-        var orderItemsList =
-            '<table class="order-product-table" data-order-id="' + orderId + '">\
+function buildOrderItemList(orderItemTos, orderId) {
+    var orderItemsList =
+        '<table class="order-product-table" data-order-id="' + orderId + '">\
             <thead>\
                 <tr><th>Item Name</th><th>Quantity</th><th>Price</th></tr>\
             </thead>\
             <tbody>';
 
-        for (var i = 0; i < orderItemTos.length; i++) {
-            orderItemsList +=
-                '<tr class="order-product-row" data-order-item-id="' + orderItemTos[i].orderItemId + '" data-order-product-id="' + orderItemTos[i].orderItemId + '">\
+    for (var i = 0; i < orderItemTos.length; i++) {
+        orderItemsList +=
+            '<tr class="order-product-row" data-order-item-id="' + orderItemTos[i].orderItemId + '" data-order-product-id="' + orderItemTos[i].orderItemId + '">\
             <td class="order-product-name" data-key="name" contenteditable="true">' +
-                orderItemTos[i].name + '</td><td class="order-product-qty" data-key="quantity" contenteditable="true">' +
-                orderItemTos[i].quantity + '</td><td class="order-product-price" data-key="price" contenteditable="true">' +
-                orderItemTos[i].price + '</td></tr>'
-        }
-
-        orderItemsList += '</tbody></table>';
-
-        return orderItemsList;
-
+            orderItemTos[i].name + '</td><td class="order-product-qty" data-key="quantity" contenteditable="true">' +
+            orderItemTos[i].quantity + '</td><td class="order-product-price" data-key="price" contenteditable="true">' +
+            orderItemTos[i].price + '</td></tr>'
     }
+
+    orderItemsList += '</tbody></table>';
+
+    return orderItemsList;
+
+}

@@ -1,10 +1,7 @@
 package com.malikov.shopsystem.web.order;
 
 import com.malikov.shopsystem.model.*;
-import com.malikov.shopsystem.service.CustomerService;
-import com.malikov.shopsystem.service.OrderItemService;
-import com.malikov.shopsystem.service.OrderService;
-import com.malikov.shopsystem.service.ProductService;
+import com.malikov.shopsystem.service.*;
 import com.malikov.shopsystem.to.CustomerAutocompleteTo;
 import com.malikov.shopsystem.to.OrderItemAutocompleteTo;
 import com.malikov.shopsystem.to.OrderTo;
@@ -31,6 +28,9 @@ public abstract class AbstractOrderController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private ProductVariationService productVariationService;
 
     public OrderTo getOrderTo(int id) {
         LOG.info("get order {}", id);
@@ -64,13 +64,13 @@ public abstract class AbstractOrderController {
         return orderService.save(order);
     }
 
-    public void changeOrderItemProductName(int itemId, String name) {
+    public void updateOrderItemProductName(int itemId, String name) {
         OrderItem orderItem = orderItemService.get(itemId);
         orderItem.setProductName(name);
         orderItemService.update(orderItem);
     }
 
-    public void changeOrderItemProductPrice(int itemId, int price) {
+    public void updateOrderItemPrice(int itemId, int price) {
         OrderItem orderItem = orderItemService.get(itemId);
         orderItem.setProductPrice(price);
         Order order = orderItem.getOrder();
@@ -79,9 +79,20 @@ public abstract class AbstractOrderController {
         orderItemService.update(orderItem);
     }
 
-    public void changeOrderItemProductQuantity(int itemId, int quantity) {
+    public void updateOrderItemProductQuantity(int itemId, int quantity) {
         OrderItem orderItem = orderItemService.get(itemId);
         orderItem.setProductQuantity(quantity);
+        Order order = orderItem.getOrder();
+        order.setTotalSum(OrderUtil.calculateTotalSum(order.getOrderItems()));
+        orderService.update(order);
+        orderItemService.update(orderItem);
+    }
+
+    public void updateOrderItemPriceProductIdProductVariationId(int itemId, int price, int productId, int productVariationId) {
+        OrderItem orderItem = orderItemService.get(itemId);
+        orderItem.setProductPrice(price);
+        orderItem.setProductId(productId);
+        orderItem.setProductVariation(productVariationService.get(productVariationId));
         Order order = orderItem.getOrder();
         order.setTotalSum(OrderUtil.calculateTotalSum(order.getOrderItems()));
         orderService.update(order);
@@ -156,7 +167,9 @@ public abstract class AbstractOrderController {
                     orderItemAutocompleteTos.add(
                             new OrderItemAutocompleteTo(
                                     product.getName() + " " + productVariation.getVariationValue().getName() + " " +
-                                    productVariation.getPrice(),
+                                            productVariation.getPrice(),
+                                    product.getId(),
+                                    productVariation.getId(),
                                     product.getName() + " " + productVariation.getVariationValue().getName(),
                                     productVariation.getPrice()
                             )
@@ -166,6 +179,8 @@ public abstract class AbstractOrderController {
                 orderItemAutocompleteTos.add(
                         new OrderItemAutocompleteTo(
                                 product.getName() + " " + product.getPrice(),
+                                product.getId(),
+                                0,
                                 product.getName(),
                                 product.getPrice()
                         )

@@ -3,11 +3,17 @@ package com.malikov.shopsystem.model;
 import javax.persistence.*;
 import java.util.Objects;
 
+@NamedQueries({
+        @NamedQuery(name = ProductVariation.DELETE, query = "DELETE FROM ProductVariation pv WHERE pv.id=:id"),
+        @NamedQuery(name = ProductVariation.ALL_SORTED, query = "SELECT pv FROM ProductVariation pv ORDER BY pv.id"),
+})
 @Entity
 @Table(name = "products_attr")
 @AttributeOverride(name = "id", column = @Column(name = "product_attr_id"))
 public class ProductVariation extends BaseEntity{
 
+    public static final String DELETE = "ProductVariation.delete";
+    public static final String ALL_SORTED = "ProductVariation.allSorted";
     @Column(name = "price")
     private int price;
 
