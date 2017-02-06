@@ -7,6 +7,12 @@ function updateTable() {
 
 $(function () {
     datatableApi = $('#datatable').DataTable({
+        // "aoColumnDefs": [
+        //     { "sClass": "editable_class", "aTargets": [ 2 ] }
+        // ],
+        // "fnDrawCallback": function() {
+        //     $("td.my_class").editable();
+        // },
         "ajax": {
             "url": ajaxUrl,
             "dataSrc": ""
@@ -47,6 +53,16 @@ $(function () {
 
             }
         ],
+        "createdRow": function (row, data, rowIndex) {
+            // Per-cell function to do whatever needed with cells
+            // $.each($('td', row), function (colIndex) {
+            $.each($('td', row), function (colIndex) {
+                // For example, adding data-* attributes to the cell
+                if (colIndex > 1 && colIndex < 10) {
+                    $(this).attr('contenteditable', "true");
+                }
+            })
+        },
         "order": [
             [
                 1,
@@ -54,7 +70,10 @@ $(function () {
             ]
         ],
         "initComplete": makeEditable
-    });
+    })
+    ;
+
+// datatableApi.on('click', )
 
     datatableApi.on('click', '.order-moar', function () {
         var tr = $(this).closest('tr');
@@ -69,7 +88,7 @@ $(function () {
         }
     });
 
-    // Storing initial value of order-item-cell on getting focus
+// Storing initial value of order-item-cell on getting focus
     datatableApi.on('focusin', '.order-product-table td', function () {
         $(this).data('value', $(this).text());
 
@@ -82,7 +101,7 @@ $(function () {
         });
     });
 
-    // Storing current values of order-item-cell
+// Storing current values of order-item-cell
     datatableApi.on('focusout', '.order-product-table td', function () {
 
         var $this = $(this);
@@ -119,7 +138,8 @@ $(function () {
         showOrderItems();
 
     });
-});
+})
+;
 
 function showOrderItems() {
     datatableApi.rows().every(function (rowIdx, tableLoop, rowLoop) {
@@ -128,15 +148,34 @@ function showOrderItems() {
         var orderItemTos = row.data().orderItemTos;
         var orderId = row.data().id;
 
-        console.log(row.data());
+// debugger;
+
+
+        // var cellId = '#cell-' + orderId + '-2';
+        // var data = datatableApi.cell(cellId).data();
+        // $( row)
+        //     .column(0)
+        //     .find('td:first-child')
+        // .find('sorting_1')
+        // .find('td:eq(1)')
+        // .prop('contenteditable','true');
+        // .attr('contenteditable','true');
+        // .attr('contenteditable','true');
+
+        // console.log(data);
+
+
+        // datatableApi.cells().every( function () {
+        //
+        //     console.log(this.data());
+        //     debugger;
+        // } );
 
         row.child(buildOrderItemList(orderItemTos, orderId)).show();
         $(tr).addClass('opened');
-        // addAutocompleteToOrderItems(orderItemTos, orderId);
-        var $firstTd = row.child().find('table td:first-child');
-        // var $firstTd = row.child().find('table td:first-child');
-        // var $lastTd = row.child().find('table td:last-child');
 
+
+        var $firstTd = row.child().find('table td:first-child');
         $firstTd.autocomplete({
             source: function (request, response) {
                 $.ajax({
