@@ -206,4 +206,11 @@ public abstract class AbstractOrderController {
         order.setStatus(status);
         orderService.save(order);
     }
+
+    public void updateFirstName(int orderId, String firstName) {
+        Order order = orderService.get(orderId);
+
+        order.setCustomerName(firstName);
+        orderService.save(order);
+    }
 }

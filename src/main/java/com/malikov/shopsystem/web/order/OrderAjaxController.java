@@ -166,6 +166,11 @@ public class OrderAjaxController extends AbstractOrderController {
         super.updateOrderStatus(orderId, status);
     }
 
+    @PostMapping(value = "/{id}/update-first-name")
+    public void updateFirstName(@PathVariable("id") int orderId, @RequestParam("first-name") String firstName) {
+        super.updateFirstName(orderId, firstName);
+    }
+
     @DeleteMapping(value = "/order-item/{orderItemId}")
     public void deleteOrderItem(@PathVariable("orderItemId") int orderItemId) {
         super.deleteOrderItem(orderItemId);

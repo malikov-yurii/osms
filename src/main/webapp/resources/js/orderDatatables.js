@@ -55,12 +55,12 @@ $(function () {
             }
         ],
         // "createdRow": function (row, data, rowIndex) {
-            // Per-cell function to do whatever needed with cells
-            // $.each($('td', row), function (colIndex) {
-                // For example, adding data-* attributes to the cell
-                // if (colIndex > 1 && colIndex < 10) {
-                //     $(this).attr('contenteditable', "true");
-            // })
+        // Per-cell function to do whatever needed with cells
+        // $.each($('td', row), function (colIndex) {
+        // For example, adding data-* attributes to the cell
+        // if (colIndex > 1 && colIndex < 10) {
+        //     $(this).attr('contenteditable', "true");
+        // })
         // },
         "order": [
             [
@@ -72,9 +72,8 @@ $(function () {
     });
 
 
-
     // datatableApi.on('click', '.order-first-name', function () {
-        // $(this).attr('contenteditable', "true");
+    // $(this).attr('contenteditable', "true");
     // });
 
 
@@ -102,10 +101,6 @@ $(function () {
                     url: ajaxUrl + rowDataId + '/update-status',
                     type: "POST",
                     data: 'status=' + ui.item.value
-                    // type: "PUT",
-                    // dataType: "json",
-                    // data: JSON.stringify({'price' : ui.item.orderItemPrice, 'productId': ui.item.productId, 'productVariationId' : ui.item.productVariationId}),
-
                 });
             }
             , focus: function (event, ui) {
@@ -119,6 +114,41 @@ $(function () {
             }
         });
 
+    });
+
+    //inline order firstName saving
+    datatableApi.on('focusout', '.order-first-name', function () {
+
+        var $this = $(this);
+        var tr = $this.closest('tr');
+        // debugger;
+        var key = $this.data('key');
+        var initVal = $this.data('value');
+
+        $this.data('value', $this.text());
+        var currentVal = $this.data('value');
+
+        if ($this.hasClass('error')) $this.removeClass('error');
+
+        if (currentVal == '') {
+            // At first check if cell isn't empty
+
+            simpleFailNoty();
+            $this.text(initVal).focus().addClass('error');
+
+        } else if (currentVal != initVal) {
+            // if value has changed then send it
+
+            var rowDataId = datatableApi.row(tr).data().id;
+            $.ajax({
+                url: ajaxUrl + rowDataId + '/update-' + key,
+                type: 'POST',
+                data: key + '=' + currentVal,
+                success: function () {
+                    successNoty('common.saved');
+                }
+            });
+        }
     });
 
     datatableApi.on('click', '.order-moar', function () {
@@ -136,6 +166,19 @@ $(function () {
 
 // Storing initial value of order-item-cell on getting focus
     datatableApi.on('focusin', '.order-product-table td', function () {
+        $(this).data('value', $(this).text());
+
+        // Making element to focus out on ENTER keybutton
+        $(this).keypress(function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                $(this).blur();
+            }
+        });
+    });
+
+    // todo get rid of code duplication
+    datatableApi.on('focusin', '.order-first-name', function () {
         $(this).data('value', $(this).text());
 
         // Making element to focus out on ENTER keybutton
@@ -304,6 +347,8 @@ function orderTableReady() {
 
 
     $('.order-first-name').prop('contenteditable', "true");
+    $('.order-first-name').data('key', "first-name");
+
     $('.order-status').attr('contenteditable', "true");
 
 }
