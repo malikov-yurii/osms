@@ -152,6 +152,7 @@ function add(add_title) {
                $(this).autocomplete("search", "");
            }
        });
+    //TODO get rid of dublicated code
     $("#status").autocomplete({
         source: function (request, response) {
             $.ajax({

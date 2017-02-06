@@ -197,4 +197,13 @@ public abstract class AbstractOrderController {
     public void deleteOrderItem(int orderItemId) {
         orderItemService.delete(orderItemId);
     }
+
+    public void updateOrderStatus(Integer orderId, OrderStatus status) {
+        // TODO: 2/6/2017 Make it work
+//        orderService.updateStatus(orderId, status);
+        Order order = orderService.get(orderId);
+
+        order.setStatus(status);
+        orderService.save(order);
+    }
 }

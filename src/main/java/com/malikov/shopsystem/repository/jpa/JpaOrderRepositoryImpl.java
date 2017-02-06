@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.repository.jpa;
 
 import com.malikov.shopsystem.model.Order;
+import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.repository.OrderRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,5 +55,14 @@ public class JpaOrderRepositoryImpl implements OrderRepository {
     public Collection<Order> getByProductId(int productId) {
         return em.createNamedQuery(Order.BY_PRODUCT_ID, Order.class)
                 .setParameter("productId", productId).getResultList();
+    }
+
+    // TODO: 2/6/2017 Now this method is not working. why?
+    @Override
+    public void updateStatus(Integer orderId, OrderStatus status) {
+        em.createNamedQuery(Order.UPDATE_STATUS)
+                .setParameter("orderId", orderId)
+                .setParameter("status", status)
+                .executeUpdate();
     }
 }

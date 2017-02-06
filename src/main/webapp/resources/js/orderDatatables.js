@@ -6,6 +6,7 @@ function updateTable() {
 }
 
 $(function () {
+
     datatableApi = $('#datatable').DataTable({
         // "aoColumnDefs": [
         //     { "sClass": "editable_class", "aTargets": [ 2 ] }
@@ -27,14 +28,14 @@ $(function () {
                 "orderable": false
             },
             {"data": "id"},
-            {"data": "firstName", "orderable": false},
-            {"data": "lastName", "orderable": false},
-            {"data": "phoneNumber", "orderable": false},
-            {"data": "city", "orderable": false},
-            {"data": "postOffice", "orderable": false},
-            {"data": "paymentType", "orderable": false},
-            {"data": "totalSum", "orderable": false},
-            {"data": "status", "orderable": false},
+            {"data": "firstName", "orderable": false, "className": "order-first-name"},
+            {"data": "lastName", "orderable": false, "className": "order-last-name"},
+            {"data": "phoneNumber", "orderable": false, "className": "order-phone-number"},
+            {"data": "city", "orderable": false, "className": "order-city"},
+            {"data": "postOffice", "orderable": false, "className": "order-post-office"},
+            {"data": "paymentType", "orderable": false, "className": "order-payment-type"},
+            {"data": "totalSum", "orderable": false, "className": "order-total-sum"},
+            {"data": "status", "orderable": false, "className": "order-status"},
             {"data": "date", "orderable": false},
             {
                 "defaultContent": "",
@@ -53,27 +54,72 @@ $(function () {
 
             }
         ],
-        "createdRow": function (row, data, rowIndex) {
+        // "createdRow": function (row, data, rowIndex) {
             // Per-cell function to do whatever needed with cells
             // $.each($('td', row), function (colIndex) {
-            $.each($('td', row), function (colIndex) {
                 // For example, adding data-* attributes to the cell
-                if (colIndex > 1 && colIndex < 10) {
-                    $(this).attr('contenteditable', "true");
-                }
-            })
-        },
+                // if (colIndex > 1 && colIndex < 10) {
+                //     $(this).attr('contenteditable', "true");
+            // })
+        // },
         "order": [
             [
                 1,
                 "desc"
             ]
         ],
-        "initComplete": makeEditable
-    })
-    ;
+        "initComplete": orderTableReady
+    });
 
-// datatableApi.on('click', )
+
+
+    // datatableApi.on('click', '.order-first-name', function () {
+        // $(this).attr('contenteditable', "true");
+    // });
+
+
+    //inline order status autocomplete and saving
+    datatableApi.on('click', '.order-status', function () {
+        var tr = $(this).closest('tr');
+        var row = datatableApi.row(tr);
+
+
+        $(this).autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: ajaxUrl + 'autocomplete-status',
+                    type: "POST",
+                    dataType: "json",
+                    success: function (data) {
+                        response(data);
+                    }
+                });
+            }
+            , select: function (event, ui) {
+                var rowDataId = datatableApi.row(tr).data().id;
+
+                $.ajax({
+                    url: ajaxUrl + rowDataId + '/update-status',
+                    type: "POST",
+                    data: 'status=' + ui.item.value
+                    // type: "PUT",
+                    // dataType: "json",
+                    // data: JSON.stringify({'price' : ui.item.orderItemPrice, 'productId': ui.item.productId, 'productVariationId' : ui.item.productVariationId}),
+
+                });
+            }
+            , focus: function (event, ui) {
+                this.value = ui.item.value;
+            }
+            , minLength: 0
+        }).bind("focus", function () {
+            console.log(this.value);
+            if (this.value === '') {
+                $(this).autocomplete("search", "");
+            }
+        });
+
+    });
 
     datatableApi.on('click', '.order-moar', function () {
         var tr = $(this).closest('tr');
@@ -100,6 +146,19 @@ $(function () {
             }
         });
     });
+
+    // // todo get rid of duplication (not work now)
+    // datatableApi.on('focusin', '.order-status', function () {
+    //     $(this).data('value', $(this).text());
+    //
+    //     // Making element to focus out on ENTER keybutton
+    //     $(this).keypress(function (e) {
+    //         if (e.which == 13) {
+    //             e.preventDefault();
+    //             $(this).blur();
+    //         }
+    //     });
+    // });
 
 // Storing current values of order-item-cell
     datatableApi.on('focusout', '.order-product-table td', function () {
@@ -147,29 +206,6 @@ function showOrderItems() {
         var tr = row.node();
         var orderItemTos = row.data().orderItemTos;
         var orderId = row.data().id;
-
-// debugger;
-
-
-        // var cellId = '#cell-' + orderId + '-2';
-        // var data = datatableApi.cell(cellId).data();
-        // $( row)
-        //     .column(0)
-        //     .find('td:first-child')
-        // .find('sorting_1')
-        // .find('td:eq(1)')
-        // .prop('contenteditable','true');
-        // .attr('contenteditable','true');
-        // .attr('contenteditable','true');
-
-        // console.log(data);
-
-
-        // datatableApi.cells().every( function () {
-        //
-        //     console.log(this.data());
-        //     debugger;
-        // } );
 
         row.child(buildOrderItemList(orderItemTos, orderId)).show();
         $(tr).addClass('opened');
@@ -261,4 +297,13 @@ function deleteOrderItem(id) {
             successNoty('common.deleted');
         }
     });
+}
+
+function orderTableReady() {
+    makeEditable();
+
+
+    $('.order-first-name').prop('contenteditable', "true");
+    $('.order-status').attr('contenteditable', "true");
+
 }
