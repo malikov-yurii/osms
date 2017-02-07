@@ -72,7 +72,7 @@ $(function () {
 
 
     //inline order status autocomplete and saving
-    datatableApi.on('click', '.order-status,.order-payment-type', function () {
+    datatableApi.on('click', '.order-status, .order-payment-type', function () {
 
         var $this = $(this);
         var tr = $this.closest('tr');
@@ -108,16 +108,44 @@ $(function () {
                     data: key + '=' + ui.item.value
                 });
             }
-            , focus: function (event, ui) {
-                this.value = ui.item.value;
-            }
+            // , focus: function (event, ui) {
+                // $(this).data("autocomplete").search($(this).val());
+                // this.value = ui.item.value;
+            // }
             , minLength: 0
-        }).bind("focus", function () {
-            console.log(this.value);
-            if (this.value === '') {
-                $(this).autocomplete("search", "");
-            }
         });
+            // .bind("focus", function () {
+            //     console.log(this.value);
+            //     if (this.value === '') {
+            //         $(this).autocomplete("search", "");
+            //     }
+            // })
+
+        $(this).autocomplete("search");
+            // .click(function () {
+            //
+            //     // debugger;
+            //     $(this).autocomplete("search");
+            //
+            //     // Use the below line instead of triggering keydown
+            //     // $(this).data("autocomplete").search($(this).val());
+            // })
+            // .focus(function () {
+            //
+            //     debugger;
+            //     $(this).autocomplete("search");
+            //
+            //     // Use the below line instead of triggering keydown
+            //     // $(this).data("autocomplete").search($(this).val());
+            // })
+        ;
+
+        // $(this).on( "click", function( event, ui ) {
+        //     debugger;
+        //     $(this).trigger(jQuery.Event("keydown"));
+            // Since I know keydown opens the menu, might as well fire a keydown event to the element
+        // });
+
     });
 
 // Storing initial value of order-item-cell on getting focus
@@ -325,28 +353,28 @@ function deleteOrderItem(id) {
 function orderTableReady() {
     makeEditable();
 
-    $('.order-first-name').prop('contenteditable', "true");
-    $('.order-first-name').data('key', "first-name");
+    $('td.order-first-name').prop('contenteditable', "true");
+    $('td.order-first-name').data('key', "first-name");
 
-    $('.order-last-name').prop('contenteditable', "true");
-    $('.order-last-name').data('key', "last-name");
+    $('td.order-last-name').prop('contenteditable', "true");
+    $('td.order-last-name').data('key', "last-name");
 
-    $('.order-phone-number').prop('contenteditable', "true");
-    $('.order-phone-number').data('key', "phone-number");
+    $('td.order-phone-number').prop('contenteditable', "true");
+    $('td.order-phone-number').data('key', "phone-number");
 
-    $('.order-city').prop('contenteditable', "true");
-    $('.order-city').data('key', "city");
+    $('td.order-city').prop('contenteditable', "true");
+    $('td.order-city').data('key', "city");
 
-    $('.order-post-office').prop('contenteditable', "true");
-    $('.order-post-office').data('key', "post-office");
+    $('td.order-post-office').prop('contenteditable', "true");
+    $('td.order-post-office').data('key', "post-office");
 
-    $('.order-total-sum').prop('contenteditable', "true");
-    $('.order-total-sum').data('key', "total-sum");
+    $('td.order-total-sum').prop('contenteditable', "true");
+    $('td.order-total-sum').data('key', "total-sum");
 
-    $('.order-status').attr('contenteditable', "true");
-    $('.order-status').data('key', "status");
+    // $('.order-status').attr('contenteditable', "true");
+    $('td.order-status').data('key', "status");
 
-    $('.order-payment-type').attr('contenteditable', "true");
-    $('.order-payment-type').data('key', "payment-type");
+    // $('.order-payment-type').attr('contenteditable', "true");
+    $('td.order-payment-type').data('key', "payment-type");
 
 }
