@@ -8,12 +8,6 @@ function updateTable() {
 $(function () {
 
     datatableApi = $('#datatable').DataTable({
-        // "aoColumnDefs": [
-        //     { "sClass": "editable_class", "aTargets": [ 2 ] }
-        // ],
-        // "fnDrawCallback": function() {
-        //     $("td.my_class").editable();
-        // },
         "ajax": {
             "url": ajaxUrl,
             "dataSrc": ""
@@ -42,11 +36,11 @@ $(function () {
                 "orderable": false,
                 "render": renderAddOrderItemBtn
             },
-            {
-                "defaultContent": "",
-                "orderable": false,
-                "render": renderEditBtn
-            },
+            // {
+            //     "defaultContent": "",
+            //     "orderable": false,
+            //     "render": renderEditBtn
+            // },
             {
                 "defaultContent": "",
                 "orderable": false,
@@ -78,15 +72,26 @@ $(function () {
 
 
     //inline order status autocomplete and saving
-    datatableApi.on('click', '.order-status', function () {
-        var tr = $(this).closest('tr');
+    datatableApi.on('click', '.order-status,.order-payment-type', function () {
+
+        var $this = $(this);
+        var tr = $this.closest('tr');
+        // debugger;
+        var key = $this.data('key');
+        var initVal = $this.data('value');
+
+        $this.data('value', $this.text());
+        var currentVal = $this.data('value');
+
+        if ($this.hasClass('error')) $this.removeClass('error');
+
         var row = datatableApi.row(tr);
 
 
         $(this).autocomplete({
             source: function (request, response) {
                 $.ajax({
-                    url: ajaxUrl + 'autocomplete-status',
+                    url: ajaxUrl + 'autocomplete-' + key,
                     type: "POST",
                     dataType: "json",
                     success: function (data) {
@@ -98,9 +103,9 @@ $(function () {
                 var rowDataId = datatableApi.row(tr).data().id;
 
                 $.ajax({
-                    url: ajaxUrl + rowDataId + '/update-status',
+                    url: ajaxUrl + rowDataId + '/update-' + key,
                     type: "POST",
-                    data: 'status=' + ui.item.value
+                    data: key + '=' + ui.item.value
                 });
             }
             , focus: function (event, ui) {
@@ -113,11 +118,24 @@ $(function () {
                 $(this).autocomplete("search", "");
             }
         });
-
     });
 
-    //inline order firstName saving
-    datatableApi.on('focusout', '.order-first-name', function () {
+// Storing initial value of order-item-cell on getting focus
+    datatableApi.on('focusin', '.order-product-table td,.order-status,.order-payment-type.order-first-name,.order-last-name,.order-phone-number,.order-city,.order-post-office,.order-total-sum', function () {
+        // datatableApi.on('focusin', '.order-product-table td', function () {
+        $(this).data('value', $(this).text());
+
+        // Making element to focus out on ENTER keybutton
+        $(this).keypress(function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                $(this).blur();
+            }
+        });
+    });
+
+    //inline order firstName, lastName, phoneNumber, city, postOffice, totalSum saving
+    datatableApi.on('focusout', '.order-first-name,.order-last-name,.order-phone-number,.order-city,.order-post-office,.order-total-sum', function () {
 
         var $this = $(this);
         var tr = $this.closest('tr');
@@ -164,44 +182,6 @@ $(function () {
         }
     });
 
-// Storing initial value of order-item-cell on getting focus
-    datatableApi.on('focusin', '.order-product-table td', function () {
-        $(this).data('value', $(this).text());
-
-        // Making element to focus out on ENTER keybutton
-        $(this).keypress(function (e) {
-            if (e.which == 13) {
-                e.preventDefault();
-                $(this).blur();
-            }
-        });
-    });
-
-    // todo get rid of code duplication
-    datatableApi.on('focusin', '.order-first-name', function () {
-        $(this).data('value', $(this).text());
-
-        // Making element to focus out on ENTER keybutton
-        $(this).keypress(function (e) {
-            if (e.which == 13) {
-                e.preventDefault();
-                $(this).blur();
-            }
-        });
-    });
-
-    // // todo get rid of duplication (not work now)
-    // datatableApi.on('focusin', '.order-status', function () {
-    //     $(this).data('value', $(this).text());
-    //
-    //     // Making element to focus out on ENTER keybutton
-    //     $(this).keypress(function (e) {
-    //         if (e.which == 13) {
-    //             e.preventDefault();
-    //             $(this).blur();
-    //         }
-    //     });
-    // });
 
 // Storing current values of order-item-cell
     datatableApi.on('focusout', '.order-product-table td', function () {
@@ -345,10 +325,28 @@ function deleteOrderItem(id) {
 function orderTableReady() {
     makeEditable();
 
-
     $('.order-first-name').prop('contenteditable', "true");
     $('.order-first-name').data('key', "first-name");
 
+    $('.order-last-name').prop('contenteditable', "true");
+    $('.order-last-name').data('key', "last-name");
+
+    $('.order-phone-number').prop('contenteditable', "true");
+    $('.order-phone-number').data('key', "phone-number");
+
+    $('.order-city').prop('contenteditable', "true");
+    $('.order-city').data('key', "city");
+
+    $('.order-post-office').prop('contenteditable', "true");
+    $('.order-post-office').data('key', "post-office");
+
+    $('.order-total-sum').prop('contenteditable', "true");
+    $('.order-total-sum').data('key', "total-sum");
+
     $('.order-status').attr('contenteditable', "true");
+    $('.order-status').data('key', "status");
+
+    $('.order-payment-type').attr('contenteditable', "true");
+    $('.order-payment-type').data('key', "payment-type");
 
 }

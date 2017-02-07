@@ -207,10 +207,42 @@ public abstract class AbstractOrderController {
         orderService.save(order);
     }
 
+    public void updateOrderPaymentType(Integer orderId, PaymentType paymentType) {
+        Order order = orderService.get(orderId);
+        order.setPaymentType(paymentType);
+        orderService.save(order);
+    }
+
     public void updateFirstName(int orderId, String firstName) {
         Order order = orderService.get(orderId);
-
         order.setCustomerName(firstName);
+        orderService.save(order);
+    }
+
+    public void updateLastName(int orderId, String lastName) {
+        Order order = orderService.get(orderId);
+        order.setCustomerLastName(lastName);
+        orderService.save(order);
+    }
+
+    public void updatePhoneNumber(int orderId, String phoneNumber) {
+        Order order = orderService.get(orderId);
+        order.setCustomerPhoneNumber(phoneNumber);
+        orderService.save(order);
+    }
+    public void updateCity(int orderId, String city) {
+        Order order = orderService.get(orderId);
+        order.setCustomerCity(city);
+        orderService.save(order);
+    }
+    public void updatePostOffice(int orderId, String postOffice) {
+        Order order = orderService.get(orderId);
+        order.setCustomerPostOffice(postOffice);
+        orderService.save(order);
+    }
+    public void updateTotalSum(int orderId, Integer totalSum) {
+        Order order = orderService.get(orderId);
+        order.setTotalSum(totalSum);
         orderService.save(order);
     }
 }

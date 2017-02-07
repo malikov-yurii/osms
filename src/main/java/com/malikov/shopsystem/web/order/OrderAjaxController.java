@@ -166,9 +166,39 @@ public class OrderAjaxController extends AbstractOrderController {
         super.updateOrderStatus(orderId, status);
     }
 
+    @PostMapping(value = "/{id}/update-payment-type")
+    public void updateOrderPaymentType(@PathVariable("id") int orderId, @RequestParam("payment-type") PaymentType paymentType) {
+        super.updateOrderPaymentType(orderId, paymentType);
+    }
+
     @PostMapping(value = "/{id}/update-first-name")
     public void updateFirstName(@PathVariable("id") int orderId, @RequestParam("first-name") String firstName) {
         super.updateFirstName(orderId, firstName);
+    }
+
+    @PostMapping(value = "/{id}/update-last-name")
+    public void updateLastName(@PathVariable("id") int orderId, @RequestParam("last-name") String lastName) {
+        super.updateLastName(orderId, lastName);
+    }
+
+    @PostMapping(value = "/{id}/update-phone-number")
+    public void updatePhoneNumber(@PathVariable("id") int orderId, @RequestParam("phone-number") String phoneNumber) {
+        super.updatePhoneNumber(orderId, phoneNumber);
+    }
+
+    @PostMapping(value = "/{id}/update-city")
+    public void updateCity(@PathVariable("id") int orderId, @RequestParam("city") String city) {
+        super.updateCity(orderId, city);
+    }
+
+    @PostMapping(value = "/{id}/update-post-office")
+    public void updatePostOffice(@PathVariable("id") int orderId, @RequestParam("post-office") String postOffice) {
+        super.updatePostOffice(orderId, postOffice);
+    }
+
+    @PostMapping(value = "/{id}/update-total-sum")
+    public void updateTotalSum(@PathVariable("id") int orderId, @RequestParam("total-sum") Integer totalSum) {
+        super.updateTotalSum(orderId, totalSum);
     }
 
     @DeleteMapping(value = "/order-item/{orderItemId}")
