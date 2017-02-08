@@ -358,3 +358,14 @@ function orderTableReady() {
     });
 
 }
+
+function addOrder() {
+    $.ajax({
+        url: 'ajax/profile/orders/',
+        type: 'POST',
+        success: function () {
+            updateTable();
+            successNoty('common.saved');
+        }
+    });
+}

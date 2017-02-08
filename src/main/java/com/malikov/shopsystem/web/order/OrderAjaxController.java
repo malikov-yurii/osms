@@ -48,17 +48,9 @@ public class OrderAjaxController extends AbstractOrderController {
 
     @PostMapping
     public ResponseEntity<String> create(@Valid OrderTo orderTo, BindingResult result, HttpEntity<String> httpEntity) {
-        String json = httpEntity.getBody();
-        if (result.hasErrors()) {
-            StringBuilder sb = new StringBuilder();
-            result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
-            return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
-        }
-
-        Order newOrder = new Order(customerService.getByPhoneNumber(orderTo.getPhoneNumber()),
+        Order newOrder = new Order(null,
                 userService.getByLogin(SecurityContextHolder.getContext().getAuthentication().getName()),
-                orderTo.getPaymentType(),
-                orderTo.getStatus(),
+                null, null,
                 null);
 
         super.create(newOrder);

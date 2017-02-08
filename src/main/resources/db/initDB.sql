@@ -88,7 +88,7 @@ CREATE TABLE products_to_categories (
 
 CREATE TABLE orders (
   id           SERIAL PRIMARY KEY,
-  customer_id  INTEGER NOT NULL,
+  customer_id  INTEGER,
   customer_name         VARCHAR,
   customer_last_name    VARCHAR,
   customer_phone_number VARCHAR,

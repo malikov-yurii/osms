@@ -82,12 +82,14 @@ public class Order extends BaseEntity {
 
     public Order(Integer id, Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, LocalDate datePlaced, List<OrderItem> orderItems) {
         this.id = id;
-        this.customer = customer;
-        this.customerName = customer.getName();
-        this.customerLastName = customer.getLastName();
-        this.customerPhoneNumber = customer.getPhoneNumber();
-        this.customerCity = customer.getCity();
-        this.customerPostOffice = customer.getPostOffice();
+        if (customer != null) {
+            this.customer = customer;
+            this.customerName = customer.getName();
+            this.customerLastName = customer.getLastName();
+            this.customerPhoneNumber = customer.getPhoneNumber();
+            this.customerCity = customer.getCity();
+            this.customerPostOffice = customer.getPostOffice();
+        }
         this.user = user;
         this.paymentType = paymentType;
         this.status = orderStatus;
