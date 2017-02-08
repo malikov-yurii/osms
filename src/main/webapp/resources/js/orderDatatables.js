@@ -16,19 +16,19 @@ $(function () {
         "info": true,
         "columns": [
             {
-                "className": "order-moar",
+                "className": "orderrow-show",
                 "data": null,
                 "defaultContent": "",
                 "orderable": false
             },
             {"data": "id"},
-            {"data": "firstName", "orderable": false, "className": "order-first-name"},
-            {"data": "lastName", "orderable": false, "className": "order-last-name"},
-            {"data": "phoneNumber", "orderable": false, "className": "order-phone-number"},
-            {"data": "city", "orderable": false, "className": "order-city"},
-            {"data": "postOffice", "orderable": false, "className": "order-post-office"},
+            {"data": "firstName", "orderable": false, "className": "order-first-name editable"},
+            {"data": "lastName", "orderable": false, "className": "order-last-name editable"},
+            {"data": "phoneNumber", "orderable": false, "className": "order-phone-number editable"},
+            {"data": "city", "orderable": false, "className": "order-city editable"},
+            {"data": "postOffice", "orderable": false, "className": "order-post-office editable"},
             {"data": "paymentType", "orderable": false, "className": "order-payment-type"},
-            {"data": "totalSum", "orderable": false, "className": "order-total-sum"},
+            {"data": "totalSum", "orderable": false, "className": "order-total-sum editable"},
             {"data": "status", "orderable": false, "className": "order-status"},
             // {"data": "date", "orderable": false},
             {
@@ -48,14 +48,9 @@ $(function () {
 
             }
         ],
-        // "createdRow": function (row, data, rowIndex) {
-        // Per-cell function to do whatever needed with cells
-        // $.each($('td', row), function (colIndex) {
-        // For example, adding data-* attributes to the cell
-        // if (colIndex > 1 && colIndex < 10) {
-        //     $(this).attr('contenteditable', "true");
-        // })
-        // },
+        "createdRow": function (row, data, rowIndex) {
+            $(row).addClass('parent-row');
+        },
         "order": [
             [
                 1,
@@ -66,17 +61,13 @@ $(function () {
     });
 
 
-    // datatableApi.on('click', '.order-first-name', function () {
-    // $(this).attr('contenteditable', "true");
-    // });
-
-
-    //inline order status and payment type autocomplete and saving
     datatableApi.on('click', '.order-status, .order-payment-type', function () {
-
+    /**
+     * Autocomplete of 'order-status' and 'payment-type'
+    **/
         var $this = $(this);
         var tr = $this.closest('tr');
-        // debugger;
+        var row = datatableApi.row(tr);
         var key = $this.data('key');
         var initVal = $this.data('value');
 
@@ -84,9 +75,6 @@ $(function () {
         var currentVal = $this.data('value');
 
         if ($this.hasClass('error')) $this.removeClass('error');
-
-        var row = datatableApi.row(tr);
-
 
         $(this).autocomplete({
             source: function (request, response) {
@@ -108,52 +96,21 @@ $(function () {
                     data: key + '=' + ui.item.value
                 });
             }
-            // , focus: function (event, ui) {
-            // $(this).data("autocomplete").search($(this).val());
-            // this.value = ui.item.value;
-            // }
             , minLength: 0
         });
-        // .bind("focus", function () {
-        //     console.log(this.value);
-        //     if (this.value === '') {
-        //         $(this).autocomplete("search", "");
-        //     }
-        // })
 
         $(this).autocomplete("search");
-        // .click(function () {
-        //
-        //     // debugger;
-        //     $(this).autocomplete("search");
-        //
-        //     // Use the below line instead of triggering keydown
-        //     // $(this).data("autocomplete").search($(this).val());
-        // })
-        // .focus(function () {
-        //
-        //     debugger;
-        //     $(this).autocomplete("search");
-        //
-        //     // Use the below line instead of triggering keydown
-        //     // $(this).data("autocomplete").search($(this).val());
-        // })
-        ;
-
-        // $(this).on( "click", function( event, ui ) {
-        //     debugger;
-        //     $(this).trigger(jQuery.Event("keydown"));
-        // Since I know keydown opens the menu, might as well fire a keydown event to the element
-        // });
 
     });
 
-// Storing initial value of order-item-cell on getting focus
     datatableApi.on('focusin', '.order-product-table td,.order-status,.order-payment-type,.order-city,.order-post-office,.order-total-sum', function () {
-        // datatableApi.on('focusin', '.order-product-table td', function () {
+    /**
+     * Storing initial value of order-item-cell, 'status', 'payment-type', 'city', 'post-office', 'total-sum' when getting focus
+    **/
+
         $(this).data('value', $(this).text());
 
-        // Making element to focus out on ENTER keybutton
+        // Making element to lose focus on ENTER keybutton
         $(this).keypress(function (e) {
             if (e.which == 13) {
                 e.preventDefault();
@@ -164,64 +121,59 @@ $(function () {
     });
 
     datatableApi.on('focusin', '.order-first-name,.order-last-name,.order-phone-number', function () {
-        // datatableApi.on('focusin', '.order-product-table td', function () {
+    /**
+     * Autocomplete of 'first-name', 'last-name', 'phone', 'city' and 'post-office'
+    **/
+
         var $this = $(this);
         $this.data('value', $(this).text());
-        // debugger;
         var tr = $this.closest('tr');
         var rowId = datatableApi.row(tr).data().id;
-        // debugger;
 
+        // Autocomplete for Order INFO
         var key = $this.data('key');
-        if (key == 'first-name' || key == 'last-name' || key == 'phone-number') {
-            $this.autocomplete({
-                source: function (request, response) {
-                    $.ajax({
-                        url: ajaxUrl + 'autocomplete-' + key,
-                        type: "POST",
-                        data: {
-                            term: request.term
-                        },
-                        dataType: "json",
-                        success: function (data) {
-                            // debugger;
-                            response(data);
-                        }
-                    });
-                }
-                , select: function (event, ui) {
-                    $(tr).find('.order-first-name').html(ui.item.firstName);
-                    $(tr).find('.order-last-name').html(ui.item.lastName);
-                    $(tr).find('.order-phone-number').html(ui.item.phoneNumber);
-                    $(tr).find('.order-city').html(ui.item.city);
-                    $(tr).find('.order-post-office').html(ui.item.postOffice);
-                    $.ajax({
-                        url: ajaxUrl + rowId +'/update-first-last-name-phone-city-post',
-                        type: "POST",
-                        data: {
-                            "firstName": ui.item.firstName,
-                            "lastName": ui.item.lastName,
-                            "phoneNumber": ui.item.phoneNumber,
-                            "city": ui.item.city,
-                            "postOffice": ui.item.postOffice
-                        },
-                        success: function (data) {
-                            successNoty('common.saved');
-                        }
-                    });
-                    return false; // Prevent the widget from inserting the value.
-                }
-                , focus: function (event, ui) {
-                    // $(tr).find('.order-first-name').html(ui.item.lastName + ' ' + ui.item.phoneNumber + ' ' + ui.item.city + ' ' + ui.item.postOffice);
-                    return false; // Prevent the widget from inserting the value.
-                }
-            });
-        } else {
-            //todo why I can't uncomment it?
-            // simpleFailNoty();
-        }
+        $this.autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: ajaxUrl + 'autocomplete-' + key,
+                    type: "POST",
+                    data: {
+                        term: request.term
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        response(data);
+                    }
+                });
+            }
+            , select: function (event, ui) {
+                $(tr).find('.order-first-name').html(ui.item.firstName);
+                $(tr).find('.order-last-name').html(ui.item.lastName);
+                $(tr).find('.order-phone-number').html(ui.item.phoneNumber);
+                $(tr).find('.order-city').html(ui.item.city);
+                $(tr).find('.order-post-office').html(ui.item.postOffice);
+                $.ajax({
+                    url: ajaxUrl + rowId +'/update-first-last-name-phone-city-post',
+                    type: "POST",
+                    data: {
+                        "firstName": ui.item.firstName,
+                        "lastName": ui.item.lastName,
+                        "phoneNumber": ui.item.phoneNumber,
+                        "city": ui.item.city,
+                        "postOffice": ui.item.postOffice
+                    },
+                    success: function (data) {
+                        successNoty('common.saved');
+                    }
+                });
+                return false; // Prevent the widget from inserting the value.
+            }
+            , focus: function (event, ui) {
+                return false; // Prevent the widget from inserting the value.
+            }
+        });
 
-        // Making element to focus out on ENTER keybutton
+        // Making element to lose focus on ENTER keybutton
         $this.keypress(function (e) {
             if (e.which == 13) {
                 e.preventDefault();
@@ -231,60 +183,13 @@ $(function () {
         });
     });
 
-    //inline order firstName, lastName, phoneNumber, city, postOffice, totalSum saving
-    datatableApi.on('focusout', '.order-first-name,.order-last-name,.order-phone-number,.order-city,.order-post-office,.order-total-sum', function () {
+    datatableApi.on('focusout', '.parent-row [class*="order-"], .order-product-table td', function () {
+    /**
+     * Making possible inline saving of order INFO and order ITEMS
+    **/
 
         var $this = $(this);
         var tr = $this.closest('tr');
-        // debugger;
-        var key = $this.data('key');
-        var initVal = $this.data('value');
-
-        $this.data('value', $this.text());
-        var currentVal = $this.data('value');
-
-        if ($this.hasClass('error')) $this.removeClass('error');
-
-        if (currentVal == '') {
-            // At first check if cell isn't empty
-
-            simpleFailNoty();
-            $this.text(initVal).focus().addClass('error');
-
-        } else if (currentVal != initVal) {
-            // if value has changed then send it
-
-            var rowDataId = datatableApi.row(tr).data().id;
-            $.ajax({
-                url: ajaxUrl + rowDataId + '/update-' + key,
-                type: 'POST',
-                data: key + '=' + currentVal,
-                success: function () {
-                    successNoty('common.saved');
-                }
-            });
-        }
-    });
-
-    datatableApi.on('click', '.order-moar', function () {
-        var tr = $(this).closest('tr');
-        var row = datatableApi.row(tr);
-
-        if (row.child.isShown()) {
-            row.child.hide();
-            tr.removeClass('opened');
-        } else {
-            row.child.show();
-            tr.addClass('opened');
-        }
-    });
-
-
-// Storing current values of order-item-cell
-    datatableApi.on('focusout', '.order-product-table td', function () {
-
-        var $this = $(this);
-        var orderItemId = $this.closest('tr').data('order-item-id');
         var key = $this.data('key');
         var initVal = $this.data('value');
 
@@ -301,25 +206,61 @@ $(function () {
         if (currentVal == '') {
             // At first check if cell isn't empty
 
+            if (initVal == '') return true; // Then check if cell already WAS empty. If so, then remove focus as evrthng is OK
+
             simpleFailNoty();
             $this.text(initVal).focus().addClass('error');
 
         } else if (currentVal != initVal) {
             // if value has changed then send it
 
-            $.ajax({
-                url: ajaxUrl + orderItemId + '/update-' + key,
-                type: 'POST',
-                data: key + '=' + currentVal,
-                success: function () {
-                    successNoty('common.saved');
-                }
-            });
+            if ($this.parents('.parent-row').length) {
+                // Request for saving order INFO
+
+                var rowDataId = datatableApi.row(tr).data().id;
+                $.ajax({
+                    url: ajaxUrl + rowDataId + '/update-' + key,
+                    type: 'POST',
+                    data: key + '=' + currentVal,
+                    success: function () {
+                        successNoty('common.saved');
+                    }
+                });
+
+            } else {
+                // Request for saving order ITEMS
+
+                var orderItemId = $this.closest('tr').data('order-item-id');
+                $.ajax({
+                    url: ajaxUrl + orderItemId + '/update-' + key,
+                    type: 'POST',
+                    data: key + '=' + currentVal,
+                    success: function () {
+                        successNoty('common.saved');
+                    }
+                });
+            }
         }
     });
 
+    datatableApi.on('click', '.orderrow-show', function () {
+        var tr = $(this).closest('tr');
+        var row = datatableApi.row(tr);
+
+        if (row.child.isShown()) {
+            row.child.hide();
+            tr.removeClass('opened');
+        } else {
+            row.child.show();
+            tr.addClass('opened');
+        }
+    });
+
+
     datatableApi.on('draw.dt', function () {
         showOrderItems();
+
+        orderTableReady();
 
     });
 })
@@ -335,7 +276,7 @@ function showOrderItems() {
         row.child(buildOrderItemList(orderItemTos, orderId)).show();
         $(tr).addClass('opened');
 
-
+        // Autocomplete for Order ITEMS
         var $firstTd = row.child().find('table td:first-child');
         $firstTd.autocomplete({
             source: function (request, response) {
@@ -357,6 +298,7 @@ function showOrderItems() {
                 $(this).nextAll('.order-product-price').html(ui.item.orderItemPrice);
                 var orderItemId = $this.closest('tr').data('order-item-id');
 
+                // Saving after autocompleted
                 $.ajax({
                     url: ajaxUrl + orderItemId + '/update-order-item-after-order-item-name-autocomplete',
                     type: 'POST',
@@ -370,10 +312,7 @@ function showOrderItems() {
                 return false; // Prevent the widget from inserting the value.
             }
             , focus: function (event, ui) {
-                // this.find('td:first-child').val(ui.item.label);
-
                 $(this).html(ui.item.orderItemName);
-                // $(this).nextAll('.order-product-price').html(ui.item.orderItemPrice);
                 return false; // Prevent the widget from inserting the value.
             }
         });
@@ -382,13 +321,15 @@ function showOrderItems() {
 
 function renderDeleteOrderItemBtn(orderItemId) {
 
-    // if (type == 'display' && $('#hasRoleAdmin').val()) {
     return '<a class="btn btn-xs btn-danger" onclick="deleteOrderItem(' + orderItemId + ');">' + i18n['common.delete'] + '</a>';
-    // }
 
 }
 
 function buildOrderItemList(orderItemTos, orderId) {
+/**
+ * Building DOM node child row - list of order ITEMS
+**/
+
     var orderItemsList =
         '<table class="order-product-table" data-order-id="' + orderId + '">\
             <thead>\
@@ -425,32 +366,22 @@ function deleteOrderItem(id) {
 }
 
 function orderTableReady() {
+/**
+ * Initialising of DATATABLE completed
+**/
+
     makeEditable();
 
-    $('td.order-first-name').prop('contenteditable', "true");
-    $('td.order-first-name').data('key', "first-name");
 
 
-    $('td.order-last-name').prop('contenteditable', "true");
-    $('td.order-last-name').data('key', "last-name");
+    $('.parent-row .editable').attr('contenteditable', true);
 
-    $('td.order-phone-number').prop('contenteditable', "true");
-    $('td.order-phone-number').data('key', "phone-number");
+    $('.parent-row [class*="order-"]').each(function() {
+        var val = this.classList[0].slice(6);
 
-    $('td.order-city').prop('contenteditable', "true");
-    $('td.order-city').data('key', "city");
+        $(this).data('key', val);
 
-    $('td.order-post-office').prop('contenteditable', "true");
-    $('td.order-post-office').data('key', "post-office");
-
-    $('td.order-total-sum').prop('contenteditable', "true");
-    $('td.order-total-sum').data('key', "total-sum");
-
-    // $('.order-status').attr('contenteditable', "true");
-    $('td.order-status').data('key', "status");
-
-    // $('.order-payment-type').attr('contenteditable', "true");
-    $('td.order-payment-type').data('key', "payment-type");
+    });
 
 }
 
@@ -460,7 +391,6 @@ function addOrder() {
         type: 'POST',
         success: function () {
             updateTable();
-            orderTableReady();
             successNoty('common.saved');
         }
     });
