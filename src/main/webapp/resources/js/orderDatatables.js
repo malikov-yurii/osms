@@ -16,19 +16,19 @@ $(function () {
         "info": true,
         "columns": [
             {
-                "className": "order-moar",
+                "className": "orderrow-show",
                 "data": null,
                 "defaultContent": "",
                 "orderable": false
             },
             {"data": "id"},
-            {"data": "firstName", "orderable": false, "className": "order-first-name"},
-            {"data": "lastName", "orderable": false, "className": "order-last-name"},
-            {"data": "phoneNumber", "orderable": false, "className": "order-phone-number"},
-            {"data": "city", "orderable": false, "className": "order-city"},
-            {"data": "postOffice", "orderable": false, "className": "order-post-office"},
+            {"data": "firstName", "orderable": false, "className": "order-first-name edtbl"},
+            {"data": "lastName", "orderable": false, "className": "order-last-name edtbl"},
+            {"data": "phoneNumber", "orderable": false, "className": "order-phone-number edtbl"},
+            {"data": "city", "orderable": false, "className": "order-city edtbl"},
+            {"data": "postOffice", "orderable": false, "className": "order-post-office edtbl"},
             {"data": "paymentType", "orderable": false, "className": "order-payment-type"},
-            {"data": "totalSum", "orderable": false, "className": "order-total-sum"},
+            {"data": "totalSum", "orderable": false, "className": "order-total-sum edtbl"},
             {"data": "status", "orderable": false, "className": "order-status"},
             // {"data": "date", "orderable": false},
             {
@@ -48,14 +48,9 @@ $(function () {
 
             }
         ],
-        // "createdRow": function (row, data, rowIndex) {
-        // Per-cell function to do whatever needed with cells
-        // $.each($('td', row), function (colIndex) {
-        // For example, adding data-* attributes to the cell
-        // if (colIndex > 1 && colIndex < 10) {
-        //     $(this).attr('contenteditable', "true");
-        // })
-        // },
+        "createdRow": function (row, data, rowIndex) {
+            $(row).addClass('order-row');
+        },
         "order": [
             [
                 1,
@@ -64,11 +59,6 @@ $(function () {
         ],
         "initComplete": orderTableReady
     });
-
-
-    // datatableApi.on('click', '.order-first-name', function () {
-    // $(this).attr('contenteditable', "true");
-    // });
 
 
     //inline order status autocomplete and saving
@@ -149,7 +139,7 @@ $(function () {
     });
 
 // Storing initial value of order-item-cell on getting focus
-    datatableApi.on('focusin', '.order-product-table td,.order-status,.order-payment-type.order-first-name,.order-last-name,.order-phone-number,.order-city,.order-post-office,.order-total-sum', function () {
+    datatableApi.on('focusin', '[class*="order-"]', function () {
         // datatableApi.on('focusin', '.order-product-table td', function () {
         $(this).data('value', $(this).text());
 
@@ -164,11 +154,10 @@ $(function () {
     });
 
     //inline order firstName, lastName, phoneNumber, city, postOffice, totalSum saving
-    datatableApi.on('focusout', '.order-first-name,.order-last-name,.order-phone-number,.order-city,.order-post-office,.order-total-sum', function () {
+    datatableApi.on('focusout', 'editable', function () {
 
         var $this = $(this);
         var tr = $this.closest('tr');
-        // debugger;
         var key = $this.data('key');
         var initVal = $this.data('value');
 
@@ -198,7 +187,7 @@ $(function () {
         }
     });
 
-    datatableApi.on('click', '.order-moar', function () {
+    datatableApi.on('click', '.orderrow-show', function () {
         var tr = $(this).closest('tr');
         var row = datatableApi.row(tr);
 
@@ -328,8 +317,6 @@ function buildOrderItemList(orderItemTos, orderId) {
             </thead>\
             <tbody>';
 
-    // debugger;
-
     for (var i = 0; i < orderItemTos.length; i++) {
         orderItemsList +=
             '<tr class="order-product-row" data-order-item-id="' + orderItemTos[i].orderItemId + '" data-order-product-id="' + orderItemTos[i].orderItemId + '">\
@@ -359,28 +346,15 @@ function deleteOrderItem(id) {
 function orderTableReady() {
     makeEditable();
 
-    $('td.order-first-name').prop('contenteditable', "true");
-    $('td.order-first-name').data('key', "first-name");
 
-    $('td.order-last-name').prop('contenteditable', "true");
-    $('td.order-last-name').data('key', "last-name");
+    $('.edtbl').attr('contenteditable', 'true');
 
-    $('td.order-phone-number').prop('contenteditable', "true");
-    $('td.order-phone-number').data('key', "phone-number");
+    $('.order-row [class*="order-"]').each(function() {
 
-    $('td.order-city').prop('contenteditable', "true");
-    $('td.order-city').data('key', "city");
+        var val = this.classList[0].slice(6);
 
-    $('td.order-post-office').prop('contenteditable', "true");
-    $('td.order-post-office').data('key', "post-office");
+        $(this).data('key', val);
 
-    $('td.order-total-sum').prop('contenteditable', "true");
-    $('td.order-total-sum').data('key', "total-sum");
-
-    // $('.order-status').attr('contenteditable', "true");
-    $('td.order-status').data('key', "status");
-
-    // $('.order-payment-type').attr('contenteditable', "true");
-    $('td.order-payment-type').data('key', "payment-type");
+    });
 
 }
