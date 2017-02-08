@@ -30,7 +30,7 @@ $(function () {
             {"data": "paymentType", "orderable": false, "className": "order-payment-type"},
             {"data": "totalSum", "orderable": false, "className": "order-total-sum"},
             {"data": "status", "orderable": false, "className": "order-status"},
-            {"data": "date", "orderable": false},
+            // {"data": "date", "orderable": false},
             {
                 "defaultContent": "",
                 "orderable": false,
@@ -158,6 +158,7 @@ $(function () {
             if (e.which == 13) {
                 e.preventDefault();
                 $(this).blur();
+                $(this).find('input').blur();
             }
         });
     });
@@ -219,7 +220,12 @@ $(function () {
         var key = $this.data('key');
         var initVal = $this.data('value');
 
-        $this.data('value', $this.text());
+        if (key == 'quantity') {
+            $this.data('value', $this.find('input').val());
+        } else {
+            $this.data('value', $this.text());
+        }
+
         var currentVal = $this.data('value');
 
         if ($this.hasClass('error')) $this.removeClass('error');
@@ -328,8 +334,8 @@ function buildOrderItemList(orderItemTos, orderId) {
         orderItemsList +=
             '<tr class="order-product-row" data-order-item-id="' + orderItemTos[i].orderItemId + '" data-order-product-id="' + orderItemTos[i].orderItemId + '">\
             <td class="order-product-name" data-key="name" contenteditable="true">' +
-            orderItemTos[i].name + '</td><td class="order-product-qty" data-key="quantity" contenteditable="true">' +
-            orderItemTos[i].quantity + '</td><td class="order-product-price" data-key="price" contenteditable="true">' +
+            orderItemTos[i].name + '</td><td  data-key="quantity"><input type="number" class="order-product-qty" value="' +
+            orderItemTos[i].quantity + '"></td><td class="order-product-price" data-key="price" contenteditable="true">' +
             orderItemTos[i].price + '</td><td>' + renderDeleteOrderItemBtn(orderItemTos[i].orderItemId) + '</td></tr>'
     }
 

@@ -76,7 +76,10 @@ table.table td {
 .order-product-table tr:nth-child(even) td {
     background: #f7f7f7;
 }
-
+.order-product-table .order-product-qty {
+    max-width: 45px;
+    text-align: center;
+}
 /* */
 .table th.order-moar {
     max-width: 70px !important;
