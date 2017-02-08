@@ -55,15 +55,15 @@ public class OrderTo {
             ,List<OrderItemTo> orderItemTos
     ) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.city = city;
-        this.postOffice = postOffice;
+         this.firstName = firstName != null ? firstName : "";
+        this.lastName = lastName != null ? lastName : "";
+        this.phoneNumber = phoneNumber != null ? phoneNumber : "";
+        this.city = city != null ? city : "";
+        this.postOffice = postOffice != null ? postOffice : "";
         this.paymentType = paymentType;
         this.date = date;
         this.status = status;
-        this.totalSum = OrderUtil.calculateTotalSumOfTos(orderItemTos);
+        this.totalSum = orderItemTos != null? OrderUtil.calculateTotalSumOfTos(orderItemTos) : 0;
         this.orderItemTos = orderItemTos;
     }
 

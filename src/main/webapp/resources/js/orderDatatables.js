@@ -71,7 +71,7 @@ $(function () {
     // });
 
 
-    //inline order status autocomplete and saving
+    //inline order status and payment type autocomplete and saving
     datatableApi.on('click', '.order-status, .order-payment-type', function () {
 
         var $this = $(this);
@@ -149,7 +149,7 @@ $(function () {
     });
 
 // Storing initial value of order-item-cell on getting focus
-    datatableApi.on('focusin', '.order-product-table td,.order-status,.order-payment-type.order-first-name,.order-last-name,.order-phone-number,.order-city,.order-post-office,.order-total-sum', function () {
+    datatableApi.on('focusin', '.order-product-table td,.order-status,.order-payment-type,.order-city,.order-post-office,.order-total-sum', function () {
         // datatableApi.on('focusin', '.order-product-table td', function () {
         $(this).data('value', $(this).text());
 
@@ -159,6 +159,74 @@ $(function () {
                 e.preventDefault();
                 $(this).blur();
                 $(this).find('input').blur();
+            }
+        });
+    });
+
+    datatableApi.on('focusin', '.order-first-name,.order-last-name,.order-phone-number', function () {
+        // datatableApi.on('focusin', '.order-product-table td', function () {
+        var $this = $(this);
+        $this.data('value', $(this).text());
+        // debugger;
+        var tr = $this.closest('tr');
+        var rowId = datatableApi.row(tr).data().id;
+        // debugger;
+
+        var key = $this.data('key');
+        if (key == 'first-name' || key == 'last-name' || key == 'phone-number') {
+            $this.autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: ajaxUrl + 'autocomplete-' + key,
+                        type: "POST",
+                        data: {
+                            term: request.term
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            // debugger;
+                            response(data);
+                        }
+                    });
+                }
+                , select: function (event, ui) {
+                    $(tr).find('.order-first-name').html(ui.item.firstName);
+                    $(tr).find('.order-last-name').html(ui.item.lastName);
+                    $(tr).find('.order-phone-number').html(ui.item.phoneNumber);
+                    $(tr).find('.order-city').html(ui.item.city);
+                    $(tr).find('.order-post-office').html(ui.item.postOffice);
+                    $.ajax({
+                        url: ajaxUrl + rowId +'/update-first-last-name-phone-city-post',
+                        type: "POST",
+                        data: {
+                            "firstName": ui.item.firstName,
+                            "lastName": ui.item.lastName,
+                            "phoneNumber": ui.item.phoneNumber,
+                            "city": ui.item.city,
+                            "postOffice": ui.item.postOffice
+                        },
+                        success: function (data) {
+                            successNoty('common.saved');
+                        }
+                    });
+                    return false; // Prevent the widget from inserting the value.
+                }
+                , focus: function (event, ui) {
+                    // $(tr).find('.order-first-name').html(ui.item.lastName + ' ' + ui.item.phoneNumber + ' ' + ui.item.city + ' ' + ui.item.postOffice);
+                    return false; // Prevent the widget from inserting the value.
+                }
+            });
+        } else {
+            //todo why I can't uncomment it?
+            // simpleFailNoty();
+        }
+
+        // Making element to focus out on ENTER keybutton
+        $this.keypress(function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                $this.blur();
+                $this.find('input').blur();
             }
         });
     });
@@ -362,6 +430,7 @@ function orderTableReady() {
     $('td.order-first-name').prop('contenteditable', "true");
     $('td.order-first-name').data('key', "first-name");
 
+
     $('td.order-last-name').prop('contenteditable', "true");
     $('td.order-last-name').data('key', "last-name");
 
@@ -391,6 +460,7 @@ function addOrder() {
         type: 'POST',
         success: function () {
             updateTable();
+            orderTableReady();
             successNoty('common.saved');
         }
     });

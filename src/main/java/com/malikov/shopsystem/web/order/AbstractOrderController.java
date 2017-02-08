@@ -245,4 +245,15 @@ public abstract class AbstractOrderController {
         order.setTotalSum(totalSum);
         orderService.save(order);
     }
+
+    public void updateOrderDetails(int orderId, String firstName, String lastName, String phoneNumber, String city, String postOffice) {
+        Order order = orderService.get(orderId);
+        order.setCustomer(customerService.getByPhoneNumber(phoneNumber));
+        order.setCustomerName(firstName);
+        order.setCustomerLastName(lastName);
+        order.setCustomerPhoneNumber(phoneNumber);
+        order.setCustomerCity(city);
+        order.setCustomerPostOffice(postOffice);
+        orderService.save(order);
+    }
 }

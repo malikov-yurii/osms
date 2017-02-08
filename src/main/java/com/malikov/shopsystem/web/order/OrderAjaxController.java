@@ -50,7 +50,7 @@ public class OrderAjaxController extends AbstractOrderController {
     public ResponseEntity<String> create(@Valid OrderTo orderTo, BindingResult result, HttpEntity<String> httpEntity) {
         Order newOrder = new Order(null,
                 userService.getByLogin(SecurityContextHolder.getContext().getAuthentication().getName()),
-                null, null,
+                PaymentType.CASH_ON_DELIVERY, OrderStatus.READY_FOR_SHIPMENT,
                 null);
 
         super.create(newOrder);
@@ -176,6 +176,17 @@ public class OrderAjaxController extends AbstractOrderController {
     @PostMapping(value = "/{id}/update-phone-number")
     public void updatePhoneNumber(@PathVariable("id") int orderId, @RequestParam("phone-number") String phoneNumber) {
         super.updatePhoneNumber(orderId, phoneNumber);
+    }
+
+    @PostMapping(value = "/{id}/update-first-last-name-phone-city-post")
+    public void updateFirstLastNamePhoneCityPost(@PathVariable("id") int orderId,
+                                                 @RequestParam("firstName") String firstName,
+                                                 @RequestParam("lastName") String lastName,
+                                                 @RequestParam("phoneNumber") String phoneNumber,
+                                                 @RequestParam("city") String city,
+                                                 @RequestParam("postOffice") String postOffice
+    ) {
+        super.updateOrderDetails(orderId, firstName, lastName, phoneNumber, city, postOffice);
     }
 
     @PostMapping(value = "/{id}/update-city")
