@@ -36,6 +36,11 @@ $(function () {
                 "orderable": false,
                 "render": renderAddOrderItemBtn
             },
+            {
+                "defaultContent": "",
+                "orderable": false,
+                "render": renderAddCustomerBtn
+            },
             // {
             //     "defaultContent": "",
             //     "orderable": false,

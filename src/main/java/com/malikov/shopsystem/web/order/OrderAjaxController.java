@@ -148,9 +148,14 @@ public class OrderAjaxController extends AbstractOrderController {
         return super.getOrderItemAutocompleteTosByProductMask(productNameMask);
     }
 
-    @PostMapping(value = "/{id}/add-order-item", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/{id}/add-order-item")
     public void addOrderItem(@PathVariable("id") int orderId) {
         super.addOrderItem(orderId);
+    }
+
+    @PostMapping(value = "/{id}/add-customer")
+    public void addCustomerFromOrder(@PathVariable("id") int orderId) {
+        super.addCustomerFromOrder(orderId);
     }
 
     @PostMapping(value = "/{id}/update-status")

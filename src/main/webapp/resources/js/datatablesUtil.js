@@ -210,6 +210,17 @@ function addOrderItem(id) {
     });
 }
 
+function addCustomerFromOrder(id) {
+    $.ajax({
+        url: 'ajax/profile/orders/' + id + '/add-customer',
+        type: 'POST',
+        success: function () {
+            updateTable();
+            successNoty('common.saved');
+        }
+    });
+}
+
 function enableUnlimited(chkbox, id) {
     var enabled = chkbox.is(":checked");
     $.ajax({
@@ -299,6 +310,12 @@ function renderDeleteBtn(data, type, row) {
 function renderAddOrderItemBtn(data, type, row) {
     if (type == 'display' && $('#hasRoleAdmin').val()) {
         return '<a class="btn btn-xs btn-primary" onclick="addOrderItem(' + row.id + ');">' + i18n['orders.addOrderItem'] + '</a>';
+    }
+}
+
+function renderAddCustomerBtn(data, type, row) {
+    if (type == 'display' && $('#hasRoleAdmin').val()) {
+        return '<a class="btn btn-xs btn-primary" onclick="addCustomerFromOrder(' + row.id + ');">' + i18n['orders.addCustomer'] + '</a>';
     }
 }
 

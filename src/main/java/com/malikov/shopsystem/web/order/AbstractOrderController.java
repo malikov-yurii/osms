@@ -230,16 +230,19 @@ public abstract class AbstractOrderController {
         order.setCustomerPhoneNumber(phoneNumber);
         orderService.save(order);
     }
+
     public void updateCity(int orderId, String city) {
         Order order = orderService.get(orderId);
         order.setCustomerCity(city);
         orderService.save(order);
     }
+
     public void updatePostOffice(int orderId, String postOffice) {
         Order order = orderService.get(orderId);
         order.setCustomerPostOffice(postOffice);
         orderService.save(order);
     }
+
     public void updateTotalSum(int orderId, Integer totalSum) {
         Order order = orderService.get(orderId);
         order.setTotalSum(totalSum);
@@ -254,6 +257,20 @@ public abstract class AbstractOrderController {
         order.setCustomerPhoneNumber(phoneNumber);
         order.setCustomerCity(city);
         order.setCustomerPostOffice(postOffice);
+        orderService.save(order);
+    }
+
+    public void addCustomerFromOrder(int orderId) {
+        Order order = orderService.get(orderId);
+        if (order.getCustomer() != null)
+            return;
+        order.setCustomer(customerService.save(
+                new Customer(order.getCustomerName()
+                        ,order.getCustomerLastName()
+                        ,order.getCustomerPhoneNumber()
+                        ,order.getCustomerCity()
+                        ,order.getCustomerPostOffice()
+                        ,null)));
         orderService.save(order);
     }
 }
