@@ -9,6 +9,9 @@ import com.malikov.shopsystem.util.OrderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +19,9 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractOrderController {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractOrderController.class);
+
+    @Autowired
+    private MessageSource messageSource;
 
     @Autowired
     private OrderService orderService;
@@ -263,7 +269,7 @@ public abstract class AbstractOrderController {
     public void addCustomerFromOrder(int orderId) {
         Order order = orderService.get(orderId);
         if (order.getCustomer() != null)
-            return;
+            throw new DataIntegrityViolationException(messageSource.getMessage("exception.duplicateCustomer", null, LocaleContextHolder.getLocale()));
         order.setCustomer(customerService.save(
                 new Customer(order.getCustomerName()
                         ,order.getCustomerLastName()
