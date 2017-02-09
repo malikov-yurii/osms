@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.web.order;
 
 import com.malikov.shopsystem.model.Order;
+import com.malikov.shopsystem.model.OrderItem;
 import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.model.PaymentType;
 import com.malikov.shopsystem.service.CustomerService;
@@ -18,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -48,10 +50,12 @@ public class OrderAjaxController extends AbstractOrderController {
 
     @PostMapping
     public ResponseEntity<String> create(@Valid OrderTo orderTo, BindingResult result, HttpEntity<String> httpEntity) {
+        List<OrderItem> orderItems = new ArrayList<>();
+        orderItems.add(new OrderItem());
         Order newOrder = new Order(null,
                 userService.getByLogin(SecurityContextHolder.getContext().getAuthentication().getName()),
                 PaymentType.CASH_ON_DELIVERY, OrderStatus.READY_FOR_SHIPMENT,
-                null);
+                orderItems);
 
         super.create(newOrder);
 

@@ -46,6 +46,9 @@ public class OrderItem extends BaseEntity {
     private Integer productQuantity;
 
     public OrderItem() {
+        this.productName = "";
+        this.productPrice = 0;
+        this.productQuantity = 0;
     }
 
     public OrderItem(Order order, Integer productId, String productName, Integer productPrice, Integer productQuantity) {
