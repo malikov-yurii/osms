@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.model;
 
 public enum OrderStatus {
-    READY_FOR_SHIPMENT,
-    AWAITING_FOR_PAYMENT
+    TO_SHIP,
+    A_FOR_P,
+    SHIPPED
 }

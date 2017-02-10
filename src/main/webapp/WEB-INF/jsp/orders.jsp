@@ -22,8 +22,8 @@
 
             <div class="view-box">
 
-                <a class="btn btn-sm btn-info" onclick="addOrder('')"><fmt:message key="orders.add"/></a>
-                <table class="table table-striped display" id="datatable">
+                <a class="btn btn-sm btn-info" onclick="addOrder('')"><fmt:message key="orders.add" /></a>
+                <table class="table table-striped display" id="datatable" width="700px">
                     <thead>
                     <tr>
                         <%--<th><fmt:message key="orders.showHide"/></th>--%>

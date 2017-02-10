@@ -48,9 +48,10 @@ table.table td {
 }
 .order-product-table th,
 .order-product-table td {
-    padding: 4px 20px;
+    padding: 4px 2px;
     border-right: 1px solid #d9d9d9;
     border-bottom: 1px solid #d9d9d9;
+    width: 10px;
     font-size: 13px;
     text-align: center;
 }
@@ -61,15 +62,16 @@ table.table td {
 .order-product-table tr th:last-child,
 .order-product-table tr td:last-child {
     border-right: none;
+    width: 27px;
 }
 .order-product-table tr:last-child td {
     border-bottom: none;
 }
 .order-product-table tr th:first-child,
 .order-product-table tr td:first-child {
-    min-width: 250px;
-    width: 50%;
-    padding-left: 15px;
+    width: 550px;
+    /*width: 50%;*/
+    padding-left: 4px;
     text-align: left;
     border-left: none;
 }
@@ -116,5 +118,10 @@ td.orderrow-show:after {
 .opened td.orderrow-show:after {
     transform: rotate(-45deg);
 }
-
+/*.jumbotron{*/
+    /*width: 720px;*/
+/*}*/
+/*.body{*/
+    /*width: 720px;*/
+/*}*/
 /**/
