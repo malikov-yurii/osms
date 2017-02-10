@@ -299,23 +299,42 @@ function renderEditBtn(data, type, row) {
     }
 }
 
-function renderDeleteBtn(data, type, row) {
+// function renderDeleteBtn(data, type, row) {
+//
+//     if (type == 'display' && $('#hasRoleAdmin').val()) {
+//         return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">' + i18n['common.delete'] + '</a>';
+//     }
+//
+// }
+function renderDeleteBtnSmall(data, type, row) {
 
     if (type == 'display' && $('#hasRoleAdmin').val()) {
-        return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">' + i18n['common.delete'] + '</a>';
+        return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">x</a>';
     }
 
 }
 
-function renderAddOrderItemBtn(data, type, row) {
-    if (type == 'display' && $('#hasRoleAdmin').val()) {
-        return '<a class="btn btn-xs btn-primary" onclick="addOrderItem(' + row.id + ');">' + i18n['orders.addOrderItem'] + '</a>';
-    }
+// function renderAddOrderItemBtn(data, type, row) {
+//     if (type == 'display' && $('#hasRoleAdmin').val()) {
+//         return '<a class="btn btn-xs btn-primary" onclick="addOrderItem(' + row.id + ');">' + i18n['orders.addOrderItem'] + '</a>';
+//     }
+// }
+
+function renderAddOrderItemBtnSmall(rowId) {
+    //todo add "type" to uncomment
+    // if (type == 'display' && $('#hasRoleAdmin').val()) {
+        return '<a class="btn btn-xs btn-success" onclick="addOrderItem(' + rowId + ');">+</a>';
+    // }
 }
 
-function renderAddCustomerBtn(data, type, row) {
+// function renderAddCustomerBtnSmall(data, type, row) {
+//     if (type == 'display' && $('#hasRoleAdmin').val()) {
+//         return '<a class="btn btn-xs btn-primary" onclick="addCustomerFromOrder(' + row.id + ');">' + i18n['orders.addCustomer'] + '</a>';
+//     }
+// }
+function renderAddCustomerBtnSmall(data, type, row) {
     if (type == 'display' && $('#hasRoleAdmin').val()) {
-        return '<a class="btn btn-xs btn-primary" onclick="addCustomerFromOrder(' + row.id + ');">' + i18n['orders.addCustomer'] + '</a>';
+        return '<a class="btn btn-xs btn-primary" onclick="addCustomerFromOrder(' + row.id + ');">+</a>';
     }
 }
 

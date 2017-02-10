@@ -15,12 +15,12 @@ $(function () {
         "paging": false,
         "info": true,
         "columns": [
-            {
-                "className": "orderrow-show",
-                "data": null,
-                "defaultContent": "",
-                "orderable": false
-            },
+            // {
+            //     "className": "orderrow-show",
+            //     "data": null,
+            //     "defaultContent": "",
+            //     "orderable": false
+            // },
             {"data": "id"},
             {"data": "firstName", "orderable": false, "className": "order-first-name editable"},
             {"data": "lastName", "orderable": false, "className": "order-last-name editable"},
@@ -31,15 +31,15 @@ $(function () {
             {"data": "totalSum", "orderable": false, "className": "order-total-sum editable"},
             {"data": "status", "orderable": false, "className": "order-status"},
             // {"data": "date", "orderable": false},
+            // {
+            //     "defaultContent": "",
+            //     "orderable": false,
+            //     "render": renderAddOrderItemBtnSmall
+            // },
             {
                 "defaultContent": "",
                 "orderable": false,
-                "render": renderAddOrderItemBtn
-            },
-            {
-                "defaultContent": "",
-                "orderable": false,
-                "render": renderAddCustomerBtn
+                "render": renderAddCustomerBtnSmall
             },
             // {
             //     "defaultContent": "",
@@ -49,7 +49,7 @@ $(function () {
             {
                 "defaultContent": "",
                 "orderable": false,
-                "render": renderDeleteBtn
+                "render": renderDeleteBtnSmall
 
             }
         ],
@@ -326,7 +326,7 @@ function showOrderItems() {
 
 function renderDeleteOrderItemBtn(orderItemId) {
 
-    return '<a class="btn btn-xs btn-danger" onclick="deleteOrderItem(' + orderItemId + ');">' + i18n['common.delete'] + '</a>';
+    return '<a class="btn btn-xs btn-danger" onclick="deleteOrderItem(' + orderItemId + ');">x</a>';
 
 }
 
@@ -338,7 +338,7 @@ function buildOrderItemList(orderItemTos, orderId) {
     var orderItemsList =
         '<table class="order-product-table" data-order-id="' + orderId + '">\
             <thead>\
-                <tr><th>Item Name</th><th>Quantity</th><th>Price</th><th></th></tr>\
+                <tr><th>Item Name</th><th>Quantity</th><th>Price</th><th>' + renderAddOrderItemBtnSmall(orderId) + '</th></tr>\
             </thead>\
             <tbody>';
 
@@ -350,7 +350,7 @@ function buildOrderItemList(orderItemTos, orderId) {
             <td class="order-product-name" data-key="name" contenteditable="true">' +
             orderItemTos[i].name + '</td><td  data-key="quantity"><input type="number" class="order-product-qty" value="' +
             orderItemTos[i].quantity + '"></td><td class="order-product-price" data-key="price" contenteditable="true">' +
-            orderItemTos[i].price + '</td><td>' + renderDeleteOrderItemBtn(orderItemTos[i].orderItemId) + '</td></tr>'
+            orderItemTos[i].price + '</td><td">' + renderDeleteOrderItemBtn(orderItemTos[i].orderItemId) + '</td></tr>'
     }
 
     orderItemsList += '</tbody></table>';

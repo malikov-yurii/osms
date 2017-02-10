@@ -26,7 +26,7 @@
                 <table class="table table-striped display" id="datatable">
                     <thead>
                     <tr>
-                        <th><fmt:message key="orders.showHide"/></th>
+                        <%--<th><fmt:message key="orders.showHide"/></th>--%>
                         <th>ID</th>
                         <th><fmt:message key="customers.firstName"/></th>
                         <th><fmt:message key="customers.lastName"/></th>
@@ -37,7 +37,7 @@
                         <th><fmt:message key="orders.totalSum"/></th>
                         <th><fmt:message key="orders.status"/></th>
                         <%--<th><fmt:message key="orders.date"/></th>--%>
-                        <th></th>
+                        <%--<th></th>--%>
                         <th></th>
                         <th></th>
                     </tr>
