@@ -16,14 +16,14 @@
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
 <div class="jumbotron">
-    <div class="container">
+    <div class="container" style="width:720px">
         <div class="shadow">
-            <h3><fmt:message key="orders.title"/></h3>
+            <%--<h3><fmt:message key="orders.title"/></h3>--%>
 
             <div class="view-box">
 
-                <a class="btn btn-sm btn-info" onclick="addOrder('')"><fmt:message key="orders.add" /></a>
-                <table class="table table-striped display" id="datatable" width="700px">
+                <%--<a class="btn btn-sm btn-info" onclick="addOrder('')"><fmt:message key="orders.add" /></a>--%>
+                <table class="table table-striped display" id="datatable" width="720px">
                     <thead>
                     <tr>
                         <%--<th><fmt:message key="orders.showHide"/></th>--%>
@@ -38,7 +38,7 @@
                         <th><fmt:message key="orders.status"/></th>
                         <%--<th><fmt:message key="orders.date"/></th>--%>
                         <%--<th></th>--%>
-                        <th></th>
+                        <th><a class="btn btn-sm btn-success" onclick="addOrder('')">+</a></th>
                         <th></th>
                     </tr>
                     </thead>

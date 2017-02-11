@@ -4,8 +4,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
+<div class="navbar navbar-inverse navbar-fixed-top"  role="navigation">
+    <div class="container" style="width:720px">
         <a href="meals" class="navbar-brand"><fmt:message key="app.title"/></a>
 
         <div class="collapse navbar-collapse">
@@ -18,7 +18,7 @@
                         <input type="hidden" id="hasRoleAdmin" value="1" >
                         <a class="btn btn-info" role="button" href="users"><fmt:message key="users.title"/></a>
                     </sec:authorize>
-                    <a class="btn btn-info" role="button" href="profile">${userTo.name} <fmt:message key="app.profile"/></a>
+                    <%--<a class="btn btn-info" role="button" href="profile">${userTo.name} <fmt:message key="app.profile"/></a>--%>
                     <input type="submit" class="btn btn-primary" value="<fmt:message key="app.logout"/>">
                 </sec:authorize>
             </form:form>

@@ -12,6 +12,7 @@ $(function () {
             "url": ajaxUrl,
             "dataSrc": ""
         },
+        "searching": false,
         "paging": false,
         "info": true,
         "columns": [
@@ -21,7 +22,7 @@ $(function () {
             //     "defaultContent": "",
             //     "orderable": false
             // },
-            {"data": "id"},
+            {"data": "id", "orderable": false},
             {"data": "firstName", "orderable": false, "className": "order-first-name editable"},
             {"data": "lastName", "orderable": false, "className": "order-last-name editable"},
             {"data": "phoneNumber", "orderable": false, "className": "order-phone-number editable"},
@@ -58,7 +59,7 @@ $(function () {
         },
         "order": [
             [
-                1,
+                0,
                 "desc"
             ]
         ],
