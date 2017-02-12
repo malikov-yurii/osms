@@ -4,8 +4,11 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "attr_values")
-@AttributeOverride(name = "id", column = @Column(name = "value_id"))
+@Table(name = "jos_jshopping_attr_values")
+@AttributeOverrides({
+        @AttributeOverride(name = "id", column = @Column(name = "value_id")),
+        @AttributeOverride(name = "name", column = @Column(name = "`name_ru-RU`")),
+})
 public class VariationValue extends NamedEntity {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

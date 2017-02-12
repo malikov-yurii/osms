@@ -5,6 +5,7 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.*;
 
 @NamedQueries({
@@ -17,7 +18,11 @@ import java.util.*;
         @NamedQuery(name = Product.BY_PRODUCT_NAME_MASK, query = "SELECT p FROM Product p WHERE lower(p.name) LIKE lower(:productNameMask)"),
 })
 @Entity
-@Table(name = "products")
+@Table(name = "jos_jshopping_products")
+@AttributeOverrides({
+        @AttributeOverride(name = "id", column = @Column(name = "product_id")),
+        @AttributeOverride(name = "name", column = @Column(name = "`name_ru-RU`")),
+})
 public class Product extends NamedEntity {
 
 
@@ -27,15 +32,17 @@ public class Product extends NamedEntity {
     public static final String ALL_SORTED = "Product.getAllSorted";
     public static final String BY_PRODUCT_NAME_MASK = "OrderItem.byProductNameMask";
 
-    @Column(name = "price")
-    private Integer price;
+    @Column(name = "product_price")
+//    @Column(name = "product_price", columnDefinition = "decimal(18,6)")
+    // TODO: 2/11/2017 DECIMAL | Integer question??
+    private BigDecimal price;
 
-    @Column(name = "quantity")
+    @Column(name = "product_quantity")
     private Integer quantity;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "products_to_categories",
+            name = "jos_jshopping_products_to_categories",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
@@ -64,7 +71,7 @@ public class Product extends NamedEntity {
                    boolean hasVariations, Collection<ProductCategory> categories, Collection<ProductVariation> productVariations) {
         this.id = id;
         this.name = name;
-        this.price = price;
+        this.price = new BigDecimal(price);
         this.unlimited = unlimited;
         this.quantity = quantity;
         this.categories = new HashSet<>(categories);
@@ -92,11 +99,11 @@ public class Product extends NamedEntity {
 
 
     public Integer getPrice() {
-        return price;
+        return price.intValue();
     }
 
     public void setPrice(Integer price) {
-        this.price = price;
+        this.price = new BigDecimal(price);
     }
 
     public Integer getQuantity() {

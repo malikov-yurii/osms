@@ -12,7 +12,7 @@ import java.util.Set;
         @NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u ORDER BY u.name"),
 })
 @Entity
-@Table(name = "users")
+@Table(name = "osms_users")
 public class User extends NamedEntity {
 
     public static final String DELETE = "User.delete";
@@ -23,7 +23,7 @@ public class User extends NamedEntity {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "osms_user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;

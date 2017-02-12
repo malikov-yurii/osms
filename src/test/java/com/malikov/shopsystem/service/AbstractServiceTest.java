@@ -23,8 +23,8 @@ import java.util.concurrent.TimeUnit;
 })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Sql(scripts = {
-//    "classpath:db/initDB.sql",
-        "classpath:db/populateDB.sql"},
+//    "classpath:db/initTestDB.sql",
+        "classpath:db/populateTestDB.sql"},
         config = @SqlConfig(encoding = "UTF-8"))
 @ActiveProfiles(Profiles.ACTIVE_DB)
 public abstract class AbstractServiceTest {

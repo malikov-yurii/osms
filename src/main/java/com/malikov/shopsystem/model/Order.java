@@ -19,7 +19,7 @@ import java.util.*;
         @NamedQuery(name = Order.UPDATE_STATUS, query = "UPDATE Order o SET o.status = :status WHERE o.id = :orderId"),
 })
 @Entity
-@Table(name = "orders")
+@Table(name = "osms_orders")
 public class Order extends BaseEntity {
 
     public static final String DELETE = "Order.delete";

@@ -8,7 +8,7 @@ import java.util.Objects;
         @NamedQuery(name = ProductVariation.ALL_SORTED, query = "SELECT pv FROM ProductVariation pv ORDER BY pv.id"),
 })
 @Entity
-@Table(name = "products_attr")
+@Table(name = "jos_jshopping_products_attr")
 @AttributeOverride(name = "id", column = @Column(name = "product_attr_id"))
 public class ProductVariation extends BaseEntity{
 

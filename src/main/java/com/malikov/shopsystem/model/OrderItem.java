@@ -15,7 +15,7 @@ import java.util.Objects;
 
 })
 @Entity
-@Table(name = "order_items")
+@Table(name = "osms_order_items")
 public class OrderItem extends BaseEntity {
 
     public static final String DELETE = "OrderItem.delete";

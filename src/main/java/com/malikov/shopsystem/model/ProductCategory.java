@@ -1,17 +1,18 @@
 package com.malikov.shopsystem.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @NamedQueries({
         @NamedQuery(name = ProductCategory.DELETE, query = "DELETE FROM ProductCategory pc WHERE pc.id=:id"),
         @NamedQuery(name = ProductCategory.ALL_SORTED, query = "SELECT pc FROM ProductCategory pc ORDER BY pc.name"),
 })
 @Entity
-@Table(name = "categories")
+@Table(name = "jos_jshopping_categories")
+@AttributeOverrides({
+        @AttributeOverride(name = "id", column = @Column(name = "category_id")),
+        @AttributeOverride(name = "name", column = @Column(name = "`name_ru-RU`")),
+})
 public class ProductCategory extends NamedEntity {
 
     public static final String DELETE = "ProductCategory.delete";

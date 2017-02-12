@@ -1,13 +1,13 @@
 package com.malikov.shopsystem.model;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "attr")
-@AttributeOverride(name = "id", column = @Column(name = "attr_id"))
+@Table(name = "jos_jshopping_attr")
+@AttributeOverrides({
+        @AttributeOverride(name = "id", column = @Column(name = "attr_id")),
+        @AttributeOverride(name = "name", column = @Column(name = "`name_ru-RU`")),
+})
 public class VariationType extends NamedEntity {
     public VariationType(Integer id, String name) {
         super(id, name);

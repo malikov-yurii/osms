@@ -17,7 +17,7 @@ import java.util.Objects;
         @NamedQuery(name = Customer.ALL_SORTED, query = "SELECT c FROM Customer c ORDER BY c.lastName"),
 })
 @Entity
-@Table(name = "customers", uniqueConstraints = {
+@Table(name = "osms_customers", uniqueConstraints = {
         @UniqueConstraint(columnNames = "phone_number", name = "customers_phone_number_idx"),
         @UniqueConstraint(columnNames = "email", name = "customers_email_idx")
 })

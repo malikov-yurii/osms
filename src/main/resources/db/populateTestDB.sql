@@ -63,7 +63,7 @@ INSERT INTO products_to_categories (product_id, category_id) VALUES
 INSERT INTO customers (name, last_name, phone_number, city, nova_poshta, email) VALUES
   ('Alex', 'Drogichinskij', '0674861352', 'Ilichevsk', '3', 'drogychynsky@gmail.com'),
   ('Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 'goltvyanskyy@gmail.com'),
-  ('Elena', 'Dunovskaya', '0984231204', 'Sumy', '7', 'katerina.tcherednichenko@yandex.ru'),
+  ('Елена', 'Дуновская', '0984231204', 'Sumy', '7', 'katerina.tcherednichenko@yandex.ru'),
   ('WithNoOrderName', 'WithNoOrderLastName', '0980000000', 'ZeroTown', '0', 'zero@yandex.ru'),
   ('Dname1', 'DLastName1', '11111111111', '111111', '1', '111zero@yandex.ru'),
   ('Dname2', 'DLastName2', '22222222222', '222222', '2','2zero@yandex.ru'),
@@ -81,7 +81,7 @@ INSERT INTO orders (customer_id, customer_name, customer_last_name, customer_pho
   (1, 'Alex', 'Drogichinskij', '0674861352', 'Ilichevsk', '3', 725, 2, 'PB', 'TO_SHIP'
     , '2016-10-11'
   ),
-  (3, 'Elena', 'Dunovskaya', '0984231204', 'Sumy', '7', 5865, 2, 'NP', 'SHIPPED'
+  (3, 'Elena', 'Дуновская', '0984231204', 'Sumy', '7', 5865, 2, 'NP', 'SHIPPED'
     , '2016-12-22'
   ),
   (1, 'Alex', 'Drogichinskij', '0674861352', 'Ilichevsk', '3', 570, 2, 'PB', 'A_FOR_P'
