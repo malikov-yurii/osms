@@ -5,7 +5,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <div class="navbar navbar-inverse navbar-fixed-top"  role="navigation">
-    <div class="container" style="width:720px">
+    <div class="container">
         <a href="meals" class="navbar-brand"><fmt:message key="app.title"/></a>
 
         <div class="collapse navbar-collapse">
