@@ -1,8 +1,8 @@
 package com.malikov.shopsystem.model;
 
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.domain.Persistable;
+
 import javax.persistence.*;
 
 @MappedSuperclass
@@ -10,10 +10,12 @@ import javax.persistence.*;
 //@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, isGetterVisibility = NONE, setterVisibility = NONE)
 public class BaseEntity implements Persistable<Integer> {
 
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
+    //    @GeneratedValue(generator = "increment")
+//    @GenericGenerator(name = "increment", strategy = "increment")
     // PROPERTY access for id due to bug: https://hibernate.atlassian.net/browse/HHH-3718
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     @Access(value = AccessType.PROPERTY)
     protected Integer id;
 
@@ -24,13 +26,13 @@ public class BaseEntity implements Persistable<Integer> {
         this.id = id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     @Override
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @Override
