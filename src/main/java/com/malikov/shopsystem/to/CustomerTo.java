@@ -16,25 +16,29 @@ public class CustomerTo implements Serializable {
 
     private String city;
 
-    private String novaPoshta;
+    private String postOffice;
 
     private String email;
+
+    private String note;
 
     public CustomerTo(@JsonProperty("id") Integer id,
                       @JsonProperty("name") String name,
                       @JsonProperty("lastName") String lastName,
                       @JsonProperty("phoneNumber") String phoneNumber,
                       @JsonProperty("city") String city,
-                      @JsonProperty("novaPoshta") String novaPoshta,
-                      @JsonProperty("email") String email
+                      @JsonProperty("postOffice") String postOffice,
+                      @JsonProperty("email") String email,
+                      @JsonProperty("note") String note
     ) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.city = city;
-        this.novaPoshta = novaPoshta;
+        this.postOffice = postOffice;
         this.email = email;
+        this.note = note;
     }
 
     public CustomerTo() {
@@ -84,12 +88,12 @@ public class CustomerTo implements Serializable {
         this.city = city;
     }
 
-    public String getNovaPoshta() {
-        return novaPoshta;
+    public String getPostOffice() {
+        return postOffice;
     }
 
-    public void setNovaPoshta(String novaPoshta) {
-        this.novaPoshta = novaPoshta;
+    public void setPostOffice(String postOffice) {
+        this.postOffice = postOffice;
     }
 
     public String getEmail() {
@@ -100,6 +104,14 @@ public class CustomerTo implements Serializable {
         this.email = email;
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
     @Override
     public String toString() {
         return "CustomerTo{" +
@@ -108,7 +120,7 @@ public class CustomerTo implements Serializable {
                 ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", city='" + city + '\'' +
-                ", novaPoshta='" + novaPoshta + '\'' +
+                ", postOffice='" + postOffice + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

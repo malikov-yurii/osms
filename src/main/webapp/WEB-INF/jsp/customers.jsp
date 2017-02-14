@@ -109,6 +109,15 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="note" class="control-label col-xs-3"><fmt:message
+                                key="customers.note"/></label>
+
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" id="note" name="note"
+                                   placeholder="<fmt:message key="customers.note"/>">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
                             <button class="btn btn-primary" type="button" onclick="save()"><fmt:message key="common.save"/></button>
                         </div>

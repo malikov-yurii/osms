@@ -94,11 +94,13 @@ public abstract class AbstractOrderController {
         orderItemService.update(orderItem);
     }
 
-    public void updateOrderItemPriceProductIdProductVariationId(int itemId, int price, int productId, int productVariationId) {
+    public void updateOrderItemPriceProductIdProductVariationId(int itemId, int price, int productId, int productVariationId, String orderItemName) {
         OrderItem orderItem = orderItemService.get(itemId);
         orderItem.setProductPrice(price);
         orderItem.setProductId(productId);
-        orderItem.setProductVariation(productVariationService.get(productVariationId));
+        orderItem.setProductName(orderItemName);
+        if (productVariationId != 0)
+            orderItem.setProductVariation(productVariationService.get(productVariationId));
         Order order = orderItem.getOrder();
         order.setTotalSum(OrderUtil.calculateTotalSum(order.getOrderItems()));
         orderService.update(order);
@@ -114,7 +116,8 @@ public abstract class AbstractOrderController {
                                 customer.getLastName(),
                                 customer.getPhoneNumber(),
                                 customer.getCity(),
-                                customer.getPostOffice()))
+                                customer.getPostOffice()
+                        ))
                 .collect(Collectors.toList());
     }
 
@@ -272,11 +275,12 @@ public abstract class AbstractOrderController {
             throw new DataIntegrityViolationException(messageSource.getMessage("exception.duplicateCustomer", null, LocaleContextHolder.getLocale()));
         order.setCustomer(customerService.save(
                 new Customer(order.getCustomerName()
-                        ,order.getCustomerLastName()
-                        ,order.getCustomerPhoneNumber()
-                        ,order.getCustomerCity()
-                        ,order.getCustomerPostOffice()
-                        ,null)));
+                        , order.getCustomerLastName()
+                        , order.getCustomerPhoneNumber()
+                        , order.getCustomerCity()
+                        , order.getCustomerPostOffice()
+                        , null
+                        , null)));
         orderService.save(order);
     }
 }

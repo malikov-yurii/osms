@@ -47,13 +47,16 @@ public class Customer extends NamedEntity {
     @Column(name = "nova_poshta")
     private String postOffice;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "note")
+    private String note;
 
     public Customer() {
     }
 
-    public Customer(Integer id, String name, String lastName, String phoneNumber, String city, String postOffice, String email) {
+    public Customer(Integer id, String name, String lastName, String phoneNumber, String city, String postOffice, String email, String note) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -61,14 +64,15 @@ public class Customer extends NamedEntity {
         this.city = city;
         this.postOffice = postOffice;
         this.email = email;
+        this.note = note;
     }
 
-    public Customer(String name, String lastName, String phoneNumber, String city, String postOffice, String email) {
-        this(null, name, lastName, phoneNumber, city, postOffice, email);
+    public Customer(String name, String lastName, String phoneNumber, String city, String postOffice, String email, String note) {
+        this(null, name, lastName, phoneNumber, city, postOffice, email, note);
     }
 
     public Customer(Customer c) {
-        this(c.getId(), c.getName(), c.getLastName(), c.getPhoneNumber(), c.getCity(), c.getPostOffice(), c.getEmail());
+        this(c.getId(), c.getName(), c.getLastName(), c.getPhoneNumber(), c.getCity(), c.getPostOffice(), c.getEmail(), c.getNote());
     }
 
     public String getLastName() {
@@ -109,6 +113,14 @@ public class Customer extends NamedEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     @Override

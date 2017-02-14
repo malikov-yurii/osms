@@ -304,11 +304,12 @@ function showOrderItems() {
                 $(this).nextAll('.order-product-price').html(ui.item.orderItemPrice);
                 var orderItemId = $this.closest('tr').data('order-item-id');
 
+                // debugger;
                 // Saving after autocompleted
                 $.ajax({
                     url: ajaxUrl + orderItemId + '/update-order-item-after-order-item-name-autocomplete',
                     type: 'POST',
-                    data: 'price=' + ui.item.orderItemPrice + '&productId=' + ui.item.productId + '&productVariationId=' + ui.item.productVariationId
+                    data: 'price=' + ui.item.orderItemPrice + '&productId=' + ui.item.productId + '&productVariationId=' + ui.item.productVariationId + '&orderItemName=' + ui.item.orderItemName
                     // todo need PUT for rest??
                     // contentType: "application/json",
                     // type: "PUT",

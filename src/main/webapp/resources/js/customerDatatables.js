@@ -18,7 +18,7 @@ $(function () {
             { "data": "lastName" },
             { "data": "phoneNumber" },
             { "data": "city" },
-            { "data": "novaPoshta" },
+            { "data": "postOffice" },
             { "data": "email" },
             {
                 "defaultContent": "",

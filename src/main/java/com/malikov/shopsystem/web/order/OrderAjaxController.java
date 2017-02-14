@@ -108,8 +108,9 @@ public class OrderAjaxController extends AbstractOrderController {
             , @RequestParam("price") int price
     , @RequestParam("productId") int productId
     , @RequestParam("productVariationId") int productVariationId
+    , @RequestParam("orderItemName") String orderItemName
     ) {
-        super.updateOrderItemPriceProductIdProductVariationId(itemId, price, productId, productVariationId);
+        super.updateOrderItemPriceProductIdProductVariationId(itemId, price, productId, productVariationId, orderItemName);
     }
 
     @PostMapping(value = "{itemId}/update-quantity")
