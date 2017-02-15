@@ -210,9 +210,9 @@ function addOrderItem(id) {
     });
 }
 
-function addCustomerFromOrder(id) {
+function persistOrUpdateCustomerFromOrder(id) {
     $.ajax({
-        url: 'ajax/profile/orders/' + id + '/add-customer',
+        url: 'ajax/profile/orders/' + id + '/persist-or-update-customer',
         type: 'POST',
         success: function () {
             updateTable();
@@ -327,14 +327,14 @@ function renderAddOrderItemBtnSmall(rowId) {
     // }
 }
 
-// function renderAddCustomerBtnSmall(data, type, row) {
+// function renderPersistOrUpdateCustomerBtnSmall(data, type, row) {
 //     if (type == 'display' && $('#hasRoleAdmin').val()) {
-//         return '<a class="btn btn-xs btn-primary" onclick="addCustomerFromOrder(' + row.id + ');">' + i18n['orders.addCustomer'] + '</a>';
+//         return '<a class="btn btn-xs btn-primary" onclick="persistOrUpdateCustomerFromOrder(' + row.id + ');">' + i18n['orders.addCustomer'] + '</a>';
 //     }
 // }
-function renderAddCustomerBtnSmall(data, type, row) {
+function renderPersistOrUpdateCustomerBtnSmall(data, type, row) {
     if (type == 'display' && $('#hasRoleAdmin').val()) {
-        return '<a class="btn btn-xs btn-primary" onclick="addCustomerFromOrder(' + row.id + ');">+</a>';
+        return '<a class="btn btn-xs btn-primary" onclick="persistOrUpdateCustomerFromOrder(' + row.id + ');">+</a>';
     }
 }
 

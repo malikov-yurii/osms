@@ -112,6 +112,7 @@ public abstract class AbstractOrderController {
                 .getByFirstNameMask(firstNameMask).stream().map(customer ->
                         new CustomerAutocompleteTo(
                                 customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
+                                customer.getId(),
                                 customer.getName(),
                                 customer.getLastName(),
                                 customer.getPhoneNumber(),
@@ -126,6 +127,7 @@ public abstract class AbstractOrderController {
                 .getByLastNameMask(lastNameMask).stream().map(customer ->
                         new CustomerAutocompleteTo(
                                 customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
+                                customer.getId(),
                                 customer.getName(),
                                 customer.getLastName(),
                                 customer.getPhoneNumber(),
@@ -139,6 +141,7 @@ public abstract class AbstractOrderController {
                 .getByPhoneNumberMask(phoneNumberMask).stream().map(customer ->
                         new CustomerAutocompleteTo(
                                 customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
+                                customer.getId(),
                                 customer.getName(),
                                 customer.getLastName(),
                                 customer.getPhoneNumber(),
@@ -152,6 +155,7 @@ public abstract class AbstractOrderController {
                 .getByCityMask(cityMask).stream().map(customer ->
                         new CustomerAutocompleteTo(
                                 customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
+                                customer.getId(),
                                 customer.getName(),
                                 customer.getLastName(),
                                 customer.getPhoneNumber(),
@@ -258,21 +262,23 @@ public abstract class AbstractOrderController {
         orderService.save(order);
     }
 
-    public void updateOrderDetails(int orderId, String firstName, String lastName, String phoneNumber, String city, String postOffice) {
+    public void setCustomerForOrder(int orderId, int customerId) {
         Order order = orderService.get(orderId);
-        order.setCustomer(customerService.getByPhoneNumber(phoneNumber));
-        order.setCustomerName(firstName);
-        order.setCustomerLastName(lastName);
-        order.setCustomerPhoneNumber(phoneNumber);
-        order.setCustomerCity(city);
-        order.setCustomerPostOffice(postOffice);
+        Customer customer = customerService.get(customerId);
+        order.setCustomer(customer);
+        order.setCustomerName(customer.getName());
+        order.setCustomerLastName(customer.getLastName());
+        order.setCustomerPhoneNumber(customer.getPhoneNumber());
+        order.setCustomerCity(customer.getCity());
+        order.setCustomerPostOffice(customer.getPostOffice());
         orderService.save(order);
     }
 
-    public void addCustomerFromOrder(int orderId) {
+    public void persistOrUpdateCustomerFromOrder(int orderId) {
         Order order = orderService.get(orderId);
-        if (order.getCustomer() != null)
+        if (order.getCustomer() != null) {
             throw new DataIntegrityViolationException(messageSource.getMessage("exception.duplicateCustomer", null, LocaleContextHolder.getLocale()));
+        }
         order.setCustomer(customerService.save(
                 new Customer(order.getCustomerName()
                         , order.getCustomerLastName()

@@ -158,9 +158,9 @@ public class OrderAjaxController extends AbstractOrderController {
         super.addOrderItem(orderId);
     }
 
-    @PostMapping(value = "/{id}/add-customer")
-    public void addCustomerFromOrder(@PathVariable("id") int orderId) {
-        super.addCustomerFromOrder(orderId);
+    @PostMapping(value = "/{id}/persist-or-update-customer")
+    public void persistOrUpdateCustomerFromOrder(@PathVariable("id") int orderId) {
+        super.persistOrUpdateCustomerFromOrder(orderId);
     }
 
     @PostMapping(value = "/{id}/update-status")
@@ -188,15 +188,11 @@ public class OrderAjaxController extends AbstractOrderController {
         super.updatePhoneNumber(orderId, phoneNumber);
     }
 
-    @PostMapping(value = "/{id}/update-first-last-name-phone-city-post")
-    public void updateFirstLastNamePhoneCityPost(@PathVariable("id") int orderId,
-                                                 @RequestParam("firstName") String firstName,
-                                                 @RequestParam("lastName") String lastName,
-                                                 @RequestParam("phoneNumber") String phoneNumber,
-                                                 @RequestParam("city") String city,
-                                                 @RequestParam("postOffice") String postOffice
+    @PostMapping(value = "/{id}/set-customer-for-order-by-customer-id")
+    public void setCustomerForOrder(@PathVariable("id") int orderId,
+                                                 @RequestParam("customerId") Integer customerId
     ) {
-        super.updateOrderDetails(orderId, firstName, lastName, phoneNumber, city, postOffice);
+        super.setCustomerForOrder(orderId, customerId);
     }
 
     @PostMapping(value = "/{id}/update-city")

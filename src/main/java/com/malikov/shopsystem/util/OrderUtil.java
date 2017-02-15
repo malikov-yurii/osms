@@ -17,7 +17,7 @@ public class OrderUtil {
                 .stream()
                 .map(oi -> new OrderItemTo(oi.getId(), oi.getProductId(), oi.getProductName(), oi.getProductPrice(), oi.getProductQuantity()))
                 .collect(Collectors.toList());
-        return new OrderTo(order.getId(), order.getCustomerName(), order.getCustomerLastName(),
+        return new OrderTo(order.getId(), order.getCustomer() != null ? order.getCustomer().getId() : 0, order.getCustomerName(), order.getCustomerLastName(),
                 order.getCustomerPhoneNumber(), order.getCustomerCity(), order.getCustomerPostOffice(),
                 order.getPaymentType(), order.getDatePlaced(), order.getStatus(), OrderItemTos);
     }

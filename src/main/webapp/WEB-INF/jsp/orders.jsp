@@ -28,6 +28,7 @@
                     <tr>
                         <%--<th><fmt:message key="orders.showHide"/></th>--%>
                         <th>ID</th>
+                        <th>custID</th>
                         <th><fmt:message key="customers.firstName"/></th>
                         <th><fmt:message key="customers.lastName"/></th>
                         <th><fmt:message key="customers.phoneNumber"/></th>
@@ -49,12 +50,12 @@
 </div>
 <jsp:include page="fragments/footer.jsp"/>
 
-<div class="modal fade" id="editRow">
+<div class="modal fade" id="editCustomer">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title" id="modalTitle"></h2>
+                <h2 class="modal-title">Edit customer</h2>
             </div>
             <div class="modal-body">
                 <form:form class="form-horizontal" method="post" id="detailsForm">
@@ -65,11 +66,8 @@
                                 key="customers.firstName"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text"
-                                   class="form-control"
-                                   id="firstName" name="firstName"
-                                   placeholder="<fmt:message key="customers.firstName"/>"
-                            >
+                            <input type="text" class="form-control" id="firstName" name="name"
+                                   placeholder="<fmt:message key="customers.firstName"/>">
                         </div>
                     </div>
                     <div class="form-group">
@@ -77,9 +75,7 @@
                                 key="customers.lastName"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text"
-                                   class="form-control"
-                                   id="lastName" name="lastName"
+                            <input type="text" class="form-control" id="lastName" name="lastName"
                                    placeholder="<fmt:message key="customers.lastName"/>">
                         </div>
                     </div>
@@ -112,41 +108,23 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="paymentType" class="control-label col-xs-3"><fmt:message
-                                key="orders.paymentType"/></label>
+                        <label for="email" class="control-label col-xs-3"><fmt:message
+                                key="customers.email"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="paymentType" name="paymentType"
-                                   placeholder="<fmt:message key="orders.paymentType"/>">
+                            <input type="text" class="form-control" id="email" name="email"
+                                   placeholder="<fmt:message key="customers.email"/>">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="status" class="control-label col-xs-3"><fmt:message
-                            key="orders.status"/></label>
+                        <label for="note" class="control-label col-xs-3"><fmt:message
+                                key="customers.note"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="status" name="status"
-                                   placeholder="<fmt:message key="orders.status"/>">
+                            <input type="text" class="form-control" id="note" name="note"
+                                   placeholder="<fmt:message key="customers.note"/>">
                         </div>
                     </div>
-                    <%--<div class="form-group">--%>
-                        <%--<label for="totalSum" class="control-label col-xs-3"><fmt:message--%>
-                                <%--key="orders.totalSum"/></label>--%>
-
-                        <%--<div class="col-xs-9">--%>
-                            <%--<input type="text" class="form-control" id="totalSum" name="totalSum"--%>
-                                   <%--placeholder="<fmt:message key="orders.totalSum"/>">--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                    <%--<div class="form-group">--%>
-                        <%--<label for="date" class="control-label col-xs-3"><fmt:message--%>
-                                <%--key="orders.date"/></label>--%>
-
-                        <%--<div class="col-xs-9">--%>
-                            <%--<input type="text" class="form-control" id="date" name="date"--%>
-                                   <%--placeholder="<fmt:message key="orders.date"/>">--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
                             <button class="btn btn-primary" type="button" onclick="save()"><fmt:message key="common.save"/></button>
@@ -157,8 +135,6 @@
         </div>
     </div>
 </div>
-
-
 </body>
 
 <script type="text/javascript">

@@ -18,6 +18,8 @@ public class OrderTo {
 
     private Integer id;
 
+    private Integer customerId;
+
     private String firstName;
 
     private String lastName;
@@ -44,6 +46,7 @@ public class OrderTo {
 
     public OrderTo(
             Integer id
+            ,Integer customerId
             ,String firstName
             ,String lastName
             ,String phoneNumber
@@ -55,7 +58,8 @@ public class OrderTo {
             ,List<OrderItemTo> orderItemTos
     ) {
         this.id = id;
-         this.firstName = firstName != null ? firstName : "";
+        this.customerId = customerId == null ? 0 :customerId;
+        this.firstName = firstName != null ? firstName : "";
         this.lastName = lastName != null ? lastName : "";
         this.phoneNumber = phoneNumber != null ? phoneNumber : "";
         this.city = city != null ? city : "";
@@ -69,6 +73,7 @@ public class OrderTo {
 
     public OrderTo(
             Integer id
+            ,Integer customerId
             ,String firstName
             ,String lastName
             ,String phoneNumber
@@ -78,7 +83,7 @@ public class OrderTo {
             ,LocalDate date
             ,OrderStatus status
     ) {
-        this(id, firstName, lastName, phoneNumber, city, postOffice, paymentType, date, status, new ArrayList<>());
+        this(id, customerId, firstName, lastName, phoneNumber, city, postOffice, paymentType, date, status, new ArrayList<>());
         this.totalSum = 0;
     }
 
@@ -189,4 +194,11 @@ public class OrderTo {
         this.orderItemTos = orderItemTos;
     }
 
+    public Integer getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
+    }
 }

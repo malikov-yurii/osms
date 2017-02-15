@@ -5,6 +5,8 @@ public class CustomerAutocompleteTo {
 //    get rid of label  - use concatenation instead
     private String label;
 
+    private Integer customerId;
+
     private String firstName;
 
     private String lastName;
@@ -17,13 +19,23 @@ public class CustomerAutocompleteTo {
 
     public CustomerAutocompleteTo(
             String label,
+            Integer customerId,
             String firstName, String lastName, String phoneNumber, String city, String postOffice) {
         this.label = label;
+        this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.city = city;
         this.postOffice = postOffice;
+    }
+
+    public Integer getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
     public String getLabel() {
