@@ -437,12 +437,9 @@ function addOrderItem(id) {
 }
 
 function persistOrUpdateCustomerFromOrder(orderId, customerId) {
-    // debugger;
-    // var orderId = row.data().id;
-    // var customerId = row.data().customerId;
     if (customerId == 0) {
         $.ajax({
-            url: 'ajax/profile/orders/' + orderId + '/persist-or-update-customer',
+            url: 'ajax/profile/orders/' + orderId + '/persist-customer-from-order',
             type: 'POST',
             success: function () {
                 updateTable();

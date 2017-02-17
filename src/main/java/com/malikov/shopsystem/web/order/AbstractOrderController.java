@@ -274,7 +274,7 @@ public abstract class AbstractOrderController {
         orderService.save(order);
     }
 
-    public void persistOrUpdateCustomerFromOrder(int orderId) {
+    public void persistCustomerFromOrder(int orderId) {
         Order order = orderService.get(orderId);
         if (order.getCustomer() != null) {
             throw new DataIntegrityViolationException(messageSource.getMessage("exception.duplicateCustomer", null, LocaleContextHolder.getLocale()));

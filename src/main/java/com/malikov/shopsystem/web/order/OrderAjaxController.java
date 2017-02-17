@@ -158,9 +158,9 @@ public class OrderAjaxController extends AbstractOrderController {
         super.addOrderItem(orderId);
     }
 
-    @PostMapping(value = "/{id}/persist-or-update-customer")
-    public void persistOrUpdateCustomerFromOrder(@PathVariable("id") int orderId) {
-        super.persistOrUpdateCustomerFromOrder(orderId);
+    @PostMapping(value = "/{id}/persist-customer-from-order")
+    public void persistCustomerFromOrder(@PathVariable("id") int orderId) {
+        super.persistCustomerFromOrder(orderId);
     }
 
     @PostMapping(value = "/{id}/update-status")
