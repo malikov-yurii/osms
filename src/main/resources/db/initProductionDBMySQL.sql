@@ -29,8 +29,8 @@ CREATE TABLE osms_customers (
   city         VARCHAR(80),
   nova_poshta  VARCHAR(20),
   email        VARCHAR(100),
-  CONSTRAINT customers_phone_number_idx UNIQUE (phone_number),
-  CONSTRAINT customers_email_idx UNIQUE (email)
+  CONSTRAINT customers_phone_number_idx UNIQUE (phone_number)
+#   ,CONSTRAINT customers_email_idx UNIQUE (email)
 );
 
 CREATE TABLE osms_orders (

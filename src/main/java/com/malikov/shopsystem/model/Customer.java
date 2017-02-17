@@ -18,8 +18,8 @@ import java.util.Objects;
 })
 @Entity
 @Table(name = "osms_customers", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "phone_number", name = "customers_phone_number_idx"),
-        @UniqueConstraint(columnNames = "email", name = "customers_email_idx")
+        @UniqueConstraint(columnNames = "phone_number", name = "customers_phone_number_idx")
+//        ,@UniqueConstraint(columnNames = "email", name = "customers_email_idx")
 })
 public class Customer extends NamedEntity {
 
@@ -58,13 +58,13 @@ public class Customer extends NamedEntity {
 
     public Customer(Integer id, String name, String lastName, String phoneNumber, String city, String postOffice, String email, String note) {
         this.id = id;
-        this.name = name;
-        this.lastName = lastName;
+        this.name = name == null ? "" : name;
+        this.lastName = lastName == null ? "" : lastName;
         this.phoneNumber = phoneNumber;
-        this.city = city;
-        this.postOffice = postOffice;
-        this.email = email;
-        this.note = note;
+        this.city = city == null ? "" : city;
+        this.postOffice = postOffice== null ? "" : postOffice;
+        this.email = email == null ? "" : email;
+        this.note = note == null ? "" : note;
     }
 
     public Customer(String name, String lastName, String phoneNumber, String city, String postOffice, String email, String note) {
