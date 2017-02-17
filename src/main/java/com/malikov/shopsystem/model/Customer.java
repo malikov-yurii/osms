@@ -58,13 +58,13 @@ public class Customer extends NamedEntity {
 
     public Customer(Integer id, String name, String lastName, String phoneNumber, String city, String postOffice, String email, String note) {
         this.id = id;
-        this.name = name == null ? "" : name;
-        this.lastName = lastName == null ? "" : lastName;
+        this.name = name;
+        this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        this.city = city == null ? "" : city;
-        this.postOffice = postOffice== null ? "" : postOffice;
-        this.email = email == null ? "" : email;
-        this.note = note == null ? "" : note;
+        this.city = city;
+        this.postOffice = postOffice;
+        this.email = email;
+        this.note = note;
     }
 
     public Customer(String name, String lastName, String phoneNumber, String city, String postOffice, String email, String note) {
