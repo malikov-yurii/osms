@@ -40,4 +40,11 @@ public abstract class AbstractCustomerController {
         LOG.info("create order{}", customer);
         return service.save(customer);
     }
+
+    public String getEmail(int id) {
+        return service.get(id).getEmail();
+    }
+    public String getNote(int id) {
+        return service.get(id).getNote();
+    }
 }

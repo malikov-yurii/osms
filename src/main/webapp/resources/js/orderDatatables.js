@@ -165,12 +165,6 @@ $(function () {
                     type: "POST",
                     data: {
                         "customerId": ui.item.customerId
-                        // ,
-                        // "firstName": ui.item.firstName,
-                        // "lastName": ui.item.lastName,
-                        // "phoneNumber": ui.item.phoneNumber,
-                        // "city": ui.item.city,
-                        // "postOffice": ui.item.postOffice
                     },
                     success: function (data) {
                         successNoty('common.saved');
@@ -406,13 +400,85 @@ function addOrder() {
     });
 }
 
-function updateCustomer(customerId) {
-    $.get('ajax/profile/customers/' + customerId, function (data) {
-        $.each(data, function (key, value) {
-            form.find("input[name='" + key + "']").val(
-                key === "dateTime" ? value.replace('T', ' ').substr(0, 16) : value
-            );
-        });
-        $('#editCustomer').modal();
+// function renderAddOrderItemBtn(data, type, row) {
+//     if (type == 'display' && $('#hasRoleAdmin').val()) {
+//         return '<a class="btn btn-xs btn-primary" onclick="addOrderItem(' + row.id + ');">' + i18n['orders.addOrderItem'] + '</a>';
+//     }
+// }
+
+function renderAddOrderItemBtnSmall(rowId) {
+    //todo add "type" to uncomment
+    // if (type == 'display' && $('#hasRoleAdmin').val()) {
+    return '<a class="btn btn-xs btn-success" onclick="addOrderItem(' + rowId + ');">+</a>';
+    // }
+}
+
+// function renderPersistOrUpdateCustomerBtnSmall(data, type, row) {
+//     if (type == 'display' && $('#hasRoleAdmin').val()) {
+//         return '<a class="btn btn-xs btn-primary" onclick="persistOrUpdateCustomerFromOrder(' + row.id + ');">' + i18n['orders.addCustomer'] + '</a>';
+//     }
+// }
+function renderPersistOrUpdateCustomerBtnSmall(data, type, row) {
+// debugger;
+    if (type == 'display' && $('#hasRoleAdmin').val()) {
+        return '<a class="btn btn-xs btn-primary" onclick="persistOrUpdateCustomerFromOrder(' + row.id + ',' + row.customerId + ');">+</a>';
+    }
+}
+
+function addOrderItem(id) {
+    $.ajax({
+        url: 'ajax/profile/orders/' + id + '/add-order-item',
+        type: 'POST',
+        success: function () {
+            updateTable();
+            successNoty('common.saved');
+        }
     });
 }
+
+function persistOrUpdateCustomerFromOrder(orderId, customerId) {
+    // debugger;
+    // var orderId = row.data().id;
+    // var customerId = row.data().customerId;
+    if (customerId == 0) {
+        $.ajax({
+            url: 'ajax/profile/orders/' + orderId + '/persist-or-update-customer',
+            type: 'POST',
+            success: function () {
+                updateTable();
+                successNoty('common.saved');
+            }
+        });
+    } else {
+        showUpdateCustomerModal(customerId)
+    }
+}
+
+function showUpdateCustomerModal(customerId) {
+    $('#editCustomer').modal();
+    // $('#editCustomer').html(add_title);
+    // form.find(":input").val("");
+    $.ajax({
+        url: 'rest/profile/customers/' + customerId,
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            // debugger;
+            $("#id").val(data.id);
+            $("#firstName").val(data.name);
+            $("#lastName").val(data.lastName);
+            $("#phoneNumber").val(data.phoneNumber);
+            $("#city").val(data.city);
+            $("#postOffice").val(data.postOffice);
+            $("#email").val(data.email);
+            $("#note").val(data.note);
+
+        },
+        error: function (error) {
+            alert.log("Error:" + error);
+        }
+    });
+
+
+}
+

@@ -199,27 +199,7 @@ function deleteRow(id) {
     });
 }
 
-function addOrderItem(id) {
-    $.ajax({
-        url: 'ajax/profile/orders/' + id + '/add-order-item',
-        type: 'POST',
-        success: function () {
-            updateTable();
-            successNoty('common.saved');
-        }
-    });
-}
 
-function persistOrUpdateCustomerFromOrder(id) {
-    $.ajax({
-        url: 'ajax/profile/orders/' + id + '/persist-or-update-customer',
-        type: 'POST',
-        success: function () {
-            updateTable();
-            successNoty('common.saved');
-        }
-    });
-}
 
 function enableUnlimited(chkbox, id) {
     var enabled = chkbox.is(":checked");
@@ -258,6 +238,26 @@ function save() {
         success: function () {
             console.log(form.serialize());
             $('#editRow').modal('hide');
+            updateTable();
+            successNoty('common.saved');
+        }
+    });
+}
+
+function saveCustomer() {
+    $.ajax({
+
+        // headers: {
+        //     'Accept': 'application/json',
+        //     'Content-Type': 'application/json'
+        // },
+        // dataType: 'json',
+        type: "POST",
+        url: 'rest/profile/customers/' + $("#id").val(),
+        data: form.serialize(),
+        success: function () {
+            console.log(form.serialize());
+            $('#editCustomer').modal('hide');
             updateTable();
             successNoty('common.saved');
         }
@@ -312,30 +312,6 @@ function renderDeleteBtnSmall(data, type, row) {
         return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">x</a>';
     }
 
-}
-
-// function renderAddOrderItemBtn(data, type, row) {
-//     if (type == 'display' && $('#hasRoleAdmin').val()) {
-//         return '<a class="btn btn-xs btn-primary" onclick="addOrderItem(' + row.id + ');">' + i18n['orders.addOrderItem'] + '</a>';
-//     }
-// }
-
-function renderAddOrderItemBtnSmall(rowId) {
-    //todo add "type" to uncomment
-    // if (type == 'display' && $('#hasRoleAdmin').val()) {
-        return '<a class="btn btn-xs btn-success" onclick="addOrderItem(' + rowId + ');">+</a>';
-    // }
-}
-
-// function renderPersistOrUpdateCustomerBtnSmall(data, type, row) {
-//     if (type == 'display' && $('#hasRoleAdmin').val()) {
-//         return '<a class="btn btn-xs btn-primary" onclick="persistOrUpdateCustomerFromOrder(' + row.id + ');">' + i18n['orders.addCustomer'] + '</a>';
-//     }
-// }
-function renderPersistOrUpdateCustomerBtnSmall(data, type, row) {
-    if (type == 'display' && $('#hasRoleAdmin').val()) {
-        return '<a class="btn btn-xs btn-primary" onclick="persistOrUpdateCustomerFromOrder(' + row.id + ');">+</a>';
-    }
 }
 
 function simpleFailNoty() {

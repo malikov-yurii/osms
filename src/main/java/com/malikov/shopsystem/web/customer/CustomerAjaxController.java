@@ -21,12 +21,6 @@ public class CustomerAjaxController extends AbstractCustomerController {
         return super.getAll();
     }
 
-    @GetMapping(value = "/{id}")
-    public Customer get(@PathVariable("id") int id) {
-        return super.get(id);
-    }
-
-
     @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable("id") int id) {
         super.delete(id);
@@ -46,5 +40,15 @@ public class CustomerAjaxController extends AbstractCustomerController {
             super.update(CustomerUtil.updateFromTo(customer, customerTo), customerTo.getId());
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{id}/get-email")
+    public String getEmail(@PathVariable("id") int id) {
+        return super.getEmail(id);
+    }
+
+    @GetMapping(value = "/{id}/get-note")
+    public String getNote(@PathVariable("id") int id) {
+        return super.getNote(id);
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class OrderRestController extends AbstractOrderController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@Valid @RequestBody Order order, @PathVariable("id") int id) {
+    public void update(Order order, @PathVariable("id") int id) {
         super.update(order, id);
     }
 
