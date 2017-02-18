@@ -76,22 +76,26 @@ public abstract class AbstractOrderController {
         orderItemService.update(orderItem);
     }
 
-    public void updateOrderItemPrice(int itemId, int price) {
+    public int updateOrderItemPrice(int itemId, int price) {
         OrderItem orderItem = orderItemService.get(itemId);
         orderItem.setProductPrice(price);
         Order order = orderItem.getOrder();
-        order.setTotalSum(OrderUtil.calculateTotalSum(order.getOrderItems()));
+        int totalSum = OrderUtil.calculateTotalSum(order.getOrderItems());
+        order.setTotalSum(totalSum);
         orderService.update(order);
         orderItemService.update(orderItem);
+        return totalSum;
     }
 
-    public void updateOrderItemProductQuantity(int itemId, int quantity) {
+    public int updateOrderItemProductQuantity(int itemId, int quantity) {
         OrderItem orderItem = orderItemService.get(itemId);
         orderItem.setProductQuantity(quantity);
         Order order = orderItem.getOrder();
-        order.setTotalSum(OrderUtil.calculateTotalSum(order.getOrderItems()));
+        int totalSum = OrderUtil.calculateTotalSum(order.getOrderItems());
+        order.setTotalSum(totalSum);
         orderService.update(order);
         orderItemService.update(orderItem);
+        return totalSum;
     }
 
     public int updateOrderItemPriceProductIdProductVariationId(int itemId, int price, int productId, int productVariationId, String orderItemName) {

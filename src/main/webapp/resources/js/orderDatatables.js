@@ -239,7 +239,10 @@ $(function () {
                     url: ajaxUrl + orderItemId + '/update-' + key,
                     type: 'POST',
                     data: key + '=' + currentVal,
-                    success: function () {
+                    success: function (data) {
+                        if (key === 'quantity' || key === 'price') {
+                            $(tr).closest('tr.child-row').prev().find('.order-total-sum').html(data);
+                        }
                         successNoty('common.saved');
                     }
                 });
@@ -277,8 +280,7 @@ function showOrderItems() {
         var orderItemTos = row.data().orderItemTos;
         var orderId = row.data().id;
 
-        row.child(buildOrderItemList(orderItemTos, orderId)).show();
-        $(tr).addClass('opened');
+        row.child(buildOrderItemList(orderItemTos, orderId), 'child-row').show();
 
         // Autocomplete for Order ITEMS
         var $firstTd = row.child().find('table td:first-child');
@@ -347,8 +349,6 @@ function buildOrderItemList(orderItemTos, orderId) {
                 <tr><th>Item Name</th><th>Q-ty</th><th>Price</th><th>' + renderAddOrderItemBtnSmall(orderId) + '</th></tr>\
             </thead>\
             <tbody>';
-
-    // debugger;
 
     for (var i = 0; i < orderItemTos.length; i++) {
         orderItemsList +=

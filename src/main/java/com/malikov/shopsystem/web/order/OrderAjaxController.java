@@ -85,13 +85,7 @@ public class OrderAjaxController extends AbstractOrderController {
         super.updateOrderItemProductName(itemId, name);
     }
 
-    // TODO: 2/5/2017 chang it to PUT
-    @PostMapping(value = "{itemId}/update-price")
-    public void updateOrderItemPrice(@PathVariable("itemId") int itemId, @RequestParam("price") int price) {
-        super.updateOrderItemPrice(itemId, price);
-    }
-
-//    @PutMapping(value = "{itemId}/change-order-item-after-order-item-name-autocomplete", consumes = MediaType.APPLICATION_JSON_VALUE)
+    //    @PutMapping(value = "{itemId}/change-order-item-after-order-item-name-autocomplete", consumes = MediaType.APPLICATION_JSON_VALUE)
 //    public void changeOrderItemAfterOrderItemNameAutocomplete(@PathVariable("itemId") int itemId
 //            , @RequestBody String json
 //    ) {
@@ -100,6 +94,17 @@ public class OrderAjaxController extends AbstractOrderController {
 //        String t = jsonObject.get("time").toString();
 //        String n = jsonObject.get("name").toString();
 //        super.updateOrderItemPriceProductIdProductVariationId(itemId, price, productId, productVariationId);
+    @PostMapping(value = "{itemId}/update-quantity")
+    public int updateOrderItemQuantity(@PathVariable("itemId") int itemId, @RequestParam("quantity") int quantity) {
+        return super.updateOrderItemProductQuantity(itemId, quantity);
+    }
+
+    // TODO: 2/5/2017 chang it to PUT
+    @PostMapping(value = "{itemId}/update-price")
+    public int updateOrderItemPrice(@PathVariable("itemId") int itemId, @RequestParam("price") int price) {
+        return super.updateOrderItemPrice(itemId, price);
+    }
+
 //    }
 
     // TODO: 2/5/2017 chang it to PUT
@@ -111,11 +116,6 @@ public class OrderAjaxController extends AbstractOrderController {
     , @RequestParam("orderItemName") String orderItemName
     ) {
         return super.updateOrderItemPriceProductIdProductVariationId(itemId, price, productId, productVariationId, orderItemName);
-    }
-
-    @PostMapping(value = "{itemId}/update-quantity")
-    public void updateOrderItemQuantity(@PathVariable("itemId") int itemId, @RequestParam("quantity") int quantity) {
-        super.updateOrderItemProductQuantity(itemId, quantity);
     }
 
     @PostMapping(value = "/autocomplete-first-name", produces = MediaType.APPLICATION_JSON_VALUE)
