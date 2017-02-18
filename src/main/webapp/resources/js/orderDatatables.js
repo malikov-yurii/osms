@@ -36,7 +36,7 @@ $(function () {
             // {
             //     "defaultContent": "",
             //     "orderable": false,
-            //     "render": renderAddOrderItemBtnSmall
+            //     "render": renderAddOrderItemBtn
             // },
             {
                 "defaultContent": "",
@@ -346,7 +346,7 @@ function buildOrderItemList(orderItemTos, orderId) {
     var orderItemsList =
         '<table class="order-product-table" data-order-id="' + orderId + '">\
             <thead>\
-                <tr><th>Item Name</th><th>Q-ty</th><th>Price</th><th>' + renderAddOrderItemBtnSmall(orderId) + '</th></tr>\
+                <tr><th>' + renderAddOrderItemBtn(orderId) + '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Item Name</th><th>Q-ty</th><th>Price</th><th>Delete</th></tr>\
             </thead>\
             <tbody>';
 
@@ -412,10 +412,10 @@ function addOrder() {
 //     }
 // }
 
-function renderAddOrderItemBtnSmall(rowId) {
+function renderAddOrderItemBtn(rowId) {
     //todo add "type" to uncomment
     // if (type == 'display' && $('#hasRoleAdmin').val()) {
-    return '<a class="btn btn-xs btn-success" onclick="addOrderItem(' + rowId + ');">+</a>';
+    return '<a class="btn btn-xs btn-success" onclick="addOrderItem(' + rowId + ');">Add order item</a>';
     // }
 }
 
