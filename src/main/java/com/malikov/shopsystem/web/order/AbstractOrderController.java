@@ -94,7 +94,7 @@ public abstract class AbstractOrderController {
         orderItemService.update(orderItem);
     }
 
-    public void updateOrderItemPriceProductIdProductVariationId(int itemId, int price, int productId, int productVariationId, String orderItemName) {
+    public int updateOrderItemPriceProductIdProductVariationId(int itemId, int price, int productId, int productVariationId, String orderItemName) {
         OrderItem orderItem = orderItemService.get(itemId);
         orderItem.setProductPrice(price);
         orderItem.setProductId(productId);
@@ -102,9 +102,11 @@ public abstract class AbstractOrderController {
         if (productVariationId != 0)
             orderItem.setProductVariation(productVariationService.get(productVariationId));
         Order order = orderItem.getOrder();
-        order.setTotalSum(OrderUtil.calculateTotalSum(order.getOrderItems()));
+        int totalSum = OrderUtil.calculateTotalSum(order.getOrderItems());
+        order.setTotalSum(totalSum);
         orderService.update(order);
         orderItemService.update(orderItem);
+        return totalSum;
     }
 
     public List<CustomerAutocompleteTo> getCustomerAutocompleteTosByFirstNameMask(String firstNameMask) {

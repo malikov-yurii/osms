@@ -307,13 +307,19 @@ function showOrderItems() {
                 $.ajax({
                     url: ajaxUrl + orderItemId + '/update-order-item-after-order-item-name-autocomplete',
                     type: 'POST',
-                    data: 'price=' + ui.item.orderItemPrice + '&productId=' + ui.item.productId + '&productVariationId=' + ui.item.productVariationId + '&orderItemName=' + ui.item.orderItemName
+                    data: 'price=' + ui.item.orderItemPrice + '&productId=' + ui.item.productId + '&productVariationId=' + ui.item.productVariationId + '&orderItemName=' + ui.item.orderItemName,
+                    success: function (data) {
+                        // debugger;
+                        $(tr).find('td.order-total-sum').html(data);
+                    }
                     // todo need PUT for rest??
                     // contentType: "application/json",
                     // type: "PUT",
                     // dataType: "json",
                     // data: JSON.stringify({'price' : ui.item.orderItemPrice, 'productId': ui.item.productId, 'productVariationId' : ui.item.productVariationId}),
                 });
+
+
                 return false; // Prevent the widget from inserting the value.
             }
             , focus: function (event, ui) {

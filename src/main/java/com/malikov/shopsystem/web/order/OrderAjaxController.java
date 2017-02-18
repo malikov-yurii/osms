@@ -104,13 +104,13 @@ public class OrderAjaxController extends AbstractOrderController {
 
     // TODO: 2/5/2017 chang it to PUT
     @PostMapping(value = "{itemId}/update-order-item-after-order-item-name-autocomplete")
-    public void updateOrderItemAfterOrderItemNameAutocomplete(@PathVariable("itemId") int itemId
+    public Integer updateOrderItemAfterOrderItemNameAutocomplete(@PathVariable("itemId") int itemId
             , @RequestParam("price") int price
     , @RequestParam("productId") int productId
     , @RequestParam("productVariationId") int productVariationId
     , @RequestParam("orderItemName") String orderItemName
     ) {
-        super.updateOrderItemPriceProductIdProductVariationId(itemId, price, productId, productVariationId, orderItemName);
+        return super.updateOrderItemPriceProductIdProductVariationId(itemId, price, productId, productVariationId, orderItemName);
     }
 
     @PostMapping(value = "{itemId}/update-quantity")
