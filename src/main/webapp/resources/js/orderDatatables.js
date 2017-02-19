@@ -459,8 +459,6 @@ function persistOrUpdateCustomerFromOrder(orderId, customerId) {
 
 function showUpdateCustomerModal(customerId) {
     $('#editCustomer').modal();
-    // $('#editCustomer').html(add_title);
-    // form.find(":input").val("");
     $.ajax({
         url: 'rest/profile/customers/' + customerId,
         type: "GET",
