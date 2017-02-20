@@ -22,15 +22,27 @@
 
     <tx:annotation-driven/>
 
-    <beans profile="postgres">
-        <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
+    <beans profile="mySql">
+        <context:property-placeholder location="classpath:db/mySql.properties" system-properties-mode="OVERRIDE"/>
 
         <bean id="dataSource"
               class="org.apache.tomcat.jdbc.pool.DataSource"
               p:driverClassName="${jdbc.driver.class}"
               p:url="${database.url}"
               p:username="${database.username}"
-              p:password="${database.password}"/>
+              p:password="${database.password}"
+              p:validationQuery="SELECT 1 FROM users"
+              p:testOnBorrow="true"
+        />
+        <!--p:maxActive="10"-->
+        <!--p:minIdle="2"-->
+        <!--p:maxWait="20000"-->
+        <!--p:initialSize="2"-->
+        <!--p:maxIdle="5"-->
+        <!--p:removeAbandoned="true"-->
+        <!--p:testOnConnect="true"-->
+        <!--p:testWhileIdle="true"-->
+
     </beans>
 
     <beans profile="tomcat">
