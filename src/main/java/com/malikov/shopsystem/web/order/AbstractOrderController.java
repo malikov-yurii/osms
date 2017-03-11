@@ -226,6 +226,15 @@ public abstract class AbstractOrderController {
         orderService.save(order);
     }
 
+    public void updateOrderComment(Integer orderId, String comment) {
+        // TODO: 2/6/2017 Make it work
+//        orderService.updateStatus(orderId, status);
+        Order order = orderService.get(orderId);
+
+        order.setComment(comment);
+        orderService.save(order);
+    }
+
     public void updateOrderPaymentType(Integer orderId, PaymentType paymentType) {
         Order order = orderService.get(orderId);
         order.setPaymentType(paymentType);

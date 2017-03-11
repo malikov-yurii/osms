@@ -54,7 +54,7 @@ public class OrderAjaxController extends AbstractOrderController {
         orderItems.add(new OrderItem());
         Order newOrder = new Order(null,
                 userService.getByLogin(SecurityContextHolder.getContext().getAuthentication().getName()),
-                PaymentType.NP, OrderStatus.TO_SHIP,
+                PaymentType.NP, OrderStatus.TO_SHIP, null,
                 orderItems);
 
         super.create(newOrder);
@@ -166,6 +166,11 @@ public class OrderAjaxController extends AbstractOrderController {
     @PostMapping(value = "/{id}/update-status")
     public void updateOrderStatus(@PathVariable("id") int orderId, @RequestParam("status") OrderStatus status) {
         super.updateOrderStatus(orderId, status);
+    }
+
+    @PostMapping(value = "/{id}/update-comment")
+    public void updateOrderStatus(@PathVariable("id") int orderId, @RequestParam("comment") String comment) {
+        super.updateOrderComment(orderId, comment);
     }
 
     @PostMapping(value = "/{id}/update-payment-type")

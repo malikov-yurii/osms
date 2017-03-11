@@ -5,6 +5,11 @@ import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
 
+/**
+ * This is parent class for domain classes which has ID
+ * @author Malikov Yurii
+ * @version 0.1
+ */
 @MappedSuperclass
 @Access(AccessType.FIELD)
 //@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, isGetterVisibility = NONE, setterVisibility = NONE)

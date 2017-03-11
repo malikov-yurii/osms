@@ -17,6 +17,7 @@ public class OrderTestData {
     public static final Order ORDER_1 = new Order(1, CUSTOMER_GOLOV, ADMIN,
             PaymentType.PB,
             OrderStatus.A_FOR_P,
+            null,
             LocalDate.of(2016, 9, 15),
             Arrays.asList(
                     new OrderItem(1, POTAL_NAZIONALE.getId(), POTAL_NAZIONALE_100, POTAL_NAZIONALE.getName(), POTAL_NAZIONALE_100.getPrice(), 1),
@@ -25,6 +26,7 @@ public class OrderTestData {
     public static final Order ORDER_2 = new Order(2, CUSTOMER_GOLOV, ADMIN,
             PaymentType.NP,
             OrderStatus.TO_SHIP,
+            null,
             LocalDate.of(2016, 11, 17),
             Arrays.asList(
                     new OrderItem(3, SHELLAC_MANETTI.getId(), SHELLAC_MANETTI_250ML, SHELLAC_MANETTI.getName(), SHELLAC_MANETTI_250ML.getPrice(), 3),
@@ -34,6 +36,7 @@ public class OrderTestData {
     public static final Order ORDER_3 = new Order(3, CUSTOMER_DROGOV, ADMIN,
             PaymentType.PB,
             OrderStatus.TO_SHIP,
+            null,
             LocalDate.of(2016, 10, 11),
             Collections.singletonList(
                     new OrderItem(5, POTAL_KITAJ.getId(), POTAL_KITAJ_100, POTAL_KITAJ.getName(), POTAL_KITAJ_100.getPrice(), 5)
@@ -42,6 +45,7 @@ public class OrderTestData {
     public static final Order ORDER_4 = new Order(4, CUSTOMER_DUNOV, ADMIN,
             PaymentType.NP,
             OrderStatus.TO_SHIP,
+            null,
             LocalDate.of(2016, 12, 22),
             Arrays.asList(
                     new OrderItem(6, SHELLAC_MANETTI.getId(), SHELLAC_MANETTI_250ML, SHELLAC_MANETTI.getName(), SHELLAC_MANETTI_250ML.getPrice(), 6),
@@ -52,6 +56,7 @@ public class OrderTestData {
     public static final Order ORDER_5 = new Order(5, CUSTOMER_DROGOV, ADMIN,
             PaymentType.PB,
             OrderStatus.A_FOR_P,
+            null,
             LocalDate.of(2016, 2, 22),
             Collections.singletonList(
                     new OrderItem(9, BITUM_DIVOLO.getId(), null, BITUM_DIVOLO.getName(), BITUM_DIVOLO.getPrice(), 1)
@@ -65,6 +70,7 @@ public class OrderTestData {
                             && Objects.equals(expected.getUser(), actual.getUser())
                             && Objects.equals(expected.getPaymentType(), actual.getPaymentType())
                             && Objects.equals(expected.getStatus(), actual.getStatus())
+                            && Objects.equals(expected.getComment(), actual.getComment())
                             && Objects.equals(expected.getDatePlaced(), actual.getDatePlaced())
                             && Objects.equals(expected.getOrderItems(), actual.getOrderItems())
                     )

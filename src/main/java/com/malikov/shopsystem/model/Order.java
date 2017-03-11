@@ -59,7 +59,7 @@ public class Order extends BaseEntity {
     @Column(name = "status")
     private OrderStatus status;
 
-//    @Temporal(TemporalType.TIMESTAMP)
+    //    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_placed"
             , columnDefinition = "timestamp default now()"
 //            , insertable=false
@@ -77,10 +77,13 @@ public class Order extends BaseEntity {
     @Column(name = "total_sum")
     private Integer totalSum;
 
+    @Column(name = "comment")
+    private String comment;
+
     public Order() {
     }
 
-    public Order(Integer id, Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, LocalDate datePlaced, List<OrderItem> orderItems) {
+    public Order(Integer id, Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, String comment, LocalDate datePlaced, List<OrderItem> orderItems) {
         this.id = id;
         if (customer != null) {
             this.customer = customer;
@@ -93,6 +96,7 @@ public class Order extends BaseEntity {
         this.user = user;
         this.paymentType = paymentType;
         this.status = orderStatus;
+        this.comment = comment;
         if (datePlaced != null) {
             this.datePlaced = datePlaced;
         }
@@ -105,12 +109,12 @@ public class Order extends BaseEntity {
         }
     }
 
-    public Order(Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, List<OrderItem> orderItems) {
-        this(null, customer, user, paymentType, orderStatus, null, orderItems);
+    public Order(Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, String comment, List<OrderItem> orderItems) {
+        this(null, customer, user, paymentType, orderStatus, comment, null, orderItems);
     }
 
     public Order(Order o) {
-        this(o.getId(), o.getCustomer(), o.getUser(), o.getPaymentType(), o.getStatus(), o.getDatePlaced(), o.getOrderItems());
+        this(o.getId(), o.getCustomer(), o.getUser(), o.getPaymentType(), o.getStatus(), o.getComment(), o.getDatePlaced(), o.getOrderItems());
     }
 
     public String getCustomerName() {
@@ -209,6 +213,14 @@ public class Order extends BaseEntity {
         this.totalSum = totalSum;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -225,7 +237,8 @@ public class Order extends BaseEntity {
                 paymentType == order.paymentType &&
                 status == order.status &&
                 Objects.equals(datePlaced, order.datePlaced) &&
-                Objects.equals(orderItems, order.orderItems);
+                Objects.equals(orderItems, order.orderItems) &&
+                Objects.equals(comment, order.comment);
     }
 
     @Override
@@ -249,6 +262,7 @@ public class Order extends BaseEntity {
                 ", datePlaced=" + datePlaced +
                 ", orderItems=" + orderItems +
                 ", totalSum=" + totalSum +
+                ", comment=" + totalSum +
                 '}';
     }
 }
