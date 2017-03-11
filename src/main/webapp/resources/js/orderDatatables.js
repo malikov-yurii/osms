@@ -22,8 +22,8 @@ $(function () {
             //     "defaultContent": "",
             //     "orderable": false
             // },
-            {"data": "id", "orderable": false},
-            {"data": "customerId", "orderable": false, "className": "order-customer-id"},
+            {"data": "id", "orderable": false, "visible" : false},
+            {"data": "customerId", "orderable": false, "visible" : false, "className": "order-customer-id"},
             {"data": "firstName", "orderable": false, "className": "order-first-name editable"},
             {"data": "lastName", "orderable": false, "className": "order-last-name editable"},
             {"data": "phoneNumber", "orderable": false, "className": "order-phone-number editable"},
@@ -32,6 +32,7 @@ $(function () {
             {"data": "paymentType", "orderable": false, "className": "order-payment-type"},
             {"data": "totalSum", "orderable": false, "className": "order-total-sum editable"},
             {"data": "status", "orderable": false, "className": "order-status"},
+            {"data": "comment", "orderable": false, "className": "order-comment editable"},
             // {"data": "date", "orderable": false},
             // {
             //     "defaultContent": "",
@@ -110,7 +111,7 @@ $(function () {
 
     });
 
-    datatableApi.on('focusin', '.order-product-table td,.order-status,.order-payment-type,.order-city,.order-post-office,.order-total-sum', function () {
+    datatableApi.on('focusin', '.order-product-table td,.order-status,.order-comment,.order-payment-type,.order-city,.order-post-office,.order-total-sum', function () {
         /**
          * Storing initial value of order-item-cell, 'status', 'payment-type', 'city', 'post-office', 'total-sum' when getting focus
          **/

@@ -24,6 +24,7 @@
 </div>
 
 <div class="jumbotron">
+
     <div class="container">
         <c:if test="${error}">
             <div class="error">

@@ -42,23 +42,26 @@ public class OrderTo {
 
     private OrderStatus status;
 
+    private String comment;
+
     private List<OrderItemTo> orderItemTos;
 
     public OrderTo(
             Integer id
-            ,Integer customerId
-            ,String firstName
-            ,String lastName
-            ,String phoneNumber
-            ,String city
-            ,String postOffice
-            ,PaymentType paymentType
-            ,LocalDate date
-            ,OrderStatus status
-            ,List<OrderItemTo> orderItemTos
+            , Integer customerId
+            , String firstName
+            , String lastName
+            , String phoneNumber
+            , String city
+            , String postOffice
+            , PaymentType paymentType
+            , LocalDate date
+            , OrderStatus status
+            , String comment
+            , List<OrderItemTo> orderItemTos
     ) {
         this.id = id;
-        this.customerId = customerId == null ? 0 :customerId;
+        this.customerId = customerId == null ? 0 : customerId;
         this.firstName = firstName != null ? firstName : "";
         this.lastName = lastName != null ? lastName : "";
         this.phoneNumber = phoneNumber != null ? phoneNumber : "";
@@ -67,23 +70,25 @@ public class OrderTo {
         this.paymentType = paymentType;
         this.date = date;
         this.status = status;
-        this.totalSum = orderItemTos != null? OrderUtil.calculateTotalSumOfTos(orderItemTos) : 0;
+        this.comment = comment;
+        this.totalSum = orderItemTos != null ? OrderUtil.calculateTotalSumOfTos(orderItemTos) : 0;
         this.orderItemTos = orderItemTos;
     }
 
     public OrderTo(
             Integer id
-            ,Integer customerId
-            ,String firstName
-            ,String lastName
-            ,String phoneNumber
-            ,String city
-            ,String postOffice
-            ,PaymentType paymentType
-            ,LocalDate date
-            ,OrderStatus status
+            , Integer customerId
+            , String firstName
+            , String lastName
+            , String phoneNumber
+            , String city
+            , String postOffice
+            , PaymentType paymentType
+            , LocalDate date
+            , OrderStatus status
+            , String comment
     ) {
-        this(id, customerId, firstName, lastName, phoneNumber, city, postOffice, paymentType, date, status, new ArrayList<>());
+        this(id, customerId, firstName, lastName, phoneNumber, city, postOffice, paymentType, date, status, comment, new ArrayList<>());
         this.totalSum = 0;
     }
 
@@ -144,6 +149,10 @@ public class OrderTo {
         return postOffice;
     }
 
+    public void setPostOffice(String postOffice) {
+        this.postOffice = postOffice;
+    }
+
     public Integer getTotalSum() {
         return totalSum;
     }
@@ -156,9 +165,19 @@ public class OrderTo {
         return paymentType;
     }
 
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
+    }
+
     @JsonSerialize(using = LocalDateSerializer.class)
     public LocalDate getDate() {
         return date;
+    }
+
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    public void setDate(LocalDate date) {
+
+        this.date = date;
     }
 
     public Timestamp getTimestamp() {
@@ -169,21 +188,16 @@ public class OrderTo {
         return status;
     }
 
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    public void setDate(LocalDate date) {
-
-        this.date = date;
-    }
-    public void setPostOffice(String postOffice) {
-        this.postOffice = postOffice;
-    }
-
-    public void setPaymentType(PaymentType paymentType) {
-        this.paymentType = paymentType;
-    }
-
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public List<OrderItemTo> getOrderItemTos() {

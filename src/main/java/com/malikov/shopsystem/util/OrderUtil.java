@@ -19,7 +19,7 @@ public class OrderUtil {
                 .collect(Collectors.toList());
         return new OrderTo(order.getId(), order.getCustomer() != null ? order.getCustomer().getId() : 0, order.getCustomerName(), order.getCustomerLastName(),
                 order.getCustomerPhoneNumber(), order.getCustomerCity(), order.getCustomerPostOffice(),
-                order.getPaymentType(), order.getDatePlaced(), order.getStatus(), OrderItemTos);
+                order.getPaymentType(), order.getDatePlaced(), order.getStatus(), order.getComment() == null ? "" : order.getComment(), OrderItemTos);
     }
 
     public static Order updateFromTo(Order order, OrderTo orderTo) {
@@ -28,6 +28,7 @@ public class OrderUtil {
         order.setCustomerPhoneNumber(orderTo.getPhoneNumber());
         order.setCustomerCity(orderTo.getCity());
         order.setCustomerPostOffice(orderTo.getPostOffice());
+        order.setComment(orderTo.getComment());
         order.setTotalSum(orderTo.getTotalSum());
         return order;
     }
