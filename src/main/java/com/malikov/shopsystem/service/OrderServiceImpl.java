@@ -53,4 +53,9 @@ public class OrderServiceImpl implements OrderService {
     public void updateStatus(Integer orderId, OrderStatus status) {
         repository.updateStatus(orderId, status);
     }
+
+    @Override
+    public List<Order> getDatatablePage(int start, int length) {
+        return repository.getDatatablePage(start, length);
+    }
 }

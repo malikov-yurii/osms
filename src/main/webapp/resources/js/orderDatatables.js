@@ -8,12 +8,15 @@ function updateTable() {
 $(function () {
 
     datatableApi = $('#datatable').DataTable({
+        "processing": true,
+        "serverSide": true,
         "ajax": {
             "url": ajaxUrl,
             "dataSrc": ""
         },
         "searching": false,
-        "paging": false,
+        "pagingType": "full_numbers",
+        "paging": true,
         "info": true,
         "columns": [
             // {

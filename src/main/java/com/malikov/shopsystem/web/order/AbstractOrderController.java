@@ -58,6 +58,11 @@ public abstract class AbstractOrderController {
         return orderService.getAll().stream().map(OrderUtil::asTo).collect(Collectors.toList());
     }
 
+    public List<OrderTo> getDatatablePage(int start, int length) {
+        LOG.info("getAll orders");
+        return orderService.getDatatablePage(start, length).stream().map(OrderUtil::asTo).collect(Collectors.toList());
+    }
+
     public void update(Order order, int id) {
         order.setId(id);
         LOG.info("update order{}", order);

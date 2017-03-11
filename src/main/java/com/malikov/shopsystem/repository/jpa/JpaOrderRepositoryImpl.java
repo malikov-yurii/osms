@@ -65,4 +65,12 @@ public class JpaOrderRepositoryImpl implements OrderRepository {
                 .setParameter("status", status)
                 .executeUpdate();
     }
+
+    @Override
+    public List<Order> getDatatablePage(int start, int length) {
+        return em.createNamedQuery(Order.ALL, Order.class)
+                .setFirstResult(start)
+                .setMaxResults(length)
+                .getResultList();
+    }
 }

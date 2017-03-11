@@ -32,9 +32,13 @@ public class OrderAjaxController extends AbstractOrderController {
     @Autowired
     UserService userService;
 
+//    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+//    public List<OrderTo> getAll() {
+//        return super.getAll();
+//    }
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<OrderTo> getAll() {
-        return super.getAll();
+    public List<OrderTo> getDatatablePage(@RequestParam("start") int start, @RequestParam("length") int length) {
+        return super.getDatatablePage(start, length);
     }
 
     @GetMapping(value = "/{id}")
