@@ -21,7 +21,7 @@
             <%--<h3><fmt:message key="orders.title"/></h3>--%>
 
             <div class="view-box">
-
+                <a class="btn btn-sm btn-success" onclick="addOrder('')">Add new order</a>
                 <%--<a class="btn btn-sm btn-info" onclick="addOrder('')"><fmt:message key="orders.add" /></a>--%>
                 <table class="table table-striped display" id="datatable">
                     <thead>
@@ -40,8 +40,8 @@
                         <th>Info</th>
                         <%--<th><fmt:message key="orders.date"/></th>--%>
                         <%--<th></th>--%>
-                        <th><a class="btn btn-sm btn-success" onclick="addOrder('')">+</a></th>
-                        <th></th>
+                        <%--<th></th>--%>
+                        <%--<th></th>--%>
                     </tr>
                     </thead>
                 </table>

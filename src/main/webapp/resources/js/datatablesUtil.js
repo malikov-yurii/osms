@@ -306,14 +306,18 @@ function renderEditBtn(data, type, row) {
 //     }
 //
 // }
-function renderDeleteBtnSmall(data, type, row) {
+// function renderDeleteBtn(data, type, row) {
+//
+//     if (type == 'display' && $('#hasRoleAdmin').val()) {
+//         return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">x</a>';
+//     }
+//
+// }
+function renderDeleteBtn(row) {
 
-    if (type == 'display' && $('#hasRoleAdmin').val()) {
-        return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">x</a>';
-    }
+        return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">Delete order</a>';
 
 }
-
 function simpleFailNoty() {
     closeNoty();
     failedNote = noty({

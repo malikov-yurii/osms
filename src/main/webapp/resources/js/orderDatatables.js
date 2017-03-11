@@ -39,22 +39,22 @@ $(function () {
             //     "orderable": false,
             //     "render": renderAddOrderItemBtn
             // },
-            {
-                "defaultContent": "",
-                "orderable": false,
-                "render": renderPersistOrUpdateCustomerBtnSmall
-            },
+            // {
+            //     "defaultContent": "",
+                // "orderable": false,
+                // "render": renderPersistOrUpdateCustomerBtn
+            // },
             // {
             //     "defaultContent": "",
             //     "orderable": false,
             //     "render": renderEditBtn
             // },
-            {
-                "defaultContent": "",
-                "orderable": false,
-                "render": renderDeleteBtnSmall
-
-            }
+            // {
+            //     "defaultContent": "",
+            //     "orderable": false,
+            //     "render": renderDeleteBtn
+            //
+            // }
         ],
         "createdRow": function (row, data, rowIndex) {
             $(row).addClass('parent-row');
@@ -281,7 +281,7 @@ function showOrderItems() {
         var orderItemTos = row.data().orderItemTos;
         var orderId = row.data().id;
 
-        row.child(buildOrderItemList(orderItemTos, orderId), 'child-row').show();
+        row.child(buildOrderItemList(orderItemTos, orderId, row.data()), 'child-row').show();
 
         // Autocomplete for Order ITEMS
         var $firstTd = row.child().find('table td:first-child');
@@ -339,7 +339,7 @@ function renderDeleteOrderItemBtn(orderItemId) {
 
 }
 
-function buildOrderItemList(orderItemTos, orderId) {
+function buildOrderItemList(orderItemTos, orderId, row) {
     /**
      * Building DOM node child row - list of order ITEMS
      **/
@@ -347,7 +347,7 @@ function buildOrderItemList(orderItemTos, orderId) {
     var orderItemsList =
         '<table class="order-product-table" data-order-id="' + orderId + '">\
             <thead>\
-                <tr><th>' + renderAddOrderItemBtn(orderId) + '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Item Name</th><th>Q-ty</th><th>Price</th><th>Delete</th></tr>\
+                <tr><th>' + renderAddOrderItemBtn(orderId) + '&nbsp;&nbsp;' + renderPersistOrUpdateCustomerBtn(row) + '&nbsp;&nbsp;' + renderDeleteBtn(row) + '</th><th>Q-ty</th><th>Price</th><th>Delete</th></tr>\
             </thead>\
             <tbody>';
 
@@ -420,16 +420,25 @@ function renderAddOrderItemBtn(rowId) {
     // }
 }
 
-// function renderPersistOrUpdateCustomerBtnSmall(data, type, row) {
+// function renderPersistOrUpdateCustomerBtn(data, type, row) {
 //     if (type == 'display' && $('#hasRoleAdmin').val()) {
 //         return '<a class="btn btn-xs btn-primary" onclick="persistOrUpdateCustomerFromOrder(' + row.id + ');">' + i18n['orders.addCustomer'] + '</a>';
 //     }
 // }
-function renderPersistOrUpdateCustomerBtnSmall(data, type, row) {
-// debugger;
-    if (type == 'display' && $('#hasRoleAdmin').val()) {
-        return '<a class="btn btn-xs btn-primary" onclick="persistOrUpdateCustomerFromOrder(' + row.id + ',' + row.customerId + ');">+</a>';
-    }
+// function renderPersistOrUpdateCustomerBtn(data, type, row) {
+// // debugger;
+//     if (type == 'display' && $('#hasRoleAdmin').val()) {
+//         return '<a class="btn btn-xs btn-primary" onclick="persistOrUpdateCustomerFromOrder(' + row.id + ',' + row.customerId + ');">+</a>';
+//     }
+//
+// }
+function renderPersistOrUpdateCustomerBtn(row) {
+        var btnText;
+    if (row.customerId === 0)
+        btnText = 'Save customer to DB';
+    else
+        btnText = 'Update customer in DB'
+        return '<a class="btn btn-xs btn-primary" onclick="persistOrUpdateCustomerFromOrder(' + row.id + ',' + row.customerId + ');">' + btnText + '</a>';
 }
 
 function addOrderItem(id) {

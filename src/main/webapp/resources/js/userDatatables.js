@@ -28,7 +28,7 @@ $(function () {
             {
                 "orderable": false,
                 "defaultContent": "",
-                "render": renderDeleteBtnSmall
+                "render": renderDeleteBtn
             }
         ],
         "order": [
