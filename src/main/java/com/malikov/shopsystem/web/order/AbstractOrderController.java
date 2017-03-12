@@ -59,11 +59,10 @@ public abstract class AbstractOrderController {
         return orderService.getAll().stream().map(OrderUtil::asTo).collect(Collectors.toList());
     }
 
-    public OrderDatatablePageTo getDatatablePage(int draw, int start, int length) {
+    public OrderDatatablePageTo getDatatablePage(int start, int length) {
         LOG.info("getAll orders");
         Long orderTotalQuantity = orderService.getTotalQuantity();
         return new OrderDatatablePageTo(
-                draw,
                 orderTotalQuantity,
                 orderTotalQuantity,
                 orderService.getDatatablePage(start, length).stream().map(OrderUtil::asTo).collect(Collectors.toList()));

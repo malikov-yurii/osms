@@ -4,27 +4,16 @@ import java.util.List;
 
 public class OrderDatatablePageTo {
 
-    private Integer draw;
-
     private Long recordsTotal;
 
     private Long recordsFiltered;
 
     private List<OrderTo> data;
 
-    public OrderDatatablePageTo(Integer draw, Long recordsTotal, Long recordsFiltered, List<OrderTo> data) {
-        this.draw = draw;
+    public OrderDatatablePageTo(Long recordsTotal, Long recordsFiltered, List<OrderTo> data) {
         this.recordsTotal = recordsTotal;
         this.recordsFiltered = recordsFiltered;
         this.data = data;
-    }
-
-    public Integer getDraw() {
-        return draw;
-    }
-
-    public void setDraw(Integer draw) {
-        this.draw = draw;
     }
 
     public Long getRecordsTotal() {
