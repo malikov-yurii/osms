@@ -190,18 +190,20 @@ div.dataTables_wrapper div.dataTables_info {
 .order-table th,
 .order-table td {
     padding: 8px;
-    font-size: 14px
+    font-size: 14px;
 }
 .order-table th {
     border-bottom: 2px solid #ddd;
 }
 .order-table td.child-row {
-    padding: 0 0 20px 4%;
+    padding: 0 0 25px;
 }
 .order-head-sm {
     display: none;
 }
-
+.order-product-table th:not(:first-child) {
+    width: 9%;
+}
 
 
 @media (max-width: 768px) {
@@ -234,20 +236,42 @@ div.dataTables_wrapper div.dataTables_info {
         display: block;
         clear: both;
     }
-    .parent-row td:nth-child(1),
-    .parent-row td:nth-child(2),
-    .parent-row td:nth-child(3),
-    .parent-row td:nth-child(4) {
-        width: 33.33%;
+
+    .parent-row td:nth-child(1) {
+        order: 1;
+        width: 30%;
     }
-    .parent-row td:nth-child(5),
-    .parent-row td:nth-child(6),
-    .parent-row td:nth-child(7),
+    .parent-row td:nth-child(2) {
+        order: 2;
+        width: 30%;
+    }
+    .parent-row td:nth-child(3) {
+        order: 3;
+        width: 30%;
+    }
+    .parent-row td:nth-child(4) {
+        order: 5;
+        width: 40%;
+    }
+    .parent-row td:nth-child(5) {
+        order: 6;
+        width: 10%;
+    }
+    .parent-row td:nth-child(6) {
+        order: 4;
+        width: 10%;
+    }
+    .parent-row td:nth-child(7) {
+        order: 9;
+        width: 15%;
+    }
     .parent-row td:nth-child(8) {
-        width: 16.66%;
+        order: 8;
+        width: 20%;
     }
     .parent-row td:nth-child(9) {
-        width: 100%;
+        order: 7;
+        width: 15%;
     }
 }
 @media (max-width: 450px) {
@@ -263,19 +287,24 @@ div.dataTables_wrapper div.dataTables_info {
     .row {
         margin: 0;
     }
-    .parent-row td:nth-child(4) {
-        width: 80%;
-    }
-    .parent-row td:nth-child(5) {
-        width: 20%
-    }
-    .parent-row td:nth-child(6),
-    .parent-row td:nth-child(7),
-    .parent-row td:nth-child(8) {
-        width: 33.33%;
-    }
 
     .order-table td.child-row {
         padding: 0 0 40px;
+    }
+    .order-product-table .order-product-qty {
+        width: 20px;
+    }
+    .order-table th,
+    .order-table td {
+        padding: 3px;
+        overflow: hidden;
+    }
+    .order-table th:focus,
+    .order-table td:focus {
+        background: #fff;
+        overflow: visible;
+    }
+    .order-product-table td {
+        font-size: 13px;
     }
 }

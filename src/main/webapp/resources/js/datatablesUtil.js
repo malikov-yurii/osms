@@ -188,14 +188,16 @@ function updateRow(id) {
 }
 
 function deleteRow(id) {
-    $.ajax({
-        url: ajaxUrl + id,
-        type: 'DELETE',
-        success: function () {
-            updateTable();
-            successNoty('common.deleted');
-        }
-    });
+    if (confirm('Вы уверены, что хотите удалить заказ?')) {
+        $.ajax({
+            url: ajaxUrl + id,
+            type: 'DELETE',
+            success: function () {
+                updateTable();
+                successNoty('common.deleted');
+            }
+        });
+    }
 }
 
 
@@ -315,7 +317,9 @@ function renderEditBtn(data, type, row) {
 // }
 function renderDeleteBtn(row) {
 
-        return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">Delete order</a>';
+        return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">' +
+            '<span class="order-head-lg">Delete order</span><span class="order-head-sm">Order <i class="fa fa-times" aria-hidden="true"></i></span>' +
+          '</a>';
 
 }
 function simpleFailNoty() {
