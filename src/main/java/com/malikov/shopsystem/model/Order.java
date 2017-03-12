@@ -17,6 +17,7 @@ import java.util.*;
         @NamedQuery(name = Order.BY_PRODUCT_ID, query = "SELECT o FROM Order o JOIN o.orderItems oi WHERE oi.productId=:productId"),
         @NamedQuery(name = Order.ALL, query = "SELECT o FROM Order o ORDER BY o.id DESC"),
         @NamedQuery(name = Order.UPDATE_STATUS, query = "UPDATE Order o SET o.status = :status WHERE o.id = :orderId"),
+        @NamedQuery(name = Order.GET_TOTAL_QUANTITY, query = "SELECT count (*) FROM Order"),
 })
 @Entity
 @Table(name = "osms_orders")
@@ -27,6 +28,7 @@ public class Order extends BaseEntity {
     public static final String BY_CUSTOMER_ID = "Order.getByCustomerId";
     public static final String BY_PRODUCT_ID = "Order.getByProductId";
     public static final String UPDATE_STATUS = "Order.updateStatus";
+    public static final String GET_TOTAL_QUANTITY = "Order.totalQuantity";
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")

@@ -7,6 +7,7 @@ import com.malikov.shopsystem.model.PaymentType;
 import com.malikov.shopsystem.service.CustomerService;
 import com.malikov.shopsystem.service.UserService;
 import com.malikov.shopsystem.to.CustomerAutocompleteTo;
+import com.malikov.shopsystem.to.OrderDatatablePageTo;
 import com.malikov.shopsystem.to.OrderItemAutocompleteTo;
 import com.malikov.shopsystem.to.OrderTo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,8 @@ public class OrderAjaxController extends AbstractOrderController {
 //    }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<OrderTo> getDatatablePage(@RequestParam("start") int start, @RequestParam("length") int length) {
-        return super.getDatatablePage(start, length);
+    public OrderDatatablePageTo getDatatablePage(@RequestParam("draw") int draw, @RequestParam("start") int start, @RequestParam("length") int length) {
+        return super.getDatatablePage(draw, start, length);
     }
 
     @GetMapping(value = "/{id}")

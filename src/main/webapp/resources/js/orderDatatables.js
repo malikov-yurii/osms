@@ -2,9 +2,10 @@ var ajaxUrl = 'ajax/profile/orders/';
 var datatableApi;
 
 function updateTable() {
+    var pageDraw = datatableApi.page.info().draw;
     var pageStart = datatableApi.page.info().start;
     var pageLength = datatableApi.page.info().length;
-    $.get(ajaxUrl + '?start='+pageStart+'&length='+pageLength, updateTableByData);
+    $.get(ajaxUrl + '?draw='+pageDraw+'&start='+pageStart+'&length='+pageLength, updateTableByData);
 }
 
 $(function () {
@@ -13,8 +14,8 @@ $(function () {
         "processing": true,
         "serverSide": true,
         "ajax": {
-            "url": ajaxUrl,
-            "dataSrc": ""
+            "url": ajaxUrl
+            // ,"dataSrc": ""
         },
         "searching": false,
         "pagingType": "full_numbers",

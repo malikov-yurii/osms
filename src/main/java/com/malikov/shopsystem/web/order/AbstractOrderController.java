@@ -3,6 +3,7 @@ package com.malikov.shopsystem.web.order;
 import com.malikov.shopsystem.model.*;
 import com.malikov.shopsystem.service.*;
 import com.malikov.shopsystem.to.CustomerAutocompleteTo;
+import com.malikov.shopsystem.to.OrderDatatablePageTo;
 import com.malikov.shopsystem.to.OrderItemAutocompleteTo;
 import com.malikov.shopsystem.to.OrderTo;
 import com.malikov.shopsystem.util.OrderUtil;
@@ -58,9 +59,14 @@ public abstract class AbstractOrderController {
         return orderService.getAll().stream().map(OrderUtil::asTo).collect(Collectors.toList());
     }
 
-    public List<OrderTo> getDatatablePage(int start, int length) {
+    public OrderDatatablePageTo getDatatablePage(int draw, int start, int length) {
         LOG.info("getAll orders");
-        return orderService.getDatatablePage(start, length).stream().map(OrderUtil::asTo).collect(Collectors.toList());
+        Long orderTotalQuantity = orderService.getTotalQuantity();
+        return new OrderDatatablePageTo(
+                draw,
+                orderTotalQuantity,
+                orderTotalQuantity,
+                orderService.getDatatablePage(start, length).stream().map(OrderUtil::asTo).collect(Collectors.toList()));
     }
 
     public void update(Order order, int id) {

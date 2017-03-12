@@ -73,4 +73,9 @@ public class JpaOrderRepositoryImpl implements OrderRepository {
                 .setMaxResults(length)
                 .getResultList();
     }
+
+    @Override
+    public Long getTotalQuantity() {
+        return (Long) em.createNamedQuery(Order.GET_TOTAL_QUANTITY).getSingleResult();
+    }
 }
