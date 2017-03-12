@@ -227,7 +227,8 @@ function enableHasVariations(chkbox, id) {
 
 function updateTableByData(data) {
     // console.log(data);
-    datatableApi.clear().rows.add(data).draw();
+
+    datatableApi.clear().rows.add(data).draw('page');
 }
 
 function save() {

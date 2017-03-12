@@ -2,7 +2,9 @@ var ajaxUrl = 'ajax/profile/orders/';
 var datatableApi;
 
 function updateTable() {
-    $.get(ajaxUrl, updateTableByData);
+    var pageStart = datatableApi.page.info().start;
+    var pageLength = datatableApi.page.info().length;
+    $.get(ajaxUrl + '?start='+pageStart+'&length='+pageLength, updateTableByData);
 }
 
 $(function () {

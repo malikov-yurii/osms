@@ -36,6 +36,7 @@ public class OrderAjaxController extends AbstractOrderController {
 //    public List<OrderTo> getAll() {
 //        return super.getAll();
 //    }
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<OrderTo> getDatatablePage(@RequestParam("start") int start, @RequestParam("length") int length) {
         return super.getDatatablePage(start, length);
