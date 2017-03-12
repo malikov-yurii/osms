@@ -4,26 +4,28 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
-<jsp:include page="fragments/headTag.jsp"/>
+<head>
+    <jsp:include page="fragments/headTag.jsp"/>
+</head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header navbar-brand"><fmt:message key="app.title"/></div>
-        <div class="navbar-collapse">
-            <form:form class="navbar-form navbar-right" role="form" action="spring_security_check" method="post">
-                    <div class="form-group">
-                        <input type="text" placeholder="Login" class="form-control" name='username'>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" placeholder="Password" class="form-control" name='password'>
-                    </div>
-                    <button type="submit" class="btn btn-success"><fmt:message key="app.login"/></button>
-            </form:form>
-        </div>
-    </div>
-</div>
 
 <div class="jumbotron">
+
+    <div class="login-logo">
+        <fmt:message key="app.title"/>
+    </div>
+
+    <div class="login-block">
+        <form:form class="login-form" role="form" action="spring_security_check" method="post">
+            <input type="text" placeholder="Login" class="form-control" name='username'>
+            <input type="password" placeholder="Password" class="form-control" name='password'>
+            <button type="submit" class="btn btn-success"><fmt:message key="app.login"/></button>
+        </form:form>
+        <a class="login-register btn-primary" role="button" href="register"><fmt:message key="app.register"/></a>
+
+    </div>
+
+    <hr>
 
     <div class="container">
         <c:if test="${error}">
@@ -36,11 +38,6 @@
                 <fmt:message key="${message}"/>
             </div>
         </c:if>
-        <p>
-            <br><br><br><br>
-
-        <p><a class="btn btn-primary btn-lg" role="button" href="register"><fmt:message key="app.register"/> &raquo;</a>
-        </p>
         <p>Developed by Yurii Malikov and Denis Malikov</p>
         <p>Used technologies: <a href="http://projects.spring.io/spring-security/">Spring Security</a>,
             <a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html">Spring MVC</a>,
@@ -62,7 +59,8 @@
             <a href="http://hamcrest.org/JavaHamcrest/">Hamcrest</a>,
             <a href="http://jquery.com/">jQuery</a>,
             <a href="http://ned.im/noty/">jQuery notification</a>,
-            <a href="http://getbootstrap.com/">Bootstrap</a>.</p>
+            <a href="http://getbootstrap.com/">Bootstrap</a>.
+        </p>
     </div>
 </div>
 <div class="container">

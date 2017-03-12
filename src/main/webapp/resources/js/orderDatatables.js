@@ -18,6 +18,7 @@ $(function () {
             "url": ajaxUrl
             // ,"dataSrc": ""
         },
+        "dom": "ft<'row'<'dataTables_length_wrap'l>><'row'<'col-md-6'i><'col-md-6'p>>",
         "searching": false,
         "pagingType": "full_numbers",
         "paging": true,
@@ -72,11 +73,12 @@ $(function () {
                 "desc"
             ]
         ],
+        "autoWidth": false,
         "initComplete": orderTableReady
     });
 
 
-    datatableApi.on('click', '.order-status, .order-payment-type', function () {
+    datatableApi.on('click', 'td.order-status, td.order-payment-type', function () {
         /**
          * Autocomplete of 'order-status' and 'payment-type'
          **/
@@ -91,7 +93,7 @@ $(function () {
 
         if ($this.hasClass('error')) $this.removeClass('error');
 
-        $(this).autocomplete({
+        $this.autocomplete({
             source: function (request, response) {
                 $.ajax({
                     url: ajaxUrl + 'autocomplete-' + key,
@@ -114,7 +116,7 @@ $(function () {
             , minLength: 0
         });
 
-        $(this).autocomplete("search");
+        $this.autocomplete("search");
 
     });
 
@@ -354,7 +356,12 @@ function buildOrderItemList(orderItemTos, orderId, row) {
     var orderItemsList =
         '<table class="order-product-table" data-order-id="' + orderId + '">\
             <thead>\
-                <tr><th>' + renderAddOrderItemBtn(orderId) + '&nbsp;&nbsp;' + renderPersistOrUpdateCustomerBtn(row) + '&nbsp;&nbsp;' + renderDeleteBtn(row) + '</th><th>Q-ty</th><th>Price</th><th>Delete</th></tr>\
+                <tr>\
+                    <th>' + renderAddOrderItemBtn(orderId) + '&nbsp;&nbsp;' + renderPersistOrUpdateCustomerBtn(row) + '&nbsp;&nbsp;' + renderDeleteBtn(row) + '</th>\
+                    <th><span class="order-head-lg">Q-ty</span><span class="order-head-sm">Q</span></th>\
+                    <th><span class="order-head-lg">Price</span><i class="order-head-sm fa fa-usd" aria-hidden="true"></i></th>\
+                    <th><span class="order-head-lg">Delete</span><i class="order-head-sm fa fa-trash-o" aria-hidden="true"></i></th>\
+                </tr>\
             </thead>\
             <tbody>';
 
