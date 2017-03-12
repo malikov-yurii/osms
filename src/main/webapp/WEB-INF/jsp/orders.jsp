@@ -17,15 +17,15 @@
 <div class="jumbotron">
     <div class="container">
         <%--<h3><fmt:message key="orders.title"/></h3>--%>
-        <a class="btn btn-sm btn-success" onclick="addOrder('')"><fmt:message key="orders.add" /></a>
+        <a class="btn btn-sm btn-success" onclick="addOrder('')"><fmt:message key="orders.add"/></a>
         <table class="order-table table-striped display" id="datatable">
             <thead>
             <tr>
                 <%--<th><fmt:message key="orders.showHide"/></th>--%>
                 <th>ID</th>
                 <th>custID</th>
-                <th><fmt:message key="customers.firstName"/></th>
                 <th><fmt:message key="customers.lastName"/></th>
+                <th><fmt:message key="customers.firstName"/></th>
                 <th><fmt:message key="customers.phoneNumber"/></th>
                 <th><fmt:message key="customers.city"/></th>
                 <th><fmt:message key="customers.postOffice"/></th>
@@ -120,7 +120,8 @@
                     </div>
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
-                            <button class="btn btn-primary" type="button" onclick="saveCustomer()"><fmt:message key="common.save"/></button>
+                            <button class="btn btn-primary" type="button" onclick="saveCustomer()"><fmt:message
+                                    key="common.save"/></button>
                         </div>
                     </div>
                 </form:form>
@@ -131,11 +132,8 @@
 </body>
 
 <script type="text/javascript">
-    var edit_title ='<fmt:message key="orders.edit"/>';
+    var edit_title = '<fmt:message key="orders.edit"/>';
 </script>
-
-
-
 
 
 <jsp:include page="fragments/footer.jsp"/>

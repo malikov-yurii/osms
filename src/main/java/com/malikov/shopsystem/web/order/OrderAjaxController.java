@@ -60,7 +60,7 @@ public class OrderAjaxController extends AbstractOrderController {
         orderItems.add(new OrderItem());
         Order newOrder = new Order(null,
                 userService.getByLogin(SecurityContextHolder.getContext().getAuthentication().getName()),
-                PaymentType.NP, OrderStatus.TO_SHIP, null,
+                PaymentType.NP, OrderStatus.SHP, null,
                 orderItems);
 
         super.create(newOrder);

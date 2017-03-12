@@ -19,7 +19,7 @@ public class Main {
 //            Elephant elephant = new Elephant("Manny");
 //            zoo.addAnimal(elephant).add(lion);
 
-//            OrderTo orderTo = new OrderTo(2, "Alla", "Kozlovskaya", "(098)12-12-343", "Rovno", "33", PaymentType.PB, LocalDate.now(), OrderStatus.TO_SHIP);
+//            OrderTo orderTo = new OrderTo(2, "Alla", "Kozlovskaya", "(098)12-12-343", "Rovno", "33", PaymentType.PB, LocalDate.now(), OrderStatus.SHP);
 //            orderTo.addProduct(new OrderItemTo(1, 4, "Potal kitay 100", 145, 3));
 //            orderTo.addProduct(new OrderItemTo(2,1,"Shellac Man", 235, 1));
 //            ObjectMapper mapper = new ObjectMapper();

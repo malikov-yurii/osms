@@ -16,7 +16,7 @@ public class OrderTestData {
 
     public static final Order ORDER_1 = new Order(1, CUSTOMER_GOLOV, ADMIN,
             PaymentType.PB,
-            OrderStatus.A_FOR_P,
+            OrderStatus.WFP,
             null,
             LocalDate.of(2016, 9, 15),
             Arrays.asList(
@@ -25,7 +25,7 @@ public class OrderTestData {
             ));
     public static final Order ORDER_2 = new Order(2, CUSTOMER_GOLOV, ADMIN,
             PaymentType.NP,
-            OrderStatus.TO_SHIP,
+            OrderStatus.SHP,
             null,
             LocalDate.of(2016, 11, 17),
             Arrays.asList(
@@ -35,7 +35,7 @@ public class OrderTestData {
 
     public static final Order ORDER_3 = new Order(3, CUSTOMER_DROGOV, ADMIN,
             PaymentType.PB,
-            OrderStatus.TO_SHIP,
+            OrderStatus.SHP,
             null,
             LocalDate.of(2016, 10, 11),
             Collections.singletonList(
@@ -44,7 +44,7 @@ public class OrderTestData {
 
     public static final Order ORDER_4 = new Order(4, CUSTOMER_DUNOV, ADMIN,
             PaymentType.NP,
-            OrderStatus.TO_SHIP,
+            OrderStatus.SHP,
             null,
             LocalDate.of(2016, 12, 22),
             Arrays.asList(
@@ -55,7 +55,7 @@ public class OrderTestData {
 
     public static final Order ORDER_5 = new Order(5, CUSTOMER_DROGOV, ADMIN,
             PaymentType.PB,
-            OrderStatus.A_FOR_P,
+            OrderStatus.WFP,
             null,
             LocalDate.of(2016, 2, 22),
             Collections.singletonList(
