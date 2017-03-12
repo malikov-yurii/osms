@@ -37,9 +37,9 @@ $(function () {
             {"data": "phoneNumber", "orderable": false, "className": "order-phone-number editable"},
             {"data": "city", "orderable": false, "className": "order-city editable"},
             {"data": "postOffice", "orderable": false, "className": "order-post-office editable"},
-            {"data": "paymentType", "orderable": false, "className": "order-payment-type"},
+            {"data": "paymentType", "orderable": false, "className": "order-payment-type editable"},
             {"data": "totalSum", "orderable": false, "className": "order-total-sum editable"},
-            {"data": "status", "orderable": false, "className": "order-status"},
+            {"data": "status", "orderable": false, "className": "order-status editable"},
             {"data": "comment", "orderable": false, "className": "order-comment editable"},
             // {"data": "date", "orderable": false},
             // {
@@ -78,7 +78,7 @@ $(function () {
     });
 
 
-    datatableApi.on('click', 'td.order-status, td.order-payment-type', function () {
+    datatableApi.on('click focusin', 'td.order-status, td.order-payment-type', function () {
         /**
          * Autocomplete of 'order-status' and 'payment-type'
          **/
@@ -117,6 +117,17 @@ $(function () {
         });
 
         $this.autocomplete("search");
+
+        // Making element to lose focus on ENTER keybutton AND preventing from typing anything in
+        $this.keypress(function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                $this.blur();
+                $this.find('input').blur();
+            } else {
+                return false;
+            }
+        });
 
     });
 
@@ -218,7 +229,7 @@ $(function () {
         if ($this.hasClass('error')) $this.removeClass('error');
 
         if (currentVal == '') {
-            // At first check if cell isn't empty
+            // At first check if cell is currently empty
 
             if (initVal == '') return true; // Then check if cell already WAS empty. If so, then remove focus as evrthng is OK
 
@@ -381,14 +392,16 @@ function buildOrderItemList(orderItemTos, orderId, row) {
 }
 
 function deleteOrderItem(id) {
-    $.ajax({
-        url: ajaxUrl + 'order-item/' + id,
-        type: 'DELETE',
-        success: function () {
-            updateTable();
-            successNoty('common.deleted');
-        }
-    });
+    if (confirm('Вы уверены, что хотите удалить эту позицию?')) {
+        $.ajax({
+            url: ajaxUrl + 'order-item/' + id,
+            type: 'DELETE',
+            success: function () {
+                updateTable();
+                successNoty('common.deleted');
+            }
+        });
+    }
 }
 
 function orderTableReady() {
@@ -430,7 +443,9 @@ function addOrder() {
 function renderAddOrderItemBtn(rowId) {
     //todo add "type" to uncomment
     // if (type == 'display' && $('#hasRoleAdmin').val()) {
-    return '<a class="btn btn-xs btn-success" onclick="addOrderItem(' + rowId + ');">Add order item</a>';
+    return '<a class="btn btn-xs btn-success" onclick="addOrderItem(' + rowId + ');">' +
+      '<span class="order-head-lg">Add order item</span><span class="order-head-sm">Product <i class="fa fa-plus" aria-hidden="true"></i></span>' +
+      '</a>';
     // }
 }
 
@@ -447,12 +462,14 @@ function renderAddOrderItemBtn(rowId) {
 //
 // }
 function renderPersistOrUpdateCustomerBtn(row) {
-        var btnText;
-    if (row.customerId === 0)
-        btnText = 'Save customer to DB';
-    else
-        btnText = 'Update customer in DB'
-        return '<a class="btn btn-xs btn-primary" onclick="persistOrUpdateCustomerFromOrder(' + row.id + ',' + row.customerId + ');">' + btnText + '</a>';
+    var btnText;
+    if (row.customerId === 0) {
+        btnText = '<span class="order-head-lg">Save customer to DB</span><span class="order-head-sm">Save customer</span>';
+    } else {
+        btnText = '<span class="order-head-lg">Update customer in DB</span><span class="order-head-sm">Upd. customer</span>'
+    };
+
+    return '<a class="btn btn-xs btn-primary" onclick="persistOrUpdateCustomerFromOrder(' + row.id + ',' + row.customerId + ');">' + btnText + '</a>';
 }
 
 function addOrderItem(id) {
