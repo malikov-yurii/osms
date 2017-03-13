@@ -243,6 +243,11 @@ div.dataTables_wrapper div.dataTables_info {
 }
 /* END OF Calculating width for every cell of order INFO */
 
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+    font-weight: normal;
+}
+
+
 @media (max-width: 768px) {
     .navbar-brand {
         float: none;
