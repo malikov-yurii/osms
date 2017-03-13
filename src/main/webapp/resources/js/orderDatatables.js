@@ -119,7 +119,7 @@ $(function () {
         $this.autocomplete("search");
 
         // Making element to lose focus on ENTER keybutton AND preventing from typing anything in
-        $this.keypress(function (e) {
+        $this.keydown(function (e) {
             if (e.which == 13) {
                 e.preventDefault();
                 $this.blur();
@@ -139,7 +139,7 @@ $(function () {
         $(this).data('value', $(this).text());
 
         // Making element to lose focus on ENTER keybutton
-        $(this).keypress(function (e) {
+        $(this).keydown(function (e) {
             if (e.which == 13) {
                 e.preventDefault();
                 $(this).blur();
@@ -199,7 +199,7 @@ $(function () {
         });
 
         // Making element to lose focus on ENTER keybutton
-        $this.keypress(function (e) {
+        $this.keydown(function (e) {
             if (e.which == 13) {
                 e.preventDefault();
                 $this.blur();

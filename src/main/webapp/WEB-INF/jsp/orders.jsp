@@ -20,7 +20,7 @@
         <a class="btn btn-sm btn-success" onclick="addOrder('')"><fmt:message key="orders.add"/></a>
         <table class="order-table table-striped display" id="datatable">
             <thead>
-            <tr>
+            <tr class="order-table-head">
                 <%--<th><fmt:message key="orders.showHide"/></th>--%>
                 <th>ID</th>
                 <th>custID</th>
