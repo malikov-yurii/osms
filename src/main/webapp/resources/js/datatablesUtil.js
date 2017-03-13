@@ -248,12 +248,6 @@ function save() {
 
 function saveCustomer() {
     $.ajax({
-
-        // headers: {
-        //     'Accept': 'application/json',
-        //     'Content-Type': 'application/json'
-        // },
-        // dataType: 'json',
         type: "POST",
         url: 'rest/profile/customers/' + $("#id").val(),
         data: form.serialize(),

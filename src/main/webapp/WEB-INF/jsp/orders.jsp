@@ -52,7 +52,13 @@
             </div>
             <div class="modal-body">
                 <form:form class="form-horizontal" method="post" id="detailsForm">
-                    <input type="hidden" id="id" name="id">
+                    <div class="form-group">
+                        <label for="id" class="control-label col-xs-3">ID</label>
+
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" disabled="disabled" id="id" name="id">
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label for="firstName" class="control-label col-xs-3"><fmt:message
@@ -120,8 +126,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
-                            <button class="btn btn-primary" type="button" onclick="saveCustomer()"><fmt:message
-                                    key="common.save"/></button>
+                            <button class="btn btn-primary" type="button" onclick="saveCustomer()"><fmt:message key="common.save"/></button>
                         </div>
                     </div>
                 </form:form>

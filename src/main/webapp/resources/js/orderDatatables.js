@@ -484,6 +484,7 @@ function addOrderItem(id) {
 }
 
 function persistOrUpdateCustomerFromOrder(orderId, customerId) {
+    debugger;
     if (customerId == 0) {
         $.ajax({
             url: 'ajax/profile/orders/' + orderId + '/persist-customer-from-order',
