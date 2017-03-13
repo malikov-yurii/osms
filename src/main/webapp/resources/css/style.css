@@ -189,6 +189,7 @@ div.dataTables_wrapper div.dataTables_info {
 }
 .order-table {
     width: 100%;
+    table-layout: fixed;
 }
 .order-table th,
 .order-table td {
@@ -204,10 +205,43 @@ div.dataTables_wrapper div.dataTables_info {
 .order-head-sm {
     display: none;
 }
+.order-table .order-post-office {
+    text-align: center;
+}
+/* Calculating width for every cell of order ITEMS */
 .order-product-table th:not(:first-child) {
     width: 9%;
 }
 
+/* Calculating width for every cell of order INFO */
+.order-table-head th:nth-child(1) {
+    width: 15%;
+}
+.order-table-head th:nth-child(2) {
+    width: 15%;
+}
+.order-table-head th:nth-child(3) {
+    width: 100px;
+}
+.order-table-head th:nth-child(4) {
+    width: 15%;
+}
+.order-table-head th:nth-child(5) {
+    width: 43px;
+}
+.order-table-head th:nth-child(6) {
+    width: 45px;
+}
+.order-table-head th:nth-child(7) {
+    width: 70px;
+}
+.order-table-head th:nth-child(8) {
+    width: 52px;
+}
+.order-table-head th:nth-child(9) {
+    width: 15%;
+}
+/* END OF Calculating width for every cell of order INFO */
 
 @media (max-width: 768px) {
     .navbar-brand {
@@ -220,6 +254,9 @@ div.dataTables_wrapper div.dataTables_info {
     .navbar-form {
         margin: 0;
         text-align: center;
+    }
+    .order-table {
+        table-layout: auto;
     }
     .order-table>thead {
         display: none;
@@ -234,48 +271,45 @@ div.dataTables_wrapper div.dataTables_info {
         align-items: center;
         border: 1px solid #e1e1e1;
     }
-    .parent-row tr:after {
-        content: '';
-        display: block;
-        clear: both;
-    }
 
-    .parent-row td:nth-child(1) {
+    /* Calculating width for every cell of order INFO */
+    .parent-row .order-last-name {
         order: 1;
-        width: 30%;
+        width: calc((100% - 100px - 40px) / 2);
     }
-    .parent-row td:nth-child(2) {
+    .parent-row .order-first-name {
         order: 2;
-        width: 30%;
+        width: calc((100% - 100px - 40px) / 2);
     }
-    .parent-row td:nth-child(3) {
+    .parent-row .order-phone-number {
         order: 3;
-        width: 30%;
+        width: 100px;
     }
-    .parent-row td:nth-child(4) {
+    .parent-row .order-city {
         order: 5;
-        width: 40%;
+        width: calc((100% - 46px - 53px - 61px) / 2);
     }
-    .parent-row td:nth-child(5) {
+    .parent-row .order-post-office {
         order: 6;
-        width: 10%;
+        width: 46px;
     }
-    .parent-row td:nth-child(6) {
+    .parent-row .order-payment-type {
         order: 4;
-        width: 10%;
+        width: 40px;
     }
-    .parent-row td:nth-child(7) {
+    .parent-row .order-total-sum {
         order: 9;
-        width: 15%;
+        width: 61px;
     }
-    .parent-row td:nth-child(8) {
+    .parent-row .order-status {
         order: 8;
-        width: 20%;
+        width: 53px;
     }
-    .parent-row td:nth-child(9) {
+    .parent-row .order-comment {
         order: 7;
-        width: 15%;
+        width: calc((100% - 46px - 53px - 61px) / 2);
     }
+    /* END OF Calculating width for every cell of order INFO */
 }
 @media (max-width: 450px) {
     .order-head-sm {
@@ -310,4 +344,43 @@ div.dataTables_wrapper div.dataTables_info {
     .order-product-table td {
         font-size: 13px;
     }
+
+    /* Calculating width for every cell of order INFO */
+    .parent-row .order-last-name {
+        order: 1;
+        width: calc((100% - 90px - 30px) / 2);
+    }
+    .parent-row .order-first-name {
+        order: 2;
+        width: calc((100% - 90px - 30px) / 2);
+    }
+    .parent-row .order-phone-number {
+        order: 3;
+        width: 90px;
+    }
+    .parent-row .order-city {
+        order: 5;
+        width: calc((100% - 36px - 43px - 51px) / 2);
+    }
+    .parent-row .order-post-office {
+        order: 6;
+        width: 36px;
+    }
+    .parent-row .order-payment-type {
+        order: 4;
+        width: 30px;
+    }
+    .parent-row .order-total-sum {
+        order: 9;
+        width: 51px;
+    }
+    .parent-row .order-status {
+        order: 8;
+        width: 43px;
+    }
+    .parent-row .order-comment {
+        order: 7;
+        width: calc((100% - 36px - 43px - 51px) / 2);
+    }
+    /* END OF Calculating width for every cell of order INFO */
 }
