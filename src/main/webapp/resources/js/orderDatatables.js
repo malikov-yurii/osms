@@ -263,13 +263,14 @@ $(function () {
         }
     });
 
-
     datatableApi.on('draw.dt', function () {
         showOrderItems();
 
         orderTableReady();
 
     });
+
+    $('.show-suppliers').on('click', showSuppliers);
 })
 ;
 
@@ -338,7 +339,7 @@ function renderDeleteOrderItemBtn(orderItemId) {
 
 }
 
-function buildOrderItemList(orderItemTos, orderId, row) {
+function buildOrderItemList(orderItems, orderId, row) {
     /**
      * Building DOM node child row - list of order ITEMS
      **/
@@ -355,13 +356,16 @@ function buildOrderItemList(orderItemTos, orderId, row) {
             </thead>\
             <tbody>';
 
-    for (var i = 0; i < orderItemTos.length; i++) {
+    for (var i = 0; i < orderItems.length; i++) {
         orderItemsList +=
-            '<tr class="order-product-row" data-order-item-id="' + orderItemTos[i].orderItemId + '" data-order-product-id="' + orderItemTos[i].orderItemId + '">\
+            '<tr class="order-product-row ' + orderItems[i].supplier + '"' +
+              'data-order-item-id="' + orderItems[i].orderItemId +
+              '" data-order-product-id="' + orderItems[i].orderItemId +
+            '">\
             <td class="order-product-name" data-key="name" contenteditable="true">' +
-            orderItemTos[i].name + '</td><td  data-key="quantity"><input type="number" class="order-product-qty" value="' +
-            orderItemTos[i].quantity + '"></td><td class="order-product-price" data-key="price" contenteditable="true">' +
-            orderItemTos[i].price + '</td><td>' + renderDeleteOrderItemBtn(orderItemTos[i].orderItemId) + '</td></tr>'
+            orderItems[i].name + '</td><td  data-key="quantity"><input type="number" class="order-product-qty" value="' +
+            orderItems[i].quantity + '"></td><td class="order-product-price" data-key="price" contenteditable="true">' +
+            orderItems[i].price + '</td><td>' + renderDeleteOrderItemBtn(orderItems[i].orderItemId) + '</td></tr>'
     }
 
     orderItemsList += '</tbody></table>';
@@ -504,25 +508,12 @@ function showUpdateCustomerModal(customerId) {
 }
 
 function onCreatedParentRow(row, data, rowIndex) {
-  $row = $(row);
-  $row.addClass('parent-row');
 
-  switch (data.status) {
-    case "OK":
-      $row.addClass('status-ok');
-      break;
-    case "SHP":
-      $row.addClass('status-shp');
-      break;
-    case "WFP":
-      $row.addClass('status-wfp');
-      break;
-    case "NEW":
-      $row.addClass('status-new');
-      break;
-    case "NOT":
-      $row.addClass('status-not');
-      break;
-    default:;
-  }
+  $row = $(row);
+  $row.addClass('parent-row').addClass('status-'+data.status);
+
+}
+
+function showSuppliers() {
+    $('body').toggleClass('suppliers-shown');
 }

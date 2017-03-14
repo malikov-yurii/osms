@@ -84,7 +84,7 @@ table.dataTable th {
 .order-product-table td:first-child {
     text-align: left;
 }
-.order-product-table tr:nth-child(even) td {
+.order-product-table tr:nth-child(even) {
     background: #f7f7f7;
 }
 .order-product-table .order-product-qty {
@@ -266,7 +266,17 @@ div.dataTables_wrapper div.dataTables_info {
 .menu-toggle {
     display: none;
 }
-
+.show-suppliers {
+    display: block;
+    max-width: 110px;
+    margin: 0 auto;
+}
+.suppliers-shown .order-product-row.anton {
+    background: rgba(214, 192, 27, 0.37);
+}
+.suppliers-shown .order-product-row.misha {
+    background: rgba(141, 56, 193, 0.37);
+}
 @media (max-width: 768px) {
     .navbar-brand {
         float: none;
@@ -433,6 +443,7 @@ div.dataTables_wrapper div.dataTables_info {
         left: 0;
         right: 0;
         padding: 0;
+        z-index: 11;
     }
     .navbar-form.opened .btn {
         display: block;
