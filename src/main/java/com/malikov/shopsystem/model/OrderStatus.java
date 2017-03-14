@@ -4,5 +4,6 @@ public enum OrderStatus {
     SHP,
     WFP,
     OK,
-    NEW
+    NEW,
+    NOT,
 }

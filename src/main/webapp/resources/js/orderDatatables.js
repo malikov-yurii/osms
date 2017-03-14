@@ -16,7 +16,6 @@ $(function () {
         "serverSide": true,
         "ajax": {
             "url": ajaxUrl
-            // ,"dataSrc": ""
         },
         "dom": "ft<'row'<'dataTables_length_wrap'l>><'row'<'col-md-6'i><'col-md-6'p>>",
         "searching": false,
@@ -24,12 +23,6 @@ $(function () {
         "paging": true,
         "info": true,
         "columns": [
-            // {
-            //     "className": "orderrow-show",
-            //     "data": null,
-            //     "defaultContent": "",
-            //     "orderable": false
-            // },
             {"data": "id", "orderable": false, "visible" : false},
             {"data": "customerId", "orderable": false, "visible" : false, "className": "order-customer-id"},
             {"data": "lastName", "orderable": false, "className": "order-last-name editable"},
@@ -41,28 +34,6 @@ $(function () {
             {"data": "totalSum", "orderable": false, "className": "order-total-sum editable"},
             {"data": "status", "orderable": false, "className": "order-status editable"},
             {"data": "comment", "orderable": false, "className": "order-comment editable"},
-            // {"data": "date", "orderable": false},
-            // {
-            //     "defaultContent": "",
-            //     "orderable": false,
-            //     "render": renderAddOrderItemBtn
-            // },
-            // {
-            //     "defaultContent": "",
-                // "orderable": false,
-                // "render": renderPersistOrUpdateCustomerBtn
-            // },
-            // {
-            //     "defaultContent": "",
-            //     "orderable": false,
-            //     "render": renderEditBtn
-            // },
-            // {
-            //     "defaultContent": "",
-            //     "orderable": false,
-            //     "render": renderDeleteBtn
-            //
-            // }
         ],
         "createdRow": function (row, data, rowIndex) {
             $(row).addClass('parent-row');

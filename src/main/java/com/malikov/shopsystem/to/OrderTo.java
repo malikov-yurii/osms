@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.model.PaymentType;
-import com.malikov.shopsystem.util.OrderUtil;
 import com.malikov.shopsystem.util.serializers.LocalDateDeserializer;
 import com.malikov.shopsystem.util.serializers.LocalDateSerializer;
 
@@ -58,6 +57,7 @@ public class OrderTo {
             , LocalDate date
             , OrderStatus status
             , String comment
+            , Integer totalSum
             , List<OrderItemTo> orderItemTos
     ) {
         this.id = id;
@@ -71,7 +71,9 @@ public class OrderTo {
         this.date = date;
         this.status = status;
         this.comment = comment;
-        this.totalSum = orderItemTos != null ? OrderUtil.calculateTotalSumOfTos(orderItemTos) : 0;
+//        this.totalSum = orderItemTos != null ? OrderUtil.calculateTotalSumOfTos(orderItemTos) : 0;
+        this.totalSum = totalSum;
+
         this.orderItemTos = orderItemTos;
     }
 
@@ -87,9 +89,10 @@ public class OrderTo {
             , LocalDate date
             , OrderStatus status
             , String comment
+            , Integer totalSum
     ) {
-        this(id, customerId, firstName, lastName, phoneNumber, city, postOffice, paymentType, date, status, comment, new ArrayList<>());
-        this.totalSum = 0;
+        this(id, customerId, firstName, lastName, phoneNumber, city, postOffice, paymentType, date, status, comment, totalSum, new ArrayList<>());
+//        this.totalSum = 0;
     }
 
     public OrderTo() {
