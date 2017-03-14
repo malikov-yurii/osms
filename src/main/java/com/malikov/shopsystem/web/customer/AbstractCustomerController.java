@@ -2,11 +2,14 @@ package com.malikov.shopsystem.web.customer;
 
 import com.malikov.shopsystem.model.Customer;
 import com.malikov.shopsystem.service.CustomerService;
+import com.malikov.shopsystem.to.CustomerTo;
+import com.malikov.shopsystem.util.CustomerUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class AbstractCustomerController {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractCustomerController.class);
@@ -24,9 +27,9 @@ public abstract class AbstractCustomerController {
         service.delete(id);
     }
 
-    public List<Customer> getAll() {
+    public List<CustomerTo> getAll() {
         LOG.info("getAll customers");
-        return service.getAll();
+        return service.getAll().stream().map(CustomerUtil::asTo).collect(Collectors.toList());
     }
 
     public void update(Customer customer, int id) {

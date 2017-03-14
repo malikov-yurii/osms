@@ -11,8 +11,15 @@ public class CustomerUtil {
     }
 
     public static CustomerTo asTo(Customer customer){
-        return new CustomerTo(customer.getId(), customer.getName(), customer.getLastName(),
-                customer.getPhoneNumber(), customer.getCity(), customer.getPostOffice(), customer.getEmail(), customer.getNote());
+        return new CustomerTo(
+                customer.getId()
+                ,customer.getName() == null ? "" : customer.getName()
+                ,customer.getLastName() == null ? "" : customer.getLastName()
+                ,customer.getPhoneNumber()
+                ,customer.getCity() == null ? "" : customer.getCity()
+                ,customer.getPostOffice() == null ? "" : customer.getPostOffice()
+                ,customer.getEmail() == null ? "" : customer.getEmail()
+                ,customer.getNote() == null ? "" : customer.getNote());
     }
 
     public static Customer updateFromTo(Customer customer, CustomerTo customerTo) {

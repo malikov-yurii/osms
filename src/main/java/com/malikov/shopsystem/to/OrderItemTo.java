@@ -17,13 +17,16 @@ public class OrderItemTo implements Serializable {
 
     private Integer quantity;
 
+    private String supplier;
+
     @JsonCreator
     public OrderItemTo(
             Integer orderItemId,
             Integer orderProductId,
             String name,
             Integer price,
-            Integer quantity
+            Integer quantity,
+            String  supplier
     ) {
 
         this.orderItemId = orderItemId;
@@ -31,6 +34,7 @@ public class OrderItemTo implements Serializable {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.supplier = supplier;
     }
 
     public OrderItemTo() {
@@ -76,6 +80,14 @@ public class OrderItemTo implements Serializable {
         this.orderProductId = orderProductId;
     }
 
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
+    }
+
     @Override
     public String toString() {
         return "OrderItemTo{" +
@@ -84,6 +96,7 @@ public class OrderItemTo implements Serializable {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
+                ", supplier=" + supplier +
                 '}';
     }
 }

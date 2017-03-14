@@ -29,7 +29,7 @@ public class CustomerRestController extends AbstractCustomerController {
     }
 
     @GetMapping
-    public List<Customer> getAll() {
+    public List<CustomerTo> getAll() {
         return super.getAll();
     }
 

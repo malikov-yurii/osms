@@ -24,6 +24,7 @@
                 <table class="table table-striped display" id="datatable">
                     <thead>
                     <tr>
+                        <th>ID</th>
                         <th><fmt:message key="customers.firstName"/></th>
                         <th><fmt:message key="customers.lastName"/></th>
                         <th><fmt:message key="customers.phoneNumber"/></th>

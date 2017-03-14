@@ -15,7 +15,15 @@ public class OrderUtil {
 
         List<OrderItemTo> OrderItemTos = order.getOrderItems()
                 .stream()
-                .map(oi -> new OrderItemTo(oi.getId(), oi.getProductId(), oi.getProductName(), oi.getProductPrice(), oi.getProductQuantity()))
+                .map(oi -> new OrderItemTo(oi.getId()
+                        , oi.getProduct() != null ? oi.getProduct().getId() : 0
+                        , oi.getProductName()
+                        , oi.getProductPrice()
+                        , oi.getProductQuantity()
+                        , oi.getProduct() != null ?
+                                            (oi.getProduct().getSupplier() != null ? oi.getProduct().getSupplier() : "")
+                                                  : ""
+                ))
                 .collect(Collectors.toList());
         return new OrderTo(order.getId(), order.getCustomer() != null ? order.getCustomer().getId() : 0, order.getCustomerName(), order.getCustomerLastName(),
                 order.getCustomerPhoneNumber(), order.getCustomerCity(), order.getCustomerPostOffice(),

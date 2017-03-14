@@ -18,6 +18,8 @@ public abstract class AbstractProductServiceTest extends AbstractServiceTest {
     @Autowired
     protected ProductService service;
 
+//   // TODO: 3/14/2017 add suppliers to tests
+
     @Test
     public void testSave() throws Exception {
         Product newProduct = new Product("newProductName", 100, false, 111, false, Collections.singleton(CATEGORY_KLEI), null);

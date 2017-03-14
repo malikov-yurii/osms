@@ -11,25 +11,27 @@ $(function () {
             "url": ajaxUrl,
             "dataSrc": ""
         },
-        "paging": false,
+        "pagingType": "full_numbers",
+        "paging": true,
         "info": true,
         "columns": [
+            { "data": "id" },
             { "data": "name" },
             { "data": "lastName" },
             { "data": "phoneNumber" },
             { "data": "city" },
             { "data": "postOffice" },
             { "data": "email" },
-            {
-                "defaultContent": "",
-                "orderable": false,
-                "render": renderEditBtn
-            },
-            {
-                "defaultContent": "",
-                "orderable": false,
-                "render": renderDeleteBtn
-            }
+            // {
+            //     "defaultContent": "",
+            //     "orderable": false,
+            //     "render": renderEditBtn
+            // },
+            // {
+            //     "defaultContent": "",
+            //     "orderable": false,
+            //     "render": renderDeleteBtn
+            // }
         ],
         "order": [
             [

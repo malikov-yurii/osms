@@ -111,7 +111,7 @@ public abstract class AbstractOrderController {
     public int updateOrderItemPriceProductIdProductVariationId(int itemId, int price, int productId, int productVariationId, String orderItemName) {
         OrderItem orderItem = orderItemService.get(itemId);
         orderItem.setProductPrice(price);
-        orderItem.setProductId(productId);
+        orderItem.setProduct(productService.get(productId));
         orderItem.setProductName(orderItemName);
         if (productVariationId != 0)
             orderItem.setProductVariation(productVariationService.get(productVariationId));

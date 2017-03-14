@@ -17,7 +17,8 @@ $(function () {
             "url": ajaxUrl,
             "dataSrc": ""
         },
-        "paging": false,
+        "pagingType": "full_numbers",
+        "paging": true,
         "info": true,
         "columns": [
             { "data": "productId" },
@@ -43,16 +44,16 @@ $(function () {
             //         return data;
             //     }
             // },
-            {
-                "defaultContent": "",
-                "orderable": false,
-                "render": renderEditBtn
-            },
-            {
-                "defaultContent": "",
-                "orderable": false,
-                "render": renderDeleteBtn
-            }
+            // {
+            //     "defaultContent": "",
+            //     "orderable": false,
+            //     "render": renderEditBtn
+            // },
+            // {
+            //     "defaultContent": "",
+            //     "orderable": false,
+            //     "render": renderDeleteBtn
+            // }
         ],
         "order": [
             [

@@ -17,7 +17,7 @@ import java.util.List;
 public class CustomerAjaxController extends AbstractCustomerController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Customer> getAll() {
+    public List<CustomerTo> getAll() {
         return super.getAll();
     }
 

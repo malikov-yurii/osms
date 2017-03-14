@@ -33,8 +33,11 @@ public class OrderItem extends BaseEntity {
     @NotFound(action = NotFoundAction.IGNORE)
     private ProductVariation productVariation;
 
-    @Column(name = "product_id")
-    private Integer productId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
+    @JoinColumn(name = "product_id")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private Product product;
 
     @Column(name = "product_name")
     private String productName;
@@ -51,20 +54,20 @@ public class OrderItem extends BaseEntity {
         this.productQuantity = 1;
     }
 
-    public OrderItem(Order order, Integer productId, String productName, Integer productPrice, Integer productQuantity) {
-        this(productId, productName, productPrice, productQuantity);
+    public OrderItem(Order order, Product product, String productName, Integer productPrice, Integer productQuantity) {
+        this(product, productName, productPrice, productQuantity);
         this.order = order;
     }
 
-    public OrderItem(Integer productId, String productName, Integer productPrice, Integer productQuantity) {
-        this.productId = productId;
+    public OrderItem(Product product, String productName, Integer productPrice, Integer productQuantity) {
+        this.product = product;
         this.productName = productName;
         this.productPrice = productPrice;
         this.productQuantity = productQuantity;
     }
 
-    public OrderItem(Integer orderItemId, Integer productId, ProductVariation productVariation, String productName, Integer productPrice, Integer productQuantity) {
-        this.productId = productId;
+    public OrderItem(Integer orderItemId, Product product, ProductVariation productVariation, String productName, Integer productPrice, Integer productQuantity) {
+        this.product = product;
         this.productVariation = productVariation;
         this.productName = productVariation != null ? productName + productVariation.getVariationValue().getName() : productName;
         this.productPrice = productPrice;
@@ -80,12 +83,12 @@ public class OrderItem extends BaseEntity {
         this.productVariation = productVariation;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public Order getOrder() {
@@ -126,7 +129,7 @@ public class OrderItem extends BaseEntity {
         if (!(o instanceof OrderItem)) return false;
         if (!super.equals(o)) return false;
         OrderItem orderItem = (OrderItem) o;
-        return Objects.equals(productId, orderItem.productId) &&
+        return Objects.equals(product, orderItem.product) &&
                 Objects.equals(productName, orderItem.productName) &&
                 Objects.equals(productPrice, orderItem.productPrice) &&
                 Objects.equals(productQuantity, orderItem.productQuantity);
@@ -134,7 +137,7 @@ public class OrderItem extends BaseEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), productId, productName, productPrice, productQuantity);
+        return Objects.hash(super.hashCode(), product, productName, productPrice, productQuantity);
     }
 
     @Override
@@ -143,7 +146,7 @@ public class OrderItem extends BaseEntity {
                 " id=" + id +
                 ", order_id=" + order.getId() +
                 ", productVariation=" + productVariation +
-                ", productId=" + productId +
+                ", product=" + product +
                 ", productName='" + productName + '\'' +
                 ", productPrice=" + productPrice +
                 ", productQuantity=" + productQuantity +

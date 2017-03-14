@@ -64,6 +64,9 @@ public class Product extends NamedEntity {
     @OrderBy("id DESC")
     private List<ProductVariation> variations;
 
+    @Column(name = "supplier")
+    private String supplier;
+
     public Product() {
     }
 
@@ -146,6 +149,18 @@ public class Product extends NamedEntity {
         this.variations = variations;
     }
 
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -157,6 +172,7 @@ public class Product extends NamedEntity {
                 Objects.equals(categories, product.categories) &&
                 Objects.equals(hasVariations, product.hasVariations) &&
                 Objects.equals(unlimited, product.unlimited) &&
+                Objects.equals(supplier, product.supplier) &&
                 Objects.equals(variations, product.variations);
     }
 
@@ -175,6 +191,7 @@ public class Product extends NamedEntity {
                 ", categories=" + categories +
                 ", hasVariations=" + hasVariations +
                 ", unlimited=" + unlimited +
+                ", supplier=" + supplier +
                 ", variations=" + variations +
                 '}';
     }
