@@ -35,9 +35,7 @@ $(function () {
             {"data": "status", "orderable": false, "className": "order-status editable"},
             {"data": "comment", "orderable": false, "className": "order-comment editable"},
         ],
-        "createdRow": function (row, data, rowIndex) {
-            $(row).addClass('parent-row');
-        },
+        "createdRow": onCreatedParentRow,
         "order": [
             [
                 0,
@@ -81,8 +79,17 @@ $(function () {
                 $.ajax({
                     url: ajaxUrl + rowDataId + '/update-' + key,
                     type: "POST",
-                    data: key + '=' + ui.item.value
+                    data: key + '=' + ui.item.value,
+                    success: function() {
+                        $(tr)
+                          .removeClass(function (index, className) {
+                            return (className.match (/(^|\s)status-\S+/g) || []).join(' ');
+                          })
+                          .addClass('status-'+ui.item.value);
+                    }
                 });
+
+                $this.blur();
             }
             , minLength: 0
         });
@@ -94,7 +101,8 @@ $(function () {
             if (e.which == 13) {
                 e.preventDefault();
                 $this.blur();
-                $this.find('input').blur();
+            } else if ((e.shiftKey && e.keyCode == 9) || e.which == 9) {
+                $this.blur();
             } else {
                 return false;
             }
@@ -255,13 +263,14 @@ $(function () {
         }
     });
 
-
     datatableApi.on('draw.dt', function () {
         showOrderItems();
 
         orderTableReady();
 
     });
+
+    $('.show-suppliers').on('click', showSuppliers);
 })
 ;
 
@@ -330,7 +339,7 @@ function renderDeleteOrderItemBtn(orderItemId) {
 
 }
 
-function buildOrderItemList(orderItemTos, orderId, row) {
+function buildOrderItemList(orderItems, orderId, row) {
     /**
      * Building DOM node child row - list of order ITEMS
      **/
@@ -347,13 +356,16 @@ function buildOrderItemList(orderItemTos, orderId, row) {
             </thead>\
             <tbody>';
 
-    for (var i = 0; i < orderItemTos.length; i++) {
+    for (var i = 0; i < orderItems.length; i++) {
         orderItemsList +=
-            '<tr class="order-product-row" data-order-item-id="' + orderItemTos[i].orderItemId + '" data-order-product-id="' + orderItemTos[i].orderItemId + '">\
+            '<tr class="order-product-row ' + orderItems[i].supplier + '"' +
+              'data-order-item-id="' + orderItems[i].orderItemId +
+              '" data-order-product-id="' + orderItems[i].orderItemId +
+            '">\
             <td class="order-product-name" data-key="name" contenteditable="true">' +
-            orderItemTos[i].name + '</td><td  data-key="quantity"><input type="number" class="order-product-qty" value="' +
-            orderItemTos[i].quantity + '"></td><td class="order-product-price" data-key="price" contenteditable="true">' +
-            orderItemTos[i].price + '</td><td>' + renderDeleteOrderItemBtn(orderItemTos[i].orderItemId) + '</td></tr>'
+            orderItems[i].name + '</td><td  data-key="quantity"><input type="number" class="order-product-qty" value="' +
+            orderItems[i].quantity + '"></td><td class="order-product-price" data-key="price" contenteditable="true">' +
+            orderItems[i].price + '</td><td>' + renderDeleteOrderItemBtn(orderItems[i].orderItemId) + '</td></tr>'
     }
 
     orderItemsList += '</tbody></table>';
@@ -382,14 +394,15 @@ function orderTableReady() {
 
     makeEditable();
 
-
     $('.parent-row .editable').attr('contenteditable', true);
+    if ($(window).width() < 768) {
+        $('.order-status, .order-payment-type').removeAttr('contenteditable');
+    }
 
     $('.parent-row [class*="order-"]').each(function () {
         var val = this.classList[0].slice(6);
 
         $(this).data('key', val);
-
     });
 
 }
@@ -492,7 +505,15 @@ function showUpdateCustomerModal(customerId) {
             alert.log("Error:" + error);
         }
     });
+}
 
+function onCreatedParentRow(row, data, rowIndex) {
+
+  $row = $(row);
+  $row.addClass('parent-row').addClass('status-'+data.status);
 
 }
 
+function showSuppliers() {
+    $('body').toggleClass('suppliers-shown');
+}

@@ -84,7 +84,7 @@ table.dataTable th {
 .order-product-table td:first-child {
     text-align: left;
 }
-.order-product-table tr:nth-child(even) td {
+.order-product-table tr:nth-child(even) {
     background: #f7f7f7;
 }
 .order-product-table .order-product-qty {
@@ -143,6 +143,7 @@ td.orderrow-show:after {
     overflow-x: hidden;
 }
 body .navbar {
+    border: 0;
     border-radius: 0;
     margin-bottom: 0;
 }
@@ -153,7 +154,7 @@ body .navbar {
     padding: 20px 0;
 }
 .login-logo {
-    margin: 25px 0 0;
+    margin: 5px 0 0;
     font-size: 36px;
     text-align: center;
 }
@@ -246,8 +247,36 @@ div.dataTables_wrapper div.dataTables_info {
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
     font-weight: normal;
 }
-
-
+.parent-row {
+    background: #f9f9f9;
+}
+.parent-row.status-shp {
+    background: #FCE5CD;
+}
+.parent-row.status-wfp {
+    background: #F4CCCC;
+}
+.parent-row.status-ok {
+    background: #deedd9;
+}
+.parent-row.status-not {
+    background: #a70000;
+    color: #fff;
+}
+.menu-toggle {
+    display: none;
+}
+.show-suppliers {
+    display: block;
+    max-width: 110px;
+    margin: 0 auto;
+}
+.suppliers-shown .order-product-row.anton {
+    background: rgba(214, 192, 27, 0.37);
+}
+.suppliers-shown .order-product-row.misha {
+    background: rgba(141, 56, 193, 0.37);
+}
 @media (max-width: 768px) {
     .navbar-brand {
         float: none;
@@ -259,6 +288,8 @@ div.dataTables_wrapper div.dataTables_info {
     .navbar-form {
         margin: 0;
         text-align: center;
+        padding-right: 0;
+        padding-left: 0;
     }
     .order-table {
         table-layout: auto;
@@ -316,7 +347,7 @@ div.dataTables_wrapper div.dataTables_info {
     }
     /* END OF Calculating width for every cell of order INFO */
 }
-@media (max-width: 450px) {
+@media (max-width: 460px) {
     .order-head-sm {
         display: initial;
     }
@@ -388,4 +419,40 @@ div.dataTables_wrapper div.dataTables_info {
         width: calc((100% - 36px - 43px - 51px) / 2);
     }
     /* END OF Calculating width for every cell of order INFO */
+
+    .menu-toggle {
+        display: inline-block;
+        float: right;
+        margin: 10px 5%;
+        padding: 6px 9px;
+        background: rgba(255,255,255,.1);
+        border: 1px solid rgba(255,255,255,.2);
+        border-radius: 3px;
+        color: #fff;
+        font-size: 19px;
+    }
+    .navbar-form {
+        display: none;
+    }
+    .navbar-brand {
+        margin-top: 6px;
+    }
+    .navbar-form.opened {
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        padding: 0;
+        z-index: 11;
+    }
+    .navbar-form.opened .btn {
+        display: block;
+        width: 100%;
+        padding-left: 5%;
+        background: #222222;
+        border: 0;
+        border-bottom: 1px solid #3e3e3e;
+        border-radius: 0;
+        text-align: left;
+    }
 }

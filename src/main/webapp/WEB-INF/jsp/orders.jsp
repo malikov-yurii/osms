@@ -17,8 +17,15 @@
 <div class="jumbotron">
     <div class="container">
         <%--<h3><fmt:message key="orders.title"/></h3>--%>
-        <a class="btn btn-sm btn-success" onclick="addOrder('')"><fmt:message key="orders.add"/></a>
-        <table class="order-table table-striped display" id="datatable">
+        <div class="row">
+            <div class="col-md-3">
+                <a class="btn btn-sm btn-success" onclick="addOrder('')"><fmt:message key="orders.add"/></a>
+            </div>
+            <div class="col-md-2 pull-right">
+                <a class="btn btn-sm btn-default show-suppliers"><fmt:message key="orders.showSuppliers"/></a>
+            </div>
+        </div>
+        <table class="order-table display" id="datatable">
             <thead>
             <tr class="order-table-head">
                 <%--<th><fmt:message key="orders.showHide"/></th>--%>

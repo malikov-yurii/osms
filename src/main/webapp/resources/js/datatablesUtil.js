@@ -325,3 +325,10 @@ function simpleFailNoty() {
         timeout: 1000
     });
 }
+
+$(function() { // - document.ready
+
+  // Opening top menu on click
+  $('.menu-toggle').on('click', function() { $('.navbar-form').toggleClass('opened'); });
+
+});
