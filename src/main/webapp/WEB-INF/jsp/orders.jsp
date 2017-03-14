@@ -18,7 +18,7 @@
     <div class="container">
         <%--<h3><fmt:message key="orders.title"/></h3>--%>
         <a class="btn btn-sm btn-success" onclick="addOrder('')"><fmt:message key="orders.add"/></a>
-        <table class="order-table table-striped display" id="datatable">
+        <table class="order-table display" id="datatable">
             <thead>
             <tr class="order-table-head">
                 <%--<th><fmt:message key="orders.showHide"/></th>--%>

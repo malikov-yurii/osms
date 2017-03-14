@@ -35,9 +35,7 @@ $(function () {
             {"data": "status", "orderable": false, "className": "order-status editable"},
             {"data": "comment", "orderable": false, "className": "order-comment editable"},
         ],
-        "createdRow": function (row, data, rowIndex) {
-            $(row).addClass('parent-row');
-        },
+        "createdRow": onCreatedParentRow,
         "order": [
             [
                 0,
@@ -81,8 +79,17 @@ $(function () {
                 $.ajax({
                     url: ajaxUrl + rowDataId + '/update-' + key,
                     type: "POST",
-                    data: key + '=' + ui.item.value
+                    data: key + '=' + ui.item.value,
+                    success: function() {
+                        $(tr)
+                          .removeClass(function (index, className) {
+                            return (className.match (/(^|\s)status-\S+/g) || []).join(' ');
+                          })
+                          .addClass('status-'+ui.item.value);
+                    }
                 });
+
+                $this.blur();
             }
             , minLength: 0
         });
@@ -94,7 +101,8 @@ $(function () {
             if (e.which == 13) {
                 e.preventDefault();
                 $this.blur();
-                $this.find('input').blur();
+            } else if ((e.shiftKey && e.keyCode == 9) || e.which == 9) {
+                $this.blur();
             } else {
                 return false;
             }
@@ -382,14 +390,15 @@ function orderTableReady() {
 
     makeEditable();
 
-
     $('.parent-row .editable').attr('contenteditable', true);
+    if ($(window).width() < 768) {
+        $('.order-status, .order-payment-type').removeAttr('contenteditable');
+    }
 
     $('.parent-row [class*="order-"]').each(function () {
         var val = this.classList[0].slice(6);
 
         $(this).data('key', val);
-
     });
 
 }
@@ -492,7 +501,28 @@ function showUpdateCustomerModal(customerId) {
             alert.log("Error:" + error);
         }
     });
-
-
 }
 
+function onCreatedParentRow(row, data, rowIndex) {
+  $row = $(row);
+  $row.addClass('parent-row');
+
+  switch (data.status) {
+    case "OK":
+      $row.addClass('status-ok');
+      break;
+    case "SHP":
+      $row.addClass('status-shp');
+      break;
+    case "WFP":
+      $row.addClass('status-wfp');
+      break;
+    case "NEW":
+      $row.addClass('status-new');
+      break;
+    case "NOT":
+      $row.addClass('status-not');
+      break;
+    default:;
+  }
+}
