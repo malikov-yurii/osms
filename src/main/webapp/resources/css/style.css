@@ -266,10 +266,11 @@ div.dataTables_wrapper div.dataTables_info {
 .menu-toggle {
     display: none;
 }
+.show-suppliers__wrap {
+    text-align: right;
+}
 .show-suppliers {
-    display: block;
     max-width: 110px;
-    margin: 0 auto;
 }
 .suppliers-shown .order-product-row.anton {
     background: rgba(214, 192, 27, 0.37);
