@@ -150,7 +150,7 @@ function add(add_title) {
       $(this).autocomplete("search", "");
     }
   });
-  //TODO get rid of dublicated code
+  //TODO get rid of duplicated code
   $("#status").autocomplete({
     source: function (request, response) {
       $.ajax({
@@ -225,8 +225,6 @@ function enableHasVariations(chkbox, id) {
 
 function updateTableByData(data) {
   datatableApi.clear().rows.add(data.data).draw('page');
-  //console.log(!!orderAddedNew);
-  //if(orderAddedNew) { $('.parent-row:first td:first-child').focus(); console.log(orderAddedNew); }
 }
 
 function save() {
@@ -319,6 +317,14 @@ function simpleFailNoty() {
     layout: 'bottomRight',
     timeout: 1000
   });
+}
+
+function toggleShowLoading(state) {
+  if (state) {
+    $('.dataTable').addClass('show-loading');
+  } else {
+    $('.dataTable').removeClass('show-loading');
+  }
 }
 
 $(function () { // - document.ready

@@ -48,6 +48,9 @@ header, footer {
     padding: 5px 20px;
     margin: 6px 0;
 }
+.dataTable {
+    position: relative;
+}
 table.dataTable td,
 table.dataTable th {
     box-sizing: border-box;
@@ -278,6 +281,26 @@ div.dataTables_wrapper div.dataTables_info {
 .suppliers-shown .order-product-row.misha {
     background: rgba(141, 56, 193, 0.37);
 }
+.show-loading:before,
+.show-loading:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,.5);
+}
+.show-loading:after {
+    content: '';
+    position: fixed;
+    background: url(../images/loading.svg) no-repeat center center / 90px;
+}
+
+
+
+
+/* @@ media */
 @media (max-width: 768px) {
     .navbar-brand {
         float: none;
