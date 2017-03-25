@@ -33,19 +33,14 @@ INSERT INTO osms_user_roles (role, user_id) VALUES
 INSERT INTO osms_customers (name, last_name, phone_number, city, nova_poshta, email) VALUES
   ('Alex', 'Drogichinskij', '0674861352', 'Ilichevsk', '3', 'drogychynsky@gmail.com'),
   ('Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 'goltvyanskyy@gmail.com'),
-  ('Елена', 'Дуновская', '0984231204', 'Sumy', '7', 'katerina.tcherednichenko@yandex.ru'),
-  ('WithNoOrderName', 'WithNoOrderLastName', '0980000000', 'ZeroTown', '0', 'zero@yandex.ru'),
-  ('Dname1', 'DLastName1', '11111111111', '111111', '1', '111zero@yandex.ru'),
-  ('Dname2', 'DLastName2', '22222222222', '222222', '2','2zero@yandex.ru'),
-  ('Dname3', 'DLastName3', '33333333333', '333333', '3','3zero@yandex.ru');
-
+  ('Elena', 'Dunovskaya', '0984231204', 'Sumy', '7', 'katerina.tcherednichenko@yandex.ru'),
+  ('WithNoOrderName', 'WithNoOrderLastName', '0980000000', 'ZeroTown', '0', 'zero@yandex.ru');
 
 INSERT INTO jos_jshopping_products (`name_ru-Ru`, product_price, unlimited, product_quantity, different_prices) VALUES
 ('Shellac Manetti', 235, 1, 22, 1),
 ('Potal Nazionale', 385, 0, 44, 1),
 ('Ferrario klej rozovyj', 220, 1, 33, 1),
-('Potal Kitaj', 145, 0, 11, 1),
-('Divolo Bitum Vosk', 570, 0, 1, 0);
+('Potal Kitaj', 145, 0, 11, 1);
 
 INSERT INTO jos_jshopping_attr (`name_ru-Ru`) VALUES
 ('Container'),
@@ -76,28 +71,24 @@ INSERT INTO jos_jshopping_products_to_categories (product_id, category_id) VALUE
 (1, 1),
 (2, 3),
 (3, 2),
-(4, 3),
-(5, 1);
-
+(4, 3);
 
 INSERT INTO osms_orders (customer_id, customer_name, customer_last_name, customer_phone_number, customer_city, customer_nova_poshta, total_sum, user_id, payment_type, status
   , date_placed
 ) VALUES
-  (2, 'Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 825, 2, 'PB', 'A_FOR_P'
+  (2, 'Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 825, 2, 'PB', 'WFP'
     , '2016-09-15'
   ),
-  (2, 'Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 1285, 2, 'NP', 'TO_SHIP'
+  (2, 'Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 1285, 2, 'NP', 'SHP'
     , '2016-11-17'
   ),
-  (1, 'Alex', 'Drogichinskij', '0674861352', 'Ilichevsk', '3', 725, 2, 'PB', 'TO_SHIP'
+  (1, 'Alex', 'Drogichinskij', '0674861352', 'Ilichevsk', '3', 725, 2, 'PB', 'SHP'
     , '2016-10-11'
   ),
-  (3, 'Elena', 'Дуновская', '0984231204', 'Sumy', '7', 5865, 2, 'NP', 'SHIPPED'
+  (3, 'Elena', 'Дуновская', '0984231204', 'Sumy', '7', 5865, 2, 'NP', 'SHP'
     , '2016-12-22'
-  ),
-  (1, 'Alex', 'Drogichinskij', '0674861352', 'Ilichevsk', '3', 570, 2, 'PB', 'A_FOR_P'
-    , '2016-02-22'
-  );
+  )
+;
 
 INSERT INTO osms_order_items (order_id, product_attr_id, product_id, product_name, product_price, product_quantity) VALUES
   (1, 3, 2, 'Potal Nazionale 100 leaves', 385, 1),
@@ -107,7 +98,6 @@ INSERT INTO osms_order_items (order_id, product_attr_id, product_id, product_nam
   (3, 7, 4, 'Potal Kitaj 100 leaves', 145, 5),
   (4, 2, 1, 'Shellac Manetti 0.25L (plastic)', 235, 6),
   (4, 3, 2, 'Potal Nazionale 100 leaves', 385, 7),
-  (4, 6, 3, 'Ferrario klej rozovyj 0.25L (plastic)', 220, 8),
-  (5, 0 , 5, 'Divolo Bitum Vosk', 333, 1)
+  (4, 6, 3, 'Ferrario klej rozovyj 0.25L (plastic)', 220, 8)
 ;
 

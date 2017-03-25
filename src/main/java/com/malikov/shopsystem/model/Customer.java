@@ -25,7 +25,7 @@ import java.util.Objects;
         ,@NamedQuery(name = Customer.BY_PHONE_NUMBER, query =
                 "SELECT c FROM Customer c WHERE c.phoneNumber=:phoneNumber")
         ,@NamedQuery(name = Customer.ALL_SORTED, query =
-                "SELECT c FROM Customer c ORDER BY c.lastName")
+                "SELECT c FROM Customer c ORDER BY c.id")
 })
 @Entity
 @Table(name = "osms_customers", uniqueConstraints = {

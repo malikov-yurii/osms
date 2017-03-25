@@ -53,16 +53,6 @@ public class OrderTestData {
                     new OrderItem(8, FERRARIO_ROZOVYJ, FERRARIO_ROZOVYJ_250ML, FERRARIO_ROZOVYJ.getName(), FERRARIO_ROZOVYJ_250ML.getPrice(), 8)
             ));
 
-    public static final Order ORDER_5 = new Order(5, CUSTOMER_DROGOV, ADMIN,
-            PaymentType.PB,
-            OrderStatus.WFP,
-            null,
-            LocalDate.of(2016, 2, 22),
-            Collections.singletonList(
-                    new OrderItem(9, BITUM_DIVOLO, null, BITUM_DIVOLO.getName(), BITUM_DIVOLO.getPrice(), 1)
-            ));
-
-
     public static final ModelMatcher<Order> MATCHER = ModelMatcher.of(Order.class,
             (expected, actual) -> expected == actual ||
                     (Objects.equals(expected.getId(), actual.getId())

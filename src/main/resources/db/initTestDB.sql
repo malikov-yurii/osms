@@ -1,39 +1,19 @@
-
-
--- DROP TABLE IF EXISTS products_to_categories;
--- DROP TABLE IF EXISTS order_items;
--- DROP TABLE IF EXISTS user_roles;
--- DROP TABLE IF EXISTS orders CASCADE ;
--- DROP TABLE IF EXISTS users;
--- DROP TABLE IF EXISTS customers;
--- DROP TABLE IF EXISTS products CASCADE ;
--- DROP TABLE IF EXISTS categories;
--- DROP TABLE IF EXISTS products_attr;
--- DROP TABLE IF EXISTS attr_values;
--- DROP TABLE IF EXISTS attr;
---
-
-
-DROP TABLE IF EXISTS products_to_categories;
-DROP TABLE IF EXISTS osms_order_items;
-DROP TABLE IF EXISTS osms_user_roles;
-DROP TABLE IF EXISTS osms_orders CASCADE ;
-DROP TABLE IF EXISTS osms_users;
-DROP TABLE IF EXISTS osms_customers CASCADE ;
-DROP TABLE IF EXISTS jos_jshopping_products_to_categories;
-DROP TABLE IF EXISTS jos_jshopping_products CASCADE ;
-DROP TABLE IF EXISTS jos_jshopping_categories;
-DROP TABLE IF EXISTS jos_jshopping_products_attr;
-DROP TABLE IF EXISTS jos_jshopping_attr_values;
-DROP TABLE IF EXISTS jos_jshopping_attr;
-DROP TABLE IF EXISTS osms_order_items;
-DROP TABLE IF EXISTS osms_orders;
-
+DROP TABLE IF EXISTS shop_system_test.osms_order_items;
+DROP TABLE IF EXISTS shop_system_test.osms_user_roles;
+DROP TABLE IF EXISTS shop_system_test.osms_orders CASCADE ;
+DROP TABLE IF EXISTS shop_system_test.osms_users;
+DROP TABLE IF EXISTS shop_system_test.osms_customers CASCADE ;
+DROP TABLE IF EXISTS shop_system_test.jos_jshopping_products_to_categories;
+DROP TABLE IF EXISTS shop_system_test.jos_jshopping_products CASCADE ;
+DROP TABLE IF EXISTS shop_system_test.jos_jshopping_categories;
+DROP TABLE IF EXISTS shop_system_test.jos_jshopping_products_attr;
+DROP TABLE IF EXISTS shop_system_test.jos_jshopping_attr_values;
+DROP TABLE IF EXISTS shop_system_test.jos_jshopping_attr;
 
 CREATE TABLE osms_users (
   id       INT(11) PRIMARY KEY AUTO_INCREMENT,
-  name     VARCHAR(35) NOT NULL,
-  password VARCHAR(35) NOT NULL,
+  name     VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
   CONSTRAINT users_unique_name_idx UNIQUE (name)
 );
 
@@ -53,6 +33,7 @@ CREATE TABLE osms_customers (
   city         VARCHAR(80),
   nova_poshta  VARCHAR(20),
   email        VARCHAR(100),
+  note         TEXT,
   CONSTRAINT customers_phone_number_idx UNIQUE (phone_number)
     #   ,CONSTRAINT customers_email_idx UNIQUE (email)
 );
@@ -64,6 +45,7 @@ CREATE TABLE jos_jshopping_products (
   product_quantity  DECIMAL(12,2) DEFAULT 0,
   unlimited         TINYINT(1) DEFAULT 0,
   different_prices  TINYINT(1) DEFAULT 0,
+  supplier          VARCHAR(10),
   CONSTRAINT products_name_idx UNIQUE (`name_ru-Ru`)
 );
 
@@ -115,6 +97,7 @@ CREATE TABLE osms_orders (
   payment_type VARCHAR(35),
   status       VARCHAR(35),
   date_placed  TIMESTAMP DEFAULT now(),
+  comment       TEXT,
   FOREIGN KEY (customer_id) REFERENCES osms_customers (id),
   FOREIGN KEY (user_id) REFERENCES osms_users (id)
 );

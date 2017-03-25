@@ -34,7 +34,7 @@ public class Product extends NamedEntity {
     public static final String ALL_SORTED = "Product.getAllSorted";
     public static final String BY_PRODUCT_NAME_MASK = "OrderItem.byProductNameMask";
 
-    @Column(name = "product_price")
+    @Column(name = "product_price", columnDefinition = "decimal", precision = 12, scale = 2)
     private BigDecimal price;
 
     @Column(name = "product_quantity")
@@ -59,7 +59,7 @@ public class Product extends NamedEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "product_id")
-    @OrderBy("id DESC")
+    @OrderBy("id ASC")
     private List<ProductVariation> variations;
 
     @Column(name = "supplier")
@@ -71,7 +71,7 @@ public class Product extends NamedEntity {
     public Product(Integer id, String name, Integer price, boolean unlimited, int quantity, boolean hasVariations,
                    Collection<ProductCategory> categories, Collection<ProductVariation> productVariations) {
         super(id, name);
-        this.price = new BigDecimal(price);
+        this.price = new BigDecimal(price).setScale(6);
         this.unlimited = unlimited;
         this.quantity = quantity;
         this.categories = new HashSet<>(categories);

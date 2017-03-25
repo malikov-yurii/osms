@@ -15,9 +15,29 @@
 
     <tx:annotation-driven/>
 
-    <beans profile="mySql">
-        <context:property-placeholder location="classpath:db/mySql.properties" system-properties-mode="OVERRIDE"/>
+    <beans profile="mySqlProduction">
+        <context:property-placeholder location="classpath:db/mySqlProduction.properties" system-properties-mode="OVERRIDE"/>
+        <bean id="dataSource"
+              class="org.apache.tomcat.jdbc.pool.DataSource"
+              p:driverClassName="${jdbc.driver.class}"
+              p:url="${database.url}"
+              p:username="${database.username}"
+              p:password="${database.password}"
+              p:removeAbandoned="true"
+              p:maxWait="20000"
+              p:testWhileIdle="true"
+              p:validationQuery="SELECT 1 FROM osms_users"
+              p:testOnBorrow="true"
+              p:maxActive="10"
+              p:minIdle="2"
+              p:maxIdle="5"
+              p:initialSize="2"
+              p:testOnConnect="true"
+        />
+    </beans>
 
+    <beans profile="mySqlTest">
+        <context:property-placeholder location="classpath:db/mySqlTest.properties" system-properties-mode="OVERRIDE"/>
         <bean id="dataSource"
               class="org.apache.tomcat.jdbc.pool.DataSource"
               p:driverClassName="${jdbc.driver.class}"
