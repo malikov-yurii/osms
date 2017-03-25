@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 import java.io.Serializable;
 
-//@RestResource(exported = false)
 public class OrderItemTo implements Serializable {
 
     private Integer orderItemId;
@@ -99,4 +98,5 @@ public class OrderItemTo implements Serializable {
                 ", supplier=" + supplier +
                 '}';
     }
+
 }

@@ -9,15 +9,19 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
 
-//import javax.persistence.*;
-
 @NamedQueries({
-        @NamedQuery(name = Order.DELETE, query = "DELETE FROM Order o WHERE o.id=:id"),
-        @NamedQuery(name = Order.BY_CUSTOMER_ID, query = "SELECT o FROM Order o JOIN o.customer c WHERE c.id=:customerId"),
-        @NamedQuery(name = Order.BY_PRODUCT_ID, query = "SELECT o FROM Order o JOIN o.orderItems oi WHERE oi.product.id=:productId"),
-        @NamedQuery(name = Order.ALL, query = "SELECT o FROM Order o ORDER BY o.id DESC"),
-        @NamedQuery(name = Order.UPDATE_STATUS, query = "UPDATE Order o SET o.status = :status WHERE o.id = :orderId"),
-        @NamedQuery(name = Order.GET_TOTAL_QUANTITY, query = "SELECT count (*) FROM Order"),
+         @NamedQuery(name = Order.DELETE, query =
+                "DELETE FROM Order o WHERE o.id=:id")
+        ,@NamedQuery(name = Order.BY_CUSTOMER_ID, query =
+                "SELECT o FROM Order o JOIN o.customer c WHERE c.id=:customerId")
+        ,@NamedQuery(name = Order.BY_PRODUCT_ID, query =
+                "SELECT o FROM Order o JOIN o.orderItems oi WHERE oi.product.id=:productId")
+        ,@NamedQuery(name = Order.ALL, query =
+                "SELECT o FROM Order o ORDER BY o.id DESC")
+        ,@NamedQuery(name = Order.UPDATE_STATUS, query =
+                "UPDATE Order o SET o.status = :status WHERE o.id = :orderId")
+        ,@NamedQuery(name = Order.GET_TOTAL_QUANTITY, query =
+                "SELECT count (*) FROM Order")
 })
 @Entity
 @Table(name = "osms_orders")
@@ -61,16 +65,10 @@ public class Order extends BaseEntity {
     @Column(name = "status")
     private OrderStatus status;
 
-    //    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_placed"
-            , columnDefinition = "timestamp default now()"
-//            , insertable=false
-    )
+    @Column(name = "date_placed", columnDefinition = "timestamp default now()")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate datePlaced = LocalDate.now();
 
-    //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "order_id")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "order")
     @Fetch(FetchMode.SELECT)
     @OrderBy("id ASC")
@@ -86,7 +84,7 @@ public class Order extends BaseEntity {
     }
 
     public Order(Integer id, Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, String comment, LocalDate datePlaced, List<OrderItem> orderItems) {
-        this.id = id;
+        super(id);
         if (customer != null) {
             this.customer = customer;
             this.customerName = customer.getName();
@@ -99,9 +97,7 @@ public class Order extends BaseEntity {
         this.paymentType = paymentType;
         this.status = orderStatus;
         this.comment = comment;
-        if (datePlaced != null) {
-            this.datePlaced = datePlaced;
-        }
+        this.datePlaced = datePlaced;
         if (orderItems != null) {
             this.orderItems = orderItems;
             this.orderItems.forEach(orderItem -> orderItem.setOrder(this));
@@ -111,12 +107,14 @@ public class Order extends BaseEntity {
         }
     }
 
-    public Order(Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, String comment, List<OrderItem> orderItems) {
+    public Order(Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus,
+                 String comment, List<OrderItem> orderItems) {
         this(null, customer, user, paymentType, orderStatus, comment, null, orderItems);
     }
 
     public Order(Order o) {
-        this(o.getId(), o.getCustomer(), o.getUser(), o.getPaymentType(), o.getStatus(), o.getComment(), o.getDatePlaced(), o.getOrderItems());
+        this(o.getId(), o.getCustomer(), o.getUser(), o.getPaymentType(), o.getStatus(),
+                o.getComment(), o.getDatePlaced(), o.getOrderItems());
     }
 
     public String getCustomerName() {
@@ -245,7 +243,8 @@ public class Order extends BaseEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), customer, customerName, customerLastName, customerPhoneNumber, customerCity, customerPostOffice, user, paymentType, status, datePlaced, orderItems);
+        return Objects.hash(super.hashCode(), customer, customerName, customerLastName, customerPhoneNumber,
+                customerCity, customerPostOffice, user, paymentType, status, datePlaced, orderItems);
     }
 
     @Override
@@ -267,5 +266,6 @@ public class Order extends BaseEntity {
                 ", comment=" + totalSum +
                 '}';
     }
+
 }
 

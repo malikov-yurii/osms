@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.util.exception;
 
 public class ExceptionUtil {
+
     private ExceptionUtil() {
     }
 
@@ -22,4 +23,5 @@ public class ExceptionUtil {
             throw new NotFoundException("Not found entity with " + msg);
         }
     }
+
 }

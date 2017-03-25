@@ -51,9 +51,10 @@ public class AdminAjaxController extends AbstractUserController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+// TODO: 3/25/2017 implement method enableUnlimited for Product
 //    @PostMapping(value = "/{id}")
 //    public void enabled(@PathVariable("id") int id, @RequestParam("enabled") boolean enabled) {
 //        super.enableUnlimited(id, enabled);
 //    }
+
 }

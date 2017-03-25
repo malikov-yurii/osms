@@ -7,17 +7,14 @@ import javax.persistence.*;
 
 /**
  * This is parent class for domain classes which has ID
+ *
  * @author Malikov Yurii
  * @version 0.1
  */
 @MappedSuperclass
 @Access(AccessType.FIELD)
-//@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, isGetterVisibility = NONE, setterVisibility = NONE)
 public class BaseEntity implements Persistable<Integer> {
 
-    //    @GeneratedValue(generator = "increment")
-//    @GenericGenerator(name = "increment", strategy = "increment")
-    // PROPERTY access for id due to bug: https://hibernate.atlassian.net/browse/HHH-3718
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -62,4 +59,5 @@ public class BaseEntity implements Persistable<Integer> {
     public int hashCode() {
         return (getId() == null) ? 0 : getId();
     }
+
 }

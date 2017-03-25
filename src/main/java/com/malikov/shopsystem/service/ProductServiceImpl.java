@@ -67,4 +67,5 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getByProductNameMask(String productNameMask) {
         return repository.getByProductNameMask(productNameMask);
     }
+
 }

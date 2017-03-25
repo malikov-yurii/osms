@@ -51,4 +51,5 @@ public class CustomerAjaxController extends AbstractCustomerController {
     public String getNote(@PathVariable("id") int id) {
         return super.getNote(id);
     }
+
 }

@@ -5,10 +5,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "jos_jshopping_attr")
 @AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name = "attr_id")),
-        @AttributeOverride(name = "name", column = @Column(name = "`name_ru-RU`")),
+         @AttributeOverride(name = "id", column = @Column(name = "attr_id"))
+        ,@AttributeOverride(name = "name", column = @Column(name = "`name_ru-RU`")),
 })
 public class VariationType extends NamedEntity {
+
     public VariationType(Integer id, String name) {
         super(id, name);
     }
@@ -20,4 +21,5 @@ public class VariationType extends NamedEntity {
     public String toString() {
         return name;
     }
+
 }

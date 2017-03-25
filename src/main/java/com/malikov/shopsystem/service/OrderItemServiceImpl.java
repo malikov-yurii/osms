@@ -37,15 +37,4 @@ public class OrderItemServiceImpl implements OrderItemService {
         repository.delete(id);
     }
 
-
-
-    //    @Override
-//    public Collection<OrderItemExtended> getByCustomerId(int customerId) {
-//        return repository.getByCustomerId(customerId);
-//    }
-
-//    @Override
-//    public Collection<OrderItemExtended> getByProductId(int productId) {
-//        return repository.getByProductId(productId);
-//    }
 }

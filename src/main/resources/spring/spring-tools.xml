@@ -8,6 +8,7 @@
          http://www.springframework.org/schema/cache
          http://www.springframework.org/schema/cache/spring-cache.xsd">
 
+
     <!-- enables scanning for @Cacheable annotation -->
     <!--<cache:annotation-driven/>-->
 <!---->

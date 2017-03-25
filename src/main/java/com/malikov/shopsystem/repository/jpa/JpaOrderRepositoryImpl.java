@@ -78,4 +78,5 @@ public class JpaOrderRepositoryImpl implements OrderRepository {
     public Long getTotalQuantity() {
         return (Long) em.createNamedQuery(Order.GET_TOTAL_QUANTITY).getSingleResult();
     }
+
 }

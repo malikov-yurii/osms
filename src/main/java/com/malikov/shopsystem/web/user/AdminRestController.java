@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping(AdminRestController.REST_URL)
 public class AdminRestController extends AbstractUserController {
+
     static final String REST_URL = "/rest/admin/users";
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -31,10 +32,6 @@ public class AdminRestController extends AbstractUserController {
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
-
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.setLocation(uriOfNewResource);
-
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
@@ -52,4 +49,5 @@ public class AdminRestController extends AbstractUserController {
     public User getLogin(@RequestParam("login") String login) {
         return super.getLogin(login);
     }
+
 }

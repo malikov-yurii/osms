@@ -95,4 +95,5 @@ public class RootController {
             return "redirect:login?message=app.registered";
         }
     }
+
 }

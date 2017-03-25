@@ -65,4 +65,5 @@ public class ProductRestController extends AbstractProductController {
             @RequestParam(value = "endDate", required = false) LocalDate endDate, @RequestParam(value = "endTime", required = false) LocalTime endTime) {
         return super.getBetween(startDate, startTime, endDate, endTime);
     }
+
 }

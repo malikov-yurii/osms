@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice(annotations = RestController.class)
 public class ExceptionInfoHandler {
+
     Logger LOG = LoggerFactory.getLogger(ExceptionInfoHandler.class);
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -48,4 +49,5 @@ public class ExceptionInfoHandler {
         }
         return new ErrorInfo(req.getRequestURL(), e);
     }
+
 }

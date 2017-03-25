@@ -1,9 +1,3 @@
-# ALTER TABLE malikovs_gilder.osms_customers MODIFY COLUMN id INT(10) UNSIGNED;
-# COMMIT;
-# ALTER TABLE malikovs_gilder.osms_customers MODIFY COLUMN id INT(10) UNSIGNED AUTO_INCREMENT;
-# COMMIT;
-
-
 -- TRUNCATE TABLE products_attr, attr_values, attr, order_items, orders, customers,
 -- products_to_categories, categories, products, user_roles, users CASCADE;
 

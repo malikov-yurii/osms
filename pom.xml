@@ -90,14 +90,10 @@
                             <!--<groupId>org.postgresql</groupId>-->
                             <!--<artifactId>postgresql</artifactId>-->
                             <!--</dependency>-->
-
-
                             <dependency>
                                 <groupId>mysql</groupId>
                                 <artifactId>mysql-connector-java</artifactId>
                             </dependency>
-
-
                         </dependencies>
                     </container>
                     <configuration>
@@ -435,6 +431,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 
 </project>

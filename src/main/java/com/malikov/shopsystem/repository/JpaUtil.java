@@ -22,4 +22,5 @@ public class JpaUtil {
         sf.getCache().evictCollectionRegions();
         sf.getCache().evictEntityRegions();
     }
+
 }

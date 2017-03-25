@@ -17,4 +17,5 @@ public interface OrderRepository extends Repository<Order> {
     List<Order> getDatatablePage(int start, int length);
 
     Long getTotalQuantity();
+
 }

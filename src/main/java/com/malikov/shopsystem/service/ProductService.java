@@ -15,4 +15,5 @@ public interface ProductService extends Service<Product> {
     void enableHasVariations(int id, boolean hasVariations);
 
     List<Product> getByProductNameMask(String productNameMask);
+
 }

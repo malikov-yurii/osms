@@ -76,4 +76,5 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User getByLogin(String login) {
         return repository.getByLogin(login);
     }
+
 }

@@ -8,11 +8,9 @@ import org.hibernate.annotations.NotFoundAction;
 import javax.persistence.*;
 import java.util.Objects;
 
-
 @NamedQueries({
-        @NamedQuery(name = OrderItem.DELETE, query = "DELETE FROM OrderItem oi WHERE oi.id=:id"),
-        @NamedQuery(name = OrderItem.ALL, query = "SELECT oi FROM OrderItem oi"),
-
+         @NamedQuery(name = OrderItem.DELETE, query = "DELETE FROM OrderItem oi WHERE oi.id=:id")
+        ,@NamedQuery(name = OrderItem.ALL,    query = "SELECT oi FROM OrderItem oi")
 })
 @Entity
 @Table(name = "osms_order_items")
@@ -20,7 +18,6 @@ public class OrderItem extends BaseEntity {
 
     public static final String DELETE = "OrderItem.delete";
     public static final String ALL = "OrderItem.getAll";
-
 
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
@@ -152,4 +149,5 @@ public class OrderItem extends BaseEntity {
                 ", productQuantity=" + productQuantity +
                 '}';
     }
+
 }

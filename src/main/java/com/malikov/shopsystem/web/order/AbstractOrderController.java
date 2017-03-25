@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class AbstractOrderController {
+
     private static final Logger LOG = LoggerFactory.getLogger(AbstractOrderController.class);
 
     @Autowired
@@ -228,19 +229,13 @@ public abstract class AbstractOrderController {
     }
 
     public void updateOrderStatus(Integer orderId, OrderStatus status) {
-        // TODO: 2/6/2017 Make it work
-//        orderService.updateStatus(orderId, status);
         Order order = orderService.get(orderId);
-
         order.setStatus(status);
         orderService.save(order);
     }
 
     public void updateOrderComment(Integer orderId, String comment) {
-        // TODO: 2/6/2017 Make it work
-//        orderService.updateStatus(orderId, status);
         Order order = orderService.get(orderId);
-
         order.setComment(comment);
         orderService.save(order);
     }
@@ -314,4 +309,5 @@ public abstract class AbstractOrderController {
                         , null)));
         orderService.save(order);
     }
+
 }

@@ -2,7 +2,7 @@ package com.malikov.shopsystem.to;
 
 public class CustomerAutocompleteTo {
 
-//    get rid of label  - use concatenation instead
+    // TODO: 3/25/2017  get rid of label  - use concatenation instead
     private String label;
 
     private Integer customerId;
@@ -85,4 +85,5 @@ public class CustomerAutocompleteTo {
     public void setPostOffice(String postOffice) {
         this.postOffice = postOffice;
     }
+
 }

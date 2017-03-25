@@ -97,5 +97,4 @@ public class JpaCustomerRepositoryImpl implements CustomerRepository {
                 .setParameter("phoneNumber", phoneNumber).getSingleResult();
     }
 
-
 }

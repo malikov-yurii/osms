@@ -2,7 +2,7 @@ package com.malikov.shopsystem.to;
 
 public class OrderItemAutocompleteTo {
 
-//    get rid of label. use javascript concatenation instead
+   // TODO: 3/25/2017    get rid of label. use javascript concatenation instead
     private String label;
 
     private Integer productId;
@@ -60,4 +60,5 @@ public class OrderItemAutocompleteTo {
     public void setOrderItemPrice(Integer orderItemPrice) {
         this.orderItemPrice = orderItemPrice;
     }
+
 }

@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import static java.util.Objects.requireNonNull;
 
 public class AuthorizedUser extends org.springframework.security.core.userdetails.User {
+
     private static final long serialVersionUID = 1L;
 
     private UserTo userTo;
@@ -49,4 +50,5 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
     public String toString() {
         return userTo.toString();
     }
+
 }

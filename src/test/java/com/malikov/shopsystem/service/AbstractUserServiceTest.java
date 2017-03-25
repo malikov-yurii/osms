@@ -20,9 +20,8 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     public void testSave() throws Exception {
         User newUser = new User("newUserNamer", "newPassword", ROLE_USER);
         User created = service.save(newUser);
-        newUser.setId(created.getId());
         MATCHER.assertCollectionEquals(
-                Arrays.asList(ADMIN, newUser, USER),
+                Arrays.asList(ADMIN, created, USER),
                 service.getAll());
     }
 

@@ -21,8 +21,6 @@
             <input type="password" placeholder="Password" class="form-control" name='password'>
             <button type="submit" class="btn btn-success"><fmt:message key="app.login"/></button>
         </form:form>
-        <a class="login-register btn-primary" role="button" href="register"><fmt:message key="app.register"/></a>
-
     </div>
 
     <hr>
@@ -56,7 +54,7 @@
             <%--<a href="http://ehcache.org">Ehcache</a>,--%>
             <a href="http://www.postgresql.org/">PostgreSQL</a>,
             <a href="http://junit.org/">JUnit</a>,
-            <a href="http://hamcrest.org/JavaHamcrest/">Hamcrest</a>,
+            <%--<a href="http://hamcrest.org/JavaHamcrest/">Hamcrest</a>,--%>
             <a href="http://jquery.com/">jQuery</a>,
             <a href="http://ned.im/noty/">jQuery notification</a>,
             <a href="http://getbootstrap.com/">Bootstrap</a>.
@@ -65,13 +63,12 @@
 </div>
 <div class="container">
     <div class="lead">
-        &nbsp;&nbsp;&nbsp;<a href="https://github.com/malikov-yurii/online-shop-management-system">Java Enterprise
-        project</a> with
-        registration/authorization and interface based on roles (USER, ADMIN).
-        Administrator has full rights to create and change all entities (order, product, user, etc.).
-        User has only read access.
-        Interaction with system is implemented with UI (AJAX) and through REST interface with basic authorization.
-        JUnit test implemented by Spring MVC Test and Spring Security Test.
+        &nbsp;&nbsp;&nbsp;<a href="https://github.com/malikov-yurii/online-shop-management-system">Java Enterprise CRM
+        project</a> with authorization for <a href="https://gilder-shop.com.ua/potal-i-susal">online-shop 'Lavka Pozolotchika'</a> .
+        - inline work with DataTable cells
+        - autocomplete live search through database
+        - an elaborated design to simplify  manager’s work
+        UI uses REST and AJAX.
     </div>
 </div>
 <jsp:include page="fragments/footer.jsp"/>

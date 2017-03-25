@@ -9,8 +9,6 @@ import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 /**
- * User: gkislin
- * Date: 26.05.2014
  * <p> * Handling Hibernate lazy-loading
  *
  * @link https://github.com/FasterXML/jackson
@@ -35,4 +33,5 @@ public class JacksonObjectMapper extends ObjectMapper {
         setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
+
 }

@@ -15,4 +15,5 @@ public interface Repository<T extends BaseEntity> {
     T get(int id);
 
     List<T> getAll();
+
 }

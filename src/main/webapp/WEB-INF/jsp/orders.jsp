@@ -42,10 +42,6 @@
                 <th><fmt:message key="orders.totalSum"/></th>
                 <th><fmt:message key="orders.status"/></th>
                 <th>Info</th>
-                <%--<th><fmt:message key="orders.date"/></th>--%>
-                <%--<th></th>--%>
-                <%--<th></th>--%>
-                <%--<th></th>--%>
             </tr>
             </thead>
         </table>

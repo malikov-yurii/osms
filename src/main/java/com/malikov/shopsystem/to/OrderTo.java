@@ -71,7 +71,6 @@ public class OrderTo {
         this.date = date;
         this.status = status;
         this.comment = comment;
-//        this.totalSum = orderItemTos != null ? OrderUtil.calculateTotalSumOfTos(orderItemTos) : 0;
         this.totalSum = totalSum;
 
         this.orderItemTos = orderItemTos;
@@ -92,7 +91,6 @@ public class OrderTo {
             , Integer totalSum
     ) {
         this(id, customerId, firstName, lastName, phoneNumber, city, postOffice, paymentType, date, status, comment, totalSum, new ArrayList<>());
-//        this.totalSum = 0;
     }
 
     public OrderTo() {
@@ -218,4 +216,5 @@ public class OrderTo {
     public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }
+
 }

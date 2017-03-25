@@ -33,11 +33,6 @@ public class OrderAjaxController extends AbstractOrderController {
     @Autowired
     UserService userService;
 
-//    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<OrderTo> getAll() {
-//        return super.getAll();
-//    }
-
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public OrderDatatablePageTo getDatatablePage(@RequestParam("start") int start, @RequestParam("length") int length) {
         return super.getDatatablePage(start, length);
@@ -68,52 +63,24 @@ public class OrderAjaxController extends AbstractOrderController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @PostMapping
-//    public ResponseEntity<String> updateOrCreate(@Valid OrderTo orderTo, BindingResult result, HttpEntity<String> httpEntity) {
-//        String json = httpEntity.getBody();
-//        if (result.hasErrors()) {
-//            StringBuilder sb = new StringBuilder();
-//            result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
-//            return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
-//        }
-//        if (orderTo.isNew()) {
-//            super.create(OrderUtil.createNewFromTo(orderTo));
-//        } else {
-//            Order order = super.getOrder(orderTo.getId());
-//            super.update(OrderUtil.updateFromTo(order, orderTo), orderTo.getId());
-//        }
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-
-    // TODO: 2/5/2017 chang it to PUT
+    // TODO: 2/5/2017 chang it to PUT??
     @PostMapping(value = "{itemId}/update-name")
     public void updateOrderItemName(@PathVariable("itemId") int itemId, @RequestParam("name") String name) {
         super.updateOrderItemProductName(itemId, name);
     }
 
-    //    @PutMapping(value = "{itemId}/change-order-item-after-order-item-name-autocomplete", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public void changeOrderItemAfterOrderItemNameAutocomplete(@PathVariable("itemId") int itemId
-//            , @RequestBody String json
-//    ) {
-//        JSONObject jsonObject = JSONObject.fromObject(json);
-//        String m = jsonObject.get("message").toString();
-//        String t = jsonObject.get("time").toString();
-//        String n = jsonObject.get("name").toString();
-//        super.updateOrderItemPriceProductIdProductVariationId(itemId, price, productId, productVariationId);
     @PostMapping(value = "{itemId}/update-quantity")
     public int updateOrderItemQuantity(@PathVariable("itemId") int itemId, @RequestParam("quantity") int quantity) {
         return super.updateOrderItemProductQuantity(itemId, quantity);
     }
 
-    // TODO: 2/5/2017 chang it to PUT
+    // TODO: 2/5/2017 chang it to PUT??
     @PostMapping(value = "{itemId}/update-price")
     public int updateOrderItemPrice(@PathVariable("itemId") int itemId, @RequestParam("price") int price) {
         return super.updateOrderItemPrice(itemId, price);
     }
 
-//    }
-
-    // TODO: 2/5/2017 chang it to PUT
+    // TODO: 2/5/2017 chang it to PUT??
     @PostMapping(value = "{itemId}/update-order-item-after-order-item-name-autocomplete")
     public Integer updateOrderItemAfterOrderItemNameAutocomplete(@PathVariable("itemId") int itemId
             , @RequestParam("price") int price
@@ -225,4 +192,5 @@ public class OrderAjaxController extends AbstractOrderController {
     public void deleteOrderItem(@PathVariable("orderItemId") int orderItemId) {
         super.deleteOrderItem(orderItemId);
     }
+
 }
