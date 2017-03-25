@@ -9,7 +9,7 @@ function updateTable(added, isTabPressed, orderId) {
   var pageLength = datatableApi.page.info().length;
   $.get(
       ajaxUrl + '?start=' + pageStart + '&length=' + pageLength,
-    updateTableByData
+      updateTableByData
     )
     .done(function () {
       if (added == 'orderAdded') {
@@ -408,6 +408,7 @@ function onOrderTableReady() {
   if (orderAdded) {
     setTimeout(function () {
       $('.parent-row:first td:first-child').focus();
+      toggleShowLoading(false);
     }, 100)
     orderAdded = false;
   }
@@ -415,6 +416,7 @@ function onOrderTableReady() {
   if (productAdded) {
     setTimeout(function () {
       $('.order-product-table[data-order-id=' + orderIdOnTab + '] tr:last-child td:first-child').focus();
+      toggleShowLoading(false);
     }, 100)
     productAdded = false;
   }
@@ -427,6 +429,7 @@ function addOrder() {
     success: function () {
       updateTable('orderAdded');
       successNoty('common.saved');
+      toggleShowLoading(true);
     }
   });
 }
@@ -477,6 +480,7 @@ function addOrderItem(id, isTabPressed) {
     success: function () {
       updateTable('productAdded', isTabPressed, id);
       successNoty('common.saved');
+      toggleShowLoading(true);
     }
   });
 }
