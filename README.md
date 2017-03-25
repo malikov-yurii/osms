@@ -2,7 +2,7 @@ ONLINE SHOP MANAGEMENT SYSTEM (CRM)
 ===============================
 
 Stack:
-Maven/ Spring Ioc/ Spring Security/ JPA(Hibernate)/ REST(Jackson)/ Bootstrap(CSS)/
+Maven/ Spring IoC/ Spring Security/ JPA(Hibernate)/ REST(Jackson)/ Bootstrap(CSS)/
 jQuery + plugins (DataTable, autocomplete, etc.)/ slf4j/ JUnit/ JSP/ Tomcat.
 
 Currenly this CRM software is used by managers of [online shop https://gilder-shop.com.ua](https://gilder-shop.com.ua)
