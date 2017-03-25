@@ -443,7 +443,7 @@ function addOrder() {
 function renderAddOrderItemBtn(rowId) {
   //todo add "type" to uncomment
   // if (type == 'display' && $('#hasRoleAdmin').val()) {
-  return '<a class="btn btn-xs btn-success" onclick="addOrderItem(' + rowId + ');">' +
+  return '<a class="btn btn-xs btn-success" onclick="addOrderItem(' + rowId + ', \'isTabPressed\');">' +
     '<span class="order-head-lg">Add order item</span><span class="order-head-sm">Product <i class="fa fa-plus" aria-hidden="true"></i></span>' +
     '</a>';
   // }
