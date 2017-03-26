@@ -1,0 +1,48 @@
+{
+  "name": "OSMS",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "concurrently \"npm run tsc\" \"npm run tsc:w\" ",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@angular/common": "^2.0.0",
+    "@angular/compiler": "^2.0.0",
+    "@angular/core": "^2.0.0",
+    "@angular/forms": "^2.0.0",
+    "@angular/http": "^2.0.0",
+    "@angular/platform-browser": "^2.0.0",
+    "@angular/platform-browser-dynamic": "^2.0.0",
+    "@angular/router": "^3.0.0",
+    "core-js": "^2.4.1",
+    "lodash": "^4.16.1",
+    "rxjs": "5.0.0-rc.4",
+    "zone.js": "^0.7.2"
+  },
+  "devDependencies": {
+    "@types/core-js": "^0.9.33",
+    "@types/lodash": "^4.14.35",
+    "@types/node": "^6.0.39",
+    "awesome-typescript-loader": "3.0.0-beta.10",
+    "concurrently": "2.1.0",
+    "css-loader": "^0.26.1",
+    "jasmine-core": "^2.4.1",
+    "karma": "^1.1.1",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-jasmine": "^1.0.2",
+    "karma-mocha-reporter": "^2.0.4",
+    "lite-server": "^2.2.2",
+    "primeng": "^2.0.5",
+    "raw-loader": "^0.5.1",
+    "reflect-metadata": "^0.1.10",
+    "systemjs": "^0.19.47",
+    "to-string-loader": "^1.1.4",
+    "ts-helpers": "^1.1.1",
+    "tslint": "^4.5.1",
+    "typescript": "^2.2.1"
+  }
+}
