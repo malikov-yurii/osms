@@ -3,7 +3,7 @@ package com.malikov.shopsystem;
 public class Profiles {
 
     public static final String
-             MYSQL = "mySqlProduction",
+             MYSQL = "mySql",
              MYSQL_TEST = "mySqlTest"
             ,JPA = "jpa"
             ,HEROKU = "heroku";

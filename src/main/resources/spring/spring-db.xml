@@ -15,7 +15,7 @@
 
     <tx:annotation-driven/>
 
-    <beans profile="mySqlProduction">
+    <beans profile="mySql">
         <context:property-placeholder location="classpath:db/mySqlProduction.properties" system-properties-mode="OVERRIDE"/>
         <bean id="dataSource"
               class="org.apache.tomcat.jdbc.pool.DataSource"
@@ -57,37 +57,6 @@
         />
     </beans>
 
-    <beans profile="tomcat">
-        <jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/shopsystem"/>
-        <context:property-placeholder location="classpath:db/tomcat.properties" system-properties-mode="OVERRIDE"/>
-    </beans>
-
-    <beans profile="heroku">
-        <context:property-placeholder location="classpath:/db/heroku.properties" system-properties-mode="OVERRIDE"/>
-
-        <bean class="java.net.URI" id="dbUrl">
-            <!--todo ${DATABASE_URL}???????????????????????????????-->
-            <constructor-arg value="${DATABASE_URL}"/>
-        </bean>
-        <bean id="dataSource"
-
-              class="org.apache.tomcat.jdbc.pool.DataSource"
-              p:driverClassName="${jdbc.driver.class}"
-              p:url="${database.url}"
-              p:username="${database.username}"
-              p:password="${database.password}"
-              p:validationQuery="SELECT 1 FROM users"
-              p:maxActive="10"
-              p:minIdle="2"
-              p:maxWait="20000"
-              p:initialSize="2"
-              p:maxIdle="5"
-              p:testOnBorrow="true"
-              p:removeAbandoned="true"
-              p:testOnConnect="true"
-              p:testWhileIdle="true"/>
-    </beans>
-
     <beans profile="jpa">
         <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
               p:dataSource-ref="dataSource"
@@ -115,8 +84,6 @@
         <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
               p:entityManagerFactory-ref="entityManagerFactory"/>
 
-        <bean class="com.malikov.shopsystem.repository.JpaUtil"/>
-
-        <context:component-scan base-package="com.malikov.shopsystem.repository.jpa"/>
+                <context:component-scan base-package="com.malikov.shopsystem.repository.jpa"/>
     </beans>
 </beans>

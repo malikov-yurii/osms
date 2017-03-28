@@ -17,7 +17,7 @@ import java.util.*;
         ,@NamedQuery(name = Order.BY_PRODUCT_ID, query =
                 "SELECT o FROM Order o JOIN o.orderItems oi WHERE oi.product.id=:productId")
         ,@NamedQuery(name = Order.ALL, query =
-                "SELECT o FROM Order o ORDER BY o.id ASC")
+                "SELECT o FROM Order o ORDER BY o.id DESC")
         ,@NamedQuery(name = Order.UPDATE_STATUS, query =
                 "UPDATE Order o SET o.status = :status WHERE o.id = :orderId")
         ,@NamedQuery(name = Order.GET_TOTAL_QUANTITY, query =

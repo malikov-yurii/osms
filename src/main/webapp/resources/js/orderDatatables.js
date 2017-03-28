@@ -52,7 +52,7 @@ $(function () {
     "order": [
       [
         0,
-        "desc"
+        "DESC"
       ]
     ],
     "autoWidth": false,
