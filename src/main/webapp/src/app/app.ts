@@ -5,6 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: '/assets/templates/app.html'
 })
 
-export class App {
-  name = 'Obi-Wan';
-};
+export class App {}

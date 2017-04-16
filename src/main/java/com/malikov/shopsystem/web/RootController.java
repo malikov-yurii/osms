@@ -23,57 +23,82 @@ public class RootController {
 
     @GetMapping("/")
     public String root() {
-        return "redirect:orders";
+        return "index";
     }
 
-    //    @Secured("ROLE_ADMIN")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/users")
-    public String users() {
-        return "users";
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(ModelMap model,
-                        @RequestParam(value = "error", required = false) boolean error,
-                        @RequestParam(value = "message", required = false) String message) {
-        model.put("error", error);
-        model.put("message", message);
-        return "login";
+    @GetMapping("/login")
+    public String login() {
+        return "index";
     }
 
     @GetMapping("/products")
     public String products() {
-        return "products";
+        return "index";
     }
 
     @GetMapping("/orders")
     public String orders() {
-        return "orders";
+        return "index";
     }
 
     @GetMapping("/customers")
     public String customers() {
-        return "customers";
+        return "index";
     }
 
-    @GetMapping("/profile")
-    public String profile() {
-        return "profile";
+    @GetMapping("/users")
+    public String users() {
+        return "index";
     }
-
-    @PostMapping("/profile")
-    public String updateProfile(@Valid UserTo userTo, BindingResult result, SessionStatus status) {
-        if (result.hasErrors()) {
-            return "profile";
-        } else {
-            userTo.setId(AuthorizedUser.id());
-            service.update(userTo);
-            AuthorizedUser.get().update(userTo);
-            status.setComplete();
-            return "redirect:products";
-        }
-    }
+//
+//    //    @Secured("ROLE_ADMIN")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @GetMapping("/users")
+//    public String users() {
+//        return "users";
+//    }
+//
+//    @RequestMapping(value = "/login", method = RequestMethod.GET)
+//    public String login(ModelMap model,
+//                        @RequestParam(value = "error", required = false) boolean error,
+//                        @RequestParam(value = "message", required = false) String message) {
+//        model.put("error", error);
+//        model.put("message", message);
+//        return "login";
+//    }
+//
+//    @GetMapping("/products")
+//    public String products() {
+//        return "products";
+//    }
+//
+//    @GetMapping("/orders")
+//    public String orders() {
+//        return "orders";
+//    }
+//
+//    @GetMapping("/customers")
+//    public String customers() {
+//        return "customers";
+//    }
+//
+//    @GetMapping("/profile")
+//    public String profile() {
+//        return "profile";
+//    }
+//
+//    @PostMapping("/profile")
+//    public String updateProfile(@Valid UserTo userTo, BindingResult result, SessionStatus status) {
+//        if (result.hasErrors()) {
+//            return "profile";
+//        } else {
+//            userTo.setId(AuthorizedUser.id());
+//            service.update(userTo);
+//            AuthorizedUser.get().update(userTo);
+//            status.setComplete();
+//            return "redirect:products";
+//        }
+//    }
 
     @GetMapping("/register")
     public String register(ModelMap model) {

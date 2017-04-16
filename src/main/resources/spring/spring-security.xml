@@ -21,13 +21,14 @@
         <intercept-url pattern="/register" access="permitAll"/>
 
         <intercept-url pattern="/**/admin/**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/**" access="isAuthenticated()"/>
+        <!--<intercept-url pattern="/**" access="isAuthenticated()"/>-->
+        <intercept-url pattern="/**" access="permitAll"/>
 
-        <form-login login-page="/login" default-target-url="/orders"
+        <form-login login-page="/" default-target-url="/orders"
                     authentication-failure-url="/login?error=true"
                     login-processing-url="/spring_security_check"/>
         <logout logout-success-url="/login"/>
-        <!--<csrf disabled="true"/>-->
+        <csrf disabled="true"/>
     </http>
 
     <beans:bean id="encoder"
@@ -35,9 +36,12 @@
         <beans:constructor-arg name="strength" value="11"/>
     </beans:bean>
 
+
     <authentication-manager>
-        <authentication-provider user-service-ref="userService">
-            <password-encoder ref="encoder"/>
+        <authentication-provider>
+            <user-service>
+                <user name="admin" password="1111" authorities="ROLE_ADMIN"/>
+            </user-service>
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

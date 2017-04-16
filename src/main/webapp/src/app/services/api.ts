@@ -7,23 +7,22 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class ApiService {
-  headers:Headers = new Headers({
-    'Content-Type': 'application/json',
-    Accept: 'application/json'
+  headers: Headers = new Headers({
+    'Content-Type': 'application/x-www-form-urlencoded'
   });
 
-  url:string = 'ajax/profile/';
+  url: string = '';
 
-  constructor(private http:Http) {
+  constructor(private http: Http) {
 
   }
 
-  private getJson(resp:Response) {
+  private getJson(resp: Response) {
     return resp.json();
   }
 
-  private checkForError(resp:Response) {
-    if (resp.status >= 200 && resp.status < 300) {
+  private checkForError(resp: Response) {
+    if (resp.status >= 200 && resp.status < 305) {
       return resp;
     } else {
       const error = new Error(resp.statusText);
@@ -33,7 +32,7 @@ export class ApiService {
     }
   }
 
-  get(path:string):Observable<any> {
+  get(path: string): Observable<any> {
     return this.http.get(`${this.url}${path}`, this.headers)
       .map(this.checkForError)
       .catch(err => Observable.throw(err))
@@ -43,19 +42,22 @@ export class ApiService {
   post(path: string, body): Observable<any> {
     return this.http.post(
         `${this.url}${path}`,
-        JSON.stringify(body),
-        {headers: this.headers}
+        body,
+        {
+          headers: this.headers,
+          withCredentials: true
+        }
       )
       .map(this.checkForError)
       .catch(err => Observable.throw(err))
       .map(this.getJson);
   }
 
-  delete(path:string):Observable<any> {
+  delete(path: string): Observable<any> {
     return this.http.delete(`${this.url}${path}`, this.headers)
       .map(this.checkForError)
       .catch(err => Observable.throw(err))
       .map(this.getJson);
   }
 
-};
+}
