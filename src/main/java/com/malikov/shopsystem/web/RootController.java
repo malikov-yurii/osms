@@ -50,7 +50,7 @@ public class RootController {
     public String users() {
         return "index";
     }
-//
+
 //    //    @Secured("ROLE_ADMIN")
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
 //    @GetMapping("/users")
