@@ -1,18 +1,5 @@
-@import url('http://use.fontawesome.com/releases/v4.7.0/css/font-awesome-css.min.css');
 @import url('https://fonts.googleapis.com/css?family=Roboto');
-/* FONT PATH
- * -------------------------- */
-@font-face {
-    font-family: 'FontAwesome';
-    src: url('//use.fontawesome.com/releases/v4.7.0/fonts/fontawesome-webfont.eot');
-    src: url('//use.fontawesome.com/releases/v4.7.0/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
-    url('//use.fontawesome.com/releases/v4.7.0/fonts/fontawesome-webfont.woff2') format('woff2'),
-    url('//use.fontawesome.com/releases/v4.7.0/fonts/fontawesome-webfont.woff') format('woff'),
-    url('//use.fontawesome.com/releases/v4.7.0/fonts/fontawesome-webfont.ttf') format('truetype'),
-    url('//use.fontawesome.com/releases/v4.7.0/fonts/fontawesome-webfont.svg#fontawesomeregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
+
 * {
     margin: 0;
     padding: 0;
@@ -89,7 +76,6 @@ table.dataTable th {
     border-bottom: 1px solid #d9d9d9;
     text-align: center;
 }
-
 .order-product-table th:last-child, .order-product-table td:last-child {
     border-right: none;
 }
@@ -229,7 +215,6 @@ div.dataTables_wrapper div.dataTables_info {
 .order-product-table th:not(:first-child) {
     width: 9%;
 }
-
 /* Calculating width for every cell of order INFO */
 .order-table-head th:nth-child(1) {
     width: 15%;
@@ -302,17 +287,13 @@ div.dataTables_wrapper div.dataTables_info {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255,255,255,.5);
+    background: rgba(255, 255, 255, .5);
 }
 .show-loading:after {
     content: '';
     position: fixed;
     background: url(../images/loading.svg) no-repeat center center / 90px;
 }
-
-
-
-
 /* @@ media */
 @media (max-width: 768px) {
     .navbar-brand {
@@ -331,7 +312,7 @@ div.dataTables_wrapper div.dataTables_info {
     .order-table {
         table-layout: auto;
     }
-    .order-table>thead {
+    .order-table > thead {
         display: none;
     }
     .order-table .parent-row {
@@ -344,7 +325,6 @@ div.dataTables_wrapper div.dataTables_info {
         align-items: center;
         border: 1px solid #e1e1e1;
     }
-
     /* Calculating width for every cell of order INFO */
     .parent-row .order-last-name {
         order: 1;
@@ -397,7 +377,6 @@ div.dataTables_wrapper div.dataTables_info {
     .row {
         margin: 0;
     }
-
     .order-table td.child-row {
         padding: 0 0 12px;
     }
@@ -417,7 +396,6 @@ div.dataTables_wrapper div.dataTables_info {
     .order-product-table td {
         font-size: 13px;
     }
-
     /* Calculating width for every cell of order INFO */
     .parent-row .order-last-name {
         order: 1;
@@ -456,14 +434,13 @@ div.dataTables_wrapper div.dataTables_info {
         width: calc((100% - 36px - 43px - 51px) / 2);
     }
     /* END OF Calculating width for every cell of order INFO */
-
     .menu-toggle {
         display: inline-block;
         float: right;
         margin: 10px 5%;
         padding: 6px 9px;
-        background: rgba(255,255,255,.1);
-        border: 1px solid rgba(255,255,255,.2);
+        background: rgba(255, 255, 255, .1);
+        border: 1px solid rgba(255, 255, 255, .2);
         border-radius: 3px;
         color: #fff;
         font-size: 19px;
@@ -492,4 +469,167 @@ div.dataTables_wrapper div.dataTables_info {
         border-radius: 0;
         text-align: left;
     }
+}
+/* NEW STYLES */
+.wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.order {
+    position: relative;
+    margin: 40px 0;
+    padding: 5px 10px;
+    box-shadow: 0 3px 11px 1px rgba(0, 0, 0, 0.4);
+}
+.order--ok,
+.order--ok .order-manage{
+    background: #deedd9;
+}
+.order--shp,
+.order--shp .order-manage{
+    background: #FCE5CD;
+}
+.order--wfp,
+.order--wfp .order-manage{
+    background: #F4CCCC;
+}
+.order--not,
+.order--not .order-manage{
+    background: #a70000;
+}
+.order--new,
+.order--new .order-manage{
+    background: #fff;
+}
+.order-info {
+    display: flex;
+    justify-content: space-between;
+}
+.order-item {
+    display: flex;
+    justify-content: space-between;
+}
+.order-info__block {
+    flex-grow: 2;
+    padding: 0 8px;
+    border-right: 1px solid rgba(0, 188, 212, 0.49);
+    font-size: 15px;
+    line-height: 1.8;
+    text-align: center;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.order-info__block:last-child {
+    border-right: 0;
+}
+.order-info__block--lastName {
+    flex-basis: 15%;
+}
+.order-info__block--firstName {
+    flex-basis: 15%;
+}
+.order-info__block--phoneNumber {
+    flex-basis: 100px;
+}
+.order-info__block--city {
+    flex-basis: 15%;
+}
+.order-info__block--postOffice {
+    flex-basis: 43px;
+}
+.order-info__block--totalSum {
+    flex-basis: 70px;
+}
+.order-info__block--paymentType {
+    flex-basis: 45px;
+}
+.order-info__block--status {
+    flex-basis: 52px;
+}
+.order-info__block--comment {
+    flex-basis: 15%;
+}
+.order-items {
+    margin: 10px 0 5px;
+    padding: 10px 0 0;
+    border-top: 1px solid rgba(0, 188, 212, 0.49);
+}
+.order-item__block {
+    padding: 0 8px;
+    box-sizing: border-box;
+    line-height: 26px;
+}
+.order-item__block--name {
+    flex-basis: 82%;
+}
+.order-item__block--quantity {
+    width: 9%;
+    text-align: center;
+    border-left: 1px solid rgba(0, 188, 212, 0.49);
+    border-right: 1px solid rgba(0, 188, 212, 0.49);
+}
+.order-item__block--price {
+    flex-basis: 9%;
+    text-align: center;
+}
+.order-item__block--delete {
+    line-height: 1;
+}
+.order-item.odd {
+    background: rgba(0, 188, 212, 0.05);
+}
+.order-item:hover {
+    background: rgba(0, 188, 212, 0.15);
+}
+.order-manage {
+    position: absolute;
+    top: 0;
+    right: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    transform: translate3d(40px, 0, 0);
+    transition: transform .2s ease;
+    box-shadow: -2px 3px 10px 0px rgba(0, 0, 0, 0.4);
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    opacity: 0;
+}
+.order-manage__block {
+    text-align: center;
+    cursor: pointer;
+}
+.order-manage__text {
+    display: none;
+}
+.order-manage__block .material-icons {
+    padding: 10px;
+    font-size: 34px;
+    transition: color .2s;
+}
+.order-manage__block--add .material-icons {
+    color: #00b500;
+}
+.order-manage__block--edit .material-icons {
+    color: #0000ea;
+}
+.order-manage__block--delete .material-icons {
+    color: #d20000;
+}
+.order-manage__block--add:hover .material-icons {
+    color: #00d600;
+}
+.order-manage__block--edit:hover .material-icons {
+    color: #205fff;
+}
+.order-manage__block--delete:hover .material-icons {
+    color: #ff0000;
+}
+
+.order:hover .order-manage {
+    opacity: .9;
+    transform: translate3d(0,0,0);
 }

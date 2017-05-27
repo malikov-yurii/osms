@@ -48,8 +48,8 @@ public class OrderTo {
     public OrderTo(
             Integer id
             , Integer customerId
-            , String firstName
             , String lastName
+            , String firstName
             , String phoneNumber
             , String city
             , String postOffice
@@ -62,8 +62,8 @@ public class OrderTo {
     ) {
         this.id = id;
         this.customerId = customerId == null ? 0 : customerId;
-        this.firstName = firstName != null ? firstName : "";
         this.lastName = lastName != null ? lastName : "";
+        this.firstName = firstName != null ? firstName : "";
         this.phoneNumber = phoneNumber != null ? phoneNumber : "";
         this.city = city != null ? city : "";
         this.postOffice = postOffice != null ? postOffice : "";
@@ -80,8 +80,8 @@ public class OrderTo {
     public OrderTo(
             Integer id
             , Integer customerId
-            , String firstName
             , String lastName
+            , String firstName
             , String phoneNumber
             , String city
             , String postOffice
@@ -91,7 +91,7 @@ public class OrderTo {
             , String comment
             , Integer totalSum
     ) {
-        this(id, customerId, firstName, lastName, phoneNumber, city, postOffice, paymentType, date, status, comment, totalSum, new ArrayList<>());
+        this(id, customerId, lastName, firstName, phoneNumber, city, postOffice, paymentType, date, status, comment, totalSum, new ArrayList<>());
 //        this.totalSum = 0;
     }
 

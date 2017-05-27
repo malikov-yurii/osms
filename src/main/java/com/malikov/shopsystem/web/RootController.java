@@ -21,17 +21,17 @@ public class RootController {
     @Autowired
     private UserService service;
 
-    @GetMapping("/")
-    public String root() {
-        return "redirect:orders";
-    }
-
-    //    @Secured("ROLE_ADMIN")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/users")
-    public String users() {
-        return "users";
-    }
+//    @GetMapping("/")
+//    public String root() {
+//        return "redirect:orders";
+//    }
+//
+//    //    @Secured("ROLE_ADMIN")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @GetMapping("/users")
+//    public String users() {
+//        return "users";
+//    }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(ModelMap model,
@@ -41,46 +41,46 @@ public class RootController {
         model.put("message", message);
         return "login";
     }
-
-    @GetMapping("/products")
-    public String products() {
-        return "products";
-    }
-
-    @GetMapping("/orders")
-    public String orders() {
-        return "orders";
-    }
-
-    @GetMapping("/customers")
-    public String customers() {
-        return "customers";
-    }
-
-    @GetMapping("/profile")
-    public String profile() {
-        return "profile";
-    }
-
-    @PostMapping("/profile")
-    public String updateProfile(@Valid UserTo userTo, BindingResult result, SessionStatus status) {
-        if (result.hasErrors()) {
-            return "profile";
-        } else {
-            userTo.setId(AuthorizedUser.id());
-            service.update(userTo);
-            AuthorizedUser.get().update(userTo);
-            status.setComplete();
-            return "redirect:products";
-        }
-    }
-
-    @GetMapping("/register")
-    public String register(ModelMap model) {
-        model.addAttribute("userTo", new UserTo());
-        model.addAttribute("register", true);
-        return "profile";
-    }
+//
+//    @GetMapping("/products")
+//    public String products() {
+//        return "products";
+//    }
+//
+//    @GetMapping("/orders")
+//    public String orders() {
+//        return "orders";
+//    }
+//
+//    @GetMapping("/customers")
+//    public String customers() {
+//        return "customers";
+//    }
+//
+//    @GetMapping("/profile")
+//    public String profile() {
+//        return "profile";
+//    }
+//
+//    @PostMapping("/profile")
+//    public String updateProfile(@Valid UserTo userTo, BindingResult result, SessionStatus status) {
+//        if (result.hasErrors()) {
+//            return "profile";
+//        } else {
+//            userTo.setId(AuthorizedUser.id());
+//            service.update(userTo);
+//            AuthorizedUser.get().update(userTo);
+//            status.setComplete();
+//            return "redirect:products";
+//        }
+//    }
+//
+//    @GetMapping("/register")
+//    public String register(ModelMap model) {
+//        model.addAttribute("userTo", new UserTo());
+//        model.addAttribute("register", true);
+//        return "profile";
+//    }
 
     @PostMapping("/register")
     public String saveRegister(@Valid UserTo userTo, BindingResult result, SessionStatus status, ModelMap model) {

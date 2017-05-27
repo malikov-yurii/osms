@@ -1,29 +1,30 @@
 import {Injectable} from '@angular/core';
 import {Headers, Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 
 @Injectable()
 export class ApiService {
-  headers:Headers = new Headers({
+  headers: Headers = new Headers({
     'Content-Type': 'application/json',
     Accept: 'application/json'
   });
 
-  url:string = 'ajax/profile/';
+  url: string = 'ajax/profile/';
 
-  constructor(private http:Http) {
+  constructor(private http: Http) {
 
   }
 
-  private getJson(resp:Response) {
+  private getJson(resp: Response) {
     return resp.json();
   }
 
-  private checkForError(resp:Response) {
-    if (resp.status >= 200 && resp.status < 300) {
+  private checkForError(resp: Response) {
+    if (resp.status >= 200 && resp.status < 400) {
       return resp;
     } else {
       const error = new Error(resp.statusText);
@@ -33,29 +34,27 @@ export class ApiService {
     }
   }
 
-  get(path:string):Observable<any> {
+  get(path: string): Observable<any> {
     return this.http.get(`${this.url}${path}`, this.headers)
       .map(this.checkForError)
       .catch(err => Observable.throw(err))
       .map(this.getJson);
   }
 
-  post(path: string, body): Observable<any> {
+  post(path: string, body?): Observable<any> {
     return this.http.post(
-        `${this.url}${path}`,
-        JSON.stringify(body),
-        {headers: this.headers}
+      `${this.url}${path}`,
+      JSON.stringify(body),
+      {headers: this.headers}
       )
       .map(this.checkForError)
-      .catch(err => Observable.throw(err))
-      .map(this.getJson);
+      .catch(err => Observable.throw(err));
   }
 
-  delete(path:string):Observable<any> {
+  delete(path: string): Observable<any> {
     return this.http.delete(`${this.url}${path}`, this.headers)
       .map(this.checkForError)
-      .catch(err => Observable.throw(err))
-      .map(this.getJson);
+      .catch(err => Observable.throw(err));
   }
 
-};
+}
