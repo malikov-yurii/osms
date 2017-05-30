@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { App, providers, routes, KeysPipe } from './app/index';
 import { Orders, Products } from './app/containers/index';
 import { Header, Order } from './app/ui/index';
+import { ContenteditableModel } from './app/directives/index';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { Header, Order } from './app/ui/index';
     Orders,
     Products,
     Order,
-    KeysPipe
+    KeysPipe,
+    ContenteditableModel
   ],
   providers,
   imports: [BrowserModule, HttpModule, FormsModule, routes],

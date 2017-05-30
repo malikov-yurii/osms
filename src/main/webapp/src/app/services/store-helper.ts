@@ -35,18 +35,35 @@ export class StoreHelper {
   findAndDelete(prop, id) {
     const currentState = this.store.getState();
     const collection = currentState[prop];
-    this.store.setState(Object.assign({}, currentState, {[prop]: collection.filter(item => {console.log(item); return item.id !== id})}));
+    this.store.setState(Object.assign({}, currentState, {[prop]: collection.filter(item => item.id !== id)}));
   }
-  findProductAndDelete(prop, id, prodId) {
+  findProductAndDelete(prop, id, productId) {
     const currentState = this.store.getState();
     const collection = currentState[prop];
     this.store.setState(Object.assign({}, currentState, {[prop]: collection.map(item => {
       if (item.id === id) {
-        item.orderItemTos = item.orderItemTos.filter(product => product.orderItemId !== prodId);
+        item.orderItemTos = item.orderItemTos.filter(product => product.id !== productId);
       }
       return item;
     })}));
   }
+  findDeepAndUpdate(prop, id, fieldName, value): boolean {
+    let updated = false;
+    const currentState = this.store.getState();
+    const collection = currentState[prop];
+    this.store.setState(Object.assign({}, currentState, {[prop]: collection.map(item => {
+      if (item.id === id && item[fieldName] !== value) {
+        item[fieldName] = value;
+        updated = true;
+      }
+      return item;
+    })}));
+    return updated;
+  }
+
+
+
+
 
   onGetState() {
     console.log(this.store.getState());

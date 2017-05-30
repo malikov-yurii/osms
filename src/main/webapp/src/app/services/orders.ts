@@ -48,4 +48,23 @@ export class OrderService {
   getStore() {
     this.storeHelper.onGetState();
   }
+
+  updateField(orderId, fieldName, value) {
+
+    let updated = this.storeHelper.findDeepAndUpdate('orders', orderId, fieldName, value);
+    if (updated) {
+      fieldName = this.camelCaseToDash(fieldName);
+      return this.api.post(
+        `${this.path}/${orderId}/update-${fieldName}`,
+        `${fieldName}=${value}`
+        ).subscribe();
+    }
+
+  }
+
+
+  private camelCaseToDash(str) {
+    return str.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`);
+  }
+
 }

@@ -504,6 +504,7 @@ div.dataTables_wrapper div.dataTables_info {
 .order-info {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 .order-item {
     display: flex;
@@ -511,15 +512,11 @@ div.dataTables_wrapper div.dataTables_info {
 }
 .order-info__block {
     flex-grow: 2;
-    padding: 0 8px;
+    padding: 2px 8px;
     border-right: 1px solid rgba(0, 188, 212, 0.49);
     font-size: 15px;
-    line-height: 1.8;
     text-align: center;
     box-sizing: border-box;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 .order-info__block:last-child {
     border-right: 0;
@@ -579,10 +576,18 @@ div.dataTables_wrapper div.dataTables_info {
     border-left: 1px solid rgba(0, 188, 212, 0.49);
     border-right: 1px solid rgba(0, 188, 212, 0.49);
 }
+.order-item__block--quantity input {
+    max-width: 30px;
+    height: 23px;
+    padding-left: 9px;
+    background: none;
+    border: none;
+}
 .order-item__block--price {
     flex-basis: 9%;
     text-align: center;
 }
+
 .order-item__block--delete {
     line-height: 1;
 }

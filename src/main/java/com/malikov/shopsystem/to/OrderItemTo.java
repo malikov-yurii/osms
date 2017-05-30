@@ -7,15 +7,15 @@ import java.io.Serializable;
 //@RestResource(exported = false)
 public class OrderItemTo implements Serializable {
 
-    private Integer orderItemId;
+    private Integer id;
 
     private Integer orderProductId;
 
     private String name;
 
-    private Integer price;
-
     private Integer quantity;
+
+    private Integer price;
 
     private String supplier;
 
@@ -24,16 +24,16 @@ public class OrderItemTo implements Serializable {
             Integer orderItemId,
             Integer orderProductId,
             String name,
-            Integer price,
             Integer quantity,
+            Integer price,
             String  supplier
     ) {
 
-        this.orderItemId = orderItemId;
+        this.id = orderItemId;
         this.orderProductId = orderProductId;
         this.name = name;
-        this.price = price;
         this.quantity = quantity;
+        this.price = price;
         this.supplier = supplier;
     }
 
@@ -65,11 +65,11 @@ public class OrderItemTo implements Serializable {
     }
 
     public Integer getOrderItemId() {
-        return orderItemId;
+        return id;
     }
 
     public void setOrderItemId(Integer orderItemId) {
-        this.orderItemId = orderItemId;
+        this.id = orderItemId;
     }
 
     public Integer getOrderProductId() {
@@ -91,11 +91,11 @@ public class OrderItemTo implements Serializable {
     @Override
     public String toString() {
         return "OrderItemTo{" +
-                "orderItemId=" + orderItemId +
+                "id=" + id +
                 ", orderProductId=" + orderProductId +
                 ", name='" + name + '\'' +
-                ", price=" + price +
                 ", quantity=" + quantity +
+                ", price=" + price +
                 ", supplier=" + supplier +
                 '}';
     }

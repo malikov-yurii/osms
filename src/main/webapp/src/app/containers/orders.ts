@@ -37,6 +37,18 @@ import { Subscription } from "rxjs/Rx";
             <div class="order-manage__text">Delete order</div>
           </div>
         </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
       
         <div class="order-info">
           <ng-container 
@@ -44,14 +56,16 @@ import { Subscription } from "rxjs/Rx";
           >
           
             <ng-template [ngIf]="!hasInput(key)">
-              <div class="order-info__block order-info__block--{{ key }}" contenteditable (input)="orders[i][key]" ngDefaultControl>
+              <div class="order-info__block order-info__block--{{ key }}" contenteditable
+              (blur)="onUpdateField(order.id, key, $event.target.innerText)"
+            >
                 {{ order[key] }}
               </div>
             </ng-template>
           
             <ng-template [ngIf]="hasInput(key)">
               <div class="order-info__block order-info__block--{{ key }}">
-                <select name="{{ key }}" (change)="onSelect($event.target)">
+                <select name="{{ key }}" (change)="onUpdateField(order.id, key, $event.target.value)">
                   <option
                    *ngFor="let keyItem of infoBlocks[key]"
                    [value]="keyItem"
@@ -63,22 +77,36 @@ import { Subscription } from "rxjs/Rx";
           
           </ng-container>
         </div>
+        
+        
         <div class="order-items">
           <div
             *ngFor="let item of order.orderItemTos; let odd = odd, let even = even"
             [ngClass]="{'order-item': true, odd: odd, even: even}"
           >
-            <div
-              *ngFor="let key of item | keys:['orderItemId', 'orderProductId', 'supplier'] "
-
-              class="order-item__block order-item__block--{{ key }}"
-              contenteditable
+          
+            <ng-container
+              *ngFor="let key of item | keys:['id', 'orderProductId', 'supplier']"
             >
-              {{ item[key] }}
-            </div>
-            <div class="order-item__block order-item__block--delete" (click)="onDeleteOrderItem(order.id, item.orderItemId)">
+            
+              <ng-template [ngIf]="!hasInput(key)">
+                <div class="order-item__block order-item__block--{{ key }}" contenteditable>
+                  {{ item[key] }}
+                </div>  
+              </ng-template>
+          
+              <ng-template [ngIf]="hasInput(key)">
+                <div class="order-item__block order-item__block--{{ key }}">
+                  <input type="number" name="" id="" value="{{ item[key] }}" (change)="onChangeOrderItemQty($event.target.value)">
+                </div>  
+              </ng-template>
+                
+            </ng-container>
+
+            <div class="order-item__block order-item__block--delete" (click)="onDeleteOrderItem(order.id, item.id)">
               <i class="material-icons">delete</i>            
             </div>
+            
           </div>
         </div>
         
@@ -104,7 +132,8 @@ export class Orders implements OnDestroy {
 
     this.subscription = this.store.changes
       .map(resp => resp.orders)
-      .subscribe(resp => this.orders = resp)
+      .subscribe(resp => this.orders = resp);
+
   }
 
   ngOnDestroy() {
@@ -149,7 +178,7 @@ export class Orders implements OnDestroy {
   }
 
   hasInput(key) {
-    return key === 'status' || key === 'paymentType' ? true : false;
+    return key === 'status' || key === 'paymentType' || key === 'quantity' ? true : false;
   }
 
   trackByIndex(index: number, value) {
@@ -161,15 +190,24 @@ export class Orders implements OnDestroy {
     console.log(target.value);
   }
 
-  onChange(target) {
+  onChangeOrderInfo(target) {
     console.log(target);
     console.log(target.name);
     console.log(target.value);
   }
 
+  onChangeOrderItemQty(value) {
+    console.log(value);
+  }
+
   consoleOrders() {
     console.log(this.orders);
   }
+
+  onUpdateField(orderId, fieldName, value) {
+    this.orderService.updateField(orderId, fieldName, value);
+  }
+
 
 }
 
@@ -177,5 +215,5 @@ export class Orders implements OnDestroy {
 
 
 
-// @TODO IF POSSIBLE
-// rename orderItemId to id
+// @TODO
+// change order of json keys in backend

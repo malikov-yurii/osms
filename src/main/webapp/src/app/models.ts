@@ -15,7 +15,7 @@ export class Order {
 }
 
 export class OrderItem {
-  orderItemId: number = 0;
+  id: number = 0;
   orderProductId: number = 0;
   name: string = '';
   price: number = 0;

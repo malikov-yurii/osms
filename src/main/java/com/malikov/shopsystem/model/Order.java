@@ -259,8 +259,8 @@ public class Order extends BaseEntity {
                 ", customerCity='" + customerCity + '\'' +
                 ", customerPostOffice='" + customerPostOffice + '\'' +
                 ", user=" + user +
-                ", paymentType=" + paymentType +
                 ", status=" + status +
+                ", paymentType=" + paymentType +
                 ", datePlaced=" + datePlaced +
                 ", orderItems=" + orderItems +
                 ", totalSum=" + totalSum +

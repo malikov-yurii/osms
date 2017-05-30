@@ -9,7 +9,7 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class ApiService {
   headers: Headers = new Headers({
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/x-www-form-urlencoded',
     Accept: 'application/json'
   });
 
@@ -43,9 +43,9 @@ export class ApiService {
 
   post(path: string, body?): Observable<any> {
     return this.http.post(
-      `${this.url}${path}`,
-      JSON.stringify(body),
-      {headers: this.headers}
+        `${this.url}${path}`,
+        body,
+        {headers: this.headers}
       )
       .map(this.checkForError)
       .catch(err => Observable.throw(err));
