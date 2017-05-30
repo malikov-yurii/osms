@@ -33,14 +33,16 @@ export class OrderService {
       .do(() => this.storeHelper.findAndDelete('orders', orderId));
   }
 
-  addOrderItem(orderId): Observable<any> {
-    return this.api.post(`${this.path}/${orderId}/add-order-item`)
-      .do(() => this.getOrders().subscribe());
+  addOrderItem(orderId) {
+    return this.storeHelper.findAndAddProduct('orders', orderId, new OrderItem());
+    // return this.api.post(`${this.path}/${orderId}/add-order-item`)
+      // .do(() => this.getOrders().subscribe());
   }
 
-  deleteOrderItem(itemId): Observable<any> {
-    return this.api.delete(`${this.path}/order-item/${itemId}`)
-      .do(() => this.storeHelper.findAndDelete('orders', itemId));
+  deleteOrderItem(id, itemId) {
+    return this.storeHelper.findProductAndDelete('orders', id, itemId);
+    // return this.api.delete(`${this.path}/order-item/${itemId}`)
+    //   .do(() => this.storeHelper.findAndDelete('orders', itemId));
   }
 
   getStore() {

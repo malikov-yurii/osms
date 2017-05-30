@@ -19,7 +19,7 @@ import { Subscription } from "rxjs/Rx";
     
     
       <div
-        *ngFor="let order of orders"
+        *ngFor="let order of orders; let i = index; trackBy: trackByIndex"
         [ngClass]="getOrderColor(order.status)"
        >
        
@@ -40,24 +40,27 @@ import { Subscription } from "rxjs/Rx";
       
         <div class="order-info">
           <ng-container 
-            *ngFor="let key of order | keys:['id', 'customerId', 'orderItemTos', 'date']"
+            *ngFor="let key of order | keys:['id', 'customerId', 'orderItemTos', 'date'];"
           >
+          
             <ng-template [ngIf]="!hasInput(key)">
-              <div class="order-info__block order-info__block--{{ key }}" contenteditable>
+              <div class="order-info__block order-info__block--{{ key }}" contenteditable (input)="orders[i][key]" ngDefaultControl>
                 {{ order[key] }}
               </div>
             </ng-template>
-            <ng-template [ngIf]="key === 'status' || key === 'paymentType'">
-                <div class="order-info__block order-info__block--{{ key }}">
-                  <select name="{{ key }}" id="" (change)="onSelect($event.target)">
-                    <option
-                     *ngFor="let keyItem of infoBlocks[key]"
-                     [value]="keyItem"
-                     [attr.selected]="keyItem === order[key] ? '' : null"
-                    >{{ keyItem }}</option>
-                  </select>
-                </div>  
+          
+            <ng-template [ngIf]="hasInput(key)">
+              <div class="order-info__block order-info__block--{{ key }}">
+                <select name="{{ key }}" (change)="onSelect($event.target)">
+                  <option
+                   *ngFor="let keyItem of infoBlocks[key]"
+                   [value]="keyItem"
+                   [attr.selected]="keyItem === order[key] ? '' : null"
+                  >{{ keyItem }}</option>
+                </select>
+              </div>  
             </ng-template>
+          
           </ng-container>
         </div>
         <div class="order-items">
@@ -73,7 +76,7 @@ import { Subscription } from "rxjs/Rx";
             >
               {{ item[key] }}
             </div>
-            <div class="order-item__block order-item__block--delete" (click)="onDeleteOrderItem(item.orderItemId)">
+            <div class="order-item__block order-item__block--delete" (click)="onDeleteOrderItem(order.id, item.orderItemId)">
               <i class="material-icons">delete</i>            
             </div>
           </div>
@@ -90,7 +93,7 @@ export class Orders implements OnDestroy {
   infoBlocks = {
     status: ['SHP', 'WFP', 'OK', 'NEW', 'NOT'],
     paymentType: ['PB', 'SV', 'NP']
-  }
+  };
 
 
   constructor(
@@ -119,10 +122,6 @@ export class Orders implements OnDestroy {
     }
   }
 
-  consoleOrders() {
-    console.log(this.orders);
-  }
-
   onGetAllOrders() {
     this.orderService.getAllOrders().subscribe(resp => console.log(resp.data));
   }
@@ -136,12 +135,12 @@ export class Orders implements OnDestroy {
   }
 
   onAddOrderItem(orderId) {
-    this.orderService.addOrderItem(orderId).subscribe();
+    this.orderService.addOrderItem(orderId);
   }
 
-  onDeleteOrderItem(orderItemId) {
+  onDeleteOrderItem(id, orderItemId) {
     if (confirm('Действительно удалить эту позицию?')) {
-      this.orderService.deleteOrderItem(orderItemId).subscribe();
+      this.orderService.deleteOrderItem(id, orderItemId);
     }
   }
 
@@ -153,9 +152,30 @@ export class Orders implements OnDestroy {
     return key === 'status' || key === 'paymentType' ? true : false;
   }
 
-  onSelectStatus(target) {
+  trackByIndex(index: number, value) {
+    return index;
+  }
+
+  onSelect(target) {
+    console.log(typeof target.name);
+    console.log(target.value);
+  }
+
+  onChange(target) {
+    console.log(target);
     console.log(target.name);
     console.log(target.value);
   }
 
+  consoleOrders() {
+    console.log(this.orders);
+  }
+
 }
+
+
+
+
+
+// @TODO IF POSSIBLE
+// rename orderItemId to id

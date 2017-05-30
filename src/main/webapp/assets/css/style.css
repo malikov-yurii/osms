@@ -472,7 +472,7 @@ div.dataTables_wrapper div.dataTables_info {
 }
 /* NEW STYLES */
 .wrapper {
-    max-width: 1000px;
+    max-width: 1140px;
     margin: 0 auto;
 }
 .order {
@@ -544,12 +544,21 @@ div.dataTables_wrapper div.dataTables_info {
 }
 .order-info__block--paymentType {
     flex-basis: 45px;
+    padding: 0 2px;
 }
 .order-info__block--status {
     flex-basis: 52px;
+    padding: 0 2px;
 }
 .order-info__block--comment {
     flex-basis: 15%;
+}
+.order-info__block select {
+    width: 100%;
+    background: none;
+    border: none;
+    border-radius: 2px;
+    height: 23px;
 }
 .order-items {
     margin: 10px 0 5px;
