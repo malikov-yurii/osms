@@ -18,7 +18,7 @@ export class OrderItem {
   id: number = 0;
   orderProductId: number = 0;
   name: string = '';
-  price: number = 0;
-  quantity: number = 1;
+  quantity: string = '1';
+  price: string = '0';
   supplier: string = '';
 }

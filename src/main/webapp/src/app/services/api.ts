@@ -20,7 +20,11 @@ export class ApiService {
   }
 
   private getJson(resp: Response) {
-    return resp.json();
+    try {
+      return resp.json();
+    } catch (err) {
+      return;
+    }
   }
 
   private checkForError(resp: Response) {
@@ -48,7 +52,8 @@ export class ApiService {
         {headers: this.headers}
       )
       .map(this.checkForError)
-      .catch(err => Observable.throw(err));
+      .catch(err => Observable.throw(err))
+      .map(this.getJson);
   }
 
   delete(path: string): Observable<any> {

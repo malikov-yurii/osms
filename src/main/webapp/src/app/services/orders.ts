@@ -49,15 +49,32 @@ export class OrderService {
     this.storeHelper.onGetState();
   }
 
-  updateField(orderId, fieldName, value) {
+  updateOrderInfo(orderId, fieldName, value) {
 
-    let updated = this.storeHelper.findDeepAndUpdate('orders', orderId, fieldName, value);
+    let updated = this.storeHelper.findAndUpdate('orders', orderId, fieldName, value);
     if (updated) {
       fieldName = this.camelCaseToDash(fieldName);
-      return this.api.post(
+      this.api.post(
         `${this.path}/${orderId}/update-${fieldName}`,
         `${fieldName}=${value}`
         ).subscribe();
+    }
+
+  }
+
+  updateOrderItem(orderId, itemId, fieldName, value) {
+
+    let updated = this.storeHelper.findProductAndUpdate('orders', orderId, itemId, fieldName, value);
+    if (updated) {
+      fieldName = this.camelCaseToDash(fieldName);
+      this.api.post(
+        `${this.path}/${itemId}/update-${fieldName}`,
+        `${fieldName}=${value}`
+      ).subscribe(
+        data => {
+          if (data) { this.storeHelper.findAndUpdate('orders', orderId, 'totalSum', data); }
+        }
+      );
     }
 
   }

@@ -20,7 +20,7 @@ export class ContenteditableModel {
    */
   private lastViewModel: string;
 
-  constructor(private elRef: ElementRef) {
+  constructor(private el: ElementRef) {
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -32,12 +32,12 @@ export class ContenteditableModel {
 
   /** This should probably be debounced. */
   onBlur() {
-    var value = this.elRef.nativeElement.innerText;
+    var value = this.el.nativeElement.innerText;
     this.lastViewModel = value;
     this.update.emit(value);
   }
 
   private refreshView() {
-    this.elRef.nativeElement.innerText = this.model
+    this.el.nativeElement.innerText = this.model
   }
 }

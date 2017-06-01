@@ -517,6 +517,7 @@ div.dataTables_wrapper div.dataTables_info {
     font-size: 15px;
     text-align: center;
     box-sizing: border-box;
+    word-break: break-all;
 }
 .order-info__block:last-child {
     border-right: 0;
@@ -566,6 +567,7 @@ div.dataTables_wrapper div.dataTables_info {
     padding: 0 8px;
     box-sizing: border-box;
     line-height: 26px;
+    word-break: break-all;
 }
 .order-item__block--name {
     flex-basis: 82%;

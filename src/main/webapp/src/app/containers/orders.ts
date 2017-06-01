@@ -57,7 +57,7 @@ import { Subscription } from "rxjs/Rx";
           
             <ng-template [ngIf]="!hasInput(key)">
               <div class="order-info__block order-info__block--{{ key }}" contenteditable
-              (blur)="onUpdateField(order.id, key, $event.target.innerText)"
+              (blur)="onUpdateOrderInfo(order.id, key, $event.target.innerText)"
             >
                 {{ order[key] }}
               </div>
@@ -65,7 +65,7 @@ import { Subscription } from "rxjs/Rx";
           
             <ng-template [ngIf]="hasInput(key)">
               <div class="order-info__block order-info__block--{{ key }}">
-                <select name="{{ key }}" (change)="onUpdateField(order.id, key, $event.target.value)">
+                <select name="{{ key }}" (change)="onUpdateOrderInfo(order.id, key, $event.target.value)">
                   <option
                    *ngFor="let keyItem of infoBlocks[key]"
                    [value]="keyItem"
@@ -90,14 +90,21 @@ import { Subscription } from "rxjs/Rx";
             >
             
               <ng-template [ngIf]="!hasInput(key)">
-                <div class="order-item__block order-item__block--{{ key }}" contenteditable>
+                <div class="order-item__block order-item__block--{{ key }}"
+                  contenteditable
+                  withHotkeys
+                  (blur)="onBlurOrderItem(order.id, item.id, key, $event.target.innerText)"
+                  (addItem)="onAddOrderItem(order.id, setFocus)"
+                >
                   {{ item[key] }}
                 </div>  
               </ng-template>
           
               <ng-template [ngIf]="hasInput(key)">
                 <div class="order-item__block order-item__block--{{ key }}">
-                  <input type="number" name="" id="" value="{{ item[key] }}" (change)="onChangeOrderItemQty($event.target.value)">
+                  <input type="number" name="" id="" value="{{ item[key] }}"
+                     (blur)="onBlurOrderItem(order.id, item.id, key, $event.target.value)"
+                  >
                 </div>  
               </ng-template>
                 
@@ -204,8 +211,17 @@ export class Orders implements OnDestroy {
     console.log(this.orders);
   }
 
-  onUpdateField(orderId, fieldName, value) {
-    this.orderService.updateField(orderId, fieldName, value);
+  onUpdateOrderInfo(orderId, fieldName, value) {
+    this.orderService.updateOrderInfo(orderId, fieldName, value);
+  }
+
+  onBlurOrderItem(orderId, itemId, fieldName, value, event) {
+    console.log(event);
+    this.orderService.updateOrderItem(orderId, itemId, fieldName, value);
+  }
+
+  onHello(orderId) {
+    this.orderService.addOrderItem(orderId);
   }
 
 
