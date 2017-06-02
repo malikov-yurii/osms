@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { OrderService } from '../services/index';
 import { Store } from '../store';
-import { Order, OrderItem } from '../models';
+import { Order, Product } from '../models';
 import { Subscription } from "rxjs/Rx";
 
 
@@ -18,15 +18,24 @@ import { Subscription } from "rxjs/Rx";
       <div class="consolestore" style="display: inline-block;" (click)="onGetStore()">Console current state</div>
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
       <div
-        *ngFor="let order of orders; let i = index; trackBy: trackByIndex"
+        *ngFor="let order of orders; let orderIndex = index; trackBy: trackByIndex"
         [ngClass]="getOrderColor(order.status)"
        >
        
         <div class="order-manage">
-          <div title="Add order item" class="order-manage__block order-manage__block--add" (click)="onAddOrderItem(order.id)">
+          <div title="Add product" class="order-manage__block order-manage__block--add" (click)="onAddProduct(order.id)">
             <i class="material-icons">add_box</i>
-            <div class="order-manage__text">Add order item</div>
+            <div class="order-manage__text">Add product</div>
           </div>
           <div title="Edit customer" class="order-manage__block order-manage__block--edit" (click)="onEditCustomer(order.customerId)">
             <i class="material-icons">mode_edit</i>
@@ -43,16 +52,10 @@ import { Subscription } from "rxjs/Rx";
         
         
         
-        
-        
-        
-        
-        
-        
       
         <div class="order-info">
           <ng-container 
-            *ngFor="let key of order | keys:['id', 'customerId', 'orderItemTos', 'date'];"
+            *ngFor="let key of order | keys:['id', 'customerId', 'orderItemTos', 'date']"
           >
           
             <ng-template [ngIf]="!hasInput(key)">
@@ -67,10 +70,10 @@ import { Subscription } from "rxjs/Rx";
               <div class="order-info__block order-info__block--{{ key }}">
                 <select name="{{ key }}" (change)="onUpdateOrderInfo(order.id, key, $event.target.value)">
                   <option
-                   *ngFor="let keyItem of infoBlocks[key]"
-                   [value]="keyItem"
-                   [attr.selected]="keyItem === order[key] ? '' : null"
-                  >{{ keyItem }}</option>
+                   *ngFor="let value of infoBlocks[key]"
+                   [value]="value"
+                   [attr.selected]="value === order[key] ? '' : null"
+                  >{{ value }}</option>
                 </select>
               </div>  
             </ng-template>
@@ -79,38 +82,40 @@ import { Subscription } from "rxjs/Rx";
         </div>
         
         
-        <div class="order-items">
+        <div class="order-products">
           <div
-            *ngFor="let item of order.orderItemTos; let odd = odd, let even = even"
-            [ngClass]="{'order-item': true, odd: odd, even: even}"
+            *ngFor="let product of order.orderItemTos; let odd = odd, let even = even; let productIndex = index;"
+            [ngClass]="{'order-product': true, odd: odd, even: even}"
           >
           
             <ng-container
-              *ngFor="let key of item | keys:['id', 'orderProductId', 'supplier']"
+              *ngFor="let key of product | keys:['id', 'orderProductId', 'supplier']; let keyIndex = index;"
             >
             
               <ng-template [ngIf]="!hasInput(key)">
-                <div class="order-item__block order-item__block--{{ key }}"
+                <div class="order-product__block order-product__block--{{ key }}"
                   contenteditable
                   withHotkeys
-                  (blur)="onBlurOrderItem(order.id, item.id, key, $event.target.innerText)"
-                  (addItem)="onAddOrderItem(order.id, setFocus)"
+                  #productBlock
+                  (blur)="onUpdateProduct(order.id, product.id, key, $event.target.innerText)"
+                  (addProduct)="onAddProduct(order.id)"
+                  (moveFocus)="onMoveFocus(productBlock)"                  
                 >
-                  {{ item[key] }}
+                  {{ product[key] }}
                 </div>  
               </ng-template>
           
               <ng-template [ngIf]="hasInput(key)">
-                <div class="order-item__block order-item__block--{{ key }}">
-                  <input type="number" name="" id="" value="{{ item[key] }}"
-                     (blur)="onBlurOrderItem(order.id, item.id, key, $event.target.value)"
+                <div class="order-product__block order-product__block--{{ key }}">
+                  <input type="number" value="{{ product[key] }}"
+                     (blur)="onUpdateProduct(order.id, product.id, key, $event.target.value)"
                   >
                 </div>  
               </ng-template>
                 
             </ng-container>
 
-            <div class="order-item__block order-item__block--delete" (click)="onDeleteOrderItem(order.id, item.id)">
+            <div class="order-product__block order-product__block--delete" (click)="onDeleteProduct(order.id, product.id)">
               <i class="material-icons">delete</i>            
             </div>
             
@@ -119,7 +124,10 @@ import { Subscription } from "rxjs/Rx";
         
       </div>    
     </div>
-  `
+  `,
+  host: {
+  '(document:keydown)': 'onDocKeydown($event)'
+  }
 })
 
 export class Orders implements OnDestroy {
@@ -162,27 +170,54 @@ export class Orders implements OnDestroy {
     this.orderService.getAllOrders().subscribe(resp => console.log(resp.data));
   }
 
-  getOrderColor(orderStatus) {
-    let status = `order--${orderStatus.toLowerCase()}`;
-    return {
-      'order': true,
-      [status]: true
-    };
+  onAddProduct(orderId) {
+    this.orderService.addProduct(orderId);
   }
 
-  onAddOrderItem(orderId) {
-    this.orderService.addOrderItem(orderId);
-  }
-
-  onDeleteOrderItem(id, orderItemId) {
+  onDeleteProduct(id, productId) {
     if (confirm('Действительно удалить эту позицию?')) {
-      this.orderService.deleteOrderItem(id, orderItemId);
+      this.orderService.deleteProduct(id, productId);
     }
   }
 
   onGetStore() {
     this.orderService.getStore();
   }
+
+  onUpdateOrderInfo(orderId, fieldName, value) {
+    this.orderService.updateOrderInfo(orderId, fieldName, value);
+  }
+
+  onUpdateProduct(orderId, productId, fieldName, value) {
+    this.orderService.updateProduct(orderId, productId, fieldName, value);
+  }
+
+  onSaveOrders() {
+
+  }
+
+
+
+
+
+
+
+  onMoveFocus(el) {
+    var index = Array.from(el.parentNode.children).indexOf(el);
+    el.parentNode.nextSibling.children[index].focus();
+  }
+
+
+  consoleOrders() {
+    console.log(new Product());
+  }
+
+
+
+
+
+
+
 
   hasInput(key) {
     return key === 'status' || key === 'paymentType' || key === 'quantity' ? true : false;
@@ -192,36 +227,22 @@ export class Orders implements OnDestroy {
     return index;
   }
 
-  onSelect(target) {
-    console.log(typeof target.name);
-    console.log(target.value);
+  getOrderColor(orderStatus) {
+    let status = `order--${orderStatus.toLowerCase()}`;
+    return {
+      'order': true,
+      [status]: true
+    };
   }
 
-  onChangeOrderInfo(target) {
-    console.log(target);
-    console.log(target.name);
-    console.log(target.value);
-  }
-
-  onChangeOrderItemQty(value) {
-    console.log(value);
-  }
-
-  consoleOrders() {
-    console.log(this.orders);
-  }
-
-  onUpdateOrderInfo(orderId, fieldName, value) {
-    this.orderService.updateOrderInfo(orderId, fieldName, value);
-  }
-
-  onBlurOrderItem(orderId, itemId, fieldName, value, event) {
-    console.log(event);
-    this.orderService.updateOrderItem(orderId, itemId, fieldName, value);
-  }
-
-  onHello(orderId) {
-    this.orderService.addOrderItem(orderId);
+  onDocKeydown(e) {
+    if (e.ctrlKey && e.code === 'KeyS') {
+      this.onSaveOrders();
+      return false;
+    } else if (e.ctrlKey && e.code === 'KeyB') {
+      this.onAddOrder();
+      return false;
+    }
   }
 
 

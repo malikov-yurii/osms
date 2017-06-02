@@ -506,7 +506,7 @@ div.dataTables_wrapper div.dataTables_info {
     justify-content: space-between;
     align-items: center;
 }
-.order-item {
+.order-product {
     display: flex;
     justify-content: space-between;
 }
@@ -558,45 +558,45 @@ div.dataTables_wrapper div.dataTables_info {
     border-radius: 2px;
     height: 23px;
 }
-.order-items {
+.order-products {
     margin: 10px 0 5px;
     padding: 10px 0 0;
     border-top: 1px solid rgba(0, 188, 212, 0.49);
 }
-.order-item__block {
+.order-product__block {
     padding: 0 8px;
     box-sizing: border-box;
     line-height: 26px;
     word-break: break-all;
 }
-.order-item__block--name {
+.order-product__block--name {
     flex-basis: 82%;
 }
-.order-item__block--quantity {
+.order-product__block--quantity {
     width: 9%;
     text-align: center;
     border-left: 1px solid rgba(0, 188, 212, 0.49);
     border-right: 1px solid rgba(0, 188, 212, 0.49);
 }
-.order-item__block--quantity input {
+.order-product__block--quantity input {
     max-width: 30px;
     height: 23px;
     padding-left: 9px;
     background: none;
     border: none;
 }
-.order-item__block--price {
+.order-product__block--price {
     flex-basis: 9%;
     text-align: center;
 }
 
-.order-item__block--delete {
+.order-product__block--delete {
     line-height: 1;
 }
-.order-item.odd {
+.order-product.odd {
     background: rgba(0, 188, 212, 0.05);
 }
-.order-item:hover {
+.order-product:hover {
     background: rgba(0, 188, 212, 0.15);
 }
 .order-manage {

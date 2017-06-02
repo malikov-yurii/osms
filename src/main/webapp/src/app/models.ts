@@ -1,5 +1,8 @@
+let orderCounter: number = 0;
 export class Order {
-  id: number = 0;
+  static count: number = 0;
+
+  id: any = `0-${Order.count++}`;
   customerId: number = 0;
   firstName: string = '';
   lastName: string = '';
@@ -11,11 +14,13 @@ export class Order {
   date: string = '';
   status: string = 'SHP';
   comment: string = '';
-  orderItemTos: OrderItem[] = [new OrderItem()];
+  orderItemTos: Product[] = [new Product()];
 }
 
-export class OrderItem {
-  id: number = 0;
+export class Product {
+  static count: number = 0;
+
+  id: any = `0-${Product.count++}`;
   orderProductId: number = 0;
   name: string = '';
   quantity: string = '1';

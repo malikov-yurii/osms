@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api';
 import { StoreHelper } from './store-helper';
-import { Order, OrderItem } from '../models';
+import { Order, Product } from '../models';
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/do';
 
@@ -33,16 +33,16 @@ export class OrderService {
       .do(() => this.storeHelper.findAndDelete('orders', orderId));
   }
 
-  addOrderItem(orderId) {
-    return this.storeHelper.findAndAddProduct('orders', orderId, new OrderItem());
+  addProduct(orderId) {
+    return this.storeHelper.findAndAddProduct('orders', orderId, new Product());
     // return this.api.post(`${this.path}/${orderId}/add-order-item`)
       // .do(() => this.getOrders().subscribe());
   }
 
-  deleteOrderItem(id, itemId) {
-    return this.storeHelper.findProductAndDelete('orders', id, itemId);
-    // return this.api.delete(`${this.path}/order-item/${itemId}`)
-    //   .do(() => this.storeHelper.findAndDelete('orders', itemId));
+  deleteProduct(orderId, productId) {
+    return this.storeHelper.findProductAndDelete('orders', orderId, productId);
+    // return this.api.delete(`${this.path}/order-item/${productId}`)
+    //   .do(() => this.storeHelper.findAndDelete('orders', productId));
   }
 
   getStore() {
@@ -53,28 +53,36 @@ export class OrderService {
 
     let updated = this.storeHelper.findAndUpdate('orders', orderId, fieldName, value);
     if (updated) {
-      fieldName = this.camelCaseToDash(fieldName);
-      this.api.post(
-        `${this.path}/${orderId}/update-${fieldName}`,
-        `${fieldName}=${value}`
+
+      if (parseInt(orderId, 10)) {
+        fieldName = this.camelCaseToDash(fieldName);
+        this.api.post(
+          `${this.path}/${orderId}/update-${fieldName}`,
+          `${fieldName}=${value}`
         ).subscribe();
+      }
+
     }
 
   }
 
-  updateOrderItem(orderId, itemId, fieldName, value) {
+  updateProduct(orderId, productId, fieldName, value) {
 
-    let updated = this.storeHelper.findProductAndUpdate('orders', orderId, itemId, fieldName, value);
+    let updated = this.storeHelper.findProductAndUpdate('orders', orderId, productId, fieldName, value);
     if (updated) {
-      fieldName = this.camelCaseToDash(fieldName);
-      this.api.post(
-        `${this.path}/${itemId}/update-${fieldName}`,
-        `${fieldName}=${value}`
-      ).subscribe(
-        data => {
-          if (data) { this.storeHelper.findAndUpdate('orders', orderId, 'totalSum', data); }
-        }
-      );
+
+      if (parseInt(orderId, 10)) {
+        fieldName = this.camelCaseToDash(fieldName);
+        this.api.post(
+          `${this.path}/${productId}/update-${fieldName}`,
+          `${fieldName}=${value}`
+        ).subscribe(
+          data => {
+            if (data) { this.storeHelper.findAndUpdate('orders', orderId, 'totalSum', data); }
+          }
+        );
+      }
+
     }
 
   }

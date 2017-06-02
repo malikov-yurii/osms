@@ -1,25 +1,33 @@
-import { Directive, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Directive, ElementRef, Output, EventEmitter } from '@angular/core';
 
 @Directive({
   selector: '[withHotkeys]',
   host: {
-    '(keyup)': 'onKeyup($event)'
+    '(keypress)': 'onKeypress($event)'
   }
 })
 export class hotkeysDirective {
 
-  @Input('withHotkeys') orderId: number;
-  @Output('addItem') addItem = new EventEmitter();
+  @Output('addProduct') addProduct = new EventEmitter();
+  @Output('moveFocus') moveFocus = new EventEmitter();
 
   constructor (private el: ElementRef) {}
 
 
-  onKeyup(e) {
+  onKeypress(e) {
     if (e.ctrlKey && e.code === 'Enter') {
-      this.addItem.emit();
+      this.addProduct.emit();
+      return false;
+    } else if (e.shiftKey && e.code === 'Enter') {
+      this.moveFocus.emit();
+      return false;
+    } else if (e.code === 'Enter') {
+      this.el.nativeElement.blur();
       return false;
     }
   }
+
+
 
 
 }
