@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { OrderService } from '../services/index';
+import { OrderService, SearchService } from '../services/index';
 import { Store } from '../store';
 import { Order, Product } from '../models';
 import { Subscription } from "rxjs/Rx";
@@ -8,6 +8,8 @@ import { Subscription } from "rxjs/Rx";
 @Component({
   template: `
     <div class="wrapper">
+    
+    <input type="text" name="" id="" [(ngModel)]="searchQuery" (input)="setFilteredOrders()">
     
       <div class="add-order" style="display: inline-block;" (click)="onAddOrder()">Add New Order</div>
     
@@ -59,7 +61,10 @@ import { Subscription } from "rxjs/Rx";
           >
           
             <ng-template [ngIf]="!hasInput(key)">
-              <div class="order-info__block order-info__block--{{ key }}" contenteditable
+              <div class="order-info__block order-info__block--{{ key }}"
+              contenteditable
+              withHotkeys
+              (addProduct)="onAddProduct(order.id)"
               (blur)="onUpdateOrderInfo(order.id, key, $event.target.innerText)"
             >
                 {{ order[key] }}
@@ -97,9 +102,9 @@ import { Subscription } from "rxjs/Rx";
                   contenteditable
                   withHotkeys
                   #productBlock
-                  (blur)="onUpdateProduct(order.id, product.id, key, $event.target.innerText)"
-                  (addProduct)="onAddProduct(order.id)"
                   (moveFocus)="onMoveFocus(productBlock)"                  
+                  (addProduct)="onAddProduct(order.id)"
+                  (blur)="onUpdateProduct(order.id, product.id, key, $event.target.innerText)"
                 >
                   {{ product[key] }}
                 </div>  
@@ -126,7 +131,7 @@ import { Subscription } from "rxjs/Rx";
     </div>
   `,
   host: {
-  '(document:keydown)': 'onDocKeydown($event)'
+    '(document:keydown)': 'onDocKeydown($event)'
   }
 })
 
@@ -137,23 +142,27 @@ export class Orders implements OnDestroy {
     status: ['SHP', 'WFP', 'OK', 'NEW', 'NOT'],
     paymentType: ['PB', 'SV', 'NP']
   };
+  searchQuery: any = '';
 
 
   constructor(
     private orderService: OrderService,
-    private store: Store
+    private store: Store,
+    private searchService: SearchService
   ) {
-    this.orderService.getOrders().subscribe();
+    this.orderService.getOrders().subscribe(resp => this.orders = resp.data);
 
-    this.subscription = this.store.changes
-      .map(resp => resp.orders)
-      .subscribe(resp => this.orders = resp);
+    // this.subscription = this.store.changes
+    //   .map(resp => resp.orders)
+    //   .subscribe(resp => this.orders = resp);
+
+    // this.orders = this.orderService.orders;
+    // this.setFilteredOrders();
+
 
   }
 
   ngOnDestroy() {
-    console.log('destroyed');
-    this.subscription.unsubscribe();
   }
 
   onAddOrder() {
@@ -196,6 +205,9 @@ export class Orders implements OnDestroy {
 
   }
 
+  setFilteredOrders() {
+    this.orders = this.orderService.search(this.searchQuery);
+  }
 
 
 
@@ -209,7 +221,7 @@ export class Orders implements OnDestroy {
 
 
   consoleOrders() {
-    console.log(new Product());
+    console.log(this.orders);
   }
 
 
@@ -224,6 +236,7 @@ export class Orders implements OnDestroy {
   }
 
   trackByIndex(index: number, value) {
+    // console.log(index);
     return index;
   }
 

@@ -6,7 +6,7 @@ import { Directive, ElementRef, Output, EventEmitter } from '@angular/core';
     '(keypress)': 'onKeypress($event)'
   }
 })
-export class hotkeysDirective {
+export class HotkeysDirective {
 
   @Output('addProduct') addProduct = new EventEmitter();
   @Output('moveFocus') moveFocus = new EventEmitter();

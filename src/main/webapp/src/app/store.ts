@@ -1,22 +1,9 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/distinctUntilChanged'
+import 'rxjs/add/operator/distinctUntilChanged';
 
-export interface Order {
-  id: number,
-  customerId: number,
-  firstName: string,
-  lastName: string,
-  phoneNumber: string,
-  city: string,
-  postOffice: string,
-  totalSum: number,
-  paymentType: string,
-  date: string,
-  status: string,
-  comment: string,
-  orderItemTos: any
-}
+import { Order } from './models';
+
 
 export interface State {
   orders: Order[]
@@ -24,7 +11,7 @@ export interface State {
 
 const defaultState: State = {
   orders: []
-}
+};
 
 const _store = new BehaviorSubject<State>(defaultState);
 

@@ -3,6 +3,10 @@ import { Store } from '../store';
 @Injectable()
 export class StoreHelper {
   constructor(private store: Store) {}
+  get(prop) {
+    const currentState = this.store.getState();
+    return currentState[prop];
+  }
   update(prop, state) {
     const currentState = this.store.getState();
     this.store.setState(Object.assign({}, currentState, { [prop]: state }));

@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api';
-import { StoreHelper } from './store-helper';
-import { Order, Product } from '../models';
 import { Observable } from "rxjs/Observable";
+import { Subscription } from 'rxjs/Rx';
 import 'rxjs/add/operator/do';
+
+import { ApiService} from './api';
+import { SearchService } from './search';
+import { StoreHelper } from './store-helper';
+import { Store } from '../store';
+import { Order, Product } from '../models';
 
 
 @Injectable()
@@ -12,7 +16,9 @@ export class OrderService {
 
   constructor(
     private api: ApiService,
-    private storeHelper: StoreHelper
+    private storeHelper: StoreHelper,
+    private store: Store,
+    private searchService: SearchService
   ) {}
 
   getOrders(): Observable<any> {
@@ -36,7 +42,7 @@ export class OrderService {
   addProduct(orderId) {
     return this.storeHelper.findAndAddProduct('orders', orderId, new Product());
     // return this.api.post(`${this.path}/${orderId}/add-order-item`)
-      // .do(() => this.getOrders().subscribe());
+    // .do(() => this.getOrders().subscribe());
   }
 
   deleteProduct(orderId, productId) {
@@ -86,6 +92,12 @@ export class OrderService {
     }
 
   }
+
+  search(searchQuery) {
+    return this.searchService.search(this.storeHelper.get('orders'), searchQuery);
+  }
+
+
 
 
   private camelCaseToDash(str) {
