@@ -152,17 +152,16 @@ export class Orders implements OnDestroy {
   ) {
     this.orderService.getOrders().subscribe(resp => this.orders = resp.data);
 
+    // @NOT NEEDED ??
     // this.subscription = this.store.changes
     //   .map(resp => resp.orders)
     //   .subscribe(resp => this.orders = resp);
-
-    // this.orders = this.orderService.orders;
-    // this.setFilteredOrders();
 
 
   }
 
   ngOnDestroy() {
+
   }
 
   onAddOrder() {
