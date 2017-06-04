@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs/Observable";
-import { Subscription } from 'rxjs/Rx';
 import 'rxjs/add/operator/do';
 
 import { ApiService} from './api';
-import { SearchService } from './search';
 import { StoreHelper } from './store-helper';
-import { Store } from '../store';
 import { Order, Product } from '../models';
 
 
@@ -16,9 +13,7 @@ export class OrderService {
 
   constructor(
     private api: ApiService,
-    private storeHelper: StoreHelper,
-    private store: Store,
-    private searchService: SearchService
+    private storeHelper: StoreHelper
   ) {}
 
   getOrders(): Observable<any> {
@@ -91,10 +86,6 @@ export class OrderService {
 
     }
 
-  }
-
-  search(searchQuery) {
-    return this.searchService.search(this.storeHelper.get('orders'), searchQuery);
   }
 
 

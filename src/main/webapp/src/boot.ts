@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { FormsModule } from '@angular/forms';
-import { App, providers, routes, KeysPipe } from './app/index';
+import { App, providers, routes, KeysPipe, SearchPipe } from './app/index';
 import { Orders, Products } from './app/containers/index';
 import { Header, Order } from './app/ui/index';
 import { HotkeysDirective } from './app/directives/index';
@@ -16,6 +16,7 @@ import { HotkeysDirective } from './app/directives/index';
     Products,
     Order,
     KeysPipe,
+    SearchPipe,
     HotkeysDirective
   ],
   providers,

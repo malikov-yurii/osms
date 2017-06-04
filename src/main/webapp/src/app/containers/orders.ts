@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { OrderService, SearchService } from '../services/index';
+import { OrderService } from '../services/index';
 import { Store } from '../store';
 import { Order, Product } from '../models';
 import { Subscription } from "rxjs/Rx";
@@ -9,7 +9,7 @@ import { Subscription } from "rxjs/Rx";
   template: `
     <div class="wrapper">
     
-    <input type="text" name="" id="" [(ngModel)]="searchQuery" (input)="setFilteredOrders()">
+    <input type="text" name="" id="" [(ngModel)]="searchQuery">
     
       <div class="add-order" style="display: inline-block;" (click)="onAddOrder()">Add New Order</div>
     
@@ -30,7 +30,7 @@ import { Subscription } from "rxjs/Rx";
     
     
       <div
-        *ngFor="let order of orders; let orderIndex = index; trackBy: trackByIndex"
+        *ngFor="let order of orders | search: searchQuery; trackBy: trackById"
         [ngClass]="getOrderColor(order.status)"
        >
        
@@ -89,12 +89,12 @@ import { Subscription } from "rxjs/Rx";
         
         <div class="order-products">
           <div
-            *ngFor="let product of order.orderItemTos; let odd = odd, let even = even; let productIndex = index;"
+            *ngFor="let product of order.orderItemTos; let odd = odd, let even = even;"
             [ngClass]="{'order-product': true, odd: odd, even: even}"
           >
           
             <ng-container
-              *ngFor="let key of product | keys:['id', 'orderProductId', 'supplier']; let keyIndex = index;"
+              *ngFor="let key of product | keys:['id', 'orderProductId', 'supplier'];"
             >
             
               <ng-template [ngIf]="!hasInput(key)">
@@ -147,21 +147,20 @@ export class Orders implements OnDestroy {
 
   constructor(
     private orderService: OrderService,
-    private store: Store,
-    private searchService: SearchService
+    private store: Store
   ) {
-    this.orderService.getOrders().subscribe(resp => this.orders = resp.data);
+    this.orderService.getOrders().subscribe();
 
     // @NOT NEEDED ??
-    // this.subscription = this.store.changes
-    //   .map(resp => resp.orders)
-    //   .subscribe(resp => this.orders = resp);
+    this.subscription = this.store.changes
+      .map(resp => resp.orders)
+      .subscribe(resp => this.orders = resp);
 
 
   }
 
   ngOnDestroy() {
-
+    this.subscription.unsubscribe();
   }
 
   onAddOrder() {
@@ -234,9 +233,8 @@ export class Orders implements OnDestroy {
     return key === 'status' || key === 'paymentType' || key === 'quantity' ? true : false;
   }
 
-  trackByIndex(index: number, value) {
-    // console.log(index);
-    return index;
+  trackById(index: number, value) {
+    return value.id;
   }
 
   getOrderColor(orderStatus) {
