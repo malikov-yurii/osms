@@ -30,7 +30,7 @@ import { Subscription } from "rxjs/Rx";
     
     
       <div
-        *ngFor="let order of orders | search: searchQuery; trackBy: trackById"
+        *ngFor="let order of orders | search: searchQuery"
         [ngClass]="getOrderColor(order.status)"
        >
        
@@ -64,8 +64,10 @@ import { Subscription } from "rxjs/Rx";
               <div class="order-info__block order-info__block--{{ key }}"
               contenteditable
               withHotkeys
+              #infoBlock
               (addProduct)="onAddProduct(order.id)"
               (blur)="onUpdateOrderInfo(order.id, key, $event.target.innerText)"
+              (moveFocus)="onMoveFocus(infoBlock, true)"
             >
                 {{ order[key] }}
               </div>
@@ -169,7 +171,7 @@ export class Orders implements OnDestroy {
 
   onDeleteOrder(orderId) {
     if (confirm('Действительно удалить этот заказ?')) {
-      this.orderService.deleteOrder(orderId).subscribe();
+      this.orderService.deleteOrder(orderId);
     }
   }
 
@@ -203,18 +205,21 @@ export class Orders implements OnDestroy {
 
   }
 
-  setFilteredOrders() {
-    this.orders = this.orderService.search(this.searchQuery);
-  }
 
 
 
 
+  onMoveFocus(el, fromInfoBlock) {
+    let parentNextSibling = el.parentNode.nextElementSibling;
+    if (parentNextSibling) {
+      if (fromInfoBlock) {
+        el.parentNode.nextElementSibling.children[0].children[0].focus();
+      } else {
+        let index = Array.from(el.parentNode.children).indexOf(el);
+        parentNextSibling.children[index].focus();
+      }
+    }
 
-
-  onMoveFocus(el) {
-    var index = Array.from(el.parentNode.children).indexOf(el);
-    el.parentNode.nextSibling.children[index].focus();
   }
 
 

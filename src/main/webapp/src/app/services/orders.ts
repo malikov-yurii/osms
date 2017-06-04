@@ -29,9 +29,10 @@ export class OrderService {
     return this.storeHelper.add('orders', new Order());
   }
 
-  deleteOrder(orderId): Observable<any> {
-    return this.api.delete(`${this.path}/${orderId}`)
-      .do(() => this.storeHelper.findAndDelete('orders', orderId));
+  deleteOrder(orderId) {
+    return this.storeHelper.findAndDelete('orders', orderId);
+    // return this.api.delete(`${this.path}/${orderId}`)
+    //   .do(() => this.storeHelper.findAndDelete('orders', orderId));
   }
 
   addProduct(orderId) {
