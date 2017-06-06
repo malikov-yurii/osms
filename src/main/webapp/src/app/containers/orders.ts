@@ -1,15 +1,17 @@
 import { Component, OnDestroy } from '@angular/core';
+import { FormsModule, FormControl } from '@angular/forms';
 import { OrderService } from '../services/index';
 import { Store } from '../store';
 import { Order, Product } from '../models';
 import { Subscription } from "rxjs/Rx";
+import 'rxjs/add/operator/debounceTime';
 
 
 @Component({
   template: `
     <div class="wrapper">
     
-    <input type="text" name="" id="" [(ngModel)]="searchQuery">
+    <input type="text" name="" id="" [(ngModel)]="searchQuery" [formControl]="searchControl">
     
       <div class="add-order" style="display: inline-block;" (click)="onAddOrder()">Add New Order</div>
     
@@ -30,9 +32,9 @@ import { Subscription } from "rxjs/Rx";
     
     
       <div
-        *ngFor="let order of orders | search: searchQuery"
+        *ngFor="let order of orders"
         [ngClass]="getOrderColor(order.status)"
-       >
+       > <!-- | search: searchQuery-->
        
         <div class="order-manage">
           <div title="Add product" class="order-manage__block order-manage__block--add" (click)="onAddProduct(order.id)">
@@ -144,6 +146,7 @@ export class Orders implements OnDestroy {
     status: ['SHP', 'WFP', 'OK', 'NEW', 'NOT'],
     paymentType: ['PB', 'SV', 'NP']
   };
+  searchControl: FormControl;
   searchQuery: any = '';
 
 
@@ -153,10 +156,18 @@ export class Orders implements OnDestroy {
   ) {
     this.orderService.getOrders().subscribe();
 
-    // @NOT NEEDED ??
+
     this.subscription = this.store.changes
       .map(resp => resp.orders)
-      .subscribe(resp => this.orders = resp);
+      .subscribe(resp => {
+        // this.orders = resp;
+        return this.setFilteredItems();
+      });
+
+    this.searchControl = new FormControl();
+    this.searchControl.valueChanges.debounceTime(0).subscribe(search => {
+      this.setFilteredItems();
+    })
 
 
   }
@@ -165,8 +176,14 @@ export class Orders implements OnDestroy {
     this.subscription.unsubscribe();
   }
 
+
+  // Manage orders
   onAddOrder() {
     this.orderService.addOrder();
+  }
+
+  onSaveOrders() {
+
   }
 
   onDeleteOrder(orderId) {
@@ -175,12 +192,22 @@ export class Orders implements OnDestroy {
     }
   }
 
-  onGetAllOrders() {
-    this.orderService.getAllOrders().subscribe(resp => console.log(resp.data));
+
+
+  // Manage order info
+  onUpdateOrderInfo(orderId, fieldName, value) {
+    this.orderService.updateOrderInfo(orderId, fieldName, value);
   }
 
+
+
+  // Manage products
   onAddProduct(orderId) {
     this.orderService.addProduct(orderId);
+  }
+
+  onUpdateProduct(orderId, productId, fieldName, value) {
+    this.orderService.updateProduct(orderId, productId, fieldName, value);
   }
 
   onDeleteProduct(id, productId) {
@@ -189,47 +216,38 @@ export class Orders implements OnDestroy {
     }
   }
 
+
+
+
+
+  setFilteredItems() {
+    this.orders = this.orderService.search(this.searchQuery);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  onGetAllOrders() {
+    this.orderService.getAllOrders().subscribe(resp => console.log(resp.data));
+  }
+
   onGetStore() {
     this.orderService.getStore();
   }
 
-  onUpdateOrderInfo(orderId, fieldName, value) {
-    this.orderService.updateOrderInfo(orderId, fieldName, value);
-  }
-
-  onUpdateProduct(orderId, productId, fieldName, value) {
-    this.orderService.updateProduct(orderId, productId, fieldName, value);
-  }
-
-  onSaveOrders() {
-
-  }
-
-
-
-
-
-  onMoveFocus(el, fromInfoBlock) {
-    let parentNextSibling = el.parentNode.nextElementSibling;
-    if (parentNextSibling) {
-      if (fromInfoBlock) {
-        el.parentNode.nextElementSibling.children[0].children[0].focus();
-      } else {
-        let index = Array.from(el.parentNode.children).indexOf(el);
-        parentNextSibling.children[index].focus();
-      }
-    }
-
-  }
-
-
   consoleOrders() {
     console.log(this.orders);
   }
-
-
-
-
 
 
 
@@ -248,6 +266,19 @@ export class Orders implements OnDestroy {
       'order': true,
       [status]: true
     };
+  }
+
+  onMoveFocus(el, fromInfoBlock) {
+    let parentNextSibling = el.parentNode.nextElementSibling;
+    if (parentNextSibling) {
+      if (fromInfoBlock) {
+        el.parentNode.nextElementSibling.children[0].children[0].focus();
+      } else {
+        let index = Array.from(el.parentNode.children).indexOf(el);
+        parentNextSibling.children[index].focus();
+      }
+    }
+
   }
 
   onDocKeydown(e) {

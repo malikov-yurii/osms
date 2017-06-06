@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { App, providers, routes, KeysPipe, SearchPipe } from './app/index';
 import { Orders, Products } from './app/containers/index';
 import { Header, Order } from './app/ui/index';
@@ -20,7 +20,7 @@ import { HotkeysDirective } from './app/directives/index';
     HotkeysDirective
   ],
   providers,
-  imports: [BrowserModule, HttpModule, FormsModule, routes],
+  imports: [BrowserModule, HttpModule, FormsModule, ReactiveFormsModule, routes],
   bootstrap: [App]
 })
 

@@ -4,47 +4,49 @@ import 'rxjs/add/operator/do';
 
 import { ApiService} from './api';
 import { StoreHelper } from './store-helper';
+import { SearchService } from './search';
 import { Order, Product } from '../models';
 
 
 @Injectable()
 export class OrderService {
-  path: string = 'orders';
+  ordersPath: string = 'orders';
 
   constructor(
     private api: ApiService,
-    private storeHelper: StoreHelper
+    private storeHelper: StoreHelper,
+    private searchService: SearchService
   ) {}
 
   getOrders(): Observable<any> {
-    return this.api.get(`${this.path}?start=0&length=10`)
-      .do(resp => this.storeHelper.update('orders', resp.data));
+    return this.api.get(`${this.ordersPath}?start=0&length=10`)
+      .do(resp => this.storeHelper.update(this.ordersPath, resp.data));
   }
 
   getAllOrders(): Observable<any> {
-    return this.api.get(`${this.path}?start=0&length=10000`);
+    return this.api.get(`${this.ordersPath}?start=0&length=10000`);
   }
 
   addOrder() {
-    return this.storeHelper.add('orders', new Order());
+    return this.storeHelper.add(this.ordersPath, new Order());
   }
 
   deleteOrder(orderId) {
-    return this.storeHelper.findAndDelete('orders', orderId);
-    // return this.api.delete(`${this.path}/${orderId}`)
-    //   .do(() => this.storeHelper.findAndDelete('orders', orderId));
+    return this.storeHelper.findAndDelete(this.ordersPath, orderId);
+    // return this.api.delete(`${this.ordersPath}/${orderId}`)
+    //   .do(() => this.storeHelper.findAndDelete(this.ordersPath, orderId));
   }
 
   addProduct(orderId) {
-    return this.storeHelper.findAndAddProduct('orders', orderId, new Product());
-    // return this.api.post(`${this.path}/${orderId}/add-order-item`)
+    return this.storeHelper.findAndAddProduct(this.ordersPath, orderId, new Product());
+    // return this.api.post(`${this.ordersPath}/${orderId}/add-order-item`)
     // .do(() => this.getOrders().subscribe());
   }
 
   deleteProduct(orderId, productId) {
-    return this.storeHelper.findProductAndDelete('orders', orderId, productId);
-    // return this.api.delete(`${this.path}/order-item/${productId}`)
-    //   .do(() => this.storeHelper.findAndDelete('orders', productId));
+    return this.storeHelper.findProductAndDelete(this.ordersPath, orderId, productId);
+    // return this.api.delete(`${this.ordersPath}/order-item/${productId}`)
+    //   .do(() => this.storeHelper.findAndDelete(this.ordersPath, productId));
   }
 
   getStore() {
@@ -53,42 +55,43 @@ export class OrderService {
 
   updateOrderInfo(orderId, fieldName, value) {
 
-    let updated = this.storeHelper.findAndUpdate('orders', orderId, fieldName, value);
+    let updated = this.storeHelper.findAndUpdate(this.ordersPath, orderId, fieldName, value);
     if (updated) {
 
       if (parseInt(orderId, 10)) {
         fieldName = this.camelCaseToDash(fieldName);
         this.api.post(
-          `${this.path}/${orderId}/update-${fieldName}`,
+          `${this.ordersPath}/${orderId}/update-${fieldName}`,
           `${fieldName}=${value}`
         ).subscribe();
       }
 
     }
-
   }
 
   updateProduct(orderId, productId, fieldName, value) {
 
-    let updated = this.storeHelper.findProductAndUpdate('orders', orderId, productId, fieldName, value);
+    let updated = this.storeHelper.findProductAndUpdate(this.ordersPath, orderId, productId, fieldName, value);
     if (updated) {
 
       if (parseInt(orderId, 10)) {
         fieldName = this.camelCaseToDash(fieldName);
         this.api.post(
-          `${this.path}/${productId}/update-${fieldName}`,
+          `${this.ordersPath}/${productId}/update-${fieldName}`,
           `${fieldName}=${value}`
         ).subscribe(
           data => {
-            if (data) { this.storeHelper.findAndUpdate('orders', orderId, 'totalSum', data); }
+            if (data) { this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'totalSum', data); }
           }
         );
       }
 
     }
-
   }
 
+  search(searchQuery) {
+    return this.searchService.search(this.storeHelper.get(this.ordersPath), searchQuery);
+  }
 
 
 
