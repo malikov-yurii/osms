@@ -15,9 +15,5 @@
 <link rel="shortcut icon" href="assets/images/icon-main.png">
 
 <link rel="stylesheet" href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css">
-<link rel="stylesheet" href="webjars/datatables/1.10.12/css/dataTables.bootstrap.min.css">
-<%--todo Do I already have it in dependencies?--%>
-<link rel="stylesheet"   href="webjars/jquery-ui/1.11.4/jquery-ui.css" >
-<link rel="stylesheet" href="webjars/datetimepicker/2.4.7/jquery.datetimepicker.css">
 
 <link rel="stylesheet" href="assets/css/style.css">

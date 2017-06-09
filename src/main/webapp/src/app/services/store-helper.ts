@@ -7,14 +7,19 @@ export class StoreHelper {
     const currentState = this.store.getState();
     return currentState[prop];
   }
-  update(prop, state) {
-    const currentState = this.store.getState();
-    this.store.setState(Object.assign({}, currentState, { [prop]: state }));
-  }
   add(prop, state) {
     const currentState = this.store.getState();
     const collection = currentState[prop];
     this.store.setState(Object.assign({}, currentState, { [prop]: [state, ...collection] }));
+  }
+  addArrayLast(prop, state: [any]) {
+    const currentState = this.store.getState();
+    const collection = currentState[prop];
+    this.store.setState(Object.assign({}, currentState, { [prop]: [...collection, ...state] }));
+  }
+  update(prop, state) {
+    const currentState = this.store.getState();
+    this.store.setState(Object.assign({}, currentState, { [prop]: state }));
   }
   findAndUpdate(prop, id, fieldName, value): boolean {
     let updated = false;
@@ -44,30 +49,30 @@ export class StoreHelper {
       return item;
     })}));
   }
-  findProductAndUpdate(prop, orderId, productId, fieldName, value): boolean {
+  findDeepAndUpdate(prop, id, deepPropKey, deepId, fieldName, value): boolean {
     let updated = false;
     const currentState = this.store.getState();
     const collection = currentState[prop];
     this.store.setState(Object.assign({}, currentState, {[prop]: collection.map(item => {
-      if (item.id === orderId) {
-        item.orderItemTos.map(product => {
-          if (product.id === productId && product[fieldName] != value) {
-            product[fieldName] = value;
+      if (item.id === id) {
+        item[deepPropKey].map(deepItem => {
+          if (deepItem.id === deepId && deepItem[fieldName] != value) {
+            deepItem[fieldName] = value;
             updated = true;
           }
-          return product;
+          return deepItem;
         });
       }
       return item;
     })}));
     return updated;
   }
-  findProductAndDelete(prop, id, productId) {
+  findDeepAndDeleteById(prop, id, deepPropKey, deepId) {
     const currentState = this.store.getState();
     const collection = currentState[prop];
     this.store.setState(Object.assign({}, currentState, {[prop]: collection.map(item => {
       if (item.id === id) {
-        item.orderItemTos = item.orderItemTos.filter(product => product.id !== productId);
+        item[deepPropKey] = item[deepPropKey].filter(deepItem => deepItem.id !== deepId);
       }
       return item;
     })}));

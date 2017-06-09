@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/observable/of';
 
 import { ApiService} from './api';
 import { StoreHelper } from './store-helper';
@@ -11,6 +13,7 @@ import { Order, Product } from '../models';
 @Injectable()
 export class OrderService {
   ordersPath: string = 'orders';
+  productsPath: string = 'orderItemTos';
 
   constructor(
     private api: ApiService,
@@ -18,9 +21,18 @@ export class OrderService {
     private searchService: SearchService
   ) {}
 
-  getOrders(): Observable<any> {
-    return this.api.get(`${this.ordersPath}?start=0&length=10`)
-      .do(resp => this.storeHelper.update(this.ordersPath, resp.data));
+  getOrders(start: number, length: number): Observable<any> {
+    return this.api
+      .get(`${this.ordersPath}?start=${start}&length=${length}`)
+      .do(resp => {
+        this.storeHelper.update(this.ordersPath, resp.data);
+      });
+  }
+
+  preloadOrders(start: number, length: number): Observable<any> {
+    return this.api
+      .get(`${this.ordersPath}?start=${start + length + 1}&length=${length * 2}`)
+      .do(resp => this.storeHelper.addArrayLast(this.ordersPath, resp.data));
   }
 
   getAllOrders(): Observable<any> {
@@ -44,7 +56,7 @@ export class OrderService {
   }
 
   deleteProduct(orderId, productId) {
-    return this.storeHelper.findProductAndDelete(this.ordersPath, orderId, productId);
+    return this.storeHelper.findDeepAndDeleteById(this.ordersPath, orderId, this.productsPath, productId);
     // return this.api.delete(`${this.ordersPath}/order-item/${productId}`)
     //   .do(() => this.storeHelper.findAndDelete(this.ordersPath, productId));
   }
@@ -71,7 +83,7 @@ export class OrderService {
 
   updateProduct(orderId, productId, fieldName, value) {
 
-    let updated = this.storeHelper.findProductAndUpdate(this.ordersPath, orderId, productId, fieldName, value);
+    let updated = this.storeHelper.findDeepAndUpdate(this.ordersPath, orderId, this.productsPath, productId, fieldName, value);
     if (updated) {
 
       if (parseInt(orderId, 10)) {
@@ -89,9 +101,19 @@ export class OrderService {
     }
   }
 
-  search(searchQuery) {
-    return this.searchService.search(this.storeHelper.get(this.ordersPath), searchQuery);
+
+  list(searchQuery: string = '', page: number = 1, length: number = 10) {
+    let orderResult = this.searchService.search(this.storeHelper.get(this.ordersPath), searchQuery);
+
+    let orderResultPage = orderResult.slice((page - 1) * length, page * length);
+
+    return Observable.of({
+      orders: orderResultPage,
+      filtered: orderResult.length
+    });
   }
+
+
 
 
 

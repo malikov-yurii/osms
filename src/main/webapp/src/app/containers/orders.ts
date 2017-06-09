@@ -1,17 +1,25 @@
 import { Component, OnDestroy } from '@angular/core';
-import { FormsModule, FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
+import { Observable } from "rxjs/Observable";
+import { Subscription } from "rxjs/Subscription";
+import { Subject } from "rxjs/Subject";
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/merge';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/share';
+import 'rxjs/add/operator/pluck';
+
 import { OrderService } from '../services/index';
 import { Store } from '../store';
-import { Order, Product } from '../models';
-import { Subscription } from "rxjs/Rx";
-import 'rxjs/add/operator/debounceTime';
+import { Order } from '../models';
 
 
 @Component({
   template: `
     <div class="wrapper">
     
-    <input type="text" name="" id="" [(ngModel)]="searchQuery" [formControl]="searchControl">
+      <input type="text" name="searchStream" id="" [(ngModel)]="searchQuery" [formControl]="searchStream">
     
       <div class="add-order" style="display: inline-block;" (click)="onAddOrder()">Add New Order</div>
     
@@ -20,21 +28,24 @@ import 'rxjs/add/operator/debounceTime';
       <div class="consoleorders"  style="display: inline-block;" (click)="consoleOrders()">Console all orders</div>
       
       <div class="consolestore" style="display: inline-block;" (click)="onGetStore()">Console current state</div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+      
+      <div class="total">Total orders: {{ totalOrders }}</div>
+      <div class="preloaded">Preloaded orders: {{ preloadedOrders }}</div>
+      
+      
+      <ul class="pagination">
+        <li (click)="pageClicked(prevPage())">Prev</li>
+        <li (click)="pageClicked(1)">1</li>
+        <li (click)="pageClicked(2)">2</li>
+        <li (click)="pageClicked(3)">3</li>
+        <li (click)="pageClicked(4)">4</li>
+        <li (click)="pageClicked(nextPage())">Next</li>
+      </ul>
     
       <div
-        *ngFor="let order of orders"
-        [ngClass]="getOrderColor(order.status)"
-       > <!-- | search: searchQuery-->
+        *ngFor="let order of orders | async; trackBy: trackById"
+        class="order order--{{ order.status }}"
+       >
        
         <div class="order-manage">
           <div title="Add product" class="order-manage__block order-manage__block--add" (click)="onAddProduct(order.id)">
@@ -131,7 +142,7 @@ import 'rxjs/add/operator/debounceTime';
           </div>
         </div>
         
-      </div>    
+      </div>
     </div>
   `,
   host: {
@@ -140,34 +151,64 @@ import 'rxjs/add/operator/debounceTime';
 })
 
 export class Orders implements OnDestroy {
-  orders: Order[] = [];
+  orders: Observable<Order[]>;
   subscription: Subscription;
   infoBlocks = {
     status: ['SHP', 'WFP', 'OK', 'NEW', 'NOT'],
     paymentType: ['PB', 'SV', 'NP']
   };
-  searchControl: FormControl;
-  searchQuery: any = '';
+
+  searchStream: FormControl = new FormControl();
+  searchQuery: string = '';
+
+  totalOrders: number = 0;
+  preloadedOrders: number = 0;
+  page: number = 1;
+  pageLength: number = 10;
+  private pageStream = new Subject<number>();
 
 
   constructor(
     private orderService: OrderService,
     private store: Store
   ) {
-    this.orderService.getOrders().subscribe();
 
+    this.orderService.getOrders(0, this.pageLength).subscribe(resp => {
+      this.totalOrders = resp.recordsTotal;
+      this.orderService.preloadOrders(0, this.pageLength).subscribe();
+    });
 
-    this.subscription = this.store.changes
-      .map(resp => resp.orders)
-      .subscribe(resp => {
-        // this.orders = resp;
-        return this.setFilteredItems();
+    let storeSource = this.store.changes
+      .map(store => {
+        this.preloadedOrders = store.orders.length;
+        return {search: this.searchQuery, page: this.page}
       });
 
-    this.searchControl = new FormControl();
-    this.searchControl.valueChanges.debounceTime(0).subscribe(search => {
-      this.setFilteredItems();
-    })
+    let searchSource = this.searchStream
+      .valueChanges
+      .debounceTime(100)
+      .distinctUntilChanged()
+      .map(searchQuery => {
+        return {search: searchQuery, page: 1}
+      });
+
+    let pageSource = this.pageStream
+      .map(pageNumber => {
+        this.page = pageNumber;
+        return {search: this.searchQuery, page: pageNumber}
+      });
+
+    let source = pageSource
+      .merge(searchSource, storeSource)
+      .startWith({search: this.searchQuery, page: this.page})
+      .switchMap((params: {search: string, page: number}) => {
+        return this.orderService.list(params.search, params.page)
+      })
+      .share();
+
+    this.orders = source.pluck('orders');
+
+
 
 
   }
@@ -175,6 +216,18 @@ export class Orders implements OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
+  pageClicked(page: number) {
+    this.pageStream.next(page);
+  }
+
+
+
+
+
+
+
+
 
 
   // Manage orders
@@ -220,9 +273,9 @@ export class Orders implements OnDestroy {
 
 
 
-  setFilteredItems() {
-    this.orders = this.orderService.search(this.searchQuery);
-  }
+  // setFilteredItems() {
+  //   this.orders = this.orderService.search(this.searchQuery);
+  // }
 
 
 
@@ -248,6 +301,9 @@ export class Orders implements OnDestroy {
   consoleOrders() {
     console.log(this.orders);
   }
+  consoleMe(me) {
+    console.log(me);
+  }
 
 
 
@@ -257,6 +313,7 @@ export class Orders implements OnDestroy {
   }
 
   trackById(index: number, value) {
+    // console.log(value.id)
     return value.id;
   }
 

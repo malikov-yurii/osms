@@ -481,24 +481,24 @@ div.dataTables_wrapper div.dataTables_info {
     padding: 5px 10px;
     box-shadow: 0 3px 11px 1px rgba(0, 0, 0, 0.4);
 }
-.order--ok,
-.order--ok .order-manage{
+.order--OK,
+.order--OK .order-manage{
     background: #deedd9;
 }
-.order--shp,
-.order--shp .order-manage{
+.order--SHP,
+.order--SHP .order-manage{
     background: #FCE5CD;
 }
-.order--wfp,
-.order--wfp .order-manage{
+.order--WFP,
+.order--WFP .order-manage{
     background: #F4CCCC;
 }
-.order--not,
-.order--not .order-manage{
+.order--NOT,
+.order--NOT .order-manage{
     background: #a70000;
 }
-.order--new,
-.order--new .order-manage{
+.order--NEW,
+.order--NEW .order-manage{
     background: #fff;
 }
 .order-info {
@@ -517,7 +517,7 @@ div.dataTables_wrapper div.dataTables_info {
     font-size: 15px;
     text-align: center;
     box-sizing: border-box;
-    word-break: break-all;
+    word-break: break-word;
 }
 .order-info__block:last-child {
     border-right: 0;
@@ -550,6 +550,7 @@ div.dataTables_wrapper div.dataTables_info {
 }
 .order-info__block--comment {
     flex-basis: 15%;
+    text-align: left;
 }
 .order-info__block select {
     width: 100%;
