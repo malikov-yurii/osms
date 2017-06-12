@@ -64,12 +64,4 @@
         <!--<property name="defaultLocale" value="ru"/>-->
         <property name="defaultLocale" value="en_US"/>
     </bean>
-
-    <mvc:interceptors>
-        <bean class="com.malikov.shopsystem.web.interceptor.ModelInterceptor"/>
-
-        <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-            <property name="paramName" value="lang"/>
-        </bean>
-    </mvc:interceptors>
 </beans>

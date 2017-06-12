@@ -68,7 +68,7 @@ public class Product extends NamedEntity {
     public Product() {
     }
 
-    public Product(Integer id, String name, Integer price, boolean unlimited, int quantity, boolean hasVariations,
+    public Product(Long id, String name, Integer price, boolean unlimited, int quantity, boolean hasVariations,
                    Collection<ProductCategory> categories, Collection<ProductVariation> productVariations) {
         super(id, name);
         this.price = new BigDecimal(price).setScale(6);

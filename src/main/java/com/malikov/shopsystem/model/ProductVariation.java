@@ -35,7 +35,7 @@ public class ProductVariation extends BaseEntity {
         this(null, price, quantity, variationValue);
     }
 
-    public ProductVariation(Integer id, int price, int quantity, VariationValue variationValue) {
+    public ProductVariation(Long id, int price, int quantity, VariationValue variationValue) {
         super(id);
         this.price = price;
         this.quantity = quantity;

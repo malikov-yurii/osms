@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class CustomerTo implements Serializable {
 
-    private Integer id;
+    private Long id;
 
     private String name;
 
@@ -22,7 +22,7 @@ public class CustomerTo implements Serializable {
 
     private String note;
 
-    public CustomerTo(@JsonProperty("id") Integer id,
+    public CustomerTo(@JsonProperty("id") Long id,
                       @JsonProperty("name") String name,
                       @JsonProperty("lastName") String lastName,
                       @JsonProperty("phoneNumber") String phoneNumber,
@@ -48,11 +48,11 @@ public class CustomerTo implements Serializable {
         return id == null;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

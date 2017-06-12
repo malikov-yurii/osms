@@ -31,7 +31,7 @@ public class User extends NamedEntity {
     public User() {
     }
 
-    public User(Integer id, String name, String password, Role... roles) {
+    public User(Long id, String name, String password, Role... roles) {
         super(id, name);
         this.password = password;
         this.roles = new HashSet<>();

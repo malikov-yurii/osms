@@ -26,7 +26,7 @@ public class VariationValue extends NamedEntity {
         this(null, name, variationType);
     }
 
-    public VariationValue(Integer id, String name, VariationType variationType) {
+    public VariationValue(Long id, String name, VariationType variationType) {
         super(id, name);
         this.variationType = variationType;
     }

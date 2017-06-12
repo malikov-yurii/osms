@@ -36,7 +36,7 @@ public class ProductUtil {
         } else {
             productTos.add(new ProductTo(
                     product.getId()
-                    , 0
+                    , 0L
                     , product.getName()
                     , product.getPrice()
                     , product.getQuantity()

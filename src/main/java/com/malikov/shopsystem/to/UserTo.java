@@ -9,7 +9,7 @@ public class UserTo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
+    private Long id;
 
     @NotEmpty
     private String name;
@@ -20,17 +20,17 @@ public class UserTo implements Serializable {
     public UserTo() {
     }
 
-    public UserTo(Integer id, String name, String password) {
+    public UserTo(Long id, String name, String password) {
         this.id = id;
         this.name = name;
         this.password = password;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

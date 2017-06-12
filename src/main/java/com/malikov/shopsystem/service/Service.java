@@ -8,10 +8,10 @@ public interface Service<T> {
 
     T update(T t);
 
-    T get(int id);
+    T get(Long id);
 
     List<T> getAll();
 
-    void delete(int id);
+    void delete(Long id);
 
 }

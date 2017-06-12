@@ -10,7 +10,7 @@ import javax.persistence.*;
 })
 public class VariationType extends NamedEntity {
 
-    public VariationType(Integer id, String name) {
+    public VariationType(Long id, String name) {
         super(id, name);
     }
 

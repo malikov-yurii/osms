@@ -83,7 +83,7 @@ public class Order extends BaseEntity {
     public Order() {
     }
 
-    public Order(Integer id, Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, String comment, LocalDate datePlaced, List<OrderItem> orderItems) {
+    public Order(Long id, Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, String comment, LocalDate datePlaced, List<OrderItem> orderItems) {
         super(id);
         if (customer != null) {
             this.customer = customer;

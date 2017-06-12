@@ -164,7 +164,7 @@
         </tr>
         </thead>
         <tbody>
-            {{ for (var i = 0; i < orderItems.length; i++) { }}
+            {{debugger; for (var i = 0; i < orderItems.length; i++) { }}
                 <tr
                   class="order-product-row {{= orderItems[i].supplier }}"
                   data-order-item-id="{{= orderItems[i].orderItemId }}"

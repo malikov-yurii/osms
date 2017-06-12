@@ -66,7 +66,7 @@ public class Customer extends NamedEntity {
     public Customer() {
     }
 
-    public Customer(Integer id, String name, String lastName,
+    public Customer(Long id, String name, String lastName,
                     String phoneNumber, String city, String postOffice, String email, String note) {
         super(id, name);
         this.lastName = lastName;

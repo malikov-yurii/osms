@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface OrderService extends Service<Order> {
 
-    Collection<Order> getByCustomerId(int customerId);
+    Collection<Order> getByCustomerId(Long customerId);
 
-    Collection<Order> getByProductId(int productId);
+    Collection<Order> getByProductId(Long productId);
 
     void updateStatus(Integer orderId, OrderStatus status);
 
@@ -18,4 +18,5 @@ public interface OrderService extends Service<Order> {
 
     Long getTotalQuantity();
 
+    Order create();
 }

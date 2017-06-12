@@ -22,7 +22,7 @@ public class ProductCategory extends NamedEntity {
     public ProductCategory() {
     }
 
-    public ProductCategory(Integer id, String name) {
+    public ProductCategory(Long id, String name) {
         this.id = id;
         this.name = name;
     }

@@ -15,9 +15,9 @@ import java.util.List;
 
 public class OrderTo {
 
-    private Integer id;
+    private Long id;
 
-    private Integer customerId;
+    private Long customerId;
 
     private String firstName;
 
@@ -46,8 +46,8 @@ public class OrderTo {
     private List<OrderItemTo> orderItemTos;
 
     public OrderTo(
-            Integer id
-            , Integer customerId
+            Long id
+            , Long customerId
             , String firstName
             , String lastName
             , String phoneNumber
@@ -77,8 +77,8 @@ public class OrderTo {
     }
 
     public OrderTo(
-            Integer id
-            , Integer customerId
+            Long id
+            , Long customerId
             , String firstName
             , String lastName
             , String phoneNumber
@@ -106,11 +106,11 @@ public class OrderTo {
         this.totalSum += orderItemTo.getPrice();
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -209,11 +209,11 @@ public class OrderTo {
         this.orderItemTos = orderItemTos;
     }
 
-    public Integer getCustomerId() {
+    public Long getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Integer customerId) {
+    public void setCustomerId(Long customerId) {
         this.customerId = customerId;
     }
 

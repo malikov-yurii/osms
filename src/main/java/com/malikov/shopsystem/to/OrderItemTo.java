@@ -6,9 +6,9 @@ import java.io.Serializable;
 
 public class OrderItemTo implements Serializable {
 
-    private Integer orderItemId;
+    private Long orderItemId;
 
-    private Integer orderProductId;
+    private Long orderProductId;
 
     private String name;
 
@@ -20,8 +20,8 @@ public class OrderItemTo implements Serializable {
 
     @JsonCreator
     public OrderItemTo(
-            Integer orderItemId,
-            Integer orderProductId,
+            Long orderItemId,
+            Long orderProductId,
             String name,
             Integer price,
             Integer quantity,
@@ -63,19 +63,19 @@ public class OrderItemTo implements Serializable {
         this.quantity = quantity;
     }
 
-    public Integer getOrderItemId() {
+    public Long getOrderItemId() {
         return orderItemId;
     }
 
-    public void setOrderItemId(Integer orderItemId) {
+    public void setOrderItemId(Long orderItemId) {
         this.orderItemId = orderItemId;
     }
 
-    public Integer getOrderProductId() {
+    public Long getOrderProductId() {
         return orderProductId;
     }
 
-    public void setOrderProductId(Integer orderProductId) {
+    public void setOrderProductId(Long orderProductId) {
         this.orderProductId = orderProductId;
     }
 

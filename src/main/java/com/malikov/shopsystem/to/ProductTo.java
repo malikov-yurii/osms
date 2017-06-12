@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class ProductTo implements Serializable {
 
-    private Integer productId;
+    private Long productId;
 
-    private Integer productVariationId;
+    private Long productVariationId;
 
     private String name;
 
@@ -17,8 +17,8 @@ public class ProductTo implements Serializable {
     private Boolean unlimited;
 
     public ProductTo(
-            Integer productId,
-            Integer productVariationId,
+            Long productId,
+            Long productVariationId,
             String name,
             Integer price,
             Integer quantity,
@@ -35,19 +35,19 @@ public class ProductTo implements Serializable {
     public ProductTo() {
     }
 
-    public Integer getProductVariationId() {
+    public Long getProductVariationId() {
         return productVariationId;
     }
 
-    public void setProductVariationId(Integer productVariationId) {
+    public void setProductVariationId(Long productVariationId) {
         this.productVariationId = productVariationId;
     }
 
-    public Integer getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(Integer productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 

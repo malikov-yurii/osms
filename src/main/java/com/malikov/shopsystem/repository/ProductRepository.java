@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ProductRepository extends Repository<Product> {
 
-    Collection<Product> getByCategoryId(int categoryId);
+    Collection<Product> getByCategoryId(Long categoryId);
 
     Collection<Product> getAllQuantityLessThan(int quantity);
 
