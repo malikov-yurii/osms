@@ -14,10 +14,6 @@ public class ProductUtil {
                 null, null);
     }
 
-//    public static ProductTo asTo(Product product){
-//        return new ProductTo(product.getId(), product.getName(), product.getPrice(), product.getQuantity());
-//    }
-
     public static Product updateFromTo(Product product, ProductTo productTo) {
         product.setName(productTo.getName());
         product.setPrice(productTo.getPrice());
@@ -48,4 +44,5 @@ public class ProductUtil {
         }
         return productTos;
     }
+
 }

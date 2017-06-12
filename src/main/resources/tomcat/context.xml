@@ -45,9 +45,5 @@
               username="user"
               password="1234"
               url="jdbc:postgresql://localhost:5432/shop_system_test"/>
-    <!--
-        username="wegxlfzjjgxaxy"
-        password="SSQyKKE_e93kiUCR-ehzMcKCxZ"
-        url="jdbc:postgresql://ec2-54-217-202-110.eu-west-1.compute.amazonaws.com:5432/dehm6lvm8bink0?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory"/>
-    -->
+
 </Context>

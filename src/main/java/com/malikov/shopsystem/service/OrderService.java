@@ -17,4 +17,5 @@ public interface OrderService extends Service<Order> {
     List<Order> getDatatablePage(int start, int length);
 
     Long getTotalQuantity();
+
 }

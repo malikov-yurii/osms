@@ -1,11 +1,12 @@
 package com.malikov.shopsystem.model;
 
-
 import javax.persistence.*;
 
 @NamedQueries({
-        @NamedQuery(name = ProductCategory.DELETE, query = "DELETE FROM ProductCategory pc WHERE pc.id=:id"),
-        @NamedQuery(name = ProductCategory.ALL_SORTED, query = "SELECT pc FROM ProductCategory pc ORDER BY pc.name"),
+         @NamedQuery(name = ProductCategory.DELETE, query =
+                "DELETE FROM ProductCategory pc WHERE pc.id=:id")
+        ,@NamedQuery(name = ProductCategory.ALL_SORTED, query =
+                "SELECT pc FROM ProductCategory pc ORDER BY pc.name")
 })
 @Entity
 @Table(name = "jos_jshopping_categories")
@@ -30,7 +31,8 @@ public class ProductCategory extends NamedEntity {
         this(null, name);
     }
 
-    public ProductCategory(ProductCategory pc){
+    public ProductCategory(ProductCategory pc) {
         this(pc.getId(), pc.getName());
     }
+
 }

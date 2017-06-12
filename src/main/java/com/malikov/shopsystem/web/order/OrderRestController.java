@@ -46,4 +46,5 @@ public class OrderRestController extends AbstractOrderController {
 
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
+
 }

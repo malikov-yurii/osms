@@ -68,4 +68,5 @@ public class ProductAjaxController extends AbstractProductController {
     public void changeHasVariations(@PathVariable("id") int id, @RequestParam("hasVariations") boolean hasVariations) {
         super.enableHasVariations(id, hasVariations);
     }
+
 }

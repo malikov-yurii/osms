@@ -7,9 +7,9 @@ import java.util.Objects;
 import java.util.Set;
 
 @NamedQueries({
-        @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=:id"),
-        @NamedQuery(name = User.BY_LOGIN, query = "SELECT u FROM User u WHERE u.name=:login"),
-        @NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u ORDER BY u.name"),
+         @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=:id")
+        ,@NamedQuery(name = User.BY_LOGIN, query = "SELECT u FROM User u WHERE u.name=:login")
+        ,@NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u ORDER BY u.name")
 })
 @Entity
 @Table(name = "osms_users")
@@ -32,8 +32,7 @@ public class User extends NamedEntity {
     }
 
     public User(Integer id, String name, String password, Role... roles) {
-        this.id = id;
-        this.name = name;
+        super(id, name);
         this.password = password;
         this.roles = new HashSet<>();
         Collections.addAll(this.roles, roles);
@@ -43,8 +42,8 @@ public class User extends NamedEntity {
         this(null, name, password, roles);
     }
 
-    public User(User u){
-        this(u.getId(), u.getName(), u.getPassword (), u.getRoles().toArray(new Role[0]));
+    public User(User u) {
+        this(u.getId(), u.getName(), u.getPassword(), u.getRoles().toArray(new Role[0]));
     }
 
     public String getPassword() {
@@ -85,4 +84,5 @@ public class User extends NamedEntity {
                 ", roles=" + roles +
                 '}';
     }
+
 }

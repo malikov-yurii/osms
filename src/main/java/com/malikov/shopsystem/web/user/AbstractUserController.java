@@ -9,11 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
-import javax.validation.ValidationException;
 import java.util.Arrays;
 import java.util.List;
 
 public abstract class AbstractUserController {
+
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     private boolean systemUserForbiddenModification;
@@ -21,12 +21,6 @@ public abstract class AbstractUserController {
     @Autowired
     public void setEnvironment(Environment environment) {
         systemUserForbiddenModification = Arrays.asList(environment.getActiveProfiles()).contains(Profiles.HEROKU);
-    }
-
-    public void checkModificationAllowed(Integer id) {
-        if (systemUserForbiddenModification && id < 3) {
-            throw new ValidationException("Admin/User modification is not allowed. <br><br><a class=\"btn btn-primary btn-lg\" role=\"button\" href=\"register\">Register &raquo;</a> your own please.");
-        }
     }
 
     @Autowired
@@ -69,9 +63,4 @@ public abstract class AbstractUserController {
         return service.getByLogin(login);
     }
 
-    // TODO: 1/16/2017 Consider necessity of enableUnlimited/disable user feature
-//    public void enableUnlimited(int id, boolean enabled) {
-//        log.info((enabled ? "enableUnlimited " : "disable ") + id);
-//        service.enableUnlimited(id, enabled);
-//    }
 }

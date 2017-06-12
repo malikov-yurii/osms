@@ -13,8 +13,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractProductController {
-    private static final Logger LOG = LoggerFactory.getLogger(AbstractProductController.class);
+public abstract class AbstractProductController {    private static final Logger LOG = LoggerFactory.getLogger(AbstractProductController.class);
 
     @Autowired
     private ProductService productService;
@@ -50,10 +49,9 @@ public abstract class AbstractProductController {
         return productService.save(product);
     }
 
+    // TODO: 1/16/2017 IMPLEMENT THIS METHOD
     public List<ProductTo> getBetween(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime) {
         LOG.info("getBetween dates {} - {} for time {} - {} ", startDate, endDate, startTime, endTime);
-
-        // TODO: 1/16/2017 I NEED IMPLEMENT THIS METHOD
         return getAll();
     }
 

@@ -13,18 +13,10 @@
        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
 
-    <!--<jdbc:initialize-database data-source="dataSource" enabled="${database.init}">-->
-    <!--<jdbc:script location="classpath:db/${jdbc.initLocation}"/>-->
-    <!--<jdbc:script encoding="utf-8" location="classpath:db/populateTestDB.sql"/>-->
-    <!--</jdbc:initialize-database>-->
-
-    <!-- Choose profile from (heroku, postgres) and (jpa)-->
-
     <tx:annotation-driven/>
 
     <beans profile="mySql">
-        <context:property-placeholder location="classpath:db/mySql.properties" system-properties-mode="OVERRIDE"/>
-
+        <context:property-placeholder location="classpath:db/mySqlProduction.properties" system-properties-mode="OVERRIDE"/>
         <bean id="dataSource"
               class="org.apache.tomcat.jdbc.pool.DataSource"
               p:driverClassName="${jdbc.driver.class}"
@@ -42,51 +34,27 @@
               p:initialSize="2"
               p:testOnConnect="true"
         />
-
-
     </beans>
 
-    <!--p:validationQuery="SELECT 1 FROM osms_users"-->
-    <!--p:testOnBorrow="true"-->
-    <!--p:maxActive="10"-->
-    <!--p:minIdle="2"-->
-    <!--p:maxWait="20000"-->
-    <!--p:initialSize="2"-->
-    <!--p:maxIdle="5"-->
-    <!--p:removeAbandoned="true"-->
-    <!--p:testOnConnect="true"-->
-    <!--p:testWhileIdle="true"-->
-
-
-    <beans profile="tomcat">
-        <jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/shopsystem"/>
-        <context:property-placeholder location="classpath:db/tomcat.properties" system-properties-mode="OVERRIDE"/>
-    </beans>
-
-    <beans profile="heroku">
-        <context:property-placeholder location="classpath:/db/heroku.properties" system-properties-mode="OVERRIDE"/>
-
-        <bean class="java.net.URI" id="dbUrl">
-            <!--todo ${DATABASE_URL}???????????????????????????????-->
-            <constructor-arg value="${DATABASE_URL}"/>
-        </bean>
+    <beans profile="mySqlTest">
+        <context:property-placeholder location="classpath:db/mySqlTest.properties" system-properties-mode="OVERRIDE"/>
         <bean id="dataSource"
-
               class="org.apache.tomcat.jdbc.pool.DataSource"
               p:driverClassName="${jdbc.driver.class}"
               p:url="${database.url}"
               p:username="${database.username}"
               p:password="${database.password}"
-              p:validationQuery="SELECT 1 FROM users"
+              p:removeAbandoned="true"
+              p:maxWait="20000"
+              p:testWhileIdle="true"
+              p:validationQuery="SELECT 1 FROM osms_users"
+              p:testOnBorrow="true"
               p:maxActive="10"
               p:minIdle="2"
-              p:maxWait="20000"
-              p:initialSize="2"
               p:maxIdle="5"
-              p:testOnBorrow="true"
-              p:removeAbandoned="true"
+              p:initialSize="2"
               p:testOnConnect="true"
-              p:testWhileIdle="true"/>
+        />
     </beans>
 
     <beans profile="jpa">
@@ -116,8 +84,6 @@
         <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
               p:entityManagerFactory-ref="entityManagerFactory"/>
 
-        <bean class="com.malikov.shopsystem.repository.JpaUtil"/>
-
-        <context:component-scan base-package="com.malikov.shopsystem.repository.jpa"/>
+                <context:component-scan base-package="com.malikov.shopsystem.repository.jpa"/>
     </beans>
 </beans>

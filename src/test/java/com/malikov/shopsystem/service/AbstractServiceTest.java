@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 //    "classpath:db/initTestDB.sql",
         "classpath:db/populateTestDB.sql"},
         config = @SqlConfig(encoding = "UTF-8"))
-@ActiveProfiles(Profiles.ACTIVE_DB)
+@ActiveProfiles(Profiles.MYSQL_TEST)
 public abstract class AbstractServiceTest {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractServiceTest.class);
 

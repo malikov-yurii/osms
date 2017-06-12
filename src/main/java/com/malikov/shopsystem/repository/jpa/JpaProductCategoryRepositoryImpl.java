@@ -44,4 +44,5 @@ public class JpaProductCategoryRepositoryImpl implements ProductCategoryReposito
         return em.createNamedQuery(ProductCategory.ALL_SORTED, ProductCategory.class)
                 .getResultList();
     }
+
 }

@@ -23,4 +23,5 @@ public interface CustomerService extends Service<Customer> {
     Customer getByEmail(String email);
 
     Customer getByPhoneNumber(String phoneNumber);
+
 }

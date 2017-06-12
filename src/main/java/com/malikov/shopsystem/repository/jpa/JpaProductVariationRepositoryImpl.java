@@ -13,9 +13,9 @@ import java.util.List;
 @Repository
 @Transactional(readOnly = true)
 public class JpaProductVariationRepositoryImpl implements ProductVariationRepository {
+
     @PersistenceContext
     EntityManager em;
-
 
     @Override
     @Transactional
@@ -45,4 +45,5 @@ public class JpaProductVariationRepositoryImpl implements ProductVariationReposi
         return em.createNamedQuery(ProductVariation.ALL_SORTED, ProductVariation.class)
                 .getResultList();
     }
+
 }

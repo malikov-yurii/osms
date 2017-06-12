@@ -39,4 +39,5 @@ public class OrderDatatablePageTo {
     public void setData(List<OrderTo> data) {
         this.data = data;
     }
+
 }

@@ -63,4 +63,5 @@ public class OrderServiceImpl implements OrderService {
     public Long getTotalQuantity() {
         return repository.getTotalQuantity();
     }
+
 }

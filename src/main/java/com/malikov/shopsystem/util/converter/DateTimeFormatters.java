@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class DateTimeFormatters {
+
     public static class LocalDateFormatter implements Formatter<LocalDate> {
 
         @Override
@@ -35,4 +36,5 @@ public class DateTimeFormatters {
             return lt.format(DateTimeFormatter.ISO_LOCAL_TIME);
         }
     }
+
 }

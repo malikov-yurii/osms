@@ -44,17 +44,6 @@ public class CustomerRestController extends AbstractCustomerController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    //    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<String> update(@Valid  CustomerTo customerTo, @PathVariable("id") int id, BindingResult result) {
-//        if (result.hasErrors()) {
-//            StringBuilder sb = new StringBuilder();
-//            result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
-//            return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
-//        }
-//        super.update(CustomerUtil.createNewFromTo(customerTo), id);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-//    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @PostMapping(value = "/{id}")
     public void update(@Valid  CustomerTo customerTo, @PathVariable("id") int id) {
 

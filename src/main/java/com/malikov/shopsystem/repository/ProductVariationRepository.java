@@ -4,5 +4,4 @@ import com.malikov.shopsystem.model.ProductVariation;
 
 public interface ProductVariationRepository extends Repository<ProductVariation> {
 
-
 }

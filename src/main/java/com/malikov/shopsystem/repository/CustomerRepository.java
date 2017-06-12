@@ -25,4 +25,5 @@ public interface CustomerRepository extends Repository<Customer> {
 
     // null if not found
     Customer getByPhoneNumber(String phoneNumber);
+
 }

@@ -6,8 +6,6 @@ import com.malikov.shopsystem.to.UserTo;
 
 public class UserUtil {
 
-    public static final int DEFAULT_CALORIES_PER_DAY = 2000;
-
     public static User createNewFromTo(UserTo newUser) {
         return new User(null, newUser.getName(), newUser.getPassword(), Role.ROLE_USER);
     }

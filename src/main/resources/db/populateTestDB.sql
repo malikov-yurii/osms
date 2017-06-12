@@ -1,94 +1,96 @@
-TRUNCATE TABLE products_attr, attr_values, attr, order_items, orders, customers,
-products_to_categories, categories, products, user_roles, users CASCADE;
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE shop_system_test.osms_order_items;
+TRUNCATE TABLE shop_system_test.osms_user_roles;
+TRUNCATE TABLE shop_system_test.jos_jshopping_products_to_categories;
+TRUNCATE TABLE shop_system_test.jos_jshopping_products;
+TRUNCATE TABLE shop_system_test.jos_jshopping_categories;
+TRUNCATE TABLE shop_system_test.jos_jshopping_products_attr;
+TRUNCATE TABLE shop_system_test.jos_jshopping_attr_values;
+TRUNCATE TABLE shop_system_test.jos_jshopping_attr;
+TRUNCATE TABLE shop_system_test.osms_users;
+TRUNCATE TABLE shop_system_test.osms_orders;
+TRUNCATE TABLE shop_system_test.osms_customers;
+SET FOREIGN_KEY_CHECKS = 1;
 
-ALTER SEQUENCE products_attr_product_attr_id_seq RESTART WITH 1;
-ALTER SEQUENCE attr_values_value_id_seq RESTART WITH 1;
-ALTER SEQUENCE attr_attr_id_seq RESTART WITH 1;
-ALTER SEQUENCE orders_id_seq RESTART WITH 1;
-ALTER SEQUENCE customers_id_seq RESTART WITH 1;
-ALTER SEQUENCE categories_id_seq RESTART WITH 1;
-ALTER SEQUENCE products_id_seq RESTART WITH 1;
-ALTER SEQUENCE users_id_seq RESTART WITH 1;
-ALTER SEQUENCE order_items_id_seq RESTART WITH 1;
+ALTER  TABLE shop_system_test.osms_orders AUTO_INCREMENT 1;
+ALTER  TABLE shop_system_test.osms_users AUTO_INCREMENT 1;
+ALTER  TABLE shop_system_test.osms_customers AUTO_INCREMENT 1;
+ALTER  TABLE shop_system_test.jos_jshopping_products AUTO_INCREMENT 1;
+ALTER  TABLE shop_system_test.jos_jshopping_categories AUTO_INCREMENT 1;
+ALTER  TABLE shop_system_test.jos_jshopping_products_attr AUTO_INCREMENT 1;
+ALTER  TABLE shop_system_test.jos_jshopping_attr_values AUTO_INCREMENT 1;
+ALTER  TABLE shop_system_test.osms_order_items AUTO_INCREMENT 1;
 
+INSERT INTO osms_users (name, password) VALUES
+('user', '$2a$11$bRQR2FxnBrKnr/PS0eaDUeEQzO2ZtYJllGPIkdekZ0q6rJVJrCmXm'), -- password = '1111'
+('admin', '$2a$11$bRQR2FxnBrKnr/PS0eaDUeEQzO2ZtYJllGPIkdekZ0q6rJVJrCmXm'); -- password = '1111'
 
-INSERT INTO users (name, password) VALUES
-  ('user', '$2a$11$bRQR2FxnBrKnr/PS0eaDUeEQzO2ZtYJllGPIkdekZ0q6rJVJrCmXm'), -- password = '1111'
-  ('admin', '$2a$11$bRQR2FxnBrKnr/PS0eaDUeEQzO2ZtYJllGPIkdekZ0q6rJVJrCmXm'); -- password = '1111'
+INSERT INTO osms_user_roles (role, user_id) VALUES
+('ROLE_USER', 1),
+('ROLE_ADMIN', 2),
+('ROLE_USER', 2);
 
-INSERT INTO user_roles (role, user_id) VALUES
-  ('ROLE_USER', 1),
-  ('ROLE_ADMIN', 2),
-  ('ROLE_USER', 2);
-
-INSERT INTO products (name, price, unlimited, quantity, different_prices) VALUES
-  ('Shellac Manetti', 235, 1, 22, 1),
-  ('Potal Nazionale', 385, 0, 44, 1),
-  ('Ferrario klej rozovyj', 220, 1, 33, 1),
-  ('Potal Kitaj', 145, 0, 11, 1),
-  ('Divolo Bitum Vosk', 570, 0, 1, 0);
-
-INSERT INTO attr (name) VALUES
-  ('Container'),
-  ('Leaves quantity');
-
-INSERT INTO attr_values (attr_id, name) VALUES
-  (1, '0.1L (plastic)'),
-  (1, '0.25L (plastic)'),
-  (2, '100 leaves'),
-  (2, '500 leaves');
-
-INSERT INTO products_attr (product_id, price, count, attr_value_id) VALUES
-  (1, 110, 88, 1),
-  (1, 235, 89, 2),
-  (2, 385, 22, 3),
-  (2, 1745, 23, 4),
-  (3, 110, 44, 1),
-  (3, 220, 45, 2),
-  (4, 145, 55, 3),
-  (4, 585, 56, 4);
-
-INSERT INTO categories (name) VALUES
-  ('Laki'),
-  ('Klei'),
-  ('Potal i zoloto');
-
-INSERT INTO products_to_categories (product_id, category_id) VALUES
-  (1, 1),
-  (2, 3),
-  (3, 2),
-  (4, 3),
-  (5, 1);
-
-INSERT INTO customers (name, last_name, phone_number, city, nova_poshta, email) VALUES
+INSERT INTO osms_customers (name, last_name, phone_number, city, nova_poshta, email) VALUES
   ('Alex', 'Drogichinskij', '0674861352', 'Ilichevsk', '3', 'drogychynsky@gmail.com'),
   ('Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 'goltvyanskyy@gmail.com'),
-  ('Елена', 'Дуновская', '0984231204', 'Sumy', '7', 'katerina.tcherednichenko@yandex.ru'),
-  ('WithNoOrderName', 'WithNoOrderLastName', '0980000000', 'ZeroTown', '0', 'zero@yandex.ru'),
-  ('Dname1', 'DLastName1', '11111111111', '111111', '1', '111zero@yandex.ru'),
-  ('Dname2', 'DLastName2', '22222222222', '222222', '2','2zero@yandex.ru'),
-  ('Dname3', 'DLastName3', '33333333333', '333333', '3','3zero@yandex.ru');
+  ('Elena', 'Dunovskaya', '0984231204', 'Sumy', '7', 'katerina.tcherednichenko@yandex.ru'),
+  ('WithNoOrderName', 'WithNoOrderLastName', '0980000000', 'ZeroTown', '0', 'zero@yandex.ru');
 
-INSERT INTO orders (customer_id, customer_name, customer_last_name, customer_phone_number, customer_city, customer_nova_poshta, total_sum, user_id, payment_type, status
+INSERT INTO jos_jshopping_products (`name_ru-Ru`, product_price, unlimited, product_quantity, different_prices) VALUES
+('Shellac Manetti', 235, 1, 22, 1),
+('Potal Nazionale', 385, 0, 44, 1),
+('Ferrario klej rozovyj', 220, 1, 33, 1),
+('Potal Kitaj', 145, 0, 11, 1);
+
+INSERT INTO jos_jshopping_attr (`name_ru-Ru`) VALUES
+('Container'),
+('Leaves quantity');
+
+INSERT INTO jos_jshopping_attr_values (attr_id, `name_ru-Ru`) VALUES
+(1, '0.1L (plastic)'),
+(1, '0.25L (plastic)'),
+(2, '100 leaves'),
+(2, '500 leaves');
+
+INSERT INTO jos_jshopping_products_attr (product_id, price, count, attr_value_id) VALUES
+(1, 110, 88, 1),
+(1, 235, 89, 2),
+(2, 385, 22, 3),
+(2, 1745, 23, 4),
+(3, 110, 44, 1),
+(3, 220, 45, 2),
+(4, 145, 55, 3),
+(4, 585, 56, 4);
+
+INSERT INTO jos_jshopping_categories (`name_ru-Ru`) VALUES
+('Laki'),
+('Klei'),
+('Potal i zoloto');
+
+INSERT INTO jos_jshopping_products_to_categories (product_id, category_id) VALUES
+(1, 1),
+(2, 3),
+(3, 2),
+(4, 3);
+
+INSERT INTO osms_orders (customer_id, customer_name, customer_last_name, customer_phone_number, customer_city, customer_nova_poshta, total_sum, user_id, payment_type, status
   , date_placed
 ) VALUES
-  (2, 'Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 825, 2, 'PB', 'A_FOR_P'
+  (2, 'Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 825, 2, 'PB', 'WFP'
     , '2016-09-15'
   ),
-  (2, 'Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 1285, 2, 'NP', 'TO_SHIP'
+  (2, 'Sergei', 'Goltvjanskij', '0938754590', 'Kiev', '31', 1285, 2, 'NP', 'SHP'
     , '2016-11-17'
   ),
-  (1, 'Alex', 'Drogichinskij', '0674861352', 'Ilichevsk', '3', 725, 2, 'PB', 'TO_SHIP'
+  (1, 'Alex', 'Drogichinskij', '0674861352', 'Ilichevsk', '3', 725, 2, 'PB', 'SHP'
     , '2016-10-11'
   ),
-  (3, 'Elena', 'Дуновская', '0984231204', 'Sumy', '7', 5865, 2, 'NP', 'SHIPPED'
+  (3, 'Elena', 'Дуновская', '0984231204', 'Sumy', '7', 5865, 2, 'NP', 'SHP'
     , '2016-12-22'
-  ),
-  (1, 'Alex', 'Drogichinskij', '0674861352', 'Ilichevsk', '3', 570, 2, 'PB', 'A_FOR_P'
-    , '2016-02-22'
-  );
+  )
+;
 
-INSERT INTO order_items (order_id, product_attr_id, product_id, product_name, product_price, product_quantity) VALUES
+INSERT INTO osms_order_items (order_id, product_attr_id, product_id, product_name, product_price, product_quantity) VALUES
   (1, 3, 2, 'Potal Nazionale 100 leaves', 385, 1),
   (1, 6, 3, 'Ferrario klej rozovyj 0.25L (plastic)', 220, 2),
   (2, 2, 1, 'Shellac Manetti 0.25L (plastic)', 235, 3),
@@ -96,7 +98,6 @@ INSERT INTO order_items (order_id, product_attr_id, product_id, product_name, pr
   (3, 7, 4, 'Potal Kitaj 100 leaves', 145, 5),
   (4, 2, 1, 'Shellac Manetti 0.25L (plastic)', 235, 6),
   (4, 3, 2, 'Potal Nazionale 100 leaves', 385, 7),
-  (4, 6, 3, 'Ferrario klej rozovyj 0.25L (plastic)', 220, 8),
-  (5, 0 , 5, 'Divolo Bitum Vosk', 333, 1)
+  (4, 6, 3, 'Ferrario klej rozovyj 0.25L (plastic)', 220, 8)
 ;
 

@@ -4,7 +4,6 @@
 # DROP TABLE IF EXISTS osms_user_roles;
 # DROP TABLE IF EXISTS osms_users;
 
-
 CREATE TABLE osms_users
 (
   id       SERIAL PRIMARY KEY,

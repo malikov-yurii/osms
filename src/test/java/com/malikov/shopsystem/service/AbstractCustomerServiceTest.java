@@ -22,8 +22,8 @@ public abstract class AbstractCustomerServiceTest extends AbstractServiceTest {
         Customer created = service.save(newCustomer);
         newCustomer.setId(created.getId());
         MATCHER.assertCollectionEquals(
-                Arrays.asList(CUSTOMER_DROGOV, CUSTOMER_DUNOV,
-                        CUSTOMER_GOLOV, newCustomer, CUSTOMER_WITHOUT_ANY_ORDER), service.getAll());
+                Arrays.asList(CUSTOMER_DROGOV, CUSTOMER_GOLOV, CUSTOMER_DUNOV,
+                        CUSTOMER_WITHOUT_ANY_ORDER, newCustomer), service.getAll());
     }
 
     @Test
@@ -73,13 +73,13 @@ public abstract class AbstractCustomerServiceTest extends AbstractServiceTest {
     @Test
     public void testGetAll() throws Exception {
         Collection<Customer> all = service.getAll();
-        MATCHER.assertCollectionEquals(Arrays.asList(CUSTOMER_DROGOV, CUSTOMER_DUNOV,
-                CUSTOMER_GOLOV, CUSTOMER_WITHOUT_ANY_ORDER), all);
+        MATCHER.assertCollectionEquals(Arrays.asList(CUSTOMER_DROGOV,
+                CUSTOMER_GOLOV, CUSTOMER_DUNOV, CUSTOMER_WITHOUT_ANY_ORDER), all);
     }
 
     @Test
     public void testDelete() throws Exception {
         service.delete(CUSTOMER_WITHOUT_ANY_ORDER.getId());
-        MATCHER.assertCollectionEquals(Arrays.asList(CUSTOMER_DROGOV, CUSTOMER_DUNOV, CUSTOMER_GOLOV), service.getAll());
+        MATCHER.assertCollectionEquals(Arrays.asList(CUSTOMER_DROGOV, CUSTOMER_GOLOV, CUSTOMER_DUNOV), service.getAll());
     }
 }

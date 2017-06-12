@@ -9,13 +9,16 @@ import java.math.BigDecimal;
 import java.util.*;
 
 @NamedQueries({
-        @NamedQuery(name = Product.DELETE, query = "DELETE FROM Product p WHERE p.id=:id"),
-        @NamedQuery(name = Product.BY_CATEGORY_ID, query =
-                "SELECT p FROM Product p JOIN p.categories c WHERE c.id=:categoryId"),
-        @NamedQuery(name = Product.QUANTITY_LESS_THAN, query =
-                "SELECT p FROM Product p WHERE p.quantity < :quantity"),
-        @NamedQuery(name = Product.ALL_SORTED, query = "SELECT p FROM Product p ORDER BY p.price"),
-        @NamedQuery(name = Product.BY_PRODUCT_NAME_MASK, query = "SELECT p FROM Product p WHERE lower(p.name) LIKE lower(:productNameMask)"),
+         @NamedQuery(name = Product.DELETE, query =
+                "DELETE FROM Product p WHERE p.id=:id")
+        ,@NamedQuery(name = Product.BY_CATEGORY_ID, query =
+                "SELECT p FROM Product p JOIN p.categories c WHERE c.id=:categoryId")
+        ,@NamedQuery(name = Product.QUANTITY_LESS_THAN, query =
+                "SELECT p FROM Product p WHERE p.quantity < :quantity")
+        ,@NamedQuery(name = Product.ALL_SORTED, query =
+                "SELECT p FROM Product p ORDER BY p.price")
+        ,@NamedQuery(name = Product.BY_PRODUCT_NAME_MASK, query =
+                "SELECT p FROM Product p WHERE lower(p.name) LIKE lower(:productNameMask)"),
 })
 @Entity
 @Table(name = "jos_jshopping_products")
@@ -25,16 +28,13 @@ import java.util.*;
 })
 public class Product extends NamedEntity {
 
-
     public static final String DELETE = "Product.delete";
     public static final String BY_CATEGORY_ID = "Product.getByCategoryId";
     public static final String QUANTITY_LESS_THAN = "Product.getQuantityLessThan";
     public static final String ALL_SORTED = "Product.getAllSorted";
     public static final String BY_PRODUCT_NAME_MASK = "OrderItem.byProductNameMask";
 
-    @Column(name = "product_price")
-//    @Column(name = "product_price", columnDefinition = "decimal(18,6)")
-    // TODO: 2/11/2017 DECIMAL | Integer question??
+    @Column(name = "product_price", columnDefinition = "decimal", precision = 12, scale = 2)
     private BigDecimal price;
 
     @Column(name = "product_quantity")
@@ -56,12 +56,10 @@ public class Product extends NamedEntity {
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean unlimited;
 
-    //????????????????????  why i should replace it with bidirectional relationship
-//    http://stackoverflow.com/questions/1307203/hibernate-unidirectional-one-to-many-association-why-is-a-join-table-better
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "product_id")
-    @OrderBy("id DESC")
+    @OrderBy("id ASC")
     private List<ProductVariation> variations;
 
     @Column(name = "supplier")
@@ -70,11 +68,10 @@ public class Product extends NamedEntity {
     public Product() {
     }
 
-    public Product(Integer id, String name, Integer price, boolean unlimited, int quantity,
-                   boolean hasVariations, Collection<ProductCategory> categories, Collection<ProductVariation> productVariations) {
-        this.id = id;
-        this.name = name;
-        this.price = new BigDecimal(price);
+    public Product(Integer id, String name, Integer price, boolean unlimited, int quantity, boolean hasVariations,
+                   Collection<ProductCategory> categories, Collection<ProductVariation> productVariations) {
+        super(id, name);
+        this.price = new BigDecimal(price).setScale(6);
         this.unlimited = unlimited;
         this.quantity = quantity;
         this.categories = new HashSet<>(categories);
@@ -93,16 +90,12 @@ public class Product extends NamedEntity {
                 p.getCategories(), p.getVariations());
     }
 
-//    private int productCode;
-
-
-//    private boolean unlimited;
-
-//    private boolean priceInEuro;
-
-
     public Integer getPrice() {
         return price.intValue();
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public void setPrice(Integer price) {
@@ -149,10 +142,6 @@ public class Product extends NamedEntity {
         this.variations = variations;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
     public String getSupplier() {
         return supplier;
     }
@@ -195,4 +184,5 @@ public class Product extends NamedEntity {
                 ", variations=" + variations +
                 '}';
     }
+
 }

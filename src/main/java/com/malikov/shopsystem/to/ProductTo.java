@@ -2,7 +2,6 @@ package com.malikov.shopsystem.to;
 
 import java.io.Serializable;
 
-//@RestResource(exported = false)
 public class ProductTo implements Serializable {
 
     private Integer productId;
@@ -99,4 +98,5 @@ public class ProductTo implements Serializable {
                 ", unlimited=" + unlimited +
                 '}';
     }
+
 }

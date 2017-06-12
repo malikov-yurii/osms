@@ -52,13 +52,13 @@ public abstract class AbstractOrderServiceTest extends AbstractServiceTest {
     @Test
     public void testGetAll() throws Exception {
         Collection<Order> all = service.getAll();
-        OrderTestData.MATCHER.assertCollectionEquals(Arrays.asList(ORDER_1, ORDER_2, ORDER_3, ORDER_4, ORDER_5), all);
+        OrderTestData.MATCHER.assertCollectionEquals(Arrays.asList(ORDER_4, ORDER_3, ORDER_2, ORDER_1), all);
     }
 
     @Test
     public void testDelete() throws Exception {
         service.delete(ORDER_2.getId());
-        OrderTestData.MATCHER.assertCollectionEquals(Arrays.asList(ORDER_1, ORDER_3, ORDER_4, ORDER_5), service.getAll());
+        OrderTestData.MATCHER.assertCollectionEquals(Arrays.asList(ORDER_4, ORDER_3, ORDER_1), service.getAll());
     }
 
     @Test

@@ -23,9 +23,7 @@ public class VariationValue extends NamedEntity {
     }
 
     public VariationValue(String name, VariationType variationType) {
-        this.id = null;
-        this.name = name;
-        this.variationType = variationType;
+        this(null, name, variationType);
     }
 
     public VariationValue(Integer id, String name, VariationType variationType) {
@@ -61,4 +59,5 @@ public class VariationValue extends NamedEntity {
                 ", type=" + variationType +
                 '}';
     }
+
 }

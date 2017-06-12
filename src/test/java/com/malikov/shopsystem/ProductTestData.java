@@ -44,9 +44,6 @@ public class ProductTestData {
     public static final Product POTAL_KITAJ = new Product(4, "Potal Kitaj", 145, false, 11, true,
             Collections.singleton(CATEGORY_POTAL_I_ZOLOTO), Arrays.asList(POTAL_KITAJ_100, POTAL_KITAJ_500));
 
-    public static final Product BITUM_DIVOLO = new Product(5, "Divolo Bitum Vosk", 570, false, 1, false,
-            Collections.singleton(CATEGORY_LAKI), null);
-
     public static final ModelMatcher<Product> MATCHER = ModelMatcher.of(Product.class,
             (expected, actual) -> expected == actual ||
                     (Objects.equals(expected.getId(), actual.getId())

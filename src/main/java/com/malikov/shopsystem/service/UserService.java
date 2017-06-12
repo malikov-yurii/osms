@@ -8,4 +8,5 @@ public interface UserService extends Service<User> {
     User getByLogin(String login);
 
     void update(UserTo userTo);
+
 }
