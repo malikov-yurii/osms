@@ -1,8 +1,10 @@
 package com.malikov.shopsystem.web.controller.order;
 
+import com.malikov.shopsystem.model.OrderItem;
 import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.model.PaymentType;
 import com.malikov.shopsystem.service.CustomerService;
+import com.malikov.shopsystem.service.OrderItemService;
 import com.malikov.shopsystem.service.OrderService;
 import com.malikov.shopsystem.service.UserService;
 import com.malikov.shopsystem.to.CustomerAutocompleteTo;
@@ -31,6 +33,9 @@ public class OrderAjaxController extends AbstractOrderController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    private OrderItemService orderItemService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public OrderDatatablePageTo getDatatablePage(@RequestParam("start") int start, @RequestParam("length") int length) {
@@ -117,8 +122,11 @@ public class OrderAjaxController extends AbstractOrderController {
     }
 
     @PostMapping(value = "/{id}/add-order-item")
-    public void addOrderItem(@PathVariable("id") Long orderId) {
-        super.addOrderItem(orderId);
+    public Long addOrderItem(@PathVariable("id") Long orderId) {
+        OrderItem orderItem = orderItemService.save(new OrderItem(orderService.get(orderId),
+                null, "", 0, 1));
+        LOG.info("create new {}", orderItem);
+        return orderItem.getId();
     }
 
     @PostMapping(value = "/{id}/persist-customer-from-order")

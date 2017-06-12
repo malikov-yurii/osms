@@ -216,10 +216,6 @@ public abstract class AbstractOrderController {
         return orderItemAutocompleteTos;
     }
 
-    public void addOrderItem(Long orderId) {
-        orderItemService.save(new OrderItem(orderService.get(orderId), null, "", 0, 1));
-    }
-
     public void deleteOrderItem(Long orderItemId) {
         orderItemService.delete(orderItemId);
     }
