@@ -6,7 +6,6 @@ import com.malikov.shopsystem.model.PaymentType;
 import com.malikov.shopsystem.service.CustomerService;
 import com.malikov.shopsystem.service.OrderItemService;
 import com.malikov.shopsystem.service.OrderService;
-import com.malikov.shopsystem.service.UserService;
 import com.malikov.shopsystem.to.CustomerAutocompleteTo;
 import com.malikov.shopsystem.to.OrderDatatablePageTo;
 import com.malikov.shopsystem.to.OrderItemAutocompleteTo;

@@ -8,35 +8,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.malikov.shopsystem.util.ValidationUtil.checkNotFound;
+
 @Service
 public class ProductVariationServiceImpl implements ProductVariationService {
 
     @Autowired
-    ProductVariationRepository repository;
-
-    @Override
-    public ProductVariation save(ProductVariation productVariation) {
-        return repository.save(productVariation);
-    }
-
-    @Override
-    public ProductVariation update(ProductVariation productVariation) {
-        return repository.save(productVariation);
-    }
+    ProductVariationRepository productVariationRepository;
 
     @Override
     public ProductVariation get(Long id) {
-        return repository.get(id);
+        return checkNotFound(productVariationRepository.get(id), "not found");
     }
-
-    @Override
-    public List<ProductVariation> getAll() {
-        return repository.getAll();
-    }
-
-    @Override
-    public void delete(Long id) {
-        repository.delete(id);
-    }
-
 }

@@ -2,6 +2,9 @@ package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.model.ProductVariation;
 
-public interface ProductVariationService extends Service<ProductVariation> {
+import java.util.List;
 
+public interface ProductVariationService {
+
+    ProductVariation get(Long id);
 }

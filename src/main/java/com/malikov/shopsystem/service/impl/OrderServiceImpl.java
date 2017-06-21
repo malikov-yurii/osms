@@ -6,7 +6,6 @@ import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.model.PaymentType;
 import com.malikov.shopsystem.repository.OrderRepository;
 import com.malikov.shopsystem.service.OrderService;
-import com.malikov.shopsystem.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

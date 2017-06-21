@@ -13,7 +13,7 @@ import static com.malikov.shopsystem.model.Role.ROLE_USER;
 
 public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
-    @Autowired
+    /*@Autowired
     protected UserService service;
 
     @Test
@@ -55,5 +55,5 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     public void testDelete() throws Exception {
         service.delete(USER.getId());
         MATCHER.assertCollectionEquals(Collections.singletonList(ADMIN), service.getAll());
-    }
+    }*/
 }
