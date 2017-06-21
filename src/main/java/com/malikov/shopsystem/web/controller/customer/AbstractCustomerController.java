@@ -42,7 +42,7 @@ public abstract class AbstractCustomerController {
     public Customer create(Customer customer) {
         customer.setId(null);
         LOG.info("create order{}", customer);
-        return service.save(customer);
+        return service.create(customer);
     }
 
     public String getEmail(Long id) {

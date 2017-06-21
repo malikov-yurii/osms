@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.malikov.shopsystem.util.ValidationUtil.checkNotFound;
+import static com.malikov.shopsystem.util.ValidationUtil.checkNotFoundById;
 
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService {
@@ -17,18 +18,18 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     ProductCategoryRepository productCategoryRepository;
 
     @Override
-    public ProductCategory save(ProductCategory productCategory) {
-        return checkNotFound(productCategoryRepository.save(productCategory), "not found");
+    public ProductCategory create(ProductCategory productCategory) {
+        return productCategoryRepository.save(productCategory);
     }
 
     @Override
     public void update(ProductCategory productCategory) {
-        checkNotFound(productCategoryRepository.save(productCategory), "not found");
+        checkNotFoundById(productCategoryRepository.save(productCategory), productCategory.getId());
     }
 
     @Override
     public ProductCategory get(Long id) {
-        return checkNotFound(productCategoryRepository.get(id), "not found");
+        return checkNotFoundById(productCategoryRepository.get(id), id);
     }
 
     @Override
@@ -38,6 +39,6 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Override
     public void delete(Long id) {
-        checkNotFound(productCategoryRepository.delete(id), "not found");
+        checkNotFoundById(productCategoryRepository.delete(id), id);
     }
 }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.malikov.shopsystem.util.ValidationUtil.checkNotFound;
+import static com.malikov.shopsystem.util.ValidationUtil.checkNotFoundById;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -21,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product get(Long id) {
-        return checkNotFound(repository.get(id), "exception.notFoundById");
+        return checkNotFoundById(repository.get(id), id);
     }
 
     @Override
@@ -35,12 +36,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(Long id) {
-        checkNotFound(repository.delete(id), "exception.notFoundById");
+        checkNotFoundById(repository.delete(id), id);
     }
 
     @Override
     public void update(Product product) {
-        checkNotFound(repository.save(product), "exception.notFoundById");
+        checkNotFoundById(repository.save(product), product.getId());
     }
 
     @Override

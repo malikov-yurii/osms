@@ -291,7 +291,7 @@ public abstract class AbstractOrderController {
         if (order.getCustomer() != null) {
             throw new DataIntegrityViolationException(messageSource.getMessage("exception.duplicateCustomer", null, LocaleContextHolder.getLocale()));
         }
-        order.setCustomer(customerService.save(
+        order.setCustomer(customerService.create(
                 new Customer(order.getCustomerName()
                         , order.getCustomerLastName()
                         , order.getCustomerPhoneNumber()

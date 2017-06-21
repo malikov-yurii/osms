@@ -19,7 +19,7 @@ public abstract class AbstractCustomerServiceTest extends AbstractServiceTest {
     public void testSave() throws Exception {
         Customer newCustomer = new Customer(
                 "NewName", "NewLastName", "0671234567", "newCity", "1", "new@gmail.com", "");
-        Customer created = service.save(newCustomer);
+        Customer created = service.create(newCustomer);
         newCustomer.setId(created.getId());
         MATCHER.assertCollectionEquals(
                 Arrays.asList(CUSTOMER_DROGOV, CUSTOMER_GOLOV, CUSTOMER_DUNOV,

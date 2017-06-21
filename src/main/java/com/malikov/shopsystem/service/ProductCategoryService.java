@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ProductCategoryService {
 
-    ProductCategory save(ProductCategory productCategory);
+    ProductCategory create(ProductCategory productCategory);
 
     void update(ProductCategory productCategory);
 

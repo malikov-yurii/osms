@@ -3,11 +3,14 @@ package com.malikov.shopsystem.service.impl;
 import com.malikov.shopsystem.model.Customer;
 import com.malikov.shopsystem.repository.CustomerRepository;
 import com.malikov.shopsystem.service.CustomerService;
+import com.malikov.shopsystem.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+
+import static com.malikov.shopsystem.util.ValidationUtil.*;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -16,18 +19,18 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository repository;
 
     @Override
-    public Customer save(Customer customer) {
+    public Customer create(Customer customer) {
         return repository.save(customer);
     }
 
     @Override
-    public Customer update(Customer customer) {
-        return repository.save(customer);
+    public void update(Customer customer) {
+        checkNotFoundById(repository.save(customer), customer.getId());
     }
 
     @Override
     public Customer get(Long id) {
-        return repository.get(id);
+        return checkNotFoundById(repository.get(id), id);
     }
 
     @Override
@@ -37,7 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void delete(Long id) {
-        repository.delete(id);
+        checkNotFoundById(repository.delete(id), id);
     }
 
     @Override
@@ -77,12 +80,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer getByEmail(String email) {
-        return repository.getByEmail(email);
+        return checkNotFound(repository.getByEmail(email), "not found by email=" + email);
     }
 
     @Override
     public Customer getByPhoneNumber(String phoneNumber) {
-        return repository.getByPhoneNumber(phoneNumber);
+        return checkNotFound(repository.getByPhoneNumber(phoneNumber), "not found by phone number=" + phoneNumber);
     }
 
 }

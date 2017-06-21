@@ -3,8 +3,19 @@ package com.malikov.shopsystem.service;
 import com.malikov.shopsystem.model.Customer;
 
 import java.util.Collection;
+import java.util.List;
 
-public interface CustomerService extends Service<Customer> {
+public interface CustomerService {
+
+    Customer create(Customer customer);
+
+    void update(Customer customer);
+
+    Customer get(Long id);
+
+    List<Customer> getAll();
+
+    void delete(Long id);
 
     Collection<Customer> getByName(String name);
 
