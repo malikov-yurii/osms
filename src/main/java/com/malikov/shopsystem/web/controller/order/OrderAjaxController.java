@@ -8,16 +8,18 @@ import com.malikov.shopsystem.service.OrderItemService;
 import com.malikov.shopsystem.service.OrderService;
 import com.malikov.shopsystem.service.UserService;
 import com.malikov.shopsystem.to.CustomerAutocompleteTo;
-import com.malikov.shopsystem.to.OrderDatatablePageTo;
 import com.malikov.shopsystem.to.OrderItemAutocompleteTo;
 import com.malikov.shopsystem.to.OrderTo;
+import com.malikov.shopsystem.util.OrderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/ajax/profile/orders")
@@ -38,19 +40,23 @@ public class OrderAjaxController extends AbstractOrderController {
     private OrderItemService orderItemService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public OrderDatatablePageTo getDatatablePage(@RequestParam("start") int start, @RequestParam("length") int length) {
-        return super.getDatatablePage(start, length);
+    public ModelMap getOrderTablePage(@RequestParam("start") int start, @RequestParam("length") int length) {
+        ModelMap modelMap = new ModelMap("recordsTotal", orderService.getTotalQuantity());
+        modelMap.addAttribute("data", orderService.getPage(start, length).stream()
+                .map(OrderUtil::asTo).collect(Collectors.toList()));
+        return modelMap;
     }
 
     @GetMapping(value = "/{id}")
-    public OrderTo get(@PathVariable("id") Long id) {
-        return super.getOrderTo(id);
+    public OrderTo get(@PathVariable("id") Long orderId) {
+        return OrderUtil.asTo(orderService.get(orderId));
     }
 
 
     @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable("id") Long id) {
-        super.delete(id);
+        orderService.delete(id);
+        LOG.info("delete order {}", id);
     }
 
     @PostMapping
@@ -58,37 +64,16 @@ public class OrderAjaxController extends AbstractOrderController {
         return orderService.create().getId();
     }
 
-    // TODO: 2/5/2017 chang it to PUT??
-    @PostMapping(value = "{itemId}/update-name")
-    public void updateOrderItemName(@PathVariable("itemId") Long itemId, @RequestParam("name") String name) {
-        super.updateOrderItemProductName(itemId, name);
-    }
 
-    @PostMapping(value = "{itemId}/update-quantity")
-    public int updateOrderItemQuantity(@PathVariable("itemId") Long itemId, @RequestParam("quantity") int quantity) {
-        return super.updateOrderItemProductQuantity(itemId, quantity);
-    }
-
-    // TODO: 2/5/2017 chang it to PUT??
-    @PostMapping(value = "{itemId}/update-price")
-    public int updateOrderItemPrice(@PathVariable("itemId") Long itemId, @RequestParam("price") int price) {
-        return super.updateOrderItemPrice(itemId, price);
-    }
-
-    // TODO: 2/5/2017 chang it to PUT??
-    @PostMapping(value = "{itemId}/update-order-item-after-order-item-name-autocomplete")
-    public Integer updateOrderItemAfterOrderItemNameAutocomplete(@PathVariable("itemId") Long itemId
+    // TODO: Old name update-order-item-after-order-item-name-autocomplete
+    @PutMapping(value = "{itemId}")
+    public Integer updateOrderItem(@PathVariable("itemId") Long itemId
             , @RequestParam("price") int price
             , @RequestParam("productId") Long productId
             , @RequestParam("productVariationId") Long productVariationId
             , @RequestParam("orderItemName") String orderItemName
     ) {
         return super.updateOrderItemPriceProductIdProductVariationId(itemId, price, productId, productVariationId, orderItemName);
-    }
-
-    @PostMapping(value = "/autocomplete-first-name", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CustomerAutocompleteTo> autocompleteFirstName(@RequestParam("term") String firstNameMask) {
-        return super.getCustomerAutocompleteTosByFirstNameMask(firstNameMask);
     }
 
     @PostMapping(value = "/autocomplete-last-name", produces = MediaType.APPLICATION_JSON_VALUE)

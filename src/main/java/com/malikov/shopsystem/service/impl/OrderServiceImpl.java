@@ -17,6 +17,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import static com.malikov.shopsystem.util.ValidationUtil.checkNotFound;
+
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -34,8 +36,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order update(Order order) {
-        return orderRepository.save(order);
+    public void update(Order order) {
+        orderRepository.save(order);
     }
 
     @Override
@@ -44,13 +46,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getAll() {
-        return orderRepository.getAll();
-    }
-
-    @Override
     public void delete(Long id) {
-        orderRepository.delete(id);
+        checkNotFound(orderRepository.delete(id), "not found order " + id + " for delete");
     }
 
     @Override
@@ -69,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getDatatablePage(int start, int length) {
+    public List<Order> getPage(int start, int length) {
         return orderRepository.getDatatablePage(start, length);
     }
 

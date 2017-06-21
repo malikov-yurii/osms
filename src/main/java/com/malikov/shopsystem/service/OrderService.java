@@ -6,7 +6,17 @@ import com.malikov.shopsystem.model.OrderStatus;
 import java.util.Collection;
 import java.util.List;
 
-public interface OrderService extends Service<Order> {
+public interface OrderService {
+
+    Order create();
+
+    Order save(Order order);
+
+    void update(Order order);
+
+    Order get(Long id);
+
+    void delete(Long id);
 
     Collection<Order> getByCustomerId(Long customerId);
 
@@ -14,9 +24,7 @@ public interface OrderService extends Service<Order> {
 
     void updateStatus(Integer orderId, OrderStatus status);
 
-    List<Order> getDatatablePage(int start, int length);
+    List<Order> getPage(int start, int length);
 
     Long getTotalQuantity();
-
-    Order create();
 }

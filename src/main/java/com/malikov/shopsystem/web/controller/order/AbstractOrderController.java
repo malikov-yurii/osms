@@ -3,9 +3,7 @@ package com.malikov.shopsystem.web.controller.order;
 import com.malikov.shopsystem.model.*;
 import com.malikov.shopsystem.service.*;
 import com.malikov.shopsystem.to.CustomerAutocompleteTo;
-import com.malikov.shopsystem.to.OrderDatatablePageTo;
 import com.malikov.shopsystem.to.OrderItemAutocompleteTo;
-import com.malikov.shopsystem.to.OrderTo;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,69 +38,10 @@ public abstract class AbstractOrderController {
     @Autowired
     private ProductVariationService productVariationService;
 
-    public OrderTo getOrderTo(Long id) {
-        LOG.info("get order {}", id);
-        return OrderUtil.asTo(orderService.get(id));
-    }
-
-    public Order getOrder(Long id) {
-        LOG.info("get order {}", id);
-        return orderService.get(id);
-    }
-
-    public void delete(Long id) {
-        LOG.info("delete order {}", id);
-        orderService.delete(id);
-    }
-
-    public List<OrderTo> getAll() {
-        LOG.info("getAll orders");
-        return orderService.getAll().stream().map(OrderUtil::asTo).collect(Collectors.toList());
-    }
-
-    public OrderDatatablePageTo getDatatablePage(int start, int length) {
-        LOG.info("getAll orders");
-        Long orderTotalQuantity = orderService.getTotalQuantity();
-        return new OrderDatatablePageTo(
-                orderTotalQuantity,
-                orderTotalQuantity,
-                orderService.getDatatablePage(start, length).stream().map(OrderUtil::asTo).collect(Collectors.toList()));
-    }
-
     public void update(Order order, Long id) {
         order.setId(id);
         LOG.info("update order{}", order);
         orderService.update(order);
-    }
-
-
-
-    public void updateOrderItemProductName(Long itemId, String name) {
-        OrderItem orderItem = orderItemService.get(itemId);
-        orderItem.setProductName(name);
-        orderItemService.update(orderItem);
-    }
-
-    public int updateOrderItemPrice(Long itemId, int price) {
-        OrderItem orderItem = orderItemService.get(itemId);
-        orderItem.setProductPrice(price);
-        Order order = orderItem.getOrder();
-        int totalSum = OrderUtil.calculateTotalSum(order.getOrderItems());
-        order.setTotalSum(totalSum);
-        orderService.update(order);
-        orderItemService.update(orderItem);
-        return totalSum;
-    }
-
-    public int updateOrderItemProductQuantity(Long itemId, int quantity) {
-        OrderItem orderItem = orderItemService.get(itemId);
-        orderItem.setProductQuantity(quantity);
-        Order order = orderItem.getOrder();
-        int totalSum = OrderUtil.calculateTotalSum(order.getOrderItems());
-        order.setTotalSum(totalSum);
-        orderService.update(order);
-        orderItemService.update(orderItem);
-        return totalSum;
     }
 
     public int updateOrderItemPriceProductIdProductVariationId(Long itemId, int price, Long productId, Long productVariationId, String orderItemName) {
@@ -118,21 +57,6 @@ public abstract class AbstractOrderController {
         orderService.update(order);
         orderItemService.update(orderItem);
         return totalSum;
-    }
-
-    public List<CustomerAutocompleteTo> getCustomerAutocompleteTosByFirstNameMask(String firstNameMask) {
-        return customerService
-                .getByFirstNameMask(firstNameMask).stream().map(customer ->
-                        new CustomerAutocompleteTo(
-                                customer.getName() + " " + customer.getLastName() + " " + customer.getCity() + " " + customer.getPhoneNumber(),
-                                customer.getId(),
-                                customer.getName(),
-                                customer.getLastName(),
-                                customer.getPhoneNumber(),
-                                customer.getCity(),
-                                customer.getPostOffice()
-                        ))
-                .collect(Collectors.toList());
     }
 
     public List<CustomerAutocompleteTo> getCustomerAutocompleteTosByLastNameMask(String lastNameMask) {
