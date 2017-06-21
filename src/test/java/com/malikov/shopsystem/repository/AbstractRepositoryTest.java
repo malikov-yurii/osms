@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.service;
+package com.malikov.shopsystem.repository;
 
 import com.malikov.shopsystem.Profiles;
 import org.junit.AfterClass;
@@ -27,8 +27,8 @@ import java.util.concurrent.TimeUnit;
         "classpath:db/populateTestDB.sql"},
         config = @SqlConfig(encoding = "UTF-8"))
 @ActiveProfiles(Profiles.MYSQL_TEST)
-public abstract class AbstractServiceTest {
-    private static final Logger LOG = LoggerFactory.getLogger(AbstractServiceTest.class);
+public abstract class AbstractRepositoryTest {
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractRepositoryTest.class);
 
     private static StringBuilder results = new StringBuilder();
 

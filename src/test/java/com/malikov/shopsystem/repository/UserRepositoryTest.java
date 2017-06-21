@@ -1,17 +1,6 @@
-package com.malikov.shopsystem.service;
+package com.malikov.shopsystem.repository;
 
-import com.malikov.shopsystem.model.User;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-
-import static com.malikov.shopsystem.UserTestData.*;
-import static com.malikov.shopsystem.model.Role.ROLE_USER;
-
-public abstract class AbstractUserServiceTest extends AbstractServiceTest {
+public abstract class UserRepositoryTest extends AbstractRepositoryTest {
 
     /*@Autowired
     protected UserService service;

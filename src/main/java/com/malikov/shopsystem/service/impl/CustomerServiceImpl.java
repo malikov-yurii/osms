@@ -3,7 +3,6 @@ package com.malikov.shopsystem.service.impl;
 import com.malikov.shopsystem.model.Customer;
 import com.malikov.shopsystem.repository.CustomerRepository;
 import com.malikov.shopsystem.service.CustomerService;
-import com.malikov.shopsystem.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

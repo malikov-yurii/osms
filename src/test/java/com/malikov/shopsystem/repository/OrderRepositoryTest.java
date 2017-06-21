@@ -1,8 +1,9 @@
-package com.malikov.shopsystem.service;
+package com.malikov.shopsystem.repository;
 
 
 import com.malikov.shopsystem.OrderTestData;
 import com.malikov.shopsystem.model.Order;
+import com.malikov.shopsystem.service.OrderService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,8 +14,8 @@ import static com.malikov.shopsystem.CustomerTestData.CUSTOMER_GOLOV;
 import static com.malikov.shopsystem.OrderTestData.*;
 import static com.malikov.shopsystem.ProductTestData.POTAL_KITAJ;
 
-public abstract class AbstractOrderServiceTest extends AbstractServiceTest {
-
+public abstract class OrderRepositoryTest extends AbstractRepositoryTest {
+/*
     @Autowired
     protected OrderService service;
 
@@ -72,4 +73,5 @@ public abstract class AbstractOrderServiceTest extends AbstractServiceTest {
         Collection<Order> allByProductId = service.getByProductId(POTAL_KITAJ.getId());
         OrderTestData.MATCHER.assertCollectionEquals(Arrays.asList(ORDER_2, ORDER_3), allByProductId);
     }
+    */
 }

@@ -1,19 +1,6 @@
-package com.malikov.shopsystem.service;
+package com.malikov.shopsystem.repository;
 
-import com.malikov.shopsystem.ProductTestData;
-import com.malikov.shopsystem.model.Product;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-
-import static com.malikov.shopsystem.ProductCategoryTestData.CATEGORY_KLEI;
-import static com.malikov.shopsystem.ProductCategoryTestData.CATEGORY_POTAL_I_ZOLOTO;
-import static com.malikov.shopsystem.ProductTestData.*;
-
-public abstract class AbstractProductServiceTest extends AbstractServiceTest {
+public abstract class ProductRepositoryTest extends AbstractRepositoryTest {
 /*
     @Autowired
     protected ProductService service;
