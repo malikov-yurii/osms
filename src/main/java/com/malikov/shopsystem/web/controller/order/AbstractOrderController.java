@@ -56,12 +56,12 @@ public abstract class AbstractOrderController {
     }
 
     public List<OrderTo> getAll() {
-        LOG.info("getAll orders");
+        LOG.info("getAllDtos orders");
         return orderService.getAll().stream().map(OrderUtil::asTo).collect(Collectors.toList());
     }
 
     public OrderDatatablePageTo getDatatablePage(int start, int length) {
-        LOG.info("getAll orders");
+        LOG.info("getAllDtos orders");
         Long orderTotalQuantity = orderService.getTotalQuantity();
         return new OrderDatatablePageTo(
                 orderTotalQuantity,

@@ -32,7 +32,7 @@ public abstract class AbstractOrderServiceTest extends AbstractServiceTest {
 //        Order created = service.save(newOrder);
 //        newOrder.setId(created.getId());
 //        OrderTestData.MATCHER.assertCollectionEquals(
-//                Arrays.asList(ORDER_1, ORDER_2, ORDER_3, ORDER_4, newOrder), service.getAll());
+//                Arrays.asList(ORDER_1, ORDER_2, ORDER_3, ORDER_4, newOrder), service.getAllDtos());
 //    }
 
     @Test

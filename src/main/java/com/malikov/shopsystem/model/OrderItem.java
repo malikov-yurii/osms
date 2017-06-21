@@ -17,7 +17,7 @@ import java.util.Objects;
 public class OrderItem extends BaseEntity {
 
     public static final String DELETE = "OrderItem.delete";
-    public static final String ALL = "OrderItem.getAll";
+    public static final String ALL = "OrderItem.getAllDtos";
 
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)

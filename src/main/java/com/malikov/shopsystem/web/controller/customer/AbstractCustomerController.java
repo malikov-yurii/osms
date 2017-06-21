@@ -29,7 +29,7 @@ public abstract class AbstractCustomerController {
     }
 
     public List<CustomerTo> getAll() {
-        LOG.info("getAll customers");
+        LOG.info("getAllDtos customers");
         return service.getAll().stream().map(CustomerUtil::asTo).collect(Collectors.toList());
     }
 

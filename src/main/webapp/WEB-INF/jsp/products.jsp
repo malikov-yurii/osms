@@ -19,46 +19,6 @@
             <h3><fmt:message key="products.title"/></h3>
 
             <div class="view-box">
-                <form:form method="post" class="form-horizontal" role="form" id="filter">
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="startDate"><fmt:message
-                                key="products.startDate"/>:</label>
-
-                        <div class="col-sm-2">
-                            <input class="form-control" name="startDate" id="startDate">
-                        </div>
-
-                        <label class="control-label col-sm-2" for="endDate"><fmt:message
-                                key="products.endDate"/>:</label>
-
-                        <div class="col-sm-2">
-                            <input class="form-control" name="endDate" id="endDate">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="startTime"><fmt:message
-                                key="products.startTime"/>:</label>
-
-                        <div class="col-sm-1">
-                            <input class="form-control" name="startTime" id="startTime">
-                        </div>
-
-                        <label class="control-label col-sm-3" for="endTime"><fmt:message
-                                key="products.endTime"/>:</label>
-
-                        <div class="col-sm-1">
-                            <input class="form-control" name="endTime" id="endTime">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-6"></div>
-                        <div class="col-sm-1">
-                            <button class="btn btn-primary" type="button" onclick="updateTable()"><fmt:message
-                                    key="products.filter"/></button>
-                        </div>
-                    </div>
-                </form:form>
-
                 <sec:authorize access="hasRole('ROLE_ADMIN')">
                     <a class="btn btn-sm btn-info" onclick="add('<fmt:message key="products.add"/>')"><fmt:message
                             key="products.add"/></a>
@@ -73,11 +33,8 @@
                         <th><fmt:message key="products.price"/></th>
                         <th><fmt:message key="products.quantity"/></th>
                         <th><fmt:message key="products.unlimited"/></th>
-                        <%--<th><fmt:message key="products.different_prices"/></th>--%>
-                        <%--<sec:authorize access="hasRole('ROLE_ADMIN')">--%>
-                            <th></th>
-                            <th></th>
-                        <%--</sec:authorize>--%>
+                        <th></th>
+                        <th></th>
                     </tr>
                     </thead>
                 </table>
