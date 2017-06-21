@@ -15,21 +15,14 @@ public class VariationValue extends NamedEntity {
     @JoinColumn(name = "attr_id")
     private VariationType variationType;
 
-    public VariationValue() {
-    }
 
-    public VariationValue(VariationType variationType) {
-        this.variationType = variationType;
-    }
-
-    public VariationValue(String name, VariationType variationType) {
-        this(null, name, variationType);
-    }
+    public VariationValue() {}
 
     public VariationValue(Long id, String name, VariationType variationType) {
         super(id, name);
         this.variationType = variationType;
     }
+
 
     public VariationType getVariationType() {
         return variationType;
@@ -59,5 +52,4 @@ public class VariationValue extends NamedEntity {
                 ", type=" + variationType +
                 '}';
     }
-
 }

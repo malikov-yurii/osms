@@ -57,7 +57,6 @@ public class OrderJpaRepositoryImpl implements OrderRepository {
                 .setParameter("productId", productId).getResultList();
     }
 
-    // TODO: 2/6/2017 Now this method is not working. why?
     @Override
     public void updateStatus(Integer orderId, OrderStatus status) {
         em.createNamedQuery(Order.UPDATE_STATUS)

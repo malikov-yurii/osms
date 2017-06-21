@@ -21,12 +21,13 @@ public class BaseEntity implements Persistable<Long> {
     @Access(value = AccessType.PROPERTY)
     protected Long id;
 
-    public BaseEntity() {
-    }
+
+    public BaseEntity() {}
 
     protected BaseEntity(Long id) {
         this.id = id;
     }
+
 
     @Override
     public Long getId() {
@@ -59,5 +60,4 @@ public class BaseEntity implements Persistable<Long> {
     public int hashCode() {
         return (int) ((getId() == null) ? 0 : getId());
     }
-
 }
