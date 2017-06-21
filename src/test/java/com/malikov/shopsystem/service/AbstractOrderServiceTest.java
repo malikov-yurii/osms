@@ -29,7 +29,7 @@ public abstract class AbstractOrderServiceTest extends AbstractServiceTest {
 //                        new OrderItemExtended(FERRARIO_ROZOVYJ.getId(), FERRARIO_ROZOVYJ.getName(), FERRARIO_ROZOVYJ.getPrice(), 7),
 //                        new OrderItemExtended(POTAL_NAZIONALE.getId(), POTAL_NAZIONALE.getName(), POTAL_NAZIONALE.getPrice(), 6)
 //                ));
-//        Order created = service.save(newOrder);
+//        Order created = service.create(newOrder);
 //        newOrder.setId(created.getId());
 //        OrderTestData.MATCHER.assertCollectionEquals(
 //                Arrays.asList(ORDER_1, ORDER_2, ORDER_3, ORDER_4, newOrder), service.getAllDtos());

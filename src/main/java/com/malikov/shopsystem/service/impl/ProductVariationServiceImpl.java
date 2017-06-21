@@ -20,4 +20,24 @@ public class ProductVariationServiceImpl implements ProductVariationService {
     public ProductVariation get(Long id) {
         return checkNotFound(productVariationRepository.get(id), "not found");
     }
+
+    @Override
+    public ProductVariation create(ProductVariation productVariation) {
+        return checkNotFound(productVariationRepository.save(productVariation), "not found");
+    }
+
+    @Override
+    public void update(ProductVariation productVariation) {
+        checkNotFound(productVariationRepository.save(productVariation), "not found");
+    }
+
+    @Override
+    public List<ProductVariation> getAll() {
+        return productVariationRepository.getAll();
+    }
+
+    @Override
+    public void delete(Long id) {
+        checkNotFound(productVariationRepository.delete(id), "not found");
+    }
 }

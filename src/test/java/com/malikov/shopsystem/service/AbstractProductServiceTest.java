@@ -23,7 +23,7 @@ public abstract class AbstractProductServiceTest extends AbstractServiceTest {
     @Test
     public void testSave() throws Exception {
         Product newProduct = new Product("newProductName", 100, false, 111, false, Collections.singleton(CATEGORY_KLEI), null);
-        Product created = service.save(newProduct);
+        Product created = service.create(newProduct);
         newProduct.setId(created.getId());
         ProductTestData.MATCHER.assertCollectionEquals(
                 Arrays.asList(POTAL_KITAJ, POTAL_NAZIONALE, SHELLAC_MANETTI, FERRARIO_ROZOVYJ, newProduct),

@@ -23,5 +23,5 @@ public interface ProductService {
 
     //Collection<Product> getByCategoryId(Long categoryId);
     //Collection<Product> getAllQuantityLessThan(int quantity);
-    //Product save(Product product);
+    //Product create(Product product);
 }

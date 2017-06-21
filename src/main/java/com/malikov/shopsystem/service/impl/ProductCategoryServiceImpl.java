@@ -8,35 +8,36 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.malikov.shopsystem.util.ValidationUtil.checkNotFound;
+
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Autowired
-    ProductCategoryRepository repository;
+    ProductCategoryRepository productCategoryRepository;
 
     @Override
     public ProductCategory save(ProductCategory productCategory) {
-        return repository.save(productCategory);
+        return checkNotFound(productCategoryRepository.save(productCategory), "not found");
     }
 
     @Override
-    public ProductCategory update(ProductCategory productCategory) {
-        return repository.save(productCategory);
+    public void update(ProductCategory productCategory) {
+        checkNotFound(productCategoryRepository.save(productCategory), "not found");
     }
 
     @Override
     public ProductCategory get(Long id) {
-        return repository.get(id);
+        return checkNotFound(productCategoryRepository.get(id), "not found");
     }
 
     @Override
     public List<ProductCategory> getAll() {
-        return repository.getAll();
+        return productCategoryRepository.getAll();
     }
 
     @Override
     public void delete(Long id) {
-        repository.delete(id);
+        checkNotFound(productCategoryRepository.delete(id), "not found");
     }
-
 }

@@ -2,6 +2,18 @@ package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.model.ProductCategory;
 
-public interface ProductCategoryService extends Service<ProductCategory> {
+import java.util.List;
+
+public interface ProductCategoryService {
+
+    ProductCategory save(ProductCategory productCategory);
+
+    void update(ProductCategory productCategory);
+
+    ProductCategory get(Long id);
+
+    List<ProductCategory> getAll();
+
+    void delete(Long id);
 
 }
