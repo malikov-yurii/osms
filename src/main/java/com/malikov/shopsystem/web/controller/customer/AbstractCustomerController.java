@@ -29,7 +29,7 @@ public abstract class AbstractCustomerController {
     }
 
     public List<CustomerTo> getAll() {
-        LOG.info("getAll customers");
+        LOG.info("getAllDtos customers");
         return service.getAll().stream().map(CustomerUtil::asTo).collect(Collectors.toList());
     }
 
@@ -42,7 +42,7 @@ public abstract class AbstractCustomerController {
     public Customer create(Customer customer) {
         customer.setId(null);
         LOG.info("create order{}", customer);
-        return service.save(customer);
+        return service.create(customer);
     }
 
     public String getEmail(Long id) {

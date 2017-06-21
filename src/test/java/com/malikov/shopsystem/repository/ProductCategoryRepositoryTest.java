@@ -1,23 +1,14 @@
-package com.malikov.shopsystem.service;
+package com.malikov.shopsystem.repository;
 
-import com.malikov.shopsystem.model.ProductCategory;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Arrays;
-import java.util.Collection;
-
-import static com.malikov.shopsystem.ProductCategoryTestData.*;
-
-public abstract class AbstractProductCategoryServiceTest extends AbstractServiceTest {
-
+public abstract class ProductCategoryRepositoryTest extends AbstractRepositoryTest {
+/*
     @Autowired
     protected ProductCategoryService service;
 
     @Test
     public void testSave() throws Exception {
         ProductCategory newProductCategory = new ProductCategory("newCategoryName");
-        ProductCategory created = service.save(newProductCategory);
+        ProductCategory created = service.create(newProductCategory);
         newProductCategory.setId(created.getId());
         MATCHER.assertCollectionEquals(
                 Arrays.asList(CATEGORY_KLEI, CATEGORY_LAKI, newProductCategory, CATEGORY_POTAL_I_ZOLOTO),
@@ -50,5 +41,5 @@ public abstract class AbstractProductCategoryServiceTest extends AbstractService
         service.delete(CATEGORY_POTAL_I_ZOLOTO.getId());
         MATCHER.assertCollectionEquals(Arrays.asList(
                 CATEGORY_KLEI, CATEGORY_LAKI), service.getAll());
-    }
+    }*/
 }

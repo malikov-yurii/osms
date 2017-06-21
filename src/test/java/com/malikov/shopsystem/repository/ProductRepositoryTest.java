@@ -1,20 +1,7 @@
-package com.malikov.shopsystem.service;
+package com.malikov.shopsystem.repository;
 
-import com.malikov.shopsystem.ProductTestData;
-import com.malikov.shopsystem.model.Product;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-
-import static com.malikov.shopsystem.ProductCategoryTestData.CATEGORY_KLEI;
-import static com.malikov.shopsystem.ProductCategoryTestData.CATEGORY_POTAL_I_ZOLOTO;
-import static com.malikov.shopsystem.ProductTestData.*;
-
-public abstract class AbstractProductServiceTest extends AbstractServiceTest {
-
+public abstract class ProductRepositoryTest extends AbstractRepositoryTest {
+/*
     @Autowired
     protected ProductService service;
 
@@ -23,11 +10,11 @@ public abstract class AbstractProductServiceTest extends AbstractServiceTest {
     @Test
     public void testSave() throws Exception {
         Product newProduct = new Product("newProductName", 100, false, 111, false, Collections.singleton(CATEGORY_KLEI), null);
-        Product created = service.save(newProduct);
+        Product created = service.create(newProduct);
         newProduct.setId(created.getId());
         ProductTestData.MATCHER.assertCollectionEquals(
                 Arrays.asList(POTAL_KITAJ, POTAL_NAZIONALE, SHELLAC_MANETTI, FERRARIO_ROZOVYJ, newProduct),
-                service.getAll());
+                service.getAllDtos());
     }
 
     @Test
@@ -46,7 +33,7 @@ public abstract class AbstractProductServiceTest extends AbstractServiceTest {
 
     @Test
     public void testGetAll() throws Exception {
-        Collection<Product> all = service.getAll();
+        Collection<Product> all = service.getAllDtos();
         ProductTestData.MATCHER.assertCollectionEquals(Arrays.asList(POTAL_KITAJ, POTAL_NAZIONALE,
                 SHELLAC_MANETTI, FERRARIO_ROZOVYJ), all);
     }
@@ -55,7 +42,7 @@ public abstract class AbstractProductServiceTest extends AbstractServiceTest {
     public void testDelete() throws Exception {
         service.delete(POTAL_NAZIONALE.getId());
         ProductTestData.MATCHER.assertCollectionEquals(Arrays.asList(
-                POTAL_KITAJ, SHELLAC_MANETTI, FERRARIO_ROZOVYJ), service.getAll());
+                POTAL_KITAJ, SHELLAC_MANETTI, FERRARIO_ROZOVYJ), service.getAllDtos());
     }
 
     @Test
@@ -69,5 +56,5 @@ public abstract class AbstractProductServiceTest extends AbstractServiceTest {
         Collection<Product> productsWhereQuantityLessThan = service.getAllQuantityLessThan(30);
         ProductTestData.MATCHER.assertCollectionEquals(
                 Arrays.asList(SHELLAC_MANETTI, POTAL_KITAJ), productsWhereQuantityLessThan);
-    }
+    }*/
 }

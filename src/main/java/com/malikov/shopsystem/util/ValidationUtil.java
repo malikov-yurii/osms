@@ -23,6 +23,17 @@ public class ValidationUtil {
     private ValidationUtil() {
     }
 
+    public static <T> T checkNotFoundById(T object, Long id) {
+        checkNotFoundById(object != null, id);
+        return object;
+    }
+
+    public static void checkNotFoundById(boolean found, Long id) {
+        if (!found) {
+            throw new NotFoundException("not found with id=" + id);
+        }
+    }
+
     public static <T> T checkNotFound(T object, String message) {
         checkNotFound(object != null, message);
         return object;

@@ -35,25 +35,6 @@ $(function () {
                     return data;
                 }
             },
-            // {
-            //     "data": "hasVariations",
-            //     "render": function (data, type, row) {
-            //         if (type == 'display') {
-            //             return '<input type="checkbox" ' + (data ? 'checked' : '') + ' onclick="enableHasVariations($(this),' + row.id + ');"/>';
-            //         }
-            //         return data;
-            //     }
-            // },
-            // {
-            //     "defaultContent": "",
-            //     "orderable": false,
-            //     "render": renderEditBtn
-            // },
-            // {
-            //     "defaultContent": "",
-            //     "orderable": false,
-            //     "render": renderDeleteBtn
-            // }
         ],
         "order": [
             [
@@ -63,38 +44,4 @@ $(function () {
         ],
         "initComplete": makeEditable
     });
-
-    var startDate = $('#startDate');
-    var endDate = $('#endDate');
-    startDate.datetimepicker({
-        timepicker: false,
-        format: 'Y-m-d',
-        formatDate: 'Y-m-d',
-        onShow: function (ct) {
-            this.setOptions({
-                maxDate: endDate.val() ? endDate.val() : false
-            })
-        }
-    });
-    endDate.datetimepicker({
-        timepicker: false,
-        format: 'Y-m-d',
-        formatDate: 'Y-m-d',
-        onShow: function (ct) {
-            this.setOptions({
-                minDate: startDate.val() ? startDate.val() : false
-            })
-        }
-    });
-
-    $('#startTime, #endTime').datetimepicker({
-        datepicker: false,
-        format: 'H:i'
-    });
-
-    $('#dateTime').datetimepicker({
-        format: 'Y-m-d H:i'
-    });
-
-
 });

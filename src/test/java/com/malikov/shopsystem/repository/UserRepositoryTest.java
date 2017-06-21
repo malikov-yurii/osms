@@ -1,25 +1,14 @@
-package com.malikov.shopsystem.service;
+package com.malikov.shopsystem.repository;
 
-import com.malikov.shopsystem.model.User;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+public abstract class UserRepositoryTest extends AbstractRepositoryTest {
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-
-import static com.malikov.shopsystem.UserTestData.*;
-import static com.malikov.shopsystem.model.Role.ROLE_USER;
-
-public abstract class AbstractUserServiceTest extends AbstractServiceTest {
-
-    @Autowired
+    /*@Autowired
     protected UserService service;
 
     @Test
     public void testSave() throws Exception {
         User newUser = new User("newUserNamer", "newPassword", ROLE_USER);
-        User created = service.save(newUser);
+        User created = service.create(newUser);
         MATCHER.assertCollectionEquals(
                 Arrays.asList(ADMIN, created, USER),
                 service.getAll());
@@ -55,5 +44,5 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     public void testDelete() throws Exception {
         service.delete(USER.getId());
         MATCHER.assertCollectionEquals(Collections.singletonList(ADMIN), service.getAll());
-    }
+    }*/
 }

@@ -63,5 +63,4 @@ public class ProductJpaRepositoryImpl implements ProductRepository {
         return em.createNamedQuery(Product.BY_PRODUCT_NAME_MASK, Product.class)
                 .setParameter("productNameMask", "%" + productNameMask + "%").getResultList();
     }
-
 }

@@ -1,7 +1,7 @@
 package com.malikov.shopsystem.util;
 
 import com.malikov.shopsystem.model.Product;
-import com.malikov.shopsystem.to.ProductTo;
+import com.malikov.shopsystem.to.ProductDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,23 +9,23 @@ import java.util.stream.Collectors;
 
 public class ProductUtil {
 
-    public static Product createNewFromTo(ProductTo productTo) {
-        return new Product(null, productTo.getName(), productTo.getPrice(), false, productTo.getQuantity(), false,
+    public static Product createNewFromTo(ProductDto productDto) {
+        return new Product(null, productDto.getName(), productDto.getPrice(), false, productDto.getQuantity(), false,
                 null, null);
     }
 
-    public static Product updateFromTo(Product product, ProductTo productTo) {
-        product.setName(productTo.getName());
-        product.setPrice(productTo.getPrice());
-        product.setQuantity(productTo.getQuantity());
+    public static Product updateFromTo(Product product, ProductDto productDto) {
+        product.setName(productDto.getName());
+        product.setPrice(productDto.getPrice());
+        product.setQuantity(productDto.getQuantity());
         return product;
     }
 
 
-    public static List<ProductTo> getToListFrom(Product product) {
-        List<ProductTo> productTos = new ArrayList<>();
+    public static List<ProductDto> getProductDtosListFrom(Product product) {
+        List<ProductDto> productDtos = new ArrayList<>();
         if (product.getHasVariations()) {
-            productTos.addAll(product.getVariations().stream().map(productVariation -> new ProductTo(
+            productDtos.addAll(product.getVariations().stream().map(productVariation -> new ProductDto(
                     product.getId()
                     , productVariation.getId()
                     , product.getName() + " " + productVariation.getVariationValue().getName()
@@ -34,7 +34,7 @@ public class ProductUtil {
                     , product.getUnlimited()))
                     .collect(Collectors.toList()));
         } else {
-            productTos.add(new ProductTo(
+            productDtos.add(new ProductDto(
                     product.getId()
                     , 0L
                     , product.getName()
@@ -42,7 +42,7 @@ public class ProductUtil {
                     , product.getQuantity()
                     , product.getUnlimited()));
         }
-        return productTos;
+        return productDtos;
     }
 
 }

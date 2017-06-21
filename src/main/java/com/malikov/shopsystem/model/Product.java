@@ -6,19 +6,25 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
+import static java.math.RoundingMode.HALF_UP;
+
+@SuppressWarnings("JpaQlInspection")
 @NamedQueries({
-         @NamedQuery(name = Product.DELETE, query =
-                "DELETE FROM Product p WHERE p.id=:id")
-        ,@NamedQuery(name = Product.BY_CATEGORY_ID, query =
-                "SELECT p FROM Product p JOIN p.categories c WHERE c.id=:categoryId")
-        ,@NamedQuery(name = Product.QUANTITY_LESS_THAN, query =
-                "SELECT p FROM Product p WHERE p.quantity < :quantity")
-        ,@NamedQuery(name = Product.ALL_SORTED, query =
-                "SELECT p FROM Product p ORDER BY p.price")
-        ,@NamedQuery(name = Product.BY_PRODUCT_NAME_MASK, query =
-                "SELECT p FROM Product p WHERE lower(p.name) LIKE lower(:productNameMask)"),
+        @NamedQuery(name = Product.DELETE, query =
+                "DELETE FROM Product p WHERE p.id=:id"),
+        @NamedQuery(name = Product.BY_CATEGORY_ID, query =
+                "SELECT p FROM Product p JOIN p.categories c"
+                        + " WHERE c.id=:categoryId"),
+        @NamedQuery(name = Product.QUANTITY_LESS_THAN, query =
+                "SELECT p FROM Product p WHERE p.quantity < :quantity"),
+        @NamedQuery(name = Product.ALL_SORTED, query =
+                "SELECT p FROM Product p ORDER BY p.price"),
+        @NamedQuery(name = Product.BY_PRODUCT_NAME_MASK, query =
+                "SELECT p FROM Product p"
+                        + " WHERE lower(p.name) LIKE lower(:productNameMask)"),
 })
 @Entity
 @Table(name = "jos_jshopping_products")
@@ -34,7 +40,8 @@ public class Product extends NamedEntity {
     public static final String ALL_SORTED = "Product.getAllSorted";
     public static final String BY_PRODUCT_NAME_MASK = "OrderItem.byProductNameMask";
 
-    @Column(name = "product_price", columnDefinition = "decimal", precision = 12, scale = 2)
+    @Column(name = "product_price", columnDefinition = "decimal",
+            precision = 12, scale = 2)
     private BigDecimal price;
 
     @Column(name = "product_quantity")
@@ -65,13 +72,14 @@ public class Product extends NamedEntity {
     @Column(name = "supplier")
     private String supplier;
 
-    public Product() {
-    }
+    public Product() {}
 
-    public Product(Long id, String name, Integer price, boolean unlimited, int quantity, boolean hasVariations,
-                   Collection<ProductCategory> categories, Collection<ProductVariation> productVariations) {
+    public Product(Long id, String name, Integer price, boolean unlimited,
+                   int quantity, boolean hasVariations,
+                   Collection<ProductCategory> categories,
+                   Collection<ProductVariation> productVariations) {
         super(id, name);
-        this.price = new BigDecimal(price).setScale(6);
+        this.price = new BigDecimal(price).setScale(6, HALF_UP);
         this.unlimited = unlimited;
         this.quantity = quantity;
         this.categories = new HashSet<>(categories);
@@ -80,15 +88,6 @@ public class Product extends NamedEntity {
             this.variations = new ArrayList<>(productVariations);
     }
 
-    public Product(String name, Integer price, boolean unlimited, int quantity, boolean hasVariations,
-                   Collection<ProductCategory> categories, Collection<ProductVariation> variations) {
-        this(null, name, price, unlimited, quantity, hasVariations, categories, variations);
-    }
-
-    public Product(Product p) {
-        this(p.getId(), p.getName(), p.getPrice(), p.getUnlimited(), p.getQuantity(), p.getHasVariations(),
-                p.getCategories(), p.getVariations());
-    }
 
     public Integer getPrice() {
         return price.intValue();
@@ -167,7 +166,8 @@ public class Product extends NamedEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), price, quantity, categories, hasVariations, unlimited, variations);
+        return Objects.hash(super.hashCode(), price, quantity, categories,
+                hasVariations, unlimited, variations);
     }
 
     @Override
@@ -184,5 +184,4 @@ public class Product extends NamedEntity {
                 ", variations=" + variations +
                 '}';
     }
-
 }

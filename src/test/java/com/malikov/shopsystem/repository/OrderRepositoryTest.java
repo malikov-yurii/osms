@@ -1,8 +1,9 @@
-package com.malikov.shopsystem.service;
+package com.malikov.shopsystem.repository;
 
 
 import com.malikov.shopsystem.OrderTestData;
 import com.malikov.shopsystem.model.Order;
+import com.malikov.shopsystem.service.OrderService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,8 +14,8 @@ import static com.malikov.shopsystem.CustomerTestData.CUSTOMER_GOLOV;
 import static com.malikov.shopsystem.OrderTestData.*;
 import static com.malikov.shopsystem.ProductTestData.POTAL_KITAJ;
 
-public abstract class AbstractOrderServiceTest extends AbstractServiceTest {
-
+public abstract class OrderRepositoryTest extends AbstractRepositoryTest {
+/*
     @Autowired
     protected OrderService service;
 
@@ -29,10 +30,10 @@ public abstract class AbstractOrderServiceTest extends AbstractServiceTest {
 //                        new OrderItemExtended(FERRARIO_ROZOVYJ.getId(), FERRARIO_ROZOVYJ.getName(), FERRARIO_ROZOVYJ.getPrice(), 7),
 //                        new OrderItemExtended(POTAL_NAZIONALE.getId(), POTAL_NAZIONALE.getName(), POTAL_NAZIONALE.getPrice(), 6)
 //                ));
-//        Order created = service.save(newOrder);
+//        Order created = service.create(newOrder);
 //        newOrder.setId(created.getId());
 //        OrderTestData.MATCHER.assertCollectionEquals(
-//                Arrays.asList(ORDER_1, ORDER_2, ORDER_3, ORDER_4, newOrder), service.getAll());
+//                Arrays.asList(ORDER_1, ORDER_2, ORDER_3, ORDER_4, newOrder), service.getAllDtos());
 //    }
 
     @Test
@@ -72,4 +73,5 @@ public abstract class AbstractOrderServiceTest extends AbstractServiceTest {
         Collection<Order> allByProductId = service.getByProductId(POTAL_KITAJ.getId());
         OrderTestData.MATCHER.assertCollectionEquals(Arrays.asList(ORDER_2, ORDER_3), allByProductId);
     }
+    */
 }

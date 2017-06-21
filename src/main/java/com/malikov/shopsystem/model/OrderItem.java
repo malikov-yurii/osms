@@ -8,16 +8,18 @@ import org.hibernate.annotations.NotFoundAction;
 import javax.persistence.*;
 import java.util.Objects;
 
+@SuppressWarnings("JpaQlInspection")
 @NamedQueries({
-         @NamedQuery(name = OrderItem.DELETE, query = "DELETE FROM OrderItem oi WHERE oi.id=:id")
-        ,@NamedQuery(name = OrderItem.ALL,    query = "SELECT oi FROM OrderItem oi")
+        @NamedQuery(name = OrderItem.DELETE, query = "DELETE FROM OrderItem oi"
+                + " WHERE oi.id=:id"),
+        @NamedQuery(name = OrderItem.ALL, query = "SELECT oi FROM OrderItem oi")
 })
 @Entity
 @Table(name = "osms_order_items")
 public class OrderItem extends BaseEntity {
 
     public static final String DELETE = "OrderItem.delete";
-    public static final String ALL = "OrderItem.getAll";
+    public static final String ALL = "OrderItem.getAllDtos";
 
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
@@ -45,32 +47,32 @@ public class OrderItem extends BaseEntity {
     @Column(name = "product_quantity")
     private Integer productQuantity;
 
+
     public OrderItem() {
         this.productName = "";
         this.productPrice = 0;
         this.productQuantity = 1;
     }
 
-    public OrderItem(Order order, Product product, String productName, Integer productPrice, Integer productQuantity) {
-        this(product, productName, productPrice, productQuantity);
+    public OrderItem(Order order, Product product, String productName,
+                     Integer productPrice, Integer productQuantity) {
+        this(null, product, null, productName, productPrice, productQuantity);
         this.order = order;
     }
 
-    public OrderItem(Product product, String productName, Integer productPrice, Integer productQuantity) {
+    public OrderItem(Long orderItemId, Product product,
+                     ProductVariation variation, String productName,
+                     Integer productPrice, Integer productQuantity) {
         this.product = product;
-        this.productName = productName;
-        this.productPrice = productPrice;
-        this.productQuantity = productQuantity;
-    }
-
-    public OrderItem(Long orderItemId, Product product, ProductVariation productVariation, String productName, Integer productPrice, Integer productQuantity) {
-        this.product = product;
-        this.productVariation = productVariation;
-        this.productName = productVariation != null ? productName + " " + productVariation.getVariationValue().getName() : productName;
+        this.productVariation = variation;
+        this.productName = variation != null
+                ? productName + " " + variation.getVariationValue().getName()
+                : productName;
         this.productPrice = productPrice;
         this.productQuantity = productQuantity;
         this.id = orderItemId;
     }
+
 
     public ProductVariation getProductVariation() {
         return productVariation;
@@ -134,7 +136,8 @@ public class OrderItem extends BaseEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), product, productName, productPrice, productQuantity);
+        return Objects.hash(super.hashCode(), product, productName,
+                productPrice, productQuantity);
     }
 
     @Override
@@ -149,5 +152,4 @@ public class OrderItem extends BaseEntity {
                 ", productQuantity=" + productQuantity +
                 '}';
     }
-
 }
