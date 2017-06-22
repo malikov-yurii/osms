@@ -1,6 +1,7 @@
-package com.malikov.shopsystem.to;
+package com.malikov.shopsystem.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class ProductDto implements Serializable {
 
@@ -10,7 +11,7 @@ public class ProductDto implements Serializable {
 
     private String name;
 
-    private Integer price;
+    private BigDecimal price;
 
     private Integer quantity;
 
@@ -20,7 +21,7 @@ public class ProductDto implements Serializable {
             Long productId,
             Long productVariationId,
             String name,
-            Integer price,
+            BigDecimal price,
             Integer quantity,
             Boolean unlimited
     ) {
@@ -59,11 +60,11 @@ public class ProductDto implements Serializable {
         this.name = name;
     }
 
-    public Integer getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
