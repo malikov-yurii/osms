@@ -6,7 +6,6 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.*;
 
 import static java.math.RoundingMode.HALF_UP;
@@ -74,12 +73,12 @@ public class Product extends NamedEntity {
 
     public Product() {}
 
-    public Product(Long id, String name, Integer price, boolean unlimited,
+    public Product(Long id, String name, BigDecimal price, boolean unlimited,
                    int quantity, boolean hasVariations,
                    Collection<ProductCategory> categories,
                    Collection<ProductVariation> productVariations) {
         super(id, name);
-        this.price = new BigDecimal(price).setScale(6, HALF_UP);
+        this.price = price;
         this.unlimited = unlimited;
         this.quantity = quantity;
         this.categories = new HashSet<>(categories);
@@ -89,16 +88,12 @@ public class Product extends NamedEntity {
     }
 
 
-    public Integer getPrice() {
-        return price.intValue();
+    public BigDecimal getPrice() {
+        return price;
     }
 
     public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = new BigDecimal(price);
     }
 
     public Integer getQuantity() {

@@ -18,7 +18,7 @@ public interface OrderRepository extends Repository<Order> {
      */
     Collection<Order> getByProductId(Long productId);
 
-    void updateStatus(Integer orderId, OrderStatus status);
+    void updateStatus(Long orderId, OrderStatus status);
 
     List<Order> getDatatablePage(int start, int length);
 

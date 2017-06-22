@@ -5,7 +5,7 @@ public abstract class ProductRepositoryTest extends AbstractRepositoryTest {
     @Autowired
     protected ProductService service;
 
-//   // TODO: 3/14/2017 add suppliers to tests
+//   // TODO: 3/14/2017 add suppliers dto tests
 
     @Test
     public void testSave() throws Exception {

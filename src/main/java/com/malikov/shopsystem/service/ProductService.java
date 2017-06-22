@@ -1,7 +1,7 @@
 package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.model.Product;
-import com.malikov.shopsystem.to.ProductDto;
+import com.malikov.shopsystem.dto.ProductDto;
 
 import java.util.List;
 

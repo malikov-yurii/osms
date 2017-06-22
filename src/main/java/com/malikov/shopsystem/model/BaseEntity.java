@@ -1,5 +1,6 @@
 package com.malikov.shopsystem.model;
 
+import com.malikov.shopsystem.HasId;
 import org.hibernate.Hibernate;
 import org.springframework.data.domain.Persistable;
 
@@ -13,7 +14,7 @@ import javax.persistence.*;
  */
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public class BaseEntity implements Persistable<Long> {
+public class BaseEntity implements Persistable<Long>, HasId {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

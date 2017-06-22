@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @SuppressWarnings("JpaQlInspection")
@@ -19,7 +20,7 @@ public class ProductVariation extends BaseEntity {
     public static final String ALL_SORTED = "ProductVariation.allSorted";
 
     @Column(name = "price")
-    private int price;
+    private BigDecimal price;
 
     @Column(name = "count")
     private int quantity;
@@ -31,7 +32,7 @@ public class ProductVariation extends BaseEntity {
 
     public ProductVariation() {}
 
-    public ProductVariation(Long id, int price, int quantity, VariationValue variationValue) {
+    public ProductVariation(Long id, BigDecimal price, int quantity, VariationValue variationValue) {
         super(id);
         this.price = price;
         this.quantity = quantity;
@@ -39,11 +40,11 @@ public class ProductVariation extends BaseEntity {
     }
 
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

@@ -3,7 +3,7 @@ package com.malikov.shopsystem;
 /**
  * @author Yurii Malikov
  */
-public interface IHasId {
+public interface HasId {
 
     Long getId();
 

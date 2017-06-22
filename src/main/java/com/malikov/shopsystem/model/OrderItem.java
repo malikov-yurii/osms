@@ -6,6 +6,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @SuppressWarnings("JpaQlInspection")
@@ -42,7 +43,7 @@ public class OrderItem extends BaseEntity {
     private String productName;
 
     @Column(name = "product_price")
-    private Integer productPrice;
+    private BigDecimal productPrice;
 
     @Column(name = "product_quantity")
     private Integer productQuantity;
@@ -50,19 +51,19 @@ public class OrderItem extends BaseEntity {
 
     public OrderItem() {
         this.productName = "";
-        this.productPrice = 0;
+        this.productPrice = new BigDecimal(0);
         this.productQuantity = 1;
     }
 
     public OrderItem(Order order, Product product, String productName,
-                     Integer productPrice, Integer productQuantity) {
+                     BigDecimal productPrice, Integer productQuantity) {
         this(null, product, null, productName, productPrice, productQuantity);
         this.order = order;
     }
 
     public OrderItem(Long orderItemId, Product product,
                      ProductVariation variation, String productName,
-                     Integer productPrice, Integer productQuantity) {
+                     BigDecimal productPrice, Integer productQuantity) {
         this.product = product;
         this.productVariation = variation;
         this.productName = variation != null
@@ -106,11 +107,11 @@ public class OrderItem extends BaseEntity {
         this.productName = productName;
     }
 
-    public Integer getProductPrice() {
+    public BigDecimal getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(Integer productPrice) {
+    public void setProductPrice(BigDecimal productPrice) {
         this.productPrice = productPrice;
     }
 

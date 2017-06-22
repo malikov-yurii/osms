@@ -1,9 +1,14 @@
 package com.malikov.shopsystem.web.controller;
 
+import com.malikov.shopsystem.dto.OrderItemAutocompleteDto;
 import com.malikov.shopsystem.service.OrderItemService;
 import com.malikov.shopsystem.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @author Yurii Malikov
@@ -18,22 +23,38 @@ public class OrderItemAjaxController {
     @Autowired
     OrderService orderService;
 
+    @GetMapping(value = "/autocomplete-by-product-name/{productNameMask}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<OrderItemAutocompleteDto> autocompleteOrderItemName(
+            @PathVariable("productNameMask") String productNameMask) {
+        return orderItemService.getByProductMask(productNameMask);
+    }
+
+    @PostMapping(value = "/create-empty-for/{orderId}")
+    public Long createNewEmptyOrderItem(@PathVariable("orderId") Long orderId) {
+        return orderItemService.createNewEmpty(orderId).getId();
+    }
+
     @PutMapping(value = "{itemId}/name")
-    public void updateOrderItemName(@PathVariable("itemId") Long itemId, @RequestParam("name") String newName) {
+    public void updateOrderItemName(@PathVariable("itemId") Long itemId,
+                                    @RequestParam("name") String newName) {
         orderItemService.updateProductName(itemId, newName);
     }
 
     @PutMapping(value = "{itemId}/quantity")
-    public int updateOrderItemQuantity(@PathVariable("itemId") Long itemId, @RequestParam("quantity") int quantity) {
+    public int updateOrderItemQuantity(@PathVariable("itemId") Long itemId,
+                                       @RequestParam("quantity") int quantity) {
         return orderItemService.updateOrderItemProductQuantity(itemId, quantity);
     }
 
     @PutMapping(value = "{itemId}/price")
-    public int updateOrderItemPrice(@PathVariable("itemId") Long itemId, @RequestParam("price") int price) {
+    public int updateOrderItemPrice(@PathVariable("itemId") Long itemId,
+                                    @RequestParam("price") BigDecimal price) {
         return orderItemService.updateOrderItemProductPrice(itemId, price);
     }
 
-
-
-
+    @DeleteMapping(value = "/order-item/{orderItemId}")
+    public void deleteOrderItem(@PathVariable("orderItemId") Long orderItemId) {
+        orderItemService.delete(orderItemId);
+    }
 }

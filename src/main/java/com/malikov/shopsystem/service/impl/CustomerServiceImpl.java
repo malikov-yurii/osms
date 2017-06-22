@@ -1,90 +1,123 @@
 package com.malikov.shopsystem.service.impl;
 
+import com.malikov.shopsystem.dto.CustomerDto;
 import com.malikov.shopsystem.model.Customer;
+import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.repository.CustomerRepository;
+import com.malikov.shopsystem.repository.OrderRepository;
 import com.malikov.shopsystem.service.CustomerService;
+import com.malikov.shopsystem.dto.CustomerAutocompleteDto;
+import com.malikov.shopsystem.util.CustomerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static com.malikov.shopsystem.util.CustomerUtil.CustomerAutocompleteDtoListOf;
+import static com.malikov.shopsystem.util.CustomerUtil.updateFromTo;
 import static com.malikov.shopsystem.util.ValidationUtil.*;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
-    private CustomerRepository repository;
+    private CustomerRepository customerRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
+
 
     @Override
-    public Customer create(Customer customer) {
-        return repository.save(customer);
+    public Customer create(CustomerDto customerDto) {
+        checkIsNew(customerDto, "customer must be new");
+        return customerRepository.save(CustomerUtil.createNewFromTo(customerDto));
     }
 
     @Override
-    public void update(Customer customer) {
-        checkNotFoundById(repository.save(customer), customer.getId());
+    public void update(CustomerDto customerDto) {
+        checkIsNotNew(customerDto, "customer must not be new");
+        Customer customer = get(customerDto.getId());
+        customerRepository.save(updateFromTo(customer, customerDto));
     }
 
     @Override
     public Customer get(Long id) {
-        return checkNotFoundById(repository.get(id), id);
+        return checkNotFoundById(customerRepository.get(id), id);
     }
 
     @Override
-    public List<Customer> getAll() {
-        return repository.getAll();
+    public List<CustomerDto> getAll() {
+        return customerRepository.getAll()
+                .stream()
+                .map(CustomerUtil::asTo)
+                .collect(Collectors.toList());
     }
 
     @Override
     public void delete(Long id) {
-        checkNotFoundById(repository.delete(id), id);
+        checkNotFoundById(customerRepository.delete(id), id);
     }
 
     @Override
-    public Collection<Customer> getByName(String name) {
-        return repository.getByName(name);
+    public List<Customer> getByName(String name) {
+        return customerRepository.getByName(name);
     }
 
     @Override
-    public Collection<Customer> getByLastName(String lastName) {
-        return repository.getByLastName(lastName);
+    public List<Customer> getByLastName(String lastName) {
+        return customerRepository.getByLastName(lastName);
     }
 
     @Override
-    public Collection<Customer> getByFirstNameMask(String firstNameMask) {
-        return repository.getByFirstNameMask(firstNameMask);
+    public List<CustomerAutocompleteDto> getByFirstNameMask(String firstNameMask) {
+        return CustomerAutocompleteDtoListOf(customerRepository.getByFirstNameMask(firstNameMask));
     }
 
     @Override
-    public Collection<Customer> getByLastNameMask(String lastNameMask) {
-        return repository.getByLastNameMask(lastNameMask);
+    public List<CustomerAutocompleteDto> getByLastNameMask(String lastNameMask) {
+        return CustomerAutocompleteDtoListOf(customerRepository.getByLastNameMask(lastNameMask));
     }
 
     @Override
-    public Collection<Customer> getByPhoneNumberMask(String phoneNumberMask) {
-        return repository.getByPhoneNumberMask(phoneNumberMask);
+    public List<CustomerAutocompleteDto> getByPhoneNumberMask(String phoneNumberMask) {
+        return CustomerAutocompleteDtoListOf(customerRepository.getByPhoneNumberMask(phoneNumberMask));
     }
 
     @Override
-    public Collection<Customer> getByCityMask(String cityMask) {
-        return repository.getByCityMask(cityMask);
+    public List<CustomerAutocompleteDto> getByCityMask(String cityMask) {
+        return CustomerAutocompleteDtoListOf(customerRepository.getByCityMask(cityMask));
     }
 
     @Override
-    public Collection<Customer> getByCity(String city) {
-        return repository.getByCity(city);
+    public List<Customer> getByCity(String city) {
+        return customerRepository.getByCity(city);
     }
 
     @Override
     public Customer getByEmail(String email) {
-        return checkNotFound(repository.getByEmail(email), "not found by email=" + email);
+        return checkNotFound(customerRepository.getByEmail(email), "not found by email=" + email);
     }
 
     @Override
     public Customer getByPhoneNumber(String phoneNumber) {
-        return checkNotFound(repository.getByPhoneNumber(phoneNumber), "not found by phone number=" + phoneNumber);
+        return checkNotFound(customerRepository.getByPhoneNumber(phoneNumber), "not found by phone number=" + phoneNumber);
     }
 
+    @Override
+    public Customer persistCustomerFromOrder(Long orderId) {
+        Order order = orderRepository.get(orderId);
+        if (order.getCustomer() != null) {
+            checkIsNew(order.getCustomer(), "Customer is not new");
+        }
+        order.setCustomer(customerRepository.save(
+                new Customer(order.getCustomerName()
+                        , order.getCustomerLastName()
+                        , order.getCustomerPhoneNumber()
+                        , order.getCustomerCity()
+                        , order.getCustomerPostOffice()
+                        , null
+                        , null)));
+        return orderRepository.save(order).getCustomer();
+    }
 }

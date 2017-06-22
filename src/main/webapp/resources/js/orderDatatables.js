@@ -109,7 +109,7 @@ $(function () {
 
     $this.autocomplete("search");
 
-    // Making element to lose focus on ENTER keybutton AND preventing from typing anything in
+    // Making element dto lose focus on ENTER keybutton AND preventing from typing anything in
     $this.keydown(function (e) {
       if (e.which == 13) {
         e.preventDefault();
@@ -130,7 +130,7 @@ $(function () {
 
     $(this).data('value', $(this).text());
 
-    // Making element to lose focus on ENTER keybutton
+    // Making element dto lose focus on ENTER keybutton
     $(this).keydown(function (e) {
       if (e.which == 13) {
         e.preventDefault();
@@ -190,7 +190,7 @@ $(function () {
       }
     });
 
-    // Making element to lose focus on ENTER keybutton
+    // Making element dto lose focus on ENTER keybutton
     $this.keydown(function (e) {
       if (e.which == 13) {
         e.preventDefault();
@@ -441,7 +441,7 @@ function addOrder() {
 // }
 
 function renderAddOrderItemBtn(rowId) {
-  //todo add "type" to uncomment
+  //todo add "type" dto uncomment
   // if (type == 'display' && $('#hasRoleAdmin').val()) {
   return '<a class="btn btn-xs btn-success" onclick="addOrderItem(' + rowId + ', \'isTabPressed\');">' +
     '<span class="order-head-lg">Add order item</span><span class="order-head-sm">Product <i class="fa fa-plus" aria-hidden="true"></i></span>' +
@@ -464,7 +464,7 @@ function renderAddOrderItemBtn(rowId) {
 function renderPersistOrUpdateCustomerBtn(row) {
   var btnText;
   if (row.customerId === 0) {
-    btnText = '<span class="order-head-lg">Save customer to DB</span><span class="order-head-sm">Save customer</span>';
+    btnText = '<span class="order-head-lg">Save customer dto DB</span><span class="order-head-sm">Save customer</span>';
   } else {
     btnText = '<span class="order-head-lg">Update customer in DB</span><span class="order-head-sm">Upd. customer</span>'
   }

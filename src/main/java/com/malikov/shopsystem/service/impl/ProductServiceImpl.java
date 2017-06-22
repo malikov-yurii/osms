@@ -3,7 +3,7 @@ package com.malikov.shopsystem.service.impl;
 import com.malikov.shopsystem.model.Product;
 import com.malikov.shopsystem.repository.ProductRepository;
 import com.malikov.shopsystem.service.ProductService;
-import com.malikov.shopsystem.to.ProductDto;
+import com.malikov.shopsystem.dto.ProductDto;
 import com.malikov.shopsystem.util.ProductUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

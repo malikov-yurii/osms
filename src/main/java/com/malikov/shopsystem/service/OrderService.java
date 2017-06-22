@@ -2,6 +2,8 @@ package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderStatus;
+import com.malikov.shopsystem.dto.OrderDto;
+import com.malikov.shopsystem.model.PaymentType;
 
 import java.util.Collection;
 import java.util.List;
@@ -22,9 +24,27 @@ public interface OrderService {
 
     Collection<Order> getByProductId(Long productId);
 
-    void updateStatus(Integer orderId, OrderStatus status);
-
-    List<Order> getPage(int start, int length);
+    List<OrderDto> getTablePage(int start, int length);
 
     Long getTotalQuantity();
+
+    void updateStatus(Long orderId, OrderStatus status);
+
+    void updateComment(Long orderId, String comment);
+
+    void updatePaymentType(Long orderId, PaymentType paymentType);
+
+    void updateCustomerFirstName(Long orderId, String firstName);
+
+    void updateCustomerLastName(Long orderId, String lastName);
+
+    void updateCustomerPhoneNumber(Long orderId, String phoneNumber);
+
+    void updateCity(Long orderId, String cityName);
+
+    void updatePostOffice(Long orderId, String postOffice);
+
+    void updateTotalSum(Long orderId, Integer totalSum);
+
+    void setCustomer(Long orderId, Long customerId);
 }
