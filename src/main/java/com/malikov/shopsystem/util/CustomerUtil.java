@@ -1,36 +1,57 @@
 package com.malikov.shopsystem.util;
 
 import com.malikov.shopsystem.model.Customer;
-import com.malikov.shopsystem.to.CustomerTo;
+import com.malikov.shopsystem.dto.CustomerAutocompleteDto;
+import com.malikov.shopsystem.dto.CustomerDto;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CustomerUtil {
 
-    public static Customer createNewFromTo(CustomerTo customerTo) {
-        return new Customer(null, customerTo.getName(), customerTo.getLastName(), customerTo.getPhoneNumber(),
-                customerTo.getCity(), customerTo.getPostOffice(), customerTo.getEmail(), customerTo.getNote());
+    public static Customer createNewFromTo(CustomerDto customerDto) {
+        return new Customer(null, customerDto.getName(), customerDto.getLastName(),
+                customerDto.getPhoneNumber(), customerDto.getCity(),
+                customerDto.getPostOffice(), customerDto.getEmail(),
+                customerDto.getNote());
     }
 
-    public static CustomerTo asTo(Customer customer){
-        return new CustomerTo(
-                customer.getId()
-                ,customer.getName() == null ? "" : customer.getName()
-                ,customer.getLastName() == null ? "" : customer.getLastName()
-                ,customer.getPhoneNumber()
-                ,customer.getCity() == null ? "" : customer.getCity()
-                ,customer.getPostOffice() == null ? "" : customer.getPostOffice()
-                ,customer.getEmail() == null ? "" : customer.getEmail()
-                ,customer.getNote() == null ? "" : customer.getNote());
+    public static CustomerDto asTo(Customer customer){
+        return new CustomerDto(
+                customer.getId(),
+                customer.getName() == null ? "" : customer.getName(),
+                customer.getLastName() == null ? "" : customer.getLastName(),
+                customer.getPhoneNumber(),
+                customer.getCity() == null ? "" : customer.getCity(),
+                customer.getPostOffice() == null ? "" : customer.getPostOffice(),
+                customer.getEmail() == null ? "" : customer.getEmail(),
+                customer.getNote() == null ? "" : customer.getNote());
     }
 
-    public static Customer updateFromTo(Customer customer, CustomerTo customerTo) {
-        customer.setName(customerTo.getName());
-        customer.setLastName(customerTo.getLastName());
-        customer.setPhoneNumber(customerTo.getPhoneNumber());
-        customer.setCity(customerTo.getCity());
-        customer.setPostOffice(customerTo.getPostOffice());
-        customer.setEmail(customerTo.getEmail());
-        customer.setNote(customerTo.getNote());
+    public static Customer updateFromTo(Customer customer, CustomerDto customerDto) {
+        customer.setName(customerDto.getName());
+        customer.setLastName(customerDto.getLastName());
+        customer.setPhoneNumber(customerDto.getPhoneNumber());
+        customer.setCity(customerDto.getCity());
+        customer.setPostOffice(customerDto.getPostOffice());
+        customer.setEmail(customerDto.getEmail());
+        customer.setNote(customerDto.getNote());
         return customer;
     }
 
+    public static List<CustomerAutocompleteDto> CustomerAutocompleteDtoListOf(
+            List<Customer> customers) {
+        return customers.stream().map(customer ->
+                new CustomerAutocompleteDto(
+                        customer.getName() + " " + customer.getLastName()
+                                + " " + customer.getCity()
+                                + " " + customer.getPhoneNumber(),
+                        customer.getId(),
+                        customer.getName(),
+                        customer.getLastName(),
+                        customer.getPhoneNumber(),
+                        customer.getCity(),
+                        customer.getPostOffice()))
+                .collect(Collectors.toList());
+    }
 }

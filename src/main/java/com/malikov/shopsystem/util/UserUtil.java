@@ -1,22 +1,22 @@
 package com.malikov.shopsystem.util;
 
+import com.malikov.shopsystem.dto.UserDto;
 import com.malikov.shopsystem.model.Role;
 import com.malikov.shopsystem.model.User;
-import com.malikov.shopsystem.to.UserTo;
 
 public class UserUtil {
 
-    public static User createNewFromTo(UserTo newUser) {
+    public static User createNewFromTo(UserDto newUser) {
         return new User(null, newUser.getName(), newUser.getPassword(), Role.ROLE_USER);
     }
 
-    public static UserTo asTo(User user) {
-        return new UserTo(user.getId(), user.getName(), user.getPassword());
+    public static UserDto asTo(User user) {
+        return new UserDto(user.getId(), user.getName(), user.getPassword());
     }
 
-    public static User updateFromTo(User user, UserTo userTo) {
-        user.setName(userTo.getName());
-        user.setPassword(userTo.getPassword());
+    public static User updateFromTo(User user, UserDto userDto) {
+        user.setName(userDto.getName());
+        user.setPassword(userDto.getPassword());
         return user;
     }
 

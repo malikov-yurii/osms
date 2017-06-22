@@ -1,7 +1,10 @@
 package com.malikov.shopsystem.util;
 
-import com.malikov.shopsystem.IHasId;
+import com.malikov.shopsystem.HasId;
 import com.malikov.shopsystem.util.exception.NotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -51,13 +54,13 @@ public class ValidationUtil {
         }
     }
 
-    public static void checkNotNew(IHasId bean, String message) {
+    public static void checkIsNotNew(HasId bean, String message) {
         if (bean.isNew()) {
             throw new IllegalArgumentException(bean.toString() + message);
         }
     }
 
-    public static void checkNew(IHasId bean, String message) {
+    public static void checkIsNew(HasId bean, String message) {
         if (!bean.isNew()) {
             throw new IllegalArgumentException(bean.toString() + message);
         }
@@ -75,7 +78,9 @@ public class ValidationUtil {
         }
     }
 
-    public static void validateFromToDates(LocalDateTime fromDateTime, LocalDateTime toDateTime, String message) {
+    public static void validateFromToDates(LocalDateTime fromDateTime,
+                                           LocalDateTime toDateTime,
+                                           String message) {
         if (fromDateTime != null && toDateTime != null) {
             validate(fromDateTime.compareTo(toDateTime) < 0, message);
         }
@@ -89,5 +94,18 @@ public class ValidationUtil {
             result = cause;
         }
         return result;
+    }
+
+    public static ResponseEntity<String> chechBindingResultHasErrors(BindingResult result) {
+        if (result.hasErrors()) {
+            StringBuilder sb = new StringBuilder();
+            result.getFieldErrors()
+                    .forEach(fe -> sb.append(fe.getField())
+                            .append(" ")
+                            .append(fe.getDefaultMessage())
+                            .append("<br>"));
+            return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
