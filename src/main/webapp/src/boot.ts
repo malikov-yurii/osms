@@ -5,8 +5,8 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { App, providers, routes, KeysPipe, SearchPipe } from './app/index';
 import { Orders, Products } from './app/containers/index';
-import { Header, Order } from './app/ui/index';
-import { HotkeysDirective } from './app/directives/index';
+import { Header, Order, AutocompleteList } from './app/ui/index';
+import { HotkeysDirective, Autocomplete, ContenteditableModel } from './app/directives/index';
 
 @NgModule({
   declarations: [
@@ -17,10 +17,14 @@ import { HotkeysDirective } from './app/directives/index';
     Order,
     KeysPipe,
     SearchPipe,
-    HotkeysDirective
+    HotkeysDirective,
+    Autocomplete,
+    AutocompleteList,
+    ContenteditableModel
   ],
   providers,
   imports: [BrowserModule, HttpModule, FormsModule, ReactiveFormsModule, routes],
+  entryComponents: [AutocompleteList],
   bootstrap: [App]
 })
 

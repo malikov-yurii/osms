@@ -7,6 +7,8 @@ import {Directive, ElementRef, Input, Output, EventEmitter, SimpleChanges} from 
   }
 })
 export class ContenteditableModel {
+  // https://stackoverflow.com/questions/35378087/how-to-use-ngmodel-on-divs-contenteditable-in-angular2
+
   @Input('contenteditableModel') model: string;
   @Output('contenteditableModelChange') update = new EventEmitter();
 
@@ -20,8 +22,7 @@ export class ContenteditableModel {
    */
   private lastViewModel: string;
 
-  constructor(private el: ElementRef) {
-  }
+  constructor(private el: ElementRef) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['model'] && changes['model'].currentValue !== this.lastViewModel) {
@@ -38,6 +39,6 @@ export class ContenteditableModel {
   }
 
   private refreshView() {
-    this.el.nativeElement.innerText = this.model
+    this.el.nativeElement.innerText = this.model;
   }
 }

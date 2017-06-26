@@ -25,11 +25,11 @@ export class Store {
   }
 
   getState() {
-    return this.store.value
+    return this.store.value;
   }
 
   purge() {
-    this.store.next(defaultState)
+    this.store.next(defaultState);
   }
 
 }

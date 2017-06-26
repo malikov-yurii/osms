@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Store } from '../store';
 
 @Injectable()
 export class SearchService {
-
-  constructor(private store: Store) {}
 
   search(items, searchQuery) {
     function _ifValueConsistQuery(value): boolean {

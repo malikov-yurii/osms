@@ -1,7 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
 import { Subject } from "rxjs/Subject";
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/merge';
@@ -12,14 +11,18 @@ import 'rxjs/add/operator/pluck';
 
 import { OrderService } from '../services/index';
 import { Store } from '../store';
-import { Order } from '../models';
+import { Order, StaticDATA } from '../models';
 
 
 @Component({
   template: `
     <div class="wrapper">
     
-      <input type="text" name="searchStream" id="" [(ngModel)]="searchQuery" [formControl]="searchStream">
+      <input type="text" name="searchStream" id=""
+        #searchControl
+        [formControl]="searchStream"
+        [(ngModel)]="searchQuery"
+      >
     
       <div class="add-order" style="display: inline-block;" (click)="onAddOrder()">Add New Order</div>
     
@@ -31,6 +34,7 @@ import { Order } from '../models';
       
       <div class="total">Total orders: {{ totalOrders }}</div>
       <div class="preloaded">Preloaded orders: {{ preloadedOrders }}</div>
+      <div class="filtered">Filtered orders: {{ filteredOrders$ | async }}</div>
       
       
       <ul class="pagination">
@@ -43,7 +47,7 @@ import { Order } from '../models';
       </ul>
     
       <div
-        *ngFor="let order of orders | async; trackBy: trackById"
+        *ngFor="let order of orders$ | async; trackBy: trackById"
         class="order order--{{ order.status }}"
        >
        
@@ -74,16 +78,18 @@ import { Order } from '../models';
           >
           
             <ng-template [ngIf]="!hasInput(key)">
-              <div class="order-info__block order-info__block--{{ key }}"
-              contenteditable
-              withHotkeys
-              #infoBlock
-              (addProduct)="onAddProduct(order.id)"
-              (blur)="onUpdateOrderInfo(order.id, key, $event.target.innerText)"
-              (moveFocus)="onMoveFocus(infoBlock, true)"
-            >
-                {{ order[key] }}
-              </div>
+              <div 
+                class="order-info__block order-info__block--{{ key }}"
+                contenteditable                
+                #infoBlock
+                hotkeys
+                [autocomplete]="['info', key]"
+                [(contenteditableModel)]="order[key]"
+                (selectedAutocomplete)="onSelectAutocompleteInfo(order.id, $event)"
+                (addProduct)="onAddProduct(order.id)"
+                (blur)="onUpdateOrderInfo(order.id, key, $event.target.innerText)"
+                (moveFocus)="onMoveFocus(infoBlock, true)"
+              ></div>
             </ng-template>
           
             <ng-template [ngIf]="hasInput(key)">
@@ -93,7 +99,9 @@ import { Order } from '../models';
                    *ngFor="let value of infoBlocks[key]"
                    [value]="value"
                    [attr.selected]="value === order[key] ? '' : null"
-                  >{{ value }}</option>
+                  >
+                    {{ value }}
+                  </option>
                 </select>
               </div>  
             </ng-template>
@@ -113,22 +121,25 @@ import { Order } from '../models';
             >
             
               <ng-template [ngIf]="!hasInput(key)">
-                <div class="order-product__block order-product__block--{{ key }}"
+                <div
+                  class="order-product__block order-product__block--{{ key }}"
                   contenteditable
-                  withHotkeys
                   #productBlock
+                  hotkeys
+                  [autocomplete]="['info', key]"
+                  [(contenteditableModel)]="product[key]"
                   (moveFocus)="onMoveFocus(productBlock)"                  
                   (addProduct)="onAddProduct(order.id)"
                   (blur)="onUpdateProduct(order.id, product.id, key, $event.target.innerText)"
-                >
-                  {{ product[key] }}
-                </div>  
+                ></div>  
               </ng-template>
           
               <ng-template [ngIf]="hasInput(key)">
                 <div class="order-product__block order-product__block--{{ key }}">
-                  <input type="number" value="{{ product[key] }}"
-                     (blur)="onUpdateProduct(order.id, product.id, key, $event.target.value)"
+                  <input
+                    type="number"
+                    value="{{ product[key] }}"
+                    (blur)="onUpdateProduct(order.id, product.id, key, $event.target.value)"
                   >
                 </div>  
               </ng-template>
@@ -150,16 +161,13 @@ import { Order } from '../models';
   }
 })
 
-export class Orders implements OnDestroy {
-  orders: Observable<Order[]>;
-  subscription: Subscription;
-  infoBlocks = {
-    status: ['SHP', 'WFP', 'OK', 'NEW', 'NOT'],
-    paymentType: ['PB', 'SV', 'NP']
-  };
+export class Orders implements OnInit, OnDestroy {
+  orders$: Observable<Order[]>;
 
-  searchStream: FormControl = new FormControl();
+  @ViewChild('searchControl') searchControl: ElementRef;
+  private searchStream: FormControl = new FormControl();
   searchQuery: string = '';
+  filteredOrders$: Observable<number>;
 
   totalOrders: number = 0;
   preloadedOrders: number = 0;
@@ -167,15 +175,19 @@ export class Orders implements OnDestroy {
   pageLength: number = 10;
   private pageStream = new Subject<number>();
 
+  infoBlocks = StaticDATA.infoBlocks;
+
 
   constructor(
     private orderService: OrderService,
     private store: Store
-  ) {
+  ) {}
+
+  ngOnInit() {
 
     this.orderService.getOrders(0, this.pageLength).subscribe(resp => {
       this.totalOrders = resp.recordsTotal;
-      this.orderService.preloadOrders(0, this.pageLength).subscribe();
+      this.orderService.preloadOrders(0, this.pageLength, 19).subscribe();
     });
 
     let storeSource = this.store.changes
@@ -206,15 +218,15 @@ export class Orders implements OnDestroy {
       })
       .share();
 
-    this.orders = source.pluck('orders');
-
-
-
+    this.orders$ = source.pluck('orders');
+    this.filteredOrders$ = source.pluck('filtered');
 
   }
 
+
+
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+
   }
 
   pageClicked(page: number) {
@@ -252,6 +264,10 @@ export class Orders implements OnDestroy {
     this.orderService.updateOrderInfo(orderId, fieldName, value);
   }
 
+  onSelectAutocompleteInfo(orderId, data) {
+    this.orderService.updateOrderInfoWithObject(orderId, data);
+  }
+
 
 
   // Manage products
@@ -272,10 +288,6 @@ export class Orders implements OnDestroy {
 
 
 
-
-  // setFilteredItems() {
-  //   this.orders = this.orderService.search(this.searchQuery);
-  // }
 
 
 
@@ -299,7 +311,7 @@ export class Orders implements OnDestroy {
   }
 
   consoleOrders() {
-    console.log(this.orders);
+    console.log(this.orders$);
   }
   consoleMe(me) {
     console.log(me);
@@ -313,7 +325,6 @@ export class Orders implements OnDestroy {
   }
 
   trackById(index: number, value) {
-    // console.log(value.id)
     return value.id;
   }
 
@@ -339,12 +350,20 @@ export class Orders implements OnDestroy {
   }
 
   onDocKeydown(e) {
-    if (e.ctrlKey && e.code === 'KeyS') {
-      this.onSaveOrders();
-      return false;
-    } else if (e.ctrlKey && e.code === 'KeyB') {
-      this.onAddOrder();
-      return false;
+    if (e.ctrlKey) {
+
+      switch (e.code) {
+        case 'KeyS':
+          this.onSaveOrders();
+          return false;
+        case 'KeyB':
+          this.onAddOrder();
+          return false;
+        case 'KeyF':
+          this.searchControl.nativeElement.focus();
+          return false;
+      }
+
     }
   }
 

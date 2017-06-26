@@ -22,16 +22,12 @@ export class OrderService {
   ) {}
 
   getOrders(start: number, length: number): Observable<any> {
-    return this.api
-      .get(`${this.ordersPath}?start=${start}&length=${length}`)
-      .do(resp => {
-        this.storeHelper.update(this.ordersPath, resp.data);
-      });
+    return this.api.get(`${this.ordersPath}?start=${start}&length=${length}`)
+      .do(resp => this.storeHelper.update(this.ordersPath, resp.data));
   }
 
-  preloadOrders(start: number, length: number): Observable<any> {
-    return this.api
-      .get(`${this.ordersPath}?start=${start + length + 1}&length=${length * 2}`)
+  preloadOrders(start: number, length: number, multiplier: number): Observable<any> {
+    return this.api.get(`${this.ordersPath}?start=${start + length}&length=${length * multiplier}`)
       .do(resp => this.storeHelper.addArrayLast(this.ordersPath, resp.data));
   }
 
@@ -39,8 +35,12 @@ export class OrderService {
     return this.api.get(`${this.ordersPath}?start=0&length=10000`);
   }
 
+
+
   addOrder() {
-    return this.storeHelper.add(this.ordersPath, new Order());
+    let newOrder = new Order();
+    let newOrderId = newOrder.id;
+    this.storeHelper.add(this.ordersPath, newOrder);
   }
 
   deleteOrder(orderId) {
@@ -50,13 +50,13 @@ export class OrderService {
   }
 
   addProduct(orderId) {
-    return this.storeHelper.findAndAddProduct(this.ordersPath, orderId, new Product());
+    return this.storeHelper.findDeepAndAdd(this.ordersPath, orderId, this.productsPath, new Product());
     // return this.api.post(`${this.ordersPath}/${orderId}/add-order-item`)
     // .do(() => this.getOrders().subscribe());
   }
 
   deleteProduct(orderId, productId) {
-    return this.storeHelper.findDeepAndDeleteById(this.ordersPath, orderId, this.productsPath, productId);
+    return this.storeHelper.findDeepAndDelete(this.ordersPath, orderId, this.productsPath, productId);
     // return this.api.delete(`${this.ordersPath}/order-item/${productId}`)
     //   .do(() => this.storeHelper.findAndDelete(this.ordersPath, productId));
   }
@@ -79,6 +79,9 @@ export class OrderService {
       }
 
     }
+  }
+  updateOrderInfoWithObject(orderId, object) {
+    let updated = this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
   }
 
   updateProduct(orderId, productId, fieldName, value) {
@@ -113,6 +116,19 @@ export class OrderService {
     });
   }
 
+  autocomplete(type: string, term: string) {
+    if (type === 'info') {
+      return this.api.post(
+        `${this.ordersPath}/autocomplete-last-name`,
+        `term=${term}`
+      )
+    } else if (type === 'product') {
+      return this.api.post(
+        `${this.ordersPath}/autocomplete-order-item-name`,
+        `term=${term}`
+      )
+    }
+  }
 
 
 

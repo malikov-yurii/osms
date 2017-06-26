@@ -650,3 +650,23 @@ div.dataTables_wrapper div.dataTables_info {
     opacity: .9;
     transform: translate3d(0,0,0);
 }
+.pagination {
+    display: flex;
+    list-style: none;
+}
+
+.pagination li {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.pagination li:hover {
+    background: #f0f0f0;
+}
+
+.autocomplete {
+    position: absolute;
+}
+.autocomplete .active {
+    color: red;
+}

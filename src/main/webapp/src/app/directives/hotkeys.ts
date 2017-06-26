@@ -1,9 +1,9 @@
 import { Directive, ElementRef, Output, EventEmitter } from '@angular/core';
 
 @Directive({
-  selector: '[withHotkeys]',
+  selector: '[hotkeys]',
   host: {
-    '(keypress)': 'onKeypress($event)'
+    '(keypress)': 'onKey($event)'
   }
 })
 export class HotkeysDirective {
@@ -13,21 +13,17 @@ export class HotkeysDirective {
 
   constructor (private el: ElementRef) {}
 
-
-  onKeypress(e) {
+  onKey(e) {
     if (e.ctrlKey && e.code === 'Enter') {
       this.addProduct.emit();
       return false;
     } else if (e.shiftKey && e.code === 'Enter') {
       this.moveFocus.emit();
       return false;
-    } else if (e.code === 'Enter') {
+    } else if (e.code === 'Enter' || e.code === 'Escape') {
       this.el.nativeElement.blur();
       return false;
     }
   }
-
-
-
 
 }

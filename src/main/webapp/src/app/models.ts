@@ -1,4 +1,3 @@
-let orderCounter: number = 0;
 export class Order {
   static count: number = 0;
 
@@ -27,3 +26,19 @@ export class Product {
   price: string = '0';
   supplier: string = '';
 }
+
+export class AutocompleteItem {
+  label: string = '';
+}
+
+export class StaticDATA {
+  static readonly infoBlocks = {
+    status: ['SHP', 'WFP', 'OK', 'NEW', 'NOT'],
+    paymentType: ['PB', 'SV', 'NP']
+  };
+
+  static readonly autocompleteBlocks = ['firstName', 'lastName', 'phoneNumber', 'name'];
+
+  static readonly keycodesNotToAutocomplete = [9, 13, 16, 17, 18, 20]; // Tab, Enter, Shift, Ctrl, Alt, Caps Lock
+}
+
