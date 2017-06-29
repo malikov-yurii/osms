@@ -85,16 +85,16 @@ import { Order, StaticDATA } from '../models';
                 hotkeys
                 [autocomplete]="['info', key]"
                 [(contenteditableModel)]="order[key]"
-                (selectedAutocomplete)="onSelectAutocompleteInfo(order.id, $event)"
+                (selectedAutocomplete)="onAutocompleteInfo(order.id, $event)"
                 (addProduct)="onAddProduct(order.id)"
-                (blur)="onUpdateOrderInfo(order.id, key, $event.target.innerText)"
+                (blur)="onUpdateOrderInfoField(order.id, key, $event.target.innerText)"
                 (moveFocus)="onMoveFocus(infoBlock, true)"
               ></div>
             </ng-template>
           
             <ng-template [ngIf]="hasInput(key)">
               <div class="order-info__block order-info__block--{{ key }}">
-                <select name="{{ key }}" (change)="onUpdateOrderInfo(order.id, key, $event.target.value)">
+                <select name="{{ key }}" (change)="onUpdateOrderInfoField(order.id, key, $event.target.value)">
                   <option
                    *ngFor="let value of infoBlocks[key]"
                    [value]="value"
@@ -126,11 +126,12 @@ import { Order, StaticDATA } from '../models';
                   contenteditable
                   #productBlock
                   hotkeys
-                  [autocomplete]="['info', key]"
+                  [autocomplete]="['product', key]"
                   [(contenteditableModel)]="product[key]"
+                  (selectedAutocomplete)="onAutocompleteProduct(order.id, product.id, $event)"
                   (moveFocus)="onMoveFocus(productBlock)"                  
                   (addProduct)="onAddProduct(order.id)"
-                  (blur)="onUpdateProduct(order.id, product.id, key, $event.target.innerText)"
+                  (blur)="onUpdateProductField(order.id, product.id, key, $event.target.innerText)"
                 ></div>  
               </ng-template>
           
@@ -139,7 +140,7 @@ import { Order, StaticDATA } from '../models';
                   <input
                     type="number"
                     value="{{ product[key] }}"
-                    (blur)="onUpdateProduct(order.id, product.id, key, $event.target.value)"
+                    (blur)="onUpdateProductField(order.id, product.id, key, $event.target.value)"
                   >
                 </div>  
               </ng-template>
@@ -157,7 +158,7 @@ import { Order, StaticDATA } from '../models';
     </div>
   `,
   host: {
-    '(document:keydown)': 'onDocKeydown($event)'
+
   }
 })
 
@@ -247,10 +248,6 @@ export class Orders implements OnInit, OnDestroy {
     this.orderService.addOrder();
   }
 
-  onSaveOrders() {
-
-  }
-
   onDeleteOrder(orderId) {
     if (confirm('Действительно удалить этот заказ?')) {
       this.orderService.deleteOrder(orderId);
@@ -260,11 +257,11 @@ export class Orders implements OnInit, OnDestroy {
 
 
   // Manage order info
-  onUpdateOrderInfo(orderId, fieldName, value) {
+  onUpdateOrderInfoField(orderId, fieldName, value) {
     this.orderService.updateOrderInfo(orderId, fieldName, value);
   }
 
-  onSelectAutocompleteInfo(orderId, data) {
+  onAutocompleteInfo(orderId, data) {
     this.orderService.updateOrderInfoWithObject(orderId, data);
   }
 
@@ -275,8 +272,12 @@ export class Orders implements OnInit, OnDestroy {
     this.orderService.addProduct(orderId);
   }
 
-  onUpdateProduct(orderId, productId, fieldName, value) {
+  onUpdateProductField(orderId, productId, fieldName, value) {
     this.orderService.updateProduct(orderId, productId, fieldName, value);
+  }
+
+  onAutocompleteProduct(orderId, productId, data) {
+    this.orderService.updateProductWithObject(orderId, productId, data);
   }
 
   onDeleteProduct(id, productId) {
@@ -353,9 +354,6 @@ export class Orders implements OnInit, OnDestroy {
     if (e.ctrlKey) {
 
       switch (e.code) {
-        case 'KeyS':
-          this.onSaveOrders();
-          return false;
         case 'KeyB':
           this.onAddOrder();
           return false;

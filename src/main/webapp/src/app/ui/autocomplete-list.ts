@@ -4,7 +4,6 @@ import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
-import { AutocompleteService } from '../services/index';
 import { AutocompleteItem } from '../models';
 
 @Component({
@@ -30,7 +29,7 @@ export class AutocompleteList implements OnInit {
   public selectedSource;
   private selectedIndex: number = 0;
 
-  constructor (private service: AutocompleteService) {
+  constructor () {
 
     this.selectedSource = this.selectedStream.map(() => {
       return Observable.of(this.list[this.selectedIndex]);

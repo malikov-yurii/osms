@@ -40,9 +40,7 @@ export class StoreHelper {
     const collection = currentState[prop];
     this.store.setState(Object.assign({}, currentState, {[prop]: collection.map(item => {
       if (item.id === id) {
-        console.log(item);
         item = Object.assign(item, sourceObj);
-        console.log(item);
         updated = true;
       }
       return item;
@@ -73,6 +71,27 @@ export class StoreHelper {
         item[deepPropKey].map(deepItem => {
           if (deepItem.id === deepId && deepItem[fieldName] != value) {
             deepItem[fieldName] = value;
+            updated = true;
+          }
+          return deepItem;
+        });
+      }
+      return item;
+    })}));
+    return updated;
+  }
+  findDeepAndUpdateWithObject(prop, id, deepPropKey, deepId, sourceObj): boolean {
+    let updated = false;
+    const currentState = this.store.getState();
+    const collection = currentState[prop];
+    this.store.setState(Object.assign({}, currentState, {[prop]: collection.map(item => {
+      if (item.id === id) {
+        item[deepPropKey].map(deepItem => {
+          if (deepItem.id === deepId) {
+            console.log(deepItem);
+            console.log(sourceObj);
+            deepItem = Object.assign(deepItem, sourceObj);
+            console.log(deepItem);
             updated = true;
           }
           return deepItem;

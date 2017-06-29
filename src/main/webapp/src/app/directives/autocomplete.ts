@@ -57,7 +57,6 @@ export class Autocomplete {
         }
 
       }
-      // console.log(e);
 
       if (StaticDATA.keycodesNotToAutocomplete.indexOf(e.which) === -1 ) {
         setTimeout(() => this.onKeyUp(e), 0);

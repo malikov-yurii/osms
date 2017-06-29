@@ -103,6 +103,9 @@ export class OrderService {
 
     }
   }
+  updateProductWithObject(orderId, productId, object) {
+    let updated = this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, object);
+  }
 
 
   list(searchQuery: string = '', page: number = 1, length: number = 10) {
