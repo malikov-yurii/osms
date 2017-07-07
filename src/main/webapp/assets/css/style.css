@@ -479,7 +479,7 @@ div.dataTables_wrapper div.dataTables_info {
     position: relative;
     margin: 40px 0;
     padding: 5px 10px;
-    box-shadow: 0 3px 11px 1px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 3px 9px 1px rgba(0, 0, 0, 0.3);
 }
 .order--OK,
 .order--OK .order-manage{
@@ -496,6 +496,7 @@ div.dataTables_wrapper div.dataTables_info {
 .order--NOT,
 .order--NOT .order-manage{
     background: #a70000;
+    color: #fff;
 }
 .order--NEW,
 .order--NEW .order-manage{
@@ -512,7 +513,7 @@ div.dataTables_wrapper div.dataTables_info {
 }
 .order-info__block {
     flex-grow: 2;
-    padding: 2px 8px;
+    padding: 6px 8px;
     border-right: 1px solid rgba(0, 188, 212, 0.49);
     font-size: 15px;
     text-align: center;
@@ -557,11 +558,11 @@ div.dataTables_wrapper div.dataTables_info {
     background: none;
     border: none;
     border-radius: 2px;
-    height: 23px;
+    height: 32px;
 }
 .order-products {
-    margin: 10px 0 5px;
-    padding: 10px 0 0;
+    margin: 4px 0 0;
+    padding: 7px 0 5px;
     border-top: 1px solid rgba(0, 188, 212, 0.49);
 }
 .order-product__block {
@@ -603,27 +604,35 @@ div.dataTables_wrapper div.dataTables_info {
 .order-manage {
     position: absolute;
     top: 0;
-    right: 100%;
+    left: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100%;
-    transform: translate3d(40px, 0, 0);
+    padding: 10px;
+    transform: translate3d(0, 0, 0);
     transition: transform .2s ease;
-    box-shadow: -2px 3px 10px 0px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px -1px 8px 0px rgba(0, 0, 0, 0.3);
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     opacity: 0;
 }
+.order:hover .order-manage {
+    opacity: 1;
+    transform: translate3d(0,-54px,0);
+}
 .order-manage__block {
+    margin: 0 15px;
     text-align: center;
     cursor: pointer;
 }
 .order-manage__text {
-    display: none;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0 0 2px;
 }
 .order-manage__block .material-icons {
-    padding: 10px;
+    display: inline-block;
+    vertical-align: middle;
     font-size: 34px;
     transition: color .2s;
 }
@@ -640,16 +649,13 @@ div.dataTables_wrapper div.dataTables_info {
     color: #00d600;
 }
 .order-manage__block--edit:hover .material-icons {
-    color: #205fff;
+    color: #4277ff;
 }
 .order-manage__block--delete:hover .material-icons {
     color: #ff0000;
 }
 
-.order:hover .order-manage {
-    opacity: .9;
-    transform: translate3d(0,0,0);
-}
+
 .pagination {
     display: flex;
     list-style: none;
@@ -660,13 +666,25 @@ div.dataTables_wrapper div.dataTables_info {
     cursor: pointer;
 }
 
-.pagination li:hover {
+.pagination li:hover,
+.pagination .active {
     background: #f0f0f0;
 }
 
 .autocomplete {
     position: absolute;
+    max-height: 189px;
+    overflow-y: auto;
+    list-style: none;
+    background: #fff;
+    z-index: 9;
+}
+.autocomplete li {
+    padding: 5px 10px;
+    border: 1px solid transparent;
 }
 .autocomplete .active {
-    color: red;
+    background: #e8faff;
+    border-top-color: #4bc6e8;
+    border-bottom-color: #4bc6e8;
 }

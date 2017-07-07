@@ -26,8 +26,8 @@ export class OrderService {
       .do(resp => this.storeHelper.update(this.ordersPath, resp.data));
   }
 
-  preloadOrders(start: number, length: number, multiplier: number): Observable<any> {
-    return this.api.get(`${this.ordersPath}?start=${start + length}&length=${length * multiplier}`)
+  preloadOrders(start: number, length: number): Observable<any> {
+    return this.api.get(`${this.ordersPath}?start=${start}&length=${length}`)
       .do(resp => this.storeHelper.addArrayLast(this.ordersPath, resp.data));
   }
 
@@ -35,6 +35,9 @@ export class OrderService {
     return this.api.get(`${this.ordersPath}?start=0&length=10000`);
   }
 
+  getAllCustomers(): Observable<any> {
+    return this.api.get(`customers/`);
+  }
 
 
   addOrder() {

@@ -45,11 +45,9 @@ export class Autocomplete {
             return false;
           case 'Enter' :
             this.listComponent.instance.selectedStream.next();
-            this.removeList();
             return true;
           case 'Tab' :
             this.listComponent.instance.selectedStream.next();
-            this.removeList();
             return true;
           case 'Escape' :
             this.removeList();
@@ -110,8 +108,19 @@ export class Autocomplete {
     if (!this.listComponent) {
       let componentFactory = this.compiler.resolveComponentFactory(AutocompleteList);
       this.listComponent = this.viewRef.createComponent(componentFactory);
+
+      let offsetTop = this.viewRef.element.nativeElement.offsetHeight;
+      let offsetLeft = this.viewRef.element.nativeElement.offsetLeft;
+
+      this.listComponent.instance.styleTop = offsetTop;
+      this.listComponent.instance.styleLeft = offsetLeft;
+
+
       this.listComponent.instance.selectedSource.subscribe(
-        item => this.selected.emit(item.value)
+        item => {
+          this.selected.emit(item.value);
+          this.removeList();
+        }
       );
     }
 

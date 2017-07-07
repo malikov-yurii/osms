@@ -8,6 +8,7 @@ import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/pluck';
+import 'rxjs/add/operator/filter';
 
 import { OrderService } from '../services/index';
 import { Store } from '../store';
@@ -37,19 +38,21 @@ import { Order, StaticDATA } from '../models';
       <div class="filtered">Filtered orders: {{ filteredOrders$ | async }}</div>
       
       
-      <ul class="pagination">
-        <li (click)="pageClicked(prevPage())">Prev</li>
-        <li (click)="pageClicked(1)">1</li>
-        <li (click)="pageClicked(2)">2</li>
-        <li (click)="pageClicked(3)">3</li>
-        <li (click)="pageClicked(4)">4</li>
-        <li (click)="pageClicked(nextPage())">Next</li>
-      </ul>
+      <pagination
+        *ngIf="totalOrders > pageLength"
+        [total]="totalOrders"
+        [length]="pageLength"
+        (pageSelected)="goToPage($event)"
+        (lengthChanged)="changePageLength($event)"
+      >
+      </pagination>
     
       <div
         *ngFor="let order of orders$ | async; trackBy: trackById"
         class="order order--{{ order.status }}"
        >
+       
+       
        
         <div class="order-manage">
           <div title="Add product" class="order-manage__block order-manage__block--add" (click)="onAddProduct(order.id)">
@@ -64,8 +67,7 @@ import { Order, StaticDATA } from '../models';
             <i class="material-icons">delete_forever</i>
             <div class="order-manage__text">Delete order</div>
           </div>
-        </div>
-        
+        </div>       
         
         
         
@@ -87,8 +89,8 @@ import { Order, StaticDATA } from '../models';
                 [(contenteditableModel)]="order[key]"
                 (selectedAutocomplete)="onAutocompleteInfo(order.id, $event)"
                 (addProduct)="onAddProduct(order.id)"
-                (blur)="onUpdateOrderInfoField(order.id, key, $event.target.innerText)"
                 (moveFocus)="onMoveFocus(infoBlock, true)"
+                (blur)="onUpdateOrderInfoField(order.id, key, $event.target.innerText)"
               ></div>
             </ng-template>
           
@@ -156,10 +158,7 @@ import { Order, StaticDATA } from '../models';
         
       </div>
     </div>
-  `,
-  host: {
-
-  }
+  `
 })
 
 export class Orders implements OnInit, OnDestroy {
@@ -174,10 +173,9 @@ export class Orders implements OnInit, OnDestroy {
   preloadedOrders: number = 0;
   page: number = 1;
   pageLength: number = 10;
-  private pageStream = new Subject<number>();
+  private pageStream = new Subject<{page: number, length: number}>();
 
   infoBlocks = StaticDATA.infoBlocks;
-
 
   constructor(
     private orderService: OrderService,
@@ -188,13 +186,15 @@ export class Orders implements OnInit, OnDestroy {
 
     this.orderService.getOrders(0, this.pageLength).subscribe(resp => {
       this.totalOrders = resp.recordsTotal;
-      this.orderService.preloadOrders(0, this.pageLength, 19).subscribe();
+      this.orderService.preloadOrders(this.pageLength, this.pageLength * 9).subscribe(
+        () => this.orderService.preloadOrders(this.pageLength + this.pageLength * 9, this.pageLength * 500).subscribe()
+      );
     });
 
     let storeSource = this.store.changes
       .map(store => {
         this.preloadedOrders = store.orders.length;
-        return {search: this.searchQuery, page: this.page}
+        return {search: this.searchQuery, page: this.page, length: this.pageLength}
       });
 
     let searchSource = this.searchStream
@@ -202,20 +202,21 @@ export class Orders implements OnInit, OnDestroy {
       .debounceTime(100)
       .distinctUntilChanged()
       .map(searchQuery => {
-        return {search: searchQuery, page: 1}
+        return {search: searchQuery, page: 1, length: this.pageLength}
       });
 
     let pageSource = this.pageStream
-      .map(pageNumber => {
-        this.page = pageNumber;
-        return {search: this.searchQuery, page: pageNumber}
+      .map(params => {
+        this.page = params.page;
+        this.pageLength = params.length;
+        return {search: this.searchQuery, page: params.page, length: params.length}
       });
 
-    let source = pageSource
-      .merge(searchSource, storeSource)
-      .startWith({search: this.searchQuery, page: this.page})
-      .switchMap((params: {search: string, page: number}) => {
-        return this.orderService.list(params.search, params.page)
+    let source = storeSource
+      .merge(searchSource, pageSource)
+      .startWith({search: this.searchQuery, page: this.page, length: this.pageLength})
+      .switchMap((params: {search: string, page: number, length: number}) => {
+        return this.orderService.list(params.search, params.page, params.length)
       })
       .share();
 
@@ -230,8 +231,17 @@ export class Orders implements OnInit, OnDestroy {
 
   }
 
-  pageClicked(page: number) {
-    this.pageStream.next(page);
+  goToPage(page: number) {
+    this.pageStream.next({
+      page: page,
+      length: this.pageLength
+    });
+  }
+  changePageLength(length: number) {
+    this.pageStream.next({
+      page: this.page,
+      length: length
+    });
   }
 
 

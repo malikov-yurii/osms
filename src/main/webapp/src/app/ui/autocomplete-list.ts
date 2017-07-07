@@ -8,11 +8,15 @@ import { AutocompleteItem } from '../models';
 
 @Component({
   template: `
-    <ul class="autocomplete">
+    <ul class="autocomplete"
+    [style.top]="styleTop + 10 + 'px'"
+    [style.left]="styleLeft + 'px'"
+    >
       
       <li 
         *ngFor="let item of list; let i = index;"
         (click)="onSelect(i)"
+        (mouseenter)="setSelected(i)"
         [class.active]="i === selectedIndex"
       >
         {{ item.label }}
@@ -28,6 +32,9 @@ export class AutocompleteList implements OnInit {
   public selectedStream = new Subject();
   public selectedSource;
   private selectedIndex: number = 0;
+
+  public styleTop;
+  public styleLeft;
 
   constructor () {
 
@@ -50,7 +57,11 @@ export class AutocompleteList implements OnInit {
   }
 
   onSelect(i) {
-    this.selectedStream.next()
+    this.selectedStream.next();
+  }
+
+  setSelected(index) {
+    this.selectedIndex = index;
   }
 
 
