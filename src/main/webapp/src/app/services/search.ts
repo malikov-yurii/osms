@@ -16,12 +16,11 @@ export class SearchService {
       for (let key in item) {
         if (item.hasOwnProperty(key)) {
           // At first checks in values of given object, e.g. 'firstName/phoneNumber'
-          // if no, then goes recursivly and checks in nested object/arrays, e.g. 'orderItemTos'
-          if (
-            _ifValueConsistQuery(item[key]) ||
-            typeof item[key] === 'object' && _deepSearch(item[key])
-          ) { return true; }
+          // if no, then goes recursivly and checks in nested object/arrays, e.g. 'orderItemTos'.
+          // To implement recursion, add following commented line in IF statement (*)
+          // || typeof item[key] === 'object' && _deepSearch(item[key])
 
+          if (_ifValueConsistQuery(item[key])) { return true; } // (*)
         }
       }
     }
