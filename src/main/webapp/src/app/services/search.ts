@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 export class SearchService {
 
   search(items, searchQuery) {
+
     function _ifValueConsistQuery(value): boolean {
       // Return true if given value isn't empty and matches search text
       if (value) {
@@ -17,7 +18,7 @@ export class SearchService {
         if (item.hasOwnProperty(key)) {
           // At first checks in values of given object, e.g. 'firstName/phoneNumber'
           // if no, then goes recursivly and checks in nested object/arrays, e.g. 'orderItemTos'.
-          // To implement recursion, add following commented line in IF statement (*)
+          // To implement recursion, add following commented line into IF statement (*)
           // || typeof item[key] === 'object' && _deepSearch(item[key])
 
           if (_ifValueConsistQuery(item[key])) { return true; } // (*)

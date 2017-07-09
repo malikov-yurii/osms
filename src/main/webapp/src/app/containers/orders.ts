@@ -19,28 +19,40 @@ import { Order, StaticDATA } from '../models';
   template: `
     <div class="wrapper">
     
+    <div class="service-block">
+    
+      <div
+        class="btn btn-orders-add"
+        (click)="onAddOrder()"
+      >Add New Order</div>
+      
+      <div class="orders-info">
+        <div class="orders-info__block orders-info__block--total">Total orders: {{ totalOrders }}</div>
+        <div class="orders-info__block orders-info__block--preloaded">Preloaded orders: {{ preloadedOrders }}</div>
+      </div>
+
       <input type="text" name="searchStream" id=""
+        class="input orders-search"
+        placeholder="Search in orders..."
         #searchControl
         [formControl]="searchStream"
         [(ngModel)]="searchQuery"
       >
+       
+    </div>
     
-      <div class="add-order" style="display: inline-block;" (click)="onAddOrder()">Add New Order</div>
     
+    <div style="display: none;">
       <div class="get-orders" style="display: inline-block;" (click)="onGetAllOrders()">Get All Orders</div>
     
       <div class="consoleorders"  style="display: inline-block;" (click)="consoleOrders()">Console all orders</div>
       
       <div class="consolestore" style="display: inline-block;" (click)="onGetStore()">Console current state</div>
-      
-      <div class="total">Total orders: {{ totalOrders }}</div>
-      <div class="preloaded">Preloaded orders: {{ preloadedOrders }}</div>
-      <div class="filtered">Filtered orders: {{ filteredOrders$ | async }}</div>
+      </div>
       
       
       <pagination
-        *ngIf="totalOrders > pageLength"
-        [total]="totalOrders"
+        [total]="filteredOrders$ | async"
         [length]="pageLength"
         (pageSelected)="goToPage($event)"
         (lengthChanged)="changePageLength($event)"
@@ -256,6 +268,7 @@ export class Orders implements OnInit, OnDestroy {
   // Manage orders
   onAddOrder() {
     this.orderService.addOrder();
+    this.goToPage(1);
   }
 
   onDeleteOrder(orderId) {
@@ -358,21 +371,6 @@ export class Orders implements OnInit, OnDestroy {
       }
     }
 
-  }
-
-  onDocKeydown(e) {
-    if (e.ctrlKey) {
-
-      switch (e.code) {
-        case 'KeyB':
-          this.onAddOrder();
-          return false;
-        case 'KeyF':
-          this.searchControl.nativeElement.focus();
-          return false;
-      }
-
-    }
   }
 
 

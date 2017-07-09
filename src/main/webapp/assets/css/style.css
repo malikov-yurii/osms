@@ -656,18 +656,18 @@ div.dataTables_wrapper div.dataTables_info {
 }
 
 
-.pagination {
+.pagination__selector {
     display: flex;
     list-style: none;
 }
 
-.pagination li {
+.pagination__selector li {
     padding: 5px 10px;
     cursor: pointer;
 }
 
-.pagination li:hover,
-.pagination .active {
+.pagination__selector li:hover,
+.pagination__selector .active {
     background: #f0f0f0;
 }
 
@@ -687,4 +687,40 @@ div.dataTables_wrapper div.dataTables_info {
     background: #e8faff;
     border-top-color: #4bc6e8;
     border-bottom-color: #4bc6e8;
+}
+.service-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+.input {
+    padding: 6px 7px;
+    border: 1px solid #bbb;
+    border-radius: 2px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #b8ffb8;
+    border: 1px solid #459e45;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.btn-orders--add {
+    margin: 15px 0 0;
+}
+.orders-info {
+    flex-grow: 2;
+    text-align: center;
+}
+
+.orders-info__block {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 1% 0 0;
+    color: #ccc;
+    font-style: italic;
 }

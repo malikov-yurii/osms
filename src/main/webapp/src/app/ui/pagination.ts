@@ -4,7 +4,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Component({
   selector: 'pagination',
   template: `
-    <div class="pagination-block">
+    <div class="pagination">
+    
       <select name="" id="" class="pagination__length"
         (change)="onChangeLength($event.target.value)"
       >
@@ -14,22 +15,30 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
         <option value="100">100</option>
         <option value="200">200</option>
       </select>
+      
+      <div class="pagination__info">
+        Displaying {{ (currentPageNumber - 1) * pageLength + 1}} – {{ currentPageNumber * pageLength }} of {{ totalItems }} items
+      </div>
+
+      <ul class="pagination__selector"
+        *ngIf="totalItems > pageLength"
+      >
+        <li (click)="selectPage(1)">First</li>
+        <li (click)="selectPage(getPrevPage())">Prev</li>
+        <li *ngIf="isPrevSpreadShown()">...</li>
+        <li 
+          *ngFor="let page of pages"
+          [class.active]="page === currentPageNumber"
+          (click)="selectPage(page)"
+        >
+          {{ page }}
+        </li>
+        <li *ngIf="isNextSpreadShown()">...</li>
+        <li (click)="selectPage(getNextPage())">Next</li>
+        <li (click)="selectPage(getLastPage())">Last</li>
+      </ul>
     
     </div>
-
-    <ul class="pagination">
-      <li (click)="selectPage(1)">First</li>
-      <li (click)="selectPage(getPrevPage())">Prev</li>
-      <li 
-        *ngFor="let page of pages"
-        [class.active]="page === currentPageNumber"
-        (click)="selectPage(page)"
-      >
-        {{ page }}
-      </li>
-      <li (click)="selectPage(getNextPage())">Next</li>
-      <li (click)="selectPage(getLastPage())">Last</li>
-    </ul>
   `
 })
 export class Pagination implements OnInit, OnChanges {
@@ -98,7 +107,13 @@ export class Pagination implements OnInit, OnChanges {
     this.lengthChanged.emit(+length);
   }
 
+  isPrevSpreadShown() {
+    return this.currentPageNumber > Math.ceil(this.pagesToDisplay / 2);
+  }
 
+  isNextSpreadShown() {
+    return this.pagesToDisplay < this.lastPage;
+  }
 
 
 
