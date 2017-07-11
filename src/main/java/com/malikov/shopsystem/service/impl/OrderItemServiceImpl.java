@@ -51,15 +51,15 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public int updateOrderItemProductQuantity(Long itemId, int quantity) {
+    public BigDecimal updateOrderItemProductQuantity(Long itemId, int quantity) {
             OrderItem orderItem = orderItemRepository.get(itemId);
             orderItem.setProductQuantity(quantity);
         return recalculateTotalSum(orderItem);
     }
 
-    private int recalculateTotalSum(OrderItem orderItem) {
+    private BigDecimal recalculateTotalSum(OrderItem orderItem) {
         Order order = orderItem.getOrder();
-        int totalSum = OrderUtil.calculateTotalSum(order.getOrderItems());
+        BigDecimal totalSum = OrderUtil.calculateTotalSum(order.getOrderItems());
         order.setTotalSum(totalSum);
         orderRepository.save(order);
         orderItemRepository.save(orderItem);
@@ -67,7 +67,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public int updateOrderItemProductPrice(Long itemId, BigDecimal price) {
+    public BigDecimal updateOrderItemProductPrice(Long itemId, BigDecimal price) {
             OrderItem orderItem = orderItemRepository.get(itemId);
             orderItem.setProductPrice(price);
         return recalculateTotalSum(orderItem);

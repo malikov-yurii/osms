@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -131,7 +132,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void updateTotalSum(Long orderId, Integer totalSum) {
+    public void updateTotalSum(Long orderId, BigDecimal totalSum) {
         Order order = get(orderId);
         order.setTotalSum(totalSum);
         save(order);

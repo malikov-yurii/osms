@@ -5,6 +5,7 @@ import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.model.PaymentType;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public interface OrderService {
 
     void updatePostOffice(Long orderId, String postOffice);
 
-    void updateTotalSum(Long orderId, Integer totalSum);
+    void updateTotalSum(Long orderId, BigDecimal totalSum);
 
     void setCustomer(Long orderId, Long customerId);
 }

@@ -6,6 +6,7 @@ import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -78,7 +79,7 @@ public class Order extends BaseEntity {
     private List<OrderItem> orderItems;
 
     @Column(name = "total_sum")
-    private Integer totalSum;
+    private BigDecimal totalSum;
 
     @Column(name = "comment")
     private String comment;
@@ -115,7 +116,7 @@ public class Order extends BaseEntity {
             this.orderItems.forEach(orderItem -> orderItem.setOrder(this));
             this.totalSum = OrderUtil.calculateTotalSum(orderItems);
         } else {
-            this.totalSum = 0;
+            this.totalSum = BigDecimal.ZERO;
         }
     }
 
@@ -214,11 +215,11 @@ public class Order extends BaseEntity {
         this.user = user;
     }
 
-    public Integer getTotalSum() {
+    public BigDecimal getTotalSum() {
         return totalSum;
     }
 
-    public void setTotalSum(Integer totalSum) {
+    public void setTotalSum(BigDecimal totalSum) {
         this.totalSum = totalSum;
     }
 

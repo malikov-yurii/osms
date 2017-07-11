@@ -42,14 +42,14 @@ public class OrderItemAjaxController {
     }
 
     @PutMapping(value = "{itemId}/quantity")
-    public int updateOrderItemQuantity(@PathVariable("itemId") Long itemId,
-                                       @RequestParam("quantity") int quantity) {
+    public BigDecimal updateOrderItemQuantity(@PathVariable("itemId") Long itemId,
+                                              @RequestParam("quantity") int quantity) {
         return orderItemService.updateOrderItemProductQuantity(itemId, quantity);
     }
 
     @PutMapping(value = "{itemId}/price")
-    public int updateOrderItemPrice(@PathVariable("itemId") Long itemId,
-                                    @RequestParam("price") BigDecimal price) {
+    public BigDecimal updateOrderItemPrice(@PathVariable("itemId") Long itemId,
+                                           @RequestParam("price") BigDecimal price) {
         return orderItemService.updateOrderItemProductPrice(itemId, price);
     }
 
