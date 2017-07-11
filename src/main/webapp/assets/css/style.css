@@ -703,9 +703,9 @@ div.dataTables_wrapper div.dataTables_info {
 .btn {
     display: inline-block;
     padding: 4px 12px;
-    background: #b8ffb8;
-    border: 1px solid #459e45;
-    border-radius: 2px;
+    background: #9ee89e;
+    border-radius: 1px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
     cursor: pointer;
 }
 
@@ -723,4 +723,7 @@ div.dataTables_wrapper div.dataTables_info {
     margin: 0 1% 0 0;
     color: #ccc;
     font-style: italic;
+}
+.order-product__block--delete .material-icons {
+    color: #bd0000;
 }

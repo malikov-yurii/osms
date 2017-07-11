@@ -18,42 +18,42 @@ import { Order, StaticDATA } from '../models';
 @Component({
   template: `
     <div class="wrapper">
-    
-    <div class="service-block">
-    
-      <div
-        class="btn btn-orders-add"
-        (click)="onAddOrder()"
-      >Add New Order</div>
+      <div class="service-block">
       
-      <div class="orders-info">
-        <div class="orders-info__block orders-info__block--total">Total orders: {{ totalOrders }}</div>
-        <div class="orders-info__block orders-info__block--preloaded">Preloaded orders: {{ preloadedOrders }}</div>
+        <div
+          class="btn btn-orders-add"
+          (click)="onAddOrder()"
+        >Add New Order</div>
+        
+        <div class="orders-info">
+          <div class="orders-info__block orders-info__block--total">Total orders: {{ totalOrders }}</div>
+          <div class="orders-info__block orders-info__block--preloaded">Preloaded orders: {{ preloadedOrders }}</div>
+        </div>
+  
+        <input type="text" name="searchStream" id=""
+          class="input orders-search"
+          placeholder="Search in orders..."
+          #searchControl
+          [formControl]="searchStream"
+          [(ngModel)]="searchQuery"
+        >
+         
       </div>
-
-      <input type="text" name="searchStream" id=""
-        class="input orders-search"
-        placeholder="Search in orders..."
-        #searchControl
-        [formControl]="searchStream"
-        [(ngModel)]="searchQuery"
-      >
-       
-    </div>
-    
-    
-    <div style="display: none;">
-      <div class="get-orders" style="display: inline-block;" (click)="onGetAllOrders()">Get All Orders</div>
-    
-      <div class="consoleorders"  style="display: inline-block;" (click)="consoleOrders()">Console all orders</div>
       
-      <div class="consolestore" style="display: inline-block;" (click)="onGetStore()">Console current state</div>
+      
+      <div style="display: none;">
+        <div class="get-orders" style="display: inline-block;" (click)="onGetAllOrders()">Get All Orders</div>
+      
+        <div class="consoleorders"  style="display: inline-block;" (click)="consoleOrders()">Console all orders</div>
+        
+        <div class="consolestore" style="display: inline-block;" (click)="onGetStore()">Console current state</div>
       </div>
       
       
       <pagination
         [total]="filteredOrders$ | async"
         [length]="pageLength"
+        [current]="page"
         (pageSelected)="goToPage($event)"
         (lengthChanged)="changePageLength($event)"
       >
@@ -88,7 +88,7 @@ import { Order, StaticDATA } from '../models';
       
         <div class="order-info">
           <ng-container 
-            *ngFor="let key of order | keys:['id', 'customerId', 'orderItemTos', 'date']"
+            *ngFor="let key of order | keys:['customerId', 'orderItemTos', 'date']"
           >
           
             <ng-template [ngIf]="!hasInput(key)">
@@ -214,7 +214,8 @@ export class Orders implements OnInit, OnDestroy {
       .debounceTime(100)
       .distinctUntilChanged()
       .map(searchQuery => {
-        return {search: searchQuery, page: 1, length: this.pageLength}
+        this.page = 1;
+        return {search: searchQuery, page: this.page, length: this.pageLength}
       });
 
     let pageSource = this.pageStream
@@ -243,17 +244,20 @@ export class Orders implements OnInit, OnDestroy {
 
   }
 
+  /* Pagination */
   goToPage(page: number) {
     this.pageStream.next({
       page: page,
       length: this.pageLength
     });
+    this.page = page;
   }
   changePageLength(length: number) {
     this.pageStream.next({
       page: this.page,
       length: length
     });
+    this.pageLength = length;
   }
 
 

@@ -44,6 +44,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class Pagination implements OnInit, OnChanges {
   @Input('total') totalItems: number = 0;
   @Input('length') pageLength: number = 10;
+  @Input('current') currentParentPage: number = 1;
   private currentPageNumber: number;
   private currentPageStream = new BehaviorSubject<number>(1);
   private lastPage: number;
@@ -63,6 +64,9 @@ export class Pagination implements OnInit, OnChanges {
   ngOnChanges() {
     this.lastPage = Math.ceil(this.totalItems / this.pageLength);
     this.setPages();
+    if (this.currentParentPage === 1) {
+      this.currentPageStream.next(1);
+    }
   }
 
   selectPage(page: number) {
@@ -92,15 +96,19 @@ export class Pagination implements OnInit, OnChanges {
     let start = 1;
     let current = this.currentPageNumber;
     let ptd = this.pagesToDisplay;
+    let end = ptd;
 
     if (current > Math.ceil(ptd / 2)) {
       start =  current - Math.floor(ptd / 2);
     }
-    if ((current + Math.floor(ptd / 2)) > this.lastPage) {
+    if ((current + Math.floor(ptd / 2)) > this.lastPage && this.lastPage > ptd) {
       start =  this.lastPage - ptd + 1;
     }
+    if (this.lastPage < ptd) {
+      end = this.lastPage;
+    }
 
-    this.pages = Array.from(new Array(ptd), (v, i) => i + start);
+    this.pages = Array.from(new Array(end), (v, i) => i + start);
   }
 
   onChangeLength(length) {
