@@ -68,7 +68,31 @@ export class OrderService {
     this.storeHelper.onGetState();
   }
 
-  updateOrderInfo(orderId, fieldName, value) {
+  updateOrderInfo(orderId, fieldName, value, flag?) {
+    if (flag) {
+      // If order info Input has been changed
+
+      let updated = this.storeHelper.findAndUpdate(this.ordersPath, orderId, fieldName, value);
+      if (updated) {
+
+        if (parseInt(orderId, 10)) {
+          fieldName = this.camelCaseToDash(fieldName);
+          this.api.post(
+            `${this.ordersPath}/${orderId}/update-${fieldName}`,
+            `${fieldName}=${value}`
+          ).subscribe();
+        }
+
+      }
+    } else if (parseInt(orderId, 10)) {
+      fieldName = this.camelCaseToDash(fieldName);
+      this.api.post(
+        `${this.ordersPath}/${orderId}/update-${fieldName}`,
+        `${fieldName}=${value}`
+      ).subscribe();
+    }
+  }
+  updateOrderInfoInput(orderId, fieldName, value) {
 
     let updated = this.storeHelper.findAndUpdate(this.ordersPath, orderId, fieldName, value);
     if (updated) {

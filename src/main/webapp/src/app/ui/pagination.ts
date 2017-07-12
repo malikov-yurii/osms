@@ -23,9 +23,10 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
       <ul class="pagination__selector"
         *ngIf="totalItems > pageLength"
       >
-        <li (click)="selectPage(1)">First</li>
         <li (click)="selectPage(getPrevPage())">Prev</li>
+        <li (click)="selectPage(1)" [class.active]="currentPageNumber === 1">1</li>        
         <li *ngIf="isPrevSpreadShown()">...</li>
+        
         <li 
           *ngFor="let page of pages"
           [class.active]="page === currentPageNumber"
@@ -33,13 +34,29 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
         >
           {{ page }}
         </li>
+        
         <li *ngIf="isNextSpreadShown()">...</li>
+        <li (click)="selectPage(lastPage)"  [class.active]="currentPageNumber === lastPage">{{ lastPage }}</li>
         <li (click)="selectPage(getNextPage())">Next</li>
-        <li (click)="selectPage(getLastPage())">Last</li>
       </ul>
     
     </div>
-  `
+  `,
+  styles: [`
+    .pagination__selector {
+      display: flex;
+      list-style: none;
+    }    
+    .pagination__selector li {
+      padding: 5px 10px;
+      user-select: none;
+      cursor: pointer;
+    }
+    .pagination__selector li:hover,
+    .pagination__selector .active {
+      background: #f0f0f0;
+    }
+  `]
 })
 export class Pagination implements OnInit, OnChanges {
   @Input('total') totalItems: number = 0;
@@ -49,7 +66,7 @@ export class Pagination implements OnInit, OnChanges {
   private currentPageStream = new BehaviorSubject<number>(1);
   private lastPage: number;
   private pages: number[];
-  private pagesToDisplay: number = 5;
+  private pagesToDisplay: number = 3;
   @Output() pageSelected = new EventEmitter<number>();
   @Output() lengthChanged = new EventEmitter<number>();
 
@@ -93,19 +110,31 @@ export class Pagination implements OnInit, OnChanges {
   }
 
   setPages() {
-    let start = 1;
+    let start = 2;
     let current = this.currentPageNumber;
     let ptd = this.pagesToDisplay;
     let end = ptd;
 
-    if (current > Math.ceil(ptd / 2)) {
-      start =  current - Math.floor(ptd / 2);
+    if (current <= ptd + 1) {
+      end = 4;
     }
-    if ((current + Math.floor(ptd / 2)) > this.lastPage && this.lastPage > ptd) {
-      start =  this.lastPage - ptd + 1;
+
+    if (current > ptd + 1) {
+      start = current - 1;
+
+      if (current >= this.lastPage - ptd) {
+        start = this.lastPage - ptd - 1;
+        end = 4;
+      }
     }
-    if (this.lastPage < ptd) {
-      end = this.lastPage;
+
+    if (this.lastPage <= ptd + 4) {
+      start = 2;
+      end = ptd + 2;
+
+      if (this.lastPage < ptd) {
+        end = this.lastPage;
+      }
     }
 
     this.pages = Array.from(new Array(end), (v, i) => i + start);
@@ -116,11 +145,11 @@ export class Pagination implements OnInit, OnChanges {
   }
 
   isPrevSpreadShown() {
-    return this.currentPageNumber > Math.ceil(this.pagesToDisplay / 2);
+    return this.lastPage > this.pagesToDisplay + 4 && this.currentPageNumber > this.pagesToDisplay + 1;
   }
 
   isNextSpreadShown() {
-    return this.pagesToDisplay < this.lastPage;
+    return this.lastPage > this.pagesToDisplay + 4 && this.currentPageNumber < this.lastPage - this.pagesToDisplay;
   }
 
 

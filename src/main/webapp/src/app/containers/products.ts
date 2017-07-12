@@ -46,18 +46,18 @@ import { ProductService } from '../services/index';
           <th>Quantity</th>
           <th>Unlimited</th>
         </thead>
-      </table>
-      <tbody>
-        <tr
-          *ngFor="let product of products$ | async"
-        >
-          <td
-            *ngFor="let key of product | keys"
+        <tbody>
+          <tr
+            *ngFor="let product of products$ | async"
           >
-            {{ product[key] }}
-          </td>
-        </tr>
-      </tbody>
+            <td
+              *ngFor="let key of product | keys"
+            >
+              {{ product[key] }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   `
 })

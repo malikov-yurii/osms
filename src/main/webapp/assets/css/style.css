@@ -654,23 +654,6 @@ div.dataTables_wrapper div.dataTables_info {
 .order-manage__block--delete:hover .material-icons {
     color: #ff0000;
 }
-
-
-.pagination__selector {
-    display: flex;
-    list-style: none;
-}
-
-.pagination__selector li {
-    padding: 5px 10px;
-    cursor: pointer;
-}
-
-.pagination__selector li:hover,
-.pagination__selector .active {
-    background: #f0f0f0;
-}
-
 .autocomplete {
     position: absolute;
     max-height: 189px;
@@ -726,4 +709,27 @@ div.dataTables_wrapper div.dataTables_info {
 }
 .order-product__block--delete .material-icons {
     color: #bd0000;
+}
+.table {
+    margin: 15px 0;
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+}
+.table td, .table th {
+    padding: 5px 8px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+.table-products th:nth-child(1),
+.table-products th:nth-child(2),
+.table-products th:nth-child(4),
+.table-products th:nth-child(5) {
+    width: 60px;
+}
+.table-products th:nth-child(3) {
+    width: calc(100% - 320px);
+}
+.table-products th:nth-child(6) {
+    width: 80px;
 }

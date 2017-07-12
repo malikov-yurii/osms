@@ -87,8 +87,13 @@ import { Order, StaticDATA } from '../models';
         
       
         <div class="order-info">
+        
+          <div class="order-info__block order-info__block--id">
+            {{ order.id }}
+          </div>
+          
           <ng-container 
-            *ngFor="let key of order | keys:['customerId', 'orderItemTos', 'date']"
+            *ngFor="let key of order | keys:['id', 'customerId', 'orderItemTos', 'date']"
           >
           
             <ng-template [ngIf]="!hasInput(key)">
@@ -102,13 +107,16 @@ import { Order, StaticDATA } from '../models';
                 (selectedAutocomplete)="onAutocompleteInfo(order.id, $event)"
                 (addProduct)="onAddProduct(order.id)"
                 (moveFocus)="onMoveFocus(infoBlock, true)"
-                (blur)="onUpdateOrderInfoField(order.id, key, $event.target.innerText)"
+                (contentChanged)="onUpdateOrderInfoField(order.id, key, $event, false)"
               ></div>
             </ng-template>
           
             <ng-template [ngIf]="hasInput(key)">
               <div class="order-info__block order-info__block--{{ key }}">
-                <select name="{{ key }}" (change)="onUpdateOrderInfoField(order.id, key, $event.target.value)">
+                <select
+                  name="{{ key }}"
+                  (change)="onUpdateOrderInfoField(order.id, key, $event.target.value, true)"
+                >
                   <option
                    *ngFor="let value of infoBlocks[key]"
                    [value]="value"
@@ -145,7 +153,7 @@ import { Order, StaticDATA } from '../models';
                   (selectedAutocomplete)="onAutocompleteProduct(order.id, product.id, $event)"
                   (moveFocus)="onMoveFocus(productBlock)"                  
                   (addProduct)="onAddProduct(order.id)"
-                  (blur)="onUpdateProductField(order.id, product.id, key, $event.target.innerText)"
+                  (contentChanged)="onUpdateProductField(order.id, product.id, key, $event, false)"
                 ></div>  
               </ng-template>
           
@@ -154,7 +162,7 @@ import { Order, StaticDATA } from '../models';
                   <input
                     type="number"
                     value="{{ product[key] }}"
-                    (blur)="onUpdateProductField(order.id, product.id, key, $event.target.value)"
+                    (blur)="onUpdateProductField(order.id, product.id, key, $event.target.value, true)"
                   >
                 </div>  
               </ng-template>
@@ -284,8 +292,8 @@ export class Orders implements OnInit, OnDestroy {
 
 
   // Manage order info
-  onUpdateOrderInfoField(orderId, fieldName, value) {
-    this.orderService.updateOrderInfo(orderId, fieldName, value);
+  onUpdateOrderInfoField(orderId, fieldName, value, flag?) {
+    this.orderService.updateOrderInfo(orderId, fieldName, value, flag);
   }
 
   onAutocompleteInfo(orderId, data) {

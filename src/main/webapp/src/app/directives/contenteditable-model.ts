@@ -11,6 +11,7 @@ export class ContenteditableModel {
 
   @Input('contenteditableModel') model: string;
   @Output('contenteditableModelChange') update = new EventEmitter();
+  @Output('contentChanged') changed = new EventEmitter();
 
   /**
    * By updating this property on keyup, and checking against it during
@@ -28,6 +29,9 @@ export class ContenteditableModel {
     if (changes['model'] && changes['model'].currentValue !== this.lastViewModel) {
       this.lastViewModel = this.model;
       this.refreshView();
+    }
+    if (changes['model'].previousValue && changes['model'].previousValue !== this.lastViewModel) {
+      this.changed.emit(this.lastViewModel);
     }
   }
 

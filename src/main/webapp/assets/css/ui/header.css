@@ -1,9 +1,25 @@
 .header {
-    padding: 20px 6%;
     background: #00bcd4;
 }
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+ul {
+    list-style: none;
+}
+li {
+    display: inline-block;
+    vertical-align: top;
+}
 a {
+    display: block;
+    padding: 0 10px;
     color: #fff;
     text-decoration: none;
     font-size: 1.2rem;
+    line-height: 65px;
+}
+a:hover {
+    background: #008ba3;
 }
