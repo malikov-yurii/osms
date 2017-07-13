@@ -2,12 +2,12 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import { Order } from './models';
+import { Order, Product } from './models';
 
 
 export interface State {
   orders: Order[],
-  products: any[]
+  products: Product[]
 }
 
 const defaultState: State = {

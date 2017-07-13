@@ -1,5 +1,4 @@
-import {Directive, Input, Output, ViewContainerRef, ComponentFactoryResolver, ComponentRef, EventEmitter} from '@angular/core';
-import 'rxjs/add/operator/delay';
+import { Directive, Input, Output, ViewContainerRef, ComponentFactoryResolver, ComponentRef, EventEmitter } from '@angular/core';
 
 import { OrderService } from '../services/index';
 import { AutocompleteList } from '../ui/index';

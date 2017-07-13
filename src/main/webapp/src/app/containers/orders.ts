@@ -364,14 +364,6 @@ export class Orders implements OnInit, OnDestroy {
     return value.id;
   }
 
-  getOrderColor(orderStatus) {
-    let status = `order--${orderStatus.toLowerCase()}`;
-    return {
-      'order': true,
-      [status]: true
-    };
-  }
-
   onMoveFocus(el, fromInfoBlock) {
     let parentNextSibling = el.parentNode.nextElementSibling;
     if (parentNextSibling) {
