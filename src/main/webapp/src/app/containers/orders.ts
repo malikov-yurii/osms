@@ -2,6 +2,7 @@ import { Component, OnDestroy, ViewChild, ElementRef, OnInit } from '@angular/co
 import { FormControl } from '@angular/forms';
 import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/merge';
 import 'rxjs/add/operator/startWith';
@@ -195,6 +196,8 @@ export class Orders implements OnInit, OnDestroy {
   pageLength: number = 10;
   private pageStream = new Subject<{page: number, length: number}>();
 
+  private subs: Subscription[] = [];
+
   infoBlocks = StaticDATA.infoBlocks;
 
   constructor(
@@ -204,10 +207,10 @@ export class Orders implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.orderService.getOrders(0, this.pageLength).subscribe(resp => {
+    this.subs[this.subs.length] = this.orderService.getOrders(0, this.pageLength).subscribe(resp => {
       this.totalOrders = resp.recordsTotal;
-      this.orderService.preloadOrders(this.pageLength, this.pageLength * 9).subscribe(
-        () => this.orderService.preloadOrders(this.pageLength + this.pageLength * 9, this.pageLength * 500).subscribe()
+      this.subs[this.subs.length] = this.orderService.preloadOrders(this.pageLength, this.pageLength * 9).subscribe(
+        () => this.subs[this.subs.length] = this.orderService.preloadOrders(this.pageLength + this.pageLength * 9, this.pageLength * 500).subscribe()
       );
     });
 
@@ -249,7 +252,7 @@ export class Orders implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 
   /* Pagination */

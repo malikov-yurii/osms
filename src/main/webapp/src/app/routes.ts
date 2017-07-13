@@ -1,6 +1,6 @@
 import { RouterModule } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
-import { Orders, Products } from './containers/index';
+import { Orders, Products, Customers } from './containers/index';
 
 export const routes: ModuleWithProviders = RouterModule.forRoot([
   // {
@@ -15,5 +15,9 @@ export const routes: ModuleWithProviders = RouterModule.forRoot([
   {
     path: 'products',
     component: Products
+  },
+  {
+    path: 'customers',
+    component: Customers
   }
 ]);

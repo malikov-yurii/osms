@@ -4,7 +4,7 @@ import { HttpModule } from '@angular/http';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { App, providers, routes, KeysPipe, SearchPipe } from './app/index';
-import { Orders, Products } from './app/containers/index';
+import { Orders, Products, Customers } from './app/containers/index';
 import { Header, Order, AutocompleteList, Pagination, ModalComponent } from './app/ui/index';
 import { HotkeysDirective, Autocomplete, ContenteditableModel } from './app/directives/index';
 
@@ -14,6 +14,7 @@ import { HotkeysDirective, Autocomplete, ContenteditableModel } from './app/dire
     Header,
     Orders,
     Products,
+    Customers,
     Order,
     KeysPipe,
     SearchPipe,

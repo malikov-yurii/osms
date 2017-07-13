@@ -16,7 +16,10 @@ export class ProductService {
 
   getAllProducts() {
     return this.api.get(this.productsPath)
-      .do(resp => this.storeHelper.update(this.productsPath, resp));
+      .do((resp: any[]) => {
+        resp.sort((a, b) => a.productId - b.productId);
+        this.storeHelper.update(this.productsPath, resp);
+      });
   }
 
 

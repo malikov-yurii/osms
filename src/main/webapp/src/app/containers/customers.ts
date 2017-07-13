@@ -9,26 +9,26 @@ import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/pluck';
+import 'rxjs/add/operator/map';
 
 import { Store } from '../store';
-import { ProductService } from '../services/index';
+import { CustomerService } from '../services/index';
 
 
 @Component({
   template: `
 
     <div class="wrapper">
-    
       <input type="text" name="searchStream" id=""
         class="input orders-search"
-        placeholder="Search in products..."
+        placeholder="Search in customers..."
         #searchControl
         [formControl]="searchStream"
         [(ngModel)]="searchQuery"
       >
       
       <pagination
-        [total]="filteredProducts$ | async"
+        [total]="filteredCustomers$ | async"
         [length]="pageLength"
         [current]="page"
         (pageSelected)="goToPage($event)"
@@ -37,23 +37,25 @@ import { ProductService } from '../services/index';
       </pagination>
         
       
-      <table class="table table-products">
+      <table class="table table-customers">
         <thead>
           <th>ID</th>
-          <th>Variation ID</th>
           <th>Name</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Unlimited</th>
+          <th>Last name</th>
+          <th>Phone</th>
+          <th>City</th>
+          <th>Post</th>
+          <th>Email</th>
+          <th>Comment</th>
         </thead>
         <tbody>
           <tr
-            *ngFor="let product of products$ | async"
+            *ngFor="let customer of customers$ | async"
           >
             <td
-              *ngFor="let key of product | keys"
+              *ngFor="let key of customer | keys"
             >
-              {{ product[key] }}
+              {{ customer[key] }}
             </td>
           </tr>
         </tbody>
@@ -61,10 +63,10 @@ import { ProductService } from '../services/index';
     </div>
   `
 })
-export class Products implements OnInit, OnDestroy {
+export class Customers implements OnInit, OnDestroy {
 
-  private products$: Observable<any[]>;
-  private filteredProducts$: Observable<number>;
+  private customers$: Observable<any[]>;
+  private filteredCustomers$: Observable<number>;
 
   @ViewChild('searchControl') searchControl: ElementRef;
   private searchStream: FormControl = new FormControl();
@@ -77,12 +79,12 @@ export class Products implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
 
   constructor(
-    private productService: ProductService,
+    private customerService: CustomerService,
     private store: Store
   ) {}
 
   ngOnInit() {
-    this.subs[this.subs.length] = this.productService.getAllProducts().subscribe();
+    this.subs[this.subs.length] = this.customerService.getAllCustomers().subscribe();
 
     let storeSource = this.store.changes
       .map(store => {
@@ -109,12 +111,14 @@ export class Products implements OnInit, OnDestroy {
       .merge(searchSource, pageSource)
       .startWith({search: this.searchQuery, page: this.page, length: this.pageLength})
       .switchMap((params: {search: string, page: number, length: number}) => {
-        return this.productService.list(params.search, params.page, params.length)
+        return this.customerService.list(params.search, params.page, params.length)
       })
       .share();
 
-    this.products$ = source.pluck('products');
-    this.filteredProducts$ = source.pluck('filtered');
+    this.customers$ = source.pluck('customers');
+    this.filteredCustomers$ = source.pluck('filtered');
+
+
   }
 
   ngOnDestroy() {
