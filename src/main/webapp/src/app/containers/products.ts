@@ -26,15 +26,6 @@ import { ProductService } from '../services/index';
         [formControl]="searchStream"
         [(ngModel)]="searchQuery"
       >
-      
-      <pagination
-        [total]="filteredProducts$ | async"
-        [length]="pageLength"
-        [current]="page"
-        (pageSelected)="goToPage($event)"
-        (lengthChanged)="changePageLength($event)"
-      >
-      </pagination>
         
       
       <table class="table table-products">
@@ -58,6 +49,14 @@ import { ProductService } from '../services/index';
           </tr>
         </tbody>
       </table>
+      
+      <pagination
+        [total]="filteredProducts$ | async"
+        [length]="pageLength"
+        [current]="page"
+        (dataChanged)="paginationChanged($event)"
+      >
+      </pagination>
     </div>
   `
 })
@@ -122,17 +121,9 @@ export class Products implements OnInit, OnDestroy {
   }
 
   /* Pagination */
-  goToPage(page: number) {
-    this.pageStream.next({
-      page: page,
-      length: this.pageLength
-    });
-  }
-  changePageLength(length: number) {
-    this.pageStream.next({
-      page: this.page,
-      length: length
-    });
+  paginationChanged({page, length}) {
+    this.pageStream.next({page, length});
+    this.page = page;
     this.pageLength = length;
   }
 

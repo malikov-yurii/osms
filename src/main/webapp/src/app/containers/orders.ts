@@ -55,8 +55,7 @@ import { Order, StaticDATA } from '../models';
         [total]="filteredOrders$ | async"
         [length]="pageLength"
         [current]="page"
-        (pageSelected)="goToPage($event)"
-        (lengthChanged)="changePageLength($event)"
+        (dataChanged)="paginationChanged($event)"
       >
       </pagination>
     
@@ -178,6 +177,16 @@ import { Order, StaticDATA } from '../models';
         </div>
         
       </div>
+      
+      
+      <pagination
+        [total]="filteredOrders$ | async"
+        [length]="pageLength"
+        [current]="page"
+        (dataChanged)="paginationChanged($event)"
+      >
+      </pagination>
+      
     </div>
   `
 })
@@ -256,18 +265,9 @@ export class Orders implements OnInit, OnDestroy {
   }
 
   /* Pagination */
-  goToPage(page: number) {
-    this.pageStream.next({
-      page: page,
-      length: this.pageLength
-    });
+  paginationChanged({page, length}) {
+    this.pageStream.next({page, length});
     this.page = page;
-  }
-  changePageLength(length: number) {
-    this.pageStream.next({
-      page: this.page,
-      length: length
-    });
     this.pageLength = length;
   }
 
@@ -283,7 +283,7 @@ export class Orders implements OnInit, OnDestroy {
   // Manage orders
   onAddOrder() {
     this.orderService.addOrder();
-    this.goToPage(1);
+    this.paginationChanged({page: 1, length: this.pageLength});
   }
 
   onDeleteOrder(orderId) {

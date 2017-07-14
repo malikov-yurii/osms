@@ -26,15 +26,6 @@ import { CustomerService } from '../services/index';
         [formControl]="searchStream"
         [(ngModel)]="searchQuery"
       >
-      
-      <pagination
-        [total]="filteredCustomers$ | async"
-        [length]="pageLength"
-        [current]="page"
-        (pageSelected)="goToPage($event)"
-        (lengthChanged)="changePageLength($event)"
-      >
-      </pagination>
         
       
       <table class="table table-customers">
@@ -60,6 +51,14 @@ import { CustomerService } from '../services/index';
           </tr>
         </tbody>
       </table>
+      
+      <pagination
+        [total]="filteredCustomers$ | async"
+        [length]="pageLength"
+        [current]="page"
+        (dataChanged)="paginationChanged($event)"
+      >
+      </pagination>
     </div>
   `
 })
@@ -126,17 +125,9 @@ export class Customers implements OnInit, OnDestroy {
   }
 
   /* Pagination */
-  goToPage(page: number) {
-    this.pageStream.next({
-      page: page,
-      length: this.pageLength
-    });
-  }
-  changePageLength(length: number) {
-    this.pageStream.next({
-      page: this.page,
-      length: length
-    });
+  paginationChanged({page, length}) {
+    this.pageStream.next({page, length});
+    this.page = page;
     this.pageLength = length;
   }
 

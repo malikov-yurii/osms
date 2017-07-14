@@ -7,13 +7,15 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
     <div class="pagination">
     
       <select name="" id="" class="pagination__length"
-        (change)="onChangeLength($event.target.value)"
+        (change)="changeLength($event.target.value)"
       >
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-        <option value="200">200</option>
+        <option
+          *ngFor="let value of [10, 20, 50, 100, 200]"
+          value="{{ value }}"
+          [attr.selected]="value === pageLength ? '' : null"
+        >
+          {{ value }}
+        </option>
       </select>
       
       <div class="pagination__info">
@@ -36,7 +38,12 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
         </li>
         
         <li *ngIf="isNextSpreadShown()">...</li>
-        <li (click)="selectPage(lastPage)"  [class.active]="currentPageNumber === lastPage">{{ lastPage }}</li>
+        <li
+          (click)="selectPage(lastPage)"
+          [class.active]="currentPageNumber === lastPage"
+        >
+          {{ lastPage }}
+        </li>
         <li (click)="selectPage(getNextPage())">Next</li>
       </ul>
     
@@ -67,7 +74,7 @@ export class Pagination implements OnInit, OnChanges {
   private lastPage: number;
   private pages: number[];
   private pagesToDisplay: number = 3;
-  @Output() pageSelected = new EventEmitter<number>();
+  @Output() dataChanged = new EventEmitter<{page: number, length: number}>();
   @Output() lengthChanged = new EventEmitter<number>();
 
 
@@ -81,16 +88,18 @@ export class Pagination implements OnInit, OnChanges {
   ngOnChanges() {
     this.lastPage = Math.ceil(this.totalItems / this.pageLength);
     this.setPages();
-    if (this.currentParentPage === 1) {
-      this.currentPageStream.next(1);
-    }
+    this.currentPageStream.next(this.currentParentPage);
   }
 
   selectPage(page: number) {
     if (page > 0) {
       this.currentPageStream.next(page);
-      this.pageSelected.emit(page);
+      this.dataChanged.emit({page: page, length: this.pageLength});
     }
+  }
+
+  changeLength(length) {
+    this.dataChanged.emit({page: 1, length: +length});
   }
 
   getPrevPage() {
@@ -138,10 +147,6 @@ export class Pagination implements OnInit, OnChanges {
     }
 
     this.pages = Array.from(new Array(end), (v, i) => i + start);
-  }
-
-  onChangeLength(length) {
-    this.lengthChanged.emit(+length);
   }
 
   isPrevSpreadShown() {
