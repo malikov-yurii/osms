@@ -8,6 +8,7 @@ import com.malikov.shopsystem.model.PaymentType;
 import com.malikov.shopsystem.util.serializers.LocalDateDeserializer;
 import com.malikov.shopsystem.util.serializers.LocalDateSerializer;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class OrderDto {
 
     private String postOffice;
 
-    private Integer totalSum;
+    private BigDecimal totalSum;
 
     private PaymentType paymentType;
 
@@ -57,7 +58,7 @@ public class OrderDto {
             , LocalDate date
             , OrderStatus status
             , String comment
-            , Integer totalSum
+            , BigDecimal totalSum
             , List<OrderItemDto> orderItemDtos
     ) {
         this.id = id;
@@ -88,7 +89,7 @@ public class OrderDto {
             , LocalDate date
             , OrderStatus status
             , String comment
-            , Integer totalSum
+            , BigDecimal totalSum
     ) {
         this(id, customerId, firstName, lastName, phoneNumber, city, postOffice, paymentType, date, status, comment, totalSum, new ArrayList<>());
     }
@@ -99,11 +100,6 @@ public class OrderDto {
     @JsonIgnore
     public boolean isNew() {
         return id == null;
-    }
-
-    public void addProduct(OrderItemDto orderItemDto) {
-        orderItemDtos.add(orderItemDto);
-        this.totalSum += orderItemDto.getPrice();
     }
 
     public Long getId() {
@@ -154,11 +150,11 @@ public class OrderDto {
         this.postOffice = postOffice;
     }
 
-    public Integer getTotalSum() {
+    public BigDecimal getTotalSum() {
         return totalSum;
     }
 
-    public void setTotalSum(Integer totalSum) {
+    public void setTotalSum(BigDecimal totalSum) {
         this.totalSum = totalSum;
     }
 

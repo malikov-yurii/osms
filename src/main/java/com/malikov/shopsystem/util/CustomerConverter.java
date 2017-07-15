@@ -7,7 +7,7 @@ import com.malikov.shopsystem.dto.CustomerDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CustomerUtil {
+public class CustomerConverter {
 
     public static Customer createNewFromTo(CustomerDto customerDto) {
         return new Customer(null, customerDto.getName(), customerDto.getLastName(),
@@ -16,7 +16,7 @@ public class CustomerUtil {
                 customerDto.getNote());
     }
 
-    public static CustomerDto asTo(Customer customer){
+    public static CustomerDto asDto(Customer customer){
         return new CustomerDto(
                 customer.getId(),
                 customer.getName() == null ? "" : customer.getName(),

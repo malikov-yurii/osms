@@ -19,10 +19,12 @@ public interface OrderItemService{
 
     void updateProductName(Long id, String newProductName);
 
-    int updateOrderItemProductQuantity(Long itemId, int quantity);
-    int updateOrderItemProductPrice(Long itemId, BigDecimal price);
+    BigDecimal updateOrderItemProductQuantity(Long itemId, int quantity);
+    BigDecimal updateOrderItemProductPrice(Long itemId, BigDecimal price);
 
     OrderItem createNewEmpty(Long orderId);
 
     List<OrderItemAutocompleteDto> getByProductMask(String productNameMask);
+
+    //List<OrderItemDto> getPage(int pageNumber, int pageCapacity);
 }

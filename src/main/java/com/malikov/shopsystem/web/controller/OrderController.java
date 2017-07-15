@@ -1,6 +1,5 @@
 package com.malikov.shopsystem.web.controller;
 
-import com.malikov.shopsystem.model.OrderItem;
 import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.model.PaymentType;
 import com.malikov.shopsystem.service.CustomerService;
@@ -16,20 +15,22 @@ import org.springframework.http.MediaType;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @RestController
-@RequestMapping(value = "/ajax/profile/orders")
-public class OrderAjaxController {
+@RequestMapping(value = "/order")
+public class OrderController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(OrderAjaxController.class);
-
-    @Autowired
-    CustomerService customerService;
+    private static final Logger LOG = LoggerFactory.getLogger(OrderController.class);
 
     @Autowired
-    OrderService orderService;
+    private CustomerService customerService;
 
     @Autowired
-    UserService userService;
+    private OrderService orderService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private OrderItemService orderItemService;
@@ -44,7 +45,7 @@ public class OrderAjaxController {
                                       @RequestParam("length") int length) {
         ModelMap modelMap = new ModelMap();
         modelMap.addAttribute("recordsTotal", orderService.getTotalQuantity());
-        modelMap.addAttribute("data", orderService.getTablePage(start, length));
+        modelMap.addAttribute("data", orderService.getPage(start, length));
         return modelMap;
     }
 
@@ -119,7 +120,7 @@ public class OrderAjaxController {
     }
 
     @PutMapping(value = "/{orderId}/total-sum")
-    public void updateTotalSum(@PathVariable("orderId") Long orderId, @RequestParam("totalSum") Integer totalSum) {
+    public void updateTotalSum(@PathVariable("orderId") Long orderId, @RequestParam("totalSum") BigDecimal totalSum) {
         orderService.updateTotalSum(orderId, totalSum);
     }
 

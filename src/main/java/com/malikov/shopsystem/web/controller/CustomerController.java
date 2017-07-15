@@ -11,11 +11,11 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/ajax/profile/customers")
-public class CustomerAjaxController {
+@RequestMapping(value = "/customer")
+public class CustomerController {
 
     @Autowired
-    CustomerService customerService;
+    private CustomerService customerService;
 
     @PostMapping
     public void createCustomer(@Valid CustomerDto customerDto) {
@@ -58,6 +58,6 @@ public class CustomerAjaxController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CustomerDto> getAll() {
-        return customerService.getAll();
+        return customerService.getPage(0, 10000);
     }
 }

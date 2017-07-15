@@ -14,8 +14,6 @@ public interface CustomerService {
 
     Customer get(Long id);
 
-    List<CustomerDto> getAll();
-
     void delete(Long id);
 
     List<Customer> getByName(String name);
@@ -37,4 +35,6 @@ public interface CustomerService {
     Customer getByPhoneNumber(String phoneNumber);
 
     Customer persistCustomerFromOrder(Long orderId);
+
+    List<CustomerDto> getPage(int pageNumber, int pageCapacity);
 }

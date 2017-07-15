@@ -12,8 +12,8 @@ public interface ProductCategoryService {
 
     ProductCategory get(Long id);
 
-    List<ProductCategory> getAll();
-
     void delete(Long id);
+
+    List<ProductCategory> getPage(int pageNumber, int pageCapacity);
 
 }

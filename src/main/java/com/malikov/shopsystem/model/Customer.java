@@ -4,52 +4,12 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @SuppressWarnings("JpaQlInspection")
-@NamedQueries({
-        @NamedQuery(name = Customer.DELETE, query =
-                "DELETE FROM Customer c WHERE c.id=:id"),
-        @NamedQuery(name = Customer.BY_NAME, query =
-                "SELECT c FROM Customer c WHERE c.name=:name"),
-        @NamedQuery(name = Customer.BY_LAST_NAME, query =
-                "SELECT c FROM Customer c WHERE c.lastName=:lastName"),
-        @NamedQuery(name = Customer.BY_FIRST_NAME_MASK, query =
-                "SELECT c FROM Customer c" +
-                        " WHERE lower(c.name) LIKE lower(:firstNameMask)"),
-        @NamedQuery(name = Customer.BY_LAST_NAME_MASK, query =
-                "SELECT c FROM Customer c"
-                        + " WHERE lower(c.lastName) LIKE lower(:lastNameMask)"),
-        @NamedQuery(name = Customer.BY_PHONE_NUMBER_MASK, query =
-                "SELECT c FROM Customer c"
-                        + " WHERE c.phoneNumber LIKE :phoneNumberMask"),
-        @NamedQuery(name = Customer.BY_CITY_MASK, query =
-                "SELECT c FROM Customer c"
-                        + " WHERE lower(c.city) LIKE lower(:cityMask)"),
-        @NamedQuery(name = Customer.BY_CITY, query =
-                "SELECT c FROM Customer c WHERE c.city=:city"),
-        @NamedQuery(name = Customer.BY_EMAIL, query =
-                "SELECT c FROM Customer c WHERE c.email=:email"),
-        @NamedQuery(name = Customer.BY_PHONE_NUMBER, query =
-                "SELECT c FROM Customer c WHERE c.phoneNumber=:phoneNumber"),
-        @NamedQuery(name = Customer.ALL_SORTED, query =
-                "SELECT c FROM Customer c ORDER BY c.id")
-})
 @Entity
 @Table(name = "osms_customers", uniqueConstraints = {
         @UniqueConstraint(columnNames = "phone_number",
                 name = "customers_phone_number_idx")
 })
 public class Customer extends NamedEntity {
-
-    public static final String DELETE = "Customer.delete";
-    public static final String ALL_SORTED = "Customer.getAllSorted";
-    public static final String BY_EMAIL = "Customer.getByEmail";
-    public static final String BY_PHONE_NUMBER = "Customer.getByPhone";
-    public static final String BY_NAME = "Customer.getByName";
-    public static final String BY_LAST_NAME = "Customer.getByLastName";
-    public static final String BY_FIRST_NAME_MASK = "Customer.getByFirstNameMask";
-    public static final String BY_LAST_NAME_MASK = "Customer.getByLastNameMask";
-    public static final String BY_PHONE_NUMBER_MASK = "Customer.getByPhoneNumberMask";
-    public static final String BY_CITY_MASK = "Customer.getByCityMask";
-    public static final String BY_CITY = "Customer.getByCity";
 
     @Column(name = "last_name")
     private String lastName;
@@ -69,8 +29,8 @@ public class Customer extends NamedEntity {
     @Column(name = "note")
     private String note;
 
-
-    public Customer() {}
+    public Customer() {
+    }
 
     public Customer(Customer c) {
         this(c.getId(), c.getName(), c.getLastName(), c.getPhoneNumber(),

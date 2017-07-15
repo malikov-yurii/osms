@@ -8,23 +8,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.*;
 
-import static java.math.RoundingMode.HALF_UP;
-
 @SuppressWarnings("JpaQlInspection")
-@NamedQueries({
-        @NamedQuery(name = Product.DELETE, query =
-                "DELETE FROM Product p WHERE p.id=:id"),
-        @NamedQuery(name = Product.BY_CATEGORY_ID, query =
-                "SELECT p FROM Product p JOIN p.categories c"
-                        + " WHERE c.id=:categoryId"),
-        @NamedQuery(name = Product.QUANTITY_LESS_THAN, query =
-                "SELECT p FROM Product p WHERE p.quantity < :quantity"),
-        @NamedQuery(name = Product.ALL_SORTED, query =
-                "SELECT p FROM Product p ORDER BY p.price"),
-        @NamedQuery(name = Product.BY_PRODUCT_NAME_MASK, query =
-                "SELECT p FROM Product p"
-                        + " WHERE lower(p.name) LIKE lower(:productNameMask)"),
-})
 @Entity
 @Table(name = "jos_jshopping_products")
 @AttributeOverrides({
@@ -32,12 +16,6 @@ import static java.math.RoundingMode.HALF_UP;
         @AttributeOverride(name = "name", column = @Column(name = "`name_ru-RU`")),
 })
 public class Product extends NamedEntity {
-
-    public static final String DELETE = "Product.delete";
-    public static final String BY_CATEGORY_ID = "Product.getByCategoryId";
-    public static final String QUANTITY_LESS_THAN = "Product.getQuantityLessThan";
-    public static final String ALL_SORTED = "Product.getAllSorted";
-    public static final String BY_PRODUCT_NAME_MASK = "OrderItem.byProductNameMask";
 
     @Column(name = "product_price", columnDefinition = "decimal",
             precision = 12, scale = 2)
@@ -62,10 +40,13 @@ public class Product extends NamedEntity {
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean unlimited;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "product")
     @Fetch(FetchMode.SELECT)
-    @JoinColumn(name = "product_id")
     @OrderBy("id ASC")
+    //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //@Fetch(FetchMode.SELECT)
+    //@JoinColumn(name = "product_id")
+    //@OrderBy("id ASC")
     private List<ProductVariation> variations;
 
     @Column(name = "supplier")
@@ -75,16 +56,13 @@ public class Product extends NamedEntity {
 
     public Product(Long id, String name, BigDecimal price, boolean unlimited,
                    int quantity, boolean hasVariations,
-                   Collection<ProductCategory> categories,
-                   Collection<ProductVariation> productVariations) {
+                   Collection<ProductCategory> categories) {
         super(id, name);
         this.price = price;
         this.unlimited = unlimited;
         this.quantity = quantity;
         this.categories = new HashSet<>(categories);
         this.hasVariations = hasVariations;
-        if (hasVariations)
-            this.variations = new ArrayList<>(productVariations);
     }
 
 

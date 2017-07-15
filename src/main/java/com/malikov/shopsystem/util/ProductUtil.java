@@ -11,7 +11,7 @@ public class ProductUtil {
 
     public static Product createNewFromTo(ProductDto productDto) {
         return new Product(null, productDto.getName(), productDto.getPrice(),
-                false, productDto.getQuantity(), false, null, null);
+                false, productDto.getQuantity(), false, null);
     }
 
     public static Product updateFromTo(Product product, ProductDto productDto) {

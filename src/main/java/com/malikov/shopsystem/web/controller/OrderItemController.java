@@ -2,7 +2,6 @@ package com.malikov.shopsystem.web.controller;
 
 import com.malikov.shopsystem.dto.OrderItemAutocompleteDto;
 import com.malikov.shopsystem.service.OrderItemService;
-import com.malikov.shopsystem.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -14,14 +13,11 @@ import java.util.List;
  * @author Yurii Malikov
  */
 @RestController
-@RequestMapping(value = "/ajax/profile/order-item")
-public class OrderItemAjaxController {
+@RequestMapping(value = "/order-item")
+public class OrderItemController {
 
     @Autowired
     private OrderItemService orderItemService;
-
-    @Autowired
-    OrderService orderService;
 
     @GetMapping(value = "/autocomplete-by-product-name/{productNameMask}",
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -42,14 +38,14 @@ public class OrderItemAjaxController {
     }
 
     @PutMapping(value = "{itemId}/quantity")
-    public int updateOrderItemQuantity(@PathVariable("itemId") Long itemId,
-                                       @RequestParam("quantity") int quantity) {
+    public BigDecimal updateOrderItemQuantity(@PathVariable("itemId") Long itemId,
+                                              @RequestParam("quantity") int quantity) {
         return orderItemService.updateOrderItemProductQuantity(itemId, quantity);
     }
 
     @PutMapping(value = "{itemId}/price")
-    public int updateOrderItemPrice(@PathVariable("itemId") Long itemId,
-                                    @RequestParam("price") BigDecimal price) {
+    public BigDecimal updateOrderItemPrice(@PathVariable("itemId") Long itemId,
+                                           @RequestParam("price") BigDecimal price) {
         return orderItemService.updateOrderItemProductPrice(itemId, price);
     }
 

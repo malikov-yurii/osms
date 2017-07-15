@@ -9,8 +9,6 @@ public interface ProductService {
 
     Product get(Long id);
 
-    List<ProductDto> getAllDtos();
-
     void delete(Long id);
 
     void update(Product product);
@@ -20,6 +18,8 @@ public interface ProductService {
     void enableHasVariations(Long id, boolean hasVariations);
 
     List<Product> getByProductNameMask(String productNameMask);
+
+    List<ProductDto> getPage(int pageNumber, int pageCapacity);
 
     //Collection<Product> getByCategoryId(Long categoryId);
     //Collection<Product> getAllQuantityLessThan(int quantity);

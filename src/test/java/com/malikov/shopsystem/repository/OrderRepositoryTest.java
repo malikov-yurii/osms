@@ -33,7 +33,7 @@ public abstract class OrderRepositoryTest extends AbstractRepositoryTest {
 //        Order created = service.create(newOrder);
 //        newOrder.setId(created.getId());
 //        OrderTestData.MATCHER.assertCollectionEquals(
-//                Arrays.asList(ORDER_1, ORDER_2, ORDER_3, ORDER_4, newOrder), service.getAllDtos());
+//                Arrays.asList(ORDER_1, ORDER_2, ORDER_3, ORDER_4, newOrder), service.getPage());
 //    }
 
     @Test

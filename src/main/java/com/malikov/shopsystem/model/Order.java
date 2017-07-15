@@ -6,36 +6,14 @@ import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
 @SuppressWarnings("JpaQlInspection")
-@NamedQueries({
-        @NamedQuery(name = Order.DELETE, query =
-                "DELETE FROM Order o WHERE o.id=:id"),
-        @NamedQuery(name = Order.BY_CUSTOMER_ID, query =
-                "SELECT o FROM Order o JOIN o.customer c"
-                        + " WHERE c.id=:customerId"),
-        @NamedQuery(name = Order.BY_PRODUCT_ID, query =
-                "SELECT o FROM Order o JOIN o.orderItems oi"
-                        + " WHERE oi.product.id=:productId"),
-        @NamedQuery(name = Order.ALL, query =
-                "SELECT o FROM Order o ORDER BY o.id DESC"),
-        @NamedQuery(name = Order.UPDATE_STATUS, query =
-                "UPDATE Order o SET o.status = :status WHERE o.id = :orderId"),
-        @NamedQuery(name = Order.GET_TOTAL_QUANTITY, query =
-                "SELECT count (*) FROM Order")
-})
 @Entity
 @Table(name = "osms_orders")
 public class Order extends BaseEntity {
-
-    public static final String DELETE = "Order.delete";
-    public static final String ALL = "Order.getAllSorted";
-    public static final String BY_CUSTOMER_ID = "Order.getByCustomerId";
-    public static final String BY_PRODUCT_ID = "Order.getByProductId";
-    public static final String UPDATE_STATUS = "Order.updateStatus";
-    public static final String GET_TOTAL_QUANTITY = "Order.totalQuantity";
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
@@ -78,7 +56,7 @@ public class Order extends BaseEntity {
     private List<OrderItem> orderItems;
 
     @Column(name = "total_sum")
-    private Integer totalSum;
+    private BigDecimal totalSum;
 
     @Column(name = "comment")
     private String comment;
@@ -115,7 +93,7 @@ public class Order extends BaseEntity {
             this.orderItems.forEach(orderItem -> orderItem.setOrder(this));
             this.totalSum = OrderUtil.calculateTotalSum(orderItems);
         } else {
-            this.totalSum = 0;
+            this.totalSum = BigDecimal.ZERO;
         }
     }
 
@@ -214,11 +192,11 @@ public class Order extends BaseEntity {
         this.user = user;
     }
 
-    public Integer getTotalSum() {
+    public BigDecimal getTotalSum() {
         return totalSum;
     }
 
-    public void setTotalSum(Integer totalSum) {
+    public void setTotalSum(BigDecimal totalSum) {
         this.totalSum = totalSum;
     }
 

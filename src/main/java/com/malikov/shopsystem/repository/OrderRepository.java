@@ -2,25 +2,21 @@ package com.malikov.shopsystem.repository;
 
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderStatus;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
-import java.util.List;
 
-public interface OrderRepository extends Repository<Order> {
+public interface OrderRepository extends PagingAndSortingRepository<Order, Long> {
 
-    /**
-     * @return orders found by customerId or emply list if not found any
-     */
-    Collection<Order> getByCustomerId(Long customerId);
+    @Query("SELECT o FROM Order o JOIN o.customer c WHERE c.id=:customerId")
+    Collection<Order> getByCustomerId(@Param("customerId") Long customerId);
 
-    /**
-     * @return orders found by productId or emply list if not found any
-     */
-    Collection<Order> getByProductId(Long productId);
+    @Query("SELECT o FROM Order o JOIN o.orderItems oi WHERE oi.product.id=:productId")
+    Collection<Order> getByProductId(@Param("productId") Long productId);
 
-    void updateStatus(Long orderId, OrderStatus status);
+    @Query("UPDATE Order o SET o.status = :status WHERE o.id = :orderId")
+    void updateStatus(@Param("orderId") Long orderId, @Param("status") OrderStatus status);
 
-    List<Order> getDatatablePage(int start, int length);
-
-    Long getTotalQuantity();
 }

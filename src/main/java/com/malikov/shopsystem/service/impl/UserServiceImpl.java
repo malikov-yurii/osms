@@ -5,16 +5,17 @@ import com.malikov.shopsystem.model.User;
 import com.malikov.shopsystem.repository.UserRepository;
 import com.malikov.shopsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import static com.malikov.shopsystem.util.ValidationUtil.checkNotFound;
+import java.util.List;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Override
     public User getByLogin(String login) {
@@ -28,5 +29,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public AuthorizedUser loadUserByUsername(String login) throws UsernameNotFoundException {
         return new AuthorizedUser(getByLogin(login));
+    }
+
+    @Override
+    public List<User> getPage(int pageNumber, int pageCapacity) {
+        return userRepository.findAll(new PageRequest(pageNumber, pageCapacity)).getContent();
     }
 }

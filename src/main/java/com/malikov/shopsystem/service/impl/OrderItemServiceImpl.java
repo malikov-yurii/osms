@@ -1,5 +1,6 @@
 package com.malikov.shopsystem.service.impl;
 import com.malikov.shopsystem.dto.OrderItemAutocompleteDto;
+import com.malikov.shopsystem.dto.OrderItemDto;
 import com.malikov.shopsystem.dto.OrderItemLiteDto;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderItem;
@@ -10,6 +11,7 @@ import com.malikov.shopsystem.repository.ProductRepository;
 import com.malikov.shopsystem.service.OrderItemService;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,13 +23,13 @@ import java.util.List;
 public class OrderItemServiceImpl implements OrderItemService {
 
     @Autowired
-    OrderItemRepository orderItemRepository;
+    private OrderItemRepository orderItemRepository;
 
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
     @Autowired
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     @Override
     public OrderItem save(OrderItem orderItem) {
@@ -45,21 +47,21 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public void updateProductName(Long id, String newProductName) {
-        OrderItem orderItem = orderItemRepository.get(id);
+        OrderItem orderItem = get(id);
         orderItem.setProductName(newProductName);
         orderItemRepository.save(orderItem);
     }
 
     @Override
-    public int updateOrderItemProductQuantity(Long itemId, int quantity) {
-            OrderItem orderItem = orderItemRepository.get(itemId);
+    public BigDecimal updateOrderItemProductQuantity(Long itemId, int quantity) {
+            OrderItem orderItem = get(itemId);
             orderItem.setProductQuantity(quantity);
         return recalculateTotalSum(orderItem);
     }
 
-    private int recalculateTotalSum(OrderItem orderItem) {
+    private BigDecimal recalculateTotalSum(OrderItem orderItem) {
         Order order = orderItem.getOrder();
-        int totalSum = OrderUtil.calculateTotalSum(order.getOrderItems());
+        BigDecimal totalSum = OrderUtil.calculateTotalSum(order.getOrderItems());
         order.setTotalSum(totalSum);
         orderRepository.save(order);
         orderItemRepository.save(orderItem);
@@ -67,15 +69,15 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public int updateOrderItemProductPrice(Long itemId, BigDecimal price) {
-            OrderItem orderItem = orderItemRepository.get(itemId);
+    public BigDecimal updateOrderItemProductPrice(Long itemId, BigDecimal price) {
+            OrderItem orderItem = get(itemId);
             orderItem.setProductPrice(price);
         return recalculateTotalSum(orderItem);
     }
 
     @Override
     public OrderItem get(Long id) {
-        return orderItemRepository.get(id);
+        return orderItemRepository.findOne(id);
     }
 
     @Override
@@ -85,14 +87,14 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public OrderItem createNewEmpty(Long orderId) {
-        return orderItemRepository.save(new OrderItem(orderRepository.get(orderId),
+        return orderItemRepository.save(new OrderItem(orderRepository.findOne(orderId),
                 null, "", new BigDecimal(0), 1));
     }
 
     @Override
     public List<OrderItemAutocompleteDto> getByProductMask(String productNameMask) {
         List<OrderItemAutocompleteDto> orderItemAutocompleteDtos = new ArrayList<>();
-        productRepository.getByProductNameMask(productNameMask).forEach(product -> {
+        productRepository.getByNameLike(productNameMask).forEach(product -> {
             if (product.getHasVariations()) {
                 for (ProductVariation productVariation : product.getVariations()) {
                     orderItemAutocompleteDtos.add(
@@ -122,4 +124,12 @@ public class OrderItemServiceImpl implements OrderItemService {
         });
         return orderItemAutocompleteDtos;
     }
+/*
+    @Override
+    public List<OrderItemDto> getPage(int pageNumber, int pageCapacity) {
+        return orderItemRepository.findAll(new PageRequest(pageNumber, pageCapacity))
+                .getContent()
+                .stream()
+                .map(OrderItemU);
+    }*/
 }

@@ -1,15 +1,55 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.malikov</groupId>
     <artifactId>shopsystem</artifactId>
-    <version>1.0</version>
     <packaging>war</packaging>
-    <name>Ticket System</name>
+
+    <version>1.0-SNAPSHOT</version>
+
+    <name>Online Shop Management System</name>
     <url>http://osms.pro/</url>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <tomcat.version>8.0.33</tomcat.version>
+        <spring.version>4.3.2.RELEASE</spring.version>
+        <spring-security.version>4.1.3.RELEASE</spring-security.version>
+        <spring-data-jpa.version>1.10.4.RELEASE</spring-data-jpa.version>
+        <jackson-json.version>2.8.4</jackson-json.version>
+
+        <!-- Logging -->
+        <logback.version>1.1.7</logback.version>
+        <slf4j.version>1.7.21</slf4j.version>
+
+        <!--DB-->
+        <!--<postgresql.version>9.4.1211</postgresql.version>-->
+        <mysql.version>5.1.6</mysql.version>
+        <!--    Tests  -->
+        <junit.version>4.12</junit.version>
+        <hamcrest.version>1.3</hamcrest.version>
+
+        <!-- Hibernate -->
+        <hibernate.version>5.2.2.Final</hibernate.version>
+        <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
+
+        <!--Tools-->
+        <ehcache.version>2.10.2.2.21</ehcache.version>
+
+        <!--webjars-->
+        <webjars-bootstrap.version>3.3.7-1</webjars-bootstrap.version>
+        <webjars-jquery.version>2.2.4</webjars-jquery.version>
+        <!--<webjars-jquery-ui.version>1.10.4</webjars-jquery-ui.version>-->
+        <webjars-jquery-ui.version>1.11.4</webjars-jquery-ui.version>
+        <webjars-datetimepicker.version>2.4.7</webjars-datetimepicker.version>
+        <webjars-noty.version>2.3.8</webjars-noty.version>
+        <webjars-datatables.version>1.10.12-1</webjars-datatables.version>
+
+    </properties>
 
     <build>
         <finalName>shopsystem</finalName>
@@ -32,68 +72,51 @@
                     <argLine>-Dfile.encoding=UTF-8</argLine>
                 </configuration>
             </plugin>
+
+            <!--  http://stackoverflow.com/questions/4305935/is-it-possible-to-supply-tomcat6s-context-xml-file-via-the-maven-cargo-plugin#4417945 -->
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.5.0</version>
+                <configuration>
+                    <container>
+                        <containerId>tomcat8x</containerId>
+                        <systemProperties>
+                            <file.encoding>UTF-8</file.encoding>
+                            <spring.profiles.active>mySql,jpa</spring.profiles.active>
+                        </systemProperties>
+                        <dependencies>
+                            <dependency>
+                                <groupId>mysql</groupId>
+                                <artifactId>mysql-connector-java</artifactId>
+                            </dependency>
+                        </dependencies>
+                    </container>
+                    <configuration>
+                        <configfiles>
+                            <configfile>
+                                <file>src/main/resources/tomcat/context.xml</file>
+                                <todir>conf/Catalina/localhost/</todir>
+                                <tofile>context.xml.default</tofile>
+                            </configfile>
+                        </configfiles>
+                    </configuration>
+                    <deployables>
+                        <deployable>
+                            <groupId>com.malikov</groupId>
+                            <artifactId>online-shop</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>${project.build.finalName}</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
-    <properties>
-        <java.version>1.8</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <mysql.version>5.1.6</mysql.version>
-        <tomcat.version>8.0.33</tomcat.version>
-
-        <!--    Tests  -->
-        <junit.version>4.12</junit.version>
-        <hamcrest.version>1.3</hamcrest.version>
-
-        <!-- Logging -->
-        <logback.version>1.1.7</logback.version>
-        <slf4j.version>1.7.21</slf4j.version>
-
-        <!-- Hibernate -->
-        <hibernate.version>5.2.2.Final</hibernate.version>
-        <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
-
-        <spring.version>4.3.2.RELEASE</spring.version>
-        <spring-security.version>4.1.3.RELEASE</spring-security.version>
-        <spring-data-jpa.version>1.10.4.RELEASE</spring-data-jpa.version>
-
-        <tomcat.version>8.0.33</tomcat.version>
-
-        <jackson-json.version>2.8.8</jackson-json.version>
-
-        <!--webjars-->
-        <webjars-sweetalert.version>1.1.3</webjars-sweetalert.version>
-        <webjars-bootstrap.version>3.3.7-1</webjars-bootstrap.version>
-        <webjars-jquery.version>2.2.4</webjars-jquery.version>
-        <webjars-jquery-ui.version>1.11.4</webjars-jquery-ui.version>
-        <webjars-datetimepicker.version>2.5.4</webjars-datetimepicker.version>
-        <webjars-noty.version>2.3.8</webjars-noty.version>
-        <webjars-datatables.version>1.10.13</webjars-datatables.version>
-
-    </properties>
-
     <dependencies>
-
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>${spring-data-jpa.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-jdbc</artifactId>
-            <version>${tomcat.version}</version>
-        </dependency>
-
         <!-- Logging with SLF4J & LogBack -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -128,6 +151,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring-data-jpa.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -141,7 +169,7 @@
             </exclusions>
         </dependency>
 
-        <!--Security-->
+        <!--security-->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
@@ -175,11 +203,28 @@
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate-validator.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.10.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>${ehcache.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>2.2.5</version>
+            <scope>provided</scope>
         </dependency>
 
         <!--Web-->
@@ -196,13 +241,7 @@
             <version>1.2</version>
         </dependency>
 
-        <!-- Webjars -->
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>sweetalert</artifactId>
-            <version>${webjars-sweetalert.version}</version>
-        </dependency>
-
+        <!-- Webjars (static dependencies distributed as JAR files) -->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery-ui</artifactId>
@@ -285,6 +324,40 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>MY_SQL</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.12.4</version>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <version>${mysql.version}</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>tomcat-jdbc</artifactId>
+                    <version>${tomcat.version}</version>
+                </dependency>
+            </dependencies>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -296,4 +369,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
 </project>

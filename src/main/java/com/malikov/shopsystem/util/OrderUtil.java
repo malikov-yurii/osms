@@ -5,6 +5,7 @@ import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderItem;
 import com.malikov.shopsystem.dto.OrderDto;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,13 +51,16 @@ public class OrderUtil {
                 order.getCustomerPostOffice(), order.getPaymentType(),
                 order.getDatePlaced(), order.getStatus(),
                 order.getComment() == null ? "" : order.getComment(),
-                order.getTotalSum() == null ? 0 : order.getTotalSum(),
+                order.getTotalSum() == null ? BigDecimal.ZERO : order.getTotalSum(),
                 orderItemDtos);
     }
 
-    public static int calculateTotalSum(Collection<OrderItem> orderItems) {
-        return orderItems.stream().mapToInt(p ->
-                (p.getProductPrice().intValue() * p.getProductQuantity()))
-                .sum();
+    public static BigDecimal calculateTotalSum(Collection<OrderItem> orderItems) {
+        return orderItems.stream().
+                reduce(
+                        BigDecimal.ZERO,
+                        (sum, oi) -> sum.add(oi.getProductPrice().multiply(new BigDecimal(oi.getProductQuantity()))),
+                        BigDecimal::add
+                );
     }
 }

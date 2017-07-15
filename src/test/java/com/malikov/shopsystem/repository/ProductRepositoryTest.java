@@ -14,7 +14,7 @@ public abstract class ProductRepositoryTest extends AbstractRepositoryTest {
         newProduct.setId(created.getId());
         ProductTestData.MATCHER.assertCollectionEquals(
                 Arrays.asList(POTAL_KITAJ, POTAL_NAZIONALE, SHELLAC_MANETTI, FERRARIO_ROZOVYJ, newProduct),
-                service.getAllDtos());
+                service.getPage());
     }
 
     @Test
@@ -33,7 +33,7 @@ public abstract class ProductRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void testGetAll() throws Exception {
-        Collection<Product> all = service.getAllDtos();
+        Collection<Product> all = service.getPage();
         ProductTestData.MATCHER.assertCollectionEquals(Arrays.asList(POTAL_KITAJ, POTAL_NAZIONALE,
                 SHELLAC_MANETTI, FERRARIO_ROZOVYJ), all);
     }
@@ -42,7 +42,7 @@ public abstract class ProductRepositoryTest extends AbstractRepositoryTest {
     public void testDelete() throws Exception {
         service.delete(POTAL_NAZIONALE.getId());
         ProductTestData.MATCHER.assertCollectionEquals(Arrays.asList(
-                POTAL_KITAJ, SHELLAC_MANETTI, FERRARIO_ROZOVYJ), service.getAllDtos());
+                POTAL_KITAJ, SHELLAC_MANETTI, FERRARIO_ROZOVYJ), service.getPage());
     }
 
     @Test

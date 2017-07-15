@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/ajax/profile/products")
-public class ProductAjaxController {
+@RequestMapping(value = "/product")
+public class ProductController {
 
     @Autowired
-    ProductService productService;
+    private ProductService productService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ProductDto> getAll() {
-        return productService.getAllDtos();
+        return productService.getPage(0, 1000 );
     }
 
     @GetMapping(value = "/{id}")
