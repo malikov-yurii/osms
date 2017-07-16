@@ -40,13 +40,13 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void update(CustomerDto customerDto) {
         checkIsNotNew(customerDto, "customer must not be new");
-        Customer customer = get(customerDto.getId());
+        Customer customer = customerRepository.findOne(customerDto.getId());
         customerRepository.save(updateFromTo(customer, customerDto));
     }
 
     @Override
-    public Customer get(Long id) {
-        return checkNotFoundById(customerRepository.findOne(id), id);
+    public CustomerDto get(Long id) {
+        return CustomerConverter.asDto(checkNotFoundById(customerRepository.findOne(id), id));
     }
 
     @Override
