@@ -1,6 +1,5 @@
 package com.malikov.shopsystem.service.impl;
 import com.malikov.shopsystem.dto.OrderItemAutocompleteDto;
-import com.malikov.shopsystem.dto.OrderItemDto;
 import com.malikov.shopsystem.dto.OrderItemLiteDto;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderItem;
@@ -11,7 +10,6 @@ import com.malikov.shopsystem.repository.ProductRepository;
 import com.malikov.shopsystem.service.OrderItemService;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -94,7 +92,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public List<OrderItemAutocompleteDto> getByProductMask(String productNameMask) {
         List<OrderItemAutocompleteDto> orderItemAutocompleteDtos = new ArrayList<>();
-        productRepository.getByNameLike(productNameMask).forEach(product -> {
+        productRepository.getByNameLike("%" + productNameMask + "%").forEach(product -> {
             if (product.getHasVariations()) {
                 for (ProductVariation productVariation : product.getVariations()) {
                     orderItemAutocompleteDtos.add(

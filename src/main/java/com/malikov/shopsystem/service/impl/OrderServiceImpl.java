@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -148,7 +149,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<OrderDto> getPage(int pageNumber, int pageCapacity) {
-        Page<Order> page = orderRepository.findAll(new PageRequest(pageNumber, pageCapacity));
+        Page<Order> page = orderRepository.findAll(new PageRequest(pageNumber, pageCapacity, new Sort(
+                new Sort.Order(Sort.Direction.DESC, "id")
+        )));
         return new PageImpl<>(
                 page.getContent().stream()
                         .map(OrderUtil::asTo)
@@ -157,6 +160,17 @@ public class OrderServiceImpl implements OrderService {
                 page.getTotalElements());
     }
 
+    /*@Override
+    public Page<OrderDto> getPage(int pageNumber, int pageCapacity) {
+        Page<Order> page = orderRepository.findAll(new PageRequest(pageNumber, pageCapacity));
+        return new PageImpl<>(
+                page.getContent().stream()
+                        .map(OrderUtil::asTo)
+                        .collect(Collectors.toList()),
+                null,
+                page.getTotalElements());
+    }
+*/
     @Override
     public Long getTotalQuantity() {
         return orderRepository.count();

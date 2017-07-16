@@ -66,22 +66,24 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<CustomerAutocompleteDto> getByFirstNameMask(String firstNameMask) {
-        return CustomerAutocompleteDtoListOf(customerRepository.getByNameLike(firstNameMask));
+        return CustomerAutocompleteDtoListOf(customerRepository.getByNameLike("%" +firstNameMask + "%"));
     }
 
     @Override
     public List<CustomerAutocompleteDto> getByLastNameMask(String lastNameMask) {
-        return CustomerAutocompleteDtoListOf(customerRepository.getByLastNameLike(lastNameMask));
+        return CustomerAutocompleteDtoListOf(
+                customerRepository.getByLastNameLike("%" + lastNameMask + "%"));
     }
 
     @Override
     public List<CustomerAutocompleteDto> getByPhoneNumberMask(String phoneNumberMask) {
-        return CustomerAutocompleteDtoListOf(customerRepository.getByPhoneNumberLike(phoneNumberMask));
+        return CustomerAutocompleteDtoListOf(
+                customerRepository.getByPhoneNumberLike("%" + phoneNumberMask + "%"));
     }
 
     @Override
     public List<CustomerAutocompleteDto> getByCityMask(String cityMask) {
-        return CustomerAutocompleteDtoListOf(customerRepository.getByCityLike(cityMask));
+        return CustomerAutocompleteDtoListOf(customerRepository.getByCityLike("%" + cityMask + "%"));
     }
 
     @Override
