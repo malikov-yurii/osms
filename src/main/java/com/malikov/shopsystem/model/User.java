@@ -6,10 +6,14 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@SuppressWarnings("JpaQlInspection")
 @NamedQueries({
-         @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=:id")
-        ,@NamedQuery(name = User.BY_LOGIN, query = "SELECT u FROM User u WHERE u.name=:login")
-        ,@NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u ORDER BY u.name")
+        @NamedQuery(name = User.DELETE, query = "DELETE FROM User u"
+                + " WHERE u.id=:id"),
+        @NamedQuery(name = User.BY_LOGIN, query = "SELECT u FROM User u "
+                + "WHERE u.name=:login"),
+        @NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u "
+                + "ORDER BY u.name")
 })
 @Entity
 @Table(name = "osms_users")
@@ -28,23 +32,16 @@ public class User extends NamedEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    public User() {
-    }
 
-    public User(Integer id, String name, String password, Role... roles) {
+    public User() {}
+
+    public User(Long id, String name, String password, Role... roles) {
         super(id, name);
         this.password = password;
         this.roles = new HashSet<>();
         Collections.addAll(this.roles, roles);
     }
 
-    public User(String name, String password, Role... roles) {
-        this(null, name, password, roles);
-    }
-
-    public User(User u) {
-        this(u.getId(), u.getName(), u.getPassword(), u.getRoles().toArray(new Role[0]));
-    }
 
     public String getPassword() {
         return password;
@@ -84,5 +81,4 @@ public class User extends NamedEntity {
                 ", roles=" + roles +
                 '}';
     }
-
 }

@@ -6,21 +6,25 @@ import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
+@SuppressWarnings("JpaQlInspection")
 @NamedQueries({
-         @NamedQuery(name = Order.DELETE, query =
-                "DELETE FROM Order o WHERE o.id=:id")
-        ,@NamedQuery(name = Order.BY_CUSTOMER_ID, query =
-                "SELECT o FROM Order o JOIN o.customer c WHERE c.id=:customerId")
-        ,@NamedQuery(name = Order.BY_PRODUCT_ID, query =
-                "SELECT o FROM Order o JOIN o.orderItems oi WHERE oi.product.id=:productId")
-        ,@NamedQuery(name = Order.ALL, query =
-                "SELECT o FROM Order o ORDER BY o.id DESC")
-        ,@NamedQuery(name = Order.UPDATE_STATUS, query =
-                "UPDATE Order o SET o.status = :status WHERE o.id = :orderId")
-        ,@NamedQuery(name = Order.GET_TOTAL_QUANTITY, query =
+        @NamedQuery(name = Order.DELETE, query =
+                "DELETE FROM Order o WHERE o.id=:id"),
+        @NamedQuery(name = Order.BY_CUSTOMER_ID, query =
+                "SELECT o FROM Order o JOIN o.customer c"
+                        + " WHERE c.id=:customerId"),
+        @NamedQuery(name = Order.BY_PRODUCT_ID, query =
+                "SELECT o FROM Order o JOIN o.orderItems oi"
+                        + " WHERE oi.product.id=:productId"),
+        @NamedQuery(name = Order.ALL, query =
+                "SELECT o FROM Order o ORDER BY o.id DESC"),
+        @NamedQuery(name = Order.UPDATE_STATUS, query =
+                "UPDATE Order o SET o.status = :status WHERE o.id = :orderId"),
+        @NamedQuery(name = Order.GET_TOTAL_QUANTITY, query =
                 "SELECT count (*) FROM Order")
 })
 @Entity
@@ -75,15 +79,22 @@ public class Order extends BaseEntity {
     private List<OrderItem> orderItems;
 
     @Column(name = "total_sum")
-    private Integer totalSum;
+    private BigDecimal totalSum;
 
     @Column(name = "comment")
     private String comment;
 
-    public Order() {
+
+    public Order() {}
+
+    public Order(Customer customer, User user, PaymentType paymentType,
+                 OrderStatus status, String comment, List<OrderItem> items) {
+        this(null, customer, user, paymentType, status, comment, null, items);
     }
 
-    public Order(Integer id, Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus, String comment, LocalDate datePlaced, List<OrderItem> orderItems) {
+    public Order(Long id, Customer customer, User user, PaymentType paymentType,
+                 OrderStatus status, String comment, LocalDate datePlaced,
+                 List<OrderItem> orderItems) {
         super(id);
         if (customer != null) {
             this.customer = customer;
@@ -93,29 +104,28 @@ public class Order extends BaseEntity {
             this.customerCity = customer.getCity();
             this.customerPostOffice = customer.getPostOffice();
         }
+
         this.user = user;
         this.paymentType = paymentType;
-        this.status = orderStatus;
+        this.status = status;
         this.comment = comment;
         this.datePlaced = datePlaced;
+
         if (orderItems != null) {
             this.orderItems = orderItems;
             this.orderItems.forEach(orderItem -> orderItem.setOrder(this));
             this.totalSum = OrderUtil.calculateTotalSum(orderItems);
         } else {
-            this.totalSum = 0;
+            this.totalSum = BigDecimal.ZERO;
         }
     }
 
-    public Order(Customer customer, User user, PaymentType paymentType, OrderStatus orderStatus,
-                 String comment, List<OrderItem> orderItems) {
-        this(null, customer, user, paymentType, orderStatus, comment, null, orderItems);
+    public Order(Order order) {
+        this(order.getId(), order.getCustomer(), order.getUser(),
+                order.getPaymentType(), order.getStatus(), order.getComment(),
+                order.getDatePlaced(), order.getOrderItems());
     }
 
-    public Order(Order o) {
-        this(o.getId(), o.getCustomer(), o.getUser(), o.getPaymentType(), o.getStatus(),
-                o.getComment(), o.getDatePlaced(), o.getOrderItems());
-    }
 
     public String getCustomerName() {
         return customerName;
@@ -205,11 +215,11 @@ public class Order extends BaseEntity {
         this.user = user;
     }
 
-    public Integer getTotalSum() {
+    public BigDecimal getTotalSum() {
         return totalSum;
     }
 
-    public void setTotalSum(Integer totalSum) {
+    public void setTotalSum(BigDecimal totalSum) {
         this.totalSum = totalSum;
     }
 
@@ -266,6 +276,5 @@ public class Order extends BaseEntity {
                 ", comment=" + totalSum +
                 '}';
     }
-
 }
 

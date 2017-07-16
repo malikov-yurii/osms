@@ -6,15 +6,8 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <http pattern="/assets/**" security="none"/>
+    <http pattern="/resources/**" security="none"/>
     <http pattern="/webjars/**" security="none"/>
-
-    <http pattern="/rest/**" use-expressions="true" name="restSecurityFilterChain" create-session="stateless">
-        <http-basic/>
-        <intercept-url pattern="/rest/admin/**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/**" access="isAuthenticated()"/>
-        <csrf disabled="true"/>
-    </http>
 
     <http>
         <intercept-url pattern="/login" access="permitAll"/>
@@ -23,11 +16,11 @@
         <intercept-url pattern="/**/admin/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
 
-        <form-login login-page="/login" default-target-url="/"
+        <form-login login-page="/login" default-target-url="/orders"
+                    always-use-default-target="true"
                     authentication-failure-url="/login?error=true"
                     login-processing-url="/spring_security_check"/>
         <logout logout-success-url="/login"/>
-        <csrf disabled="true"/>
     </http>
 
     <beans:bean id="encoder"

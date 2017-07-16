@@ -1,12 +1,14 @@
 package com.malikov.shopsystem.model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Objects;
 
+@SuppressWarnings("JpaQlInspection")
 @NamedQueries({
-         @NamedQuery(name = ProductVariation.DELETE, query =
-                "DELETE FROM ProductVariation pv WHERE pv.id=:id")
-        ,@NamedQuery(name = ProductVariation.ALL_SORTED, query =
+        @NamedQuery(name = ProductVariation.DELETE, query =
+                "DELETE FROM ProductVariation pv WHERE pv.id=:id"),
+        @NamedQuery(name = ProductVariation.ALL_SORTED, query =
                 "SELECT pv FROM ProductVariation pv ORDER BY pv.id")
 })
 @Entity
@@ -18,35 +20,31 @@ public class ProductVariation extends BaseEntity {
     public static final String ALL_SORTED = "ProductVariation.allSorted";
 
     @Column(name = "price")
-    private int price;
+    private BigDecimal price;
 
     @Column(name = "count")
     private int quantity;
-
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "attr_value_id")
     private VariationValue variationValue;
 
-    public ProductVariation() {
-    }
 
-    public ProductVariation(int price, int quantity, VariationValue variationValue) {
-        this(null, price, quantity, variationValue);
-    }
+    public ProductVariation() {}
 
-    public ProductVariation(Integer id, int price, int quantity, VariationValue variationValue) {
+    public ProductVariation(Long id, BigDecimal price, int quantity, VariationValue variationValue) {
         super(id);
         this.price = price;
         this.quantity = quantity;
         this.variationValue = variationValue;
     }
 
-    public int getPrice() {
+
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -91,5 +89,4 @@ public class ProductVariation extends BaseEntity {
                 ", variationValue=" + variationValue +
                 '}';
     }
-
 }

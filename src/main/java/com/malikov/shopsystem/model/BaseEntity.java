@@ -1,5 +1,6 @@
 package com.malikov.shopsystem.model;
 
+import com.malikov.shopsystem.HasId;
 import org.hibernate.Hibernate;
 import org.springframework.data.domain.Persistable;
 
@@ -13,27 +14,28 @@ import javax.persistence.*;
  */
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public class BaseEntity implements Persistable<Integer> {
+public class BaseEntity implements Persistable<Long>, HasId {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @Access(value = AccessType.PROPERTY)
-    protected Integer id;
+    protected Long id;
 
-    public BaseEntity() {
-    }
 
-    protected BaseEntity(Integer id) {
+    public BaseEntity() {}
+
+    protected BaseEntity(Long id) {
         this.id = id;
     }
 
+
     @Override
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -57,7 +59,6 @@ public class BaseEntity implements Persistable<Integer> {
 
     @Override
     public int hashCode() {
-        return (getId() == null) ? 0 : getId();
+        return (int) ((getId() == null) ? 0 : getId());
     }
-
 }

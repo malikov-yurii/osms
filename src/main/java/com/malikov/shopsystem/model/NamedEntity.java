@@ -9,13 +9,14 @@ public class NamedEntity extends BaseEntity {
     @Column(name = "name", nullable = false)
     protected String name;
 
-    public NamedEntity() {
-    }
 
-    protected NamedEntity(Integer id, String name) {
+    public NamedEntity() {}
+
+    protected NamedEntity(Long id, String name) {
         super(id);
         this.name = name;
     }
+
 
     public String getName() {
         return this.name;
@@ -30,5 +31,4 @@ public class NamedEntity extends BaseEntity {
         return "id='" + id + '\'' +
                 " name='" + name + '\'';
     }
-
 }

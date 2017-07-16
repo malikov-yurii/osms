@@ -1,27 +1,40 @@
 package com.malikov.shopsystem.service;
 
+import com.malikov.shopsystem.dto.CustomerDto;
 import com.malikov.shopsystem.model.Customer;
+import com.malikov.shopsystem.dto.CustomerAutocompleteDto;
 
-import java.util.Collection;
+import java.util.List;
 
-public interface CustomerService extends Service<Customer> {
+public interface CustomerService {
 
-    Collection<Customer> getByName(String name);
+    Customer create(CustomerDto customerDto);
 
-    Collection<Customer> getByLastName(String lastName);
+    void update(CustomerDto customerDto);
 
-    Collection<Customer> getByFirstNameMask(String firstNameMask);
+    Customer get(Long id);
 
-    Collection<Customer> getByLastNameMask(String lastNameMask);
+    List<CustomerDto> getAll();
 
-    Collection<Customer> getByPhoneNumberMask(String phoneNumberMask);
+    void delete(Long id);
 
-    Collection<Customer> getByCityMask(String cityMask);
+    List<Customer> getByName(String name);
 
-    Collection<Customer> getByCity(String city);
+    List<Customer> getByLastName(String lastName);
+
+    List<CustomerAutocompleteDto> getByFirstNameMask(String firstNameMask);
+
+    List<CustomerAutocompleteDto> getByLastNameMask(String lastNameMask);
+
+    List<CustomerAutocompleteDto> getByPhoneNumberMask(String phoneNumberMask);
+
+    List<CustomerAutocompleteDto> getByCityMask(String cityMask);
+
+    List<Customer> getByCity(String city);
 
     Customer getByEmail(String email);
 
     Customer getByPhoneNumber(String phoneNumber);
 
+    Customer persistCustomerFromOrder(Long orderId);
 }

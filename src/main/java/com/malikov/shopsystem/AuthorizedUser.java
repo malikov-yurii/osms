@@ -1,7 +1,7 @@
 package com.malikov.shopsystem;
 
 import com.malikov.shopsystem.model.User;
-import com.malikov.shopsystem.to.UserTo;
+import com.malikov.shopsystem.dto.UserDto;
 import com.malikov.shopsystem.util.UserUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,11 +12,11 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
 
     private static final long serialVersionUID = 1L;
 
-    private UserTo userTo;
+    private UserDto userDto;
 
     public AuthorizedUser(User user) {
         super(user.getName(), user.getPassword(), true, true, true, true, user.getRoles());
-        this.userTo = UserUtil.asTo(user);
+        this.userDto = UserUtil.asTo(user);
     }
 
     public static AuthorizedUser safeGet() {
@@ -34,21 +34,21 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
         return user;
     }
 
-    public static int id() {
-        return get().userTo.getId();
+    public static Long id() {
+        return get().userDto.getId();
     }
 
-    public void update(UserTo newTo) {
-        userTo = newTo;
+    public void update(UserDto newTo) {
+        userDto = newTo;
     }
 
-    public UserTo getUserTo() {
-        return userTo;
+    public UserDto getUserDto() {
+        return userDto;
     }
 
     @Override
     public String toString() {
-        return userTo.toString();
+        return userDto.toString();
     }
 
 }

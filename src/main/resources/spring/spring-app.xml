@@ -4,13 +4,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <import resource="spring-tools.xml"/>
     <import resource="spring-security.xml"/>
 
     <context:annotation-config/>
 
     <context:component-scan base-package="com.malikov.**.service"/>
-
-    <bean class="com.malikov.shopsystem.repository.JpaUtil"/>
 
 </beans>

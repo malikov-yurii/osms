@@ -1,19 +1,27 @@
 package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.model.Product;
+import com.malikov.shopsystem.dto.ProductDto;
 
-import java.util.Collection;
 import java.util.List;
 
-public interface ProductService extends Service<Product> {
-    Collection<Product> getByCategoryId(int categoryId);
+public interface ProductService {
 
-    Collection<Product> getAllQuantityLessThan(int quantity);
+    Product get(Long id);
 
-    void enableUnlimited(int id, boolean unlimited);
+    List<ProductDto> getAllDtos();
 
-    void enableHasVariations(int id, boolean hasVariations);
+    void delete(Long id);
+
+    void update(Product product);
+
+    void enableUnlimited(Long id, boolean unlimited);
+
+    void enableHasVariations(Long id, boolean hasVariations);
 
     List<Product> getByProductNameMask(String productNameMask);
 
+    //Collection<Product> getByCategoryId(Long categoryId);
+    //Collection<Product> getAllQuantityLessThan(int quantity);
+    //Product create(Product product);
 }

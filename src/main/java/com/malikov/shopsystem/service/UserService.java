@@ -1,12 +1,11 @@
 package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.model.User;
-import com.malikov.shopsystem.to.UserTo;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService extends Service<User> {
-
+/**
+ * Created by Yurii_Malikov on 6/21/2017.
+ */
+public interface UserService extends UserDetailsService {
     User getByLogin(String login);
-
-    void update(UserTo userTo);
-
 }

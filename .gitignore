@@ -1,6 +1,6 @@
-.idea
-out
-target
+target/
+/git/nbproject
+/.idea/
 *.iml
-log
-mySql.properties
+
+
