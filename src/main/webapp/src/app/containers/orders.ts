@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, OnInit, ViewContainerRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
@@ -11,7 +11,7 @@ import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/pluck';
 import 'rxjs/add/operator/filter';
 
-import { OrderService } from '../services/index';
+import { OrderService, PopupService } from '../services/index';
 import { Store } from '../store';
 import { Order, StaticDATA } from '../models';
 
@@ -20,7 +20,6 @@ import { Order, StaticDATA } from '../models';
   template: `
     <div class="wrapper">
       <div class="service-block">
-      
         <div
           class="btn btn-orders-add"
           (click)="onAddOrder()"
@@ -211,16 +210,18 @@ export class Orders implements OnInit, OnDestroy {
 
   constructor(
     private orderService: OrderService,
-    private store: Store
+    private store: Store,
+    private popupService: PopupService,
+    private viewRef: ViewContainerRef
   ) {}
 
   ngOnInit() {
 
     this.subs[this.subs.length] = this.orderService.getOrders(0, this.pageLength).subscribe(resp => {
       this.totalOrders = resp.recordsTotal;
-      this.subs[this.subs.length] = this.orderService.preloadOrders(this.pageLength, this.pageLength * 9).subscribe(
-        () => this.subs[this.subs.length] = this.orderService.preloadOrders(this.pageLength + this.pageLength * 9, this.pageLength * 500).subscribe()
-      );
+      // this.subs[this.subs.length] = this.orderService.preloadOrders(this.pageLength, this.pageLength * 9).subscribe(
+      //   () => this.subs[this.subs.length] = this.orderService.preloadOrders(this.pageLength + this.pageLength * 9, this.pageLength * 500).subscribe()
+      // );
     });
 
     let storeSource = this.store.changes
@@ -256,6 +257,8 @@ export class Orders implements OnInit, OnDestroy {
     this.orders$ = source.pluck('orders');
     this.filteredOrders$ = source.pluck('filtered');
 
+    this.popupService.viewContainerRef = this.viewRef;
+
   }
 
 
@@ -276,11 +279,7 @@ export class Orders implements OnInit, OnDestroy {
 
 
 
-
-
-
-
-  // Manage orders
+  // Add and Delete orders
   onAddOrder() {
     this.orderService.addOrder();
     this.paginationChanged({page: 1, length: this.pageLength});
@@ -305,7 +304,9 @@ export class Orders implements OnInit, OnDestroy {
 
 
 
-  // Manage products
+
+
+  // Manage order products
   onAddProduct(orderId) {
     this.orderService.addProduct(orderId);
   }
@@ -326,6 +327,15 @@ export class Orders implements OnInit, OnDestroy {
 
 
 
+  // Manage customers
+  onEditCustomer(customerId) {
+    this.popupService.renderPopup().subscribe(customer => {
+      this.orderService.saveCustomer(customerId, customer).subscribe();
+    });
+    this.orderService.getCustomer(customerId).subscribe(customer => {
+      this.popupService.onProvideWithData(customer);
+    })
+  }
 
 
 

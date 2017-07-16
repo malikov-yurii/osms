@@ -45,11 +45,29 @@ export class ApiService {
       .map(this.getJson);
   }
 
+  getRest(path: string): Observable<any> {
+    return this.http.get(`rest/profile/${path}`, this.headers)
+      .map(this.checkForError)
+      .catch(err => Observable.throw(err))
+      .map(this.getJson);
+  }
+
   post(path: string, body?): Observable<any> {
     return this.http.post(
         `${this.url}${path}`,
         body,
         {headers: this.headers}
+      )
+      .map(this.checkForError)
+      .catch(err => Observable.throw(err))
+      .map(this.getJson);
+  }
+
+  postRest(path: string, body?): Observable<any> {
+    return this.http.post(
+      `rest/profile/${path}`,
+      body,
+      {headers: this.headers}
       )
       .map(this.checkForError)
       .catch(err => Observable.throw(err))

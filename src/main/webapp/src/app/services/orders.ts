@@ -35,8 +35,16 @@ export class OrderService {
     return this.api.get(`${this.ordersPath}?start=0&length=10000`);
   }
 
-  getAllCustomers(): Observable<any> {
-    return this.api.get(`customers/`);
+  getCustomer(customerId): Observable<any> {
+    return this.api.getRest(`customers/${customerId}`);
+  }
+  saveCustomer(customerId, objCustomerInfo): Observable<any> {
+    let customerInfo = Object.keys(objCustomerInfo).map(key => {
+      return `${encodeURIComponent(key)}=${encodeURIComponent(objCustomerInfo[key])}`
+    }).join('&');
+    // @TODO get rid of this ^
+
+    return this.api.postRest(`customers/${customerId}`, customerInfo);
   }
 
 
@@ -70,10 +78,11 @@ export class OrderService {
 
   updateOrderInfo(orderId, fieldName, value, flag?) {
     if (flag) {
-      // If order info Input has been changed
+      // If we are changing order info INPUT (e.g., Status, Payment type)
 
       let updated = this.storeHelper.findAndUpdate(this.ordersPath, orderId, fieldName, value);
       if (updated) {
+        // If input has been changed
 
         if (parseInt(orderId, 10)) {
           fieldName = this.camelCaseToDash(fieldName);

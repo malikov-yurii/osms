@@ -7,7 +7,8 @@ import { StaticDATA } from '../models';
 @Directive({
   selector: '[autocomplete]',
   host: {
-    '(keydown)': 'onKeyDown($event)'
+    '(keydown)': 'onKeyDown($event)',
+    '(blur)': 'onBlur($event)'
   }
 })
 export class Autocomplete {
@@ -84,6 +85,10 @@ export class Autocomplete {
 
   }
 
+  onBlur(e) {
+    // this.removeList();
+  }
+
   private doSearch() {
     this.refreshTimer = undefined;
     this.searchInProgress = true;
@@ -108,7 +113,7 @@ export class Autocomplete {
       let componentFactory = this.compiler.resolveComponentFactory(AutocompleteList);
       this.listComponent = this.viewRef.createComponent(componentFactory);
 
-      let offsetTop = this.viewRef.element.nativeElement.offsetHeight;
+      let offsetTop = this.viewRef.element.nativeElement.offsetTop + this.viewRef.element.nativeElement.offsetHeight;
       let offsetLeft = this.viewRef.element.nativeElement.offsetLeft;
 
       this.listComponent.instance.styleTop = offsetTop;

@@ -698,12 +698,31 @@ div.dataTables_wrapper div.dataTables_info {
 .btn {
     display: inline-block;
     padding: 4px 12px;
-    background: #9ee89e;
-    border-radius: 1px;
+    background: #39b339;
+    border: 0;
+    border-radius: 2px;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+    color: #fff;
+    text-transform: uppercase;
     cursor: pointer;
 }
-
+.btn:hover {
+    background: #39a339;
+}
+.btn:active {
+    outline: none;
+    position: relative;
+    top: 2px;
+}
+.btn:focus {
+    outline: none;
+}
+.btn--warning {
+    background: #cc3737;
+}
+.btn--warning:hover {
+    background: #bf3737;
+}
 .btn-orders--add {
     margin: 15px 0 0;
 }

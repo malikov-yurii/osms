@@ -9,7 +9,7 @@ import { AutocompleteItem } from '../models';
 @Component({
   template: `
     <ul class="autocomplete"
-    [style.top]="styleTop + 10 + 'px'"
+    [style.top]="styleTop + 'px'"
     [style.left]="styleLeft + 'px'"
     >
       
@@ -27,7 +27,7 @@ import { AutocompleteItem } from '../models';
 })
 export class AutocompleteList implements OnInit {
 
-  public list: AutocompleteItem[];
+  public list: AutocompleteItem[] = [];
   public focusMoved = new Subject();
   public selectedStream = new Subject();
   public selectedSource;
