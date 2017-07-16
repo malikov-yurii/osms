@@ -70,7 +70,7 @@ var Autocomplete = (function () {
         }
     };
     Autocomplete.prototype.onBlur = function (e) {
-        // this.removeList();
+        this.removeList();
     };
     Autocomplete.prototype.doSearch = function () {
         var _this = this;

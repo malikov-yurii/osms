@@ -85,7 +85,7 @@ import { Order, StaticDATA } from '../models';
                 (selectedAutocomplete)="onAutocompleteInfo(order.id, $event)"
                 (addProduct)="onAddProduct(order.id)"
                 (moveFocus)="onMoveFocus(infoBlock, true)"
-                (contentChanged)="onUpdateOrderInfoField(order.id, key, $event, false)"
+                (contentChanged)="onUpdateOrderInfoField(order.id, key, $event)"
               ></div>
             </ng-template>
           
@@ -93,7 +93,7 @@ import { Order, StaticDATA } from '../models';
               <div class="order-info__block order-info__block--{{ key }}">
                 <select
                   name="{{ key }}"
-                  (change)="onUpdateOrderInfoField(order.id, key, $event.target.value, true)"
+                  (change)="onUpdateOrderInfoInput(order.id, key, $event.target.value)"
                 >
                   <option
                    *ngFor="let value of infoBlocks[key]"
@@ -134,7 +134,7 @@ import { Order, StaticDATA } from '../models';
           >
           
             <ng-container
-              *ngFor="let key of product | keys:['orderItemId', 'orderProductId', 'supplier'];"
+              *ngFor="let key of product | keys:['orderProductId', 'supplier'];"
             >
             
               <ng-template [ngIf]="!hasInput(key)">
@@ -148,7 +148,7 @@ import { Order, StaticDATA } from '../models';
                   (selectedAutocomplete)="onAutocompleteProduct(order.id, product.id, $event)"
                   (moveFocus)="onMoveFocus(productBlock)"                  
                   (addProduct)="onAddProduct(order.id)"
-                  (contentChanged)="onUpdateProductField(order.id, product.id, key, $event, false)"
+                  (contentChanged)="onUpdateProductField(order.id, product.id, key, $event)"
                 ></div>  
               </ng-template>
           
@@ -157,7 +157,7 @@ import { Order, StaticDATA } from '../models';
                   <input
                     type="number"
                     value="{{ product[key] }}"
-                    (blur)="onUpdateProductField(order.id, product.id, key, $event.target.value, true)"
+                    (blur)="onUpdateProductInput(order.id, product.id, key, $event.target.value)"
                   >
                 </div>  
               </ng-template>
@@ -291,8 +291,12 @@ export class Orders implements OnInit, OnDestroy {
 
 
   // Manage order info
-  onUpdateOrderInfoField(orderId, fieldName, value, flag?) {
-    this.orderService.updateOrderInfo(orderId, fieldName, value, flag);
+  onUpdateOrderInfoField(orderId, fieldName, value) {
+    this.orderService.updateOrderInfoField(orderId, fieldName, value);
+  }
+
+  onUpdateOrderInfoInput(orderId, fieldName, value) {
+    this.orderService.updateOrderInfoInput(orderId, fieldName, value);
   }
 
   onAutocompleteInfo(orderId, data) {
@@ -309,7 +313,11 @@ export class Orders implements OnInit, OnDestroy {
   }
 
   onUpdateProductField(orderId, productId, fieldName, value) {
-    this.orderService.updateProduct(orderId, productId, fieldName, value);
+    this.orderService.updateProductField(orderId, productId, fieldName, value);
+  }
+
+  onUpdateProductInput(orderId, productId, fieldName, value) {
+    this.orderService.updateProductInput(orderId, productId, fieldName, value);
   }
 
   onAutocompleteProduct(orderId, productId, data) {
@@ -327,7 +335,7 @@ export class Orders implements OnInit, OnDestroy {
   // Manage customers
   onEditCustomer(customerId) {
     this.popupService.renderPopup().subscribe(customer => {
-      // this.orderService.saveCustomer(customerId, customer).subscribe();
+      this.orderService.saveCustomer(customerId, customer).subscribe();
     });
     this.orderService.getCustomer(customerId).subscribe(customer => {
       this.popupService.onProvideWithData(customer);

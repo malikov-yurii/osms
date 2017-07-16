@@ -14,7 +14,7 @@ var Order = (function () {
         this.date = '';
         this.status = 'SHP';
         this.comment = '';
-        this.orderItemTos = [new Product()];
+        this.orderItemDtos = [new Product()];
     }
     return Order;
 }());

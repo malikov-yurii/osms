@@ -69,7 +69,7 @@ export class StoreHelper {
     this.store.setState(Object.assign({}, currentState, {[prop]: collection.map(item => {
       if (item.id === id) {
         item[deepPropKey].map(deepItem => {
-          if (deepItem.id === deepId && deepItem[fieldName] != value) {
+          if (deepItem.id === deepId && deepItem[fieldName] !== value) {
             deepItem[fieldName] = value;
             updated = true;
           }

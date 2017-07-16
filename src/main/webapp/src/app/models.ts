@@ -13,7 +13,7 @@ export class Order {
   date: string = '';
   status: string = 'SHP';
   comment: string = '';
-  orderItemTos: Product[] = [new Product()];
+  orderItemDtos: Product[] = [new Product()];
 }
 
 export class Product {

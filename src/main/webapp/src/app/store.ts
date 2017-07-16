@@ -7,14 +7,14 @@ import { Order, Product } from './models';
 
 export interface State {
   order: Order[],
-  products: Product[],
-  customers: any[]
+  product: Product[],
+  customer: any[]
 }
 
 const defaultState: State = {
   order: [],
-  products: [],
-  customers: []
+  product: [],
+  customer: []
 };
 
 const _store = new BehaviorSubject<State>(defaultState);

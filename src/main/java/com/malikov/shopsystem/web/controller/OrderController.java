@@ -95,7 +95,7 @@ public class OrderController {
     }
 
     @PutMapping(value = "/{orderId}/phone-number")
-    public void updatePhoneNumber(@PathVariable("orderid") Long orderId,
+    public void updatePhoneNumber(@PathVariable("orderId") Long orderId,
                                   @RequestParam("phoneNumber") String phoneNumber) {
         orderService.updateCustomerPhoneNumber(orderId, phoneNumber);
     }
@@ -106,7 +106,7 @@ public class OrderController {
         orderService.updateCity(orderId, cityName);
     }
 
-    @PutMapping(value = "/{orderId}/office")
+    @PutMapping(value = "/{orderId}/post-office")
     public void updatePostOffice(@PathVariable("orderId") Long orderId,
                                  @RequestParam("postOffice") String postOffice) {
         orderService.updatePostOffice(orderId, postOffice);

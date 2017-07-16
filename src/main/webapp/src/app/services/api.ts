@@ -42,7 +42,7 @@ export class ApiService {
       .map(this.getJson);
   }
 
-  post(path: string, body): Observable<any> {
+  post(path: string, body?): Observable<any> {
     return this.http.post(
         path,
         body,

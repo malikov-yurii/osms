@@ -13,7 +13,7 @@ import { Order, Product } from '../models';
 @Injectable()
 export class OrderService {
   ordersPath: string = 'order';
-  productsPath: string = 'orderItemTos';
+  productsPath: string = 'orderItemDtos';
 
   constructor(
     private api: ApiService,
@@ -26,44 +26,87 @@ export class OrderService {
       .do(resp => this.storeHelper.update('order', resp.elements));
   }
 
-  // preloadOrders(start: number, length: number): Observable<any> {
-  //   return this.api.get(`${this.ordersPath}?start=${start}&length=${length}`)
-  //     .do(resp => this.storeHelper.addArrayLast(this.ordersPath, resp.data));
-  // }
-
-  getAllOrders(): Observable<any> {
-    return this.api.get(`${this.ordersPath}?start=0&length=10000`);
-  }
-
-  getCustomer(customerId): Observable<any> {
-    return this.api.get(`customer/${customerId}`);
-  }
-  // saveCustomer(customerId, objCustomerInfo): Observable<any> {
-  //   let customerInfo = Object.keys(objCustomerInfo).map(key => {
-  //     return `${encodeURIComponent(key)}=${encodeURIComponent(objCustomerInfo[key])}`
-  //   }).join('&');
-  //   // @TODO get rid of this ^
-  //
-  //   // return this.api.postRest(`customers/${customerId}`, customerInfo);
-  // }
-
-
   addOrder() {
     let newOrder = new Order();
     let newOrderId = newOrder.id;
     this.storeHelper.add(this.ordersPath, newOrder);
+    this.api.post(this.ordersPath).subscribe(orderId => {
+      console.log(orderId);
+      this.storeHelper.findAndUpdate(this.ordersPath, newOrderId, 'id', orderId);
+    })
   }
 
   deleteOrder(orderId) {
-    return this.storeHelper.findAndDelete(this.ordersPath, orderId);
-    // return this.api.delete(`${this.ordersPath}/${orderId}`)
-    //   .do(() => this.storeHelper.findAndDelete(this.ordersPath, orderId));
+    this.storeHelper.findAndDelete(this.ordersPath, orderId);
+    return this.api.apiDelete(`${this.ordersPath}/${orderId}`).subscribe();
   }
 
+  updateOrderInfoField(orderId, fieldName, value) {
+    // Changing order info common field (e.g., firstName, phoneNumber)
+
+    this.api.put(
+      `${this.ordersPath}/${orderId}/${this.camelCaseToDash(fieldName)}`,
+      `${fieldName}=${value}`
+    ).subscribe();
+  }
+
+  updateOrderInfoInput(orderId, fieldName, value) {
+    // Changing order info INPUT (e.g., Status, Payment type)
+
+    this.storeHelper.findAndUpdate(this.ordersPath, orderId, fieldName, value);
+
+    this.api.put(
+      `${this.ordersPath}/${orderId}/${this.camelCaseToDash(fieldName)}`,
+      `${fieldName}=${value}`
+    ).subscribe();
+  }
+
+  updateOrderInfoWithObject(orderId, object) {
+    this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
+  }
+
+
+
   addProduct(orderId) {
-    return this.storeHelper.findDeepAndAdd(this.ordersPath, orderId, this.productsPath, new Product());
-    // return this.api.post(`${this.ordersPath}/${orderId}/add-order-item`)
-    // .do(() => this.getOrders().subscribe());
+    let newProduct = new Product();
+    let newProductId = newProduct.id;
+    this.storeHelper.findDeepAndAdd(this.ordersPath, orderId, this.productsPath, newProduct);
+    return this.api.post(`order-item/create-empty-for/${orderId}`)
+      .subscribe(productId => {
+        this.storeHelper.findDeepAndUpdate(this.ordersPath, orderId, this.productsPath, newProductId, 'id', productId);
+      });
+  }
+
+  updateProductField(orderId, productId, fieldName, value) {
+    // Changing order item common field (e.g., name, price)
+
+    this.api.post(
+      `${this.ordersPath}/${productId}/${this.camelCaseToDash(fieldName)}`,
+      `${fieldName}=${value}`
+    ).subscribe(
+      data => {
+        if (data) { this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'totalSum', data); }
+      }
+    );
+
+  }
+
+  updateProductInput(orderId, productId, fieldName, value) {
+    // Changing order item INPUT (quantity)
+    this.storeHelper.findDeepAndUpdate(this.ordersPath, orderId, this.productsPath, productId, fieldName, value);
+
+    this.api.post(
+      `${this.ordersPath}/${productId}/${this.camelCaseToDash(fieldName)}`,
+      `${fieldName}=${value}`
+    ).subscribe(
+      data => {
+        if (data) { this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'totalSum', data); }
+      }
+    );
+  }
+
+  updateProductWithObject(orderId, productId, object) {
+    this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, object);
   }
 
   deleteProduct(orderId, productId) {
@@ -72,75 +115,18 @@ export class OrderService {
     //   .do(() => this.storeHelper.findAndDelete(this.ordersPath, productId));
   }
 
-  getStore() {
-    this.storeHelper.onGetState();
+
+
+  getCustomer(customerId): Observable<any> {
+    return this.api.get(`customer/${customerId}`);
   }
+  saveCustomer(customerId, customerInfo): Observable<any> {
+    // customerInfo = Object.keys(customerInfo).map(key => {
+    //   return `${encodeURIComponent(key)}=${encodeURIComponent(customerInfo[key])}`
+    // }).join('&');
+    // @TODO get rid of this ^
 
-  updateOrderInfo(orderId, fieldName, value, flag?) {
-    if (flag) {
-      // If we are changing order info INPUT (e.g., Status, Payment type)
-
-      let updated = this.storeHelper.findAndUpdate(this.ordersPath, orderId, fieldName, value);
-      if (updated) {
-        // If input has been changed
-
-        if (parseInt(orderId, 10)) {
-          // fieldName = this.camelCaseToDash(fieldName);
-          this.api.put(
-            `${this.ordersPath}/${orderId}/${this.camelCaseToDash(fieldName)}`,
-            `${fieldName}=${value}`
-          ).subscribe();
-        }
-
-      }
-    } else if (parseInt(orderId, 10)) {
-      // fieldName = this.camelCaseToDash(fieldName);
-      this.api.put(
-        `${this.ordersPath}/${orderId}/${this.camelCaseToDash(fieldName)}`,
-        `${fieldName}=${value}`
-      ).subscribe();
-    }
-  }
-  updateOrderInfoInput(orderId, fieldName, value) {
-
-    let updated = this.storeHelper.findAndUpdate(this.ordersPath, orderId, fieldName, value);
-    if (updated) {
-
-      if (parseInt(orderId, 10)) {
-        fieldName = this.camelCaseToDash(fieldName);
-        this.api.post(
-          `${this.ordersPath}/${orderId}/update-${fieldName}`,
-          `${fieldName}=${value}`
-        ).subscribe();
-      }
-
-    }
-  }
-  updateOrderInfoWithObject(orderId, object) {
-    let updated = this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
-  }
-
-  updateProduct(orderId, productId, fieldName, value) {
-
-    let updated = this.storeHelper.findDeepAndUpdate(this.ordersPath, orderId, this.productsPath, productId, fieldName, value);
-    if (updated) {
-
-      if (parseInt(orderId, 10)) {
-        // fieldName = this.camelCaseToDash(fieldName);
-        this.api.post(
-          `${this.ordersPath}/${productId}/${this.camelCaseToDash(fieldName)}`,
-          `${fieldName}=${value}`
-        ).subscribe(
-          data => {
-            if (data) { this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'totalSum', data); }
-          }
-        );
-      }
-
-    }
-  }
-  updateProductWithObject(orderId, productId, object) {
-    let updated = this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, object);
+    return this.api.put(`customer/${customerId}`, customerInfo);
   }
 
 
@@ -161,9 +147,8 @@ export class OrderService {
         `customer/autocomplete-by-last-name-mask/${term}`
       )
     } else if (type === 'product') {
-      return this.api.post(
-        `${this.ordersPath}/autocomplete-order-item-name`,
-        `term=${term}`
+      return this.api.get(
+        `order-item/autocomplete-by-product-name/${term}`
       )
     }
   }
@@ -177,4 +162,12 @@ export class OrderService {
     return str.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`);
   }
 
+
+  getStore() {
+    this.storeHelper.onGetState();
+  }
+
+  getAllOrders(): Observable<any> {
+    return this.api.get(`${this.ordersPath}?start=0&length=10000`);
+  }
 }

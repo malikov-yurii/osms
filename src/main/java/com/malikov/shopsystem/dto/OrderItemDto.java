@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 public class OrderItemDto implements Serializable {
 
-    private Long orderItemId;
+    private Long id;
 
     private Long orderProductId;
 
@@ -29,7 +29,7 @@ public class OrderItemDto implements Serializable {
             String  supplier
     ) {
 
-        this.orderItemId = orderItemId;
+        this.id = orderItemId;
         this.orderProductId = orderProductId;
         this.name = name;
         this.price = price;
@@ -65,11 +65,11 @@ public class OrderItemDto implements Serializable {
     }
 
     public Long getOrderItemId() {
-        return orderItemId;
+        return id;
     }
 
     public void setOrderItemId(Long orderItemId) {
-        this.orderItemId = orderItemId;
+        this.id = orderItemId;
     }
 
     public Long getOrderProductId() {
@@ -91,7 +91,7 @@ public class OrderItemDto implements Serializable {
     @Override
     public String toString() {
         return "OrderItemDto{" +
-                "orderItemId=" + orderItemId +
+                "id=" + id +
                 ", orderProductId=" + orderProductId +
                 ", name='" + name + '\'' +
                 ", price=" + price +

@@ -53,7 +53,7 @@ public class OrderItem extends BaseEntity {
         this.order = order;
     }
 
-    public OrderItem(Long orderItemId, Product product,
+    public OrderItem(Long id, Product product,
                      ProductVariation variation, String productName,
                      BigDecimal productPrice, Integer productQuantity) {
         this.product = product;
@@ -63,7 +63,7 @@ public class OrderItem extends BaseEntity {
                 : productName;
         this.productPrice = productPrice;
         this.productQuantity = productQuantity;
-        this.id = orderItemId;
+        this.id = id;
     }
 
 

@@ -11,8 +11,8 @@ var core_1 = require("@angular/core");
 require("rxjs/add/operator/distinctUntilChanged");
 var defaultState = {
     order: [],
-    products: [],
-    customers: []
+    product: [],
+    customer: []
 };
 var _store = new BehaviorSubject_1.BehaviorSubject(defaultState);
 var Store = (function () {

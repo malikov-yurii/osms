@@ -86,7 +86,7 @@ export class Autocomplete {
   }
 
   onBlur(e) {
-    // this.removeList();
+    this.removeList();
   }
 
   private doSearch() {

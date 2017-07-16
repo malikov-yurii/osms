@@ -88,7 +88,7 @@ var StoreHelper = (function () {
         this.store.setState(Object.assign({}, currentState, (_a = {}, _a[prop] = collection.map(function (item) {
             if (item.id === id) {
                 item[deepPropKey].map(function (deepItem) {
-                    if (deepItem.id === deepId && deepItem[fieldName] != value) {
+                    if (deepItem.id === deepId && deepItem[fieldName] !== value) {
                         deepItem[fieldName] = value;
                         updated = true;
                     }
