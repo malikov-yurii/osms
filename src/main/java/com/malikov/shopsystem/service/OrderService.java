@@ -1,13 +1,13 @@
 package com.malikov.shopsystem.service;
 
+import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderStatus;
-import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.model.PaymentType;
+import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.List;
 
 public interface OrderService {
 
@@ -47,5 +47,5 @@ public interface OrderService {
 
     void setCustomer(Long orderId, Long customerId);
 
-    List<OrderDto> getPage(int start, int length);
+    Page<OrderDto> getPage(int pageNumber, int pageCapacity);
 }

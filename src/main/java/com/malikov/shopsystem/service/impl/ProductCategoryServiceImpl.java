@@ -38,7 +38,8 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     @Override
-    public List<ProductCategory> getPage(int pageNumber, int pageCapacity) {
-        return productCategoryRepository.findAll(new PageRequest(pageNumber, pageCapacity)).getContent();
+    public List<ProductCategory> getAll() {
+        return productCategoryRepository.findAll(new PageRequest(0, 200))
+                .getContent();
     }
 }

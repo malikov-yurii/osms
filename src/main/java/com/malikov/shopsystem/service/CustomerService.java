@@ -3,6 +3,7 @@ package com.malikov.shopsystem.service;
 import com.malikov.shopsystem.dto.CustomerDto;
 import com.malikov.shopsystem.model.Customer;
 import com.malikov.shopsystem.dto.CustomerAutocompleteDto;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -36,5 +37,5 @@ public interface CustomerService {
 
     Customer persistCustomerFromOrder(Long orderId);
 
-    List<CustomerDto> getPage(int pageNumber, int pageCapacity);
+    Page<CustomerDto> getPage(int pageNumber, int pageCapacity);
 }

@@ -1,10 +1,12 @@
 package com.malikov.shopsystem.web.controller;
 
-import com.malikov.shopsystem.service.CustomerService;
 import com.malikov.shopsystem.dto.CustomerAutocompleteDto;
 import com.malikov.shopsystem.dto.CustomerDto;
+import com.malikov.shopsystem.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,7 +24,7 @@ public class CustomerController {
         customerService.create(customerDto);
     }
 
-    @PutMapping
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateCustomer(@Valid CustomerDto customerDto) {
         customerService.update(customerDto);
     }
@@ -32,21 +34,21 @@ public class CustomerController {
         customerService.delete(customerId);
     }
 
-    @GetMapping(value = "/autocomplete-by-last-name/{lastNameMask}",
+    @GetMapping(value = "/autocomplete-by-last-name-mask/{lastNameMask}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CustomerAutocompleteDto> autocompleteLastName(
             @PathVariable("lastNameMask") String lastNameMask) {
         return customerService.getByLastNameMask(lastNameMask);
     }
 
-    @GetMapping(value = "/autocomplete-by-phone-number/{phoneNumberMask}",
+    @GetMapping(value = "/autocomplete-by-phone-number-mask/{phoneNumberMask}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CustomerAutocompleteDto> autocompletePhoneNumber(
             @PathVariable("phoneNumberMask") String phoneNumberMask) {
         return customerService.getByPhoneNumberMask(phoneNumberMask);
     }
 
-    @PostMapping(value = "/autocomplete-city", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/autocomplete-by-city-mask", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CustomerAutocompleteDto> autocompleteCity(@RequestParam("term") String cityMask) {
         return customerService.getByCityMask(cityMask);
     }
@@ -57,7 +59,12 @@ public class CustomerController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CustomerDto> getAll() {
-        return customerService.getPage(0, 10000);
+    public ModelMap getCustomerTablePage(@RequestParam("pageNumber") int pageNumber,
+                                      @RequestParam("pageCapacity") int pageCapacity) {
+        ModelMap modelMap = new ModelMap();
+        Page<CustomerDto> page = customerService.getPage(pageNumber, pageCapacity);
+        modelMap.addAttribute("totalElements", page.getTotalElements());
+        modelMap.addAttribute("elements", page.getContent());
+        return modelMap;
     }
 }

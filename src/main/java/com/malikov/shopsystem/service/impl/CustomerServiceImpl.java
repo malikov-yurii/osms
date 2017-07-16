@@ -9,6 +9,8 @@ import com.malikov.shopsystem.repository.OrderRepository;
 import com.malikov.shopsystem.service.CustomerService;
 import com.malikov.shopsystem.util.CustomerConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -115,11 +117,14 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<CustomerDto> getPage(int pageNumber, int pageCapacity) {
-        return customerRepository.findAll(new PageRequest(pageNumber, pageCapacity))
-                .getContent()
-                .stream()
-                .map(CustomerConverter::asDto)
-                .collect(Collectors.toList());
+    public Page<CustomerDto> getPage(int pageNumber, int pageCapacity) {
+        Page<Customer> page = customerRepository.findAll(new PageRequest(pageNumber, pageCapacity));
+        return new PageImpl<>(
+                page.getContent().stream()
+                        .map(CustomerConverter::asDto)
+                        .collect(Collectors.toList()),
+                null,
+                page.getTotalElements());
     }
+
 }

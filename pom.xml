@@ -84,6 +84,7 @@
                         <systemProperties>
                             <file.encoding>UTF-8</file.encoding>
                             <spring.profiles.active>mySql,jpa</spring.profiles.active>
+                            <!--<spring.profiles.active>mySql</spring.profiles.active>-->
                         </systemProperties>
                         <dependencies>
                             <dependency>

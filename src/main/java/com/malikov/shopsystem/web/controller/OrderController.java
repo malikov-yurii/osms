@@ -1,16 +1,17 @@
 package com.malikov.shopsystem.web.controller;
 
+import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.model.PaymentType;
 import com.malikov.shopsystem.service.CustomerService;
 import com.malikov.shopsystem.service.OrderItemService;
 import com.malikov.shopsystem.service.OrderService;
 import com.malikov.shopsystem.service.UserService;
-import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -24,16 +25,7 @@ public class OrderController {
     private static final Logger LOG = LoggerFactory.getLogger(OrderController.class);
 
     @Autowired
-    private CustomerService customerService;
-
-    @Autowired
     private OrderService orderService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private OrderItemService orderItemService;
 
     @GetMapping(value = "/{id}")
     public OrderDto get(@PathVariable("id") Long orderId) {
@@ -41,11 +33,12 @@ public class OrderController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ModelMap getOrderTablePage(@RequestParam("start") int start,
-                                      @RequestParam("length") int length) {
+    public ModelMap getOrderTablePage(@RequestParam("pageNumber") int pageNumber,
+                                      @RequestParam("pageCapacity") int pageCapacity) {
         ModelMap modelMap = new ModelMap();
-        modelMap.addAttribute("recordsTotal", orderService.getTotalQuantity());
-        modelMap.addAttribute("data", orderService.getPage(start, length));
+        Page<OrderDto> page = orderService.getPage(pageNumber, pageCapacity);
+        modelMap.addAttribute("totalElements", page.getTotalElements());
+        modelMap.addAttribute("elements", page.getContent());
         return modelMap;
     }
 

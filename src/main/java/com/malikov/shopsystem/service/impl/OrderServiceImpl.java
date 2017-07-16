@@ -13,6 +13,8 @@ import com.malikov.shopsystem.util.OrderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -21,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -146,13 +147,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> getPage(int pageNumber, int pageCapacity) {
-        return orderRepository
-                .findAll(new PageRequest(pageNumber, pageCapacity))
-                .getContent()
-                .stream()
-                .map(OrderUtil::asTo)
-                .collect(Collectors.toList());
+    public Page<OrderDto> getPage(int pageNumber, int pageCapacity) {
+        Page<Order> page = orderRepository.findAll(new PageRequest(pageNumber, pageCapacity));
+        return new PageImpl<>(
+                page.getContent().stream()
+                        .map(OrderUtil::asTo)
+                        .collect(Collectors.toList()),
+                null,
+                page.getTotalElements());
     }
 
     @Override

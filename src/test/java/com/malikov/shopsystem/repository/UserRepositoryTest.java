@@ -1,12 +1,11 @@
 package com.malikov.shopsystem.repository;
 
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class UserRepositoryTest extends AbstractRepositoryTest {
 
-    @Autowired
-    private UserRepository userRepository;
+    //@Autowired
+    //private UserRepository userRepository;
 
     @Test
     public void testSave() throws Exception {

@@ -1,7 +1,10 @@
 package com.malikov.shopsystem.dto;
 
+import com.malikov.shopsystem.model.ProductCategory;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Set;
 
 public class ProductDto implements Serializable {
 
@@ -17,13 +20,16 @@ public class ProductDto implements Serializable {
 
     private Boolean unlimited;
 
+    private Set<ProductCategory> categories;
+
     public ProductDto(
             Long productId,
             Long productVariationId,
             String name,
             BigDecimal price,
             Integer quantity,
-            Boolean unlimited
+            Boolean unlimited,
+            Set<ProductCategory> categories
     ) {
         this.productId = productId;
         this.productVariationId = productVariationId;
@@ -31,6 +37,7 @@ public class ProductDto implements Serializable {
         this.price = price;
         this.quantity = quantity;
         this.unlimited = unlimited;
+        this.categories = categories;
     }
 
     public ProductDto() {
@@ -86,6 +93,14 @@ public class ProductDto implements Serializable {
 
     public void setUnlimited(Boolean unlimited) {
         this.unlimited = unlimited;
+    }
+
+    public Set<ProductCategory> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<ProductCategory> categories) {
+        this.categories = categories;
     }
 
     @Override

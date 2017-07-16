@@ -1,7 +1,8 @@
 package com.malikov.shopsystem.service;
 
-import com.malikov.shopsystem.model.Product;
 import com.malikov.shopsystem.dto.ProductDto;
+import com.malikov.shopsystem.model.Product;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -11,15 +12,17 @@ public interface ProductService {
 
     void delete(Long id);
 
-    void update(Product product);
+    void update(ProductDto productDto);
 
-    void enableUnlimited(Long id, boolean unlimited);
-
-    void enableHasVariations(Long id, boolean hasVariations);
+    //void enableUnlimited(Long id, boolean unlimited);
+    //
+    //void enableHasVariations(Long id, boolean hasVariations);
 
     List<Product> getByProductNameMask(String productNameMask);
 
-    List<ProductDto> getPage(int pageNumber, int pageCapacity);
+    Page<ProductDto> getPage(int pageNumber, int pageCapacity);
+
+    //Page<ProductDto> getPageByCategoryName(String categoryName, int pageNumber, int pageCapacity);
 
     //Collection<Product> getByCategoryId(Long categoryId);
     //Collection<Product> getAllQuantityLessThan(int quantity);

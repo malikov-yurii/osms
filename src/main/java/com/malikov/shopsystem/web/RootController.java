@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class RootController {
 
+    //@Autowired
+    //private ApplicationContext appContext;
+
     @GetMapping("/")
     public String root() {
         return "redirect:orders";

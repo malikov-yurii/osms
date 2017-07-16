@@ -20,9 +20,9 @@ public class OrderDto {
 
     private Long customerId;
 
-    private String firstName;
-
     private String lastName;
+
+    private String firstName;
 
     private String phoneNumber;
 
@@ -30,9 +30,9 @@ public class OrderDto {
 
     private String postOffice;
 
-    private BigDecimal totalSum;
-
     private PaymentType paymentType;
+
+    private BigDecimal totalSum;
 
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
