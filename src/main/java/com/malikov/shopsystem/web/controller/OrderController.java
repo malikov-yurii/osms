@@ -1,12 +1,10 @@
 package com.malikov.shopsystem.web.controller;
 
 import com.malikov.shopsystem.dto.OrderDto;
+import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.model.PaymentType;
-import com.malikov.shopsystem.service.CustomerService;
-import com.malikov.shopsystem.service.OrderItemService;
 import com.malikov.shopsystem.service.OrderService;
-import com.malikov.shopsystem.service.UserService;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,8 +46,12 @@ public class OrderController {
     }
 
     @PostMapping
-    public Long create() {
-        return orderService.create().getId();
+    public ModelMap create() {
+        ModelMap model = new ModelMap();
+        Order order = orderService.create();
+        model.put("orderId", order.getId());
+        model.put("orderItemId", order.getOrderItems().get(0).getId());
+        return model;
     }
 
     @GetMapping(value = "/autocomplete-payment-type",
