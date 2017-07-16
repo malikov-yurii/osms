@@ -16,173 +16,201 @@ import java.util.List;
 
 public class OrderDto {
 
-  private Long id;
+    private Long id;
 
-  private Long customerId;
+    private Long customerId;
 
-  private String firstName;
+    private String lastName;
 
-  private String lastName;
+    private String firstName;
 
-  private String phoneNumber;
+    private String phoneNumber;
 
-  private String city;
+    private String city;
 
-  private String postOffice;
+    private String postOffice;
 
-  private BigDecimal totalSum;
+    private PaymentType paymentType;
 
-  private PaymentType paymentType;
+    private BigDecimal totalSum;
 
-  @JsonDeserialize(using = LocalDateDeserializer.class)
-  @JsonSerialize(using = LocalDateSerializer.class)
-  private LocalDate date;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate date;
 
-  private Timestamp timestamp;
+    private Timestamp timestamp;
 
-  private OrderStatus status;
+    private OrderStatus status;
 
-  private String comment;
+    private String comment;
 
-  private List<OrderItemDto> orderItemDtos;
+    private List<OrderItemDto> orderItemDtos;
 
-  public OrderDto() {
-  }
+    public OrderDto(
+            Long id
+            , Long customerId
+            , String firstName
+            , String lastName
+            , String phoneNumber
+            , String city
+            , String postOffice
+            , PaymentType paymentType
+            , LocalDate date
+            , OrderStatus status
+            , String comment
+            , BigDecimal totalSum
+            , List<OrderItemDto> orderItemDtos
+    ) {
+        this.id = id;
+        this.customerId = customerId == null ? 0 : customerId;
+        this.firstName = firstName != null ? firstName : "";
+        this.lastName = lastName != null ? lastName : "";
+        this.phoneNumber = phoneNumber != null ? phoneNumber : "";
+        this.city = city != null ? city : "";
+        this.postOffice = postOffice != null ? postOffice : "";
+        this.paymentType = paymentType;
+        this.date = date;
+        this.status = status;
+        this.comment = comment;
+        this.totalSum = totalSum;
 
-  public OrderDto(Long id, Long customerId, String firstName, String lastName, String phoneNumber,
-                  String city, String postOffice, PaymentType paymentType, LocalDate date,
-                  OrderStatus status, String comment, BigDecimal totalSum,
-                  List<OrderItemDto> orderItemDtos
-  ) {
-    this.id = id;
-    this.customerId = customerId == null ? 0 : customerId;
-    this.firstName = firstName != null ? firstName : "";
-    this.lastName = lastName != null ? lastName : "";
-    this.phoneNumber = phoneNumber != null ? phoneNumber : "";
-    this.city = city != null ? city : "";
-    this.postOffice = postOffice != null ? postOffice : "";
-    this.paymentType = paymentType;
-    this.date = date;
-    this.status = status;
-    this.comment = comment;
-    this.totalSum = totalSum;
-    this.orderItemDtos = orderItemDtos;
-  }
+        this.orderItemDtos = orderItemDtos;
+    }
 
-  @JsonIgnore
-  public boolean isNew() {
-    return id == null;
-  }
+    public OrderDto(
+            Long id
+            , Long customerId
+            , String firstName
+            , String lastName
+            , String phoneNumber
+            , String city
+            , String postOffice
+            , PaymentType paymentType
+            , LocalDate date
+            , OrderStatus status
+            , String comment
+            , BigDecimal totalSum
+    ) {
+        this(id, customerId, firstName, lastName, phoneNumber, city, postOffice, paymentType, date, status, comment, totalSum, new ArrayList<>());
+    }
 
-  public Long getId() {
-    return id;
-  }
+    public OrderDto() {
+    }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+    @JsonIgnore
+    public boolean isNew() {
+        return id == null;
+    }
 
-  public String getFirstName() {
-    return firstName;
-  }
+    public Long getId() {
+        return id;
+    }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  public String getLastName() {
-    return lastName;
-  }
+    public String getFirstName() {
+        return firstName;
+    }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-  public String getPhoneNumber() {
-    return phoneNumber;
-  }
+    public String getLastName() {
+        return lastName;
+    }
 
-  public void setPhoneNumber(String phoneNumber) {
-    this.phoneNumber = phoneNumber;
-  }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-  public String getCity() {
-    return city;
-  }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-  public void setCity(String city) {
-    this.city = city;
-  }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
-  public String getPostOffice() {
-    return postOffice;
-  }
+    public String getCity() {
+        return city;
+    }
 
-  public void setPostOffice(String postOffice) {
-    this.postOffice = postOffice;
-  }
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-  public BigDecimal getTotalSum() {
-    return totalSum;
-  }
+    public String getPostOffice() {
+        return postOffice;
+    }
 
-  public void setTotalSum(BigDecimal totalSum) {
-    this.totalSum = totalSum;
-  }
+    public void setPostOffice(String postOffice) {
+        this.postOffice = postOffice;
+    }
 
-  public PaymentType getPaymentType() {
-    return paymentType;
-  }
+    public BigDecimal getTotalSum() {
+        return totalSum;
+    }
 
-  public void setPaymentType(PaymentType paymentType) {
-    this.paymentType = paymentType;
-  }
+    public void setTotalSum(BigDecimal totalSum) {
+        this.totalSum = totalSum;
+    }
 
-  @JsonSerialize(using = LocalDateSerializer.class)
-  public LocalDate getDate() {
-    return date;
-  }
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
 
-  @JsonDeserialize(using = LocalDateDeserializer.class)
-  public void setDate(LocalDate date) {
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
+    }
 
-    this.date = date;
-  }
+    @JsonSerialize(using = LocalDateSerializer.class)
+    public LocalDate getDate() {
+        return date;
+    }
 
-  public Timestamp getTimestamp() {
-    return Timestamp.valueOf(date.atStartOfDay());
-  }
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    public void setDate(LocalDate date) {
 
-  public OrderStatus getStatus() {
-    return status;
-  }
+        this.date = date;
+    }
 
-  public void setStatus(OrderStatus status) {
-    this.status = status;
-  }
+    public Timestamp getTimestamp() {
+        return Timestamp.valueOf(date.atStartOfDay());
+    }
 
-  public String getComment() {
-    return comment;
-  }
+    public OrderStatus getStatus() {
+        return status;
+    }
 
-  public void setComment(String comment) {
-    this.comment = comment;
-  }
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
 
-  public List<OrderItemDto> getOrderItemDtos() {
-    return orderItemDtos;
-  }
+    public String getComment() {
+        return comment;
+    }
 
-  public void setOrderItemDtos(List<OrderItemDto> orderItemDtos) {
-    this.orderItemDtos = orderItemDtos;
-  }
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
-  public Long getCustomerId() {
-    return customerId;
-  }
+    public List<OrderItemDto> getOrderItemDtos() {
+        return orderItemDtos;
+    }
 
-  public void setCustomerId(Long customerId) {
-    this.customerId = customerId;
-  }
+    public void setOrderItemDtos(List<OrderItemDto> orderItemDtos) {
+        this.orderItemDtos = orderItemDtos;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
 
 }

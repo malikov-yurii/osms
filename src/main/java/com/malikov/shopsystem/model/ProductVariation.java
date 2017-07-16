@@ -5,19 +5,14 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @SuppressWarnings("JpaQlInspection")
-@NamedQueries({
-        @NamedQuery(name = ProductVariation.DELETE, query =
-                "DELETE FROM ProductVariation pv WHERE pv.id=:id"),
-        @NamedQuery(name = ProductVariation.ALL_SORTED, query =
-                "SELECT pv FROM ProductVariation pv ORDER BY pv.id")
-})
 @Entity
 @Table(name = "jos_jshopping_products_attr")
 @AttributeOverride(name = "id", column = @Column(name = "product_attr_id"))
 public class ProductVariation extends BaseEntity {
 
-    public static final String DELETE = "ProductVariation.delete";
-    public static final String ALL_SORTED = "ProductVariation.allSorted";
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @Column(name = "price")
     private BigDecimal price;
@@ -32,10 +27,11 @@ public class ProductVariation extends BaseEntity {
 
     public ProductVariation() {}
 
-    public ProductVariation(Long id, BigDecimal price, int quantity, VariationValue variationValue) {
+    public ProductVariation(Long id, BigDecimal price, int quantity, Product product, VariationValue variationValue) {
         super(id);
         this.price = price;
         this.quantity = quantity;
+        this.product = product;
         this.variationValue = variationValue;
     }
 
@@ -62,6 +58,14 @@ public class ProductVariation extends BaseEntity {
 
     public void setVariationValue(VariationValue variationValue) {
         this.variationValue = variationValue;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     @Override

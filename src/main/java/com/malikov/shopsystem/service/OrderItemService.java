@@ -25,4 +25,6 @@ public interface OrderItemService{
     OrderItem createNewEmpty(Long orderId);
 
     List<OrderItemAutocompleteDto> getByProductMask(String productNameMask);
+
+    //List<OrderItemDto> getPage(int pageNumber, int pageCapacity);
 }

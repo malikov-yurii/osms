@@ -1,18 +1,21 @@
 package com.malikov.shopsystem.service.impl;
 
+import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderItem;
 import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.model.PaymentType;
+import com.malikov.shopsystem.repository.CustomerRepository;
 import com.malikov.shopsystem.repository.OrderRepository;
-import com.malikov.shopsystem.service.CustomerService;
+import com.malikov.shopsystem.repository.UserRepository;
 import com.malikov.shopsystem.service.OrderService;
-import com.malikov.shopsystem.service.UserService;
-import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,10 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.malikov.shopsystem.util.ValidationUtil.checkNotFound;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -31,13 +31,13 @@ public class OrderServiceImpl implements OrderService {
     private static final Logger LOG = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
     @Autowired
-    UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
-    CustomerService customerService;
+    private CustomerRepository customerRepository;
 
     @Override
     public Order save(Order order) {
@@ -51,12 +51,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order get(Long id) {
-        return orderRepository.get(id);
+        return orderRepository.findOne(id);
     }
 
     @Override
     public void delete(Long id) {
-        checkNotFound(orderRepository.delete(id), "not found order " + id + " for delete");
+        orderRepository.delete(id);
     }
 
     @Override
@@ -142,27 +142,30 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public void setCustomer(Long orderId, Long customerId) {
         Order order = get(orderId);
-        order.setCustomer(customerService.get(customerId));
+        order.setCustomer(customerRepository.findOne(customerId));
         save(order);
     }
 
     @Override
-    public List<OrderDto> getTablePage(int start, int length) {
-        return orderRepository.getDatatablePage(start, length)
-                .stream()
-                .map(OrderUtil::asTo)
-                .collect(Collectors.toList());
+    public Page<OrderDto> getPage(int pageNumber, int pageCapacity) {
+        Page<Order> page = orderRepository.findAll(new PageRequest(pageNumber, pageCapacity));
+        return new PageImpl<>(
+                page.getContent().stream()
+                        .map(OrderUtil::asTo)
+                        .collect(Collectors.toList()),
+                null,
+                page.getTotalElements());
     }
 
     @Override
     public Long getTotalQuantity() {
-        return orderRepository.getTotalQuantity();
+        return orderRepository.count();
     }
 
     @Override
     public Order create() {
         Order newOrder = new Order(null,
-                userService.getByLogin(SecurityContextHolder.getContext().getAuthentication().getName()),
+                userRepository.getByLogin(SecurityContextHolder.getContext().getAuthentication().getName()),
                 PaymentType.NP, OrderStatus.SHP, null, Collections.singletonList(new OrderItem()));
         LOG.info("create new {}", newOrder);
         return save(newOrder);

@@ -1,21 +1,24 @@
 package com.malikov.shopsystem.service.impl;
 
+import com.malikov.shopsystem.dto.CustomerAutocompleteDto;
 import com.malikov.shopsystem.dto.CustomerDto;
 import com.malikov.shopsystem.model.Customer;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.repository.CustomerRepository;
 import com.malikov.shopsystem.repository.OrderRepository;
 import com.malikov.shopsystem.service.CustomerService;
-import com.malikov.shopsystem.dto.CustomerAutocompleteDto;
-import com.malikov.shopsystem.util.CustomerUtil;
+import com.malikov.shopsystem.util.CustomerConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.malikov.shopsystem.util.CustomerUtil.CustomerAutocompleteDtoListOf;
-import static com.malikov.shopsystem.util.CustomerUtil.updateFromTo;
+import static com.malikov.shopsystem.util.CustomerConverter.CustomerAutocompleteDtoListOf;
+import static com.malikov.shopsystem.util.CustomerConverter.updateFromTo;
 import static com.malikov.shopsystem.util.ValidationUtil.*;
 
 @Service
@@ -31,7 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer create(CustomerDto customerDto) {
         checkIsNew(customerDto, "customer must be new");
-        return customerRepository.save(CustomerUtil.createNewFromTo(customerDto));
+        return customerRepository.save(CustomerConverter.createNewFromTo(customerDto));
     }
 
     @Override
@@ -43,20 +46,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer get(Long id) {
-        return checkNotFoundById(customerRepository.get(id), id);
-    }
-
-    @Override
-    public List<CustomerDto> getAll() {
-        return customerRepository.getAll()
-                .stream()
-                .map(CustomerUtil::asTo)
-                .collect(Collectors.toList());
+        return checkNotFoundById(customerRepository.findOne(id), id);
     }
 
     @Override
     public void delete(Long id) {
-        checkNotFoundById(customerRepository.delete(id), id);
+        customerRepository.delete(id);
     }
 
     @Override
@@ -71,22 +66,22 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<CustomerAutocompleteDto> getByFirstNameMask(String firstNameMask) {
-        return CustomerAutocompleteDtoListOf(customerRepository.getByFirstNameMask(firstNameMask));
+        return CustomerAutocompleteDtoListOf(customerRepository.getByNameLike(firstNameMask));
     }
 
     @Override
     public List<CustomerAutocompleteDto> getByLastNameMask(String lastNameMask) {
-        return CustomerAutocompleteDtoListOf(customerRepository.getByLastNameMask(lastNameMask));
+        return CustomerAutocompleteDtoListOf(customerRepository.getByLastNameLike(lastNameMask));
     }
 
     @Override
     public List<CustomerAutocompleteDto> getByPhoneNumberMask(String phoneNumberMask) {
-        return CustomerAutocompleteDtoListOf(customerRepository.getByPhoneNumberMask(phoneNumberMask));
+        return CustomerAutocompleteDtoListOf(customerRepository.getByPhoneNumberLike(phoneNumberMask));
     }
 
     @Override
     public List<CustomerAutocompleteDto> getByCityMask(String cityMask) {
-        return CustomerAutocompleteDtoListOf(customerRepository.getByCityMask(cityMask));
+        return CustomerAutocompleteDtoListOf(customerRepository.getByCityLike(cityMask));
     }
 
     @Override
@@ -106,7 +101,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer persistCustomerFromOrder(Long orderId) {
-        Order order = orderRepository.get(orderId);
+        Order order = orderRepository.findOne(orderId);
         if (order.getCustomer() != null) {
             checkIsNew(order.getCustomer(), "Customer is not new");
         }
@@ -120,4 +115,16 @@ public class CustomerServiceImpl implements CustomerService {
                         , null)));
         return orderRepository.save(order).getCustomer();
     }
+
+    @Override
+    public Page<CustomerDto> getPage(int pageNumber, int pageCapacity) {
+        Page<Customer> page = customerRepository.findAll(new PageRequest(pageNumber, pageCapacity));
+        return new PageImpl<>(
+                page.getContent().stream()
+                        .map(CustomerConverter::asDto)
+                        .collect(Collectors.toList()),
+                null,
+                page.getTotalElements());
+    }
+
 }

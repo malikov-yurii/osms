@@ -1,13 +1,13 @@
 package com.malikov.shopsystem.service;
 
+import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderStatus;
-import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.model.PaymentType;
+import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.List;
 
 public interface OrderService {
 
@@ -24,8 +24,6 @@ public interface OrderService {
     Collection<Order> getByCustomerId(Long customerId);
 
     Collection<Order> getByProductId(Long productId);
-
-    List<OrderDto> getTablePage(int start, int length);
 
     Long getTotalQuantity();
 
@@ -48,4 +46,6 @@ public interface OrderService {
     void updateTotalSum(Long orderId, BigDecimal totalSum);
 
     void setCustomer(Long orderId, Long customerId);
+
+    Page<OrderDto> getPage(int pageNumber, int pageCapacity);
 }

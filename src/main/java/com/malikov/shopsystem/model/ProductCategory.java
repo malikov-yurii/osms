@@ -3,12 +3,6 @@ package com.malikov.shopsystem.model;
 import javax.persistence.*;
 
 @SuppressWarnings("JpaQlInspection")
-@NamedQueries({
-        @NamedQuery(name = ProductCategory.DELETE, query =
-                "DELETE FROM ProductCategory pc WHERE pc.id=:id"),
-        @NamedQuery(name = ProductCategory.ALL_SORTED, query =
-                "SELECT pc FROM ProductCategory pc ORDER BY pc.name")
-})
 @Entity
 @Table(name = "jos_jshopping_categories")
 @AttributeOverrides({
@@ -16,10 +10,6 @@ import javax.persistence.*;
         @AttributeOverride(name = "name", column = @Column(name = "`name_ru-RU`")),
 })
 public class ProductCategory extends NamedEntity {
-
-    public static final String DELETE = "ProductCategory.delete";
-    public static final String ALL_SORTED = "ProductCategory.getAllSorted";
-
 
     public ProductCategory() {}
 

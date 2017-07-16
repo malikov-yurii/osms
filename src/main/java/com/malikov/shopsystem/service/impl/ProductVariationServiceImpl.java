@@ -1,25 +1,28 @@
 package com.malikov.shopsystem.service.impl;
 
+import com.malikov.shopsystem.dto.ProductVariationDto;
 import com.malikov.shopsystem.model.ProductVariation;
 import com.malikov.shopsystem.repository.ProductVariationRepository;
 import com.malikov.shopsystem.service.ProductVariationService;
+import com.malikov.shopsystem.util.ProductVariationConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static com.malikov.shopsystem.util.ValidationUtil.checkNotFound;
 import static com.malikov.shopsystem.util.ValidationUtil.checkNotFoundById;
 
 @Service
 public class ProductVariationServiceImpl implements ProductVariationService {
 
     @Autowired
-    ProductVariationRepository productVariationRepository;
+    private ProductVariationRepository productVariationRepository;
 
     @Override
     public ProductVariation get(Long id) {
-        return checkNotFoundById(productVariationRepository.get(id), id);
+        return checkNotFoundById(productVariationRepository.findOne(id), id);
     }
 
     @Override
@@ -33,12 +36,17 @@ public class ProductVariationServiceImpl implements ProductVariationService {
     }
 
     @Override
-    public List<ProductVariation> getAll() {
-        return productVariationRepository.getAll();
+    public List<ProductVariationDto> getPage(int pageNumber, int pageCapacity) {
+        return productVariationRepository
+                .findAll(new PageRequest(pageNumber, pageCapacity))
+                .getContent()
+                .stream()
+                .map(ProductVariationConverter::asDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public void delete(Long id) {
-        checkNotFoundById(productVariationRepository.delete(id), id);
+        productVariationRepository.delete(id);
     }
 }

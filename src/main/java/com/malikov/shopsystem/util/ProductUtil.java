@@ -2,6 +2,7 @@ package com.malikov.shopsystem.util;
 
 import com.malikov.shopsystem.model.Product;
 import com.malikov.shopsystem.dto.ProductDto;
+import com.malikov.shopsystem.model.ProductCategory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ public class ProductUtil {
 
     public static Product createNewFromTo(ProductDto productDto) {
         return new Product(null, productDto.getName(), productDto.getPrice(),
-                false, productDto.getQuantity(), false, null, null);
+                false, productDto.getQuantity(), false, null);
     }
 
     public static Product updateFromTo(Product product, ProductDto productDto) {
@@ -21,7 +22,7 @@ public class ProductUtil {
         return product;
     }
 
-    public static List<ProductDto> getProductDtosListFrom(Product product) {
+    public static List<ProductDto> getDtosFrom(Product product) {
         List<ProductDto> productDtos = new ArrayList<>();
         if (product.getHasVariations()) {
             productDtos.addAll(product.getVariations()
@@ -32,12 +33,14 @@ public class ProductUtil {
                                     + productVariation.getVariationValue().getName(),
                             productVariation.getPrice(),
                             productVariation.getQuantity(),
-                            product.getUnlimited()))
+                            product.getUnlimited(),
+                            product.getCategories()))
                     .collect(Collectors.toList()));
         } else {
             productDtos.add(new ProductDto(
                     product.getId(), 0L, product.getName(), product.getPrice(),
-                    product.getQuantity(), product.getUnlimited()));
+                    product.getQuantity(), product.getUnlimited(),
+                    product.getCategories()));
         }
         return productDtos;
     }

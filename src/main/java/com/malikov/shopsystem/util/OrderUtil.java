@@ -12,37 +12,55 @@ import java.util.stream.Collectors;
 
 public class OrderUtil {
 
-  public static OrderDto asTo(Order order) {
-    List<OrderItemDto> orderItemDtos = order.getOrderItems()
-        .stream()
-        .map(oi -> new OrderItemDto(oi.getId(),
-            oi.getProduct() != null ? oi.getProduct().getId() : 0,
-            oi.getProductName(),
-            oi.getProductPrice(),
-            oi.getProductQuantity(),
-            oi.getProduct() != null
-                ? (oi.getProduct().getSupplier() != null
-                ? oi.getProduct().getSupplier()
-                : "")
-                : ""
-        ))
-        .collect(Collectors.toList());
+    public static Order updateFromTo(Order order, OrderDto orderDto) {
+        order.setCustomerName(orderDto.getFirstName());
+        order.setCustomerLastName(orderDto.getLastName());
+        order.setCustomerPhoneNumber(orderDto.getPhoneNumber());
+        order.setCustomerCity(orderDto.getCity());
+        order.setCustomerPostOffice(orderDto.getPostOffice());
+        order.setComment(orderDto.getComment());
+        order.setTotalSum(orderDto.getTotalSum());
+        return order;
+    }
 
-    return new OrderDto(order.getId(),
-        order.getCustomer() != null ? order.getCustomer().getId() : 0,
-        order.getCustomerName(), order.getCustomerLastName(),
-        order.getCustomerPhoneNumber(), order.getCustomerCity(),
-        order.getCustomerPostOffice(), order.getPaymentType(),
-        order.getDatePlaced(), order.getStatus(),
-        order.getComment() == null ? "" : order.getComment(),
-        order.getTotalSum() == null ? BigDecimal.ZERO : order.getTotalSum(),
-        orderItemDtos);
-  }
+    public static int calculateTotalSumOfTos(Collection<OrderItemDto> orderItemDtos) {
+        return orderItemDtos.stream().mapToInt(p ->
+                (p.getPrice().intValue() * p.getQuantity()))
+                .sum();
+    }
 
-  public static BigDecimal calculateTotalSum(Collection<OrderItem> orderItems) {
-    return orderItems.stream()
-        .map(orderItem ->
-            orderItem.getProductPrice().multiply(new BigDecimal(orderItem.getProductQuantity())))
-        .reduce(BigDecimal.ZERO, BigDecimal::add);
-  }
+    public static OrderDto asTo(Order order) {
+        List<OrderItemDto> orderItemDtos = order.getOrderItems()
+                .stream()
+                .map(oi -> new OrderItemDto(oi.getId(),
+                        oi.getProduct() != null ? oi.getProduct().getId() : 0,
+                        oi.getProductName(),
+                        oi.getProductPrice(),
+                        oi.getProductQuantity(),
+                        oi.getProduct() != null
+                                ? (oi.getProduct().getSupplier() != null
+                                ? oi.getProduct().getSupplier()
+                                : "")
+                                : ""
+                ))
+                .collect(Collectors.toList());
+        return new OrderDto(order.getId(),
+                order.getCustomer() != null? order.getCustomer().getId(): 0,
+                order.getCustomerName(), order.getCustomerLastName(),
+                order.getCustomerPhoneNumber(), order.getCustomerCity(),
+                order.getCustomerPostOffice(), order.getPaymentType(),
+                order.getDatePlaced(), order.getStatus(),
+                order.getComment() == null ? "" : order.getComment(),
+                order.getTotalSum() == null ? BigDecimal.ZERO : order.getTotalSum(),
+                orderItemDtos);
+    }
+
+    public static BigDecimal calculateTotalSum(Collection<OrderItem> orderItems) {
+        return orderItems.stream().
+                reduce(
+                        BigDecimal.ZERO,
+                        (sum, oi) -> sum.add(oi.getProductPrice().multiply(new BigDecimal(oi.getProductQuantity()))),
+                        BigDecimal::add
+                );
+    }
 }

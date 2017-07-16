@@ -4,18 +4,18 @@ import com.malikov.shopsystem.model.ProductCategory;
 import com.malikov.shopsystem.repository.ProductCategoryRepository;
 import com.malikov.shopsystem.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.malikov.shopsystem.util.ValidationUtil.checkNotFound;
 import static com.malikov.shopsystem.util.ValidationUtil.checkNotFoundById;
 
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Autowired
-    ProductCategoryRepository productCategoryRepository;
+    private ProductCategoryRepository productCategoryRepository;
 
     @Override
     public ProductCategory create(ProductCategory productCategory) {
@@ -29,16 +29,17 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Override
     public ProductCategory get(Long id) {
-        return checkNotFoundById(productCategoryRepository.get(id), id);
-    }
-
-    @Override
-    public List<ProductCategory> getAll() {
-        return productCategoryRepository.getAll();
+        return checkNotFoundById(productCategoryRepository.findOne(id), id);
     }
 
     @Override
     public void delete(Long id) {
-        checkNotFoundById(productCategoryRepository.delete(id), id);
+        productCategoryRepository.delete(id);
+    }
+
+    @Override
+    public List<ProductCategory> getAll() {
+        return productCategoryRepository.findAll(new PageRequest(0, 200))
+                .getContent();
     }
 }

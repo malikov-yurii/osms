@@ -7,21 +7,9 @@ import java.util.Objects;
 import java.util.Set;
 
 @SuppressWarnings("JpaQlInspection")
-@NamedQueries({
-        @NamedQuery(name = User.DELETE, query = "DELETE FROM User u"
-                + " WHERE u.id=:id"),
-        @NamedQuery(name = User.BY_LOGIN, query = "SELECT u FROM User u "
-                + "WHERE u.name=:login"),
-        @NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u "
-                + "ORDER BY u.name")
-})
 @Entity
 @Table(name = "osms_users")
 public class User extends NamedEntity {
-
-    public static final String DELETE = "User.delete";
-    public static final String ALL_SORTED = "User.allSorted";
-    public static final String BY_LOGIN = "User.getByLogin";
 
     @Column(name = "password")
     private String password;
