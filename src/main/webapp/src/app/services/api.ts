@@ -13,11 +13,8 @@ export class ApiService {
     Accept: 'application/json'
   });
 
-  url: string = 'ajax/profile/';
 
-  constructor(private http: Http) {
-
-  }
+  constructor(private http: Http) {}
 
   private getJson(resp: Response) {
     try {
@@ -39,22 +36,15 @@ export class ApiService {
   }
 
   get(path: string): Observable<any> {
-    return this.http.get(`${this.url}${path}`, this.headers)
+    return this.http.get(path, this.headers)
       .map(this.checkForError)
       .catch(err => Observable.throw(err))
       .map(this.getJson);
   }
 
-  getRest(path: string): Observable<any> {
-    return this.http.get(`rest/profile/${path}`, this.headers)
-      .map(this.checkForError)
-      .catch(err => Observable.throw(err))
-      .map(this.getJson);
-  }
-
-  post(path: string, body?): Observable<any> {
+  post(path: string, body): Observable<any> {
     return this.http.post(
-        `${this.url}${path}`,
+        path,
         body,
         {headers: this.headers}
       )
@@ -63,19 +53,19 @@ export class ApiService {
       .map(this.getJson);
   }
 
-  postRest(path: string, body?): Observable<any> {
-    return this.http.post(
-      `rest/profile/${path}`,
+  put(path: string, body): Observable<any> {
+    return this.http.put(
+      path,
       body,
       {headers: this.headers}
-      )
+    )
       .map(this.checkForError)
       .catch(err => Observable.throw(err))
       .map(this.getJson);
   }
 
-  delete(path: string): Observable<any> {
-    return this.http.delete(`${this.url}${path}`, this.headers)
+  apiDelete(path: string): Observable<any> {
+    return this.http.delete(path, this.headers)
       .map(this.checkForError)
       .catch(err => Observable.throw(err));
   }

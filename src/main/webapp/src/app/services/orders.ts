@@ -12,7 +12,7 @@ import { Order, Product } from '../models';
 
 @Injectable()
 export class OrderService {
-  ordersPath: string = 'orders';
+  ordersPath: string = 'order';
   productsPath: string = 'orderItemTos';
 
   constructor(
@@ -22,30 +22,30 @@ export class OrderService {
   ) {}
 
   getOrders(start: number, length: number): Observable<any> {
-    return this.api.get(`${this.ordersPath}?start=${start}&length=${length}`)
-      .do(resp => this.storeHelper.update(this.ordersPath, resp.data));
+    return this.api.get(`/${this.ordersPath}?pageNumber=${start}&pageCapacity=${length}`)
+      .do(resp => this.storeHelper.update('order', resp.elements));
   }
 
-  preloadOrders(start: number, length: number): Observable<any> {
-    return this.api.get(`${this.ordersPath}?start=${start}&length=${length}`)
-      .do(resp => this.storeHelper.addArrayLast(this.ordersPath, resp.data));
-  }
+  // preloadOrders(start: number, length: number): Observable<any> {
+  //   return this.api.get(`${this.ordersPath}?start=${start}&length=${length}`)
+  //     .do(resp => this.storeHelper.addArrayLast(this.ordersPath, resp.data));
+  // }
 
   getAllOrders(): Observable<any> {
     return this.api.get(`${this.ordersPath}?start=0&length=10000`);
   }
 
   getCustomer(customerId): Observable<any> {
-    return this.api.getRest(`customers/${customerId}`);
+    return this.api.get(`customer/${customerId}`);
   }
-  saveCustomer(customerId, objCustomerInfo): Observable<any> {
-    let customerInfo = Object.keys(objCustomerInfo).map(key => {
-      return `${encodeURIComponent(key)}=${encodeURIComponent(objCustomerInfo[key])}`
-    }).join('&');
-    // @TODO get rid of this ^
-
-    return this.api.postRest(`customers/${customerId}`, customerInfo);
-  }
+  // saveCustomer(customerId, objCustomerInfo): Observable<any> {
+  //   let customerInfo = Object.keys(objCustomerInfo).map(key => {
+  //     return `${encodeURIComponent(key)}=${encodeURIComponent(objCustomerInfo[key])}`
+  //   }).join('&');
+  //   // @TODO get rid of this ^
+  //
+  //   // return this.api.postRest(`customers/${customerId}`, customerInfo);
+  // }
 
 
   addOrder() {
@@ -85,18 +85,18 @@ export class OrderService {
         // If input has been changed
 
         if (parseInt(orderId, 10)) {
-          fieldName = this.camelCaseToDash(fieldName);
-          this.api.post(
-            `${this.ordersPath}/${orderId}/update-${fieldName}`,
+          // fieldName = this.camelCaseToDash(fieldName);
+          this.api.put(
+            `${this.ordersPath}/${orderId}/${this.camelCaseToDash(fieldName)}`,
             `${fieldName}=${value}`
           ).subscribe();
         }
 
       }
     } else if (parseInt(orderId, 10)) {
-      fieldName = this.camelCaseToDash(fieldName);
-      this.api.post(
-        `${this.ordersPath}/${orderId}/update-${fieldName}`,
+      // fieldName = this.camelCaseToDash(fieldName);
+      this.api.put(
+        `${this.ordersPath}/${orderId}/${this.camelCaseToDash(fieldName)}`,
         `${fieldName}=${value}`
       ).subscribe();
     }
@@ -126,9 +126,9 @@ export class OrderService {
     if (updated) {
 
       if (parseInt(orderId, 10)) {
-        fieldName = this.camelCaseToDash(fieldName);
+        // fieldName = this.camelCaseToDash(fieldName);
         this.api.post(
-          `${this.ordersPath}/${productId}/update-${fieldName}`,
+          `${this.ordersPath}/${productId}/${this.camelCaseToDash(fieldName)}`,
           `${fieldName}=${value}`
         ).subscribe(
           data => {
@@ -157,9 +157,8 @@ export class OrderService {
 
   autocomplete(type: string, term: string) {
     if (type === 'info') {
-      return this.api.post(
-        `${this.ordersPath}/autocomplete-last-name`,
-        `term=${term}`
+      return this.api.get(
+        `customer/autocomplete-by-last-name-mask/${term}`
       )
     } else if (type === 'product') {
       return this.api.post(
@@ -169,7 +168,9 @@ export class OrderService {
     }
   }
 
-
+  statuses() {
+    return this.api.get('/order/autocomplete-status');
+  }
 
 
   private camelCaseToDash(str) {

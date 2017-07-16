@@ -13,15 +13,25 @@ public class RootController {
     //@Autowired
     //private ApplicationContext appContext;
 
-    @GetMapping("/")
+    @GetMapping("/orders")
     public String root() {
-        return "redirect:orders";
+        return "/index.html";
     }
 
-    @GetMapping("/users")
-    public String users() {
-        return "users";
+    @GetMapping("/products")
+    public String products() {
+        return "/index.html";
     }
+
+    @GetMapping("/customers")
+    public String customers() {
+        return "/index.html";
+    }
+//
+//    @GetMapping("/users")
+//    public String users() {
+//        return "users";
+//    }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(ModelMap model,
@@ -29,21 +39,21 @@ public class RootController {
                         @RequestParam(value = "message", required = false) String message) {
         model.put("error", error);
         model.put("message", message);
-        return "login";
+        return "/WEB-INF/jsp/login.jsp";
     }
 
-    @GetMapping("/products")
-    public String products() {
-        return "products";
-    }
-
-    @GetMapping("/orders")
-    public String orders() {
-        return "orders";
-    }
-
-    @GetMapping("/customers")
-    public String customers() {
-        return "customers";
-    }
+//    @GetMapping("/products")
+//    public String products() {
+//        return "products";
+//    }
+//
+//    @GetMapping("/orders")
+//    public String orders() {
+//        return "orders";
+//    }
+//
+//    @GetMapping("/customers")
+//    public String customers() {
+//        return "customers";
+//    }
 }

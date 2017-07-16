@@ -6,13 +6,13 @@ import { Order, Product } from './models';
 
 
 export interface State {
-  orders: Order[],
+  order: Order[],
   products: Product[],
   customers: any[]
 }
 
 const defaultState: State = {
-  orders: [],
+  order: [],
   products: [],
   customers: []
 };

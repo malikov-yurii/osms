@@ -82,31 +82,31 @@ public class OrderController {
         orderService.updatePaymentType(orderId, paymentType);
     }
 
-    @PutMapping(value = "/{orderId}/customer-first-name")
+    @PutMapping(value = "/{orderId}/first-name")
     public void updateFirstName(@PathVariable("orderId") Long orderId,
                                 @RequestParam("firstName") String firstName) {
         orderService.updateCustomerFirstName(orderId, firstName);
     }
 
-    @PutMapping(value = "/{orderId}/customer-last-name")
+    @PutMapping(value = "/{orderId}/last-name")
     public void updateLastName(@PathVariable("orderId") Long orderId,
                                @RequestParam("lastName") String lastName) {
         orderService.updateCustomerLastName(orderId, lastName);
     }
 
-    @PutMapping(value = "/{orderId}/customer-phone-number")
-    public void updatePhoneNumber(@PathVariable("id") Long orderId,
+    @PutMapping(value = "/{orderId}/phone-number")
+    public void updatePhoneNumber(@PathVariable("orderid") Long orderId,
                                   @RequestParam("phoneNumber") String phoneNumber) {
         orderService.updateCustomerPhoneNumber(orderId, phoneNumber);
     }
 
-    @PutMapping(value = "/{orderId}/update-city")
+    @PutMapping(value = "/{orderId}/city")
     public void updateCity(@PathVariable("orderId") Long orderId,
                            @RequestParam("city") String cityName) {
         orderService.updateCity(orderId, cityName);
     }
 
-    @PutMapping(value = "/{orderId}/post-office")
+    @PutMapping(value = "/{orderId}/office")
     public void updatePostOffice(@PathVariable("orderId") Long orderId,
                                  @RequestParam("postOffice") String postOffice) {
         orderService.updatePostOffice(orderId, postOffice);

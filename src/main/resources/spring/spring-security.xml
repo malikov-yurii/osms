@@ -6,7 +6,7 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <http pattern="/resources/**" security="none"/>
+    <http pattern="/assets/**" security="none"/>
     <http pattern="/webjars/**" security="none"/>
 
     <http>
@@ -16,11 +16,12 @@
         <intercept-url pattern="/**/admin/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
 
-        <form-login login-page="/login" default-target-url="/orders"
+        <form-login login-page="/login" default-target-url="/"
                     always-use-default-target="true"
                     authentication-failure-url="/login?error=true"
                     login-processing-url="/spring_security_check"/>
         <logout logout-success-url="/login"/>
+        <csrf disabled="true"/>
     </http>
 
     <beans:bean id="encoder"

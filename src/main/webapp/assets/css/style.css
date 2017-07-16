@@ -506,6 +506,9 @@ div.dataTables_wrapper div.dataTables_info {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 3px 0 0;
+    padding: 0 0 7px;
+    border-bottom: 1px solid rgba(0, 188, 212, 0.49);
 }
 .order-product {
     display: flex;
@@ -561,9 +564,7 @@ div.dataTables_wrapper div.dataTables_info {
     height: 32px;
 }
 .order-products {
-    margin: 4px 0 0;
-    padding: 7px 0 5px;
-    border-top: 1px solid rgba(0, 188, 212, 0.49);
+    margin: 8px 0 3px;
 }
 .order-product__block {
     padding: 0 8px;
@@ -604,11 +605,9 @@ div.dataTables_wrapper div.dataTables_info {
 .order-manage {
     display: flex;
     align-items: center;
-    margin: 0 0 7px;
-    padding: 1px 0 5px;
+    margin: 9px 0 0;
+    padding: 0 0 7px;
     border-bottom: 1px solid rgba(0, 188, 212, 0.49);
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
 }
 .order-manage.collapsible {
     position: absolute;
@@ -651,17 +650,17 @@ div.dataTables_wrapper div.dataTables_info {
 .order-manage__block--add .material-icons {
     color: #00b500;
 }
-.order-manage__block--edit .material-icons {
-    color: #0000ea;
-}
-.order-manage__block--delete .material-icons {
-    color: #d20000;
-}
 .order-manage__block--add:hover .material-icons {
     color: #00d600;
 }
+.order-manage__block--edit .material-icons {
+    color: #0000ea;
+}
 .order-manage__block--edit:hover .material-icons {
     color: #4277ff;
+}
+.order-manage__block--delete .material-icons {
+    color: #d20000;
 }
 .order-manage__block--delete:hover .material-icons {
     color: #ff0000;

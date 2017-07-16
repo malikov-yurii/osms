@@ -19,6 +19,7 @@ import { Order, StaticDATA } from '../models';
 @Component({
   template: `
     <div class="wrapper">
+    <div (click)="statuses()">statuses</div>
       <div class="service-block">
         <div
           class="btn btn-orders-add"
@@ -62,28 +63,6 @@ import { Order, StaticDATA } from '../models';
         *ngFor="let order of orders$ | async; trackBy: trackById"
         class="order order--{{ order.status }}"
        >
-       
-       
-       
-        <div class="order-manage">
-          <div title="Add product" class="order-manage__block order-manage__block--add" (click)="onAddProduct(order.id)">
-            <i class="material-icons">add_box</i>
-            <div class="order-manage__text">Add product</div>
-          </div>
-          <div title="Edit customer" class="order-manage__block order-manage__block--edit" (click)="onEditCustomer(order.customerId)">
-            <i class="material-icons">mode_edit</i>
-            <div class="order-manage__text">Edit customer</div>
-          </div>
-          <div title="Delete order" class="order-manage__block order-manage__block--delete" (click)="onDeleteOrder(order.id)">
-            <i class="material-icons">delete_forever</i>
-            <div class="order-manage__text">Delete order</div>
-          </div>
-        </div>       
-        
-        
-        
-        
-        
       
         <div class="order-info">
         
@@ -92,7 +71,7 @@ import { Order, StaticDATA } from '../models';
           </div>
           
           <ng-container 
-            *ngFor="let key of order | keys:['id', 'customerId', 'orderItemTos', 'date']"
+            *ngFor="let key of order | keys:['id', 'customerId', 'orderItemDtos', 'date']"
           >
           
             <ng-template [ngIf]="!hasInput(key)">
@@ -129,16 +108,33 @@ import { Order, StaticDATA } from '../models';
           
           </ng-container>
         </div>
+       
+       
+       
+        <div class="order-manage">
+          <div title="Add product" class="order-manage__block order-manage__block--add" (click)="onAddProduct(order.id)">
+            <i class="material-icons">add_box</i>
+            <div class="order-manage__text">Add product</div>
+          </div>
+          <div title="Edit customer" class="order-manage__block order-manage__block--edit" (click)="onEditCustomer(order.customerId)">
+            <i class="material-icons">mode_edit</i>
+            <div class="order-manage__text">Edit customer</div>
+          </div>
+          <div title="Delete order" class="order-manage__block order-manage__block--delete" (click)="onDeleteOrder(order.id)">
+            <i class="material-icons">delete_forever</i>
+            <div class="order-manage__text">Delete order</div>
+          </div>
+        </div>
         
         
         <div class="order-products">
           <div
-            *ngFor="let product of order.orderItemTos; let odd = odd, let even = even;"
+            *ngFor="let product of order.orderItemDtos; let odd = odd, let even = even;"
             [ngClass]="{'order-product': true, odd: odd, even: even}"
           >
           
             <ng-container
-              *ngFor="let key of product | keys:['id', 'orderProductId', 'supplier'];"
+              *ngFor="let key of product | keys:['orderItemId', 'orderProductId', 'supplier'];"
             >
             
               <ng-template [ngIf]="!hasInput(key)">
@@ -218,7 +214,8 @@ export class Orders implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.subs[this.subs.length] = this.orderService.getOrders(0, this.pageLength).subscribe(resp => {
-      this.totalOrders = resp.recordsTotal;
+      console.log(resp);
+      this.totalOrders = resp.totalElements;
       // this.subs[this.subs.length] = this.orderService.preloadOrders(this.pageLength, this.pageLength * 9).subscribe(
       //   () => this.subs[this.subs.length] = this.orderService.preloadOrders(this.pageLength + this.pageLength * 9, this.pageLength * 500).subscribe()
       // );
@@ -226,7 +223,7 @@ export class Orders implements OnInit, OnDestroy {
 
     let storeSource = this.store.changes
       .map(store => {
-        this.preloadedOrders = store.orders.length;
+        this.preloadedOrders = store.order.length;
         return {search: this.searchQuery, page: this.page, length: this.pageLength}
       });
 
@@ -330,7 +327,7 @@ export class Orders implements OnInit, OnDestroy {
   // Manage customers
   onEditCustomer(customerId) {
     this.popupService.renderPopup().subscribe(customer => {
-      this.orderService.saveCustomer(customerId, customer).subscribe();
+      // this.orderService.saveCustomer(customerId, customer).subscribe();
     });
     this.orderService.getCustomer(customerId).subscribe(customer => {
       this.popupService.onProvideWithData(customer);
@@ -390,12 +387,7 @@ export class Orders implements OnInit, OnDestroy {
 
   }
 
-
+  statuses() {
+    this.orderService.statuses().subscribe(resp => console.log(resp))
+  }
 }
-
-
-
-
-
-// @TODO
-// change order of json keys in backend
