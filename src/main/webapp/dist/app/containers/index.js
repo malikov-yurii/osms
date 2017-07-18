@@ -6,3 +6,4 @@ var products_1 = require("./products");
 exports.Products = products_1.Products;
 var customers_1 = require("./customers");
 exports.Customers = customers_1.Customers;
+//# sourceMappingURL=index.js.map

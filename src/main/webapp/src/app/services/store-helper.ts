@@ -88,10 +88,7 @@ export class StoreHelper {
       if (item.id === id) {
         item[deepPropKey].map(deepItem => {
           if (deepItem.id === deepId) {
-            console.log(deepItem);
-            console.log(sourceObj);
             deepItem = Object.assign(deepItem, sourceObj);
-            console.log(deepItem);
             updated = true;
           }
           return deepItem;

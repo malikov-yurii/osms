@@ -47,3 +47,4 @@ ProductService = __decorate([
         index_1.SearchService])
 ], ProductService);
 exports.ProductService = ProductService;
+//# sourceMappingURL=products.js.map

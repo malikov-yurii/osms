@@ -13,3 +13,4 @@ var mapValuesToArray = function (obj) { return Object.keys(obj).map(function (ke
 exports.providers = [
     store_1.Store
 ].concat(mapValuesToArray(services));
+//# sourceMappingURL=index.js.map

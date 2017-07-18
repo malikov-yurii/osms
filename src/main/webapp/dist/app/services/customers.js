@@ -47,3 +47,4 @@ CustomerService = __decorate([
         index_1.SearchService])
 ], CustomerService);
 exports.CustomerService = CustomerService;
+//# sourceMappingURL=customers.js.map

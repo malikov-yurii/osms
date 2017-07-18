@@ -7,7 +7,10 @@ import { Subject } from 'rxjs/Subject';
   template: `
     <div class="popup-wrapper">
       <div class="popup-overlay" (click)="close()" [@fadeInOut]="animState"></div>
-      <div class="popup" [@flyInOut]="animState">
+      <div class="popup"
+        [@expandHeight]="hasData"
+        [@flyInOut]="animState"
+      >
         <div class="popup__head">
           Update customer
           
@@ -35,7 +38,7 @@ import { Subject } from 'rxjs/Subject';
           
             <div class="popup__formgroup" *ngFor="let key of data | keys:['id']">
               <label class="popup__label" for="{{ key }}">{{ key }}</label>
-              <input rows="1"  class="popup__input" id="{{ key }}" type="text" formControlName="{{ key }}">
+              <input class="input popup__input" id="{{ key }}" type="text" formControlName="{{ key }}">
             </div>
           </div>
           
@@ -73,10 +76,12 @@ import { Subject } from 'rxjs/Subject';
         transform: translate(-50%, -50%);
         min-width: 550px;
         max-width: 100%;
+        min-height: 195px;
         background: #fff;
         border: 1px solid #b9b9b9;
         border-radius: 4px;
         box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.42);
+        overflow: hidden;
     }
     
     .popup__head {
@@ -127,33 +132,10 @@ import { Subject } from 'rxjs/Subject';
         font-size: 15px;
     }
     
-    input.popup__input {
-        padding: 8px 0;
-        border: 0;
-        box-shadow: 0 .5px 0 0 #ccc;
-        font: inherit;
-        resize: none;
-        transition: box-shadow .15s linear;
-    }
-    
-    input.popup__input:hover {
-        box-shadow: 0 .8px 0 0 #000;
-    }
-    
-    input.popup__input:focus {
-        outline: none;
-        box-shadow: 0 .8px 0 0 #00bcd4;
-    }
-    
     .popup__btns {
         padding: 3px 16px 16px;
         display: flex;
         justify-content: space-between;
-    }
-    
-    .popup__btn {
-        padding: 7px 10px;
-        box-shadow: 0 1px 4px 0 rgba(0,0,0,.26);
     }
     
     .popup__btn .material-icons {
@@ -163,11 +145,11 @@ import { Subject } from 'rxjs/Subject';
         margin: 0 5px 0 0;
     }
     .popup__loading {
-        min-height: 200px;
         display: flex;
         justify-content: center;
         align-content: center;
         flex-wrap: wrap;
+        padding: 20px 0;
     }
     
     .popup__loading-text {
@@ -178,26 +160,33 @@ import { Subject } from 'rxjs/Subject';
     
     .popup__loading-image {
         max-width: 70px;
+        max-height: 70px;
+        margin: 15px 0 0;
     }
   `],
   animations: [
     trigger('fadeInOut', [
       transition(':enter', [
         style({opacity: 0}),
-        animate(100, style({opacity: 1}))
+        animate('0.2s ease', style({opacity: 1}))
       ]),
       transition('* => destroying', [
-        animate(100, style({opacity: 0}))
+        animate('0.2s ease', style({opacity: 0}))
       ])
     ]),
     trigger('flyInOut', [
       transition(':enter', [
-        style({opacity: 0, transform: 'translate(-50%, -60%)'}),
-        animate(100)
+        style({opacity: 0, transform: 'translate(-90%, -50%)'}),
+        animate('0.2s ease', style({opacity: 1, transform: 'translate(-50%, -50%)'}))
       ]),
       transition('* => destroying', [
-        animate(100, style({transform: 'translate(-50%, -70%)'}))
+        animate('0.2s ease', style({opacity: 0, transform: 'translate(-10%, -50%)'}))
       ])
+    ]),
+    trigger('expandHeight', [
+      state('0', style({height: '150px'})),
+      state('1', style({height: '*'})),
+      transition('0 => 1', animate('0.2s ease'))
     ])
   ],
 })

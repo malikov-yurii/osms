@@ -27,7 +27,7 @@ public class RootController {
     public String customers() {
         return "/index.html";
     }
-//
+
 //    @GetMapping("/users")
 //    public String users() {
 //        return "users";

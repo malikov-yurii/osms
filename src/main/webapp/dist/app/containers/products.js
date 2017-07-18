@@ -86,3 +86,4 @@ Products = __decorate([
         store_1.Store])
 ], Products);
 exports.Products = Products;
+//# sourceMappingURL=products.js.map

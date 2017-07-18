@@ -49,7 +49,7 @@ public class OrderItemController {
         return orderItemService.updateOrderItemProductPrice(itemId, price);
     }
 
-    @DeleteMapping(value = "/order-item/{orderItemId}")
+    @DeleteMapping(value = "{orderItemId}")
     public void deleteOrderItem(@PathVariable("orderItemId") Long orderItemId) {
         orderItemService.delete(orderItemId);
     }

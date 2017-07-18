@@ -37,7 +37,7 @@ export class StaticDATA {
     paymentType: ['PB', 'SV', 'NP']
   };
 
-  static readonly autocompleteBlocks = ['firstName', 'lastName', 'phoneNumber', 'name'];
+  static readonly autocompleteBlocks = ['firstName', 'lastName', 'phoneNumber', 'city', 'name'];
 
   static readonly keycodesNotToAutocomplete = [9, 13, 16, 17, 18, 20]; // Tab, Enter, Shift, Ctrl, Alt, Caps Lock
 }

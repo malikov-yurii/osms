@@ -10,3 +10,4 @@ var pagination_1 = require("./pagination");
 exports.Pagination = pagination_1.Pagination;
 var popup_1 = require("./popup");
 exports.PopupComponent = popup_1.PopupComponent;
+//# sourceMappingURL=index.js.map

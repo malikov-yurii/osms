@@ -35,8 +35,8 @@ public class OrderUtil {
                 .map(oi -> new OrderItemDto(oi.getId(),
                         oi.getProduct() != null ? oi.getProduct().getId() : 0,
                         oi.getProductName(),
-                        oi.getProductPrice(),
                         oi.getProductQuantity(),
+                        oi.getProductPrice(),
                         oi.getProduct() != null
                                 ? (oi.getProduct().getSupplier() != null
                                 ? oi.getProduct().getSupplier()

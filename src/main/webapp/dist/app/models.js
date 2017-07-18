@@ -49,6 +49,7 @@ StaticDATA.infoBlocks = {
     status: ['SHP', 'WFP', 'OK', 'NEW', 'NOT'],
     paymentType: ['PB', 'SV', 'NP']
 };
-StaticDATA.autocompleteBlocks = ['firstName', 'lastName', 'phoneNumber', 'name'];
+StaticDATA.autocompleteBlocks = ['firstName', 'lastName', 'phoneNumber', 'city', 'name'];
 StaticDATA.keycodesNotToAutocomplete = [9, 13, 16, 17, 18, 20]; // Tab, Enter, Shift, Ctrl, Alt, Caps Lock
 exports.StaticDATA = StaticDATA;
+//# sourceMappingURL=models.js.map

@@ -8,9 +8,15 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class ApiService {
-  headers: Headers = new Headers({
+
+  headersForm: Headers = new Headers({
     'Content-Type': 'application/x-www-form-urlencoded',
-    Accept: 'application/json'
+    'Accept': 'application/json'
+  });
+
+  headersJson: Headers = new Headers({
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
   });
 
 
@@ -36,36 +42,29 @@ export class ApiService {
   }
 
   get(path: string): Observable<any> {
-    return this.http.get(path, this.headers)
+    return this.http.get(path, {headers: this.headersForm})
       .map(this.checkForError)
       .catch(err => Observable.throw(err))
       .map(this.getJson);
   }
 
-  post(path: string, body?): Observable<any> {
-    return this.http.post(
-        path,
-        body,
-        {headers: this.headers}
-      )
+  post(path: string): Observable<any> {
+    return this.http.post(path, {headers: this.headersForm})
       .map(this.checkForError)
       .catch(err => Observable.throw(err))
       .map(this.getJson);
   }
 
-  put(path: string, body): Observable<any> {
-    return this.http.put(
-      path,
-      body,
-      {headers: this.headers}
-    )
+  put(path: string, body: any, json: boolean = false): Observable<any> {
+    let headers = json ? this.headersJson : this.headersForm;
+    return this.http.put(path, body, {headers})
       .map(this.checkForError)
       .catch(err => Observable.throw(err))
       .map(this.getJson);
   }
 
   apiDelete(path: string): Observable<any> {
-    return this.http.delete(path, this.headers)
+    return this.http.delete(path, {headers: this.headersForm})
       .map(this.checkForError)
       .catch(err => Observable.throw(err));
   }

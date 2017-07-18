@@ -50,3 +50,4 @@ HotkeysDirective = __decorate([
     __metadata("design:paramtypes", [core_1.ElementRef])
 ], HotkeysDirective);
 exports.HotkeysDirective = HotkeysDirective;
+//# sourceMappingURL=hotkeys.js.map

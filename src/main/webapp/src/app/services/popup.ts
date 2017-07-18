@@ -1,5 +1,5 @@
 import { Injectable, ComponentRef, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
-import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/delay';
 
 import { PopupComponent } from '../ui/index';
 
@@ -14,7 +14,7 @@ export class PopupService {
     let popupFactory = this.compiler.resolveComponentFactory(PopupComponent);
     this.popupComponent = this.viewContainerRef.createComponent(popupFactory);
 
-    this.popupComponent.instance.destroyedStream.debounceTime(100).subscribe(() => {
+    this.popupComponent.instance.destroyedStream.delay(180).subscribe(() => {
       this.popupComponent.destroy();
     });
     return this.popupComponent.instance.submittedStream;

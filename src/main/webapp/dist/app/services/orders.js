@@ -32,18 +32,21 @@ var OrderService = (function () {
             .do(function (resp) { return _this.storeHelper.update('order', resp.elements); });
     };
     OrderService.prototype.addOrder = function () {
-        var _this = this;
         var newOrder = new models_1.Order();
         var newOrderId = newOrder.id;
+        var newOrderItemId = newOrder[this.productsPath][0].id;
         this.storeHelper.add(this.ordersPath, newOrder);
-        this.api.post(this.ordersPath).subscribe(function (orderId) {
-            console.log(orderId);
-            _this.storeHelper.findAndUpdate(_this.ordersPath, newOrderId, 'id', orderId);
-        });
+        // this.api.post(this.ordersPath).subscribe(resp => {
+        //   this.storeHelper.findAndUpdate(this.ordersPath, newOrderId, 'id', resp.orderId);
+        //   this.storeHelper.findDeepAndUpdate(
+        //     this.ordersPath, resp.orderId, this.productsPath,
+        //     newOrderItemId, 'id', resp.orderItemId
+        //   );
+        // })
     };
     OrderService.prototype.deleteOrder = function (orderId) {
         this.storeHelper.findAndDelete(this.ordersPath, orderId);
-        return this.api.apiDelete(this.ordersPath + "/" + orderId).subscribe();
+        // this.api.apiDelete(`${this.ordersPath}/${orderId}`).subscribe();
     };
     OrderService.prototype.updateOrderInfoField = function (orderId, fieldName, value) {
         // Changing order info common field (e.g., firstName, phoneNumber)
@@ -62,7 +65,7 @@ var OrderService = (function () {
         var newProduct = new models_1.Product();
         var newProductId = newProduct.id;
         this.storeHelper.findDeepAndAdd(this.ordersPath, orderId, this.productsPath, newProduct);
-        return this.api.post("order-item/create-empty-for/" + orderId)
+        this.api.post("order-item/create-empty-for/" + orderId)
             .subscribe(function (productId) {
             _this.storeHelper.findDeepAndUpdate(_this.ordersPath, orderId, _this.productsPath, newProductId, 'id', productId);
         });
@@ -70,17 +73,17 @@ var OrderService = (function () {
     OrderService.prototype.updateProductField = function (orderId, productId, fieldName, value) {
         // Changing order item common field (e.g., name, price)
         var _this = this;
-        this.api.post(this.ordersPath + "/" + productId + "/" + this.camelCaseToDash(fieldName), fieldName + "=" + value).subscribe(function (data) {
+        this.api.put("order-item/" + productId + "/" + this.camelCaseToDash(fieldName), fieldName + "=" + value).subscribe(function (data) {
             if (data) {
                 _this.storeHelper.findAndUpdate(_this.ordersPath, orderId, 'totalSum', data);
             }
         });
     };
     OrderService.prototype.updateProductInput = function (orderId, productId, fieldName, value) {
-        var _this = this;
         // Changing order item INPUT (quantity)
+        var _this = this;
         this.storeHelper.findDeepAndUpdate(this.ordersPath, orderId, this.productsPath, productId, fieldName, value);
-        this.api.post(this.ordersPath + "/" + productId + "/" + this.camelCaseToDash(fieldName), fieldName + "=" + value).subscribe(function (data) {
+        this.api.put("order-item/" + productId + "/" + this.camelCaseToDash(fieldName), fieldName + "=" + value).subscribe(function (data) {
             if (data) {
                 _this.storeHelper.findAndUpdate(_this.ordersPath, orderId, 'totalSum', data);
             }
@@ -90,41 +93,46 @@ var OrderService = (function () {
         this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, object);
     };
     OrderService.prototype.deleteProduct = function (orderId, productId) {
-        return this.storeHelper.findDeepAndDelete(this.ordersPath, orderId, this.productsPath, productId);
-        // return this.api.delete(`${this.ordersPath}/order-item/${productId}`)
-        //   .do(() => this.storeHelper.findAndDelete(this.ordersPath, productId));
+        this.storeHelper.findDeepAndDelete(this.ordersPath, orderId, this.productsPath, productId);
+        return this.api.apiDelete("order-item/" + productId);
     };
     OrderService.prototype.getCustomer = function (customerId) {
         return this.api.get("customer/" + customerId);
     };
     OrderService.prototype.saveCustomer = function (customerId, customerInfo) {
-        // customerInfo = Object.keys(customerInfo).map(key => {
-        //   return `${encodeURIComponent(key)}=${encodeURIComponent(customerInfo[key])}`
-        // }).join('&');
-        // @TODO get rid of this ^
-        return this.api.put("customer/" + customerId, customerInfo);
+        return this.api.put("customer/" + customerId, customerInfo, true);
+    };
+    OrderService.prototype.persistCustomer = function (orderId) {
+        var _this = this;
+        this.api.post("customer/persist-customer-from-order/" + orderId)
+            .subscribe(function (customerId) {
+            _this.storeHelper.findAndUpdate(_this.ordersPath, orderId, 'customerId', customerId);
+        });
     };
     OrderService.prototype.list = function (searchQuery, page, length) {
         if (searchQuery === void 0) { searchQuery = ''; }
         if (page === void 0) { page = 1; }
         if (length === void 0) { length = 10; }
         var orderResult = this.searchService.search(this.storeHelper.get(this.ordersPath), searchQuery);
-        var orderResultPage = orderResult.slice((page - 1) * length, page * length);
+        var orderResultPage = orderResult.slice(0, length);
         return Observable_1.Observable.of({
             orders: orderResultPage,
             filtered: orderResult.length
         });
     };
-    OrderService.prototype.autocomplete = function (type, term) {
-        if (type === 'info') {
+    OrderService.prototype.autocomplete = function (types, term) {
+        if (types[1] === 'lastName' || types[1] === 'firstName') {
             return this.api.get("customer/autocomplete-by-last-name-mask/" + term);
         }
-        else if (type === 'product') {
+        else if (types[1] === 'phoneNumber') {
+            return this.api.get("customer/autocomplete-by-phone-number-mask/" + term);
+        }
+        else if (types[1] === 'city') {
+            return this.api.get("customer/autocomplete-by-city-mask/" + term);
+        }
+        else if (types[0] === 'product') {
             return this.api.get("order-item/autocomplete-by-product-name/" + term);
         }
-    };
-    OrderService.prototype.statuses = function () {
-        return this.api.get('/order/autocomplete-status');
     };
     OrderService.prototype.camelCaseToDash = function (str) {
         return str.replace(/([A-Z])/g, function (g) { return "-" + g[0].toLowerCase(); });
@@ -144,3 +152,4 @@ OrderService = __decorate([
         search_1.SearchService])
 ], OrderService);
 exports.OrderService = OrderService;
+//# sourceMappingURL=orders.js.map

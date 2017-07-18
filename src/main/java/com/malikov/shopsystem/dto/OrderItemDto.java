@@ -13,9 +13,9 @@ public class OrderItemDto implements Serializable {
 
     private String name;
 
-    private BigDecimal price;
-
     private Integer quantity;
+
+    private BigDecimal price;
 
     private String supplier;
 
@@ -24,16 +24,16 @@ public class OrderItemDto implements Serializable {
             Long orderItemId,
             Long orderProductId,
             String name,
-            BigDecimal price,
             Integer quantity,
+            BigDecimal price,
             String  supplier
     ) {
 
         this.id = orderItemId;
         this.orderProductId = orderProductId;
         this.name = name;
-        this.price = price;
         this.quantity = quantity;
+        this.price = price;
         this.supplier = supplier;
     }
 
@@ -94,8 +94,8 @@ public class OrderItemDto implements Serializable {
                 "id=" + id +
                 ", orderProductId=" + orderProductId +
                 ", name='" + name + '\'' +
-                ", price=" + price +
                 ", quantity=" + quantity +
+                ", price=" + price +
                 ", supplier=" + supplier +
                 '}';
     }

@@ -39,6 +39,9 @@ var Autocomplete = (function () {
                     case 'Enter':
                         this.listComponent.instance.selectedStream.next();
                         return true;
+                    case 'NumpadEnter':
+                        this.listComponent.instance.selectedStream.next();
+                        return false;
                     case 'Tab':
                         this.listComponent.instance.selectedStream.next();
                         return true;
@@ -76,7 +79,7 @@ var Autocomplete = (function () {
         var _this = this;
         this.refreshTimer = undefined;
         this.searchInProgress = true;
-        this.orderService.autocomplete(this.types[0], this.term).subscribe(function (resp) {
+        this.orderService.autocomplete(this.types, this.term).subscribe(function (resp) {
             _this.searchInProgress = false;
             if (_this.searchRequired) {
                 _this.searchRequired = false;
@@ -135,3 +138,4 @@ Autocomplete = __decorate([
         core_1.ComponentFactoryResolver])
 ], Autocomplete);
 exports.Autocomplete = Autocomplete;
+//# sourceMappingURL=autocomplete.js.map

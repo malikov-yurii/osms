@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-require("rxjs/add/operator/debounceTime");
+require("rxjs/add/operator/delay");
 var index_1 = require("../ui/index");
 var PopupService = (function () {
     function PopupService(compiler) {
@@ -21,7 +21,7 @@ var PopupService = (function () {
         var _this = this;
         var popupFactory = this.compiler.resolveComponentFactory(index_1.PopupComponent);
         this.popupComponent = this.viewContainerRef.createComponent(popupFactory);
-        this.popupComponent.instance.destroyedStream.debounceTime(100).subscribe(function () {
+        this.popupComponent.instance.destroyedStream.delay(180).subscribe(function () {
             _this.popupComponent.destroy();
         });
         return this.popupComponent.instance.submittedStream;
@@ -36,3 +36,4 @@ PopupService = __decorate([
     __metadata("design:paramtypes", [core_1.ComponentFactoryResolver])
 ], PopupService);
 exports.PopupService = PopupService;
+//# sourceMappingURL=popup.js.map

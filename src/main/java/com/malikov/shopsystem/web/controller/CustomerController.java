@@ -61,8 +61,10 @@ public class CustomerController {
         return customerService.getByPhoneNumberMask(phoneNumberMask);
     }
 
-    @PostMapping(value = "/autocomplete-by-city-mask", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CustomerAutocompleteDto> autocompleteCity(@RequestParam("term") String cityMask) {
+    @GetMapping(value = "/autocomplete-by-city-mask/{cityMask}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CustomerAutocompleteDto> autocompleteCity(
+            @PathVariable("cityMask") String cityMask) {
         return customerService.getByCityMask(cityMask);
     }
 

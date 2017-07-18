@@ -108,10 +108,7 @@ var StoreHelper = (function () {
             if (item.id === id) {
                 item[deepPropKey].map(function (deepItem) {
                     if (deepItem.id === deepId) {
-                        console.log(deepItem);
-                        console.log(sourceObj);
                         deepItem = Object.assign(deepItem, sourceObj);
-                        console.log(deepItem);
                         updated = true;
                     }
                     return deepItem;
@@ -143,3 +140,4 @@ StoreHelper = __decorate([
     __metadata("design:paramtypes", [store_1.Store])
 ], StoreHelper);
 exports.StoreHelper = StoreHelper;
+//# sourceMappingURL=store-helper.js.map

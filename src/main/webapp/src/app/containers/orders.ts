@@ -1,5 +1,6 @@
 import { Component, OnDestroy, ViewChild, ElementRef, OnInit, ViewContainerRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { trigger, state, group, style, transition, animate } from '@angular/animations';
 import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
 import { Subscription } from 'rxjs/Subscription';
@@ -17,42 +18,39 @@ import { Order, StaticDATA } from '../models';
 
 
 @Component({
-  template: `
+  template: `           
+    <div style="display: none;">
+      <div class="get-orders" style="display: inline-block;" (click)="onGetAllOrders()">Get All Orders</div>
+    
+      <div class="consolestore" style="display: inline-block;" (click)="onGetStore()">Console current state</div>
+      
+      <div class="consoleorders"  style="display: inline-block;" (click)="console()">Console</div>
+    </div>
+      
     <div class="wrapper">
-    <div (click)="statuses()">statuses</div>
+    
       <div class="service-block">
         <div
           class="btn btn-orders-add"
           (click)="onAddOrder()"
         >Add New Order</div>
-        
-        <div class="orders-info">
-          <div class="orders-info__block orders-info__block--total">Total orders: {{ totalOrders }}</div>
-          <div class="orders-info__block orders-info__block--preloaded">Preloaded orders: {{ preloadedOrders }}</div>
-        </div>
   
         <input type="text" name="searchStream" id=""
-          class="input orders-search"
+          class="input search-input"
           placeholder="Search in orders..."
+          [@changeWidth]="searchExpanded"
           #searchControl
           [formControl]="searchStream"
           [(ngModel)]="searchQuery"
+          (focusin)="toggleAnimState()"
+          (focusout)="toggleAnimState()"
         >
          
       </div>
       
       
-      <div style="display: none;">
-        <div class="get-orders" style="display: inline-block;" (click)="onGetAllOrders()">Get All Orders</div>
-      
-        <div class="consoleorders"  style="display: inline-block;" (click)="consoleOrders()">Console all orders</div>
-        
-        <div class="consolestore" style="display: inline-block;" (click)="onGetStore()">Console current state</div>
-      </div>
-      
-      
       <pagination
-        [total]="filteredOrders$ | async"
+        [total]="totalOrders"
         [length]="pageLength"
         [current]="page"
         (dataChanged)="paginationChanged($event)"
@@ -60,8 +58,9 @@ import { Order, StaticDATA } from '../models';
       </pagination>
     
       <div
-        *ngFor="let order of orders$ | async; trackBy: trackById"
         class="order order--{{ order.status }}"
+        [@fadeInOut]
+        *ngFor="let order of orders$ | async; trackBy: trackById"
        >
       
         <div class="order-info">
@@ -116,7 +115,17 @@ import { Order, StaticDATA } from '../models';
             <i class="material-icons">add_box</i>
             <div class="order-manage__text">Add product</div>
           </div>
-          <div title="Edit customer" class="order-manage__block order-manage__block--edit" (click)="onEditCustomer(order.customerId)">
+          <div title="Save customer" class="order-manage__block order-manage__block--save"
+            *ngIf="order.customerId === 0"
+            (click)="onPersistCustomer(order.id)"
+          >
+            <i class="material-icons">save</i>
+            <div class="order-manage__text">Save customer</div>
+          </div>
+          <div title="Edit customer" class="order-manage__block order-manage__block--edit"
+            *ngIf="order.customerId !== 0"
+            (click)="onEditCustomer(order.customerId)"
+          >
             <i class="material-icons">mode_edit</i>
             <div class="order-manage__text">Edit customer</div>
           </div>
@@ -134,7 +143,7 @@ import { Order, StaticDATA } from '../models';
           >
           
             <ng-container
-              *ngFor="let key of product | keys:['orderProductId', 'supplier'];"
+              *ngFor="let key of product | keys:['id', 'orderProductId', 'supplier'];"
             >
             
               <ng-template [ngIf]="!hasInput(key)">
@@ -173,17 +182,30 @@ import { Order, StaticDATA } from '../models';
         
       </div>
       
-      
-      <pagination
-        [total]="filteredOrders$ | async"
-        [length]="pageLength"
-        [current]="page"
-        (dataChanged)="paginationChanged($event)"
-      >
-      </pagination>
-      
     </div>
-  `
+  `,
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({opacity: 0.001, height: 10}),
+        group([
+          animate('0.25s ease', style({height: '*'})),
+          animate('0.35s 0.1s ease', style({opacity: 1}))
+        ])
+      ]),
+      transition(':leave', [
+        group([
+          animate('0.25s ease', style({height: 0, margin: 0})),
+          animate('0.25s 0.1s ease', style({opacity: 0}))
+        ])
+      ])
+    ]),
+    trigger('changeWidth', [
+      state('collapsed', style({width: '140px'})),
+      state('expanded', style({width: '240px'})),
+      transition('collapsed <=> expanded', animate('.3s ease')),
+    ])
+  ]
 })
 
 export class Orders implements OnInit, OnDestroy {
@@ -192,13 +214,14 @@ export class Orders implements OnInit, OnDestroy {
   @ViewChild('searchControl') searchControl: ElementRef;
   private searchStream: FormControl = new FormControl();
   searchQuery: string = '';
+  searchExpanded = 'collapsed';
   filteredOrders$: Observable<number>;
 
   totalOrders: number = 0;
   preloadedOrders: number = 0;
   page: number = 1;
   pageLength: number = 10;
-  private pageStream = new Subject<{page: number, length: number}>();
+  private pageStream = new Subject<{page: number, length: number, apiGet?: boolean}>();
 
   private subs: Subscription[] = [];
 
@@ -213,13 +236,7 @@ export class Orders implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.subs[this.subs.length] = this.orderService.getOrders(0, this.pageLength).subscribe(resp => {
-      console.log(resp);
-      this.totalOrders = resp.totalElements;
-      // this.subs[this.subs.length] = this.orderService.preloadOrders(this.pageLength, this.pageLength * 9).subscribe(
-      //   () => this.subs[this.subs.length] = this.orderService.preloadOrders(this.pageLength + this.pageLength * 9, this.pageLength * 500).subscribe()
-      // );
-    });
+    this.onGetOrders();
 
     let storeSource = this.store.changes
       .map(store => {
@@ -232,7 +249,6 @@ export class Orders implements OnInit, OnDestroy {
       .debounceTime(100)
       .distinctUntilChanged()
       .map(searchQuery => {
-        this.page = 1;
         return {search: searchQuery, page: this.page, length: this.pageLength}
       });
 
@@ -240,6 +256,10 @@ export class Orders implements OnInit, OnDestroy {
       .map(params => {
         this.page = params.page;
         this.pageLength = params.length;
+        if (params.apiGet !== false) {
+          this.onGetOrders();
+        }
+
         return {search: this.searchQuery, page: params.page, length: params.length}
       });
 
@@ -264,22 +284,17 @@ export class Orders implements OnInit, OnDestroy {
     this.subs.forEach(sub => sub.unsubscribe());
   }
 
-  /* Pagination */
-  paginationChanged({page, length}) {
-    this.pageStream.next({page, length});
-    this.page = page;
-    this.pageLength = length;
+  // Manage orders
+  onGetOrders() {
+    this.subs[this.subs.length] = this.orderService.getOrders(this.page - 1, this.pageLength).subscribe(resp => {
+      this.totalOrders = resp.totalElements;
+    });
   }
 
-
-
-
-
-
-  // Add and Delete orders
   onAddOrder() {
     this.orderService.addOrder();
-    this.paginationChanged({page: 1, length: this.pageLength});
+    let apiGet = this.page === 1 ? false : true; // Tracing if need to send http get request for orders
+    this.paginationChanged({page: 1, length: this.pageLength, apiGet});
   }
 
   onDeleteOrder(orderId) {
@@ -287,6 +302,18 @@ export class Orders implements OnInit, OnDestroy {
       this.orderService.deleteOrder(orderId);
     }
   }
+
+
+  // Pagination
+  paginationChanged({page, length, apiGet}) {
+    this.pageStream.next({page, length, apiGet});
+  }
+
+
+
+
+
+
 
 
 
@@ -326,7 +353,7 @@ export class Orders implements OnInit, OnDestroy {
 
   onDeleteProduct(id, productId) {
     if (confirm('Действительно удалить эту позицию?')) {
-      this.orderService.deleteProduct(id, productId);
+      this.orderService.deleteProduct(id, productId).subscribe();
     }
   }
 
@@ -340,6 +367,10 @@ export class Orders implements OnInit, OnDestroy {
     this.orderService.getCustomer(customerId).subscribe(customer => {
       this.popupService.onProvideWithData(customer);
     })
+  }
+
+  onPersistCustomer(orderId) {
+    this.orderService.persistCustomer(orderId);
   }
 
 
@@ -364,11 +395,8 @@ export class Orders implements OnInit, OnDestroy {
     this.orderService.getStore();
   }
 
-  consoleOrders() {
-    console.log(this.orders$);
-  }
-  consoleMe(me) {
-    console.log(me);
+  console() {
+    console.log(this.searchStream);
   }
 
 
@@ -392,10 +420,11 @@ export class Orders implements OnInit, OnDestroy {
         parentNextSibling.children[index].focus();
       }
     }
-
   }
 
-  statuses() {
-    this.orderService.statuses().subscribe(resp => console.log(resp))
+  toggleAnimState(e) {
+    this.searchExpanded = this.searchExpanded === 'collapsed' ? 'expanded' : 'collapsed';
   }
+
+
 }

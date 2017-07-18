@@ -58,3 +58,4 @@ SearchPipe = __decorate([
     core_1.Pipe({ name: 'search' })
 ], SearchPipe);
 exports.SearchPipe = SearchPipe;
+//# sourceMappingURL=pipes.js.map

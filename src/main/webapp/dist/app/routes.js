@@ -21,3 +21,4 @@ exports.routes = router_1.RouterModule.forRoot([
         component: index_1.Customers
     }
 ]);
+//# sourceMappingURL=routes.js.map

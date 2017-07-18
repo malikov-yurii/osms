@@ -35,7 +35,6 @@ export class Autocomplete {
     if (this.fieldsToAutocomplete.indexOf(this.types[1]) > -1) {
 
       if (this.listComponent) {
-
         switch (e.code) {
           case 'ArrowDown' :
             this.listComponent.instance.focusMoved.next('next');
@@ -46,6 +45,9 @@ export class Autocomplete {
           case 'Enter' :
             this.listComponent.instance.selectedStream.next();
             return true;
+          case 'NumpadEnter' :
+            this.listComponent.instance.selectedStream.next();
+            return false;
           case 'Tab' :
             this.listComponent.instance.selectedStream.next();
             return true;
@@ -93,7 +95,7 @@ export class Autocomplete {
     this.refreshTimer = undefined;
     this.searchInProgress = true;
 
-    this.orderService.autocomplete(this.types[0], this.term).subscribe(
+    this.orderService.autocomplete(this.types, this.term).subscribe(
       resp => {
         this.searchInProgress = false;
         if (this.searchRequired) {

@@ -58,3 +58,4 @@ ContenteditableModel = __decorate([
     __metadata("design:paramtypes", [core_1.ElementRef])
 ], ContenteditableModel);
 exports.ContenteditableModel = ContenteditableModel;
+//# sourceMappingURL=contenteditable-model.js.map

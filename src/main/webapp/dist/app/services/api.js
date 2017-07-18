@@ -18,9 +18,13 @@ require("rxjs/add/observable/throw");
 var ApiService = (function () {
     function ApiService(http) {
         this.http = http;
-        this.headers = new http_1.Headers({
+        this.headersForm = new http_1.Headers({
             'Content-Type': 'application/x-www-form-urlencoded',
-            Accept: 'application/json'
+            'Accept': 'application/json'
+        });
+        this.headersJson = new http_1.Headers({
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
         });
     }
     ApiService.prototype.getJson = function (resp) {
@@ -43,25 +47,27 @@ var ApiService = (function () {
         }
     };
     ApiService.prototype.get = function (path) {
-        return this.http.get(path, this.headers)
+        return this.http.get(path, { headers: this.headersForm })
             .map(this.checkForError)
             .catch(function (err) { return Observable_1.Observable.throw(err); })
             .map(this.getJson);
     };
-    ApiService.prototype.post = function (path, body) {
-        return this.http.post(path, body, { headers: this.headers })
+    ApiService.prototype.post = function (path) {
+        return this.http.post(path, { headers: this.headersForm })
             .map(this.checkForError)
             .catch(function (err) { return Observable_1.Observable.throw(err); })
             .map(this.getJson);
     };
-    ApiService.prototype.put = function (path, body) {
-        return this.http.put(path, body, { headers: this.headers })
+    ApiService.prototype.put = function (path, body, json) {
+        if (json === void 0) { json = false; }
+        var headers = json ? this.headersJson : this.headersForm;
+        return this.http.put(path, body, { headers: headers })
             .map(this.checkForError)
             .catch(function (err) { return Observable_1.Observable.throw(err); })
             .map(this.getJson);
     };
     ApiService.prototype.apiDelete = function (path) {
-        return this.http.delete(path, this.headers)
+        return this.http.delete(path, { headers: this.headersForm })
             .map(this.checkForError)
             .catch(function (err) { return Observable_1.Observable.throw(err); });
     };
@@ -72,3 +78,4 @@ ApiService = __decorate([
     __metadata("design:paramtypes", [http_1.Http])
 ], ApiService);
 exports.ApiService = ApiService;
+//# sourceMappingURL=api.js.map

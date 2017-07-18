@@ -1,4 +1,4 @@
-import {Component, Input, Output, OnInit, OnChanges, EventEmitter} from '@angular/core';
+import { Component, Input, Output, OnInit, OnChanges, EventEmitter } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
@@ -6,50 +6,61 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
   template: `
     <div class="pagination">
     
-      <select name="" id="" class="pagination__length"
-        (change)="changeLength($event.target.value)"
-      >
-        <option
-          *ngFor="let value of [10, 20, 50, 100, 200]"
-          value="{{ value }}"
-          [attr.selected]="value === pageLength ? '' : null"
-        >
-          {{ value }}
-        </option>
-      </select>
-      
       <div class="pagination__info">
         Displaying {{ (currentPageNumber - 1) * pageLength + 1}} – {{ currentPageNumber * pageLength }} of {{ totalItems }} items
       </div>
-
-      <ul class="pagination__selector"
-        *ngIf="totalItems > pageLength"
-      >
-        <li (click)="selectPage(getPrevPage())">Prev</li>
-        <li (click)="selectPage(1)" [class.active]="currentPageNumber === 1">1</li>        
-        <li *ngIf="isPrevSpreadShown()">...</li>
-        
-        <li 
-          *ngFor="let page of pages"
-          [class.active]="page === currentPageNumber"
-          (click)="selectPage(page)"
+      
+      <div class="pagination__right">
+        <select name="" id="" class="pagination__length"
+          (change)="changeLength($event.target.value)"
         >
-          {{ page }}
-        </li>
-        
-        <li *ngIf="isNextSpreadShown()">...</li>
-        <li
-          (click)="selectPage(lastPage)"
-          [class.active]="currentPageNumber === lastPage"
+          <option
+            *ngFor="let value of [10, 20, 50, 100, 200]"
+            value="{{ value }}"
+            [attr.selected]="value === pageLength ? '' : null"
+          >
+            {{ value }}
+          </option>
+        </select>
+  
+        <ul class="pagination__selector"
+          *ngIf="totalItems > pageLength"
         >
-          {{ lastPage }}
-        </li>
-        <li (click)="selectPage(getNextPage())">Next</li>
-      </ul>
-    
+          <li (click)="selectPage(getPrevPage())">Prev</li>
+          <li (click)="selectPage(1)" [class.active]="currentPageNumber === 1">1</li>        
+          <li *ngIf="isPrevSpreadShown()">...</li>
+          
+          <li 
+            *ngFor="let page of pages"
+            [class.active]="page === currentPageNumber"
+            (click)="selectPage(page)"
+          >
+            {{ page }}
+          </li>
+          
+          <li *ngIf="isNextSpreadShown()">...</li>
+          <li
+            (click)="selectPage(lastPage)"
+            [class.active]="currentPageNumber === lastPage"
+          >
+            {{ lastPage }}
+          </li>
+          <li (click)="selectPage(getNextPage())">Next</li>
+        </ul>
+        
+      </div>
     </div>
   `,
   styles: [`
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0;
+    }
+    .pagination__right {
+      text-align: right;
+    }
     .pagination__selector {
       display: flex;
       list-style: none;
