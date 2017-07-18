@@ -4,6 +4,7 @@ import com.malikov.shopsystem.dto.OrderItemDto;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderItem;
 import com.malikov.shopsystem.dto.OrderDto;
+import com.malikov.shopsystem.model.OrderStatus;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -62,5 +63,16 @@ public class OrderUtil {
                         (sum, oi) -> sum.add(oi.getProductPrice().multiply(new BigDecimal(oi.getProductQuantity()))),
                         BigDecimal::add
                 );
+    }
+
+    public static Integer getStatusSortOrder(OrderStatus status) {
+        switch (status) {
+            case OK:  return 5;
+            case SHP: return 1;
+            case WFP: return 2;
+            case NEW: return 3;
+            case NOT: return 4;
+            default:  return 0;
+        }
     }
 }

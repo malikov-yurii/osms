@@ -61,6 +61,9 @@ public class Order extends BaseEntity {
     @Column(name = "comment")
     private String comment;
 
+    @Column(name = "status_sort_order")
+    private Integer statusSortOrder;
+
 
     public Order() {}
 
@@ -95,14 +98,9 @@ public class Order extends BaseEntity {
         } else {
             this.totalSum = BigDecimal.ZERO;
         }
-    }
 
-    public Order(Order order) {
-        this(order.getId(), order.getCustomer(), order.getUser(),
-                order.getPaymentType(), order.getStatus(), order.getComment(),
-                order.getDatePlaced(), order.getOrderItems());
+        this.statusSortOrder = OrderUtil.getStatusSortOrder(status);
     }
-
 
     public String getCustomerName() {
         return customerName;
@@ -166,6 +164,7 @@ public class Order extends BaseEntity {
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+        this.statusSortOrder = OrderUtil.getStatusSortOrder(status);
     }
 
     public List<OrderItem> getOrderItems() {
