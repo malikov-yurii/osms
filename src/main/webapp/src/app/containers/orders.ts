@@ -201,8 +201,8 @@ import { Order, StaticDATA } from '../models';
       ])
     ]),
     trigger('changeWidth', [
-      state('collapsed', style({width: '140px'})),
-      state('expanded', style({width: '240px'})),
+      state('collapsed', style({width: '190px'})),
+      state('expanded', style({width: '300px'})),
       transition('collapsed <=> expanded', animate('.3s ease')),
     ])
   ]

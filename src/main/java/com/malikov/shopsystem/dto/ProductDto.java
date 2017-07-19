@@ -12,6 +12,8 @@ public class ProductDto implements Serializable {
 
     private Long productVariationId;
 
+    private Set<ProductCategory> categories;
+
     private String name;
 
     private BigDecimal price;
@@ -20,24 +22,22 @@ public class ProductDto implements Serializable {
 
     private Boolean unlimited;
 
-    private Set<ProductCategory> categories;
-
     public ProductDto(
             Long productId,
             Long productVariationId,
+            Set<ProductCategory> categories,
             String name,
             BigDecimal price,
             Integer quantity,
-            Boolean unlimited,
-            Set<ProductCategory> categories
+            Boolean unlimited
     ) {
         this.productId = productId;
         this.productVariationId = productVariationId;
+        this.categories = categories;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.unlimited = unlimited;
-        this.categories = categories;
     }
 
     public ProductDto() {
@@ -57,6 +57,14 @@ public class ProductDto implements Serializable {
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public Set<ProductCategory> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<ProductCategory> categories) {
+        this.categories = categories;
     }
 
     public String getName() {
@@ -93,14 +101,6 @@ public class ProductDto implements Serializable {
 
     public void setUnlimited(Boolean unlimited) {
         this.unlimited = unlimited;
-    }
-
-    public Set<ProductCategory> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<ProductCategory> categories) {
-        this.categories = categories;
     }
 
     @Override

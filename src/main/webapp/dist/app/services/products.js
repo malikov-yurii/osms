@@ -17,14 +17,15 @@ var ProductService = (function () {
         this.api = api;
         this.storeHelper = storeHelper;
         this.searchService = searchService;
-        this.productsPath = 'products';
+        this.productsPath = 'product';
     }
     ProductService.prototype.getAllProducts = function () {
         var _this = this;
-        return this.api.get(this.productsPath)
-            .do(function (resp) {
-            resp.sort(function (a, b) { return a.productId - b.productId; });
-            _this.storeHelper.update(_this.productsPath, resp);
+        return this.api.get(this.productsPath + "?pageNumber=0&pageCapacity=10000")
+            .do(function (_a) {
+            var totalElements = _a.totalElements, elements = _a.elements;
+            elements.sort(function (a, b) { return a.productId - b.productId; });
+            _this.storeHelper.update(_this.productsPath, elements);
         });
     };
     ProductService.prototype.list = function (searchQuery, page, length) {

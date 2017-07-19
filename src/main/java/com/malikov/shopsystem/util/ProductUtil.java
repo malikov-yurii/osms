@@ -29,18 +29,18 @@ public class ProductUtil {
                     .stream()
                     .map(productVariation -> new ProductDto(
                             product.getId(), productVariation.getId(),
+                            product.getCategories(),
                             product.getName() + " "
                                     + productVariation.getVariationValue().getName(),
                             productVariation.getPrice(),
                             productVariation.getQuantity(),
-                            product.getUnlimited(),
-                            product.getCategories()))
+                            product.getUnlimited()))
                     .collect(Collectors.toList()));
         } else {
             productDtos.add(new ProductDto(
-                    product.getId(), 0L, product.getName(), product.getPrice(),
-                    product.getQuantity(), product.getUnlimited(),
-                    product.getCategories()));
+                    product.getId(), 0L, product.getCategories(),
+                    product.getName(), product.getPrice(),
+                    product.getQuantity(), product.getUnlimited()));
         }
         return productDtos;
     }

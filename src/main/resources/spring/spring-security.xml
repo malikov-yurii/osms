@@ -7,7 +7,6 @@
 	http://www.springframework.org/schema/security/spring-security.xsd">
 
     <http pattern="/assets/**" security="none"/>
-    <http pattern="/webjars/**" security="none"/>
 
     <http>
         <intercept-url pattern="/login" access="permitAll"/>

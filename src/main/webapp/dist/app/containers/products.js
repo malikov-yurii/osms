@@ -33,7 +33,10 @@ var Products = (function () {
     }
     Products.prototype.ngOnInit = function () {
         var _this = this;
-        this.subs[this.subs.length] = this.productService.getAllProducts().subscribe();
+        this.subs[this.subs.length] = this.productService.getAllProducts().subscribe(function (_a) {
+            var totalElements = _a.totalElements, elements = _a.elements;
+            return _this.totalProducts = totalElements;
+        });
         var storeSource = this.store.changes
             .map(function (store) {
             return { search: _this.searchQuery, page: _this.page, length: _this.pageLength };

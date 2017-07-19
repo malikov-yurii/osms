@@ -197,8 +197,8 @@ Orders = __decorate([
                 ])
             ]),
             animations_1.trigger('changeWidth', [
-                animations_1.state('collapsed', animations_1.style({ width: '140px' })),
-                animations_1.state('expanded', animations_1.style({ width: '240px' })),
+                animations_1.state('collapsed', animations_1.style({ width: '190px' })),
+                animations_1.state('expanded', animations_1.style({ width: '300px' })),
                 animations_1.transition('collapsed <=> expanded', animations_1.animate('.3s ease')),
             ])
         ]

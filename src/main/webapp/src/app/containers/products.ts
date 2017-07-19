@@ -32,6 +32,7 @@ import { ProductService } from '../services/index';
         <thead>
           <th>ID</th>
           <th>Variation ID</th>
+          <th>Category</th>
           <th>Name</th>
           <th>Price</th>
           <th>Quantity</th>
@@ -63,6 +64,7 @@ import { ProductService } from '../services/index';
 export class Products implements OnInit, OnDestroy {
 
   private products$: Observable<any[]>;
+  private totalProducts: any;
   private filteredProducts$: Observable<number>;
 
   @ViewChild('searchControl') searchControl: ElementRef;
@@ -81,7 +83,9 @@ export class Products implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.subs[this.subs.length] = this.productService.getAllProducts().subscribe();
+    this.subs[this.subs.length] = this.productService.getAllProducts().subscribe(
+      ({totalElements, elements}) => this.totalProducts = totalElements
+    );
 
     let storeSource = this.store.changes
       .map(store => {
