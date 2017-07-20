@@ -146,7 +146,7 @@ import { Order, StaticDATA } from '../models';
               *ngFor="let key of product | keys:['id', 'orderProductId', 'supplier'];"
             >
             
-              <ng-template [ngIf]="!hasInput(key)">
+              <ng-template *ngIf="!hasInput(key)">
                 <div
                   class="order-product__block order-product__block--{{ key }}"
                   contenteditable
@@ -161,7 +161,7 @@ import { Order, StaticDATA } from '../models';
                 ></div>  
               </ng-template>
           
-              <ng-template [ngIf]="hasInput(key)">
+              <ng-template *ngIf="hasInput(key)">
                 <div class="order-product__block order-product__block--{{ key }}">
                   <input
                     type="number"

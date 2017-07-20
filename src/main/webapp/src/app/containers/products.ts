@@ -40,13 +40,21 @@ import { ProductService } from '../services/index';
         </thead>
         <tbody>
           <tr
-            *ngFor="let product of products$ | async"
+            *ngFor="let product of products$ | async; let odd = odd; let even = even;"
+            [ngClass]="{'product': true, 'odd': odd, 'even': even}"
           >
-            <td
+            <ng-container
               *ngFor="let key of product | keys"
             >
-              {{ product[key] }}
-            </td>
+              <td *ngIf="key !== 'categories'; else tdWithCategory">
+                {{ product[key] }}
+              </td>
+              
+              <ng-template #tdWithCategory>
+                <td>{{ printCategories(product[key]) }}</td>
+              </ng-template>
+              
+            </ng-container>
           </tr>
         </tbody>
       </table>
