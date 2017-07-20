@@ -32,21 +32,19 @@ var OrderService = (function () {
             .do(function (resp) { return _this.storeHelper.update('order', resp.elements); });
     };
     OrderService.prototype.addOrder = function () {
+        var _this = this;
         var newOrder = new models_1.Order();
         var newOrderId = newOrder.id;
         var newOrderItemId = newOrder[this.productsPath][0].id;
         this.storeHelper.add(this.ordersPath, newOrder);
-        // this.api.post(this.ordersPath).subscribe(resp => {
-        //   this.storeHelper.findAndUpdate(this.ordersPath, newOrderId, 'id', resp.orderId);
-        //   this.storeHelper.findDeepAndUpdate(
-        //     this.ordersPath, resp.orderId, this.productsPath,
-        //     newOrderItemId, 'id', resp.orderItemId
-        //   );
-        // })
+        this.api.post(this.ordersPath).subscribe(function (resp) {
+            _this.storeHelper.findAndUpdate(_this.ordersPath, newOrderId, 'id', resp.orderId);
+            _this.storeHelper.findDeepAndUpdate(_this.ordersPath, resp.orderId, _this.productsPath, newOrderItemId, 'id', resp.orderItemId);
+        });
     };
     OrderService.prototype.deleteOrder = function (orderId) {
         this.storeHelper.findAndDelete(this.ordersPath, orderId);
-        // this.api.apiDelete(`${this.ordersPath}/${orderId}`).subscribe();
+        this.api.apiDelete(this.ordersPath + "/" + orderId).subscribe();
     };
     OrderService.prototype.updateOrderInfoField = function (orderId, fieldName, value) {
         // Changing order info common field (e.g., firstName, phoneNumber)

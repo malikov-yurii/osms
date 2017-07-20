@@ -31,18 +31,18 @@ export class OrderService {
     let newOrderId = newOrder.id;
     let newOrderItemId = newOrder[this.productsPath][0].id;
     this.storeHelper.add(this.ordersPath, newOrder);
-    // this.api.post(this.ordersPath).subscribe(resp => {
-    //   this.storeHelper.findAndUpdate(this.ordersPath, newOrderId, 'id', resp.orderId);
-    //   this.storeHelper.findDeepAndUpdate(
-    //     this.ordersPath, resp.orderId, this.productsPath,
-    //     newOrderItemId, 'id', resp.orderItemId
-    //   );
-    // })
+    this.api.post(this.ordersPath).subscribe(resp => {
+      this.storeHelper.findAndUpdate(this.ordersPath, newOrderId, 'id', resp.orderId);
+      this.storeHelper.findDeepAndUpdate(
+        this.ordersPath, resp.orderId, this.productsPath,
+        newOrderItemId, 'id', resp.orderItemId
+      );
+    })
   }
 
   deleteOrder(orderId) {
     this.storeHelper.findAndDelete(this.ordersPath, orderId);
-    // this.api.apiDelete(`${this.ordersPath}/${orderId}`).subscribe();
+    this.api.apiDelete(`${this.ordersPath}/${orderId}`).subscribe();
   }
 
 
