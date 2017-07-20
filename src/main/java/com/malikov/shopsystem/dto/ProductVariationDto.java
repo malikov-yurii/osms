@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.dto;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * @author Yurii Malikov
@@ -18,7 +19,7 @@ public class ProductVariationDto {
 
     public ProductVariationDto(String name, BigDecimal price, Integer quantity) {
         this.name = name;
-        this.price = price;
+        this.price = price.setScale(0, RoundingMode.HALF_UP);
         this.quantity = quantity;
     }
 
@@ -35,7 +36,7 @@ public class ProductVariationDto {
     }
 
     public void setPrice(BigDecimal price) {
-        this.price = price;
+        this.price = price.setScale(0, RoundingMode.HALF_UP);
     }
 
     public Integer getQuantity() {

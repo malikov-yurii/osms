@@ -4,6 +4,7 @@ import com.malikov.shopsystem.model.ProductCategory;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Set;
 
 public class ProductDto implements Serializable {
@@ -22,6 +23,8 @@ public class ProductDto implements Serializable {
 
     private Boolean unlimited;
 
+    private String supplier;
+
     public ProductDto(
             Long productId,
             Long productVariationId,
@@ -29,15 +32,17 @@ public class ProductDto implements Serializable {
             String name,
             BigDecimal price,
             Integer quantity,
-            Boolean unlimited
+            Boolean unlimited,
+            String supplier
     ) {
         this.productId = productId;
         this.productVariationId = productVariationId;
         this.categories = categories;
         this.name = name;
-        this.price = price;
+        this.price = price.setScale(0, RoundingMode.HALF_UP);
         this.quantity = quantity;
         this.unlimited = unlimited;
+        this.supplier = supplier;
     }
 
     public ProductDto() {
@@ -80,7 +85,7 @@ public class ProductDto implements Serializable {
     }
 
     public void setPrice(BigDecimal price) {
-        this.price = price;
+        this.price = price.setScale(0, RoundingMode.HALF_UP);
     }
 
     public Integer getQuantity() {
@@ -103,16 +108,11 @@ public class ProductDto implements Serializable {
         this.unlimited = unlimited;
     }
 
-    @Override
-    public String toString() {
-        return "ProductDto{" +
-                "productId=" + productId +
-                ", productVariationId=" + productVariationId +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", unlimited=" + unlimited +
-                '}';
+    public String getSupplier() {
+        return supplier;
     }
 
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
+    }
 }
