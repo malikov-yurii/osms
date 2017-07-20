@@ -31,25 +31,25 @@ public class OrderItemController {
         return orderItemService.createNewEmpty(orderId).getId();
     }
 
-    @PutMapping(value = "{itemId}/name")
+    @PutMapping(value = "/{itemId}/name")
     public void updateOrderItemName(@PathVariable("itemId") Long itemId,
                                     @RequestParam("name") String newName) {
         orderItemService.updateProductName(itemId, newName);
     }
 
-    @PutMapping(value = "{itemId}/quantity")
+    @PutMapping(value = "/{itemId}/quantity")
     public BigDecimal updateOrderItemQuantity(@PathVariable("itemId") Long itemId,
                                               @RequestParam("quantity") int quantity) {
         return orderItemService.updateOrderItemProductQuantity(itemId, quantity);
     }
 
-    @PutMapping(value = "{itemId}/price")
+    @PutMapping(value = "/{itemId}/price")
     public BigDecimal updateOrderItemPrice(@PathVariable("itemId") Long itemId,
                                            @RequestParam("price") BigDecimal price) {
         return orderItemService.updateOrderItemProductPrice(itemId, price);
     }
 
-    @DeleteMapping(value = "{orderItemId}")
+    @DeleteMapping(value = "/{orderItemId}")
     public void deleteOrderItem(@PathVariable("orderItemId") Long orderItemId) {
         orderItemService.delete(orderItemId);
     }
