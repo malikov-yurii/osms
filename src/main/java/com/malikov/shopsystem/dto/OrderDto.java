@@ -9,6 +9,7 @@ import com.malikov.shopsystem.util.serializers.LocalDateDeserializer;
 import com.malikov.shopsystem.util.serializers.LocalDateSerializer;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class OrderDto {
         this.date = date;
         this.status = status;
         this.comment = comment;
-        this.totalSum = totalSum;
+        this.totalSum = totalSum.setScale(0, RoundingMode.HALF_UP);
 
         this.orderItemDtos = orderItemDtos;
     }
@@ -155,7 +156,7 @@ public class OrderDto {
     }
 
     public void setTotalSum(BigDecimal totalSum) {
-        this.totalSum = totalSum;
+        this.totalSum = totalSum.setScale(0, RoundingMode.HALF_UP);
     }
 
     public PaymentType getPaymentType() {

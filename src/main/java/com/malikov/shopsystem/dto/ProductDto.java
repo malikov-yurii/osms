@@ -4,6 +4,7 @@ import com.malikov.shopsystem.model.ProductCategory;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Set;
 
 public class ProductDto implements Serializable {
@@ -35,7 +36,7 @@ public class ProductDto implements Serializable {
         this.productVariationId = productVariationId;
         this.categories = categories;
         this.name = name;
-        this.price = price;
+        this.price = price.setScale(0, RoundingMode.HALF_UP);
         this.quantity = quantity;
         this.unlimited = unlimited;
     }
@@ -80,7 +81,7 @@ public class ProductDto implements Serializable {
     }
 
     public void setPrice(BigDecimal price) {
-        this.price = price;
+        this.price = price.setScale(0, RoundingMode.HALF_UP);
     }
 
     public Integer getQuantity() {

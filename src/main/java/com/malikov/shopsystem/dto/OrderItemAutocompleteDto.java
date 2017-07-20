@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.dto;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class OrderItemAutocompleteDto {
 
@@ -20,7 +21,7 @@ public class OrderItemAutocompleteDto {
         this.productId = productId;
         this.productVariationId = productVariationId;
         this.orderItemName = orderItemName;
-        this.orderItemPrice = orderItemPrice;
+        this.orderItemPrice = orderItemPrice.setScale(0, RoundingMode.HALF_UP);
     }
 
     public String getLabel() {
@@ -60,6 +61,6 @@ public class OrderItemAutocompleteDto {
     }
 
     public void setOrderItemPrice(BigDecimal orderItemPrice) {
-        this.orderItemPrice = orderItemPrice;
+        this.orderItemPrice = orderItemPrice.setScale(0, RoundingMode.HALF_UP);
     }
 }

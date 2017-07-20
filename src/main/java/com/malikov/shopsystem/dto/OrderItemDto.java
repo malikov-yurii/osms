@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class OrderItemDto implements Serializable {
 
@@ -33,7 +34,7 @@ public class OrderItemDto implements Serializable {
         this.orderProductId = orderProductId;
         this.name = name;
         this.quantity = quantity;
-        this.price = price;
+        this.price = price.setScale(0, RoundingMode.HALF_UP);
         this.supplier = supplier;
     }
 
@@ -53,7 +54,7 @@ public class OrderItemDto implements Serializable {
     }
 
     public void setPrice(BigDecimal price) {
-        this.price = price;
+        this.price = price.setScale(0, RoundingMode.HALF_UP);
     }
 
     public Integer getQuantity() {

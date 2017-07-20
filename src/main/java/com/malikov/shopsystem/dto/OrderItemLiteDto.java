@@ -1,9 +1,7 @@
 package com.malikov.shopsystem.dto;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * Created by Yurii_Malikov on 6/22/2017.
@@ -25,7 +23,7 @@ public class OrderItemLiteDto {
     }
 
     public void setPrice(BigDecimal price) {
-        this.price = price;
+        this.price = price.setScale(0, RoundingMode.HALF_UP);
     }
 
     public Long getProductId() {
