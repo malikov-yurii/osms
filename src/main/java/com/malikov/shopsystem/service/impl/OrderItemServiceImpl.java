@@ -79,8 +79,10 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
-        orderItemRepository.delete(id);
+        OrderItem orderItem = orderItemRepository.findOne(id);
+        orderItemRepository.delete(orderItem);
     }
 
     @Override
