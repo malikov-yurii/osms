@@ -1,8 +1,7 @@
 package com.malikov.shopsystem.util;
 
-import com.malikov.shopsystem.model.Product;
 import com.malikov.shopsystem.dto.ProductDto;
-import com.malikov.shopsystem.model.ProductCategory;
+import com.malikov.shopsystem.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,13 +33,14 @@ public class ProductUtil {
                                     + productVariation.getVariationValue().getName(),
                             productVariation.getPrice(),
                             productVariation.getQuantity(),
-                            product.getUnlimited()))
+                            product.getUnlimited(),
+                            product.getSupplier()))
                     .collect(Collectors.toList()));
         } else {
             productDtos.add(new ProductDto(
                     product.getId(), 0L, product.getCategories(),
                     product.getName(), product.getPrice(),
-                    product.getQuantity(), product.getUnlimited()));
+                    product.getQuantity(), product.getUnlimited(), product.getSupplier()));
         }
         return productDtos;
     }
