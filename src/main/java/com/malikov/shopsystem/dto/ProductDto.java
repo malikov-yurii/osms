@@ -13,9 +13,9 @@ public class ProductDto implements Serializable {
 
     private Long productVariationId;
 
-    private Set<ProductCategory> categories;
-
     private String name;
+
+    private Set<ProductCategory> categories;
 
     private BigDecimal price;
 
@@ -28,8 +28,8 @@ public class ProductDto implements Serializable {
     public ProductDto(
             Long productId,
             Long productVariationId,
-            Set<ProductCategory> categories,
             String name,
+            Set<ProductCategory> categories,
             BigDecimal price,
             Integer quantity,
             Boolean unlimited,
@@ -37,8 +37,8 @@ public class ProductDto implements Serializable {
     ) {
         this.productId = productId;
         this.productVariationId = productVariationId;
-        this.categories = categories;
         this.name = name;
+        this.categories = categories;
         this.price = price.setScale(0, RoundingMode.HALF_UP);
         this.quantity = quantity;
         this.unlimited = unlimited;

@@ -11,6 +11,7 @@ import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/pluck';
 
 import { Store } from '../store';
+import { Product } from '../models';
 import { ProductService } from '../services/index';
 
 
@@ -20,7 +21,7 @@ import { ProductService } from '../services/index';
     <div class="wrapper">
     
       <input type="text" name="searchStream" id=""
-        class="input orders-search"
+        class="input search-input"
         placeholder="Search in products..."
         #searchControl
         [formControl]="searchStream"
@@ -32,11 +33,12 @@ import { ProductService } from '../services/index';
         <thead>
           <th>ID</th>
           <th>Variation ID</th>
-          <th>Category</th>
           <th>Name</th>
+          <th>Category</th>
           <th>Price</th>
           <th>Quantity</th>
           <th>Unlimited</th>
+          <th>Supplier</th>
         </thead>
         <tbody>
           <tr
@@ -46,12 +48,15 @@ import { ProductService } from '../services/index';
             <ng-container
               *ngFor="let key of product | keys"
             >
-              <td *ngIf="key !== 'categories'; else tdWithCategory">
+              <td
+               class="product-cell--{{ key }}"
+                *ngIf="key !== 'categories'; else tdWithCategory"
+              >
                 {{ product[key] }}
               </td>
               
               <ng-template #tdWithCategory>
-                <td>{{ printCategories(product[key]) }}</td>
+                <td class="product-cell--category">{{ printCategories(product[key]) }}</td>
               </ng-template>
               
             </ng-container>
@@ -71,7 +76,7 @@ import { ProductService } from '../services/index';
 })
 export class Products implements OnInit, OnDestroy {
 
-  private products$: Observable<any[]>;
+  private products$: Observable<Product[]>;
   private totalProducts: any;
   private filteredProducts$: Observable<number>;
 
@@ -84,6 +89,8 @@ export class Products implements OnInit, OnDestroy {
   pageLength: number = 10;
 
   private subs: Subscription[] = [];
+  private categories: string[] = [];
+  private suppliers: string[] = [];
 
   constructor(
     private productService: ProductService,
@@ -92,7 +99,11 @@ export class Products implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subs[this.subs.length] = this.productService.getAllProducts().subscribe(
-      ({totalElements, elements}) => this.totalProducts = totalElements
+      ({totalElements, elements}) => {
+        this.totalProducts = totalElements;
+        this.getCategoriesList(elements);
+        this.getSuppliersList(elements);
+      }
     );
 
     let storeSource = this.store.changes
@@ -137,6 +148,30 @@ export class Products implements OnInit, OnDestroy {
     this.pageStream.next({page, length});
     this.page = page;
     this.pageLength = length;
+  }
+
+
+  printCategories(arr: {id, name}[]) {
+    return arr.map(category => category.name).join('; ');
+  }
+
+  getCategoriesList(products: Product[]) {
+    let _categories = products.reduce((acc, product) => {
+      return acc.concat(product.categories.map(cat => cat.name));
+    }, []);
+
+    this.categories = Array.from(new Set(_categories));
+  }
+
+  getSuppliersList(products: Product[]) {
+    let _suppliers = [];
+    products.forEach(product => {
+      if (product.supplier) {
+        _suppliers.push(product.supplier);
+      }
+    });
+
+    this.suppliers = Array.from(new Set(_suppliers));
   }
 
 }

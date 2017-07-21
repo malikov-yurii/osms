@@ -30,12 +30,16 @@ var Products = (function () {
         this.page = 1;
         this.pageLength = 10;
         this.subs = [];
+        this.categories = [];
+        this.suppliers = [];
     }
     Products.prototype.ngOnInit = function () {
         var _this = this;
         this.subs[this.subs.length] = this.productService.getAllProducts().subscribe(function (_a) {
             var totalElements = _a.totalElements, elements = _a.elements;
-            return _this.totalProducts = totalElements;
+            _this.totalProducts = totalElements;
+            _this.getCategoriesList(elements);
+            _this.getSuppliersList(elements);
         });
         var storeSource = this.store.changes
             .map(function (store) {
@@ -75,6 +79,24 @@ var Products = (function () {
         this.page = page;
         this.pageLength = length;
     };
+    Products.prototype.printCategories = function (arr) {
+        return arr.map(function (category) { return category.name; }).join('; ');
+    };
+    Products.prototype.getCategoriesList = function (products) {
+        var _categories = products.reduce(function (acc, product) {
+            return acc.concat(product.categories.map(function (cat) { return cat.name; }));
+        }, []);
+        this.categories = Array.from(new Set(_categories));
+    };
+    Products.prototype.getSuppliersList = function (products) {
+        var _suppliers = [];
+        products.forEach(function (product) {
+            if (product.supplier) {
+                _suppliers.push(product.supplier);
+            }
+        });
+        this.suppliers = Array.from(new Set(_suppliers));
+    };
     return Products;
 }());
 __decorate([
@@ -83,7 +105,7 @@ __decorate([
 ], Products.prototype, "searchControl", void 0);
 Products = __decorate([
     core_1.Component({
-        template: "\n\n    <div class=\"wrapper\">\n    \n      <input type=\"text\" name=\"searchStream\" id=\"\"\n        class=\"input orders-search\"\n        placeholder=\"Search in products...\"\n        #searchControl\n        [formControl]=\"searchStream\"\n        [(ngModel)]=\"searchQuery\"\n      >\n        \n      \n      <table class=\"table table-products\">\n        <thead>\n          <th>ID</th>\n          <th>Variation ID</th>\n          <th>Category</th>\n          <th>Name</th>\n          <th>Price</th>\n          <th>Quantity</th>\n          <th>Unlimited</th>\n        </thead>\n        <tbody>\n          <tr\n            *ngFor=\"let product of products$ | async; let odd = odd; let even = even;\"\n            [ngClass]=\"{'product': true, 'odd': odd, 'even': even}\"\n          >\n            <ng-container\n              *ngFor=\"let key of product | keys\"\n            >\n              <td *ngIf=\"key !== 'categories'; else tdWithCategory\">\n                {{ product[key] }}\n              </td>\n              \n              <ng-template #tdWithCategory>\n                <td>{{ printCategories(product[key]) }}</td>\n              </ng-template>\n              \n            </ng-container>\n          </tr>\n        </tbody>\n      </table>\n      \n      <pagination\n        [total]=\"filteredProducts$ | async\"\n        [length]=\"pageLength\"\n        [current]=\"page\"\n        (dataChanged)=\"paginationChanged($event)\"\n      >\n      </pagination>\n    </div>\n  "
+        template: "\n\n    <div class=\"wrapper\">\n    \n      <input type=\"text\" name=\"searchStream\" id=\"\"\n        class=\"input search-input\"\n        placeholder=\"Search in products...\"\n        #searchControl\n        [formControl]=\"searchStream\"\n        [(ngModel)]=\"searchQuery\"\n      >\n        \n      \n      <table class=\"table table-products\">\n        <thead>\n          <th>ID</th>\n          <th>Variation ID</th>\n          <th>Name</th>\n          <th>Category</th>\n          <th>Price</th>\n          <th>Quantity</th>\n          <th>Unlimited</th>\n          <th>Supplier</th>\n        </thead>\n        <tbody>\n          <tr\n            *ngFor=\"let product of products$ | async; let odd = odd; let even = even;\"\n            [ngClass]=\"{'product': true, 'odd': odd, 'even': even}\"\n          >\n            <ng-container\n              *ngFor=\"let key of product | keys\"\n            >\n              <td\n               class=\"product-cell--{{ key }}\"\n                *ngIf=\"key !== 'categories'; else tdWithCategory\"\n              >\n                {{ product[key] }}\n              </td>\n              \n              <ng-template #tdWithCategory>\n                <td class=\"product-cell--category\">{{ printCategories(product[key]) }}</td>\n              </ng-template>\n              \n            </ng-container>\n          </tr>\n        </tbody>\n      </table>\n      \n      <pagination\n        [total]=\"filteredProducts$ | async\"\n        [length]=\"pageLength\"\n        [current]=\"page\"\n        (dataChanged)=\"paginationChanged($event)\"\n      >\n      </pagination>\n    </div>\n  "
     }),
     __metadata("design:paramtypes", [index_1.ProductService,
         store_1.Store])

@@ -22,6 +22,7 @@ export class Product {
   id: any = `0-${Product.count++}`;
   orderProductId: number = 0;
   name: string = '';
+  categories?: {id, name}[] = [{id: '', name: ''}];
   quantity: string = '1';
   price: string = '0';
   supplier: string = '';

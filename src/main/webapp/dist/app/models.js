@@ -25,6 +25,7 @@ var Product = (function () {
         this.id = "0-" + Product.count++;
         this.orderProductId = 0;
         this.name = '';
+        this.categories = [{ id: '', name: '' }];
         this.quantity = '1';
         this.price = '0';
         this.supplier = '';
