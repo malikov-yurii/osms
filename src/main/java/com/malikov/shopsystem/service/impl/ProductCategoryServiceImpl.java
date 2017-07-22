@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.malikov.shopsystem.util.ValidationUtil.checkNotFoundById;
 
@@ -41,5 +42,13 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     public List<ProductCategory> getAll() {
         return productCategoryRepository.findAll(new PageRequest(0, 200))
                 .getContent();
+    }
+
+    @Override
+    public List<String> getAllNames() {
+        return productCategoryRepository.findAll(new PageRequest(0, 200))
+                .getContent().stream()
+                .map(ProductCategory::getName)
+                .collect(Collectors.toList());
     }
 }
