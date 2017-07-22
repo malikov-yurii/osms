@@ -11,7 +11,6 @@ import com.malikov.shopsystem.service.OrderItemService;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -35,7 +34,6 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    @Transactional
     public void update(Long orderItemId, OrderItemLiteDto orderItemLiteDto) {
         OrderItem orderItem = get(orderItemId);
         orderItem.setProductName(orderItemLiteDto.getOrderItemName());
@@ -79,10 +77,8 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    @Transactional
     public void delete(Long id) {
-        OrderItem orderItem = orderItemRepository.findOne(id);
-        orderItemRepository.delete(orderItem);
+        orderItemRepository.delete(id);
     }
 
     @Override
@@ -124,12 +120,5 @@ public class OrderItemServiceImpl implements OrderItemService {
         });
         return orderItemAutocompleteDtos;
     }
-/*
-    @Override
-    public List<OrderItemDto> getPage(int pageNumber, int pageCapacity) {
-        return orderItemRepository.findAll(new PageRequest(pageNumber, pageCapacity))
-                .getContent()
-                .stream()
-                .map(OrderItemU);
-    }*/
+
 }

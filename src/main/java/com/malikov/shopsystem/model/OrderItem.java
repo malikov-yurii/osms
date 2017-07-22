@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-@SuppressWarnings("JpaQlInspection")
 @Entity
 @Table(name = "osms_order_items")
 public class OrderItem extends BaseEntity {
