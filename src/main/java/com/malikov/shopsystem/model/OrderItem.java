@@ -13,7 +13,8 @@ import java.util.Objects;
 @Table(name = "osms_order_items")
 public class OrderItem extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    //@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "order_id")
     private Order order;

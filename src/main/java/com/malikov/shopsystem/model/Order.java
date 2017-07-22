@@ -50,8 +50,9 @@ public class Order extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate datePlaced = LocalDate.now();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
-    //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "order")
+    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
+    //@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER, mappedBy = "order")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "order")
     @Fetch(FetchMode.SELECT)
     @OrderBy("id ASC")
     private List<OrderItem> orderItems;
