@@ -49,11 +49,50 @@ public class ProductController {
         productService.delete(id);
     }
 
-    @PutMapping(value = "/{id}")
-    public void updateProduct(@PathVariable("id") Long id, ProductDto productDto){
+    /*@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateProduct(@PathVariable("id") Long id,
+                              @RequestParam(value = "variationId", required = false) Long variationId,
+                              @RequestParam(value = "price", required = false) BigDecimal price,
+                              @RequestParam(value = "quantity", required = false) Integer quantity,
+                              ModelMap modelMap
+
+    ){
+        ProductDto productDto = new ProductDto();
         productDto.setProductId(id);
+        productDto.setProductVariationId(variationId);
+        productDto.setPrice(price);
+        productDto.setQuantity(quantity);
+
+        productService.update(productDto);
+    }*/
+
+  /*  @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateProduct(@PathVariable("id") Long id, ProductDto productDto, ModelMap modelMap){
+        productDto.setProductId(null);
         productService.update(productDto);
     }
+*/
+    @PutMapping(value = "/{productId}")
+    public void updateProduct(@PathVariable("productId") Long productId,
+                              ProductDto productDto
+
+    ){
+        productDto.setProductId(productId);
+        productService.update(productDto);
+    }
+    /*
+    @PutMapping(value = "/{id}")
+    public void updateProduct(@PathVariable("id") Long id,
+                              @RequestParam(value = "quantity", required = false) Integer quantity,
+                              @RequestParam(value = "price", required = false) BigDecimal price,
+                              @RequestParam(value = "variationId", required = false) Long variationId
+
+    ){
+        System.out.println();
+        productService.update(null);
+    }
+
+    */
 /*
     @PutMapping(value = "/{id}/unlimited-state")
     public void changeUnlimited(@PathVariable("id") Long id, @RequestParam("unlimited") boolean unlimited) {

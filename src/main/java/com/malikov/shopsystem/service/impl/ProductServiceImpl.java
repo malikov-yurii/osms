@@ -59,6 +59,7 @@ public class ProductServiceImpl implements ProductService {
     public void update(ProductDto productDto) {
         Product product;
         checkNotFoundById(product = productRepository.findOne(productDto.getProductId()), productDto.getProductId());
+
         if (productDto.getProductVariationId() != null) {
             product.getVariations().stream()
                     .filter(productVariation -> Objects.equals(productVariation.getId(), productDto.getProductVariationId()))
