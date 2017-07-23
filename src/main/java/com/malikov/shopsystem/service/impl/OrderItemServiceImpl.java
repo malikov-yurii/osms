@@ -1,4 +1,5 @@
 package com.malikov.shopsystem.service.impl;
+
 import com.malikov.shopsystem.dto.OrderItemAutocompleteDto;
 import com.malikov.shopsystem.dto.OrderItemLiteDto;
 import com.malikov.shopsystem.model.Order;
@@ -11,12 +12,14 @@ import com.malikov.shopsystem.service.OrderItemService;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class OrderItemServiceImpl implements OrderItemService {
 
     @Autowired
@@ -29,11 +32,13 @@ public class OrderItemServiceImpl implements OrderItemService {
     private ProductRepository productRepository;
 
     @Override
+    @Transactional
     public OrderItem save(OrderItem orderItem) {
         return orderItemRepository.save(orderItem);
     }
 
     @Override
+    @Transactional
     public void update(Long orderItemId, OrderItemLiteDto orderItemLiteDto) {
         OrderItem orderItem = get(orderItemId);
         orderItem.setProductName(orderItemLiteDto.getOrderItemName());
@@ -42,6 +47,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
+    @Transactional
     public void updateProductName(Long id, String newProductName) {
         OrderItem orderItem = get(id);
         orderItem.setProductName(newProductName);
@@ -49,26 +55,31 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
+    @Transactional
     public BigDecimal updateOrderItemProductQuantity(Long itemId, int quantity) {
-            OrderItem orderItem = get(itemId);
-            orderItem.setProductQuantity(quantity);
-        return recalculateTotalSum(orderItem);
+        OrderItem orderItem = get(itemId);
+        orderItem.setProductQuantity(quantity);
+        orderItemRepository.save(orderItem);
+
+        return recalculateAndUpdateTotalSum(orderItem);
     }
 
-    private BigDecimal recalculateTotalSum(OrderItem orderItem) {
-        Order order = orderItem.getOrder();
+    private BigDecimal recalculateAndUpdateTotalSum(OrderItem orderItem) {
+        Order order = orderRepository.findOne(orderItem.getOrder().getId());
         BigDecimal totalSum = OrderUtil.calculateTotalSum(order.getOrderItems());
         order.setTotalSum(totalSum);
         orderRepository.save(order);
-        orderItemRepository.save(orderItem);
         return totalSum;
     }
 
     @Override
+    @Transactional
     public BigDecimal updateOrderItemProductPrice(Long itemId, BigDecimal price) {
-            OrderItem orderItem = get(itemId);
-            orderItem.setProductPrice(price);
-        return recalculateTotalSum(orderItem);
+        OrderItem orderItem = get(itemId);
+        orderItem.setProductPrice(price);
+        orderItemRepository.save(orderItem);
+
+        return recalculateAndUpdateTotalSum(orderItem);
     }
 
     @Override
@@ -77,11 +88,13 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         orderItemRepository.delete(id);
     }
 
     @Override
+    @Transactional
     public OrderItem createNewEmpty(Long orderId) {
         return orderItemRepository.save(new OrderItem(orderRepository.findOne(orderId),
                 null, "", new BigDecimal(0), 1));
