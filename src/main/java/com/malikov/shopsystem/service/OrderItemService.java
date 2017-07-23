@@ -26,5 +26,7 @@ public interface OrderItemService{
 
     List<OrderItemAutocompleteDto> getByProductMask(String productNameMask);
 
+    void updateProduct(Long itemId, Long productId, Long productVariationId);
+
     //List<OrderItemDto> getPage(int pageNumber, int pageCapacity);
 }
