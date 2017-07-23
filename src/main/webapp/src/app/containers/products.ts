@@ -25,7 +25,7 @@ import { ProductService } from '../services/index';
       
         <filter
           [filters]="[
-            {label: 'category', data: suppliers},
+            {label: 'category', data: categories},
             {label: 'supplier', data: suppliers}
           ]"
           (filtered)="onFilterChange($event)"
@@ -208,7 +208,7 @@ export class Products implements OnInit, OnDestroy {
 
     products.forEach(product => {
       if (product.categories) {
-        _categories.concat(product.categories);
+        _categories = _categories.concat(product.categories);
       }
       if (product.supplier) {
         _suppliers.push(product.supplier);
