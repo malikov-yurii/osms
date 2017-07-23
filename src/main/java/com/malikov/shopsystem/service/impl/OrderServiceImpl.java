@@ -1,10 +1,7 @@
 package com.malikov.shopsystem.service.impl;
 
 import com.malikov.shopsystem.dto.OrderDto;
-import com.malikov.shopsystem.model.Order;
-import com.malikov.shopsystem.model.OrderItem;
-import com.malikov.shopsystem.model.OrderStatus;
-import com.malikov.shopsystem.model.PaymentType;
+import com.malikov.shopsystem.model.*;
 import com.malikov.shopsystem.repository.CustomerRepository;
 import com.malikov.shopsystem.repository.OrderRepository;
 import com.malikov.shopsystem.repository.UserRepository;
@@ -146,7 +143,13 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public void setCustomer(Long orderId, Long customerId) {
         Order order = get(orderId);
-        order.setCustomer(customerRepository.findOne(customerId));
+        Customer customer = customerRepository.findOne(customerId);
+        order.setCustomer(customer);
+        order.setCustomerName(customer.getName());
+        order.setCustomerLastName(customer.getLastName());
+        order.setCustomerPhoneNumber(customer.getPhoneNumber());
+        order.setCustomerCity(customer.getCity());
+        order.setCustomerPostOffice(customer.getPostOffice());
         save(order);
     }
 
