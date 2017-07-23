@@ -71,8 +71,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public void updateStatus(Long orderId, OrderStatus status) {
-        orderRepository.updateStatus(orderId, status);
+        Order order = orderRepository.findOne(orderId);
+        order.setStatus(status);
+        orderRepository.save(order);
     }
 
     @Override
