@@ -2,3 +2,4 @@ target/
 /git/nbproject
 /.idea/
 *.iml
+/src/main/webapp/node_modules
