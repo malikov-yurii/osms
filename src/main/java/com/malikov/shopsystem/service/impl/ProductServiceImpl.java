@@ -33,7 +33,9 @@ public class ProductServiceImpl implements ProductService {
         List<ProductDto> allProductDtos = new ArrayList<>();
         Page<Product> page = productRepository.findAll(new PageRequest(pageNumber, pageCapacity));
         for (Product product : page.getContent()) {
-            allProductDtos.addAll(ProductUtil.getDtosFrom(product));
+            if (product.getCategories().size() != 0) {
+                allProductDtos.addAll(ProductUtil.getDtosFrom(product));
+            }
         }
         return new PageImpl<>(allProductDtos, null, page.getTotalElements());
     }
