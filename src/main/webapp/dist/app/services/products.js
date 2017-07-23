@@ -25,20 +25,33 @@ var ProductService = (function () {
             .do(function (_a) {
             var totalElements = _a.totalElements, elements = _a.elements;
             elements.sort(function (a, b) { return a.id - b.id; });
+            elements = elements.map(function (el) {
+                el.categories = el.categories.join('; ');
+                return el;
+            });
             _this.storeHelper.update(_this.productsPath, elements);
         });
     };
     ProductService.prototype.list = function (searchQuery, page, length, filterData) {
         var searchResult = this.searchService.search(this.storeHelper.get(this.productsPath), searchQuery);
         var filterResult = searchResult.filter(function (product) {
-            if (product[filterData.label]) {
-                if (product[filterData.label].indexOf(filterData.data) > -1) {
-                    return true;
+            var flag = 0;
+            for (var prop in filterData) {
+                if (filterData.hasOwnProperty(prop)) {
+                    if (product[prop]) {
+                        if (product[prop].indexOf(filterData[prop]) > -1) {
+                            flag++;
+                        }
+                        else {
+                            return false;
+                        }
+                    }
+                    else {
+                        flag++;
+                    }
                 }
             }
-            else {
-                return true;
-            }
+            return flag === Object.keys(filterData).length ? true : false;
         });
         var productResultPage = filterResult.slice((page - 1) * length, page * length);
         return Observable_1.Observable.of({
@@ -51,6 +64,9 @@ var ProductService = (function () {
             body['variationId'] = productVarId;
         }
         this.api.put(this.productsPath + "/" + productId, body, true).subscribe();
+    };
+    ProductService.prototype.purgeStore = function () {
+        this.storeHelper.update(this.productsPath, []);
     };
     return ProductService;
 }());

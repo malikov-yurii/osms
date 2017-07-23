@@ -130,6 +130,7 @@ var StoreHelper = (function () {
         }), _a)));
         var _a;
     };
+    // @TODO remove this
     StoreHelper.prototype.onGetState = function () {
         console.log(this.store.getState());
     };

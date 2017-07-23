@@ -26,6 +26,9 @@ var OrderService = (function () {
         this.ordersPath = 'order';
         this.productsPath = 'orderItemDtos';
     }
+    OrderService.prototype.purgeStore = function () {
+        this.storeHelper.update(this.ordersPath, []);
+    };
     OrderService.prototype.getOrders = function (start, length) {
         var _this = this;
         return this.api.get("/" + this.ordersPath + "?pageNumber=" + start + "&pageCapacity=" + length)
@@ -135,6 +138,7 @@ var OrderService = (function () {
     OrderService.prototype.camelCaseToDash = function (str) {
         return str.replace(/([A-Z])/g, function (g) { return "-" + g[0].toLowerCase(); });
     };
+    // @TODO remove this
     OrderService.prototype.getStore = function () {
         this.storeHelper.onGetState();
     };

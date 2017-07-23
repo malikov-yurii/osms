@@ -39,6 +39,7 @@ var SearchService = (function () {
                 }
             }
         }
+        // To implement deep search, change "_search" to "_deepSearch" in following line
         return items.length && searchQuery ? items.filter(_search) : items;
     };
     return SearchService;

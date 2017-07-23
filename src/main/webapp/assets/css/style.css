@@ -23,7 +23,7 @@ body {
 .input {
     padding: 8px 0;
     border: 0;
-    box-shadow: 0 .5px 0 0 #ccc;
+    box-shadow: 0 1px 0 0 #ddd;
     font: 400 16px 'Roboto';
     transition: box-shadow .15s linear;
 }
@@ -319,13 +319,26 @@ body {
     border: 1px solid #ccc;
     text-align: center;
 }
-.table-products th {
+.table-products .headcell {
     width: 75px;
 }
-.table-products th:nth-child(3),
-.table-products th:nth-child(4) {
+.table-products .headcell--name,
+.table-products .headcell--category {
     width: calc((100% - (75px * 6)) / 2);
 }
 .product-cell--supplier {
+    word-break: break-word;
+}
+.search-input {
+    width: 190px;
+}
+.table-customers .headcell {
+    width: 20%;
+}
+.table-customers .headcell--id,
+.table-customers .headcell--post {
+    width: 75px;
+}
+.table-customers td {
     word-break: break-word;
 }

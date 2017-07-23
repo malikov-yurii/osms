@@ -10,12 +10,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var forms_1 = require("@angular/forms");
 var Filter = (function () {
-    function Filter() {
+    function Filter(fb) {
+        this.fb = fb;
         this.filtered = new core_1.EventEmitter();
+        this.form = this.fb.group({});
     }
-    Filter.prototype.onChange = function (label, data) {
-        this.filtered.emit({ label: label, data: data });
+    Filter.prototype.ngOnChanges = function () {
+        try {
+            this.form = this.fb.group(this.filters);
+        }
+        catch (e) { }
+    };
+    Filter.prototype.onChange = function () {
+        this.filtered.emit(this.form.value);
     };
     return Filter;
 }());
@@ -30,8 +39,10 @@ __decorate([
 Filter = __decorate([
     core_1.Component({
         selector: 'filter',
-        template: "\n    <div class=\"filter-wrapper\">\n      <div\n        class=\"filter\"\n        *ngFor=\"let filter of filters\"\n      >\n        <div class=\"filter-label\">\n          {{ filter.label }}\n        </div>\n        \n        <select \n          class=\"filter-select\"\n          (change)=\"onChange(filter.label, $event.target.value)\"\n        >\n          <option value=\"\">- Show all -</option>\n          <option\n            *ngFor=\"let option of filter.data\"\n            value=\"{{ option }}\"\n          >\n            {{ option }}\n          </option>\n        </select>\n      </div>\n    </div>\n  "
-    })
+        template: "\n    <form class=\"filter-wrapper\" [formGroup]=\"form\">\n      <div\n        class=\"filter\"\n        *ngFor=\"let filter of filters | keys\"\n      >\n        <div class=\"filter__label\">\n          {{ filter }} :\n        </div>\n        \n        <select\n          class=\"filter__select input\"\n          formControlName=\"{{ filter }}\"\n          (change)=\"onChange(filter, $event.target.value)\"\n        >\n          <option value=\"\" selected>- Show all -</option>\n          <option\n            *ngFor=\"let option of filters[filter]\"\n            value=\"{{ option }}\"\n          >\n            {{ option }}\n          </option>\n        </select>\n      </div>\n    </form>\n  ",
+        styles: ["\n    .filter {\n        display: flex;\n        align-items: center;\n        margin: 5px 0;\n    }\n    \n    .filter__label {\n        margin: 0 10px 0 0;\n        width: 100px;\n        text-transform: capitalize;\n        font-size: 15px;\n        word-break: break-word;\n    }\n    .filter__select {\n        width: 140px;\n        cursor: pointer;\n        font-size: 15px;\n    }\n  "]
+    }),
+    __metadata("design:paramtypes", [forms_1.FormBuilder])
 ], Filter);
 exports.Filter = Filter;
 //# sourceMappingURL=filter.js.map

@@ -3,8 +3,8 @@ export class Order {
 
   id: any = `0-${Order.count++}`;
   customerId: number = 0;
-  firstName: string = '';
   lastName: string = '';
+  firstName: string = '';
   phoneNumber: string = '';
   city: string = '';
   postOffice: string = '';
@@ -38,7 +38,7 @@ export class StaticDATA {
     paymentType: ['PB', 'SV', 'NP']
   };
 
-  static readonly autocompleteBlocks = ['firstName', 'lastName', 'phoneNumber', 'city', 'name'];
+  static readonly autocompleteBlocks = ['lastName', 'phoneNumber', 'city', 'name'];
 
   static readonly keycodesNotToAutocomplete = [9, 13, 16, 17, 18, 20]; // Tab, Enter, Shift, Ctrl, Alt, Caps Lock
 }

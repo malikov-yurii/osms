@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { trigger, state, group, style, transition, animate } from '@angular/animations';
 import { Observable } from "rxjs/Observable";
@@ -77,13 +77,9 @@ import { Order, StaticDATA } from '../models';
               <div 
                 class="order-info__block order-info__block--{{ key }}"
                 contenteditable                
-                #infoBlock
-                hotkeys
                 [autocomplete]="['info', key]"
                 [(contenteditableModel)]="order[key]"
                 (selectedAutocomplete)="onAutocompleteInfo(order.id, $event)"
-                (addProduct)="onAddProduct(order.id)"
-                (moveFocus)="onMoveFocus(infoBlock, true)"
                 (contentChanged)="onUpdateOrderInfoField(order.id, key, $event)"
               ></div>
             </ng-template>
@@ -151,12 +147,9 @@ import { Order, StaticDATA } from '../models';
                   class="order-product__block order-product__block--{{ key }}"
                   contenteditable
                   #productBlock
-                  hotkeys
                   [autocomplete]="['product', key]"
                   [(contenteditableModel)]="product[key]"
                   (selectedAutocomplete)="onAutocompleteProduct(order.id, product.id, $event)"
-                  (moveFocus)="onMoveFocus(productBlock)"                  
-                  (addProduct)="onAddProduct(order.id)"
                   (contentChanged)="onUpdateProductField(order.id, product.id, key, $event)"
                 ></div>  
               </ng-template>
@@ -211,7 +204,6 @@ import { Order, StaticDATA } from '../models';
 export class Orders implements OnInit, OnDestroy {
   orders$: Observable<Order[]>;
 
-  @ViewChild('searchControl') searchControl: ElementRef;
   private searchStream: FormControl = new FormControl();
   searchQuery: string = '';
   searchExpanded = 'collapsed';
@@ -282,6 +274,7 @@ export class Orders implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subs.forEach(sub => sub.unsubscribe());
+    this.orderService.purgeStore();
   }
 
   // Manage orders
@@ -386,7 +379,7 @@ export class Orders implements OnInit, OnDestroy {
 
 
 
-
+// @TODO remove this
   onGetAllOrders() {
     this.orderService.getAllOrders().subscribe(resp => console.log(resp.data));
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl } from "@angular/forms";
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable } from 'rxjs/Observable';
@@ -24,10 +24,10 @@ import { ProductService } from '../services/index';
       <div class="service-block">
       
         <filter
-          [filters]="[
-            {label: 'category', data: categories},
-            {label: 'supplier', data: suppliers}
-          ]"
+          [filters]="{
+            categories: categories,
+            supplier: suppliers
+          }"
           (filtered)="onFilterChange($event)"
         ></filter>
       
@@ -48,14 +48,14 @@ import { ProductService } from '../services/index';
       
       <table class="table table-products">
         <thead>
-          <th>ID</th>
-          <th>Variation ID</th>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Unlimited</th>
-          <th>Supplier</th>
+          <th class="headcell headcell--id">ID</th>
+          <th class="headcell headcell--varId">Variation ID</th>
+          <th class="headcell headcell--name">Name</th>
+          <th class="headcell headcell--category">Category</th>
+          <th class="headcell headcell--price">Price</th>
+          <th class="headcell headcell--qty">Quantity</th>
+          <th class="headcell headcell--unlim">Unlimited</th>
+          <th class="headcell headcell--supplier">Supplier</th>
         </thead>
         <tbody>
           <tr
@@ -77,19 +77,9 @@ import { ProductService } from '../services/index';
               
               
               <ng-template [ngIf]="!isEditable(key)">
-              
-                <ng-template [ngIf]="isCategory(key)">
-                  <td class="product-cell--category">
-                    {{ printCategories(product[key]) }}
-                  </td>
-                </ng-template>
-              
-                <ng-template [ngIf]="!isCategory(key)">
-                  <td class="product-cell--{{ key }}">
-                    {{ product[key] }}
-                  </td>
-                </ng-template>
-                
+                <td class="product-cell--{{ key }}">
+                  {{ product[key] }}
+                </td>
               </ng-template>
               
             </ng-container>
@@ -120,7 +110,6 @@ export class Products implements OnInit, OnDestroy {
   private totalProducts: any;
   private filteredProducts$: Observable<number>;
 
-  @ViewChild('searchControl') searchControl: ElementRef;
   private searchStream: FormControl = new FormControl();
   searchQuery: string = '';
 
@@ -129,11 +118,11 @@ export class Products implements OnInit, OnDestroy {
   pageLength: number = 10;
 
   private filterStream = new Subject<any>();
-  private filterData = {label: 'supplier', data: ''};
+  private filterData = {supplier: '', categories: ''};
 
   private subs: Subscription[] = [];
-  private categories: string[] = [];
-  private suppliers: string[] = [];
+  private categories: string[] = [''];
+  private suppliers: string[] = [''];
 
   private searchExpanded = 'collapsed';
 
@@ -191,6 +180,7 @@ export class Products implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subs.forEach(sub => sub.unsubscribe());
+    // this.productService.purgeStore();
   }
 
   /* Pagination */
@@ -232,10 +222,6 @@ export class Products implements OnInit, OnDestroy {
 
 
 
-
-  printCategories(array) {
-    return array.join('<br>');
-  }
 
   isEditable(key) {
     return key === 'price' || key === 'quantity' ? true : false;

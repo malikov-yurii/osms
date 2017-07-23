@@ -6,7 +6,7 @@ import { ApiService, StoreHelper, SearchService } from './index';
 @Injectable()
 export class CustomerService {
 
-  private customersPath: string = 'customers';
+  private customersPath: string = 'customer';
 
   constructor(
     private api: ApiService,
@@ -15,10 +15,10 @@ export class CustomerService {
   ) {}
 
   getAllCustomers() {
-    return this.api.get(this.customersPath)
-      .do((resp: any[]) => {
-        resp.sort((a, b) => a.id - b.id);
-        this.storeHelper.update(this.customersPath, resp);
+    return this.api.get(`${this.customersPath}?pageNumber=0&pageCapacity=10000`)
+      .do(({totalElements, elements}) => {
+        elements.sort((a, b) => a.id - b.id);
+        this.storeHelper.update(this.customersPath, elements);
       });
   }
 

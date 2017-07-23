@@ -18,17 +18,37 @@ export class ProductService {
     return this.api.get(`${this.productsPath}?pageNumber=0&pageCapacity=10000`)
       .do(({totalElements, elements}) => {
         elements.sort((a, b) => a.id - b.id);
+        elements = elements.map(el => {
+          el.categories = el.categories.join('; ');
+          return el;
+        });
         this.storeHelper.update(this.productsPath, elements);
       });
   }
 
 
-  list(searchQuery: string, page: number, length: number, filterData: {label, data}) {
+  list(searchQuery: string, page: number, length: number, filterData: {any}) {
     let searchResult = this.searchService.search(this.storeHelper.get(this.productsPath), searchQuery);
     let filterResult = searchResult.filter(product => {
-      if (product[filterData.label]) {
-        if (product[filterData.label].indexOf(filterData.data) > -1) { return true; }
-      } else { return true; }
+      let flag = 0;
+
+      for (let prop in filterData) {
+        if (filterData.hasOwnProperty(prop)) {
+
+          if (product[prop]) {
+            if (product[prop].indexOf(filterData[prop]) > -1) {
+              flag++;
+            } else {
+              return false;
+            }
+          } else {
+            flag++;
+          }
+
+        }
+      }
+
+      return flag === Object.keys(filterData).length ? true : false;
     });
 
     let productResultPage = filterResult.slice((page - 1) * length, page * length);
@@ -44,6 +64,10 @@ export class ProductService {
       body['variationId'] = productVarId;
     }
     this.api.put(`${this.productsPath}/${productId}`, body, true).subscribe();
+  }
+
+  purgeStore() {
+    this.storeHelper.update(this.productsPath, []);
   }
 
 }

@@ -31,10 +31,10 @@ var Products = (function () {
         this.page = 1;
         this.pageLength = 10;
         this.filterStream = new Subject_1.Subject();
-        this.filterData = { label: 'supplier', data: '' };
+        this.filterData = { supplier: '', categories: '' };
         this.subs = [];
-        this.categories = [];
-        this.suppliers = [];
+        this.categories = [''];
+        this.suppliers = [''];
         this.searchExpanded = 'collapsed';
     }
     Products.prototype.ngOnInit = function () {
@@ -79,6 +79,7 @@ var Products = (function () {
     };
     Products.prototype.ngOnDestroy = function () {
         this.subs.forEach(function (sub) { return sub.unsubscribe(); });
+        // this.productService.purgeStore();
     };
     /* Pagination */
     Products.prototype.paginationChanged = function (_a) {
@@ -108,9 +109,6 @@ var Products = (function () {
         this.productService.updateProductField(productId, productVarId, (_a = {}, _a[fieldName] = value, _a));
         var _a;
     };
-    Products.prototype.printCategories = function (array) {
-        return array.join('<br>');
-    };
     Products.prototype.isEditable = function (key) {
         return key === 'price' || key === 'quantity' ? true : false;
     };
@@ -122,13 +120,9 @@ var Products = (function () {
     };
     return Products;
 }());
-__decorate([
-    core_1.ViewChild('searchControl'),
-    __metadata("design:type", core_1.ElementRef)
-], Products.prototype, "searchControl", void 0);
 Products = __decorate([
     core_1.Component({
-        template: "\n\n    <div class=\"wrapper\">\n    \n      <div class=\"service-block\">\n      \n        <filter\n          [filters]=\"[\n            {label: 'category', data: categories},\n            {label: 'supplier', data: suppliers}\n          ]\"\n          (filtered)=\"onFilterChange($event)\"\n        ></filter>\n      \n        <input type=\"text\" name=\"searchStream\" id=\"\"\n          class=\"input search-input\"\n          placeholder=\"Search in products...\"\n          [@changeWidth]=\"searchExpanded\"\n          #searchControl\n          [formControl]=\"searchStream\"\n          [(ngModel)]=\"searchQuery\"\n          (focusin)=\"toggleAnimState()\"\n          (focusout)=\"toggleAnimState()\"\n        >\n      \n      </div>\n      \n        \n      \n      <table class=\"table table-products\">\n        <thead>\n          <th>ID</th>\n          <th>Variation ID</th>\n          <th>Name</th>\n          <th>Category</th>\n          <th>Price</th>\n          <th>Quantity</th>\n          <th>Unlimited</th>\n          <th>Supplier</th>\n        </thead>\n        <tbody>\n          <tr\n            *ngFor=\"let product of products$ | async; let odd = odd; let even = even;\"\n            [ngClass]=\"{'product': true, 'odd': odd, 'even': even}\"\n          >\n            <ng-container\n              *ngFor=\"let key of product | keys\"\n            >\n              \n              <ng-template [ngIf]=\"isEditable(key)\">\n                <td\n                  class=\"product-cell--{{ key }} editable\"\n                  contenteditable\n                  [(contenteditableModel)]=\"product[key]\"\n                  (contentChanged)=\"onUpdateProductField(product.id, product.variationId, key, $event)\"\n                ></td>\n              </ng-template>\n              \n              \n              <ng-template [ngIf]=\"!isEditable(key)\">\n              \n                <ng-template [ngIf]=\"isCategory(key)\">\n                  <td class=\"product-cell--category\">\n                    {{ printCategories(product[key]) }}\n                  </td>\n                </ng-template>\n              \n                <ng-template [ngIf]=\"!isCategory(key)\">\n                  <td class=\"product-cell--{{ key }}\">\n                    {{ product[key] }}\n                  </td>\n                </ng-template>\n                \n              </ng-template>\n              \n            </ng-container>\n          </tr>\n        </tbody>\n      </table>\n      \n      <pagination\n        [total]=\"filteredProducts$ | async\"\n        [length]=\"pageLength\"\n        [current]=\"page\"\n        (dataChanged)=\"paginationChanged($event)\"\n      >\n      </pagination>\n    </div>\n  ",
+        template: "\n\n    <div class=\"wrapper\">\n    \n      <div class=\"service-block\">\n      \n        <filter\n          [filters]=\"{\n            categories: categories,\n            supplier: suppliers\n          }\"\n          (filtered)=\"onFilterChange($event)\"\n        ></filter>\n      \n        <input type=\"text\" name=\"searchStream\" id=\"\"\n          class=\"input search-input\"\n          placeholder=\"Search in products...\"\n          [@changeWidth]=\"searchExpanded\"\n          #searchControl\n          [formControl]=\"searchStream\"\n          [(ngModel)]=\"searchQuery\"\n          (focusin)=\"toggleAnimState()\"\n          (focusout)=\"toggleAnimState()\"\n        >\n      \n      </div>\n      \n        \n      \n      <table class=\"table table-products\">\n        <thead>\n          <th class=\"headcell headcell--id\">ID</th>\n          <th class=\"headcell headcell--varId\">Variation ID</th>\n          <th class=\"headcell headcell--name\">Name</th>\n          <th class=\"headcell headcell--category\">Category</th>\n          <th class=\"headcell headcell--price\">Price</th>\n          <th class=\"headcell headcell--qty\">Quantity</th>\n          <th class=\"headcell headcell--unlim\">Unlimited</th>\n          <th class=\"headcell headcell--supplier\">Supplier</th>\n        </thead>\n        <tbody>\n          <tr\n            *ngFor=\"let product of products$ | async; let odd = odd; let even = even;\"\n            [ngClass]=\"{'product': true, 'odd': odd, 'even': even}\"\n          >\n            <ng-container\n              *ngFor=\"let key of product | keys\"\n            >\n              \n              <ng-template [ngIf]=\"isEditable(key)\">\n                <td\n                  class=\"product-cell--{{ key }} editable\"\n                  contenteditable\n                  [(contenteditableModel)]=\"product[key]\"\n                  (contentChanged)=\"onUpdateProductField(product.id, product.variationId, key, $event)\"\n                ></td>\n              </ng-template>\n              \n              \n              <ng-template [ngIf]=\"!isEditable(key)\">\n                <td class=\"product-cell--{{ key }}\">\n                  {{ product[key] }}\n                </td>\n              </ng-template>\n              \n            </ng-container>\n          </tr>\n        </tbody>\n      </table>\n      \n      <pagination\n        [total]=\"filteredProducts$ | async\"\n        [length]=\"pageLength\"\n        [current]=\"page\"\n        (dataChanged)=\"paginationChanged($event)\"\n      >\n      </pagination>\n    </div>\n  ",
         animations: [
             animations_1.trigger('changeWidth', [
                 animations_1.state('collapsed', animations_1.style({ width: '190px' })),

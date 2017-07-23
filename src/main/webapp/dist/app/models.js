@@ -4,8 +4,8 @@ var Order = (function () {
     function Order() {
         this.id = "0-" + Order.count++;
         this.customerId = 0;
-        this.firstName = '';
         this.lastName = '';
+        this.firstName = '';
         this.phoneNumber = '';
         this.city = '';
         this.postOffice = '';
@@ -50,7 +50,7 @@ StaticDATA.infoBlocks = {
     status: ['SHP', 'WFP', 'OK', 'NEW', 'NOT'],
     paymentType: ['PB', 'SV', 'NP']
 };
-StaticDATA.autocompleteBlocks = ['firstName', 'lastName', 'phoneNumber', 'city', 'name'];
+StaticDATA.autocompleteBlocks = ['lastName', 'phoneNumber', 'city', 'name'];
 StaticDATA.keycodesNotToAutocomplete = [9, 13, 16, 17, 18, 20]; // Tab, Enter, Shift, Ctrl, Alt, Caps Lock
 exports.StaticDATA = StaticDATA;
 //# sourceMappingURL=models.js.map

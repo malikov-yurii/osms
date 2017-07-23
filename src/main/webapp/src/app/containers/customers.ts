@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl } from "@angular/forms";
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from "rxjs/Subject";
 import { Subscription } from 'rxjs/Subscription';
@@ -19,25 +20,30 @@ import { CustomerService } from '../services/index';
   template: `
 
     <div class="wrapper">
-      <input type="text" name="searchStream" id=""
-        class="input orders-search"
-        placeholder="Search in customers..."
-        #searchControl
-        [formControl]="searchStream"
-        [(ngModel)]="searchQuery"
-      >
+    
+      <div class="service-block">
+        <input type="text" name="searchStream" id=""
+          class="input customers-search pull-right"
+          placeholder="Search in customers..."
+          [@changeWidth]="searchExpanded"
+          [formControl]="searchStream"
+          [(ngModel)]="searchQuery"
+          (focusin)="toggleAnimState()"
+          (focusout)="toggleAnimState()"
+        >
+      </div>
         
       
       <table class="table table-customers">
         <thead>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Last name</th>
-          <th>Phone</th>
-          <th>City</th>
-          <th>Post</th>
-          <th>Email</th>
-          <th>Comment</th>
+          <th class="headcell headcell--id">ID</th>
+          <th class="headcell headcell--name">Name</th>
+          <th class="headcell headcell--lastName">Last name</th>
+          <th class="headcell headcell--phone">Phone</th>
+          <th class="headcell headcell--city">City</th>
+          <th class="headcell headcell--post">Post</th>
+          <th class="headcell headcell--email">Email</th>
+          <th class="headcell headcell--comment">Comment</th>
         </thead>
         <tbody>
           <tr
@@ -60,14 +66,20 @@ import { CustomerService } from '../services/index';
       >
       </pagination>
     </div>
-  `
+  `,
+  animations: [
+    trigger('changeWidth', [
+      state('collapsed', style({width: '190px'})),
+      state('expanded', style({width: '300px'})),
+      transition('collapsed <=> expanded', animate('.3s ease')),
+    ])
+  ]
 })
 export class Customers implements OnInit, OnDestroy {
 
   private customers$: Observable<any[]>;
   private filteredCustomers$: Observable<number>;
 
-  @ViewChild('searchControl') searchControl: ElementRef;
   private searchStream: FormControl = new FormControl();
   searchQuery: string = '';
 
@@ -76,6 +88,8 @@ export class Customers implements OnInit, OnDestroy {
   pageLength: number = 10;
 
   private subs: Subscription[] = [];
+
+  private searchExpanded = 'collapsed';
 
   constructor(
     private customerService: CustomerService,
@@ -129,6 +143,11 @@ export class Customers implements OnInit, OnDestroy {
     this.pageStream.next({page, length});
     this.page = page;
     this.pageLength = length;
+  }
+
+
+  toggleAnimState() {
+    this.searchExpanded = this.searchExpanded === 'collapsed' ? 'expanded' : 'collapsed';
   }
 
 }

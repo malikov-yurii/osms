@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
+var animations_1 = require("@angular/animations");
 var Subject_1 = require("rxjs/Subject");
 require("rxjs/add/operator/debounceTime");
 require("rxjs/add/operator/merge");
@@ -31,6 +32,7 @@ var Customers = (function () {
         this.page = 1;
         this.pageLength = 10;
         this.subs = [];
+        this.searchExpanded = 'collapsed';
     }
     Customers.prototype.ngOnInit = function () {
         var _this = this;
@@ -73,15 +75,21 @@ var Customers = (function () {
         this.page = page;
         this.pageLength = length;
     };
+    Customers.prototype.toggleAnimState = function () {
+        this.searchExpanded = this.searchExpanded === 'collapsed' ? 'expanded' : 'collapsed';
+    };
     return Customers;
 }());
-__decorate([
-    core_1.ViewChild('searchControl'),
-    __metadata("design:type", core_1.ElementRef)
-], Customers.prototype, "searchControl", void 0);
 Customers = __decorate([
     core_1.Component({
-        template: "\n\n    <div class=\"wrapper\">\n      <input type=\"text\" name=\"searchStream\" id=\"\"\n        class=\"input orders-search\"\n        placeholder=\"Search in customers...\"\n        #searchControl\n        [formControl]=\"searchStream\"\n        [(ngModel)]=\"searchQuery\"\n      >\n        \n      \n      <table class=\"table table-customers\">\n        <thead>\n          <th>ID</th>\n          <th>Name</th>\n          <th>Last name</th>\n          <th>Phone</th>\n          <th>City</th>\n          <th>Post</th>\n          <th>Email</th>\n          <th>Comment</th>\n        </thead>\n        <tbody>\n          <tr\n            *ngFor=\"let customer of customers$ | async\"\n          >\n            <td\n              *ngFor=\"let key of customer | keys\"\n            >\n              {{ customer[key] }}\n            </td>\n          </tr>\n        </tbody>\n      </table>\n      \n      <pagination\n        [total]=\"filteredCustomers$ | async\"\n        [length]=\"pageLength\"\n        [current]=\"page\"\n        (dataChanged)=\"paginationChanged($event)\"\n      >\n      </pagination>\n    </div>\n  "
+        template: "\n\n    <div class=\"wrapper\">\n    \n      <div class=\"service-block\">\n        <input type=\"text\" name=\"searchStream\" id=\"\"\n          class=\"input customers-search pull-right\"\n          placeholder=\"Search in customers...\"\n          [@changeWidth]=\"searchExpanded\"\n          [formControl]=\"searchStream\"\n          [(ngModel)]=\"searchQuery\"\n          (focusin)=\"toggleAnimState()\"\n          (focusout)=\"toggleAnimState()\"\n        >\n      </div>\n        \n      \n      <table class=\"table table-customers\">\n        <thead>\n          <th class=\"headcell headcell--id\">ID</th>\n          <th class=\"headcell headcell--name\">Name</th>\n          <th class=\"headcell headcell--lastName\">Last name</th>\n          <th class=\"headcell headcell--phone\">Phone</th>\n          <th class=\"headcell headcell--city\">City</th>\n          <th class=\"headcell headcell--post\">Post</th>\n          <th class=\"headcell headcell--email\">Email</th>\n          <th class=\"headcell headcell--comment\">Comment</th>\n        </thead>\n        <tbody>\n          <tr\n            *ngFor=\"let customer of customers$ | async\"\n          >\n            <td\n              *ngFor=\"let key of customer | keys\"\n            >\n              {{ customer[key] }}\n            </td>\n          </tr>\n        </tbody>\n      </table>\n      \n      <pagination\n        [total]=\"filteredCustomers$ | async\"\n        [length]=\"pageLength\"\n        [current]=\"page\"\n        (dataChanged)=\"paginationChanged($event)\"\n      >\n      </pagination>\n    </div>\n  ",
+        animations: [
+            animations_1.trigger('changeWidth', [
+                animations_1.state('collapsed', animations_1.style({ width: '190px' })),
+                animations_1.state('expanded', animations_1.style({ width: '300px' })),
+                animations_1.transition('collapsed <=> expanded', animations_1.animate('.3s ease')),
+            ])
+        ]
     }),
     __metadata("design:paramtypes", [index_1.CustomerService,
         store_1.Store])

@@ -11,7 +11,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
       </div>
       
       <div class="pagination__right">
-        <select name="" id="" class="pagination__length"
+        <select name="" id="" class="pagination__length input"
           (change)="changeLength($event.target.value)"
         >
           <option
@@ -26,9 +26,15 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
         <ul class="pagination__selector"
           *ngIf="totalItems > pageLength"
         >
-          <li (click)="selectPage(getPrevPage())">Prev</li>
-          <li (click)="selectPage(1)" [class.active]="currentPageNumber === 1">1</li>        
-          <li *ngIf="isPrevSpreadShown()">...</li>
+          <li
+            (click)="selectPage(getPrevPage())"
+            [class.disabled]="currentPageNumber === 1"
+          >Prev</li>
+          <li
+            (click)="selectPage(1)"
+            [class.active]="currentPageNumber === 1"
+          >1</li>        
+          <li class="spread" *ngIf="isPrevSpreadShown()">...</li>
           
           <li 
             *ngFor="let page of pages"
@@ -38,14 +44,17 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
             {{ page }}
           </li>
           
-          <li *ngIf="isNextSpreadShown()">...</li>
+          <li class="spread" *ngIf="isNextSpreadShown()">...</li>
           <li
             (click)="selectPage(lastPage)"
             [class.active]="currentPageNumber === lastPage"
           >
             {{ lastPage }}
           </li>
-          <li (click)="selectPage(getNextPage())">Next</li>
+          <li
+            (click)="selectPage(getNextPage())"
+            [class.disabled]="currentPageNumber === lastPage"
+          >Next</li>
         </ul>
         
       </div>
@@ -57,22 +66,36 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
       justify-content: space-between;
       align-items: center;
       margin: 20px 0;
+      font-size: 15px;
     }
     .pagination__right {
       text-align: right;
+    }
+    .pagination__length {
+      margin: 0 0 10px;
+      font-size: 15px;
     }
     .pagination__selector {
       display: flex;
       list-style: none;
     }    
-    .pagination__selector li {
+    li {
       padding: 5px 10px;
       user-select: none;
       cursor: pointer;
     }
-    .pagination__selector li:hover,
-    .pagination__selector .active {
-      background: #f0f0f0;
+    li:hover,
+    li.active {
+      background: #00bcd4;
+      color: #fff;
+    }
+    li.disabled,
+    li.disabled:hover
+    li.spread,
+    li.spread:hover {
+        background: transparent;
+        color: #999;
+        cursor: default;
     }
   `]
 })

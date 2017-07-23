@@ -21,6 +21,10 @@ export class OrderService {
     private searchService: SearchService
   ) {}
 
+  purgeStore() {
+    this.storeHelper.update(this.ordersPath, []);
+  }
+
   getOrders(start: number, length: number): Observable<any> {
     return this.api.get(`/${this.ordersPath}?pageNumber=${start}&pageCapacity=${length}`)
       .do(resp => this.storeHelper.update('order', resp.elements));
@@ -181,6 +185,8 @@ export class OrderService {
   }
 
 
+
+  // @TODO remove this
   getStore() {
     this.storeHelper.onGetState();
   }
