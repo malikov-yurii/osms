@@ -1,7 +1,5 @@
 package com.malikov.shopsystem.dto;
 
-import com.malikov.shopsystem.model.ProductCategory;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -15,7 +13,7 @@ public class ProductDto implements Serializable {
 
     private String name;
 
-    private Set<ProductCategory> categories;
+    private Set<String> categories;
 
     private BigDecimal price;
 
@@ -29,7 +27,7 @@ public class ProductDto implements Serializable {
             Long productId,
             Long productVariationId,
             String name,
-            Set<ProductCategory> categories,
+            Set<String> categories,
             BigDecimal price,
             Integer quantity,
             Boolean unlimited,
@@ -64,11 +62,11 @@ public class ProductDto implements Serializable {
         this.productId = productId;
     }
 
-    public Set<ProductCategory> getCategories() {
+    public Set<String> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<ProductCategory> categories) {
+    public void setCategories(Set<String> categories) {
         this.categories = categories;
     }
 

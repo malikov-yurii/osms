@@ -2,9 +2,11 @@ package com.malikov.shopsystem.util;
 
 import com.malikov.shopsystem.dto.ProductDto;
 import com.malikov.shopsystem.model.Product;
+import com.malikov.shopsystem.model.ProductCategory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ProductUtil {
@@ -30,7 +32,7 @@ public class ProductUtil {
                             product.getId(), productVariation.getId(),
                             product.getName() + " "
                                     + productVariation.getVariationValue().getName(),
-                            product.getCategories(),
+                            getCategoryNames(product),
                             productVariation.getPrice(),
                             productVariation.getQuantity(),
                             product.getUnlimited(),
@@ -39,9 +41,13 @@ public class ProductUtil {
         } else {
             productDtos.add(new ProductDto(
                     product.getId(), 0L, product.getName(),
-                    product.getCategories(), product.getPrice(),
-                    product.getQuantity(), product.getUnlimited(), product.getSupplier()));
+                    getCategoryNames(product),
+                    product.getPrice(),product.getQuantity(), product.getUnlimited(), product.getSupplier()));
         }
         return productDtos;
+    }
+
+    private static Set<String> getCategoryNames(Product product) {
+        return product.getCategories().stream().map(ProductCategory::getName).collect(Collectors.toSet());
     }
 }
