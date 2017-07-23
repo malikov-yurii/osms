@@ -152,12 +152,12 @@ export class Pagination implements OnInit, OnChanges {
       start = 2;
       end = ptd + 2;
 
-      if (this.lastPage < ptd) {
-        end = this.lastPage;
+      if (this.lastPage <= ptd + 2) {
+        end = this.lastPage - 2;
       }
     }
 
-    this.pages = Array.from(new Array(end), (v, i) => i + start);
+    this.pages = Array.from(new Array(Math.max(0, end)), (v, i) => i + start);
   }
 
   isPrevSpreadShown() {

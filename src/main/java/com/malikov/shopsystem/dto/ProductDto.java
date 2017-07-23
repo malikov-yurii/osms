@@ -7,9 +7,9 @@ import java.util.Set;
 
 public class ProductDto implements Serializable {
 
-    private Long productId;
+    private Long id;
 
-    private Long productVariationId;
+    private Long variationId;
 
     private String name;
 
@@ -24,8 +24,8 @@ public class ProductDto implements Serializable {
     private String supplier;
 
     public ProductDto(
-            Long productId,
-            Long productVariationId,
+            Long id,
+            Long variationId,
             String name,
             Set<String> categories,
             BigDecimal price,
@@ -33,8 +33,8 @@ public class ProductDto implements Serializable {
             Boolean unlimited,
             String supplier
     ) {
-        this.productId = productId;
-        this.productVariationId = productVariationId;
+        this.id = id;
+        this.variationId = variationId;
         this.name = name;
         this.categories = categories;
         this.price = price.setScale(0, RoundingMode.HALF_UP);
@@ -47,19 +47,19 @@ public class ProductDto implements Serializable {
     }
 
     public Long getProductVariationId() {
-        return productVariationId;
+        return variationId;
     }
 
-    public void setProductVariationId(Long productVariationId) {
-        this.productVariationId = productVariationId;
+    public void setProductVariationId(Long variationId) {
+        this.variationId = variationId;
     }
 
     public Long getProductId() {
-        return productId;
+        return id;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProductId(Long id) {
+        this.id = id;
     }
 
     public Set<String> getCategories() {
@@ -95,7 +95,7 @@ public class ProductDto implements Serializable {
     }
 
     public boolean isNew() {
-        return productVariationId == null;
+        return variationId == null;
     }
 
     public Boolean getUnlimited() {

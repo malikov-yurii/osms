@@ -17,21 +17,33 @@ export class ProductService {
   getAllProducts() {
     return this.api.get(`${this.productsPath}?pageNumber=0&pageCapacity=10000`)
       .do(({totalElements, elements}) => {
-        elements.sort((a, b) => a.productId - b.productId);
+        elements.sort((a, b) => a.id - b.id);
         this.storeHelper.update(this.productsPath, elements);
       });
   }
 
 
-  list(searchQuery: string = '', page: number = 1, length: number = 10) {
-    let productResult = this.searchService.search(this.storeHelper.get(this.productsPath), searchQuery);
+  list(searchQuery: string, page: number, length: number, filterData: {label, data}) {
+    let searchResult = this.searchService.search(this.storeHelper.get(this.productsPath), searchQuery);
+    let filterResult = searchResult.filter(product => {
+      if (product[filterData.label]) {
+        if (product[filterData.label].indexOf(filterData.data) > -1) { return true; }
+      } else { return true; }
+    });
 
-    let productResultPage = productResult.slice((page - 1) * length, page * length);
+    let productResultPage = filterResult.slice((page - 1) * length, page * length);
 
     return Observable.of({
       products: productResultPage,
-      filtered: productResult.length
+      filtered: filterResult.length
     });
+  }
+
+  updateProductField(productId, productVarId, body) {
+    if (productVarId !== 0) {
+      body['variationId'] = productVarId;
+    }
+    this.api.put(`${this.productsPath}/${productId}`, body, true).subscribe();
   }
 
 }

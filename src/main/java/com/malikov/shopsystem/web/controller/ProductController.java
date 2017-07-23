@@ -72,11 +72,9 @@ public class ProductController {
         productService.update(productDto);
     }
 */
-    @PutMapping(value = "/{productId}")
+    @PutMapping(value = "/{productId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateProduct(@PathVariable("productId") Long productId,
-                              ProductDto productDto
-
-    ){
+                              @RequestBody ProductDto productDto){
         productDto.setProductId(productId);
         productService.update(productDto);
     }

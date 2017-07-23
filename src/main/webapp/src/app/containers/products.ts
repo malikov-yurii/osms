@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { FormControl } from "@angular/forms";
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from "rxjs/Subject";
 import { Subscription } from 'rxjs/Subscription';
@@ -20,13 +21,29 @@ import { ProductService } from '../services/index';
 
     <div class="wrapper">
     
-      <input type="text" name="searchStream" id=""
-        class="input search-input"
-        placeholder="Search in products..."
-        #searchControl
-        [formControl]="searchStream"
-        [(ngModel)]="searchQuery"
-      >
+      <div class="service-block">
+      
+        <filter
+          [filters]="[
+            {label: 'category', data: suppliers},
+            {label: 'supplier', data: suppliers}
+          ]"
+          (filtered)="onFilterChange($event)"
+        ></filter>
+      
+        <input type="text" name="searchStream" id=""
+          class="input search-input"
+          placeholder="Search in products..."
+          [@changeWidth]="searchExpanded"
+          #searchControl
+          [formControl]="searchStream"
+          [(ngModel)]="searchQuery"
+          (focusin)="toggleAnimState()"
+          (focusout)="toggleAnimState()"
+        >
+      
+      </div>
+      
         
       
       <table class="table table-products">
@@ -48,15 +65,31 @@ import { ProductService } from '../services/index';
             <ng-container
               *ngFor="let key of product | keys"
             >
-              <td
-               class="product-cell--{{ key }}"
-                *ngIf="key !== 'categories'; else tdWithCategory"
-              >
-                {{ product[key] }}
-              </td>
               
-              <ng-template #tdWithCategory>
-                <td class="product-cell--category">{{ printCategories(product[key]) }}</td>
+              <ng-template [ngIf]="isEditable(key)">
+                <td
+                  class="product-cell--{{ key }} editable"
+                  contenteditable
+                  [(contenteditableModel)]="product[key]"
+                  (contentChanged)="onUpdateProductField(product.id, product.variationId, key, $event)"
+                ></td>
+              </ng-template>
+              
+              
+              <ng-template [ngIf]="!isEditable(key)">
+              
+                <ng-template [ngIf]="isCategory(key)">
+                  <td class="product-cell--category">
+                    {{ printCategories(product[key]) }}
+                  </td>
+                </ng-template>
+              
+                <ng-template [ngIf]="!isCategory(key)">
+                  <td class="product-cell--{{ key }}">
+                    {{ product[key] }}
+                  </td>
+                </ng-template>
+                
               </ng-template>
               
             </ng-container>
@@ -72,7 +105,14 @@ import { ProductService } from '../services/index';
       >
       </pagination>
     </div>
-  `
+  `,
+  animations: [
+    trigger('changeWidth', [
+      state('collapsed', style({width: '190px'})),
+      state('expanded', style({width: '300px'})),
+      transition('collapsed <=> expanded', animate('.3s ease')),
+    ])
+  ]
 })
 export class Products implements OnInit, OnDestroy {
 
@@ -88,9 +128,14 @@ export class Products implements OnInit, OnDestroy {
   page: number = 1;
   pageLength: number = 10;
 
+  private filterStream = new Subject<any>();
+  private filterData = {label: 'supplier', data: ''};
+
   private subs: Subscription[] = [];
   private categories: string[] = [];
   private suppliers: string[] = [];
+
+  private searchExpanded = 'collapsed';
 
   constructor(
     private productService: ProductService,
@@ -101,14 +146,13 @@ export class Products implements OnInit, OnDestroy {
     this.subs[this.subs.length] = this.productService.getAllProducts().subscribe(
       ({totalElements, elements}) => {
         this.totalProducts = totalElements;
-        this.getCategoriesList(elements);
-        this.getSuppliersList(elements);
+        this.getFiltersList(elements);
       }
     );
 
     let storeSource = this.store.changes
       .map(store => {
-        return {search: this.searchQuery, page: this.page, length: this.pageLength}
+        return {search: this.searchQuery, page: this.page, length: this.pageLength, filterData: this.filterData}
       });
 
     let searchSource = this.searchStream
@@ -117,21 +161,27 @@ export class Products implements OnInit, OnDestroy {
       .distinctUntilChanged()
       .map(searchQuery => {
         this.page = 1;
-        return {search: searchQuery, page: this.page, length: this.pageLength}
+        return {search: searchQuery, page: this.page, length: this.pageLength, filterData: this.filterData}
       });
 
     let pageSource = this.pageStream
       .map(params => {
         this.page = params.page;
         this.pageLength = params.length;
-        return {search: this.searchQuery, page: params.page, length: params.length}
+        return {search: this.searchQuery, page: params.page, length: params.length, filterData: this.filterData}
+      });
+
+    let filterSource = this.filterStream
+      .map(filterData => {
+        this.filterData = filterData;
+        return {search: this.searchQuery, page: this.page, length: this.pageLength, filterData: filterData}
       });
 
     let source = storeSource
-      .merge(searchSource, pageSource)
-      .startWith({search: this.searchQuery, page: this.page, length: this.pageLength})
-      .switchMap((params: {search: string, page: number, length: number}) => {
-        return this.productService.list(params.search, params.page, params.length)
+      .merge(searchSource, pageSource, filterSource)
+      .startWith({search: this.searchQuery, page: this.page, length: this.pageLength, filterData: this.filterData})
+      .switchMap((params: {search: string, page: number, length: number, filterData}) => {
+        return this.productService.list(params.search, params.page, params.length, params.filterData)
       })
       .share();
 
@@ -151,27 +201,52 @@ export class Products implements OnInit, OnDestroy {
   }
 
 
-  printCategories(arr: {id, name}[]) {
-    return arr.map(category => category.name).join('; ');
-  }
 
-  getCategoriesList(products: Product[]) {
-    let _categories = products.reduce((acc, product) => {
-      return acc.concat(product.categories.map(cat => cat.name));
-    }, []);
-
-    this.categories = Array.from(new Set(_categories));
-  }
-
-  getSuppliersList(products: Product[]) {
+  getFiltersList(products: Product[]) {
+    let _categories = [];
     let _suppliers = [];
+
     products.forEach(product => {
+      if (product.categories) {
+        _categories.concat(product.categories);
+      }
       if (product.supplier) {
         _suppliers.push(product.supplier);
       }
     });
 
+    this.categories = Array.from(new Set(_categories));
     this.suppliers = Array.from(new Set(_suppliers));
+  }
+
+  onFilterChange(e) {
+    this.filterStream.next(e);
+  }
+
+  onUpdateProductField(productId, productVarId, fieldName, value) {
+    this.productService.updateProductField(productId, productVarId, {[fieldName]: value});
+  }
+
+
+
+
+
+
+
+  printCategories(array) {
+    return array.join('<br>');
+  }
+
+  isEditable(key) {
+    return key === 'price' || key === 'quantity' ? true : false;
+  }
+
+  isCategory(key) {
+    return key === 'categories' ? true : false;
+  }
+
+  toggleAnimState() {
+    this.searchExpanded = this.searchExpanded === 'collapsed' ? 'expanded' : 'collapsed';
   }
 
 }

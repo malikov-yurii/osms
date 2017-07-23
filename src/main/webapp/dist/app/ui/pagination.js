@@ -73,11 +73,11 @@ var Pagination = (function () {
         if (this.lastPage <= ptd + 4) {
             start = 2;
             end = ptd + 2;
-            if (this.lastPage < ptd) {
-                end = this.lastPage;
+            if (this.lastPage <= ptd + 2) {
+                end = this.lastPage - 2;
             }
         }
-        this.pages = Array.from(new Array(end), function (v, i) { return i + start; });
+        this.pages = Array.from(new Array(Math.max(0, end)), function (v, i) { return i + start; });
     };
     Pagination.prototype.isPrevSpreadShown = function () {
         return this.lastPage > this.pagesToDisplay + 4 && this.currentPageNumber > this.pagesToDisplay + 1;

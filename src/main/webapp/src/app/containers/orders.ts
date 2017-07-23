@@ -141,13 +141,9 @@ import { Order, StaticDATA } from '../models';
             *ngFor="let product of order.orderItemDtos; let odd = odd, let even = even;"
             [ngClass]="{'order-product': true, odd: odd, even: even}"
           >
-        
-            <div class="order-product__block order-product__block--">
-              {{ product.id }}
-            </div>
           
             <ng-container
-              *ngFor="let key of product | keys:['id', 'orderProductId', 'supplier'];"
+              *ngFor="let key of product | keys:['id', 'orderProductId', 'categories', 'supplier'];"
             >
             
               <ng-template [ngIf]="!hasInput(key)">
@@ -426,7 +422,7 @@ export class Orders implements OnInit, OnDestroy {
     }
   }
 
-  toggleAnimState(e) {
+  toggleAnimState() {
     this.searchExpanded = this.searchExpanded === 'collapsed' ? 'expanded' : 'collapsed';
   }
 

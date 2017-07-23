@@ -24,20 +24,33 @@ var ProductService = (function () {
         return this.api.get(this.productsPath + "?pageNumber=0&pageCapacity=10000")
             .do(function (_a) {
             var totalElements = _a.totalElements, elements = _a.elements;
-            elements.sort(function (a, b) { return a.productId - b.productId; });
+            elements.sort(function (a, b) { return a.id - b.id; });
             _this.storeHelper.update(_this.productsPath, elements);
         });
     };
-    ProductService.prototype.list = function (searchQuery, page, length) {
-        if (searchQuery === void 0) { searchQuery = ''; }
-        if (page === void 0) { page = 1; }
-        if (length === void 0) { length = 10; }
-        var productResult = this.searchService.search(this.storeHelper.get(this.productsPath), searchQuery);
-        var productResultPage = productResult.slice((page - 1) * length, page * length);
+    ProductService.prototype.list = function (searchQuery, page, length, filterData) {
+        var searchResult = this.searchService.search(this.storeHelper.get(this.productsPath), searchQuery);
+        var filterResult = searchResult.filter(function (product) {
+            if (product[filterData.label]) {
+                if (product[filterData.label].indexOf(filterData.data) > -1) {
+                    return true;
+                }
+            }
+            else {
+                return true;
+            }
+        });
+        var productResultPage = filterResult.slice((page - 1) * length, page * length);
         return Observable_1.Observable.of({
             products: productResultPage,
-            filtered: productResult.length
+            filtered: filterResult.length
         });
+    };
+    ProductService.prototype.updateProductField = function (productId, productVarId, body) {
+        if (productVarId !== 0) {
+            body['variationId'] = productVarId;
+        }
+        this.api.put(this.productsPath + "/" + productId, body, true).subscribe();
     };
     return ProductService;
 }());
