@@ -1,5 +1,4 @@
 import { Directive, Input, Output, ViewContainerRef, ComponentFactoryResolver, ComponentRef, EventEmitter } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
 
 import { OrderService } from '../services/index';
 import { AutocompleteList } from '../ui/index';
@@ -20,10 +19,10 @@ export class Autocomplete {
   private fieldsToAutocomplete = StaticDATA.autocompleteBlocks;
   private term: string;
   private refreshTimer: any = undefined;
-  private searchRequired: boolean = true;
+  private searchRequired: boolean = false;
   private searchInProgress: boolean = false;
+  private isBlurred: boolean = true;
   private listComponent: ComponentRef<AutocompleteList> = undefined;
-  private sub: Subscription;
 
 
   constructor(
@@ -46,7 +45,7 @@ export class Autocomplete {
             return false;
           case 'Enter' :
             this.listComponent.instance.selectedStream.next();
-            return false;
+            return true;
           case 'NumpadEnter' :
             this.listComponent.instance.selectedStream.next();
             return false;
@@ -69,12 +68,12 @@ export class Autocomplete {
 
 
   onKeyUp(e) {
-    this.searchRequired = true;
+    this.isBlurred = false;
     this.term = e.target.innerText;
     if (this.term && !this.refreshTimer) {
       this.refreshTimer = setTimeout(
         () => {
-          if (!this.searchInProgress && this.term && this.searchRequired) {
+          if (!this.searchInProgress && this.term && !this.isBlurred) {
             this.doSearch();
           } else {
             this.searchRequired = true;
@@ -91,6 +90,7 @@ export class Autocomplete {
   }
 
   onBlur(e) {
+    this.isBlurred = true;
     this.removeList();
   }
 
@@ -98,14 +98,13 @@ export class Autocomplete {
     this.refreshTimer = undefined;
     this.searchInProgress = true;
 
-    this.sub = this.orderService.autocomplete(this.types, this.term).subscribe(
+    this.orderService.autocomplete(this.types, this.term).subscribe(
       resp => {
         this.searchInProgress = false;
         if (this.searchRequired) {
           this.searchRequired = false;
           this.doSearch();
         } else {
-          this.searchRequired = true;
           this.renderList(resp);
         }
       }
@@ -142,9 +141,6 @@ export class Autocomplete {
     this.refreshTimer = undefined;
     this.searchInProgress = false;
     this.searchRequired = false;
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
     if (this.listComponent) {
       this.listComponent.destroy();
       this.listComponent = undefined;

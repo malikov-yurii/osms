@@ -21,8 +21,9 @@ var Autocomplete = (function () {
         this.selected = new core_1.EventEmitter();
         this.fieldsToAutocomplete = models_1.StaticDATA.autocompleteBlocks;
         this.refreshTimer = undefined;
-        this.searchRequired = true;
+        this.searchRequired = false;
         this.searchInProgress = false;
+        this.isBlurred = true;
         this.listComponent = undefined;
     }
     Autocomplete.prototype.onKeyDown = function (e) {
@@ -38,7 +39,7 @@ var Autocomplete = (function () {
                         return false;
                     case 'Enter':
                         this.listComponent.instance.selectedStream.next();
-                        return false;
+                        return true;
                     case 'NumpadEnter':
                         this.listComponent.instance.selectedStream.next();
                         return false;
@@ -57,11 +58,11 @@ var Autocomplete = (function () {
     };
     Autocomplete.prototype.onKeyUp = function (e) {
         var _this = this;
-        this.searchRequired = true;
+        this.isBlurred = false;
         this.term = e.target.innerText;
         if (this.term && !this.refreshTimer) {
             this.refreshTimer = setTimeout(function () {
-                if (!_this.searchInProgress && _this.term && _this.searchRequired) {
+                if (!_this.searchInProgress && _this.term && !_this.isBlurred) {
                     _this.doSearch();
                 }
                 else {
@@ -74,20 +75,20 @@ var Autocomplete = (function () {
         }
     };
     Autocomplete.prototype.onBlur = function (e) {
+        this.isBlurred = true;
         this.removeList();
     };
     Autocomplete.prototype.doSearch = function () {
         var _this = this;
         this.refreshTimer = undefined;
         this.searchInProgress = true;
-        this.sub = this.orderService.autocomplete(this.types, this.term).subscribe(function (resp) {
+        this.orderService.autocomplete(this.types, this.term).subscribe(function (resp) {
             _this.searchInProgress = false;
             if (_this.searchRequired) {
                 _this.searchRequired = false;
                 _this.doSearch();
             }
             else {
-                _this.searchRequired = true;
                 _this.renderList(resp);
             }
         });
@@ -112,9 +113,6 @@ var Autocomplete = (function () {
         this.refreshTimer = undefined;
         this.searchInProgress = false;
         this.searchRequired = false;
-        if (this.sub) {
-            this.sub.unsubscribe();
-        }
         if (this.listComponent) {
             this.listComponent.destroy();
             this.listComponent = undefined;
