@@ -58,9 +58,9 @@ var OrderService = (function () {
         this.storeHelper.findAndUpdate(this.ordersPath, orderId, fieldName, value);
         this.api.put(this.ordersPath + "/" + orderId + "/" + this.camelCaseToDash(fieldName), fieldName + "=" + value).subscribe();
     };
-    OrderService.prototype.updateOrderInfoWithObject = function (orderId, object) {
-        this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
-        this.api.put(this.ordersPath + "/" + orderId, "customerId=" + object.customerId).subscribe();
+    OrderService.prototype.autocompleteOrderInfo = function (orderId, object) {
+        // this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
+        this.api.put(this.ordersPath + "/" + orderId + "/set-customer", "customerId=" + object.customerId).subscribe();
     };
     OrderService.prototype.addProduct = function (orderId) {
         var _this = this;

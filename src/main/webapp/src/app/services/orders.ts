@@ -75,10 +75,10 @@ export class OrderService {
     ).subscribe();
   }
 
-  updateOrderInfoWithObject(orderId, object) {
-    this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
+  autocompleteOrderInfo(orderId, object) {
+    // this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
     this.api.put(
-      `${this.ordersPath}/${orderId}`,
+      `${this.ordersPath}/${orderId}/set-customer`,
       `customerId=${object.customerId}`
     ).subscribe();
   }

@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
-var animations_1 = require("@angular/animations");
 var Subject_1 = require("rxjs/Subject");
 require("rxjs/add/operator/debounceTime");
 require("rxjs/add/operator/merge");
@@ -21,6 +20,7 @@ require("rxjs/add/operator/share");
 require("rxjs/add/operator/pluck");
 var store_1 = require("../store");
 var index_1 = require("../services/index");
+var animations_1 = require("../ui/animations");
 var Products = (function () {
     function Products(productService, store) {
         this.productService = productService;
@@ -123,13 +123,8 @@ var Products = (function () {
 Products = __decorate([
     core_1.Component({
         template: "\n\n    <div class=\"wrapper products-page\">\n    \n      <div class=\"service-block\">\n      \n        <filter\n          [filters]=\"{\n            categories: categories,\n            supplier: suppliers\n          }\"\n          (filtered)=\"onFilterChange($event)\"\n        ></filter>\n      \n        <input type=\"text\" name=\"searchStream\" id=\"\"\n          class=\"input search-input\"\n          placeholder=\"Search in products...\"\n          [@changeWidth]=\"searchExpanded\"\n          #searchControl\n          [formControl]=\"searchStream\"\n          [(ngModel)]=\"searchQuery\"\n          (focusin)=\"toggleAnimState()\"\n          (focusout)=\"toggleAnimState()\"\n        >\n      \n      </div>\n      \n        \n      <div class=\"table-container\">\n        <table class=\"table table-products\">\n          <thead>\n            <th class=\"product-cell--id numeric\">ID</th>\n            <th class=\"product-cell--varId numeric\">Variation ID</th>\n            <th class=\"product-cell--name\">Name</th>\n            <th class=\"product-cell--category\">Category</th>\n            <th class=\"product-cell--price numeric\">Price</th>\n            <th class=\"product-cell--qty numeric\">Quantity</th>\n            <th class=\"product-cell--unlim\">Unlimited</th>\n            <th class=\"product-cell--supplier\">Supplier</th>\n          </thead>\n          <tbody>\n            <tr\n              *ngFor=\"let product of products$ | async; let odd = odd; let even = even;\"\n              [ngClass]=\"{'product': true, 'odd': odd, 'even': even}\"\n            >\n              <ng-container\n                *ngFor=\"let key of product | keys\"\n              >\n                \n                <ng-template [ngIf]=\"isEditable(key)\">\n                  <td\n                    class=\"product-cell--{{ key }} editable\"\n                    contenteditable\n                    [(contenteditableModel)]=\"product[key]\"\n                    (contentChanged)=\"onUpdateProductField(product.id, product.variationId, key, $event)\"\n                  ></td>\n                </ng-template>\n                \n                \n                <ng-template [ngIf]=\"!isEditable(key)\">\n                  <td class=\"product-cell--{{ key }}\">\n                    {{ product[key] }}\n                  </td>\n                </ng-template>\n                \n              </ng-container>\n            </tr>\n          </tbody>\n        </table>\n      </div>\n      \n      <pagination\n        [total]=\"filteredProducts$ | async\"\n        [length]=\"pageLength\"\n        [current]=\"page\"\n        (dataChanged)=\"paginationChanged($event)\"\n      >\n      </pagination>\n    </div>\n  ",
-        animations: [
-            animations_1.trigger('changeWidth', [
-                animations_1.state('collapsed', animations_1.style({ width: '*' })),
-                animations_1.state('expanded', animations_1.style({ width: '300px' })),
-                animations_1.transition('collapsed <=> expanded', animations_1.animate('.3s ease')),
-            ])
-        ]
+        animations: [animations_1.slideToLeft(), animations_1.changeWidth()],
+        host: { '[@slideToLeft]': '' }
     }),
     __metadata("design:paramtypes", [index_1.ProductService,
         store_1.Store])

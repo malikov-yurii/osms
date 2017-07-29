@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { trigger, state, group, style, transition, animate } from '@angular/animations';
 import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
 import { Subscription } from 'rxjs/Subscription';
@@ -15,6 +14,7 @@ import 'rxjs/add/operator/filter';
 import { OrderService, PopupService } from '../services/index';
 import { Store } from '../store';
 import { Order, StaticDATA } from '../models';
+import { slideToLeft, appear, changeWidth, fadeInOut } from '../ui/animations';
 
 
 @Component({
@@ -180,33 +180,8 @@ import { Order, StaticDATA } from '../models';
       
     </div>
   `,
-  animations: [
-    trigger('appear', [
-      transition(':enter', [
-        style({opacity: 0.001, height: 10}),
-        group([
-          animate('0.25s ease', style({height: '*'})),
-          animate('0.35s 0.1s ease', style({opacity: 1}))
-        ])
-      ]),
-      transition(':leave', [
-        group([
-          animate('0.25s ease', style({height: 0, margin: 0})),
-          animate('0.25s 0.1s ease', style({opacity: 0}))
-        ])
-      ])
-    ]),
-    trigger('changeWidth', [
-      state('collapsed', style({width: '*'})),
-      state('expanded', style({width: '300px'})),
-      transition('collapsed <=> expanded', animate('.3s ease')),
-    ]),
-    trigger('fadeInOut', [
-      state('collapsed', style({opacity: '*'})),
-      state('expanded', style({opacity: 0})),
-      transition('collapsed <=> expanded', animate('.3s ease')),
-    ])
-  ]
+  animations: [slideToLeft(), appear(), changeWidth(), fadeInOut()],
+  host: {'[@slideToLeft]': ''}
 })
 
 export class Orders implements OnInit, OnDestroy {
@@ -328,7 +303,7 @@ export class Orders implements OnInit, OnDestroy {
   }
 
   onAutocompleteInfo(orderId, data) {
-    this.orderService.updateOrderInfoWithObject(orderId, data);
+    this.orderService.autocompleteOrderInfo(orderId, data);
   }
 
 

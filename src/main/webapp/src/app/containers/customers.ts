@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl } from "@angular/forms";
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from "rxjs/Subject";
 import { Subscription } from 'rxjs/Subscription';
@@ -14,6 +13,7 @@ import 'rxjs/add/operator/map';
 
 import { Store } from '../store';
 import { CustomerService } from '../services/index';
+import { slideToLeft, changeWidth } from '../ui/animations';
 
 
 @Component({
@@ -68,13 +68,8 @@ import { CustomerService } from '../services/index';
       </pagination>
     </div>
   `,
-  animations: [
-    trigger('changeWidth', [
-      state('collapsed', style({width: '*'})),
-      state('expanded', style({width: '300px'})),
-      transition('collapsed <=> expanded', animate('.3s ease')),
-    ])
-  ]
+  animations: [slideToLeft(), changeWidth()],
+  host: {'[@slideToLeft]': ''}
 })
 export class Customers implements OnInit, OnDestroy {
 

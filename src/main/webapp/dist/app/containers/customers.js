@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
-var animations_1 = require("@angular/animations");
 var Subject_1 = require("rxjs/Subject");
 require("rxjs/add/operator/debounceTime");
 require("rxjs/add/operator/merge");
@@ -22,6 +21,7 @@ require("rxjs/add/operator/pluck");
 require("rxjs/add/operator/map");
 var store_1 = require("../store");
 var index_1 = require("../services/index");
+var animations_1 = require("../ui/animations");
 var Customers = (function () {
     function Customers(customerService, store) {
         this.customerService = customerService;
@@ -84,13 +84,8 @@ var Customers = (function () {
 Customers = __decorate([
     core_1.Component({
         template: "\n\n    <div class=\"wrapper customers-page\">\n    \n      <div class=\"service-block\">\n        <input type=\"text\" name=\"searchStream\" id=\"\"\n          class=\"input customers-search pull-right\"\n          placeholder=\"Search in customers...\"\n          [@changeWidth]=\"searchExpanded\"\n          [formControl]=\"searchStream\"\n          [(ngModel)]=\"searchQuery\"\n          (focusin)=\"toggleAnimState()\"\n          (focusout)=\"toggleAnimState()\"\n        >\n      </div>\n        \n      <div class=\"table-container\">\n        <table class=\"table table-customers\">\n          <thead>\n            <th class=\"headcell headcell--id\">ID</th>\n            <th class=\"headcell headcell--name\">Name</th>\n            <th class=\"headcell headcell--lastName\">Last name</th>\n            <th class=\"headcell headcell--phone\">Phone</th>\n            <th class=\"headcell headcell--city\">City</th>\n            <th class=\"headcell headcell--post\">Post</th>\n            <th class=\"headcell headcell--email\">Email</th>\n            <th class=\"headcell headcell--comment\">Comment</th>\n          </thead>\n          <tbody>\n            <tr\n              *ngFor=\"let customer of customers$ | async\"\n            >\n              <td\n                *ngFor=\"let key of customer | keys\"\n              >\n                {{ customer[key] }}\n              </td>\n            </tr>\n          </tbody>\n        </table>\n      </div>\n      \n      <pagination\n        [total]=\"filteredCustomers$ | async\"\n        [length]=\"pageLength\"\n        [current]=\"page\"\n        (dataChanged)=\"paginationChanged($event)\"\n      >\n      </pagination>\n    </div>\n  ",
-        animations: [
-            animations_1.trigger('changeWidth', [
-                animations_1.state('collapsed', animations_1.style({ width: '*' })),
-                animations_1.state('expanded', animations_1.style({ width: '300px' })),
-                animations_1.transition('collapsed <=> expanded', animations_1.animate('.3s ease')),
-            ])
-        ]
+        animations: [animations_1.slideToLeft(), animations_1.changeWidth()],
+        host: { '[@slideToLeft]': '' }
     }),
     __metadata("design:paramtypes", [index_1.CustomerService,
         store_1.Store])
