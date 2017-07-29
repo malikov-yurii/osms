@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDto {
@@ -48,20 +47,9 @@ public class OrderDto {
     private List<OrderItemDto> orderItemDtos;
 
     public OrderDto(
-            Long id
-            , Long customerId
-            , String firstName
-            , String lastName
-            , String phoneNumber
-            , String city
-            , String postOffice
-            , PaymentType paymentType
-            , LocalDate date
-            , OrderStatus status
-            , String comment
-            , BigDecimal totalSum
-            , List<OrderItemDto> orderItemDtos
-    ) {
+            Long id, Long customerId, String firstName, String lastName, String phoneNumber, String city,
+            String postOffice, PaymentType paymentType, LocalDate date, OrderStatus status, String comment,
+            BigDecimal totalSum, List<OrderItemDto> orderItemDtos) {
         this.id = id;
         this.customerId = customerId == null ? 0 : customerId;
         this.firstName = firstName != null ? firstName : "";
@@ -76,23 +64,6 @@ public class OrderDto {
         this.totalSum = totalSum.setScale(0, RoundingMode.HALF_UP);
 
         this.orderItemDtos = orderItemDtos;
-    }
-
-    public OrderDto(
-            Long id
-            , Long customerId
-            , String firstName
-            , String lastName
-            , String phoneNumber
-            , String city
-            , String postOffice
-            , PaymentType paymentType
-            , LocalDate date
-            , OrderStatus status
-            , String comment
-            , BigDecimal totalSum
-    ) {
-        this(id, customerId, firstName, lastName, phoneNumber, city, postOffice, paymentType, date, status, comment, totalSum, new ArrayList<>());
     }
 
     public OrderDto() {
