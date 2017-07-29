@@ -180,8 +180,7 @@ import { slideToLeft, appear, changeWidth, fadeInOut } from '../ui/animations';
       
     </div>
   `,
-  animations: [slideToLeft(), appear(), changeWidth(), fadeInOut()],
-  host: {'[@slideToLeft]': ''}
+  animations: [slideToLeft(), appear(), changeWidth(), fadeInOut()]
 })
 
 export class Orders implements OnInit, OnDestroy {

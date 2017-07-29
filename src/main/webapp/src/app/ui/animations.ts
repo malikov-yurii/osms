@@ -3,7 +3,7 @@ import {trigger, state, group, animate, style, transition} from '@angular/animat
 export function slideToRight() {
   return trigger('slideToRight', [
     state('void', style({position:'fixed', width:'100%'}) ),
-    state('*', style({position:'fixed', width:'100%'}) ),
+    state('*', style({position:'fixed', width:'100%', overflow: 'scroll'}) ),
     transition(':enter', [
       style({transform: 'translateX(-100%)'}),
       animate('0.5s ease-in-out', style({transform: 'translateX(0%)'}))
@@ -18,7 +18,6 @@ export function slideToRight() {
 export function slideToLeft() {
   return trigger('slideToLeft', [
     state('void', style({position:'fixed', width:'100%'}) ),
-    state('*', style({position:'fixed', width:'100%'}) ),
     transition(':enter', [
       style({transform: 'translateX(100%)'}),
       animate('0.5s ease-in-out', style({transform: 'translateX(0%)'}))

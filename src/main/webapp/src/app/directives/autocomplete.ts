@@ -45,10 +45,10 @@ export class Autocomplete {
             return false;
           case 'Enter' :
             this.listComponent.instance.selectedStream.next();
-            return true;
+            return false;
           case 'NumpadEnter' :
             this.listComponent.instance.selectedStream.next();
-            return false;
+            return true;
           case 'Tab' :
             this.listComponent.instance.selectedStream.next();
             return true;
