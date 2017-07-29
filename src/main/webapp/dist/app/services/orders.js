@@ -49,16 +49,16 @@ var OrderService = (function () {
         this.storeHelper.findAndDelete(this.ordersPath, orderId);
         this.api.apiDelete(this.ordersPath + "/" + orderId).subscribe();
     };
-    OrderService.prototype.updateOrderInfoField = function (orderId, fieldName, value) {
+    OrderService.prototype.updateInfoField = function (orderId, fieldName, value) {
         // Changing order info common field (e.g., firstName, phoneNumber)
         this.api.put(this.ordersPath + "/" + orderId + "/" + this.camelCaseToDash(fieldName), fieldName + "=" + value).subscribe();
     };
-    OrderService.prototype.updateOrderInfoInput = function (orderId, fieldName, value) {
+    OrderService.prototype.updateInfoInput = function (orderId, fieldName, value) {
         // Changing order info INPUT (e.g., Status, Payment type)
         this.storeHelper.findAndUpdate(this.ordersPath, orderId, fieldName, value);
         this.api.put(this.ordersPath + "/" + orderId + "/" + this.camelCaseToDash(fieldName), fieldName + "=" + value).subscribe();
     };
-    OrderService.prototype.autocompleteOrderInfo = function (orderId, object) {
+    OrderService.prototype.autocompleteInfo = function (orderId, object) {
         // this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
         this.api.put(this.ordersPath + "/" + orderId + "/set-customer", "customerId=" + object.customerId).subscribe();
     };
@@ -91,8 +91,14 @@ var OrderService = (function () {
             }
         });
     };
-    OrderService.prototype.updateProductWithObject = function (orderId, productId, object) {
-        this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, object);
+    OrderService.prototype.autocompleteProduct = function (orderId, product, object) {
+        this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, product.id, object);
+        if (product.orderProductVariationId != null) {
+            this.api.put("order-item/" + product.id, "productVariationId=" + product.orderProductVariationId).subscribe();
+        }
+        else {
+            this.api.put("order-item/" + product.id, "productId=" + product.orderProductId).subscribe();
+        }
     };
     OrderService.prototype.deleteProduct = function (orderId, productId) {
         this.storeHelper.findDeepAndDelete(this.ordersPath, orderId, this.productsPath, productId);

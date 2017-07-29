@@ -83,7 +83,7 @@ import { slideToLeft, appear, changeWidth, fadeInOut } from '../ui/animations';
                 [autocomplete]="['info', key]"
                 [(contenteditableModel)]="order[key]"
                 (selectedAutocomplete)="onAutocompleteInfo(order.id, $event)"
-                (contentChanged)="onUpdateOrderInfoField(order.id, key, $event)"
+                (contentChanged)="onUpdateInfoField(order.id, key, $event)"
               ></div>
             </ng-template>
           
@@ -91,7 +91,7 @@ import { slideToLeft, appear, changeWidth, fadeInOut } from '../ui/animations';
               <div class="order-info__block order-info__block--{{ key }}">
                 <select
                   name="{{ key }}"
-                  (change)="onUpdateOrderInfoInput(order.id, key, $event.target.value)"
+                  (change)="onUpdateInfoInput(order.id, key, $event.target.value)"
                 >
                   <option
                    *ngFor="let value of infoBlocks[key]"
@@ -142,7 +142,9 @@ import { slideToLeft, appear, changeWidth, fadeInOut } from '../ui/animations';
           >
           
             <ng-container
-              *ngFor="let key of product | keys:['id', 'orderProductId', 'categories', 'supplier'];"
+              *ngFor="let key of product | keys:[
+                'id', 'orderProductId', 'orderProductVariationId', 'categories', 'supplier'
+              ];"
             >
             
               <ng-template [ngIf]="!hasInput(key)">
@@ -152,7 +154,7 @@ import { slideToLeft, appear, changeWidth, fadeInOut } from '../ui/animations';
                   #productBlock
                   [autocomplete]="['product', key]"
                   [(contenteditableModel)]="product[key]"
-                  (selectedAutocomplete)="onAutocompleteProduct(order.id, product.id, $event)"
+                  (selectedAutocomplete)="onAutocompleteProduct(order.id, product, $event)"
                   (contentChanged)="onUpdateProductField(order.id, product.id, key, $event)"
                 ></div>  
               </ng-template>
@@ -268,7 +270,7 @@ export class Orders implements OnInit, OnDestroy {
 
   onAddOrder() {
     this.orderService.addOrder();
-    let apiGet = this.page === 1 ? false : true; // Tracing if need to send http get request for orders
+    let apiGet = this.page === 1 ? false : true; // Tracing if it's needed to send http GET request for orders
     this.paginationChanged({page: 1, length: this.pageLength, apiGet});
   }
 
@@ -293,16 +295,16 @@ export class Orders implements OnInit, OnDestroy {
 
 
   // Manage order info
-  onUpdateOrderInfoField(orderId, fieldName, value) {
-    this.orderService.updateOrderInfoField(orderId, fieldName, value);
+  onUpdateInfoField(orderId, fieldName, value) {
+    this.orderService.updateInfoField(orderId, fieldName, value);
   }
 
-  onUpdateOrderInfoInput(orderId, fieldName, value) {
-    this.orderService.updateOrderInfoInput(orderId, fieldName, value);
+  onUpdateInfoInput(orderId, fieldName, value) {
+    this.orderService.updateInfoInput(orderId, fieldName, value);
   }
 
   onAutocompleteInfo(orderId, data) {
-    this.orderService.autocompleteOrderInfo(orderId, data);
+    this.orderService.autocompleteInfo(orderId, data);
   }
 
 
@@ -322,8 +324,8 @@ export class Orders implements OnInit, OnDestroy {
     this.orderService.updateProductInput(orderId, productId, fieldName, value);
   }
 
-  onAutocompleteProduct(orderId, productId, data) {
-    this.orderService.updateProductWithObject(orderId, productId, data);
+  onAutocompleteProduct(orderId, product, data) {
+    this.orderService.autocompleteProduct(orderId, product, data);
   }
 
   onDeleteProduct(id, productId) {

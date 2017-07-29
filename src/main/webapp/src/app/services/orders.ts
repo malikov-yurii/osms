@@ -55,7 +55,7 @@ export class OrderService {
 
 
 
-  updateOrderInfoField(orderId, fieldName, value) {
+  updateInfoField(orderId, fieldName, value) {
     // Changing order info common field (e.g., firstName, phoneNumber)
 
     this.api.put(
@@ -64,7 +64,7 @@ export class OrderService {
     ).subscribe();
   }
 
-  updateOrderInfoInput(orderId, fieldName, value) {
+  updateInfoInput(orderId, fieldName, value) {
     // Changing order info INPUT (e.g., Status, Payment type)
 
     this.storeHelper.findAndUpdate(this.ordersPath, orderId, fieldName, value);
@@ -75,7 +75,7 @@ export class OrderService {
     ).subscribe();
   }
 
-  autocompleteOrderInfo(orderId, object) {
+  autocompleteInfo(orderId, object) {
     // this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
     this.api.put(
       `${this.ordersPath}/${orderId}/set-customer`,
@@ -132,8 +132,20 @@ export class OrderService {
     );
   }
 
-  updateProductWithObject(orderId, productId, object) {
-    this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, object);
+  autocompleteProduct(orderId, product, object) {
+    this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, product.id, object);
+
+    if (product.orderProductVariationId != null) {
+      this.api.put(
+        `order-item/${product.id}`,
+        `productVariationId=${product.orderProductVariationId}`
+      ).subscribe();
+    } else {
+      this.api.put(
+        `order-item/${product.id}`,
+        `productId=${product.orderProductId}`
+      ).subscribe();
+    }
   }
 
   deleteProduct(orderId, productId): Observable<any> {
