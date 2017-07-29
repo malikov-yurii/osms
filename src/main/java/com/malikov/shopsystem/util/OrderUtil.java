@@ -1,9 +1,9 @@
 package com.malikov.shopsystem.util;
 
+import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderItemDto;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderItem;
-import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.model.OrderStatus;
 
 import java.math.BigDecimal;
@@ -70,7 +70,7 @@ public class OrderUtil {
             case OK:  return 5;
             case SHP: return 1;
             case WFP: return 2;
-            case NEW: return 3;
+            case NEW: return 1;
             case NOT: return 4;
             default:  return 0;
         }

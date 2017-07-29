@@ -14,6 +14,7 @@ import com.malikov.shopsystem.service.OrderItemService;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -45,24 +46,38 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     @Transactional
-    public void updateProduct(Long itemId, Long productId, Long productVariationId) {
-        if (productId == null && productVariationId == null) {
-            throw new RuntimeException("presence of productId or productVariationId is mandatory");
+    public void updateProduct(Long itemId, Long newProductId, Long newProductVariationId) {
+        if (newProductId == null && newProductVariationId == null) {
+            throw new RuntimeException("presence of newProductId or newProductVariationId is mandatory");
         }
 
         OrderItem orderItem = orderItemRepository.findOne(itemId);
 
-        if (productVariationId != null) {
-            ProductVariation productVariation = productVariationRepository.findOne(productVariationId);
-            orderItem.setProduct(productVariation.getProduct());
-            orderItem.setProductName(productVariation.getProduct().getName() + " "
-                    + productVariation.getVariationValue().getName());
-            orderItem.setProductPrice(productVariation.getPrice());
+        if (newProductVariationId != null) {
+            ProductVariation oldProductVariation = orderItem.getProductVariation();
+            oldProductVariation.setQuantity(oldProductVariation.getQuantity() + orderItem.getProductQuantity());
+            productVariationRepository.save(oldProductVariation);
+
+            ProductVariation newProductVariation = productVariationRepository.findOne(newProductVariationId);
+            orderItem.setProduct(newProductVariation.getProduct());
+            orderItem.setProductName(newProductVariation.getProduct().getName() + " "
+                    + newProductVariation.getVariationValue().getName());
+            orderItem.setProductPrice(newProductVariation.getPrice());
+
+            newProductVariation.setQuantity(newProductVariation.getQuantity() - 1);
+            productVariationRepository.save(newProductVariation);
         }else {
-            Product product = productRepository.findOne(productId);
-            orderItem.setProduct(product);
-            orderItem.setProductName(product.getName());
-            orderItem.setProductPrice(product.getPrice());
+            Product oldProduct = orderItem.getProduct();
+            oldProduct.setQuantity(oldProduct.getQuantity() + orderItem.getProductQuantity());
+            productRepository.save(oldProduct);
+
+            Product newProduct = productRepository.findOne(newProductId);
+            orderItem.setProduct(newProduct);
+            orderItem.setProductName(newProduct.getName());
+            orderItem.setProductPrice(newProduct.getPrice());
+
+            newProduct.setQuantity(newProduct.getQuantity() - 1);
+            productRepository.save(newProduct);
         }
 
         orderItem.setProductQuantity(1);
@@ -88,12 +103,27 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     @Transactional
-    public BigDecimal updateOrderItemProductQuantity(Long itemId, int quantity) {
-        OrderItem orderItem = get(itemId);
-        orderItem.setProductQuantity(quantity);
+    public BigDecimal updateOrderItemProductQuantity(Long itemId, final int newOrderItemQuantity) {
+        OrderItem orderItem = get(itemId); // TODO: 7/29/2017  potential detached error??
+        final int quantityDelta = newOrderItemQuantity - orderItem.getProductQuantity();
+        orderItem.setProductQuantity(newOrderItemQuantity);
         orderItemRepository.save(orderItem);
 
+        updateProductQuantityInDb(orderItem, quantityDelta);
+
         return recalculateAndUpdateTotalSum(orderItem);
+    }
+
+    private void updateProductQuantityInDb(OrderItem orderItem, int quantityDelta) {
+        if (orderItem.getProductVariation() != null) {
+            ProductVariation productVariation = orderItem.getProductVariation();
+            productVariation.setQuantity(productVariation.getQuantity() + quantityDelta);
+            productVariationRepository.save(productVariation);
+        } else {
+            Product product = orderItem.getProduct();
+            product.setQuantity(product.getQuantity() + quantityDelta);
+            productRepository.save(product);
+        }
     }
 
     private BigDecimal recalculateAndUpdateTotalSum(OrderItem orderItem) {
@@ -115,14 +145,25 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public OrderItem get(Long id) {
         return orderItemRepository.findOne(id);
     }
 
     @Override
     @Transactional
-    public void delete(Long id) {
-        orderItemRepository.delete(id);
+    public void delete(Long orderItemId) {
+        OrderItem orderItem = get(orderItemId);
+        if (orderItem.getProductVariation() != null) {
+            ProductVariation productVariation = orderItem.getProductVariation();
+            productVariation.setQuantity(productVariation.getQuantity() + orderItem.getProductQuantity());
+            productVariationRepository.save(productVariation);
+        } else {
+            Product product = orderItem.getProduct();
+            product.setQuantity(product.getQuantity() + orderItem.getProductQuantity());
+            productRepository.save(product);
+        }
+        orderItemRepository.delete(orderItemId);
     }
 
     @Override

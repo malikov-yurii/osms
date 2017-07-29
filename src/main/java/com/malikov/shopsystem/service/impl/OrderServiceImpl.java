@@ -1,10 +1,9 @@
 package com.malikov.shopsystem.service.impl;
 
+import com.malikov.shopsystem.DbOperation;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.model.*;
-import com.malikov.shopsystem.repository.CustomerRepository;
-import com.malikov.shopsystem.repository.OrderRepository;
-import com.malikov.shopsystem.repository.UserRepository;
+import com.malikov.shopsystem.repository.*;
 import com.malikov.shopsystem.service.OrderService;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.slf4j.Logger;
@@ -23,6 +22,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
+import static com.malikov.shopsystem.DbOperation.DECREASE_IN_STOCK;
+import static com.malikov.shopsystem.DbOperation.INCREASE_IN_STOCK;
+import static com.malikov.shopsystem.util.OrderStatusUtil.isWithdrawalStatus;
+
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -36,6 +39,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private ProductVariationRepository productVariationRepository;
 
     @Override
     public Order save(Order order) {
@@ -69,10 +78,67 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void updateStatus(Long orderId, OrderStatus status) {
+    public void updateStatus(Long orderId, OrderStatus newStatus) {
         Order order = orderRepository.findOne(orderId);
-        order.setStatus(status);
+        OrderStatus oldStatus = order.getStatus();
+        order.setStatus(newStatus);
         orderRepository.save(order);
+
+        if (newStatus.equals(oldStatus) || (isWithdrawalStatus(newStatus) == isWithdrawalStatus(oldStatus))) {
+            return;
+        }
+
+        if (!isWithdrawalStatus(oldStatus) && isWithdrawalStatus(newStatus)) {
+            updateProductQuantityInDbForAllOrderItems(order, INCREASE_IN_STOCK);
+        } else {
+            updateProductQuantityInDbForAllOrderItems(order, DECREASE_IN_STOCK);
+        }
+    }
+
+    private void updateProductQuantityInDbForAllOrderItems(Order order, DbOperation dbOperation) {
+        for (OrderItem orderItem : order.getOrderItems()) {
+            if (orderItem.getProduct() == null) {
+                continue;
+            }
+
+            if (orderItem.getProductVariation() != null) {
+                updateProductVariationQuantityInDb(orderItem, dbOperation);
+            } else {
+                updateProductQuantityInDb(orderItem, dbOperation);
+            }
+        }
+    }
+
+    private void updateProductQuantityInDb(OrderItem orderItem, DbOperation dbOperation) {
+        Product product = orderItem.getProduct();
+        int productQuantityToPersist = calculateProductQuantityToPersist(product.getQuantity(),
+                orderItem.getProductQuantity(), dbOperation);
+        product.setQuantity(productQuantityToPersist);
+        productRepository.save(product);
+    }
+
+    private void updateProductVariationQuantityInDb(OrderItem orderItem, DbOperation dbOperation) {
+        ProductVariation productVariation = orderItem.getProductVariation();
+        int productQuantityToPersist = calculateProductQuantityToPersist(productVariation.getQuantity(),
+                orderItem.getProductQuantity(), dbOperation);
+        productVariation.setQuantity(productQuantityToPersist);
+        productVariationRepository.save(productVariation);
+    }
+
+    private int calculateProductQuantityToPersist(int productQuantityInDb, int productQuantityInOrderItem,
+                                                  DbOperation dbOperation) {
+        int productQuantityToPersist;
+        switch (dbOperation) {
+            case INCREASE_IN_STOCK:
+                productQuantityToPersist = productQuantityInDb + productQuantityInOrderItem;
+                break;
+            case DECREASE_IN_STOCK:
+                productQuantityToPersist = productQuantityInDb - productQuantityInOrderItem;
+                break;
+            default:
+                throw new RuntimeException("only INCREASE_IN_STOCK or DECREASE_IN_STOCK supported");
+        }
+        return productQuantityToPersist;
     }
 
     @Override
@@ -187,7 +253,7 @@ public class OrderServiceImpl implements OrderService {
     public Order create() {
         Order newOrder = new Order(null,
                 userRepository.getByLogin(SecurityContextHolder.getContext().getAuthentication().getName()),
-                PaymentType.NP, OrderStatus.SHP, null, Collections.singletonList(new OrderItem()));
+                PaymentType.NP, OrderStatus.NEW, null, Collections.singletonList(new OrderItem()));
         LOG.info("create new {}", newOrder);
         return save(newOrder);
     }

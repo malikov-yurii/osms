@@ -20,6 +20,7 @@ public interface OrderItemService{
     void updateProductName(Long id, String newProductName);
 
     BigDecimal updateOrderItemProductQuantity(Long itemId, int quantity);
+
     BigDecimal updateOrderItemProductPrice(Long itemId, BigDecimal price);
 
     OrderItem createNewEmpty(Long orderId);
