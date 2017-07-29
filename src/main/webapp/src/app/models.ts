@@ -20,7 +20,8 @@ export class Product {
   static count: number = 0;
 
   id: any = `0-${Product.count++}`;
-  orderProductId: number = 0;
+  productId?: number = 0;
+  productVariationId?: number = 0;
   name: string = '';
   categories?: {id, name}[] = [{id: '', name: ''}];
   quantity: string = '1';

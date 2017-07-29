@@ -8,7 +8,7 @@ public class OrderItemAutocompleteDto {
    // TODO: 3/25/2017    get rid of label. use javascript concatenation instead
     private String label;
 
-    private Long orderProductId;
+    private Long productId;
 
     private Long productVariationId;
 
@@ -16,9 +16,9 @@ public class OrderItemAutocompleteDto {
 
     private BigDecimal price;
 
-    public OrderItemAutocompleteDto(String label, Long orderProductId, Long productVariationId, String name, BigDecimal price) {
+    public OrderItemAutocompleteDto(String label, Long productId, Long productVariationId, String name, BigDecimal price) {
         this.label = label;
-        this.orderProductId = orderProductId;
+        this.productId = productId;
         this.productVariationId = productVariationId;
         this.name = name;
         this.price = price.setScale(0, RoundingMode.HALF_UP);
@@ -33,11 +33,11 @@ public class OrderItemAutocompleteDto {
     }
 
     public Long getProductId() {
-        return orderProductId;
+        return productId;
     }
 
-    public void setProductId(Long orderProductId) {
-        this.orderProductId = orderProductId;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public Long getProductVariationId() {

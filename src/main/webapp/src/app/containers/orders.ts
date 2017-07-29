@@ -143,7 +143,7 @@ import { slideToLeft, appear, changeWidth, fadeInOut } from '../ui/animations';
           
             <ng-container
               *ngFor="let key of product | keys:[
-                'id', 'orderProductId', 'orderProductVariationId', 'categories', 'supplier'
+                'id', 'productId', 'productVariationId', 'categories', 'supplier'
               ];"
             >
             
@@ -154,7 +154,7 @@ import { slideToLeft, appear, changeWidth, fadeInOut } from '../ui/animations';
                   #productBlock
                   [autocomplete]="['product', key]"
                   [(contenteditableModel)]="product[key]"
-                  (selectedAutocomplete)="onAutocompleteProduct(order.id, product, $event)"
+                  (selectedAutocomplete)="onAutocompleteProduct(order.id, product.id, $event)"
                   (contentChanged)="onUpdateProductField(order.id, product.id, key, $event)"
                 ></div>  
               </ng-template>
@@ -324,8 +324,8 @@ export class Orders implements OnInit, OnDestroy {
     this.orderService.updateProductInput(orderId, productId, fieldName, value);
   }
 
-  onAutocompleteProduct(orderId, product, data) {
-    this.orderService.autocompleteProduct(orderId, product, data);
+  onAutocompleteProduct(orderId, productId, data) {
+    this.orderService.autocompleteProduct(orderId, productId, data);
   }
 
   onDeleteProduct(id, productId) {

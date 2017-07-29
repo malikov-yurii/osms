@@ -23,7 +23,8 @@ exports.Order = Order;
 var Product = (function () {
     function Product() {
         this.id = "0-" + Product.count++;
-        this.orderProductId = 0;
+        this.productId = 0;
+        this.productVariationId = 0;
         this.name = '';
         this.categories = [{ id: '', name: '' }];
         this.quantity = '1';

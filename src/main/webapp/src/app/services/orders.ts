@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/timeout';
 import 'rxjs/add/observable/of';
 
 import { ApiService} from './api';
@@ -76,11 +76,11 @@ export class OrderService {
   }
 
   autocompleteInfo(orderId, object) {
-    // this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
+    this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
     this.api.put(
       `${this.ordersPath}/${orderId}/set-customer`,
       `customerId=${object.customerId}`
-    ).subscribe();
+    ).timeout(2500).subscribe();
   }
 
 
@@ -101,7 +101,7 @@ export class OrderService {
   }
 
   updateProductField(orderId, productId, fieldName, value) {
-    // Changing order item common field (e.g., name, price)
+    // Changing order item editable field (e.g., name, price)
 
     this.api.put(
       `order-item/${productId}/${this.camelCaseToDash(fieldName)}`,
@@ -132,19 +132,19 @@ export class OrderService {
     );
   }
 
-  autocompleteProduct(orderId, product, object) {
-    this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, product.id, object);
+  autocompleteProduct(orderId, productId, data) {
+    this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, data);
 
-    if (product.orderProductVariationId != null) {
+    if (data.productVariationId) {
       this.api.put(
-        `order-item/${product.id}`,
-        `productVariationId=${product.orderProductVariationId}`
-      ).subscribe();
+        `order-item/${productId}`,
+        `productVariationId=${data.productVariationId}`
+      ).timeout(500).subscribe();
     } else {
       this.api.put(
-        `order-item/${product.id}`,
-        `productId=${product.orderProductId}`
-      ).subscribe();
+        `order-item/${productId}`,
+        `productId=${data.productId}`
+      ).timeout(500).subscribe();
     }
   }
 

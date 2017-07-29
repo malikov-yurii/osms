@@ -185,11 +185,12 @@ body {
     border-right: 1px solid rgba(0, 188, 212, 0.49);
 }
 .order-product__block--quantity input {
-    width: 37px;
+    width: 49px;
     height: 23px;
     padding-left: 9px;
     background: none;
     border: none;
+    text-align: center;
 }
 .order-product__block--price {
     width: 9%;

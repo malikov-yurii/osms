@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var Observable_1 = require("rxjs/Observable");
 require("rxjs/add/operator/do");
-require("rxjs/add/operator/delay");
+require("rxjs/add/operator/timeout");
 require("rxjs/add/observable/of");
 var api_1 = require("./api");
 var store_helper_1 = require("./store-helper");
@@ -59,8 +59,8 @@ var OrderService = (function () {
         this.api.put(this.ordersPath + "/" + orderId + "/" + this.camelCaseToDash(fieldName), fieldName + "=" + value).subscribe();
     };
     OrderService.prototype.autocompleteInfo = function (orderId, object) {
-        // this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
-        this.api.put(this.ordersPath + "/" + orderId + "/set-customer", "customerId=" + object.customerId).subscribe();
+        this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
+        this.api.put(this.ordersPath + "/" + orderId + "/set-customer", "customerId=" + object.customerId).timeout(2500).subscribe();
     };
     OrderService.prototype.addProduct = function (orderId) {
         var _this = this;
@@ -73,7 +73,7 @@ var OrderService = (function () {
         });
     };
     OrderService.prototype.updateProductField = function (orderId, productId, fieldName, value) {
-        // Changing order item common field (e.g., name, price)
+        // Changing order item editable field (e.g., name, price)
         var _this = this;
         this.api.put("order-item/" + productId + "/" + this.camelCaseToDash(fieldName), fieldName + "=" + value).subscribe(function (data) {
             if (data) {
@@ -91,13 +91,13 @@ var OrderService = (function () {
             }
         });
     };
-    OrderService.prototype.autocompleteProduct = function (orderId, product, object) {
-        this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, product.id, object);
-        if (product.orderProductVariationId != null) {
-            this.api.put("order-item/" + product.id, "productVariationId=" + product.orderProductVariationId).subscribe();
+    OrderService.prototype.autocompleteProduct = function (orderId, productId, data) {
+        this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, data);
+        if (data.productVariationId) {
+            this.api.put("order-item/" + productId, "productVariationId=" + data.productVariationId).timeout(500).subscribe();
         }
         else {
-            this.api.put("order-item/" + product.id, "productId=" + product.orderProductId).subscribe();
+            this.api.put("order-item/" + productId, "productId=" + data.productId).timeout(500).subscribe();
         }
     };
     OrderService.prototype.deleteProduct = function (orderId, productId) {

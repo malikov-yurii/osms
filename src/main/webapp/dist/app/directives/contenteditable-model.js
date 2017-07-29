@@ -21,14 +21,14 @@ var ContenteditableModel = (function () {
             this.lastViewModel = this.model;
             this.refreshView();
         }
-        if (changes['model'].previousValue !== undefined && changes['model'].previousValue != this.lastViewModel) {
-            this.changed.emit(this.lastViewModel);
-        }
     };
     /** This should probably be debounced. */
     ContenteditableModel.prototype.onBlur = function () {
         var value = this.el.nativeElement.innerText;
-        this.lastViewModel = value;
+        if (this.lastViewModel != value) {
+            this.changed.emit(value);
+            this.lastViewModel = value;
+        }
         this.update.emit(value);
     };
     ContenteditableModel.prototype.refreshView = function () {
