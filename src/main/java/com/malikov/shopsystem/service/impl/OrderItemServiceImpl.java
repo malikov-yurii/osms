@@ -4,10 +4,12 @@ import com.malikov.shopsystem.dto.OrderItemAutocompleteDto;
 import com.malikov.shopsystem.dto.OrderItemLiteDto;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderItem;
+import com.malikov.shopsystem.model.Product;
 import com.malikov.shopsystem.model.ProductVariation;
 import com.malikov.shopsystem.repository.OrderItemRepository;
 import com.malikov.shopsystem.repository.OrderRepository;
 import com.malikov.shopsystem.repository.ProductRepository;
+import com.malikov.shopsystem.repository.ProductVariationRepository;
 import com.malikov.shopsystem.service.OrderItemService;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +34,39 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private ProductVariationRepository productVariationRepository;
+
     @Override
     @Transactional
     public OrderItem save(OrderItem orderItem) {
         return orderItemRepository.save(orderItem);
+    }
+
+    @Override
+    @Transactional
+    public void updateProduct(Long itemId, Long productId, Long productVariationId) {
+        if (productId == null && productVariationId == null) {
+            throw new RuntimeException("presence of productId or productVariationId is mandatory");
+        }
+
+        OrderItem orderItem = orderItemRepository.findOne(itemId);
+
+        if (productVariationId != null) {
+            ProductVariation productVariation = productVariationRepository.findOne(productVariationId);
+            orderItem.setProduct(productVariation.getProduct());
+            orderItem.setProductName(productVariation.getProduct().getName() + " "
+                    + productVariation.getVariationValue().getName());
+            orderItem.setProductPrice(productVariation.getPrice());
+        }else {
+            Product product = productRepository.findOne(productId);
+            orderItem.setProduct(product);
+            orderItem.setProductName(product.getName());
+            orderItem.setProductPrice(product.getPrice());
+        }
+
+        orderItem.setProductQuantity(1);
+        orderItemRepository.save(orderItem);
     }
 
     @Override
@@ -109,8 +141,8 @@ public class OrderItemServiceImpl implements OrderItemService {
                     orderItemAutocompleteDtos.add(
                             new OrderItemAutocompleteDto(
                                     product.getName() + " "
-                                            + productVariation.getVariationValue().getName()
-                                            + " " + productVariation.getPrice(),
+                                            + productVariation.getVariationValue().getName() + " "
+                                            + productVariation.getPrice().setScale(0, RoundingMode.HALF_UP),
                                     product.getId(),
                                     productVariation.getId(),
                                     product.getName() + " "
