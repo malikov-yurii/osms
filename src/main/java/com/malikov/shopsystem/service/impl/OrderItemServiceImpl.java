@@ -214,7 +214,7 @@ public class OrderItemServiceImpl implements OrderItemService {
             } else {
                 orderItemAutocompleteDtos.add(
                         new OrderItemAutocompleteDto(
-                                product.getName() + " " + product.getPrice(),
+                                product.getName() + " " + product.getPrice().setScale(0, RoundingMode.HALF_UP),
                                 product.getId(),
                                 0L,
                                 product.getName(),
