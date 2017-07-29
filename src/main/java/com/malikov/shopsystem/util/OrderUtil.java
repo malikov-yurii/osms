@@ -34,14 +34,15 @@ public class OrderUtil {
         List<OrderItemDto> orderItemDtos = order.getOrderItems()
                 .stream()
                 .map(oi -> new OrderItemDto(oi.getId(),
-                        oi.getProduct() != null ? oi.getProduct().getId() : 0,
+                        oi.getProduct() != null ? oi.getProduct().getId() : null,
+                        oi.getProductVariation() != null ? oi.getProductVariation().getId() : null,
                         oi.getProductName(),
                         oi.getProductQuantity(),
                         oi.getProductPrice(),
                         oi.getProduct() != null
                                 ? (oi.getProduct().getSupplier() != null
                                 ? oi.getProduct().getSupplier()
-                                : "")
+                                : " ")
                                 : ""
                 ))
                 .collect(Collectors.toList());

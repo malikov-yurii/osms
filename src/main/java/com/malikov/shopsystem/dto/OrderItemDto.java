@@ -10,7 +10,9 @@ public class OrderItemDto implements Serializable {
 
     private Long id;
 
-    private Long orderProductId;
+    private Long productId;
+
+    private Long productVariationId;
 
     private String name;
 
@@ -23,7 +25,8 @@ public class OrderItemDto implements Serializable {
     @JsonCreator
     public OrderItemDto(
             Long orderItemId,
-            Long orderProductId,
+            Long productId,
+            Long productVariationId,
             String name,
             Integer quantity,
             BigDecimal price,
@@ -31,7 +34,8 @@ public class OrderItemDto implements Serializable {
     ) {
 
         this.id = orderItemId;
-        this.orderProductId = orderProductId;
+        this.productId = productId;
+        this.productVariationId = productVariationId;
         this.name = name;
         this.quantity = quantity;
         this.price = price.setScale(0, RoundingMode.HALF_UP);
@@ -73,12 +77,12 @@ public class OrderItemDto implements Serializable {
         this.id = orderItemId;
     }
 
-    public Long getOrderProductId() {
-        return orderProductId;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setOrderProductId(Long orderProductId) {
-        this.orderProductId = orderProductId;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public String getSupplier() {
@@ -89,16 +93,11 @@ public class OrderItemDto implements Serializable {
         this.supplier = supplier;
     }
 
-    @Override
-    public String toString() {
-        return "OrderItemDto{" +
-                "id=" + id +
-                ", orderProductId=" + orderProductId +
-                ", name='" + name + '\'' +
-                ", quantity=" + quantity +
-                ", price=" + price +
-                ", supplier=" + supplier +
-                '}';
+    public Long getProductVariationId() {
+        return productVariationId;
     }
 
+    public void setProductVariationId(Long productVariationId) {
+        this.productVariationId = productVariationId;
+    }
 }
