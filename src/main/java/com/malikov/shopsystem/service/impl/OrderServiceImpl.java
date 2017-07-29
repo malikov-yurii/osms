@@ -89,9 +89,9 @@ public class OrderServiceImpl implements OrderService {
         }
 
         if (!isWithdrawalStatus(oldStatus) && isWithdrawalStatus(newStatus)) {
-            updateProductQuantityInDbForAllOrderItems(order, INCREASE_IN_STOCK);
-        } else {
             updateProductQuantityInDbForAllOrderItems(order, DECREASE_IN_STOCK);
+        } else {
+            updateProductQuantityInDbForAllOrderItems(order, INCREASE_IN_STOCK);
         }
     }
 

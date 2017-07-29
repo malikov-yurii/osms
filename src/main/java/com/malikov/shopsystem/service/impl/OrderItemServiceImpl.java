@@ -22,6 +22,8 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.malikov.shopsystem.util.OrderStatusUtil.isWithdrawalStatus;
+
 @Service
 @Transactional(readOnly = true)
 public class OrderItemServiceImpl implements OrderItemService {
@@ -54,9 +56,11 @@ public class OrderItemServiceImpl implements OrderItemService {
         OrderItem orderItem = orderItemRepository.findOne(itemId);
 
         if (newProductVariationId != null) {
-            ProductVariation oldProductVariation = orderItem.getProductVariation();
-            oldProductVariation.setQuantity(oldProductVariation.getQuantity() + orderItem.getProductQuantity());
-            productVariationRepository.save(oldProductVariation);
+            if (orderItem.getProduct() != null) {
+                ProductVariation oldProductVariation = orderItem.getProductVariation();
+                oldProductVariation.setQuantity(oldProductVariation.getQuantity() + orderItem.getProductQuantity());
+                productVariationRepository.save(oldProductVariation);
+            }
 
             ProductVariation newProductVariation = productVariationRepository.findOne(newProductVariationId);
             orderItem.setProduct(newProductVariation.getProduct());
@@ -67,9 +71,11 @@ public class OrderItemServiceImpl implements OrderItemService {
             newProductVariation.setQuantity(newProductVariation.getQuantity() - 1);
             productVariationRepository.save(newProductVariation);
         }else {
-            Product oldProduct = orderItem.getProduct();
-            oldProduct.setQuantity(oldProduct.getQuantity() + orderItem.getProductQuantity());
-            productRepository.save(oldProduct);
+            if (orderItem.getProduct() != null) {
+                Product oldProduct = orderItem.getProduct();
+                oldProduct.setQuantity(oldProduct.getQuantity() + orderItem.getProductQuantity());
+                productRepository.save(oldProduct);
+            }
 
             Product newProduct = productRepository.findOne(newProductId);
             orderItem.setProduct(newProduct);
@@ -104,12 +110,14 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     @Transactional
     public BigDecimal updateOrderItemProductQuantity(Long itemId, final int newOrderItemQuantity) {
-        OrderItem orderItem = get(itemId); // TODO: 7/29/2017  potential detached error??
+        OrderItem orderItem = get(itemId);
         final int quantityDelta = newOrderItemQuantity - orderItem.getProductQuantity();
         orderItem.setProductQuantity(newOrderItemQuantity);
         orderItemRepository.save(orderItem);
 
-        updateProductQuantityInDb(orderItem, quantityDelta);
+        if (isWithdrawalStatus(orderItem.getOrder().getStatus())) {
+            updateProductQuantityInDb(orderItem, quantityDelta);
+        }
 
         return recalculateAndUpdateTotalSum(orderItem);
     }
@@ -117,11 +125,11 @@ public class OrderItemServiceImpl implements OrderItemService {
     private void updateProductQuantityInDb(OrderItem orderItem, int quantityDelta) {
         if (orderItem.getProductVariation() != null) {
             ProductVariation productVariation = orderItem.getProductVariation();
-            productVariation.setQuantity(productVariation.getQuantity() + quantityDelta);
+            productVariation.setQuantity(productVariation.getQuantity() - quantityDelta);
             productVariationRepository.save(productVariation);
         } else {
             Product product = orderItem.getProduct();
-            product.setQuantity(product.getQuantity() + quantityDelta);
+            product.setQuantity(product.getQuantity() - quantityDelta);
             productRepository.save(product);
         }
     }
@@ -154,16 +162,22 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Transactional
     public void delete(Long orderItemId) {
         OrderItem orderItem = get(orderItemId);
-        if (orderItem.getProductVariation() != null) {
-            ProductVariation productVariation = orderItem.getProductVariation();
-            productVariation.setQuantity(productVariation.getQuantity() + orderItem.getProductQuantity());
-            productVariationRepository.save(productVariation);
-        } else {
-            Product product = orderItem.getProduct();
-            product.setQuantity(product.getQuantity() + orderItem.getProductQuantity());
-            productRepository.save(product);
+        Order order = orderItem.getOrder();
+
+        if (isWithdrawalStatus(order.getStatus())) {
+            if (orderItem.getProductVariation() != null) {
+                ProductVariation productVariation = orderItem.getProductVariation();
+                productVariation.setQuantity(productVariation.getQuantity() + orderItem.getProductQuantity());
+                productVariationRepository.save(productVariation);
+            } else {
+                Product product = orderItem.getProduct();
+                product.setQuantity(product.getQuantity() + orderItem.getProductQuantity());
+                productRepository.save(product);
+            }
         }
-        orderItemRepository.delete(orderItemId);
+
+        order.getOrderItems().remove(orderItem);
+        orderItemRepository.delete(orderItem);
     }
 
     @Override
