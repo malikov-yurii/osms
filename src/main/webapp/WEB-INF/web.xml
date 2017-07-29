@@ -74,4 +74,9 @@
         <servlet-name>mvc-dispatcher</servlet-name>
     </filter-mapping>
 
+    <!-- Session Configuration -->
+    <session-config>
+        <session-timeout>240</session-timeout>
+    </session-config>
+
 </web-app>

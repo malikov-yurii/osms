@@ -11,10 +11,11 @@ import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/pluck';
 import 'rxjs/add/operator/filter';
 
-import { OrderService, PopupService } from '../services/index';
+import { OrderService } from '../services/orders';
+import { PopupService } from '../services/popup';
 import { Store } from '../store';
 import { Order, StaticDATA } from '../models';
-import { slideToLeft, appear, changeWidth, fadeInOut } from '../ui/animations';
+import { slideToLeft, appear, changeWidth } from '../ui/animations';
 
 
 @Component({
@@ -32,14 +33,16 @@ import { slideToLeft, appear, changeWidth, fadeInOut } from '../ui/animations';
       <div class="service-block">
         <div
           class="btn btn-orders-add"
-          [@fadeInOut]="searchInputState"
           (click)="onAddOrder()"
         >Add New Order</div>
         
-        <div class="search-input-container">  
+        <div
+          class="search-input-container"
+          [class.expanded]="searchInputState === 'expanded'"
+        >  
           <input type="text" name="searchStream" id=""
-            class="input search-input"
             placeholder="Search in orders..."
+            class="input search-input"
             [@changeWidth]="searchInputState"
             #searchControl
             [formControl]="searchStream"
@@ -182,7 +185,8 @@ import { slideToLeft, appear, changeWidth, fadeInOut } from '../ui/animations';
       
     </div>
   `,
-  animations: [slideToLeft(), appear(), changeWidth(), fadeInOut()]
+  animations: [slideToLeft(), appear(), changeWidth()],
+  providers: [PopupService]
 })
 
 export class Orders implements OnInit, OnDestroy {
@@ -338,11 +342,11 @@ export class Orders implements OnInit, OnDestroy {
 
   // Manage customers
   onEditCustomer(customerId) {
-    this.popupService.renderPopup().subscribe(customer => {
+    this.popupService.renderPopup('Update customer').subscribe(customer => {
       this.orderService.saveCustomer(customerId, customer).subscribe();
     });
     this.orderService.getCustomer(customerId).subscribe(customer => {
-      this.popupService.onProvideWithData(customer);
+      this.popupService.onProvideWithFormData(customer);
     })
   }
 

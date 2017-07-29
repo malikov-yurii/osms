@@ -8,24 +8,28 @@ import { Subject } from 'rxjs/Subject';
     <div class="popup-wrapper">
       <div class="popup-overlay" (click)="close()" [@fadeInOut]="animState"></div>
       <div class="popup"
-        [@expandHeight]="hasData"
+        [@expandHeight]="hasData || hasFormData"
         [@flyInOut]="animState"
       >
         <div class="popup__head">
-          Update customer
+          {{ header }}
           
           <div class="popup__close" (click)="close()">
             <i class="material-icons">close</i>
           </div>
         </div>
         
-        <div class="popup__loading" *ngIf="!hasData">
+        <div class="popup__loading" *ngIf="isLoaderVisible()">
           <div class="popup__loading-text">Loading...</div>
           <img src="/assets/images/loading.svg" alt="" class="popup__loading-image">
         </div>
         
+        <div class="popup__content" *ngIf="hasData">
+          <div class="popup__content-text">{{ this.data }}</div>
+        </div>
+        
         <form
-          *ngIf="hasData"
+          *ngIf="hasFormData"
           [formGroup]="form"
           (ngSubmit)="onSubmit()"
         >
@@ -77,6 +81,11 @@ import { Subject } from 'rxjs/Subject';
         min-width: 550px;
         max-width: 100%;
         min-height: 195px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        align-content: stretch;
+        justify-content: center;
         background: #fff;
         border: 1px solid #b9b9b9;
         border-radius: 4px;
@@ -87,6 +96,7 @@ import { Subject } from 'rxjs/Subject';
     .popup__head {
         position: relative;
         padding: 8px 16px;
+        width: 100%;
         background: #f4f4f4;
         border-bottom: 1px solid #ccc;
         border-top-right-radius: 4px;
@@ -110,8 +120,15 @@ import { Subject } from 'rxjs/Subject';
     }
     
     .popup__content {
+        width: 100%;
         padding: 8px 16px;
         font-size: 15px;
+    }
+    
+    .popup__content-text {
+        max-width: 220px;
+        margin: 0 auto;
+        text-align: center;
     }
     
     .popup__formgroup {
@@ -163,6 +180,11 @@ import { Subject } from 'rxjs/Subject';
         max-height: 70px;
         margin: 15px 0 0;
     }
+    
+    form {
+        width: 100%;
+    }
+    
     @media only screen and (max-width: 600px) {
       .popup {
           min-width: initial;
@@ -215,15 +237,22 @@ export class PopupComponent {
   private data = {};
   private form: FormGroup;
   private hasData: boolean = false;
+  private hasFormData: boolean = false;
   private animState: string = 'displaying';
+  public header: string = 'Popup header';
   public destroyedStream = new Subject();
   public submittedStream = new Subject();
 
   constructor(private formBuilder: FormBuilder) {}
 
-  provideWithData(data: {any}) {
+  provideWithData(data: any) {
     this.data = data;
     this.hasData = true;
+  }
+
+  provideWithFormData(data: {any}) {
+    this.data = data;
+    this.hasFormData = true;
     this.form = this.formBuilder.group(data);
   }
 
@@ -239,5 +268,9 @@ export class PopupComponent {
 
   reset() {
     this.form.reset(this.data);
+  }
+
+  isLoaderVisible() {
+    return (this.hasData === false && this.hasFormData === false) ? true : false;
   }
 }

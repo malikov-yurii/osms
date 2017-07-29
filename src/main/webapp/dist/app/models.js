@@ -26,8 +26,8 @@ var Product = (function () {
         this.productId = 0;
         this.productVariationId = 0;
         this.name = '';
-        this.categories = [{ id: '', name: '' }];
-        this.quantity = '1';
+        this.categories = [''];
+        this.quantity = '0';
         this.price = '0';
         this.supplier = '';
     }
@@ -53,5 +53,6 @@ StaticDATA.infoBlocks = {
 };
 StaticDATA.autocompleteBlocks = ['lastName', 'phoneNumber', 'city', 'name'];
 StaticDATA.keycodesNotToAutocomplete = [9, 13, 16, 17, 18, 20]; // Tab, Enter, Shift, Ctrl, Alt, Caps Lock
+StaticDATA.sessionTime = 235 * 60 * 1000; // minutes
 exports.StaticDATA = StaticDATA;
 //# sourceMappingURL=models.js.map

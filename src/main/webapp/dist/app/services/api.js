@@ -12,9 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var Observable_1 = require("rxjs/Observable");
+var Subject_1 = require("rxjs/Subject");
 require("rxjs/add/operator/map");
 require("rxjs/add/operator/catch");
+require("rxjs/add/operator/do");
 require("rxjs/add/observable/throw");
+var sessionTimeout;
+exports.sessionTimeoutStream = new Subject_1.Subject();
 var ApiService = (function () {
     function ApiService(http) {
         this.http = http;
@@ -27,6 +31,35 @@ var ApiService = (function () {
             'Accept': 'application/json'
         });
     }
+    ApiService.prototype.get = function (path) {
+        return this.http.get(path, { headers: this.headersForm })
+            .map(this.checkForError)
+            .catch(function (err) { return Observable_1.Observable.throw(err); })
+            .map(this.getJson)
+            .do(this.updateSession);
+    };
+    ApiService.prototype.post = function (path) {
+        return this.http.post(path, { headers: this.headersForm })
+            .map(this.checkForError)
+            .catch(function (err) { return Observable_1.Observable.throw(err); })
+            .map(this.getJson)
+            .do(this.updateSession);
+    };
+    ApiService.prototype.put = function (path, body, json) {
+        if (json === void 0) { json = false; }
+        var headers = json ? this.headersJson : this.headersForm;
+        return this.http.put(path, body, { headers: headers })
+            .map(this.checkForError)
+            .catch(function (err) { return Observable_1.Observable.throw(err); })
+            .map(this.getJson)
+            .do(this.updateSession);
+    };
+    ApiService.prototype.apiDelete = function (path) {
+        return this.http.delete(path, { headers: this.headersForm })
+            .map(this.checkForError)
+            .catch(function (err) { return Observable_1.Observable.throw(err); })
+            .do(this.updateSession);
+    };
     ApiService.prototype.getJson = function (resp) {
         try {
             return resp.json();
@@ -36,6 +69,9 @@ var ApiService = (function () {
         }
     };
     ApiService.prototype.checkForError = function (resp) {
+        if (resp.url.indexOf('login') !== -1) {
+            return window.location.pathname = '/login';
+        }
         if (resp.status >= 200 && resp.status < 400) {
             return resp;
         }
@@ -46,30 +82,11 @@ var ApiService = (function () {
             throw error;
         }
     };
-    ApiService.prototype.get = function (path) {
-        return this.http.get(path, { headers: this.headersForm })
-            .map(this.checkForError)
-            .catch(function (err) { return Observable_1.Observable.throw(err); })
-            .map(this.getJson);
-    };
-    ApiService.prototype.post = function (path) {
-        return this.http.post(path, { headers: this.headersForm })
-            .map(this.checkForError)
-            .catch(function (err) { return Observable_1.Observable.throw(err); })
-            .map(this.getJson);
-    };
-    ApiService.prototype.put = function (path, body, json) {
-        if (json === void 0) { json = false; }
-        var headers = json ? this.headersJson : this.headersForm;
-        return this.http.put(path, body, { headers: headers })
-            .map(this.checkForError)
-            .catch(function (err) { return Observable_1.Observable.throw(err); })
-            .map(this.getJson);
-    };
-    ApiService.prototype.apiDelete = function (path) {
-        return this.http.delete(path, { headers: this.headersForm })
-            .map(this.checkForError)
-            .catch(function (err) { return Observable_1.Observable.throw(err); });
+    ApiService.prototype.updateSession = function () {
+        clearTimeout(sessionTimeout);
+        sessionTimeout = setTimeout(function () {
+            exports.sessionTimeoutStream.next();
+        }, 5000);
     };
     return ApiService;
 }());

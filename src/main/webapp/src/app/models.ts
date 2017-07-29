@@ -23,8 +23,8 @@ export class Product {
   productId?: number = 0;
   productVariationId?: number = 0;
   name: string = '';
-  categories?: {id, name}[] = [{id: '', name: ''}];
-  quantity: string = '1';
+  categories?: string[] = [''];
+  quantity: string = '0';
   price: string = '0';
   supplier: string = '';
 }
@@ -42,5 +42,7 @@ export class StaticDATA {
   static readonly autocompleteBlocks = ['lastName', 'phoneNumber', 'city', 'name'];
 
   static readonly keycodesNotToAutocomplete = [9, 13, 16, 17, 18, 20]; // Tab, Enter, Shift, Ctrl, Alt, Caps Lock
+
+  static readonly sessionTime = 235 * 60 * 1000; // minutes
 }
 

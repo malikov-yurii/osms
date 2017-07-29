@@ -4,4 +4,3 @@ export { StoreHelper } from './store-helper';
 export { SearchService } from './search';
 export { ProductService } from './products';
 export { CustomerService } from './customers';
-export { PopupService } from './popup';

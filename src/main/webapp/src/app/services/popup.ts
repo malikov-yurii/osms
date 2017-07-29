@@ -10,18 +10,24 @@ export class PopupService {
 
   constructor(private compiler: ComponentFactoryResolver) {}
 
-  renderPopup() {
+  renderPopup(header, data?: any) {
     let popupFactory = this.compiler.resolveComponentFactory(PopupComponent);
     this.popupComponent = this.viewContainerRef.createComponent(popupFactory);
 
     this.popupComponent.instance.destroyedStream.delay(180).subscribe(() => {
       this.popupComponent.destroy();
     });
+
+    this.popupComponent.instance.header = header;
+    if (data) {
+      this.popupComponent.instance.provideWithData(data);
+    }
+
     return this.popupComponent.instance.submittedStream;
   }
 
-  onProvideWithData(data: {any}) {
-    this.popupComponent.instance.provideWithData(data);
+  onProvideWithFormData(data: {any}) {
+    this.popupComponent.instance.provideWithFormData(data);
   }
 
 

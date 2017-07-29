@@ -17,17 +17,21 @@ var PopupService = (function () {
         this.compiler = compiler;
         this.popupComponent = undefined;
     }
-    PopupService.prototype.renderPopup = function () {
+    PopupService.prototype.renderPopup = function (header, data) {
         var _this = this;
         var popupFactory = this.compiler.resolveComponentFactory(index_1.PopupComponent);
         this.popupComponent = this.viewContainerRef.createComponent(popupFactory);
         this.popupComponent.instance.destroyedStream.delay(180).subscribe(function () {
             _this.popupComponent.destroy();
         });
+        this.popupComponent.instance.header = header;
+        if (data) {
+            this.popupComponent.instance.provideWithData(data);
+        }
         return this.popupComponent.instance.submittedStream;
     };
-    PopupService.prototype.onProvideWithData = function (data) {
-        this.popupComponent.instance.provideWithData(data);
+    PopupService.prototype.onProvideWithFormData = function (data) {
+        this.popupComponent.instance.provideWithFormData(data);
     };
     return PopupService;
 }());
