@@ -12,7 +12,7 @@ var Order = (function () {
         this.totalSum = 0;
         this.paymentType = 'NP';
         this.date = '';
-        this.status = 'SHP';
+        this.status = 'NEW';
         this.comment = '';
         this.orderItemDtos = [new Product()];
     }

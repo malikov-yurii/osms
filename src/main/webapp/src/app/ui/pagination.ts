@@ -64,7 +64,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
     .pagination {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-end;
       margin: 20px 0;
       font-size: 15px;
     }
@@ -90,12 +90,30 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
       color: #fff;
     }
     li.disabled,
-    li.disabled:hover
+    li.disabled:hover,
     li.spread,
     li.spread:hover {
         background: transparent;
         color: #999;
         cursor: default;
+    }
+    @media only screen and (max-width: 500px) {
+      .pagination {
+          flex-wrap: wrap;
+      }
+      
+      .pagination__info {
+          display: none;
+      }
+      
+      .pagination__right {
+          margin-left: auto;
+      }
+      
+      li.spread {
+          padding-left: 2px;
+          padding-right: 2px;
+      }    
     }
   `]
 })

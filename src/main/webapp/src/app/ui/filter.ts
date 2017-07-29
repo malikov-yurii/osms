@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 @Component({
   selector: 'filter',
   template: `
-    <form class="filter-wrapper" [formGroup]="form">
+    <form class="filter-container" [formGroup]="form">
       <div
         class="filter"
         *ngFor="let filter of filters | keys"
@@ -47,6 +47,18 @@ import { FormGroup, FormBuilder } from '@angular/forms';
         width: 140px;
         cursor: pointer;
         font-size: 15px;
+    }
+    @media only screen and (max-width: 500px) {
+      .filter {
+          justify-content: space-between;
+      }
+      .filter__label {
+          width: 42%;
+      }
+      
+      .filter__select {
+          width: 47%;
+      }
     }
   `]
 })

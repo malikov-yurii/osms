@@ -21,7 +21,7 @@ var ContenteditableModel = (function () {
             this.lastViewModel = this.model;
             this.refreshView();
         }
-        if (changes['model'].previousValue && changes['model'].previousValue != this.lastViewModel) {
+        if (changes['model'].previousValue !== undefined && changes['model'].previousValue != this.lastViewModel) {
             this.changed.emit(this.lastViewModel);
         }
     };

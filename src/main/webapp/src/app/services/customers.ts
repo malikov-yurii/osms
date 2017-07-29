@@ -34,4 +34,8 @@ export class CustomerService {
     });
   }
 
+  purgeStore() {
+    this.storeHelper.update(this.customersPath, []);
+  }
+
 }

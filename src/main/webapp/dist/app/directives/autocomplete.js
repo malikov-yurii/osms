@@ -21,7 +21,7 @@ var Autocomplete = (function () {
         this.selected = new core_1.EventEmitter();
         this.fieldsToAutocomplete = models_1.StaticDATA.autocompleteBlocks;
         this.refreshTimer = undefined;
-        this.searchRequired = false;
+        this.searchRequired = true;
         this.searchInProgress = false;
         this.listComponent = undefined;
     }
@@ -38,7 +38,7 @@ var Autocomplete = (function () {
                         return false;
                     case 'Enter':
                         this.listComponent.instance.selectedStream.next();
-                        return true;
+                        return false;
                     case 'NumpadEnter':
                         this.listComponent.instance.selectedStream.next();
                         return false;
@@ -57,10 +57,11 @@ var Autocomplete = (function () {
     };
     Autocomplete.prototype.onKeyUp = function (e) {
         var _this = this;
+        this.searchRequired = true;
         this.term = e.target.innerText;
         if (this.term && !this.refreshTimer) {
             this.refreshTimer = setTimeout(function () {
-                if (!_this.searchInProgress && _this.term) {
+                if (!_this.searchInProgress && _this.term && _this.searchRequired) {
                     _this.doSearch();
                 }
                 else {
@@ -79,13 +80,14 @@ var Autocomplete = (function () {
         var _this = this;
         this.refreshTimer = undefined;
         this.searchInProgress = true;
-        this.orderService.autocomplete(this.types, this.term).subscribe(function (resp) {
+        this.sub = this.orderService.autocomplete(this.types, this.term).subscribe(function (resp) {
             _this.searchInProgress = false;
             if (_this.searchRequired) {
                 _this.searchRequired = false;
                 _this.doSearch();
             }
             else {
+                _this.searchRequired = true;
                 _this.renderList(resp);
             }
         });
@@ -110,6 +112,9 @@ var Autocomplete = (function () {
         this.refreshTimer = undefined;
         this.searchInProgress = false;
         this.searchRequired = false;
+        if (this.sub) {
+            this.sub.unsubscribe();
+        }
         if (this.listComponent) {
             this.listComponent.destroy();
             this.listComponent = undefined;

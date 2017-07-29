@@ -77,6 +77,10 @@ export class OrderService {
 
   updateOrderInfoWithObject(orderId, object) {
     this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
+    this.api.put(
+      `${this.ordersPath}/${orderId}`,
+      `customerId=${object.customerId}`
+    ).subscribe();
   }
 
 

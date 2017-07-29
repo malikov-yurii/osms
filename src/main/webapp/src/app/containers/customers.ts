@@ -19,7 +19,7 @@ import { CustomerService } from '../services/index';
 @Component({
   template: `
 
-    <div class="wrapper">
+    <div class="wrapper customers-page">
     
       <div class="service-block">
         <input type="text" name="searchStream" id=""
@@ -33,30 +33,31 @@ import { CustomerService } from '../services/index';
         >
       </div>
         
-      
-      <table class="table table-customers">
-        <thead>
-          <th class="headcell headcell--id">ID</th>
-          <th class="headcell headcell--name">Name</th>
-          <th class="headcell headcell--lastName">Last name</th>
-          <th class="headcell headcell--phone">Phone</th>
-          <th class="headcell headcell--city">City</th>
-          <th class="headcell headcell--post">Post</th>
-          <th class="headcell headcell--email">Email</th>
-          <th class="headcell headcell--comment">Comment</th>
-        </thead>
-        <tbody>
-          <tr
-            *ngFor="let customer of customers$ | async"
-          >
-            <td
-              *ngFor="let key of customer | keys"
+      <div class="table-container">
+        <table class="table table-customers">
+          <thead>
+            <th class="headcell headcell--id">ID</th>
+            <th class="headcell headcell--name">Name</th>
+            <th class="headcell headcell--lastName">Last name</th>
+            <th class="headcell headcell--phone">Phone</th>
+            <th class="headcell headcell--city">City</th>
+            <th class="headcell headcell--post">Post</th>
+            <th class="headcell headcell--email">Email</th>
+            <th class="headcell headcell--comment">Comment</th>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let customer of customers$ | async"
             >
-              {{ customer[key] }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <td
+                *ngFor="let key of customer | keys"
+              >
+                {{ customer[key] }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       
       <pagination
         [total]="filteredCustomers$ | async"
@@ -69,7 +70,7 @@ import { CustomerService } from '../services/index';
   `,
   animations: [
     trigger('changeWidth', [
-      state('collapsed', style({width: '190px'})),
+      state('collapsed', style({width: '*'})),
       state('expanded', style({width: '300px'})),
       transition('collapsed <=> expanded', animate('.3s ease')),
     ])
@@ -136,6 +137,7 @@ export class Customers implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subs.forEach(sub => sub.unsubscribe());
+    this.customerService.purgeStore();
   }
 
   /* Pagination */

@@ -71,9 +71,9 @@ import { Subject } from 'rxjs/Subject';
     
     .popup {
         position: absolute;
-        top: 50%;
+        top: 12%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: translateX(-50%);
         min-width: 550px;
         max-width: 100%;
         min-height: 195px;
@@ -163,6 +163,27 @@ import { Subject } from 'rxjs/Subject';
         max-height: 70px;
         margin: 15px 0 0;
     }
+    @media only screen and (max-width: 600px) {
+      .popup {
+          min-width: initial;
+          width: 300px;
+          top: 0;
+          margin: 30px 0 50px;
+      }
+      
+      .popup__label {
+          display: block;
+          width: 100%;
+          font-size: 13px;
+          color: #999;
+      }
+      
+      .popup__input {
+          display: block;
+          width: 100%;
+          margin: 0;
+      }    
+    }
   `],
   animations: [
     trigger('fadeInOut', [
@@ -176,11 +197,11 @@ import { Subject } from 'rxjs/Subject';
     ]),
     trigger('flyInOut', [
       transition(':enter', [
-        style({opacity: 0, transform: 'translate(-90%, -50%)'}),
-        animate('0.2s ease', style({opacity: 1, transform: 'translate(-50%, -50%)'}))
+        style({opacity: 0, transform: 'translateX(-90%)'}),
+        animate('0.2s ease', style({opacity: 1, transform: 'translateX(-50%)'}))
       ]),
       transition('* => destroying', [
-        animate('0.2s ease', style({opacity: 0, transform: 'translate(-10%, -50%)'}))
+        animate('0.2s ease', style({opacity: 0, transform: 'translateX(-10%)'}))
       ])
     ]),
     trigger('expandHeight', [

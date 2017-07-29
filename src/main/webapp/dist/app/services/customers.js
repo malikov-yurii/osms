@@ -39,6 +39,9 @@ var CustomerService = (function () {
             filtered: customerResult.length
         });
     };
+    CustomerService.prototype.purgeStore = function () {
+        this.storeHelper.update(this.customersPath, []);
+    };
     return CustomerService;
 }());
 CustomerService = __decorate([

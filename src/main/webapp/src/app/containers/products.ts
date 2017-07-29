@@ -19,7 +19,7 @@ import { ProductService } from '../services/index';
 @Component({
   template: `
 
-    <div class="wrapper">
+    <div class="wrapper products-page">
     
       <div class="service-block">
       
@@ -45,47 +45,48 @@ import { ProductService } from '../services/index';
       </div>
       
         
-      
-      <table class="table table-products">
-        <thead>
-          <th class="headcell headcell--id">ID</th>
-          <th class="headcell headcell--varId">Variation ID</th>
-          <th class="headcell headcell--name">Name</th>
-          <th class="headcell headcell--category">Category</th>
-          <th class="headcell headcell--price">Price</th>
-          <th class="headcell headcell--qty">Quantity</th>
-          <th class="headcell headcell--unlim">Unlimited</th>
-          <th class="headcell headcell--supplier">Supplier</th>
-        </thead>
-        <tbody>
-          <tr
-            *ngFor="let product of products$ | async; let odd = odd; let even = even;"
-            [ngClass]="{'product': true, 'odd': odd, 'even': even}"
-          >
-            <ng-container
-              *ngFor="let key of product | keys"
+      <div class="table-container">
+        <table class="table table-products">
+          <thead>
+            <th class="product-cell--id numeric">ID</th>
+            <th class="product-cell--varId numeric">Variation ID</th>
+            <th class="product-cell--name">Name</th>
+            <th class="product-cell--category">Category</th>
+            <th class="product-cell--price numeric">Price</th>
+            <th class="product-cell--qty numeric">Quantity</th>
+            <th class="product-cell--unlim">Unlimited</th>
+            <th class="product-cell--supplier">Supplier</th>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let product of products$ | async; let odd = odd; let even = even;"
+              [ngClass]="{'product': true, 'odd': odd, 'even': even}"
             >
-              
-              <ng-template [ngIf]="isEditable(key)">
-                <td
-                  class="product-cell--{{ key }} editable"
-                  contenteditable
-                  [(contenteditableModel)]="product[key]"
-                  (contentChanged)="onUpdateProductField(product.id, product.variationId, key, $event)"
-                ></td>
-              </ng-template>
-              
-              
-              <ng-template [ngIf]="!isEditable(key)">
-                <td class="product-cell--{{ key }}">
-                  {{ product[key] }}
-                </td>
-              </ng-template>
-              
-            </ng-container>
-          </tr>
-        </tbody>
-      </table>
+              <ng-container
+                *ngFor="let key of product | keys"
+              >
+                
+                <ng-template [ngIf]="isEditable(key)">
+                  <td
+                    class="product-cell--{{ key }} editable"
+                    contenteditable
+                    [(contenteditableModel)]="product[key]"
+                    (contentChanged)="onUpdateProductField(product.id, product.variationId, key, $event)"
+                  ></td>
+                </ng-template>
+                
+                
+                <ng-template [ngIf]="!isEditable(key)">
+                  <td class="product-cell--{{ key }}">
+                    {{ product[key] }}
+                  </td>
+                </ng-template>
+                
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       
       <pagination
         [total]="filteredProducts$ | async"
@@ -98,7 +99,7 @@ import { ProductService } from '../services/index';
   `,
   animations: [
     trigger('changeWidth', [
-      state('collapsed', style({width: '190px'})),
+      state('collapsed', style({width: '*'})),
       state('expanded', style({width: '300px'})),
       transition('collapsed <=> expanded', animate('.3s ease')),
     ])
@@ -163,7 +164,7 @@ export class Products implements OnInit, OnDestroy {
     let filterSource = this.filterStream
       .map(filterData => {
         this.filterData = filterData;
-        return {search: this.searchQuery, page: this.page, length: this.pageLength, filterData: filterData}
+        return {search: this.searchQuery, page: 1, length: this.pageLength, filterData: filterData}
       });
 
     let source = storeSource
@@ -180,7 +181,7 @@ export class Products implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subs.forEach(sub => sub.unsubscribe());
-    // this.productService.purgeStore();
+    this.productService.purgeStore();
   }
 
   /* Pagination */

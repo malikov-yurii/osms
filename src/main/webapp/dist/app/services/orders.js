@@ -60,6 +60,7 @@ var OrderService = (function () {
     };
     OrderService.prototype.updateOrderInfoWithObject = function (orderId, object) {
         this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
+        this.api.put(this.ordersPath + "/" + orderId, "customerId=" + object.customerId).subscribe();
     };
     OrderService.prototype.addProduct = function (orderId) {
         var _this = this;

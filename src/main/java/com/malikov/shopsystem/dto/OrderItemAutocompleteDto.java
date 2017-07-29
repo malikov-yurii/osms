@@ -8,20 +8,20 @@ public class OrderItemAutocompleteDto {
    // TODO: 3/25/2017    get rid of label. use javascript concatenation instead
     private String label;
 
-    private Long productId;
+    private Long orderProductId;
 
     private Long productVariationId;
 
-    private String orderItemName;
+    private String name;
 
-    private BigDecimal orderItemPrice;
+    private BigDecimal price;
 
-    public OrderItemAutocompleteDto(String label, Long productId, Long productVariationId, String orderItemName, BigDecimal orderItemPrice) {
+    public OrderItemAutocompleteDto(String label, Long orderProductId, Long productVariationId, String name, BigDecimal price) {
         this.label = label;
-        this.productId = productId;
+        this.orderProductId = orderProductId;
         this.productVariationId = productVariationId;
-        this.orderItemName = orderItemName;
-        this.orderItemPrice = orderItemPrice.setScale(0, RoundingMode.HALF_UP);
+        this.name = name;
+        this.price = price.setScale(0, RoundingMode.HALF_UP);
     }
 
     public String getLabel() {
@@ -33,11 +33,11 @@ public class OrderItemAutocompleteDto {
     }
 
     public Long getProductId() {
-        return productId;
+        return orderProductId;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProductId(Long orderProductId) {
+        this.orderProductId = orderProductId;
     }
 
     public Long getProductVariationId() {
@@ -49,18 +49,18 @@ public class OrderItemAutocompleteDto {
     }
 
     public String getOrderItemName() {
-        return orderItemName;
+        return name;
     }
 
-    public void setOrderItemName(String orderItemName) {
-        this.orderItemName = orderItemName;
+    public void setOrderItemName(String name) {
+        this.name = name;
     }
 
     public BigDecimal getOrderItemPrice() {
-        return orderItemPrice;
+        return price;
     }
 
-    public void setOrderItemPrice(BigDecimal orderItemPrice) {
-        this.orderItemPrice = orderItemPrice.setScale(0, RoundingMode.HALF_UP);
+    public void setOrderItemPrice(BigDecimal price) {
+        this.price = price.setScale(0, RoundingMode.HALF_UP);
     }
 }

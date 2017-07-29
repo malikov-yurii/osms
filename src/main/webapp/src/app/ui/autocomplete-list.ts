@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/map';
@@ -9,8 +9,9 @@ import { AutocompleteItem } from '../models';
 @Component({
   template: `
     <ul class="autocomplete"
-    [style.top]="styleTop + 'px'"
-    [style.left]="styleLeft + 'px'"
+      
+      [style.top]="styleTop + 'px'"
+      [style.left]="styleLeft + 'px'"
     >
       
       <li 
@@ -36,7 +37,7 @@ export class AutocompleteList implements OnInit {
   public styleTop;
   public styleLeft;
 
-  constructor () {
+  constructor (private viewRef: ViewContainerRef) {
 
     this.selectedSource = this.selectedStream.map(() => {
       return Observable.of(this.list[this.selectedIndex]);
@@ -49,6 +50,7 @@ export class AutocompleteList implements OnInit {
     this.focusMoved.subscribe(direction => {
       if (direction === 'next' && this.selectedIndex < this.list.length - 1) {
         this.selectedIndex++;
+        this.scrollList();
       } else if (direction === 'prev' && this.selectedIndex > 0) {
         this.selectedIndex--;
       }
@@ -64,7 +66,10 @@ export class AutocompleteList implements OnInit {
     this.selectedIndex = index;
   }
 
-
+  scrollList() {
+    let activeEl = this.viewRef.element.nativeElement.querySelector('.active');
+    activeEl.scrollIntoViewIfNeeded();
+  }
 
 
 

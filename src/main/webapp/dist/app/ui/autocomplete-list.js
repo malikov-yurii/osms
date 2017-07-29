@@ -15,8 +15,9 @@ var Observable_1 = require("rxjs/Observable");
 require("rxjs/add/operator/map");
 require("rxjs/add/observable/of");
 var AutocompleteList = (function () {
-    function AutocompleteList() {
+    function AutocompleteList(viewRef) {
         var _this = this;
+        this.viewRef = viewRef;
         this.list = [];
         this.focusMoved = new Subject_1.Subject();
         this.selectedStream = new Subject_1.Subject();
@@ -30,6 +31,7 @@ var AutocompleteList = (function () {
         this.focusMoved.subscribe(function (direction) {
             if (direction === 'next' && _this.selectedIndex < _this.list.length - 1) {
                 _this.selectedIndex++;
+                _this.scrollList();
             }
             else if (direction === 'prev' && _this.selectedIndex > 0) {
                 _this.selectedIndex--;
@@ -42,13 +44,17 @@ var AutocompleteList = (function () {
     AutocompleteList.prototype.setSelected = function (index) {
         this.selectedIndex = index;
     };
+    AutocompleteList.prototype.scrollList = function () {
+        var activeEl = this.viewRef.element.nativeElement.querySelector('.active');
+        activeEl.scrollIntoViewIfNeeded();
+    };
     return AutocompleteList;
 }());
 AutocompleteList = __decorate([
     core_1.Component({
-        template: "\n    <ul class=\"autocomplete\"\n    [style.top]=\"styleTop + 'px'\"\n    [style.left]=\"styleLeft + 'px'\"\n    >\n      \n      <li \n        *ngFor=\"let item of list; let i = index;\"\n        (click)=\"onSelect(i)\"\n        (mouseenter)=\"setSelected(i)\"\n        [class.active]=\"i === selectedIndex\"\n      >\n        {{ item.label }}\n      </li>\n    \n    </ul>\n  "
+        template: "\n    <ul class=\"autocomplete\"\n      \n      [style.top]=\"styleTop + 'px'\"\n      [style.left]=\"styleLeft + 'px'\"\n    >\n      \n      <li \n        *ngFor=\"let item of list; let i = index;\"\n        (click)=\"onSelect(i)\"\n        (mouseenter)=\"setSelected(i)\"\n        [class.active]=\"i === selectedIndex\"\n      >\n        {{ item.label }}\n      </li>\n    \n    </ul>\n  "
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [core_1.ViewContainerRef])
 ], AutocompleteList);
 exports.AutocompleteList = AutocompleteList;
 //# sourceMappingURL=autocomplete-list.js.map

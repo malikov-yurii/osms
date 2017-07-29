@@ -27,24 +27,27 @@ import { Order, StaticDATA } from '../models';
       <div class="consoleorders"  style="display: inline-block;" (click)="console()">Console</div>
     </div>
       
-    <div class="wrapper">
+    <div class="wrapper order-page">
     
       <div class="service-block">
         <div
           class="btn btn-orders-add"
+          [@fadeInOut]="searchInputState"
           (click)="onAddOrder()"
         >Add New Order</div>
-  
-        <input type="text" name="searchStream" id=""
-          class="input search-input"
-          placeholder="Search in orders..."
-          [@changeWidth]="searchExpanded"
-          #searchControl
-          [formControl]="searchStream"
-          [(ngModel)]="searchQuery"
-          (focusin)="toggleAnimState()"
-          (focusout)="toggleAnimState()"
-        >
+        
+        <div class="search-input-container">  
+          <input type="text" name="searchStream" id=""
+            class="input search-input"
+            placeholder="Search in orders..."
+            [@changeWidth]="searchInputState"
+            #searchControl
+            [formControl]="searchStream"
+            [(ngModel)]="searchQuery"
+            (focusin)="toggleAnimState()"
+            (focusout)="toggleAnimState()"
+          >
+        </div>
          
       </div>
       
@@ -59,7 +62,7 @@ import { Order, StaticDATA } from '../models';
     
       <div
         class="order order--{{ order.status }}"
-        [@fadeInOut]
+        [@appear]
         *ngFor="let order of orders$ | async; trackBy: trackById"
        >
       
@@ -70,7 +73,7 @@ import { Order, StaticDATA } from '../models';
           </div>
           
           <ng-container 
-            *ngFor="let key of order | keys:['id', 'customerId', 'orderItemDtos', 'date']"
+            *ngFor="let key of order | keys:['id', 'customerId', 'orderItemDtos']"
           >
           
             <ng-template [ngIf]="!hasInput(key)">
@@ -178,7 +181,7 @@ import { Order, StaticDATA } from '../models';
     </div>
   `,
   animations: [
-    trigger('fadeInOut', [
+    trigger('appear', [
       transition(':enter', [
         style({opacity: 0.001, height: 10}),
         group([
@@ -194,8 +197,13 @@ import { Order, StaticDATA } from '../models';
       ])
     ]),
     trigger('changeWidth', [
-      state('collapsed', style({width: '190px'})),
+      state('collapsed', style({width: '*'})),
       state('expanded', style({width: '300px'})),
+      transition('collapsed <=> expanded', animate('.3s ease')),
+    ]),
+    trigger('fadeInOut', [
+      state('collapsed', style({opacity: '*'})),
+      state('expanded', style({opacity: 0})),
       transition('collapsed <=> expanded', animate('.3s ease')),
     ])
   ]
@@ -206,7 +214,7 @@ export class Orders implements OnInit, OnDestroy {
 
   private searchStream: FormControl = new FormControl();
   searchQuery: string = '';
-  searchExpanded = 'collapsed';
+  searchInputState = 'collapsed';
   filteredOrders$: Observable<number>;
 
   totalOrders: number = 0;
@@ -416,7 +424,7 @@ export class Orders implements OnInit, OnDestroy {
   }
 
   toggleAnimState() {
-    this.searchExpanded = this.searchExpanded === 'collapsed' ? 'expanded' : 'collapsed';
+    this.searchInputState = this.searchInputState === 'collapsed' ? 'expanded' : 'collapsed';
   }
 
 

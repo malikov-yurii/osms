@@ -11,7 +11,7 @@ export class Order {
   totalSum: number = 0;
   paymentType: string = 'NP';
   date: string = '';
-  status: string = 'SHP';
+  status: string = 'NEW';
   comment: string = '';
   orderItemDtos: Product[] = [new Product()];
 }
