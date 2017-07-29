@@ -56,7 +56,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         OrderItem orderItem = orderItemRepository.findOne(itemId);
 
         if (newProductVariationId != null) {
-            if (orderItem.getProduct() != null) {
+            if (orderItem.getProductVariation() != null) {
                 ProductVariation oldProductVariation = orderItem.getProductVariation();
                 oldProductVariation.setQuantity(oldProductVariation.getQuantity() + orderItem.getProductQuantity());
                 productVariationRepository.save(oldProductVariation);
@@ -64,12 +64,15 @@ public class OrderItemServiceImpl implements OrderItemService {
 
             ProductVariation newProductVariation = productVariationRepository.findOne(newProductVariationId);
             orderItem.setProduct(newProductVariation.getProduct());
+            orderItem.setProductVariation(newProductVariation);
             orderItem.setProductName(newProductVariation.getProduct().getName() + " "
                     + newProductVariation.getVariationValue().getName());
             orderItem.setProductPrice(newProductVariation.getPrice());
 
-            newProductVariation.setQuantity(newProductVariation.getQuantity() - 1);
-            productVariationRepository.save(newProductVariation);
+            if (isWithdrawalStatus(orderItem.getOrder().getStatus())) {
+                newProductVariation.setQuantity(newProductVariation.getQuantity() - 1);
+                productVariationRepository.save(newProductVariation);
+            }
         }else {
             if (orderItem.getProduct() != null) {
                 Product oldProduct = orderItem.getProduct();
@@ -82,8 +85,10 @@ public class OrderItemServiceImpl implements OrderItemService {
             orderItem.setProductName(newProduct.getName());
             orderItem.setProductPrice(newProduct.getPrice());
 
-            newProduct.setQuantity(newProduct.getQuantity() - 1);
-            productRepository.save(newProduct);
+            if (isWithdrawalStatus(orderItem.getOrder().getStatus())) {
+                newProduct.setQuantity(newProduct.getQuantity() - 1);
+                productRepository.save(newProduct);
+            }
         }
 
         orderItem.setProductQuantity(1);
