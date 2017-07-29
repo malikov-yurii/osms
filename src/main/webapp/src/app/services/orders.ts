@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/timeout';
 import 'rxjs/add/observable/of';
 
 import { ApiService} from './api';
@@ -80,7 +79,7 @@ export class OrderService {
     this.api.put(
       `${this.ordersPath}/${orderId}/set-customer`,
       `customerId=${object.customerId}`
-    ).timeout(2500).subscribe();
+    ).subscribe();
   }
 
 
@@ -139,12 +138,12 @@ export class OrderService {
       this.api.put(
         `order-item/${productId}`,
         `productVariationId=${data.productVariationId}`
-      ).timeout(500).subscribe();
+      ).subscribe();
     } else {
       this.api.put(
         `order-item/${productId}`,
         `productId=${data.productId}`
-      ).timeout(500).subscribe();
+      ).subscribe();
     }
   }
 

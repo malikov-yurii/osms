@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var Observable_1 = require("rxjs/Observable");
 require("rxjs/add/operator/do");
-require("rxjs/add/operator/timeout");
 require("rxjs/add/observable/of");
 var api_1 = require("./api");
 var store_helper_1 = require("./store-helper");
@@ -60,7 +59,7 @@ var OrderService = (function () {
     };
     OrderService.prototype.autocompleteInfo = function (orderId, object) {
         this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
-        this.api.put(this.ordersPath + "/" + orderId + "/set-customer", "customerId=" + object.customerId).timeout(2500).subscribe();
+        this.api.put(this.ordersPath + "/" + orderId + "/set-customer", "customerId=" + object.customerId).subscribe();
     };
     OrderService.prototype.addProduct = function (orderId) {
         var _this = this;
@@ -94,10 +93,10 @@ var OrderService = (function () {
     OrderService.prototype.autocompleteProduct = function (orderId, productId, data) {
         this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, data);
         if (data.productVariationId) {
-            this.api.put("order-item/" + productId, "productVariationId=" + data.productVariationId).timeout(500).subscribe();
+            this.api.put("order-item/" + productId, "productVariationId=" + data.productVariationId).subscribe();
         }
         else {
-            this.api.put("order-item/" + productId, "productId=" + data.productId).timeout(500).subscribe();
+            this.api.put("order-item/" + productId, "productId=" + data.productId).subscribe();
         }
     };
     OrderService.prototype.deleteProduct = function (orderId, productId) {
