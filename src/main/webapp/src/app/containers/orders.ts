@@ -55,6 +55,138 @@ import { slideToLeft, appear, changeWidth } from '../ui/animations';
          
       </div>
       
+      <div class="orders">
+        <div
+          class="order order--{{ order.status }}"
+          [@appear]
+          *ngFor="let order of orders$ | async"
+         >
+        
+          <div class="order-info">
+          
+            <div class="order-info__block order-info__block--id">
+              {{ order.id }}
+            </div>
+            
+            <ng-container 
+              *ngFor="let key of order | keys:['id', 'customerId', 'orderItemDtos']"
+            >
+              
+              <ng-container *ngIf="!hasInput(key)">
+            
+                <ng-template [ngIf]="key !== 'date'">
+                  <div 
+                    class="order-info__block order-info__block--{{ key }}"
+                    contenteditable                
+                    [autocomplete]="['info', key]"
+                    [(contenteditableModel)]="order[key]"
+                    (selectedAutocomplete)="onAutocompleteInfo(order.id, $event)"
+                    (contentChanged)="onUpdateInfoField(order.id, key, $event)"
+                  ></div>  
+                </ng-template>
+              
+                <ng-template [ngIf]="key === 'date'">
+                  <div class="order-info__block order-info__block--date">
+                    {{ order[key] | date:'dd MMM HH:mm' }}
+                  </div>  
+                </ng-template>
+                
+              </ng-container>
+            
+              <ng-template [ngIf]="hasInput(key)">
+                <div class="order-info__block order-info__block--{{ key }}">
+                  <select
+                    name="{{ key }}"
+                    (change)="onUpdateInfoInput(order.id, key, $event.target.value)"
+                  >
+                    <option
+                     *ngFor="let value of infoBlocks[key]"
+                     [value]="value"
+                     [attr.selected]="value === order[key] ? '' : null"
+                    >
+                      {{ value }}
+                    </option>
+                  </select>
+                </div>  
+              </ng-template>
+            
+            </ng-container>
+          </div>
+         
+         
+         
+          <div class="order-manage">
+            <div title="Add product" class="order-manage__block order-manage__block--add" (click)="onAddProduct(order.id)">
+              <i class="material-icons">add_box</i>
+              <div class="order-manage__text">Add product</div>
+            </div>
+            <div title="Save customer" class="order-manage__block order-manage__block--save"
+              *ngIf="order.customerId === 0"
+              (click)="onPersistCustomer(order.id)"
+            >
+              <i class="material-icons">save</i>
+              <div class="order-manage__text">Save customer</div>
+            </div>
+            <div title="Edit customer" class="order-manage__block order-manage__block--edit"
+              *ngIf="order.customerId !== 0"
+              (click)="onEditCustomer(order.customerId)"
+            >
+              <i class="material-icons">mode_edit</i>
+              <div class="order-manage__text">Edit customer</div>
+            </div>
+            <div title="Delete order" class="order-manage__block order-manage__block--delete" (click)="onDeleteOrder(order.id)">
+              <i class="material-icons">delete_forever</i>
+              <div class="order-manage__text">Delete order</div>
+            </div>
+          </div>
+          
+          
+          <div class="order-products">
+            <div
+              *ngFor="let product of order.orderItemDtos; let odd = odd, let even = even;"
+              [ngClass]="{'order-product': true, odd: odd, even: even}"
+            >
+            
+              <ng-container
+                *ngFor="let key of product | keys:[
+                  'id', 'productId', 'productVariationId', 'categories', 'supplier'
+                ];"
+              >
+              
+                <ng-template [ngIf]="!hasInput(key)">
+                  <div
+                    class="order-product__block order-product__block--{{ key }}"
+                    contenteditable
+                    #productBlock
+                    [autocomplete]="['product', key]"
+                    [(contenteditableModel)]="product[key]"
+                    (selectedAutocomplete)="onAutocompleteProduct(order.id, product.id, $event)"
+                    (contentChanged)="onUpdateProductField(order.id, product.id, key, $event)"
+                  ></div>  
+                </ng-template>
+            
+                <ng-template [ngIf]="hasInput(key)">
+                  <div class="order-product__block order-product__block--{{ key }}">
+                    <input
+                      type="number"
+                      value="{{ product[key] }}"
+                      (blur)="onUpdateProductInput(order.id, product.id, key, $event.target.value)"
+                    >
+                  </div>  
+                </ng-template>
+                  
+              </ng-container>
+  
+              <div class="order-product__block order-product__block--delete" (click)="onDeleteProduct(order.id, product.id)">
+                <i class="material-icons">delete</i>            
+              </div>
+              
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
       
       <pagination
         [total]="totalOrders"
@@ -63,126 +195,6 @@ import { slideToLeft, appear, changeWidth } from '../ui/animations';
         (dataChanged)="paginationChanged($event)"
       >
       </pagination>
-    
-      <div
-        class="order order--{{ order.status }}"
-        [@appear]
-        *ngFor="let order of orders$ | async"
-       >
-      
-        <div class="order-info">
-        
-          <div class="order-info__block order-info__block--id">
-            {{ order.id }}
-          </div>
-          
-          <ng-container 
-            *ngFor="let key of order | keys:['id', 'customerId', 'orderItemDtos']"
-          >
-          
-            <ng-template [ngIf]="!hasInput(key)">
-              <div 
-                class="order-info__block order-info__block--{{ key }}"
-                contenteditable                
-                [autocomplete]="['info', key]"
-                [(contenteditableModel)]="order[key]"
-                (selectedAutocomplete)="onAutocompleteInfo(order.id, $event)"
-                (contentChanged)="onUpdateInfoField(order.id, key, $event)"
-              ></div>
-            </ng-template>
-          
-            <ng-template [ngIf]="hasInput(key)">
-              <div class="order-info__block order-info__block--{{ key }}">
-                <select
-                  name="{{ key }}"
-                  (change)="onUpdateInfoInput(order.id, key, $event.target.value)"
-                >
-                  <option
-                   *ngFor="let value of infoBlocks[key]"
-                   [value]="value"
-                   [attr.selected]="value === order[key] ? '' : null"
-                  >
-                    {{ value }}
-                  </option>
-                </select>
-              </div>  
-            </ng-template>
-          
-          </ng-container>
-        </div>
-       
-       
-       
-        <div class="order-manage">
-          <div title="Add product" class="order-manage__block order-manage__block--add" (click)="onAddProduct(order.id)">
-            <i class="material-icons">add_box</i>
-            <div class="order-manage__text">Add product</div>
-          </div>
-          <div title="Save customer" class="order-manage__block order-manage__block--save"
-            *ngIf="order.customerId === 0"
-            (click)="onPersistCustomer(order.id)"
-          >
-            <i class="material-icons">save</i>
-            <div class="order-manage__text">Save customer</div>
-          </div>
-          <div title="Edit customer" class="order-manage__block order-manage__block--edit"
-            *ngIf="order.customerId !== 0"
-            (click)="onEditCustomer(order.customerId)"
-          >
-            <i class="material-icons">mode_edit</i>
-            <div class="order-manage__text">Edit customer</div>
-          </div>
-          <div title="Delete order" class="order-manage__block order-manage__block--delete" (click)="onDeleteOrder(order.id)">
-            <i class="material-icons">delete_forever</i>
-            <div class="order-manage__text">Delete order</div>
-          </div>
-        </div>
-        
-        
-        <div class="order-products">
-          <div
-            *ngFor="let product of order.orderItemDtos; let odd = odd, let even = even;"
-            [ngClass]="{'order-product': true, odd: odd, even: even}"
-          >
-          
-            <ng-container
-              *ngFor="let key of product | keys:[
-                'id', 'productId', 'productVariationId', 'categories', 'supplier'
-              ];"
-            >
-            
-              <ng-template [ngIf]="!hasInput(key)">
-                <div
-                  class="order-product__block order-product__block--{{ key }}"
-                  contenteditable
-                  #productBlock
-                  [autocomplete]="['product', key]"
-                  [(contenteditableModel)]="product[key]"
-                  (selectedAutocomplete)="onAutocompleteProduct(order.id, product.id, $event)"
-                  (contentChanged)="onUpdateProductField(order.id, product.id, key, $event)"
-                ></div>  
-              </ng-template>
-          
-              <ng-template [ngIf]="hasInput(key)">
-                <div class="order-product__block order-product__block--{{ key }}">
-                  <input
-                    type="number"
-                    value="{{ product[key] }}"
-                    (blur)="onUpdateProductInput(order.id, product.id, key, $event.target.value)"
-                  >
-                </div>  
-              </ng-template>
-                
-            </ng-container>
-
-            <div class="order-product__block order-product__block--delete" (click)="onDeleteProduct(order.id, product.id)">
-              <i class="material-icons">delete</i>            
-            </div>
-            
-          </div>
-        </div>
-        
-      </div>
       
     </div>
   `,

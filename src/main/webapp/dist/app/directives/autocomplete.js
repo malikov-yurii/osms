@@ -75,8 +75,11 @@ var Autocomplete = (function () {
         }
     };
     Autocomplete.prototype.onBlur = function (e) {
-        this.isBlurred = true;
-        this.removeList();
+        var _this = this;
+        setTimeout(function () {
+            _this.isBlurred = true;
+            _this.removeList();
+        }, 500);
     };
     Autocomplete.prototype.doSearch = function () {
         var _this = this;

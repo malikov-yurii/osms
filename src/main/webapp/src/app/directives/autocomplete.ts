@@ -90,8 +90,10 @@ export class Autocomplete {
   }
 
   onBlur(e) {
-    this.isBlurred = true;
-    this.removeList();
+    setTimeout(() => {
+      this.isBlurred = true;
+      this.removeList();
+    }, 500);
   }
 
   private doSearch() {

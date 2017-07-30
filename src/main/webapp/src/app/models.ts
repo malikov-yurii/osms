@@ -10,7 +10,7 @@ export class Order {
   postOffice: string = '';
   totalSum: number = 0;
   paymentType: string = 'NP';
-  date: string = '';
+  date: any = new Date();
   status: string = 'NEW';
   comment: string = '';
   orderItemDtos: Product[] = [new Product()];
