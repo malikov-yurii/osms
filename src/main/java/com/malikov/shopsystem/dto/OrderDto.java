@@ -5,13 +5,15 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.model.PaymentType;
+import com.malikov.shopsystem.util.DateTimeUtil;
 import com.malikov.shopsystem.util.serializers.LocalDateDeserializer;
 import com.malikov.shopsystem.util.serializers.LocalDateSerializer;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Timestamp;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class OrderDto {
@@ -34,11 +36,10 @@ public class OrderDto {
 
     private BigDecimal totalSum;
 
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
-    private LocalDate date;
-
-    private Timestamp timestamp;
+    //@JsonDeserialize(using = LocalDateDeserializer.class)
+    //@JsonSerialize(using = LocalDateSerializer.class)
+    @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
+    private LocalDateTime date;
 
     private OrderStatus status;
 
@@ -48,7 +49,7 @@ public class OrderDto {
 
     public OrderDto(
             Long id, Long customerId, String firstName, String lastName, String phoneNumber, String city,
-            String postOffice, PaymentType paymentType, LocalDate date, OrderStatus status, String comment,
+            String postOffice, PaymentType paymentType, LocalDateTime date, OrderStatus status, String comment,
             BigDecimal totalSum, List<OrderItemDto> orderItemDtos) {
         this.id = id;
         this.customerId = customerId == null ? 0 : customerId;
@@ -138,19 +139,15 @@ public class OrderDto {
         this.paymentType = paymentType;
     }
 
-    @JsonSerialize(using = LocalDateSerializer.class)
-    public LocalDate getDate() {
+    //@JsonSerialize(using = LocalDateSerializer.class)
+    public LocalDateTime getDate() {
         return date;
     }
 
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    public void setDate(LocalDate date) {
+    //@JsonDeserialize(using = LocalDateDeserializer.class)
+    public void setDate(LocalDateTime date) {
 
         this.date = date;
-    }
-
-    public Timestamp getTimestamp() {
-        return Timestamp.valueOf(date.atStartOfDay());
     }
 
     public OrderStatus getStatus() {

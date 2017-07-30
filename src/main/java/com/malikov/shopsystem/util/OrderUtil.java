@@ -51,7 +51,7 @@ public class OrderUtil {
                 order.getCustomerName(), order.getCustomerLastName(),
                 order.getCustomerPhoneNumber(), order.getCustomerCity(),
                 order.getCustomerPostOffice(), order.getPaymentType(),
-                order.getDatePlaced(), order.getStatus(),
+                order.getDateTimePlaced(), order.getStatus(),
                 order.getComment() == null ? "" : order.getComment(),
                 order.getTotalSum() == null ? BigDecimal.ZERO : order.getTotalSum(),
                 orderItemDtos);

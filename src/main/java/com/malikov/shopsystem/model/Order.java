@@ -3,12 +3,12 @@ package com.malikov.shopsystem.model;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
 
 @SuppressWarnings("JpaQlInspection")
 @Entity
@@ -47,8 +47,8 @@ public class Order extends BaseEntity {
     private OrderStatus status;
 
     @Column(name = "date_placed", columnDefinition = "timestamp default now()")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate datePlaced = LocalDate.now();
+    //@DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime dateTimePlaced = LocalDateTime.now();
 
     //@OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
     //@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER, mappedBy = "order")
@@ -75,7 +75,7 @@ public class Order extends BaseEntity {
     }
 
     public Order(Long id, Customer customer, User user, PaymentType paymentType,
-                 OrderStatus status, String comment, LocalDate datePlaced,
+                 OrderStatus status, String comment, LocalDateTime dateTimePlaced,
                  List<OrderItem> orderItems) {
         super(id);
         if (customer != null) {
@@ -91,7 +91,7 @@ public class Order extends BaseEntity {
         this.paymentType = paymentType;
         this.status = status;
         this.comment = comment;
-        this.datePlaced = datePlaced;
+        this.dateTimePlaced = dateTimePlaced;
 
         if (orderItems != null) {
             this.orderItems = orderItems;
@@ -144,12 +144,12 @@ public class Order extends BaseEntity {
         this.customerPostOffice = customerPostOffice;
     }
 
-    public LocalDate getDatePlaced() {
-        return datePlaced;
+    public LocalDateTime getDateTimePlaced() {
+        return dateTimePlaced;
     }
 
-    public void setDatePlaced(LocalDate datePlaced) {
-        this.datePlaced = datePlaced;
+    public void setDateTimePlaced(LocalDateTime dateTimePlaced) {
+        this.dateTimePlaced = dateTimePlaced;
     }
 
     public PaymentType getPaymentType() {
@@ -224,7 +224,7 @@ public class Order extends BaseEntity {
                 Objects.equals(user, order.user) &&
                 paymentType == order.paymentType &&
                 status == order.status &&
-                Objects.equals(datePlaced, order.datePlaced) &&
+                Objects.equals(dateTimePlaced, order.dateTimePlaced) &&
                 Objects.equals(orderItems, order.orderItems) &&
                 Objects.equals(comment, order.comment);
     }
@@ -232,7 +232,7 @@ public class Order extends BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), customer, customerName, customerLastName, customerPhoneNumber,
-                customerCity, customerPostOffice, user, paymentType, status, datePlaced, orderItems);
+                customerCity, customerPostOffice, user, paymentType, status, dateTimePlaced, orderItems);
     }
 
     @Override
@@ -248,7 +248,7 @@ public class Order extends BaseEntity {
                 ", user=" + user +
                 ", status=" + status +
                 ", paymentType=" + paymentType +
-                ", datePlaced=" + datePlaced +
+                ", dateTimePlaced=" + dateTimePlaced +
                 ", orderItems=" + orderItems +
                 ", totalSum=" + totalSum +
                 ", comment=" + totalSum +

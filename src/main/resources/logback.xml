@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
     <appender name="file" class="ch.qos.logback.core.FileAppender">
-        <file>log/lowcost.log</file>
+        <file>log/shopsystem.log</file>
         <encoder>
             <charset>UTF-8</charset>
             <pattern>%date %-5level %logger{0} [%file:%line] %msg%n</pattern>
