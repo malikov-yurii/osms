@@ -94,6 +94,7 @@ var OrderService = (function () {
         });
     };
     OrderService.prototype.autocompleteProduct = function (orderId, productId, data) {
+        data['quantity'] = 1;
         this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, data);
         if (data.productVariationId) {
             this.api.put("order-item/" + productId, "productVariationId=" + data.productVariationId).subscribe();
