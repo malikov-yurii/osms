@@ -12,16 +12,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var api_1 = require("./services/api");
 var popup_1 = require("./services/popup");
+var noty_1 = require("./services/noty");
 var App = (function () {
-    function App(popupService, viewRef) {
+    function App(popupService, notyService, viewRef) {
         this.popupService = popupService;
+        this.notyService = notyService;
         this.viewRef = viewRef;
     }
     App.prototype.ngOnInit = function () {
-    };
-    App.prototype.ngAfterViewInit = function () {
         var _this = this;
         this.popupService.viewContainerRef = this.viewRef;
+        this.notyService.viewContainerRef = this.viewRef;
         api_1.sessionTimeoutStream.subscribe(function () {
             _this.popupService
                 .renderPopup('Warning!', 'You session has timed out!\nPlease, reload the page')
@@ -37,6 +38,7 @@ App = __decorate([
         providers: [popup_1.PopupService]
     }),
     __metadata("design:paramtypes", [popup_1.PopupService,
+        noty_1.NotyService,
         core_1.ViewContainerRef])
 ], App);
 exports.App = App;

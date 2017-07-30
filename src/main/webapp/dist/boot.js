@@ -38,11 +38,12 @@ AppModule = __decorate([
             index_4.ContenteditableModel,
             index_3.Pagination,
             index_3.PopupComponent,
-            index_3.Filter
+            index_3.Filter,
+            index_3.NotyComponent
         ],
         providers: index_1.providers,
         imports: [platform_browser_1.BrowserModule, animations_1.BrowserAnimationsModule, http_1.HttpModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, index_1.routes],
-        entryComponents: [index_3.AutocompleteList, index_3.PopupComponent],
+        entryComponents: [index_3.AutocompleteList, index_3.PopupComponent, index_3.NotyComponent],
         bootstrap: [index_1.App]
     })
 ], AppModule);
