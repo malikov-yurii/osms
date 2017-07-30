@@ -31,11 +31,9 @@ var OrderService = (function () {
     OrderService.prototype.getOrders = function (start, length) {
         var _this = this;
         return this.api.get("/" + this.ordersPath + "?pageNumber=" + start + "&pageCapacity=" + length)
-            .map(function (resp) { return resp.elements.map(function (v) {
-            v.date = v.date.split('T').join('\n');
-            return v;
-        }); })
-            .do(function (elements) { return _this.storeHelper.update('order', elements); });
+            .do(function (resp) {
+            _this.storeHelper.update('order', resp.elements);
+        });
     };
     OrderService.prototype.addOrder = function () {
         var _this = this;
@@ -55,12 +53,12 @@ var OrderService = (function () {
     };
     OrderService.prototype.updateInfoField = function (orderId, fieldName, value) {
         // Changing order info common field (e.g., firstName, phoneNumber)
-        this.api.put(this.ordersPath + "/" + orderId + "/" + this.camelCaseToDash(fieldName), fieldName + "=" + value).subscribe();
+        return this.api.put(this.ordersPath + "/" + orderId + "/" + this.camelCaseToDash(fieldName), fieldName + "=" + value);
     };
     OrderService.prototype.updateInfoInput = function (orderId, fieldName, value) {
         // Changing order info INPUT (e.g., Status, Payment type)
         this.storeHelper.findAndUpdate(this.ordersPath, orderId, fieldName, value);
-        this.api.put(this.ordersPath + "/" + orderId + "/" + this.camelCaseToDash(fieldName), fieldName + "=" + value).subscribe();
+        return this.api.put(this.ordersPath + "/" + orderId + "/" + this.camelCaseToDash(fieldName), fieldName + "=" + value);
     };
     OrderService.prototype.autocompleteInfo = function (orderId, object) {
         this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
@@ -79,7 +77,7 @@ var OrderService = (function () {
     OrderService.prototype.updateProductField = function (orderId, productId, fieldName, value) {
         // Changing order item editable field (e.g., name, price)
         var _this = this;
-        this.api.put("order-item/" + productId + "/" + this.camelCaseToDash(fieldName), fieldName + "=" + value).subscribe(function (data) {
+        return this.api.put("order-item/" + productId + "/" + this.camelCaseToDash(fieldName), fieldName + "=" + value).do(function (data) {
             if (data) {
                 _this.storeHelper.findAndUpdate(_this.ordersPath, orderId, 'totalSum', data);
             }
@@ -96,7 +94,6 @@ var OrderService = (function () {
         });
     };
     OrderService.prototype.autocompleteProduct = function (orderId, productId, data) {
-        data.quantity = 1; // Manually setting product quantity to 1
         this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, data);
         if (data.productVariationId) {
             this.api.put("order-item/" + productId, "productVariationId=" + data.productVariationId).subscribe();

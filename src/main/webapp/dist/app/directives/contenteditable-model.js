@@ -22,11 +22,18 @@ var ContenteditableModel = (function () {
             this.refreshView();
         }
     };
+    ContenteditableModel.prototype.onKeydown = function (e) {
+        if (e.code === 'Enter' || e.code === 'Escape') {
+            this.el.nativeElement.blur();
+            return false;
+        }
+    };
     /** This should probably be debounced. */
     ContenteditableModel.prototype.onBlur = function () {
         var value = this.el.nativeElement.innerText;
         if (this.lastViewModel != value) {
-            this.changed.emit(value);
+            // debugger
+            this.changed.emit({ newValue: value, oldValue: this.lastViewModel });
             this.lastViewModel = value;
         }
         this.update.emit(value);
@@ -52,7 +59,8 @@ ContenteditableModel = __decorate([
     core_1.Directive({
         selector: '[contenteditableModel]',
         host: {
-            '(blur)': 'onBlur()'
+            '(blur)': 'onBlur()',
+            '(keypress)': 'onKeydown($event)'
         }
     }),
     __metadata("design:paramtypes", [core_1.ElementRef])

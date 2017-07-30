@@ -3,7 +3,8 @@ import {Directive, ElementRef, Input, Output, EventEmitter, SimpleChanges} from 
 @Directive({
   selector: '[contenteditableModel]',
   host: {
-    '(blur)': 'onBlur()'
+    '(blur)': 'onBlur()',
+    '(keypress)': 'onKeydown($event)'
   }
 })
 export class ContenteditableModel {
@@ -32,11 +33,19 @@ export class ContenteditableModel {
     }
   }
 
+  onKeydown(e) {
+    if (e.code === 'Enter' || e.code === 'Escape') {
+      this.el.nativeElement.blur();
+      return false;
+    }
+  }
+
   /** This should probably be debounced. */
   onBlur() {
     var value = this.el.nativeElement.innerText;
     if (this.lastViewModel != value) { // nonstrict comparison is needed
-      this.changed.emit(value);
+      // debugger
+      this.changed.emit({newValue: value, oldValue: this.lastViewModel});
       this.lastViewModel = value;
     }
     this.update.emit(value);

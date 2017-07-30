@@ -12,7 +12,7 @@ import 'rxjs/add/operator/pluck';
 
 import { Store } from '../store';
 import { Product } from '../models';
-import { ProductService } from '../services/index';
+import { ProductService, NotyService } from '../services/index';
 import { slideToLeft, changeWidth } from '../ui/animations';
 
 
@@ -123,6 +123,7 @@ export class Products implements OnInit, OnDestroy {
 
   constructor(
     private productService: ProductService,
+    private notyService: NotyService,
     private store: Store
   ) {}
 
@@ -208,8 +209,11 @@ export class Products implements OnInit, OnDestroy {
     this.filterStream.next(e);
   }
 
-  onUpdateProductField(productId, productVarId, fieldName, value) {
-    this.productService.updateProductField(productId, productVarId, {[fieldName]: value});
+  onUpdateProductField(productId, productVarId, fieldName, {newValue, oldValue}) {
+    this.productService.updateProductField(productId, productVarId, {[fieldName]: newValue})
+      .subscribe(() => {
+        this.notyService.renderNoty(`"${oldValue}" has been changed to "${newValue}"`);
+      });
   }
 
 

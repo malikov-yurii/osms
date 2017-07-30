@@ -97,7 +97,7 @@ import { slideToLeft, appear, changeWidth } from '../ui/animations';
                 <div class="order-info__block order-info__block--{{ key }}">
                   <select
                     name="{{ key }}"
-                    (change)="onUpdateInfoInput(order.id, key, $event.target.value)"
+                    (change)="onUpdateInfoInput(order.id, key, $event)"
                   >
                     <option
                      *ngFor="let value of infoBlocks[key]"
@@ -321,12 +321,17 @@ export class Orders implements OnInit, OnDestroy {
 
 
   // Manage order info
-  onUpdateInfoField(orderId, fieldName, value) {
-    this.orderService.updateInfoField(orderId, fieldName, value);
+  onUpdateInfoField(orderId, fieldName, {newValue, oldValue}) {
+    this.orderService.updateInfoField(orderId, fieldName, newValue)
+      .subscribe(() => {
+        this.notyService.renderNoty(`"${oldValue}" has been changed to "${newValue}"`);
+      });
   }
 
-  onUpdateInfoInput(orderId, fieldName, value) {
-    this.orderService.updateInfoInput(orderId, fieldName, value);
+  onUpdateInfoInput(orderId, fieldName, e) {
+    console.log(e);
+    this.orderService.updateInfoInput(orderId, fieldName, e.target.value)
+      .subscribe();
   }
 
   onAutocompleteInfo(orderId, data) {
@@ -342,8 +347,11 @@ export class Orders implements OnInit, OnDestroy {
     this.orderService.addProduct(orderId);
   }
 
-  onUpdateProductField(orderId, productId, fieldName, value) {
-    this.orderService.updateProductField(orderId, productId, fieldName, value);
+  onUpdateProductField(orderId, productId, fieldName, {newValue, oldValue}) {
+    this.orderService.updateProductField(orderId, productId, fieldName, newValue)
+      .subscribe(() => {
+        this.notyService.renderNoty(`"${oldValue}" has been changed to "${newValue}"`);
+      });
   }
 
   onUpdateProductInput(orderId, productId, fieldName, value) {

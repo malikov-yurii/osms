@@ -74,10 +74,10 @@ var Autocomplete = (function () {
             this.removeList();
         }
     };
-    Autocomplete.prototype.onBlur = function (e) {
+    Autocomplete.prototype.onBlur = function () {
         var _this = this;
+        this.isBlurred = true;
         setTimeout(function () {
-            _this.isBlurred = true;
             _this.removeList();
         }, 500);
     };
@@ -106,9 +106,11 @@ var Autocomplete = (function () {
             this.listComponent.instance.styleTop = offsetTop;
             this.listComponent.instance.styleLeft = offsetLeft;
             this.listComponent.instance.selectedSource.subscribe(function (item) {
-                console.log(item);
                 _this.selected.emit(item.value);
                 _this.removeList();
+                setTimeout(function () {
+                    _this.viewRef.element.nativeElement.blur();
+                }, 50);
             });
         }
         this.listComponent.instance.list = resp;

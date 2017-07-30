@@ -22,8 +22,9 @@ var store_1 = require("../store");
 var index_1 = require("../services/index");
 var animations_1 = require("../ui/animations");
 var Products = (function () {
-    function Products(productService, store) {
+    function Products(productService, notyService, store) {
         this.productService = productService;
+        this.notyService = notyService;
         this.store = store;
         this.searchStream = new forms_1.FormControl();
         this.searchQuery = '';
@@ -105,9 +106,14 @@ var Products = (function () {
     Products.prototype.onFilterChange = function (e) {
         this.filterStream.next(e);
     };
-    Products.prototype.onUpdateProductField = function (productId, productVarId, fieldName, value) {
-        this.productService.updateProductField(productId, productVarId, (_a = {}, _a[fieldName] = value, _a));
-        var _a;
+    Products.prototype.onUpdateProductField = function (productId, productVarId, fieldName, _a) {
+        var _this = this;
+        var newValue = _a.newValue, oldValue = _a.oldValue;
+        this.productService.updateProductField(productId, productVarId, (_b = {}, _b[fieldName] = newValue, _b))
+            .subscribe(function () {
+            _this.notyService.renderNoty("\"" + oldValue + "\" has been changed to \"" + newValue + "\"");
+        });
+        var _b;
     };
     Products.prototype.isEditable = function (key) {
         return key === 'price' || key === 'quantity' ? true : false;
@@ -127,6 +133,7 @@ Products = __decorate([
         host: { '[@slideToLeft]': '' }
     }),
     __metadata("design:paramtypes", [index_1.ProductService,
+        index_1.NotyService,
         store_1.Store])
 ], Products);
 exports.Products = Products;

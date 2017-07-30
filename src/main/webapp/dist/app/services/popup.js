@@ -21,7 +21,7 @@ var PopupService = (function () {
         var _this = this;
         var popupFactory = this.compiler.resolveComponentFactory(index_1.PopupComponent);
         this.popupComponent = this.viewContainerRef.createComponent(popupFactory);
-        this.popupComponent.instance.destroyedStream.delay(180).subscribe(function () {
+        this.popupComponent.instance.destroyedStream.subscribe(function () {
             _this.popupComponent.destroy();
         });
         this.popupComponent.instance.header = header;

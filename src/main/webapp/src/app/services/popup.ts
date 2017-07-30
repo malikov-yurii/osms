@@ -14,7 +14,7 @@ export class PopupService {
     let popupFactory = this.compiler.resolveComponentFactory(PopupComponent);
     this.popupComponent = this.viewContainerRef.createComponent(popupFactory);
 
-    this.popupComponent.instance.destroyedStream.delay(180).subscribe(() => {
+    this.popupComponent.instance.destroyedStream.subscribe(() => {
       this.popupComponent.destroy();
     });
 

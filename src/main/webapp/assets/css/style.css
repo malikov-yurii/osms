@@ -530,7 +530,7 @@ td.product-cell--supplier {
     }
     .order-info__block--id {
         order: 1;
-        width: 15%;
+        width: 13%;
     }
     .order-info__block--lastName {
         order: 5;
@@ -560,11 +560,11 @@ td.product-cell--supplier {
     }
     .order-info__block--date {
         order: 2;
-        width: 27%;
+        width: 30%;
     }
     .order-info__block--comment {
         order: 3;
-        width: 40%;
+        width: 39%;
     }
     .order-info__block--paymentType {
         order: 10;

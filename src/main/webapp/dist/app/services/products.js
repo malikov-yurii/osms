@@ -63,7 +63,7 @@ var ProductService = (function () {
         if (productVarId !== 0) {
             body['variationId'] = productVarId;
         }
-        this.api.put(this.productsPath + "/" + productId, body, true).subscribe();
+        return this.api.put(this.productsPath + "/" + productId, body, true);
     };
     ProductService.prototype.purgeStore = function () {
         this.storeHelper.update(this.productsPath, []);

@@ -26,11 +26,9 @@ export class OrderService {
 
   getOrders(start: number, length: number): Observable<any> {
     return this.api.get(`/${this.ordersPath}?pageNumber=${start}&pageCapacity=${length}`)
-      .map(resp => resp.elements.map(v => {
-        v.date = v.date.split('T').join('\n');
-        return v;
-      }))
-      .do(elements => this.storeHelper.update('order', elements));
+      .do(resp => {
+        this.storeHelper.update('order', resp.elements)
+      });
   }
 
   addOrder() {
@@ -62,10 +60,10 @@ export class OrderService {
   updateInfoField(orderId, fieldName, value) {
     // Changing order info common field (e.g., firstName, phoneNumber)
 
-    this.api.put(
+    return this.api.put(
       `${this.ordersPath}/${orderId}/${this.camelCaseToDash(fieldName)}`,
       `${fieldName}=${value}`
-    ).subscribe();
+    );
   }
 
   updateInfoInput(orderId, fieldName, value) {
@@ -73,10 +71,10 @@ export class OrderService {
 
     this.storeHelper.findAndUpdate(this.ordersPath, orderId, fieldName, value);
 
-    this.api.put(
+    return this.api.put(
       `${this.ordersPath}/${orderId}/${this.camelCaseToDash(fieldName)}`,
       `${fieldName}=${value}`
-    ).subscribe();
+    );
   }
 
   autocompleteInfo(orderId, object) {
@@ -107,10 +105,10 @@ export class OrderService {
   updateProductField(orderId, productId, fieldName, value) {
     // Changing order item editable field (e.g., name, price)
 
-    this.api.put(
+    return this.api.put(
       `order-item/${productId}/${this.camelCaseToDash(fieldName)}`,
       `${fieldName}=${value}`
-    ).subscribe(
+    ).do(
       data => {
         if (data) { this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'totalSum', data); }
       }
@@ -137,7 +135,6 @@ export class OrderService {
   }
 
   autocompleteProduct(orderId, productId, data) {
-    data.quantity = 1; // Manually setting product quantity to 1
     this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, data);
 
     if (data.productVariationId) {

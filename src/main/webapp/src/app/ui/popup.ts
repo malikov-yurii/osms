@@ -210,21 +210,23 @@ import { Subject } from 'rxjs/Subject';
   `],
   animations: [
     trigger('fadeInOut', [
+      state('destroyed', style({opacity: 0})),
       transition(':enter', [
         style({opacity: 0}),
         animate('0.2s ease', style({opacity: 1}))
       ]),
       transition('* => destroyed', [
-        animate('0.2s ease', style({opacity: 0}))
+        animate('0.2s ease')
       ])
     ]),
     trigger('flyInOut', [
+      state('destroyed', style({opacity: 0, transform: 'translateX(-10%)'})),
       transition(':enter', [
         style({opacity: 0, transform: 'translateX(-90%)'}),
         animate('0.2s ease', style({opacity: 1, transform: 'translateX(-50%)'}))
       ]),
       transition('* => destroyed', [
-        animate('0.2s ease', style({opacity: 0, transform: 'translateX(-10%)'}))
+        animate('0.2s ease')
       ])
     ]),
     trigger('expandHeight', [

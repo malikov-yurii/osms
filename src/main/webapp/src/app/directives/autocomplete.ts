@@ -89,9 +89,9 @@ export class Autocomplete {
 
   }
 
-  onBlur(e) {
+  onBlur() {
+    this.isBlurred = true;
     setTimeout(() => {
-      this.isBlurred = true;
       this.removeList();
     }, 500);
   }
@@ -129,9 +129,11 @@ export class Autocomplete {
 
       this.listComponent.instance.selectedSource.subscribe(
         item => {
-          console.log(item);
           this.selected.emit(item.value);
           this.removeList();
+          setTimeout(() => {
+            this.viewRef.element.nativeElement.blur();
+          }, 50)
         }
       );
     }
