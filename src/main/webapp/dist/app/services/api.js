@@ -17,6 +17,7 @@ require("rxjs/add/operator/map");
 require("rxjs/add/operator/catch");
 require("rxjs/add/operator/do");
 require("rxjs/add/observable/throw");
+var models_1 = require("../models");
 var sessionTimeout;
 exports.sessionTimeoutStream = new Subject_1.Subject();
 var ApiService = (function () {
@@ -86,7 +87,7 @@ var ApiService = (function () {
         clearTimeout(sessionTimeout);
         sessionTimeout = setTimeout(function () {
             exports.sessionTimeoutStream.next();
-        }, 5000);
+        }, models_1.StaticDATA.sessionTime);
     };
     return ApiService;
 }());

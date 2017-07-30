@@ -92,3 +92,19 @@ export function fadeInOut() {
     transition('collapsed <=> expanded', animate('.3s ease')),
   ])
 }
+
+
+export function appearNoty() {
+  return trigger('appearNoty', [
+    transition(':enter', [
+      style({transform: 'translate(-50%, 100%)', color: 'transparent'}),
+      group([
+        animate('275ms', style({transform: 'translate(-50%, 0)', easing: 'cubic-bezier(0.0, 0.0, 0.2, 1)'})),
+        animate('275ms 100ms ease', style({color: '#fff'}))
+      ])
+    ]),
+    transition('* => destroyed', [
+      animate('250ms', style({transform: 'translate(-50%, 100%)', easing: 'cubic-bezier(0.4, 0.0, 1, 1)'}))
+    ])
+  ])
+}

@@ -13,6 +13,7 @@ import 'rxjs/add/operator/filter';
 
 import { OrderService } from '../services/orders';
 import { PopupService } from '../services/popup';
+import { NotyService } from '../services/noty';
 import { Store } from '../store';
 import { Order, StaticDATA } from '../models';
 import { slideToLeft, appear, changeWidth } from '../ui/animations';
@@ -66,7 +67,7 @@ import { slideToLeft, appear, changeWidth } from '../ui/animations';
       <div
         class="order order--{{ order.status }}"
         [@appear]
-        *ngFor="let order of orders$ | async; trackBy: trackById"
+        *ngFor="let order of orders$ | async"
        >
       
         <div class="order-info">
@@ -208,9 +209,10 @@ export class Orders implements OnInit, OnDestroy {
   infoBlocks = StaticDATA.infoBlocks;
 
   constructor(
-    private orderService: OrderService,
     private store: Store,
+    private orderService: OrderService,
     private popupService: PopupService,
+    private notyService: NotyService,
     private viewRef: ViewContainerRef
   ) {}
 
@@ -246,8 +248,8 @@ export class Orders implements OnInit, OnDestroy {
     let source = storeSource
       .merge(searchSource, pageSource)
       .startWith({search: this.searchQuery, page: this.page, length: this.pageLength})
-      .switchMap((params: {search: string, page: number, length: number}) => {
-        return this.orderService.list(params.search, params.page, params.length)
+      .switchMap(({search, page, length}) => {
+        return this.orderService.list(search, page, length)
       })
       .share();
 
@@ -267,20 +269,27 @@ export class Orders implements OnInit, OnDestroy {
 
   // Manage orders
   onGetOrders() {
-    this.subs[this.subs.length] = this.orderService.getOrders(this.page - 1, this.pageLength).subscribe(resp => {
-      this.totalOrders = resp.totalElements;
-    });
+    this.subs[this.subs.length] = this.orderService
+      .getOrders(this.page - 1, this.pageLength)
+      .subscribe(resp => {
+        this.totalOrders = resp.totalElements;
+      });
   }
 
   onAddOrder() {
-    this.orderService.addOrder();
+    this.orderService.addOrder().subscribe(({orderId, orderItemId}) => {
+      this.notyService.renderNoty(`Order № ${orderId} has been added`)
+    });
+
     let apiGet = this.page === 1 ? false : true; // Tracing if it's needed to send http GET request for orders
     this.paginationChanged({page: 1, length: this.pageLength, apiGet});
   }
 
   onDeleteOrder(orderId) {
     if (confirm('Действительно удалить этот заказ?')) {
-      this.orderService.deleteOrder(orderId);
+      this.orderService.deleteOrder(orderId).subscribe(() => {
+        this.notyService.renderNoty(`Order № ${orderId} has been deleted`);
+      });
     }
   }
 

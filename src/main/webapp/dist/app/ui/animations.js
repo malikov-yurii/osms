@@ -95,4 +95,19 @@ function fadeInOut() {
     ]);
 }
 exports.fadeInOut = fadeInOut;
+function appearNoty() {
+    return animations_1.trigger('appearNoty', [
+        animations_1.transition(':enter', [
+            animations_1.style({ transform: 'translate(-50%, 100%)', color: 'transparent' }),
+            animations_1.group([
+                animations_1.animate('275ms', animations_1.style({ transform: 'translate(-50%, 0)', easing: 'cubic-bezier(0.0, 0.0, 0.2, 1)' })),
+                animations_1.animate('275ms 100ms ease', animations_1.style({ color: '#fff' }))
+            ])
+        ]),
+        animations_1.transition('* => destroyed', [
+            animations_1.animate('250ms', animations_1.style({ transform: 'translate(-50%, 100%)', easing: 'cubic-bezier(0.4, 0.0, 1, 1)' }))
+        ])
+    ]);
+}
+exports.appearNoty = appearNoty;
 //# sourceMappingURL=animations.js.map

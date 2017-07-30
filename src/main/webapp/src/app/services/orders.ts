@@ -26,7 +26,11 @@ export class OrderService {
 
   getOrders(start: number, length: number): Observable<any> {
     return this.api.get(`/${this.ordersPath}?pageNumber=${start}&pageCapacity=${length}`)
-      .do(resp => this.storeHelper.update('order', resp.elements));
+      .map(resp => resp.elements.map(v => {
+        v.date = v.date.split('T').join('\n');
+        return v;
+      }))
+      .do(elements => this.storeHelper.update('order', elements));
   }
 
   addOrder() {
@@ -34,18 +38,19 @@ export class OrderService {
     let newOrderId = newOrder.id;
     let newOrderItemId = newOrder[this.productsPath][0].id;
     this.storeHelper.add(this.ordersPath, newOrder);
-    this.api.post(this.ordersPath).subscribe(resp => {
-      this.storeHelper.findAndUpdate(this.ordersPath, newOrderId, 'id', resp.orderId);
-      this.storeHelper.findDeepAndUpdate(
-        this.ordersPath, resp.orderId, this.productsPath,
-        newOrderItemId, 'id', resp.orderItemId
-      );
-    })
+    return this.api.post(this.ordersPath)
+      .do(resp => {
+        this.storeHelper.findAndUpdate(this.ordersPath, newOrderId, 'id', resp.orderId);
+        this.storeHelper.findDeepAndUpdate(
+          this.ordersPath, resp.orderId, this.productsPath,
+          newOrderItemId, 'id', resp.orderItemId
+        );
+      })
   }
 
   deleteOrder(orderId) {
     this.storeHelper.findAndDelete(this.ordersPath, orderId);
-    this.api.apiDelete(`${this.ordersPath}/${orderId}`).subscribe();
+    return this.api.apiDelete(`${this.ordersPath}/${orderId}`);
   }
 
 

@@ -105,10 +105,13 @@ body {
 }
 .order-product {
     display: flex;
-    /* justify-content: space-between; */
     align-items: center;
 }
 .order-info__block {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
     padding: 6px 8px;
     border-right: 1px solid rgba(0, 188, 212, 0.49);
     font-size: 15px;

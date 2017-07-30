@@ -12,4 +12,6 @@ var popup_1 = require("./popup");
 exports.PopupComponent = popup_1.PopupComponent;
 var filter_1 = require("./filter");
 exports.Filter = filter_1.Filter;
+var noty_1 = require("./noty");
+exports.NotyComponent = noty_1.NotyComponent;
 //# sourceMappingURL=index.js.map

@@ -12,4 +12,6 @@ var products_1 = require("./products");
 exports.ProductService = products_1.ProductService;
 var customers_1 = require("./customers");
 exports.CustomerService = customers_1.CustomerService;
+var noty_1 = require("./noty");
+exports.NotyService = noty_1.NotyService;
 //# sourceMappingURL=index.js.map

@@ -31,7 +31,11 @@ var OrderService = (function () {
     OrderService.prototype.getOrders = function (start, length) {
         var _this = this;
         return this.api.get("/" + this.ordersPath + "?pageNumber=" + start + "&pageCapacity=" + length)
-            .do(function (resp) { return _this.storeHelper.update('order', resp.elements); });
+            .map(function (resp) { return resp.elements.map(function (v) {
+            v.date = v.date.split('T').join('\n');
+            return v;
+        }); })
+            .do(function (elements) { return _this.storeHelper.update('order', elements); });
     };
     OrderService.prototype.addOrder = function () {
         var _this = this;
@@ -39,14 +43,15 @@ var OrderService = (function () {
         var newOrderId = newOrder.id;
         var newOrderItemId = newOrder[this.productsPath][0].id;
         this.storeHelper.add(this.ordersPath, newOrder);
-        this.api.post(this.ordersPath).subscribe(function (resp) {
+        return this.api.post(this.ordersPath)
+            .do(function (resp) {
             _this.storeHelper.findAndUpdate(_this.ordersPath, newOrderId, 'id', resp.orderId);
             _this.storeHelper.findDeepAndUpdate(_this.ordersPath, resp.orderId, _this.productsPath, newOrderItemId, 'id', resp.orderItemId);
         });
     };
     OrderService.prototype.deleteOrder = function (orderId) {
         this.storeHelper.findAndDelete(this.ordersPath, orderId);
-        this.api.apiDelete(this.ordersPath + "/" + orderId).subscribe();
+        return this.api.apiDelete(this.ordersPath + "/" + orderId);
     };
     OrderService.prototype.updateInfoField = function (orderId, fieldName, value) {
         // Changing order info common field (e.g., firstName, phoneNumber)
