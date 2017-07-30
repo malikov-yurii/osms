@@ -187,6 +187,7 @@ import { slideToLeft, appear, changeWidth } from '../ui/animations';
     </div>
   `,
   animations: [slideToLeft(), appear(), changeWidth()],
+  host: {'[@slideToLeft]': ''},
   providers: [PopupService]
 })
 

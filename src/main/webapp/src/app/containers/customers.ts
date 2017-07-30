@@ -68,7 +68,8 @@ import { slideToLeft, changeWidth } from '../ui/animations';
       </pagination>
     </div>
   `,
-  animations: [slideToLeft(), changeWidth()]
+  animations: [slideToLeft(), changeWidth()],
+  host: {'[@slideToLeft]': ''}
 })
 export class Customers implements OnInit, OnDestroy {
 
