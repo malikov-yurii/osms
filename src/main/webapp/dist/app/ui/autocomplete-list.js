@@ -31,20 +31,22 @@ var AutocompleteList = (function () {
         this.focusMoved.subscribe(function (direction) {
             if (direction === 'next' && _this.selectedIndex < _this.list.length - 1) {
                 _this.selectedIndex++;
-                _this.scrollList();
             }
             else if (direction === 'prev' && _this.selectedIndex > 0) {
                 _this.selectedIndex--;
             }
+            _this.resolveScroll();
         });
     };
-    AutocompleteList.prototype.onSelect = function (i) {
+    AutocompleteList.prototype.onClick = function () {
+        console.log(this.selectedIndex);
+        console.log(this.list[this.selectedIndex]);
         this.selectedStream.next();
     };
     AutocompleteList.prototype.setSelected = function (index) {
         this.selectedIndex = index;
     };
-    AutocompleteList.prototype.scrollList = function () {
+    AutocompleteList.prototype.resolveScroll = function () {
         var activeEl = this.viewRef.element.nativeElement.querySelector('.active');
         activeEl.scrollIntoViewIfNeeded();
     };
@@ -52,7 +54,7 @@ var AutocompleteList = (function () {
 }());
 AutocompleteList = __decorate([
     core_1.Component({
-        template: "\n    <ul class=\"autocomplete\"\n      \n      [style.top]=\"styleTop + 'px'\"\n      [style.left]=\"styleLeft + 'px'\"\n    >\n      \n      <li \n        *ngFor=\"let item of list; let i = index;\"\n        (click)=\"onSelect(i)\"\n        (mouseenter)=\"setSelected(i)\"\n        [class.active]=\"i === selectedIndex\"\n      >\n        {{ item.label }}\n      </li>\n    \n    </ul>\n  "
+        template: "\n    <ul class=\"autocomplete\"\n      [style.top]=\"styleTop + 'px'\"\n      [style.left]=\"styleLeft + 'px'\"\n      (click)=\"onClick()\"\n    >\n      \n      <li \n        *ngFor=\"let item of list; let i = index;\"\n        (mouseenter)=\"setSelected(i)\"\n        [class.active]=\"i === selectedIndex\"\n      >\n        {{ item.label }}\n      </li>\n    \n    </ul>\n  "
     }),
     __metadata("design:paramtypes", [core_1.ViewContainerRef])
 ], AutocompleteList);

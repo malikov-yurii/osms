@@ -9,14 +9,13 @@ import { AutocompleteItem } from '../models';
 @Component({
   template: `
     <ul class="autocomplete"
-      
       [style.top]="styleTop + 'px'"
       [style.left]="styleLeft + 'px'"
+      (click)="onClick()"
     >
       
       <li 
         *ngFor="let item of list; let i = index;"
-        (click)="onSelect(i)"
         (mouseenter)="setSelected(i)"
         [class.active]="i === selectedIndex"
       >
@@ -50,15 +49,17 @@ export class AutocompleteList implements OnInit {
     this.focusMoved.subscribe(direction => {
       if (direction === 'next' && this.selectedIndex < this.list.length - 1) {
         this.selectedIndex++;
-        this.scrollList();
       } else if (direction === 'prev' && this.selectedIndex > 0) {
         this.selectedIndex--;
       }
+      this.resolveScroll();
     });
 
   }
 
-  onSelect(i) {
+  onClick() {
+    console.log(this.selectedIndex);
+    console.log(this.list[this.selectedIndex]);
     this.selectedStream.next();
   }
 
@@ -66,7 +67,7 @@ export class AutocompleteList implements OnInit {
     this.selectedIndex = index;
   }
 
-  scrollList() {
+  resolveScroll() {
     let activeEl = this.viewRef.element.nativeElement.querySelector('.active');
     activeEl.scrollIntoViewIfNeeded();
   }

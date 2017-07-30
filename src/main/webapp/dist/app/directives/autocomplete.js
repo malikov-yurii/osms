@@ -103,6 +103,7 @@ var Autocomplete = (function () {
             this.listComponent.instance.styleTop = offsetTop;
             this.listComponent.instance.styleLeft = offsetLeft;
             this.listComponent.instance.selectedSource.subscribe(function (item) {
+                console.log(item);
                 _this.selected.emit(item.value);
                 _this.removeList();
             });

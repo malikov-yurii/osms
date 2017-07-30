@@ -127,6 +127,7 @@ export class Autocomplete {
 
       this.listComponent.instance.selectedSource.subscribe(
         item => {
+          console.log(item);
           this.selected.emit(item.value);
           this.removeList();
         }

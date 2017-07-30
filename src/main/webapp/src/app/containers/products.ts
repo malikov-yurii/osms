@@ -51,10 +51,9 @@ import { slideToLeft, changeWidth } from '../ui/animations';
             <th class="product-cell--id numeric">ID</th>
             <th class="product-cell--varId numeric">Variation ID</th>
             <th class="product-cell--name">Name</th>
-            <th class="product-cell--category">Category</th>
+            <th class="product-cell--categories">Category</th>
             <th class="product-cell--price numeric">Price</th>
-            <th class="product-cell--qty numeric">Quantity</th>
-            <th class="product-cell--unlim">Unlimited</th>
+            <th class="product-cell--quantity numeric">Quantity</th>
             <th class="product-cell--supplier">Supplier</th>
           </thead>
           <tbody>
@@ -63,7 +62,7 @@ import { slideToLeft, changeWidth } from '../ui/animations';
               [ngClass]="{'product': true, 'odd': odd, 'even': even}"
             >
               <ng-container
-                *ngFor="let key of product | keys"
+                *ngFor="let key of product | keys:['unlimited']"
               >
                 
                 <ng-template [ngIf]="isEditable(key)">

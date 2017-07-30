@@ -137,6 +137,7 @@ export class OrderService {
   }
 
   autocompleteProduct(orderId, productId, data) {
+    data.quantity = 1; // Manually setting product quantity to 1
     this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, data);
 
     if (data.productVariationId) {

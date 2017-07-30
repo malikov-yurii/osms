@@ -6,10 +6,11 @@ import { Subject } from 'rxjs/Subject';
 @Component({
   template: `
     <div class="popup-wrapper">
-      <div class="popup-overlay" (click)="close()" [@fadeInOut]="animState"></div>
+      <div class="popup-overlay" (click)="close()" [@fadeInOut]="animationState"></div>
       <div class="popup"
         [@expandHeight]="hasData || hasFormData"
-        [@flyInOut]="animState"
+        [@flyInOut]="animationState"
+        (@flyInOut.done)="onAnimationDone($event)"
       >
         <div class="popup__head">
           {{ header }}
@@ -19,7 +20,7 @@ import { Subject } from 'rxjs/Subject';
           </div>
         </div>
         
-        <div class="popup__loading" *ngIf="isLoaderVisible()">
+        <div class="popup__loading" *ngIf="!this.hasData && !this.hasFormData">
           <div class="popup__loading-text">Loading...</div>
           <img src="/assets/images/loading.svg" alt="" class="popup__loading-image">
         </div>
@@ -213,7 +214,7 @@ import { Subject } from 'rxjs/Subject';
         style({opacity: 0}),
         animate('0.2s ease', style({opacity: 1}))
       ]),
-      transition('* => destroying', [
+      transition('* => destroyed', [
         animate('0.2s ease', style({opacity: 0}))
       ])
     ]),
@@ -222,7 +223,7 @@ import { Subject } from 'rxjs/Subject';
         style({opacity: 0, transform: 'translateX(-90%)'}),
         animate('0.2s ease', style({opacity: 1, transform: 'translateX(-50%)'}))
       ]),
-      transition('* => destroying', [
+      transition('* => destroyed', [
         animate('0.2s ease', style({opacity: 0, transform: 'translateX(-10%)'}))
       ])
     ]),
@@ -238,7 +239,7 @@ export class PopupComponent {
   private form: FormGroup;
   private hasData: boolean = false;
   private hasFormData: boolean = false;
-  private animState: string = 'displaying';
+  private animationState: string = 'idle';
   public header: string = 'Popup header';
   public destroyedStream = new Subject();
   public submittedStream = new Subject();
@@ -262,15 +263,16 @@ export class PopupComponent {
   }
 
   close() {
-    this.animState = 'destroying';
-    this.destroyedStream.next();
+    this.animationState = 'destroyed';
   }
 
   reset() {
     this.form.reset(this.data);
   }
 
-  isLoaderVisible() {
-    return (this.hasData === false && this.hasFormData === false) ? true : false;
+  onAnimationDone(e) {
+    if (e.toState === 'destroyed') {
+      this.destroyedStream.next();
+    }
   }
 }
