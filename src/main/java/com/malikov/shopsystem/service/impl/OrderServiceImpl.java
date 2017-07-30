@@ -63,7 +63,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void delete(Long id) {
-        orderRepository.delete(id);
+        Order order = get(id);
+
+        if (isWithdrawalStatus(order.getStatus())) {
+            updateProductQuantityInDbForAllOrderItems(order, INCREASE_IN_STOCK);
+        }
+
+        orderRepository.delete(order);
     }
 
     @Override
