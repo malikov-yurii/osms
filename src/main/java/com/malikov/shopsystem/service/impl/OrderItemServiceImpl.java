@@ -152,7 +152,7 @@ public class OrderItemServiceImpl implements OrderItemService {
             ProductVariation productVariation = orderItem.getProductVariation();
             productVariation.setQuantity(productVariation.getQuantity() - quantityDelta);
             productVariationRepository.save(productVariation);
-        } else {
+        } else if (orderItem.getProduct() != null){
             Product product = orderItem.getProduct();
             product.setQuantity(product.getQuantity() - quantityDelta);
             productRepository.save(product);
@@ -190,15 +190,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         Order order = orderItem.getOrder();
 
         if (isWithdrawalStatus(order.getStatus())) {
-            if (orderItem.getProductVariation() != null) {
-                ProductVariation productVariation = orderItem.getProductVariation();
-                productVariation.setQuantity(productVariation.getQuantity() + orderItem.getProductQuantity());
-                productVariationRepository.save(productVariation);
-            } else {
-                Product product = orderItem.getProduct();
-                product.setQuantity(product.getQuantity() + orderItem.getProductQuantity());
-                productRepository.save(product);
-            }
+            returnToStockPreviousProducts(orderItem);
         }
 
         order.getOrderItems().remove(orderItem);
