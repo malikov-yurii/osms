@@ -209,7 +209,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Transactional
     public OrderItem createNewEmpty(Long orderId) {
         return orderItemRepository.save(new OrderItem(orderRepository.findOne(orderId),
-                null, "", new BigDecimal(0), 1));
+                null, "", new BigDecimal(0), 0));
     }
 
     @Override

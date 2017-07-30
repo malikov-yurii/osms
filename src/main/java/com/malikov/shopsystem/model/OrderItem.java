@@ -44,7 +44,7 @@ public class OrderItem extends BaseEntity {
     public OrderItem() {
         this.productName = "";
         this.productPrice = new BigDecimal(0);
-        this.productQuantity = 1;
+        this.productQuantity = 0;
     }
 
     public OrderItem(Order order, Product product, String productName,
