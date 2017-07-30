@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.malikov.shopsystem.util.OrderStatusUtil.isWithdrawalStatus;
 
@@ -48,51 +49,70 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     @Transactional
-    public void updateProduct(Long itemId, Long newProductId, Long newProductVariationId) {
-        if (newProductId == null && newProductVariationId == null) {
-            throw new RuntimeException("presence of newProductId or newProductVariationId is mandatory");
-        }
-
+    public void setProduct(Long itemId, Long newProductId) {
+        Objects.requireNonNull(newProductId);
         OrderItem orderItem = orderItemRepository.findOne(itemId);
 
-        if (newProductVariationId != null) {
-            if (orderItem.getProductVariation() != null) {
-                ProductVariation oldProductVariation = orderItem.getProductVariation();
-                oldProductVariation.setQuantity(oldProductVariation.getQuantity() + orderItem.getProductQuantity());
-                productVariationRepository.save(oldProductVariation);
-            }
+        returnToStockPreviousProducts(orderItem);
 
-            ProductVariation newProductVariation = productVariationRepository.findOne(newProductVariationId);
-            orderItem.setProduct(newProductVariation.getProduct());
-            orderItem.setProductVariation(newProductVariation);
-            orderItem.setProductName(newProductVariation.getProduct().getName() + " "
-                    + newProductVariation.getVariationValue().getName());
-            orderItem.setProductPrice(newProductVariation.getPrice());
+        Product newProduct = productRepository.findOne(newProductId);
 
-            if (isWithdrawalStatus(orderItem.getOrder().getStatus())) {
-                newProductVariation.setQuantity(newProductVariation.getQuantity() - 1);
-                productVariationRepository.save(newProductVariation);
-            }
-        }else {
-            if (orderItem.getProduct() != null) {
-                Product oldProduct = orderItem.getProduct();
-                oldProduct.setQuantity(oldProduct.getQuantity() + orderItem.getProductQuantity());
-                productRepository.save(oldProduct);
-            }
+        setProductForOrderItem(orderItem, newProduct);
 
-            Product newProduct = productRepository.findOne(newProductId);
-            orderItem.setProduct(newProduct);
-            orderItem.setProductName(newProduct.getName());
-            orderItem.setProductPrice(newProduct.getPrice());
-
-            if (isWithdrawalStatus(orderItem.getOrder().getStatus())) {
-                newProduct.setQuantity(newProduct.getQuantity() - 1);
-                productRepository.save(newProduct);
-            }
+        if (isWithdrawalStatus(orderItem.getOrder().getStatus())) {
+            newProduct.setQuantity(newProduct.getQuantity() - 1);
+            productRepository.save(newProduct);
         }
 
         orderItem.setProductQuantity(1);
         orderItemRepository.save(orderItem);
+    }
+
+    @Override
+    @Transactional
+    public void setProductVariation(Long itemId, Long newProductVariationId) {
+        Objects.requireNonNull(newProductVariationId);
+        OrderItem orderItem = orderItemRepository.findOne(itemId);
+
+        returnToStockPreviousProducts(orderItem);
+
+        ProductVariation newProductVariation = productVariationRepository.findOne(newProductVariationId);
+
+        setProductVariationForOrderItem(orderItem, newProductVariation);
+
+        if (isWithdrawalStatus(orderItem.getOrder().getStatus())) {
+            newProductVariation.setQuantity(newProductVariation.getQuantity() - 1);
+            productVariationRepository.save(newProductVariation);
+        }
+
+        orderItem.setProductQuantity(1);
+        orderItemRepository.save(orderItem);
+    }
+
+    private void setProductVariationForOrderItem(OrderItem orderItem, ProductVariation newProductVariation) {
+        orderItem.setProduct(newProductVariation.getProduct());
+        orderItem.setProductVariation(newProductVariation);
+        orderItem.setProductName(newProductVariation.getProduct().getName() + " "
+                + newProductVariation.getVariationValue().getName());
+        orderItem.setProductPrice(newProductVariation.getPrice());
+    }
+
+    private void setProductForOrderItem(OrderItem orderItem, Product newProduct) {
+        orderItem.setProduct(newProduct);
+        orderItem.setProductName(newProduct.getName());
+        orderItem.setProductPrice(newProduct.getPrice());
+    }
+
+    private void returnToStockPreviousProducts(OrderItem orderItem) {
+        if (orderItem.getProductVariation() != null) {
+            ProductVariation oldProductVariation = orderItem.getProductVariation();
+            oldProductVariation.setQuantity(oldProductVariation.getQuantity() + orderItem.getProductQuantity());
+            productVariationRepository.save(oldProductVariation);
+        } else if (orderItem.getProduct() != null) {
+            Product oldProduct = orderItem.getProduct();
+            oldProduct.setQuantity(oldProduct.getQuantity() + orderItem.getProductQuantity());
+            productRepository.save(oldProduct);
+        }
     }
 
     @Override

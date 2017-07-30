@@ -7,11 +7,11 @@ import com.malikov.shopsystem.model.OrderItem;
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface OrderItemService{
+public interface OrderItemService {
 
     OrderItem save(OrderItem orderItem);
 
-    void  update(Long itemId, OrderItemLiteDto orderItemLiteDto);
+    void update(Long itemId, OrderItemLiteDto orderItemLiteDto);
 
     OrderItem get(Long id);
 
@@ -27,7 +27,9 @@ public interface OrderItemService{
 
     List<OrderItemAutocompleteDto> getByProductMask(String productNameMask);
 
-    void updateProduct(Long itemId, Long productId, Long productVariationId);
+    void setProduct(Long itemId, Long productId);
+
+    void setProductVariation(Long itemId, Long productVariationId);
 
     //List<OrderItemDto> getPage(int pageNumber, int pageCapacity);
 }

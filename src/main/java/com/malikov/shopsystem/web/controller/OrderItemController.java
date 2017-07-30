@@ -31,14 +31,16 @@ public class OrderItemController {
         return orderItemService.createNewEmpty(orderId).getId();
     }
 
-    /**
-     * @param productId expected only if product doesn't have variations
-     */
-    @PutMapping(value = "/{itemId}")
-    public void updateProductForOrderItem(@PathVariable("itemId") Long itemId,
-            @RequestParam(value = "productId", required = false) Long productId,
-            @RequestParam(value = "productVariationId", required = false) Long productVariationId) {
-        orderItemService.updateProduct(itemId, productId, productVariationId);
+    @PutMapping(value = "/{itemId}", params = "productId")
+    public void updateOrderItemSetNewProduct(@PathVariable("itemId") Long itemId,
+            @RequestParam(value = "productId") Long productId) {
+        orderItemService.setProduct(itemId, productId);
+    }
+
+    @PutMapping(value = "/{itemId}", params = "productVariationId")
+    public void updateOrderItemSetNewProductVariation(@PathVariable("itemId") Long itemId,
+            @RequestParam(value = "productVariationId") Long productVariationId) {
+        orderItemService.setProductVariation(itemId, productVariationId);
     }
 
     @PutMapping(value = "/{itemId}/name")
