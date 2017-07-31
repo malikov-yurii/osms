@@ -229,8 +229,9 @@ public class OrderServiceImpl implements OrderService {
     public Page<OrderDto> getPage(int pageNumber, int pageCapacity) {
         Page<Order> page = orderRepository.findAll(new PageRequest(pageNumber, pageCapacity,
                 new Sort(
-                        new Sort.Order(Sort.Direction.ASC, "statusSortOrder"),
-                        new Sort.Order(Sort.Direction.DESC, "id"))));
+                        //new Sort.Order(Sort.Direction.ASC, "statusSortOrder"),
+                        new Sort.Order(Sort.Direction.DESC, "id")
+                )));
         return new PageImpl<>(
                 page.getContent().stream()
                         .map(OrderUtil::asTo)
