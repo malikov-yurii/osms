@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -32,15 +33,16 @@ public class OrderItemController {
     }
 
     @PutMapping(value = "/{itemId}", params = "productId")
-    public void updateOrderItemSetNewProduct(@PathVariable("itemId") Long itemId,
+    public BigDecimal updateOrderItemSetNewProduct(@PathVariable("itemId") Long itemId,
             @RequestParam(value = "productId") Long productId) {
-        orderItemService.setProduct(itemId, productId);
+        return orderItemService.setProduct(itemId, productId).setScale(0, RoundingMode.HALF_UP);
     }
 
     @PutMapping(value = "/{itemId}", params = "productVariationId")
-    public void updateOrderItemSetNewProductVariation(@PathVariable("itemId") Long itemId,
+    public BigDecimal updateOrderItemSetNewProductVariation(@PathVariable("itemId") Long itemId,
             @RequestParam(value = "productVariationId") Long productVariationId) {
-        orderItemService.setProductVariation(itemId, productVariationId);
+        return orderItemService.setProductVariation(itemId, productVariationId)
+                .setScale(0, RoundingMode.HALF_UP);
     }
 
     @PutMapping(value = "/{itemId}/name")
@@ -62,7 +64,7 @@ public class OrderItemController {
     }
 
     @DeleteMapping(value = "/{orderItemId}")
-    public void deleteOrderItem(@PathVariable("orderItemId") Long orderItemId) {
-        orderItemService.delete(orderItemId);
+    public BigDecimal deleteOrderItem(@PathVariable("orderItemId") Long orderItemId) {
+        return orderItemService.delete(orderItemId).setScale(0, RoundingMode.HALF_UP);
     }
 }

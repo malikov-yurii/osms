@@ -11,11 +11,11 @@ public interface OrderItemService {
 
     OrderItem save(OrderItem orderItem);
 
-    void update(Long itemId, OrderItemLiteDto orderItemLiteDto);
+    BigDecimal update(Long itemId, OrderItemLiteDto orderItemLiteDto);
 
     OrderItem get(Long id);
 
-    void delete(Long id);
+    BigDecimal delete(Long id);
 
     void updateProductName(Long id, String newProductName);
 
@@ -27,9 +27,9 @@ public interface OrderItemService {
 
     List<OrderItemAutocompleteDto> getByProductMask(String productNameMask);
 
-    void setProduct(Long itemId, Long productId);
+    BigDecimal setProduct(Long itemId, Long productId);
 
-    void setProductVariation(Long itemId, Long productVariationId);
+    BigDecimal setProductVariation(Long itemId, Long productVariationId);
 
     //List<OrderItemDto> getPage(int pageNumber, int pageCapacity);
 }

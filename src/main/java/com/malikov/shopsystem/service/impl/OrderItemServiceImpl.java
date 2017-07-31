@@ -44,12 +44,14 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     @Transactional
     public OrderItem save(OrderItem orderItem) {
-        return orderItemRepository.save(orderItem);
+        orderItem = orderItemRepository.save(orderItem);
+        recalculateAndUpdateTotalSum(orderItem);
+        return orderItem;
     }
 
     @Override
     @Transactional
-    public void setProduct(Long itemId, Long newProductId) {
+    public BigDecimal setProduct(Long itemId, Long newProductId) {
         Objects.requireNonNull(newProductId);
         OrderItem orderItem = orderItemRepository.findOne(itemId);
 
@@ -65,12 +67,12 @@ public class OrderItemServiceImpl implements OrderItemService {
         }
 
         orderItem.setProductQuantity(1);
-        orderItemRepository.save(orderItem);
+        return recalculateAndUpdateTotalSum(orderItem);
     }
 
     @Override
     @Transactional
-    public void setProductVariation(Long itemId, Long newProductVariationId) {
+    public BigDecimal setProductVariation(Long itemId, Long newProductVariationId) {
         Objects.requireNonNull(newProductVariationId);
         OrderItem orderItem = orderItemRepository.findOne(itemId);
 
@@ -86,7 +88,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         }
 
         orderItem.setProductQuantity(1);
-        orderItemRepository.save(orderItem);
+        return recalculateAndUpdateTotalSum(orderItem);
     }
 
     private void setProductVariationForOrderItem(OrderItem orderItem, ProductVariation newProductVariation) {
@@ -117,11 +119,11 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     @Transactional
-    public void update(Long orderItemId, OrderItemLiteDto orderItemLiteDto) {
+    public BigDecimal update(Long orderItemId, OrderItemLiteDto orderItemLiteDto) {
         OrderItem orderItem = get(orderItemId);
         orderItem.setProductName(orderItemLiteDto.getOrderItemName());
         orderItem.setProductPrice(orderItemLiteDto.getPrice());
-        orderItemRepository.save(orderItem);
+        return recalculateAndUpdateTotalSum(orderItemRepository.save(orderItem));
     }
 
     @Override
@@ -185,7 +187,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     @Transactional
-    public void delete(Long orderItemId) {
+    public BigDecimal delete(Long orderItemId) {
         OrderItem orderItem = get(orderItemId);
         Order order = orderItem.getOrder();
 
@@ -195,6 +197,8 @@ public class OrderItemServiceImpl implements OrderItemService {
 
         order.getOrderItems().remove(orderItem);
         orderItemRepository.delete(orderItem);
+
+        return recalculateAndUpdateTotalSum(orderItem);
     }
 
     @Override
