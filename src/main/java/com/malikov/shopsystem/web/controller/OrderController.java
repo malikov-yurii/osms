@@ -120,8 +120,8 @@ public class OrderController {
     }
 
     @PutMapping(value = "/{orderId}/set-customer")
-    public void setCustomerForOrder(@PathVariable("orderId") Long orderId,
+    public String setCustomerForOrder(@PathVariable("orderId") Long orderId,
                                     @RequestParam("customerId") Long customerId) {
-        orderService.setCustomer(orderId, customerId);
+        return orderService.setCustomer(orderId, customerId).getNote();
     }
 }

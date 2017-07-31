@@ -213,7 +213,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void setCustomer(Long orderId, Long customerId) {
+    public Customer setCustomer(Long orderId, Long customerId) {
         Order order = get(orderId);
         Customer customer = customerRepository.findOne(customerId);
         order.setCustomer(customer);
@@ -223,6 +223,7 @@ public class OrderServiceImpl implements OrderService {
         order.setCustomerCity(customer.getCity());
         order.setCustomerPostOffice(customer.getPostOffice());
         save(order);
+        return customer;
     }
 
     @Override

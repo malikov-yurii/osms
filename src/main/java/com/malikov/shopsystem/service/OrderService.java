@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.dto.OrderDto;
+import com.malikov.shopsystem.model.Customer;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.model.PaymentType;
@@ -45,7 +46,7 @@ public interface OrderService {
 
     void updateTotalSum(Long orderId, BigDecimal totalSum);
 
-    void setCustomer(Long orderId, Long customerId);
+    Customer setCustomer(Long orderId, Long customerId);
 
     Page<OrderDto> getPage(int pageNumber, int pageCapacity);
 }
