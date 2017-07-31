@@ -4,7 +4,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var sysBuilder = require('systemjs-builder');
 
-gulp.task('bundle:libs', function() {
+gulp.task('bundle-prod:libs', function() {
    return gulp.src([
            'node_modules/core-js/client/shim.min.js',
            'node_modules/zone.js/dist/zone.js',
@@ -15,6 +15,19 @@ gulp.task('bundle:libs', function() {
        .pipe(concat('vendors.min.js'))
        .pipe(uglify())
        .pipe(gulp.dest('public/lib'));
+});
+
+gulp.task('bundle-dev:libs', function() {
+  return gulp.src([
+      'node_modules/core-js/client/shim.min.js',
+      'node_modules/zone.js/dist/zone.js',
+      'node_modules/reflect-metadata/Reflect.js',
+      'node_modules/systemjs/dist/system.src.js',
+      'systemjs.config.dev.js'
+    ])
+    .pipe(concat('vendors.dev.min.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('public/lib'));
 });
 
 gulp.task('bundle:js', function() {
