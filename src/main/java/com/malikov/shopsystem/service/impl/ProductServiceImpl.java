@@ -102,6 +102,6 @@ public class ProductServiceImpl implements ProductService {
 */
     @Override
     public List<Product> getByProductNameMask(String productNameMask) {
-        return productRepository.getByNameLike("%" + productNameMask + "%");
+        return productRepository.getByNameLike("%" + productNameMask.trim() + "%");
     }
 }

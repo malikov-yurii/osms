@@ -211,7 +211,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public List<OrderItemAutocompleteDto> getByProductMask(String productNameMask) {
         List<OrderItemAutocompleteDto> orderItemAutocompleteDtos = new ArrayList<>();
-        productRepository.getByNameLike("%" + productNameMask + "%").forEach(product -> {
+        productRepository.getByNameLike("%" + productNameMask.trim() + "%").forEach(product -> {
             if (product.getHasVariations()) {
                 for (ProductVariation productVariation : product.getVariations()) {
                     orderItemAutocompleteDtos.add(
