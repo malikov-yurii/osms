@@ -1,18 +1,13 @@
 package com.malikov.shopsystem.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.model.PaymentType;
 import com.malikov.shopsystem.util.DateTimeUtil;
-import com.malikov.shopsystem.util.serializers.LocalDateDeserializer;
-import com.malikov.shopsystem.util.serializers.LocalDateSerializer;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,6 +27,8 @@ public class OrderDto {
 
     private String postOffice;
 
+    private String customerNote;
+
     private PaymentType paymentType;
 
     private BigDecimal totalSum;
@@ -49,8 +46,8 @@ public class OrderDto {
 
     public OrderDto(
             Long id, Long customerId, String firstName, String lastName, String phoneNumber, String city,
-            String postOffice, PaymentType paymentType, LocalDateTime date, OrderStatus status, String comment,
-            BigDecimal totalSum, List<OrderItemDto> orderItemDtos) {
+            String postOffice, String customerNote, PaymentType paymentType, LocalDateTime date, OrderStatus status,
+            String comment, BigDecimal totalSum, List<OrderItemDto> orderItemDtos) {
         this.id = id;
         this.customerId = customerId == null ? 0 : customerId;
         this.firstName = firstName != null ? firstName : "";
@@ -58,6 +55,7 @@ public class OrderDto {
         this.phoneNumber = phoneNumber != null ? phoneNumber : "";
         this.city = city != null ? city : "";
         this.postOffice = postOffice != null ? postOffice : "";
+        this.customerNote = customerNote != null ? customerNote : "";
         this.paymentType = paymentType;
         this.date = date;
         this.status = status;
@@ -121,6 +119,14 @@ public class OrderDto {
 
     public void setPostOffice(String postOffice) {
         this.postOffice = postOffice;
+    }
+
+    public String getCustomerNote() {
+        return customerNote;
+    }
+
+    public void setCustomerNote(String customerNote) {
+        this.customerNote = customerNote;
     }
 
     public BigDecimal getTotalSum() {
