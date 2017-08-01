@@ -50,8 +50,8 @@ public class OrderUtil {
                 order.getCustomer() != null? order.getCustomer().getId(): 0,
                 order.getCustomerName(), order.getCustomerLastName(),
                 order.getCustomerPhoneNumber(), order.getCustomerCity(),
-                order.getCustomerPostOffice(), order.getCustomer().getNote(), order.getPaymentType(),
-                order.getDateTimePlaced(), order.getStatus(),
+                order.getCustomerPostOffice(), order.getCustomer() != null ? order.getCustomer().getNote() : null,
+                order.getPaymentType(), order.getDateTimePlaced(), order.getStatus(),
                 order.getComment() == null ? "" : order.getComment(),
                 order.getTotalSum() == null ? BigDecimal.ZERO : order.getTotalSum(),
                 orderItemDtos);
