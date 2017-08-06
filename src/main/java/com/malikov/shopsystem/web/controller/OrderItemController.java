@@ -1,6 +1,6 @@
 package com.malikov.shopsystem.web.controller;
 
-import com.malikov.shopsystem.dto.OrderItemAutocompleteDto;
+import com.malikov.shopsystem.dto.ProductAutocompleteDto;
 import com.malikov.shopsystem.service.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,7 +22,7 @@ public class OrderItemController {
 
     @GetMapping(value = "/autocomplete-by-product-name/{productNameMask}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<OrderItemAutocompleteDto> autocompleteOrderItemName(
+    public List<ProductAutocompleteDto> autocompleteOrderItemName(
             @PathVariable("productNameMask") String productNameMask) {
         return orderItemService.getByProductMask(productNameMask);
     }

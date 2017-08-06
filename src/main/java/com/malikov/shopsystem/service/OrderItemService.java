@@ -1,6 +1,6 @@
 package com.malikov.shopsystem.service;
 
-import com.malikov.shopsystem.dto.OrderItemAutocompleteDto;
+import com.malikov.shopsystem.dto.ProductAutocompleteDto;
 import com.malikov.shopsystem.dto.OrderItemLiteDto;
 import com.malikov.shopsystem.model.OrderItem;
 
@@ -25,7 +25,7 @@ public interface OrderItemService {
 
     OrderItem createNewEmpty(Long orderId);
 
-    List<OrderItemAutocompleteDto> getByProductMask(String productNameMask);
+    List<ProductAutocompleteDto> getByProductMask(String productNameMask);
 
     BigDecimal setProduct(Long itemId, Long productId);
 

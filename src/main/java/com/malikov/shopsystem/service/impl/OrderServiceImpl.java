@@ -2,6 +2,7 @@ package com.malikov.shopsystem.service.impl;
 
 import com.malikov.shopsystem.DbOperation;
 import com.malikov.shopsystem.dto.OrderDto;
+import com.malikov.shopsystem.dto.OrderFilterDto;
 import com.malikov.shopsystem.model.*;
 import com.malikov.shopsystem.repository.*;
 import com.malikov.shopsystem.service.OrderService;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -47,13 +49,8 @@ public class OrderServiceImpl implements OrderService {
     private ProductVariationRepository productVariationRepository;
 
     @Override
-    public Order save(Order order) {
-        return orderRepository.save(order);
-    }
-
-    @Override
-    public void update(Order order) {
-        orderRepository.save(order);
+    public Page<OrderDto> getFilteredPage(OrderFilterDto orderFilterDto, int pageNumber, int pageCapacity) {
+        return null;
     }
 
     @Override
@@ -83,13 +80,109 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional
-    public void updateStatus(Long orderId, OrderStatus newStatus) {
-        Order order = orderRepository.findOne(orderId);
-        OrderStatus oldStatus = order.getStatus();
-        order.setStatus(newStatus);
-        orderRepository.save(order);
+    public Order save(OrderDto orderDto) {
+        throw new RuntimeException("save new order method not implemented");
+    }
 
+    @Override
+    public void update(OrderDto orderDto) {
+        Order order = get(orderDto.getId());
+        if (order == null) {
+            throw new RuntimeException(String.format("order with id=%d not found", orderDto.getId()));
+        }
+
+        setCustomerInfoToOrder(order, orderDto);
+        setPaymentType(order, orderDto.getPaymentType());
+        setNote(order, orderDto.getNote());
+        setTotalSum(order, orderDto.getTotalSum());
+
+        if (orderDto.getStatus() != null) {
+            OrderStatus oldStatus = orderDto.getStatus();
+            order.setStatus(orderDto.getStatus());
+            orderRepository.save(order);
+            updateOrderItemProductStock(order, orderDto.getStatus(), oldStatus);
+        } else {
+            orderRepository.save(order);
+        }
+
+    }
+
+    private void setCustomerInfoToOrder(Order order, OrderDto orderDto) {
+        if (orderDto.getCustomerId() != null) {
+            setCustomer(order, orderDto.getCustomerId());
+        } else {
+            setCustomerFirstName(order, orderDto.getCustomerFirstName());
+            setCustomerLastName(order, orderDto.getCustomerLastName());
+            setCustomerPhoneNumber(order, orderDto.getCustomerPhoneNumber());
+            setDestinationCity(order, orderDto.getDestinationCity());
+            setDestinationPostOffice(order, orderDto.getDestinationPostOffice());
+        }
+    }
+
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void setCustomer(Order order, Long customerId) {
+
+        Customer customer = customerRepository.findOne(customerId);
+        if (customer == null) {
+            throw new RuntimeException(String.format("Customer with id=%d not found", customerId));
+        }
+        order.setCustomer(customer);
+        order.setCustomerFirstName(customer.getName());
+        order.setCustomerLastName(customer.getLastName());
+        order.setCustomerPhoneNumber(customer.getPhoneNumber());
+        order.setDestinationCity(customer.getCity());
+        order.setDestinationPostOffice(customer.getPostOffice());
+    }
+
+    private void setCustomerFirstName(Order order, String firstName) {
+        if (firstName != null) {
+            order.setCustomerFirstName(firstName);
+        }
+    }
+
+    private void setCustomerLastName(Order order, String lastName) {
+        if (lastName != null) {
+            order.setCustomerLastName(lastName);
+        }
+    }
+
+    private void setCustomerPhoneNumber(Order order, String phoneNumber) {
+        if (phoneNumber != null) {
+            order.setCustomerPhoneNumber(phoneNumber);
+        }
+    }
+
+    private void setDestinationCity(Order order, String destinationCity) {
+        if (destinationCity != null) {
+            order.setDestinationCity(destinationCity);
+        }
+    }
+
+    private void setDestinationPostOffice(Order order, String destinationPostOffice) {
+        if (destinationPostOffice != null) {
+            order.setDestinationPostOffice(destinationPostOffice);
+        }
+    }
+
+    private void setPaymentType(Order order, PaymentType paymentType) {
+        if (paymentType != null) {
+            order.setPaymentType(paymentType);
+        }
+    }
+
+    private void setNote(Order order, String comment) {
+        if (comment != null) {
+            order.setComment(comment);
+        }
+    }
+
+    private void setTotalSum(Order order, BigDecimal totalSum) {
+        if (totalSum != null) {
+            order.setTotalSum(totalSum);
+        }
+    }
+
+    private void updateOrderItemProductStock(Order order, OrderStatus newStatus, OrderStatus oldStatus) {
         if (newStatus.equals(oldStatus) || (isWithdrawalStatus(newStatus) == isWithdrawalStatus(oldStatus))) {
             return;
         }
@@ -148,85 +241,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional
-    public void updateComment(Long orderId, String comment) {
-        Order order = get(orderId);
-        order.setComment(comment);
-        save(order);
-    }
-
-    @Override
-    @Transactional
-    public void updatePaymentType(Long orderId, PaymentType paymentType) {
-        Order order = get(orderId);
-        order.setPaymentType(paymentType);
-        save(order);
-    }
-
-    @Override
-    @Transactional
-    public void updateCustomerFirstName(Long orderId, String firstName) {
-        Order order = get(orderId);
-        order.setCustomerName(firstName);
-        save(order);
-    }
-
-    @Override
-    @Transactional
-    public void updateCustomerLastName(Long orderId, String lastName) {
-        Order order = get(orderId);
-        order.setCustomerLastName(lastName);
-        save(order);
-    }
-
-    @Override
-    @Transactional
-    public void updateCustomerPhoneNumber(Long orderId, String phoneNumber) {
-        Order order = get(orderId);
-        order.setCustomerPhoneNumber(phoneNumber);
-        save(order);
-    }
-
-    @Override
-    @Transactional
-    public void updateCity(Long orderId, String cityName) {
-        Order order = get(orderId);
-        order.setCustomerCity(cityName);
-        save(order);
-    }
-
-    @Override
-    @Transactional
-    public void updatePostOffice(Long orderId, String postOffice) {
-        Order order = get(orderId);
-        order.setCustomerPostOffice(postOffice);
-        save(order);
-    }
-
-    @Override
-    @Transactional
-    public void updateTotalSum(Long orderId, BigDecimal totalSum) {
-        Order order = get(orderId);
-        order.setTotalSum(totalSum);
-        save(order);
-    }
-
-    @Override
-    @Transactional
-    public Customer setCustomer(Long orderId, Long customerId) {
-        Order order = get(orderId);
-        Customer customer = customerRepository.findOne(customerId);
-        order.setCustomer(customer);
-        order.setCustomerName(customer.getName());
-        order.setCustomerLastName(customer.getLastName());
-        order.setCustomerPhoneNumber(customer.getPhoneNumber());
-        order.setCustomerCity(customer.getCity());
-        order.setCustomerPostOffice(customer.getPostOffice());
-        save(order);
-        return customer;
-    }
-
-    @Override
     public Page<OrderDto> getPage(int pageNumber, int pageCapacity) {
         Page<Order> page = orderRepository.findAll(new PageRequest(pageNumber, pageCapacity,
                 new Sort(
@@ -241,28 +255,17 @@ public class OrderServiceImpl implements OrderService {
                 page.getTotalElements());
     }
 
-    /*@Override
-    public Page<OrderDto> getPage(int pageNumber, int pageCapacity) {
-        Page<Order> page = orderRepository.findAll(new PageRequest(pageNumber, pageCapacity));
-        return new PageImpl<>(
-                page.getContent().stream()
-                        .map(OrderUtil::asTo)
-                        .collect(Collectors.toList()),
-                null,
-                page.getTotalElements());
-    }
-*/
     @Override
     public Long getTotalQuantity() {
         return orderRepository.count();
     }
 
     @Override
-    public Order create() {
+    public Order createEmpty() {
         Order newOrder = new Order(null,
                 userRepository.getByLogin(SecurityContextHolder.getContext().getAuthentication().getName()),
                 PaymentType.NP, OrderStatus.NEW, null, Collections.singletonList(new OrderItem()));
         LOG.info("create new {}", newOrder);
-        return save(newOrder);
+        return orderRepository.save(newOrder);
     }
 }

@@ -17,15 +17,15 @@ public class OrderDto {
 
     private Long customerId;
 
-    private String lastName;
+    private String customerLastName;
 
-    private String firstName;
+    private String customerFirstName;
 
-    private String phoneNumber;
+    private String customerPhoneNumber;
 
-    private String city;
+    private String destinationCity;
 
-    private String postOffice;
+    private String destinationPostOffice;
 
     private String customerNote;
 
@@ -33,33 +33,31 @@ public class OrderDto {
 
     private BigDecimal totalSum;
 
-    //@JsonDeserialize(using = LocalDateDeserializer.class)
-    //@JsonSerialize(using = LocalDateSerializer.class)
     @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
-    private LocalDateTime date;
+    private LocalDateTime createdDateTime;
 
     private OrderStatus status;
 
-    private String comment;
+    private String note;
 
     private List<OrderItemDto> orderItemDtos;
 
     public OrderDto(
-            Long id, Long customerId, String firstName, String lastName, String phoneNumber, String city,
-            String postOffice, String customerNote, PaymentType paymentType, LocalDateTime date, OrderStatus status,
-            String comment, BigDecimal totalSum, List<OrderItemDto> orderItemDtos) {
+            Long id, Long customerId, String customerFirstName, String customerLastName, String customerPhoneNumber, String destinationCity,
+            String destinationPostOffice, String customerNote, PaymentType paymentType, LocalDateTime createdDateTime, OrderStatus status,
+            String note, BigDecimal totalSum, List<OrderItemDto> orderItemDtos) {
         this.id = id;
         this.customerId = customerId == null ? 0 : customerId;
-        this.firstName = firstName != null ? firstName : "";
-        this.lastName = lastName != null ? lastName : "";
-        this.phoneNumber = phoneNumber != null ? phoneNumber : "";
-        this.city = city != null ? city : "";
-        this.postOffice = postOffice != null ? postOffice : "";
+        this.customerFirstName = customerFirstName != null ? customerFirstName : "";
+        this.customerLastName = customerLastName != null ? customerLastName : "";
+        this.customerPhoneNumber = customerPhoneNumber != null ? customerPhoneNumber : "";
+        this.destinationCity = destinationCity != null ? destinationCity : "";
+        this.destinationPostOffice = destinationPostOffice != null ? destinationPostOffice : "";
         this.customerNote = customerNote != null ? customerNote : "";
         this.paymentType = paymentType;
-        this.date = date;
+        this.createdDateTime = createdDateTime;
         this.status = status;
-        this.comment = comment;
+        this.note = note;
         this.totalSum = totalSum.setScale(0, RoundingMode.HALF_UP);
 
         this.orderItemDtos = orderItemDtos;
@@ -81,44 +79,44 @@ public class OrderDto {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getCustomerFirstName() {
+        return customerFirstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setCustomerFirstName(String customerFirstName) {
+        this.customerFirstName = customerFirstName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getCustomerLastName() {
+        return customerLastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setCustomerLastName(String customerLastName) {
+        this.customerLastName = customerLastName;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getCustomerPhoneNumber() {
+        return customerPhoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setCustomerPhoneNumber(String customerPhoneNumber) {
+        this.customerPhoneNumber = customerPhoneNumber;
     }
 
-    public String getCity() {
-        return city;
+    public String getDestinationCity() {
+        return destinationCity;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setDestinationCity(String destinationCity) {
+        this.destinationCity = destinationCity;
     }
 
-    public String getPostOffice() {
-        return postOffice;
+    public String getDestinationPostOffice() {
+        return destinationPostOffice;
     }
 
-    public void setPostOffice(String postOffice) {
-        this.postOffice = postOffice;
+    public void setDestinationPostOffice(String destinationPostOffice) {
+        this.destinationPostOffice = destinationPostOffice;
     }
 
     public String getCustomerNote() {
@@ -146,14 +144,14 @@ public class OrderDto {
     }
 
     //@JsonSerialize(using = LocalDateSerializer.class)
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getCreatedDateTime() {
+        return createdDateTime;
     }
 
     //@JsonDeserialize(using = LocalDateDeserializer.class)
-    public void setDate(LocalDateTime date) {
+    public void setCreatedDateTime(LocalDateTime createdDateTime) {
 
-        this.date = date;
+        this.createdDateTime = createdDateTime;
     }
 
     public OrderStatus getStatus() {
@@ -164,12 +162,12 @@ public class OrderDto {
         this.status = status;
     }
 
-    public String getComment() {
-        return comment;
+    public String getNote() {
+        return note;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public List<OrderItemDto> getOrderItemDtos() {

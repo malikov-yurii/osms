@@ -24,7 +24,7 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th><fmt:message key="customers.firstName"/></th>
+                        <th><fmt:message key="customers.customerFirstName"/></th>
                         <th><fmt:message key="customers.lastName"/></th>
                         <th><fmt:message key="customers.phoneNumber"/></th>
                         <th><fmt:message key="customers.city"/></th>
@@ -54,12 +54,12 @@
                     <input type="hidden" id="id" name="id">
 
                     <div class="form-group">
-                        <label for="firstName" class="control-label col-xs-3"><fmt:message
-                                key="customers.firstName"/></label>
+                        <label for="customerFirstName" class="control-label col-xs-3"><fmt:message
+                                key="customers.customerFirstName"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="firstName" name="name"
-                                   placeholder="<fmt:message key="customers.firstName"/>">
+                            <input type="text" class="form-control" id="customerFirstName" name="name"
+                                   placeholder="<fmt:message key="customers.customerFirstName"/>">
                         </div>
                     </div>
                     <div class="form-group">

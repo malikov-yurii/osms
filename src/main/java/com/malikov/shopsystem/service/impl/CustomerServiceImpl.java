@@ -108,11 +108,11 @@ public class CustomerServiceImpl implements CustomerService {
             checkIsNew(order.getCustomer(), "Customer is not new");
         }
         order.setCustomer(customerRepository.save(
-                new Customer(order.getCustomerName()
+                new Customer(order.getCustomerFirstName()
                         , order.getCustomerLastName()
                         , order.getCustomerPhoneNumber()
-                        , order.getCustomerCity()
-                        , order.getCustomerPostOffice()
+                        , order.getDestinationCity()
+                        , order.getDestinationPostOffice()
                         , null
                         , null)));
         return orderRepository.save(order).getCustomer();

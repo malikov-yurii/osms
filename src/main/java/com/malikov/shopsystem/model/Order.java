@@ -20,7 +20,7 @@ public class Order extends BaseEntity {
     private Customer customer;
 
     @Column(name = "customer_name")
-    private String customerName;
+    private String customerFirstName;
 
     @Column(name = "customer_last_name")
     private String customerLastName;
@@ -29,10 +29,10 @@ public class Order extends BaseEntity {
     private String customerPhoneNumber;
 
     @Column(name = "customer_city")
-    private String customerCity;
+    private String destinationCity;
 
     @Column(name = "customer_nova_poshta")
-    private String customerPostOffice;
+    private String destinationPostOffice;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -48,7 +48,7 @@ public class Order extends BaseEntity {
 
     @Column(name = "date_placed", columnDefinition = "timestamp default now()")
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime dateTimePlaced = LocalDateTime.now();
+    private LocalDateTime dateTimeCreated = LocalDateTime.now();
 
     //@OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
     //@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER, mappedBy = "order")
@@ -75,23 +75,23 @@ public class Order extends BaseEntity {
     }
 
     public Order(Long id, Customer customer, User user, PaymentType paymentType,
-                 OrderStatus status, String comment, LocalDateTime dateTimePlaced,
+                 OrderStatus status, String comment, LocalDateTime dateTimeCreated,
                  List<OrderItem> orderItems) {
         super(id);
         if (customer != null) {
             this.customer = customer;
-            this.customerName = customer.getName();
+            this.customerFirstName = customer.getName();
             this.customerLastName = customer.getLastName();
             this.customerPhoneNumber = customer.getPhoneNumber();
-            this.customerCity = customer.getCity();
-            this.customerPostOffice = customer.getPostOffice();
+            this.destinationCity = customer.getCity();
+            this.destinationPostOffice = customer.getPostOffice();
         }
 
         this.user = user;
         this.paymentType = paymentType;
         this.status = status;
         this.comment = comment;
-        this.dateTimePlaced = dateTimePlaced;
+        this.dateTimeCreated = dateTimeCreated;
 
         if (orderItems != null) {
             this.orderItems = orderItems;
@@ -104,12 +104,12 @@ public class Order extends BaseEntity {
         this.statusSortOrder = OrderUtil.getStatusSortOrder(status);
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getCustomerFirstName() {
+        return customerFirstName;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setCustomerFirstName(String customerFirstName) {
+        this.customerFirstName = customerFirstName;
     }
 
     public String getCustomerLastName() {
@@ -128,28 +128,28 @@ public class Order extends BaseEntity {
         this.customerPhoneNumber = customerPhoneNumber;
     }
 
-    public String getCustomerCity() {
-        return customerCity;
+    public String getDestinationCity() {
+        return destinationCity;
     }
 
-    public void setCustomerCity(String customerCity) {
-        this.customerCity = customerCity;
+    public void setDestinationCity(String destinationCity) {
+        this.destinationCity = destinationCity;
     }
 
-    public String getCustomerPostOffice() {
-        return customerPostOffice;
+    public String getDestinationPostOffice() {
+        return destinationPostOffice;
     }
 
-    public void setCustomerPostOffice(String customerPostOffice) {
-        this.customerPostOffice = customerPostOffice;
+    public void setDestinationPostOffice(String destinationPostOffice) {
+        this.destinationPostOffice = destinationPostOffice;
     }
 
-    public LocalDateTime getDateTimePlaced() {
-        return dateTimePlaced;
+    public LocalDateTime getDateTimeCreated() {
+        return dateTimeCreated;
     }
 
-    public void setDateTimePlaced(LocalDateTime dateTimePlaced) {
-        this.dateTimePlaced = dateTimePlaced;
+    public void setDateTimeCreated(LocalDateTime dateTimeCreated) {
+        this.dateTimeCreated = dateTimeCreated;
     }
 
     public PaymentType getPaymentType() {
@@ -216,23 +216,23 @@ public class Order extends BaseEntity {
         if (!super.equals(o)) return false;
         Order order = (Order) o;
         return Objects.equals(customer, order.customer) &&
-                Objects.equals(customerName, order.customerName) &&
+                Objects.equals(customerFirstName, order.customerFirstName) &&
                 Objects.equals(customerLastName, order.customerLastName) &&
                 Objects.equals(customerPhoneNumber, order.customerPhoneNumber) &&
-                Objects.equals(customerCity, order.customerCity) &&
-                Objects.equals(customerPostOffice, order.customerPostOffice) &&
+                Objects.equals(destinationCity, order.destinationCity) &&
+                Objects.equals(destinationPostOffice, order.destinationPostOffice) &&
                 Objects.equals(user, order.user) &&
                 paymentType == order.paymentType &&
                 status == order.status &&
-                Objects.equals(dateTimePlaced, order.dateTimePlaced) &&
+                Objects.equals(dateTimeCreated, order.dateTimeCreated) &&
                 Objects.equals(orderItems, order.orderItems) &&
                 Objects.equals(comment, order.comment);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), customer, customerName, customerLastName, customerPhoneNumber,
-                customerCity, customerPostOffice, user, paymentType, status, dateTimePlaced, orderItems);
+        return Objects.hash(super.hashCode(), customer, customerFirstName, customerLastName, customerPhoneNumber,
+                destinationCity, destinationPostOffice, user, paymentType, status, dateTimeCreated, orderItems);
     }
 
     @Override
@@ -240,15 +240,15 @@ public class Order extends BaseEntity {
         return "Order{" +
                 "id=" + id +
                 ", customer=" + customer +
-                ", customerName='" + customerName + '\'' +
+                ", customerName='" + customerFirstName + '\'' +
                 ", customerLastName='" + customerLastName + '\'' +
                 ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
-                ", customerCity='" + customerCity + '\'' +
-                ", customerPostOffice='" + customerPostOffice + '\'' +
+                ", customerCity='" + destinationCity + '\'' +
+                ", customerPostOffice='" + destinationPostOffice + '\'' +
                 ", user=" + user +
                 ", status=" + status +
                 ", paymentType=" + paymentType +
-                ", dateTimePlaced=" + dateTimePlaced +
+                ", dateTimePlaced=" + dateTimeCreated +
                 ", orderItems=" + orderItems +
                 ", totalSum=" + totalSum +
                 ", comment=" + totalSum +

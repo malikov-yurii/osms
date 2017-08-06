@@ -9,7 +9,7 @@ public class CustomerDto implements Serializable, HasId {
 
     private Long id;
 
-    private String name;
+    private String firstName;
 
     private String lastName;
 
@@ -24,7 +24,7 @@ public class CustomerDto implements Serializable, HasId {
     private String note;
 
     public CustomerDto(@JsonProperty("id") Long id,
-                       @JsonProperty("name") String name,
+                       @JsonProperty("name") String firstName,
                        @JsonProperty("lastName") String lastName,
                        @JsonProperty("phoneNumber") String phoneNumber,
                        @JsonProperty("city") String city,
@@ -33,7 +33,7 @@ public class CustomerDto implements Serializable, HasId {
                        @JsonProperty("note") String note
     ) {
         this.id = id;
-        this.name = name;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.city = city;
@@ -57,12 +57,12 @@ public class CustomerDto implements Serializable, HasId {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -117,7 +117,7 @@ public class CustomerDto implements Serializable, HasId {
     public String toString() {
         return "CustomerDto{" +
                 "id=" + id +
-                ", firstName='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", city='" + city + '\'' +

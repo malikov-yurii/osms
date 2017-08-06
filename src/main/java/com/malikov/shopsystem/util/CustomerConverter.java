@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class CustomerConverter {
 
     public static Customer createNewFromTo(CustomerDto customerDto) {
-        return new Customer(null, customerDto.getName(), customerDto.getLastName(),
+        return new Customer(null, customerDto.getFirstName(), customerDto.getLastName(),
                 customerDto.getPhoneNumber(), customerDto.getCity(),
                 customerDto.getPostOffice(), customerDto.getEmail(),
                 customerDto.getNote());
@@ -29,7 +29,7 @@ public class CustomerConverter {
     }
 
     public static Customer updateFromTo(Customer customer, CustomerDto customerDto) {
-        customer.setName(customerDto.getName());
+        customer.setName(customerDto.getFirstName());
         customer.setLastName(customerDto.getLastName());
         customer.setPhoneNumber(customerDto.getPhoneNumber());
         customer.setCity(customerDto.getCity());

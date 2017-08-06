@@ -14,12 +14,12 @@ import java.util.stream.Collectors;
 public class OrderUtil {
 
     public static Order updateFromTo(Order order, OrderDto orderDto) {
-        order.setCustomerName(orderDto.getFirstName());
-        order.setCustomerLastName(orderDto.getLastName());
-        order.setCustomerPhoneNumber(orderDto.getPhoneNumber());
-        order.setCustomerCity(orderDto.getCity());
-        order.setCustomerPostOffice(orderDto.getPostOffice());
-        order.setComment(orderDto.getComment());
+        order.setCustomerFirstName(orderDto.getCustomerFirstName());
+        order.setCustomerLastName(orderDto.getCustomerLastName());
+        order.setCustomerPhoneNumber(orderDto.getCustomerPhoneNumber());
+        order.setDestinationCity(orderDto.getDestinationCity());
+        order.setDestinationPostOffice(orderDto.getDestinationPostOffice());
+        order.setComment(orderDto.getNote());
         order.setTotalSum(orderDto.getTotalSum());
         return order;
     }
@@ -48,10 +48,10 @@ public class OrderUtil {
                 .collect(Collectors.toList());
         return new OrderDto(order.getId(),
                 order.getCustomer() != null? order.getCustomer().getId(): 0,
-                order.getCustomerName(), order.getCustomerLastName(),
-                order.getCustomerPhoneNumber(), order.getCustomerCity(),
-                order.getCustomerPostOffice(), order.getCustomer() != null ? order.getCustomer().getNote() : null,
-                order.getPaymentType(), order.getDateTimePlaced(), order.getStatus(),
+                order.getCustomerFirstName(), order.getCustomerLastName(),
+                order.getCustomerPhoneNumber(), order.getDestinationCity(),
+                order.getDestinationPostOffice(), order.getCustomer() != null ? order.getCustomer().getNote() : null,
+                order.getPaymentType(), order.getDateTimeCreated(), order.getStatus(),
                 order.getComment() == null ? "" : order.getComment(),
                 order.getTotalSum() == null ? BigDecimal.ZERO : order.getTotalSum(),
                 orderItemDtos);

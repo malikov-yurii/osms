@@ -3,9 +3,8 @@ package com.malikov.shopsystem.dto;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class OrderItemAutocompleteDto {
+public class ProductAutocompleteDto {
 
-   // TODO: 3/25/2017    get rid of label. use javascript concatenation instead
     private String label;
 
     private Long productId;
@@ -16,7 +15,7 @@ public class OrderItemAutocompleteDto {
 
     private BigDecimal price;
 
-    public OrderItemAutocompleteDto(String label, Long productId, Long productVariationId, String name, BigDecimal price) {
+    public ProductAutocompleteDto(String label, Long productId, Long productVariationId, String name, BigDecimal price) {
         this.label = label;
         this.productId = productId;
         this.productVariationId = productVariationId;

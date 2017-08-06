@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.web.controller;
 
 import com.malikov.shopsystem.dto.OrderDto;
+import com.malikov.shopsystem.dto.OrderFilterDto;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.model.PaymentType;
@@ -25,6 +26,17 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @GetMapping(value = "/filter")
+    public ModelMap getFilteredPage(@RequestBody OrderFilterDto orderFilterDto,
+                                    @RequestParam("pageNumber") int pageNumber,
+                                    @RequestParam("pageCapacity") int pageCapacity) {
+        ModelMap modelMap = new ModelMap();
+        Page<OrderDto> page = orderService.getFilteredPage(orderFilterDto, pageNumber, pageCapacity);;
+        modelMap.addAttribute("totalElements", page.getTotalElements());
+        modelMap.addAttribute("elements", page.getContent());
+        return modelMap;
+
+    }
     @GetMapping(value = "/{id}")
     public OrderDto get(@PathVariable("id") Long orderId) {
         return OrderUtil.asTo(orderService.get(orderId));
@@ -40,20 +52,6 @@ public class OrderController {
         return modelMap;
     }
 
-    @DeleteMapping(value = "/{id}")
-    public void delete(@PathVariable("id") Long id) {
-        orderService.delete(id);
-    }
-
-    @PostMapping
-    public ModelMap create() {
-        ModelMap model = new ModelMap();
-        Order order = orderService.create();
-        model.put("orderId", order.getId());
-        model.put("orderItemId", order.getOrderItems().get(0).getId());
-        return model;
-    }
-
     @GetMapping(value = "/autocomplete-payment-type",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public PaymentType[] autocompletePaymentType() {
@@ -66,62 +64,26 @@ public class OrderController {
         return OrderStatus.values();
     }
 
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable("id") Long id) {
+        orderService.delete(id);
+    }
+
+    @PostMapping
+    public ModelMap createEmpty() {
+        ModelMap model = new ModelMap();
+        Order order = orderService.createEmpty();
+        model.put("orderId", order.getId());
+        model.put("orderItemId", order.getOrderItems().get(0).getId());
+        return model;
+    }
+
+
+
     @PutMapping(value = "/{orderId}/status")
-    public void updateOrderStatus(@PathVariable("orderId") Long orderId,
-                                  @RequestParam("status") OrderStatus status) {
-        orderService.updateStatus(orderId, status);
+    public void update(@PathVariable("orderId") Long orderId, @RequestBody OrderDto orderDto) {
+        orderDto.setId(orderId);
+        orderService.update(orderDto);
     }
 
-    @PutMapping(value = "/{orderId}/comment")
-    public void updateOrderComment(@PathVariable("orderId") Long orderId,
-                                   @RequestParam("comment") String comment) {
-        orderService.updateComment(orderId, comment);
-    }
-
-    @PutMapping(value = "/{orderId}/payment-type")
-    public void updateOrderPaymentType(@PathVariable("orderId") Long orderId,
-                                       @RequestParam("paymentType") PaymentType paymentType) {
-        orderService.updatePaymentType(orderId, paymentType);
-    }
-
-    @PutMapping(value = "/{orderId}/first-name")
-    public void updateFirstName(@PathVariable("orderId") Long orderId,
-                                @RequestParam("firstName") String firstName) {
-        orderService.updateCustomerFirstName(orderId, firstName);
-    }
-
-    @PutMapping(value = "/{orderId}/last-name")
-    public void updateLastName(@PathVariable("orderId") Long orderId,
-                               @RequestParam("lastName") String lastName) {
-        orderService.updateCustomerLastName(orderId, lastName);
-    }
-
-    @PutMapping(value = "/{orderId}/phone-number")
-    public void updatePhoneNumber(@PathVariable("orderId") Long orderId,
-                                  @RequestParam("phoneNumber") String phoneNumber) {
-        orderService.updateCustomerPhoneNumber(orderId, phoneNumber);
-    }
-
-    @PutMapping(value = "/{orderId}/city")
-    public void updateCity(@PathVariable("orderId") Long orderId,
-                           @RequestParam("city") String cityName) {
-        orderService.updateCity(orderId, cityName);
-    }
-
-    @PutMapping(value = "/{orderId}/post-office")
-    public void updatePostOffice(@PathVariable("orderId") Long orderId,
-                                 @RequestParam("postOffice") String postOffice) {
-        orderService.updatePostOffice(orderId, postOffice);
-    }
-
-    @PutMapping(value = "/{orderId}/total-sum")
-    public void updateTotalSum(@PathVariable("orderId") Long orderId, @RequestParam("totalSum") BigDecimal totalSum) {
-        orderService.updateTotalSum(orderId, totalSum);
-    }
-
-    @PutMapping(value = "/{orderId}/set-customer")
-    public String setCustomerForOrder(@PathVariable("orderId") Long orderId,
-                                    @RequestParam("customerId") Long customerId) {
-        return orderService.setCustomer(orderId, customerId).getNote();
-    }
 }

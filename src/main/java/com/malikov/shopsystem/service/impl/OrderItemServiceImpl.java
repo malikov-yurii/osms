@@ -1,6 +1,6 @@
 package com.malikov.shopsystem.service.impl;
 
-import com.malikov.shopsystem.dto.OrderItemAutocompleteDto;
+import com.malikov.shopsystem.dto.ProductAutocompleteDto;
 import com.malikov.shopsystem.dto.OrderItemLiteDto;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderItem;
@@ -209,13 +209,13 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public List<OrderItemAutocompleteDto> getByProductMask(String productNameMask) {
-        List<OrderItemAutocompleteDto> orderItemAutocompleteDtos = new ArrayList<>();
+    public List<ProductAutocompleteDto> getByProductMask(String productNameMask) {
+        List<ProductAutocompleteDto> productAutocompleteDtos = new ArrayList<>();
         productRepository.getByNameLike("%" + productNameMask.replaceAll(",", "") + "%").forEach(product -> {
             if (product.getHasVariations()) {
                 for (ProductVariation productVariation : product.getVariations()) {
-                    orderItemAutocompleteDtos.add(
-                            new OrderItemAutocompleteDto(
+                    productAutocompleteDtos.add(
+                            new ProductAutocompleteDto(
                                     product.getName() + " "
                                             + productVariation.getVariationValue().getName() + " "
                                             + productVariation.getPrice().setScale(0, RoundingMode.HALF_UP),
@@ -228,8 +228,8 @@ public class OrderItemServiceImpl implements OrderItemService {
                     );
                 }
             } else {
-                orderItemAutocompleteDtos.add(
-                        new OrderItemAutocompleteDto(
+                productAutocompleteDtos.add(
+                        new ProductAutocompleteDto(
                                 product.getName() + " " + product.getPrice().setScale(0, RoundingMode.HALF_UP),
                                 product.getId(),
                                 0L,
@@ -239,7 +239,7 @@ public class OrderItemServiceImpl implements OrderItemService {
                 );
             }
         });
-        return orderItemAutocompleteDtos;
+        return productAutocompleteDtos;
     }
 
 }
