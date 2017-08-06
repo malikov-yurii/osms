@@ -19,12 +19,6 @@ public interface OrderService {
 
     void delete(Long id);
 
-    Collection<Order> getByCustomerId(Long customerId);
-
-    Collection<Order> getByProductId(Long productId);
-
-    Long getTotalQuantity();
-
     Page<OrderDto> getPage(int pageNumber, int pageCapacity);
 
     Page<OrderDto> getFilteredPage(OrderFilterDto orderFilterDto, int pageNumber, int pageCapacity);

@@ -7,6 +7,8 @@ import com.malikov.shopsystem.model.*;
 import com.malikov.shopsystem.repository.*;
 import com.malikov.shopsystem.service.OrderService;
 import com.malikov.shopsystem.util.OrderUtil;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,11 @@ import static com.malikov.shopsystem.util.OrderStatusUtil.isWithdrawalStatus;
 public class OrderServiceImpl implements OrderService {
 
     private static final Logger LOG = LoggerFactory.getLogger(OrderServiceImpl.class);
+
+    private static final Sort DESC_SORT_ORDER = new Sort(
+            //new Sort.Order(Sort.Direction.ASC, "statusSortOrder"),
+            new Sort.Order(Sort.Direction.DESC, "id")
+    );
 
     @Autowired
     private OrderRepository orderRepository;
@@ -48,9 +54,84 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ProductVariationRepository productVariationRepository;
 
-    @Override
+    @SuppressWarnings("unchecked assignments")
     public Page<OrderDto> getFilteredPage(OrderFilterDto orderFilterDto, int pageNumber, int pageCapacity) {
-        return null;
+        return convertToFilteredOrderDtoPage(orderRepository.findAll(buildFilterRestrictions(orderFilterDto),
+                new PageRequest(pageNumber, pageCapacity, DESC_SORT_ORDER)));
+    }
+
+    private BooleanBuilder buildFilterRestrictions(OrderFilterDto filter) {
+        QOrder order = QOrder.order;
+        BooleanBuilder filterRestrictions = new BooleanBuilder();
+        addCustomerFilterRestrictions(filter, order, filterRestrictions);
+        addProductFilterRestrictions(filter, order, filterRestrictions);
+        addDateTimeCreatedFilterRestrictions(filter, order, filterRestrictions);
+        return filterRestrictions;
+    }
+
+    private void addDateTimeCreatedFilterRestrictions(OrderFilterDto filter,
+                                                      QOrder qOrder, BooleanBuilder booleanBuilder) {
+        if (filter.getFromDateTimeCreated() != null || filter.getToDateTimeCreated() != null) {
+            BooleanExpression isCreatedBetween =
+                    qOrder.dateTimeCreated.between(filter.getFromDateTimeCreated(), filter.getToDateTimeCreated());
+            booleanBuilder.and(isCreatedBetween);
+        }
+    }
+
+    private void addProductFilterRestrictions(OrderFilterDto filter, QOrder qOrder, BooleanBuilder booleanBuilder) {
+        if(filter.getProductVariationId() != null) {
+            ProductVariation productVariation = productVariationRepository.findOne(filter.getProductVariationId());
+            BooleanExpression isIncludeProduct = qOrder.orderItems.any().productVariation.eq(productVariation);
+            booleanBuilder.and(isIncludeProduct);
+        } else if(filter.getProductId() != null) {
+            Product product = productRepository.findOne(filter.getProductId());
+            BooleanExpression isIncludeProduct = qOrder.orderItems.any().product.eq(product);
+            booleanBuilder.and(isIncludeProduct);
+        } else if(filter.getProductNameMask() != null) {
+            BooleanExpression isIncludeProductWithLikeProductName =
+                    qOrder.orderItems.any().productName.like(filter.getProductNameMask());
+            booleanBuilder.and(isIncludeProductWithLikeProductName);
+        }
+
+    }
+
+    private void addCustomerFilterRestrictions(OrderFilterDto filter, QOrder qOrder, BooleanBuilder booleanBuilder) {
+        if(filter.getCustomerId() != null) {
+            Customer customer = customerRepository.findOne(filter.getCustomerId());
+            BooleanExpression isCustomer = qOrder.customer.eq(customer);
+            booleanBuilder.and(isCustomer);
+        } else {
+            BooleanExpression isLikeCustomerPhoneNumber;
+            if(filter.getCustomerFirstNameMask() != null) {
+                isLikeCustomerPhoneNumber = qOrder.customerFirstName.like(filter.getCustomerFirstNameMask());
+                booleanBuilder.and(isLikeCustomerPhoneNumber);
+            }
+
+            if(filter.getCustomerLastNameMask() != null) {
+                isLikeCustomerPhoneNumber = qOrder.customerLastName.like(filter.getCustomerLastNameMask());
+                booleanBuilder.and(isLikeCustomerPhoneNumber);
+            }
+
+            if(filter.getDestinationCityMask() != null) {
+                isLikeCustomerPhoneNumber = qOrder.destinationCity.like(filter.getDestinationCityMask());
+                booleanBuilder.and(isLikeCustomerPhoneNumber);
+            }
+
+            if(filter.getCustomerPhoneMask() != null) {
+                isLikeCustomerPhoneNumber = qOrder.customerPhoneNumber.like(filter.getCustomerPhoneMask());
+                booleanBuilder.and(isLikeCustomerPhoneNumber);
+            }
+        }
+
+    }
+
+    private PageImpl<OrderDto> convertToFilteredOrderDtoPage(Page<Order> page) {
+        return new PageImpl<>(
+                page.getContent().stream()
+                        .map(OrderUtil::asTo)
+                        .collect(Collectors.toList()),
+                null,
+                page.getTotalElements());
     }
 
     @Override
@@ -67,16 +148,6 @@ public class OrderServiceImpl implements OrderService {
         }
 
         orderRepository.delete(order);
-    }
-
-    @Override
-    public Collection<Order> getByCustomerId(Long customerId) {
-        return orderRepository.getByCustomerId(customerId);
-    }
-
-    @Override
-    public Collection<Order> getByProductId(Long productId) {
-        return orderRepository.getByProductId(productId);
     }
 
     @Override
@@ -242,22 +313,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<OrderDto> getPage(int pageNumber, int pageCapacity) {
-        Page<Order> page = orderRepository.findAll(new PageRequest(pageNumber, pageCapacity,
-                new Sort(
-                        //new Sort.Order(Sort.Direction.ASC, "statusSortOrder"),
-                        new Sort.Order(Sort.Direction.DESC, "id")
-                )));
-        return new PageImpl<>(
-                page.getContent().stream()
-                        .map(OrderUtil::asTo)
-                        .collect(Collectors.toList()),
-                null,
-                page.getTotalElements());
-    }
-
-    @Override
-    public Long getTotalQuantity() {
-        return orderRepository.count();
+        return convertToFilteredOrderDtoPage(
+                orderRepository.findAll(new PageRequest(pageNumber,pageCapacity, DESC_SORT_ORDER)));
     }
 
     @Override
