@@ -89,7 +89,7 @@ public class OrderServiceImpl implements OrderService {
             booleanBuilder.and(isIncludeProduct);
         } else if(filter.getProductNameMask() != null) {
             BooleanExpression isIncludeProductWithLikeProductName =
-                    qOrder.orderItems.any().productName.like(filter.getProductNameMask());
+                    qOrder.orderItems.any().productName.like("%" + filter.getProductNameMask() + "%");
             booleanBuilder.and(isIncludeProductWithLikeProductName);
         }
 
@@ -103,22 +103,22 @@ public class OrderServiceImpl implements OrderService {
         } else {
             BooleanExpression isLikeCustomerPhoneNumber;
             if(filter.getCustomerFirstNameMask() != null) {
-                isLikeCustomerPhoneNumber = qOrder.customerFirstName.like(filter.getCustomerFirstNameMask());
+                isLikeCustomerPhoneNumber = qOrder.customerFirstName.like("%" + filter.getCustomerFirstNameMask() + "%");
                 booleanBuilder.and(isLikeCustomerPhoneNumber);
             }
 
             if(filter.getCustomerLastNameMask() != null) {
-                isLikeCustomerPhoneNumber = qOrder.customerLastName.like(filter.getCustomerLastNameMask());
+                isLikeCustomerPhoneNumber = qOrder.customerLastName.like("%" + filter.getCustomerLastNameMask() + "%");
                 booleanBuilder.and(isLikeCustomerPhoneNumber);
             }
 
             if(filter.getDestinationCityMask() != null) {
-                isLikeCustomerPhoneNumber = qOrder.destinationCity.like(filter.getDestinationCityMask());
+                isLikeCustomerPhoneNumber = qOrder.destinationCity.like("%" + filter.getDestinationCityMask() + "%");
                 booleanBuilder.and(isLikeCustomerPhoneNumber);
             }
 
             if(filter.getCustomerPhoneMask() != null) {
-                isLikeCustomerPhoneNumber = qOrder.customerPhoneNumber.like(filter.getCustomerPhoneMask());
+                isLikeCustomerPhoneNumber = qOrder.customerPhoneNumber.like("%" + filter.getCustomerPhoneMask() + "%");
                 booleanBuilder.and(isLikeCustomerPhoneNumber);
             }
         }
