@@ -2,6 +2,6 @@ target/
 /git/nbproject
 /.idea/
 *.iml
-/src/main/webapp/node_modules
-/src/main/webapp/src
+/src/node_modules
+/src/main/webapp/vendor
 /src/main/webapp/dist
