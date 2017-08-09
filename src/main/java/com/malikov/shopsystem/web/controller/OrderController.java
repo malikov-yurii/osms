@@ -15,8 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-
 @RestController
 @RequestMapping(value = "/order")
 public class OrderController {
@@ -26,7 +24,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping(value = "/filter")
+    @GetMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
     public ModelMap getFilteredPage(@RequestBody OrderFilterDto orderFilterDto,
                                     @RequestParam("pageNumber") int pageNumber,
                                     @RequestParam("pageCapacity") int pageCapacity) {
@@ -52,14 +50,12 @@ public class OrderController {
         return modelMap;
     }
 
-    @GetMapping(value = "/autocomplete-payment-type",
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/autocomplete-payment-type", produces = MediaType.APPLICATION_JSON_VALUE)
     public PaymentType[] autocompletePaymentType() {
         return PaymentType.values();
     }
 
-    @GetMapping(value = "/autocomplete-status",
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/autocomplete-status", produces = MediaType.APPLICATION_JSON_VALUE)
     public OrderStatus[] autocompleteOrderStatus() {
         return OrderStatus.values();
     }

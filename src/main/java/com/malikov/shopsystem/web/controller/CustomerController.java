@@ -19,8 +19,7 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping(value = "/{customerId}",
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomerDto getCustomer(@PathVariable("customerId") Long customerId) {
         return customerService.get(customerId);
     }

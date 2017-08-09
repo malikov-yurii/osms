@@ -21,8 +21,7 @@ public class OrderItemController {
     @Autowired
     private OrderItemService orderItemService;
 
-    @GetMapping(value = "/autocomplete-by-product-name/{productNameMask}",
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/autocomplete-by-product-name/{productNameMask}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ProductAutocompleteDto> autocompleteOrderItemName(
             @PathVariable("productNameMask") String productNameMask) {
         return orderItemService.getByProductMask(productNameMask);
