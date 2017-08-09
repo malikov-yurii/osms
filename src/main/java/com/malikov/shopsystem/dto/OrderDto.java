@@ -40,12 +40,12 @@ public class OrderDto {
 
     private String note;
 
-    private List<OrderItemDto> orderItemDtos;
+    private List<OrderItemDto> orderItems;
 
     public OrderDto(
             Long id, Long customerId, String customerFirstName, String customerLastName, String customerPhoneNumber, String destinationCity,
             String destinationPostOffice, String customerNote, PaymentType paymentType, LocalDateTime createdDateTime, OrderStatus status,
-            String note, BigDecimal totalSum, List<OrderItemDto> orderItemDtos) {
+            String note, BigDecimal totalSum, List<OrderItemDto> orderItems) {
         this.id = id;
         this.customerId = customerId == null ? 0 : customerId;
         this.customerFirstName = customerFirstName != null ? customerFirstName : "";
@@ -60,7 +60,7 @@ public class OrderDto {
         this.note = note;
         this.totalSum = totalSum.setScale(0, RoundingMode.HALF_UP);
 
-        this.orderItemDtos = orderItemDtos;
+        this.orderItems = orderItems;
     }
 
     public OrderDto() {
@@ -170,12 +170,12 @@ public class OrderDto {
         this.note = note;
     }
 
-    public List<OrderItemDto> getOrderItemDtos() {
-        return orderItemDtos;
+    public List<OrderItemDto> getOrderItems() {
+        return orderItems;
     }
 
-    public void setOrderItemDtos(List<OrderItemDto> orderItemDtos) {
-        this.orderItemDtos = orderItemDtos;
+    public void setOrderItems(List<OrderItemDto> orderItems) {
+        this.orderItems = orderItems;
     }
 
     public Long getCustomerId() {
