@@ -47,12 +47,12 @@
                 </div>
 
                 <ng-container
-                        *ngFor="let key of order | keys:['id', 'customerId', 'customerNote', 'orderItemDtos']"
+                        *ngFor="let key of order | keys:['id', 'customerId', 'customerNote', 'orderItems']"
                 >
 
                     <ng-container *ngIf="!hasInput(key)">
 
-                        <ng-template [ngIf]="key !== 'date'">
+                        <ng-template [ngIf]="key !== 'createdDateTime'">
                             <div
                                     class="order-info__block order-info__block--{{ key }}"
                                     contenteditable
@@ -63,7 +63,7 @@
                             ></div>
                         </ng-template>
 
-                        <ng-template [ngIf]="key === 'date'">
+                        <ng-template [ngIf]="key === 'createdDateTime'">
                             <div class="order-info__block order-info__block--date">
                                 {{ order[key] | date:'dd MMM HH:mm' }}
                             </div>
@@ -126,7 +126,7 @@
 
             <div class="order-products">
                 <div
-                        *ngFor="let product of order.orderItemDtos; let odd = odd, let even = even;"
+                        *ngFor="let product of order.orderItems; let odd = odd, let even = even;"
                         [ngClass]="{'order-product': true, odd: odd, even: even}"
                 >
 

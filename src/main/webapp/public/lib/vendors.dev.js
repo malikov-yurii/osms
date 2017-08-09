@@ -8626,6 +8626,7 @@ else {
     map: {
       // our app is within the dist folder
       app: 'dist',
+      'templatesUrl': 'assets/templates',
       // angular bundles
       '@angular/animations':          'npm:@angular/animations/bundles/animations.umd.js',
       '@angular/animations/browser':  'npm:@angular/animations/bundles/animations-browser.umd.js',
