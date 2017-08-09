@@ -132,19 +132,19 @@ body {
 .order-info__block--id {
     width: 55px;
 }
-.order-info__block--lastName,
-.order-info__block--firstName,
-.order-info__block--city,
+.order-info__block--customerLastName,
+.order-info__block--customerFirstName,
+.order-info__block--destinationCity,
 .order-info__block--comment {
     width: calc((100% - 55px - 105px - 45px - 45px - 70px - 95px - 52px - 14px) / 4);
 }
-.order-info__block--phoneNumber {
+.order-info__block--customerPhoneNumber {
     width: 105px;
 }
-.order-info__block--postOffice {
+.order-info__block--destinationPostOffice {
     width: 45px;
 }
-.order-info__block--date {
+.order-info__block--createdDateTime {
     width: 105px;
     font-size: 13px;
 }
@@ -426,15 +426,15 @@ td.product-cell--supplier {
         order: 1;
         width: 45px;
     }
-    .order-info__block--lastName {
+    .order-info__block--customerLastName {
         order: 2;
         width: calc((100% - 45px - 93px - 83px - 35px) / 2);
     }
-    .order-info__block--firstName {
+    .order-info__block--customerFirstName {
         order: 3;
         width: calc((100% - 45px - 93px - 83px - 35px) / 2);
     }
-    .order-info__block--phoneNumber {
+    .order-info__block--customerPhoneNumber {
         order: 4;
         width: 93px;
     }
@@ -442,15 +442,15 @@ td.product-cell--supplier {
         order: 6;
         width: 35px;
     }
-    .order-info__block--city {
+    .order-info__block--destinationCity {
         order: 7;
         width: calc((100% - 32px - 35px - 70px) / 2);
     }
-    .order-info__block--postOffice {
+    .order-info__block--destinationPostOffice {
         order: 8;
         width: 32px;
     }
-    .order-info__block--date {
+    .order-info__block--createdDateTime {
         order: 5;
         width: 83px;
     }
@@ -548,15 +548,15 @@ td.product-cell--supplier {
         order: 1;
         width: 13%;
     }
-    .order-info__block--lastName {
+    .order-info__block--customerLastName {
         order: 5;
         width: calc(100% / 3);
     }
-    .order-info__block--firstName {
+    .order-info__block--customerFirstName {
         order: 6;
         width: calc(100% / 3);
     }
-    .order-info__block--phoneNumber {
+    .order-info__block--customerPhoneNumber {
         order: 7;
         width: calc(100% / 3);
         border-right-width: 0;
@@ -566,15 +566,15 @@ td.product-cell--supplier {
         width: 18%;
         border-right-width: 0;
     }
-    .order-info__block--city {
+    .order-info__block--destinationCity {
         order: 8;
         width: 57%;
     }
-    .order-info__block--postOffice {
+    .order-info__block--destinationPostOffice {
         order: 9;
         width: 12%;
     }
-    .order-info__block--date {
+    .order-info__block--createdDateTime {
         order: 2;
         width: 30%;
     }
