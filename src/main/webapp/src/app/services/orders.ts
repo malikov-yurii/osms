@@ -62,9 +62,7 @@ export class OrderService {
     return this.api.put(
       `${this.ordersPath}/${orderId}`,
       {
-        order: {
-          [fieldName]: value
-        }
+        [fieldName]: value
       }
     );
   }
