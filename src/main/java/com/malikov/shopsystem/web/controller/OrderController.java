@@ -2,6 +2,7 @@ package com.malikov.shopsystem.web.controller;
 
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
+import com.malikov.shopsystem.dto.OrderUpdateDto;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.model.PaymentType;
@@ -76,9 +77,9 @@ public class OrderController {
 
     @PutMapping(value = "/{orderId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateCustomer(@PathVariable("orderId") Long orderId,
-                               @RequestBody OrderDto orderDto) {
-        orderDto.setId(orderId);
-        orderService.update(orderDto);
+                               @RequestBody OrderUpdateDto orderUpdateDto) {
+        orderUpdateDto.setId(orderId);
+        orderService.update(orderUpdateDto);
     }
 
 }

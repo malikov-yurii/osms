@@ -2,6 +2,7 @@ package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
+import com.malikov.shopsystem.dto.OrderUpdateDto;
 import com.malikov.shopsystem.model.Order;
 import org.springframework.data.domain.Page;
 
@@ -11,7 +12,7 @@ public interface OrderService {
 
     Order save(OrderDto orderDto);
 
-    void update(OrderDto orderDto);
+    void update(OrderUpdateDto orderUpdateDto);
 
     Order get(Long id);
 

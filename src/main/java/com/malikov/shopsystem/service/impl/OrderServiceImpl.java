@@ -3,6 +3,7 @@ package com.malikov.shopsystem.service.impl;
 import com.malikov.shopsystem.DbOperation;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
+import com.malikov.shopsystem.dto.OrderUpdateDto;
 import com.malikov.shopsystem.model.*;
 import com.malikov.shopsystem.repository.*;
 import com.malikov.shopsystem.service.OrderService;
@@ -156,43 +157,43 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void update(OrderDto orderDto) {
-        Order order = get(orderDto.getId());
-        checkOrderNotFound(order, orderDto);
+    public void update(OrderUpdateDto orderUpdateDto) {
+        Order order = get(orderUpdateDto.getId());
+        checkOrderNotFound(order, orderUpdateDto);
 
-        setCustomerInfoToOrder(order, orderDto);
-        setPaymentType(order, orderDto.getPaymentType());
-        setNote(order, orderDto.getNote());
-        setTotalSum(order, orderDto.getTotalSum());
-        setStatus(order, orderDto);
+        setCustomerInfoToOrder(order, orderUpdateDto);
+        setPaymentType(order, orderUpdateDto.getPaymentType());
+        setNote(order, orderUpdateDto.getNote());
+        setTotalSum(order, orderUpdateDto.getTotalSum());
+        setStatus(order, orderUpdateDto);
     }
 
-    private void checkOrderNotFound(Order order, OrderDto orderDto) {
+    private void checkOrderNotFound(Order order, OrderUpdateDto orderUpdateDto) {
         if (order == null) {
-            throw new RuntimeException(String.format("order with id=%d not found", orderDto.getId()));
+            throw new RuntimeException(String.format("order with id=%d not found", orderUpdateDto.getId()));
         }
     }
 
-    private void setStatus(Order order, OrderDto orderDto) {
-        if (orderDto.getStatus() != null) {
-            OrderStatus oldStatus = orderDto.getStatus();
-            order.setStatus(orderDto.getStatus());
+    private void setStatus(Order order, OrderUpdateDto orderUpdateDto) {
+        if (orderUpdateDto.getStatus() != null) {
+            OrderStatus oldStatus = orderUpdateDto.getStatus();
+            order.setStatus(orderUpdateDto.getStatus());
             orderRepository.save(order);
-            updateOrderItemProductStock(order, orderDto.getStatus(), oldStatus);
+            updateOrderItemProductStock(order, orderUpdateDto.getStatus(), oldStatus);
         } else {
             orderRepository.save(order);
         }
     }
 
-    private void setCustomerInfoToOrder(Order order, OrderDto orderDto) {
-        if (orderDto.getCustomerId() != null) {
-            setCustomer(order, orderDto.getCustomerId());
+    private void setCustomerInfoToOrder(Order order, OrderUpdateDto orderUpdateDto) {
+        if (orderUpdateDto.getCustomerId() != null) {
+            setCustomer(order, orderUpdateDto.getCustomerId());
         } else {
-            setCustomerFirstName(order, orderDto.getCustomerFirstName());
-            setCustomerLastName(order, orderDto.getCustomerLastName());
-            setCustomerPhoneNumber(order, orderDto.getCustomerPhoneNumber());
-            setDestinationCity(order, orderDto.getDestinationCity());
-            setDestinationPostOffice(order, orderDto.getDestinationPostOffice());
+            setCustomerFirstName(order, orderUpdateDto.getCustomerFirstName());
+            setCustomerLastName(order, orderUpdateDto.getCustomerLastName());
+            setCustomerPhoneNumber(order, orderUpdateDto.getCustomerPhoneNumber());
+            setDestinationCity(order, orderUpdateDto.getDestinationCity());
+            setDestinationPostOffice(order, orderUpdateDto.getDestinationPostOffice());
         }
     }
 
