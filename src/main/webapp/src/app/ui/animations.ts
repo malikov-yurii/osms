@@ -85,11 +85,13 @@ export function changeWidth(width: string = '300px') {
   ])
 }
 
-export function fadeInOut() {
+export function fadeInOut(params?: {paramsVoid: string, paramsAny: string}) {
+  let voidState = params ? params.paramsVoid : 'void';
+  let anyState  = params ? params.paramsAny : '*';
   return trigger('fadeInOut', [
-    state('collapsed', style({opacity: '*'})),
-    state('expanded', style({opacity: 0})),
-    transition('collapsed <=> expanded', animate('.3s ease')),
+    state(voidState, style({display: 'none', opacity: 0})),
+    state(anyState, style({display: '*', opacity: 1})),
+    transition(`${voidState} <=> ${anyState}`, animate('.2s ease')),
   ])
 }
 

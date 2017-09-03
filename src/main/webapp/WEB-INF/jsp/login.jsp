@@ -1,25 +1,17 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"          %>
+<%@ taglib prefix="c"    uri="http://java.sun.com/jsp/jstl/core"        %>
+<%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt"         %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn"   uri="http://java.sun.com/jsp/jstl/functions"   %>
 <html>
 <head>
-
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width">
 
-    <meta name="_csrf" content="${_csrf.token}"/>
-    <meta name="_csrf_header" content="${_csrf.headerName}"/>
-
     <title><fmt:message key="app.title"/></title>
-    <base href="${pageContext.request.contextPath}/"/>
 
     <link rel="shortcut icon" href="assets/images/icon-main.png">
-
-
     <link rel="stylesheet" href="assets/css/login.css">
-
 </head>
 <body>
 

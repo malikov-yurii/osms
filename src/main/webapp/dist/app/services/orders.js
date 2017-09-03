@@ -52,8 +52,27 @@ var OrderService = (function () {
         this.storeHelper.findAndDelete(this.ordersPath, orderId);
         return this.api.apiDelete(this.ordersPath + "/" + orderId);
     };
-    OrderService.prototype.filterOrders = function (body) {
-        return this.api.put("/" + this.ordersPath + "/filter", body);
+    OrderService.prototype.filterOrders = function (page, pageLength, filters) {
+        var _this = this;
+        var payload = {};
+        for (var key in filters) {
+            if (filters[key] && filters.hasOwnProperty(key)) {
+                if (key.toLowerCase().indexOf('date') !== -1) {
+                    payload[key] = filters[key] + "T00:00:00";
+                }
+                else {
+                    payload[key] = filters[key];
+                }
+            }
+        }
+        payload['paging'] = {
+            page: page - 1,
+            size: pageLength
+        };
+        return this.api.put("/" + this.ordersPath + "/filter", payload)
+            .do(function (response) {
+            _this.storeHelper.update('order', response.elements);
+        });
     };
     // Manage order info
     // Changing order info common field (e.g., firstName, phoneNumber)

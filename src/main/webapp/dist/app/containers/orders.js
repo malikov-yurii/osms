@@ -43,6 +43,7 @@ var Orders = (function () {
         this.subs = [];
         this.infoBlocks = models_1.STATIC_DATA.infoBlocks;
         this.showFilters = false;
+        this.filterLoads = false;
     }
     Orders.prototype.ngOnInit = function () {
         var _this = this;
@@ -89,9 +90,7 @@ var Orders = (function () {
         var _this = this;
         this.subs[this.subs.length] = this.orderService
             .getOrders(this.page - 1, this.pageLength)
-            .subscribe(function (resp) {
-            _this.totalOrders = resp.totalElements;
-        });
+            .subscribe(function (resp) { return _this.totalOrders = resp.totalElements; });
     };
     Orders.prototype.onAddOrder = function () {
         var _this = this;
@@ -114,6 +113,16 @@ var Orders = (function () {
     Orders.prototype.paginationChanged = function (_a) {
         var page = _a.page, length = _a.length, apiGet = _a.apiGet;
         this.pageStream.next({ page: page, length: length, apiGet: apiGet });
+    };
+    // Manage filter
+    Orders.prototype.onFilterSubmit = function (filters) {
+        var _this = this;
+        this.filterLoads = true;
+        this.orderService.filterOrders(this.page, this.pageLength, filters)
+            .subscribe(function (response) {
+            _this.totalOrders = response.totalElements;
+            (function () { return _this.filterLoads = false; });
+        }, function () { return _this.filterLoads = false; }, function () { return _this.filterLoads = false; });
     };
     // Manage order info
     Orders.prototype.onUpdateInfoField = function (orderId, fieldName, _a) {
@@ -166,29 +175,6 @@ var Orders = (function () {
     };
     Orders.prototype.onPersistCustomer = function (orderId) {
         this.orderService.persistCustomer(orderId);
-    };
-    // Manage filter
-    Orders.prototype.onFilterSubmit = function (filters) {
-        var transformed = {};
-        for (var key in filters) {
-            if (filters.hasOwnProperty(key)) {
-                if (filters[key]) {
-                    if (key.toLowerCase().indexOf('date') !== -1) {
-                        transformed[key] = filters[key] + "T00:00:00";
-                    }
-                    else {
-                        transformed[key] = filters[key];
-                    }
-                }
-            }
-        }
-        var body = {
-            filter: transformed,
-            pageNumber: this.page - 1,
-            pageCapacity: this.pageLength
-        };
-        this.orderService.filterOrders(body)
-            .subscribe(function (r) { return console.log(r); });
     };
     // @TODO remove this
     Orders.prototype.onGetAllOrders = function () {

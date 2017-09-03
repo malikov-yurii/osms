@@ -54,11 +54,28 @@ export class OrderService {
     return this.api.apiDelete(`${this.ordersPath}/${orderId}`);
   }
 
-  filterOrders(body): Observable<any> {
-    return this.api.put(
-      `/${this.ordersPath}/filter`,
-      body
-    )
+  filterOrders(page, pageLength, filters): Observable<any> {
+    let payload = {};
+
+    for (let key in filters) {
+      if (filters[key] && filters.hasOwnProperty(key)) {
+        if (key.toLowerCase().indexOf('date') !== -1) {
+          payload[key] = `${filters[key]}T00:00:00`;
+        } else {
+          payload[key] = filters[key];
+        }
+      }
+    }
+
+    payload['paging'] = {
+      page: page - 1,
+      size: pageLength
+    };
+
+    return this.api.put(`/${this.ordersPath}/filter`, payload)
+      .do(response => {
+        this.storeHelper.update('order', response.elements)
+      });
   }
 
 

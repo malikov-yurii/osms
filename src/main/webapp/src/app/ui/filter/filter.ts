@@ -2,53 +2,62 @@ import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Observable } from "rxjs/Observable";
 
-import { appear } from '../animations';
+import { appear, fadeInOut } from '../animations';
 
 @Component({
   selector: 'filter',
   template: `
-    <form [formGroup]="form" (ngSubmit)="onSubmit($event)" [@appear] class="filter-container">
-      <div
-        class="filter filter__block"
-        *ngFor="let filter of filters"
-      >
-        <div class="filter__label">
-          {{ filter.label }} :
+    <div [@appear] class="filter-container">
+      <form [formGroup]="form" (ngSubmit)="onSubmit($event)" class="filter__form">
+        <div
+          class="filter filter__block"
+          *ngFor="let filter of filters"
+        >
+          <div class="filter__label">
+            {{ filter.label }} :
+          </div>
+          
+          <ng-container [ngSwitch]="filter.type">
+            <input *ngSwitchCase="'text'" type="text" class="input filter__input" formControlName="{{filter.code}}">
+            
+            <input *ngSwitchCase="'date'" type="date" class="input filter__input" formControlName="{{filter.code}}">
+          
+            <select
+              *ngSwitchCase="'select'"
+              formControlName="{{ filter.code }}"
+              class="filter__select input"
+            >
+              <option value="" selected>- Show all -</option>
+              <option
+                *ngFor="let option of filters[filter]"
+                value="{{ option }}"
+              >
+                {{ option }}
+              </option>
+            </select>
+            
+          </ng-container>
+  
         </div>
         
-        <ng-container [ngSwitch]="filter.type">
-          <input *ngSwitchCase="'text'" type="text" class="input filter__input" formControlName="{{filter.code}}">
-          
-          <input *ngSwitchCase="'date'" type="date" class="input filter__input" formControlName="{{filter.code}}">
-        
-          <select
-            *ngSwitchCase="'select'"
-            formControlName="{{ filter.code }}"
-            class="filter__select input"
-          >
-            <option value="" selected>- Show all -</option>
-            <option
-              *ngFor="let option of filters[filter]"
-              value="{{ option }}"
-            >
-              {{ option }}
-            </option>
-          </select>
-          
-        </ng-container>
-
+        <button type="submit" class="btn filter__block filter__submit">Submit</button>
+      </form>
+      <div *ngIf="loads" [@fadeInOut] class="filter-overlay">
+        <img class="filter-overlay__image" src="/assets/images/loading.svg" alt="">
       </div>
-      
-      <button type="submit" class="btn filter__block filter__submit">Submit</button>
-    </form>
+    </div>
   `,
   styles: [`
     .filter-container {
+        position: relative;
+        margin-bottom: 20px;
+    }
+    
+    .filter__form {
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
         flex-wrap: wrap;
-        margin-bottom: 20px;
     }
     
     .filter__block {
@@ -79,6 +88,23 @@ import { appear } from '../animations';
         margin-left: auto;
     }
     
+    .filter-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(255, 255, 255, .7);
+    }
+    
+    .filter-overlay__image {
+        max-width: 300px;
+        max-height: 300px;
+    }
+    
     @media only screen and (max-width: 900px) {
         .filter {
             justify-content: space-between;
@@ -100,13 +126,14 @@ import { appear } from '../animations';
         }
     }
   `],
-  animations: [appear()]
+  animations: [appear(), fadeInOut()]
 })
 export class Filter implements OnChanges {
   private form: FormGroup;
 
-  @Input() filters: {code: string; label: string; type: string; value?: any}[];
-  @Output() filterSubmit = new EventEmitter<Observable<any>>();
+  @Input()  filters       : {code: string; label: string; type: string; value?: any}[];
+  @Input()  loads         : boolean;
+  @Output() filterSubmit  : EventEmitter<Observable<any>> = new EventEmitter();
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({});
@@ -115,7 +142,7 @@ export class Filter implements OnChanges {
   ngOnChanges() {
     let filters = {};
     this.filters.forEach(filter => {
-      filters[filter.code] = filter.value ? filter.value : '';
+      filters[filter.code] = filter.value || '';
     });
 
     try {
@@ -124,7 +151,7 @@ export class Filter implements OnChanges {
 
   }
 
-  onSubmit() {
+  onSubmit(e) {
     this.filterSubmit.emit(this.form.value);
   }
 }

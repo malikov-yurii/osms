@@ -87,11 +87,13 @@ function changeWidth(width) {
     ]);
 }
 exports.changeWidth = changeWidth;
-function fadeInOut() {
+function fadeInOut(params) {
+    var voidState = params ? params.paramsVoid : 'void';
+    var anyState = params ? params.paramsAny : '*';
     return animations_1.trigger('fadeInOut', [
-        animations_1.state('collapsed', animations_1.style({ opacity: '*' })),
-        animations_1.state('expanded', animations_1.style({ opacity: 0 })),
-        animations_1.transition('collapsed <=> expanded', animations_1.animate('.3s ease')),
+        animations_1.state(voidState, animations_1.style({ display: 'none', opacity: 0 })),
+        animations_1.state(anyState, animations_1.style({ display: '*', opacity: 1 })),
+        animations_1.transition(voidState + " <=> " + anyState, animations_1.animate('.2s ease')),
     ]);
 }
 exports.fadeInOut = fadeInOut;

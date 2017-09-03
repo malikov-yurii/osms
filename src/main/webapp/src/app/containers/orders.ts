@@ -45,6 +45,7 @@ export class Orders implements OnInit, OnDestroy {
   private infoBlocks = STATIC_DATA.infoBlocks;
 
   private showFilters: boolean = false;
+  private filterLoads: boolean = false;
 
 
   constructor(
@@ -109,9 +110,7 @@ export class Orders implements OnInit, OnDestroy {
   onGetOrders() {
     this.subs[this.subs.length] = this.orderService
       .getOrders(this.page - 1, this.pageLength)
-      .subscribe(resp => {
-        this.totalOrders = resp.totalElements;
-      });
+      .subscribe(resp => this.totalOrders = resp.totalElements);
   }
 
   onAddOrder() {
@@ -137,6 +136,20 @@ export class Orders implements OnInit, OnDestroy {
     this.pageStream.next({page, length, apiGet});
   }
 
+
+  // Manage filter
+  private onFilterSubmit(filters: IOrderFilter) {
+    this.filterLoads = true;
+    this.orderService.filterOrders(this.page, this.pageLength, filters)
+      .subscribe(
+        response => {
+          this.totalOrders = response.totalElements;
+          () => this.filterLoads = false;
+        },
+        () => this.filterLoads = false,
+        () => this.filterLoads = false
+      );
+  }
 
 
 
@@ -202,33 +215,6 @@ export class Orders implements OnInit, OnDestroy {
 
   onPersistCustomer(orderId) {
     this.orderService.persistCustomer(orderId);
-  }
-
-
-  // Manage filter
-  private onFilterSubmit(filters: IOrderFilter) {
-    let transformed = {};
-
-    for (let key in filters) {
-      if (filters[key] && filters.hasOwnProperty(key)) {
-        if (key.toLowerCase().indexOf('date') !== -1) {
-          transformed[key] = `${filters[key]}T00:00:00`;
-        } else {
-          transformed[key] = filters[key];
-        }
-      }
-    }
-
-    let body = {
-      filter: transformed,
-      pageNumber: this.page - 1,
-      pageCapacity: this.pageLength
-    };
-
-
-
-    this.orderService.filterOrders(body)
-      .subscribe(r => console.log(r));
   }
 
 

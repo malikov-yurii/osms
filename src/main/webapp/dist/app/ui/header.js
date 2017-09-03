@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var animations_1 = require("@angular/animations");
+var animations_1 = require("./animations");
 var Header = (function () {
     function Header() {
         this.menuState = 'collapsed';
@@ -25,13 +25,7 @@ Header = __decorate([
         selector: 'nav-header',
         templateUrl: '/assets/templates/ui/header.html',
         styleUrls: ['assets/css/ui/header.css'],
-        animations: [
-            animations_1.trigger('fadeInOut', [
-                animations_1.state('collapsed', animations_1.style({ display: 'none', opacity: 0 })),
-                animations_1.state('expanded', animations_1.style({ display: 'block', opacity: 1 })),
-                animations_1.transition('collapsed <=> expanded', animations_1.animate('.3s ease')),
-            ])
-        ]
+        animations: [animations_1.fadeInOut({ paramsVoid: 'collapsed', paramsAny: 'expanded' })]
     }),
     __metadata("design:paramtypes", [])
 ], Header);
