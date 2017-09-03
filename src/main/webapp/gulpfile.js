@@ -1,37 +1,36 @@
 var gulp = require('gulp');
-var SystemBuilder = require('gulp-systemjs-builder');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var sysBuilder = require('systemjs-builder');
 
 
 // Production
-gulp.task('bundle-polly:prod', function() {
-   return gulp.src([
-           'node_modules/core-js/client/shim.min.js',
-           'node_modules/zone.js/dist/zone.js',
-           'node_modules/reflect-metadata/Reflect.js',
-           'node_modules/systemjs/dist/system.src.js',
-           'systemjs.config.prod.js'
-       ], {cwd: '../../'})
-       .pipe(concat('vendors.min.js'))
-       .pipe(uglify())
-       .pipe(gulp.dest('public/lib'));
+gulp.task('bundle-polly:prod', function () {
+  return gulp.src([
+      '../../node_modules/core-js/client/shim.min.js',
+      '../../node_modules/zone.js/dist/zone.js',
+      '../../node_modules/reflect-metadata/Reflect.js',
+      '../../node_modules/systemjs/dist/system.src.js',
+      'systemjs.config.prod.js'
+    ])
+    .pipe(concat('vendors.min.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('public/lib'));
 });
 
-gulp.task('bundle:js', function() {
-  var builder = new sysBuilder('', './systemjs.config.dev.js');
+gulp.task('bundle:js', function () {
+  var builder = new sysBuilder('', './systemjs.config.prod.js');
   return builder.buildStatic('app', 'public/dist/app.min.js');
 });
 
-gulp.task('minify:js', ['bundle:js'], function() {
+gulp.task('minify:js', ['bundle:js'], function () {
   gulp.src('public/dist/app.min.js')
     .pipe(uglify())
     .pipe(gulp.dest('public/dist/'));
 });
 
 // Developer version
-gulp.task('bundle-polly:dev', function() {
+gulp.task('bundle-polly:dev', function () {
   return gulp.src([
       '../../node_modules/core-js/client/shim.min.js',
       '../../node_modules/zone.js/dist/zone.js',
@@ -43,11 +42,11 @@ gulp.task('bundle-polly:dev', function() {
     .pipe(gulp.dest('public/lib'));
 });
 
-gulp.task('copy-libs', function() {
+gulp.task('copy-libs', function () {
   return gulp.src([
-    '@angular/**/bundles/**',
-    'rxjs/**/*.js'
-  ], {cwd: '../../node_modules/**'})
+      '@angular/**/bundles/**',
+      'rxjs/**/*.js'
+    ], {cwd: '../../node_modules/**'})
     .pipe(gulp.dest('vendor'));
 });
 
