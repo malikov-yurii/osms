@@ -29,15 +29,29 @@ public class CustomerConverter {
     }
 
     public static Customer updateFromTo(Customer customer, CustomerDto customerDto) {
-        customer.setName(customerDto.getFirstName());
-        customer.setLastName(customerDto.getLastName());
-        customer.setPhoneNumber(customerDto.getPhoneNumber());
-        customer.setCity(customerDto.getCity());
-        customer.setPostOffice(customerDto.getPostOffice());
-        customer.setEmail(customerDto.getEmail());
-        customer.setNote(customerDto.getNote());
-        return customer;
-    }
+        if (customerDto.getFirstName() != null) {
+            customer.setName(customerDto.getFirstName());
+        }
+        if (customerDto.getLastName() != null) {
+            customer.setLastName(customerDto.getLastName());
+        }
+        if (customerDto.getPhoneNumber() != null) {
+            customer.setPhoneNumber(customerDto.getPhoneNumber());
+        }
+        if (customerDto.getCity() != null) {
+            customer.setCity(customerDto.getCity());
+        }
+        if (customerDto.getPostOffice() != null) {
+            customer.setPostOffice(customerDto.getPostOffice());
+        }
+        if (customerDto.getPhoneNumber() != null) {
+            customer.setEmail(customerDto.getEmail());
+        }
+        if (customerDto.getNote() != null) {
+            customer.setNote(customerDto.getNote());
+        }
+            return customer;
+        }
 
     public static List<CustomerAutocompleteDto> CustomerAutocompleteDtoListOf(
             List<Customer> customers) {
