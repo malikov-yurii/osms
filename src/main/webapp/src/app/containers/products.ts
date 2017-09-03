@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormControl } from "@angular/forms";
-import { Observable } from 'rxjs/Observable';
-import { Subject } from "rxjs/Subject";
-import { Subscription } from 'rxjs/Subscription';
+import { FormControl }   from "@angular/forms";
+import { Observable }    from 'rxjs/Observable';
+import { Subject }       from "rxjs/Subject";
+import { Subscription }  from 'rxjs/Subscription';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/merge';
 import 'rxjs/add/operator/startWith';
@@ -18,18 +18,17 @@ import { slideToLeft, changeWidth } from '../ui/animations';
 
 @Component({
   template: `
-
     <div class="wrapper products-page">
     
       <div class="service-block">
       
-        <filter
+        <filter-static
           [filters]="{
             categories: categories,
             supplier: suppliers
           }"
           (filtered)="onFilterChange($event)"
-        ></filter>
+        ></filter-static>
       
         <input type="text" name="searchStream" id=""
           class="input search-input"

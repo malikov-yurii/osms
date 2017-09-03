@@ -44,6 +44,9 @@ export class Orders implements OnInit, OnDestroy {
 
   infoBlocks = StaticDATA.infoBlocks;
 
+  private showSuppliers: boolean = false;
+  private showFilters: boolean = false;
+
   constructor(
     private store: Store,
     private orderService: OrderService,
@@ -147,12 +150,11 @@ export class Orders implements OnInit, OnDestroy {
   onUpdateInfoField(orderId, fieldName, {newValue, oldValue}) {
     this.orderService.updateInfoField(orderId, fieldName, newValue)
       .subscribe(() => {
-        this.notyService.renderNoty(`"${oldValue}" has been changed to "${newValue}"`);
+        this.notyService.renderNoty(`${oldValue} has been changed to ${newValue}`);
       });
   }
 
   onUpdateInfoInput(orderId, fieldName, e) {
-    console.log(e);
     this.orderService.updateInfoInput(orderId, fieldName, e.target.value)
       .subscribe();
   }
@@ -173,7 +175,7 @@ export class Orders implements OnInit, OnDestroy {
   onUpdateProductField(orderId, productId, fieldName, {newValue, oldValue}) {
     this.orderService.updateProductField(orderId, productId, fieldName, newValue)
       .subscribe(() => {
-        this.notyService.renderNoty(`"${oldValue}" has been changed to "${newValue}"`);
+        this.notyService.renderNoty(`${oldValue} has been changed to ${newValue}`);
       });
   }
 
@@ -205,6 +207,12 @@ export class Orders implements OnInit, OnDestroy {
 
   onPersistCustomer(orderId) {
     this.orderService.persistCustomer(orderId);
+  }
+
+
+  // Manage filter
+  onFilterChange(event) {
+    console.log(event);
   }
 
 

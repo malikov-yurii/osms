@@ -62,7 +62,7 @@ export function slideToTop() {
 export function appear() {
   return trigger('appear', [
     transition(':enter', [
-      style({opacity: 0.001, height: 10}),
+      style({opacity: 0.001, height: 1}),
       group([
         animate('0.25s ease', style({height: '*'})),
         animate('0.35s 0.1s ease', style({opacity: 1}))

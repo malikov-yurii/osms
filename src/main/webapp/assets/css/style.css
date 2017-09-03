@@ -6,7 +6,6 @@
     box-sizing: border-box;
 }
 body {
-    min-height: 110vh;
     overflow-y: scroll;
     background: url(../images/loading.svg) no-repeat -9999px -9999px;
     font: 14px 'Roboto', sans-serif;
@@ -110,10 +109,7 @@ body {
     padding: 0 0 7px;
     border-bottom: 1px solid rgba(0, 188, 212, 0.49);
 }
-.order-product {
-    display: flex;
-    align-items: center;
-}
+
 .order-info__block {
     display: flex;
     align-items: center;
@@ -185,6 +181,11 @@ body {
 .order-info__block--customerNote {
     width: 30%;
 }
+
+.order-product {
+    display: flex;
+    align-items: center;
+}
 .order-products {
     margin: 8px 0 3px;
 }
@@ -225,6 +226,9 @@ body {
 }
 .order-product:hover {
     background: rgba(0, 188, 212, 0.15);
+}
+.order-product.show-supplier {
+    background: rgba(188, 31, 255, 0.25);
 }
 .order-manage {
     display: flex;

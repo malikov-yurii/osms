@@ -45,9 +45,9 @@ export class ApiService {
       .do(this.updateSession);
   }
 
-  put(path: string, body: any, json: boolean = false): Observable<any> {
+  put(path: string, body: any, json: boolean = true): Observable<any> {
     let headers = json ? this.headersJson : this.headersForm;
-    return this.http.put(path, body, {headers})
+    return this.http.put(path, body, this.headersJson)
       .map(this.checkForError)
       .catch(err => Observable.throw(err))
       .map(this.getJson)

@@ -1,8 +1,8 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
-  selector: 'filter',
+  selector: 'filter-static',
   template: `
     <form class="filter-container" [formGroup]="form">
       <div
@@ -16,7 +16,6 @@ import { FormGroup, FormBuilder } from '@angular/forms';
         <select
           class="filter__select input"
           formControlName="{{ filter }}"
-          (change)="onChange(filter, $event.target.value)"
         >
           <option value="" selected>- Show all -</option>
           <option
@@ -62,7 +61,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
     }
   `]
 })
-export class Filter implements OnChanges {
+export class FilterStatic implements OnChanges {
   @Input() filters: {any};
   @Output() filtered = new EventEmitter<{any}>();
 
@@ -72,13 +71,13 @@ export class Filter implements OnChanges {
     this.form = this.fb.group({});
   }
 
+  ngOnInit() {
+    this.form.valueChanges.subscribe(value => this.filtered.emit(value));
+  }
+
   ngOnChanges() {
     try {
       this.form = this.fb.group(this.filters);
-    } catch (e) {}
-  }
-
-  onChange() {
-    this.filtered.emit(this.form.value);
+    } catch (e) {console.warn(e)}
   }
 }

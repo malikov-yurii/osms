@@ -57,23 +57,25 @@ export class OrderService {
 
 
 
+  // Changing order info common field (e.g., firstName, phoneNumber)
   updateInfoField(orderId, fieldName, value) {
-    // Changing order info common field (e.g., firstName, phoneNumber)
-
     return this.api.put(
-      `${this.ordersPath}/${orderId}/${this.camelCaseToDash(fieldName)}`,
-      `${fieldName}=${value}`
+      `${this.ordersPath}/${orderId}`,
+      {
+        order: {
+          [fieldName]: value
+        }
+      }
     );
   }
 
+  // Changing order info INPUT (e.g., Status, Payment type)
   updateInfoInput(orderId, fieldName, value) {
-    // Changing order info INPUT (e.g., Status, Payment type)
-
     this.storeHelper.findAndUpdate(this.ordersPath, orderId, fieldName, value);
 
     return this.api.put(
-      `${this.ordersPath}/${orderId}/${this.camelCaseToDash(fieldName)}`,
-      `${fieldName}=${value}`
+      `${this.ordersPath}/${orderId}`,
+      {[fieldName]: value}
     );
   }
 
@@ -81,7 +83,7 @@ export class OrderService {
     this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
     this.api.put(
       `${this.ordersPath}/${orderId}/set-customer`,
-      `customerId=${object.customerId}`
+      {customerId: object.customerId}
     ).subscribe();
   }
 
@@ -102,12 +104,11 @@ export class OrderService {
       });
   }
 
+  // Changing order item editable field (e.g., name, price)
   updateProductField(orderId, productId, fieldName, value) {
-    // Changing order item editable field (e.g., name, price)
-
     return this.api.put(
-      `order-item/${productId}/${this.camelCaseToDash(fieldName)}`,
-      `${fieldName}=${value}`
+      `order-item/${productId}`,
+      {[fieldName]: value}
     ).do(
       data => {
         if (data) { this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'totalSum', data); }
@@ -116,17 +117,16 @@ export class OrderService {
 
   }
 
+  // Changing order item INPUT (quantity)
   updateProductInput(orderId, productId, fieldName, value) {
-    // Changing order item INPUT (quantity)
-
     this.storeHelper.findDeepAndUpdate(
       this.ordersPath, orderId, this.productsPath,
       productId, fieldName, value
     );
 
     this.api.put(
-      `order-item/${productId}/${this.camelCaseToDash(fieldName)}`,
-      `${fieldName}=${value}`
+      `order-item/${productId}`,
+      {[fieldName]: value}
     ).subscribe(
       data => {
         if (data) { this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'totalSum', data); }
@@ -141,12 +141,12 @@ export class OrderService {
     if (data.productVariationId) {
       this.api.put(
         `order-item/${productId}`,
-        `productVariationId=${data.productVariationId}`
+        {productVariationId: data.productVariationId}
       ).subscribe();
     } else {
       this.api.put(
         `order-item/${productId}`,
-        `productId=${data.productId}`
+        {productId: data.productId}
       ).subscribe();
     }
   }
@@ -162,7 +162,7 @@ export class OrderService {
     return this.api.get(`customer/${customerId}`);
   }
   saveCustomer(customerId, customerInfo): Observable<any> {
-    return this.api.put(`customer/${customerId}`, customerInfo, true);
+    return this.api.put(`customer/${customerId}`, customerInfo);
   }
   persistCustomer(orderId) {
     this.api.post(`customer/persist-customer-from-order/${orderId}`)
