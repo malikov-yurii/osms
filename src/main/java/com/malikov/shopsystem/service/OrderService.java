@@ -1,5 +1,6 @@
 package com.malikov.shopsystem.service;
 
+import com.malikov.shopsystem.dto.GenericFilter;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
 import com.malikov.shopsystem.dto.OrderUpdateDto;
@@ -20,5 +21,5 @@ public interface OrderService {
 
     Page<OrderDto> getPage(int pageNumber, int pageCapacity);
 
-    Page<OrderDto> getFilteredPage(OrderFilterDto orderFilterDto, int pageNumber, int pageCapacity);
+    Page<OrderDto> getFilteredPage(GenericFilter<OrderFilterDto, OrderDto> genericFilter);
 }

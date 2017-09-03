@@ -1,5 +1,6 @@
 package com.malikov.shopsystem.web.controller;
 
+import com.malikov.shopsystem.dto.GenericFilter;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
 import com.malikov.shopsystem.dto.OrderUpdateDto;
@@ -25,12 +26,12 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PutMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ModelMap getFilteredPage(@RequestBody OrderFilterDto orderFilterDto,
-                                    @RequestParam("pageNumber") int pageNumber,
-                                    @RequestParam("pageCapacity") int pageCapacity) {
+    @PutMapping(value = "/filter",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ModelMap getFilteredPage(@RequestBody GenericFilter<OrderFilterDto, OrderDto> orderFilterDto) {
         ModelMap modelMap = new ModelMap();
-        Page<OrderDto> page = orderService.getFilteredPage(orderFilterDto, pageNumber, pageCapacity);;
+        Page<OrderDto> page = orderService.getFilteredPage(orderFilterDto);
         modelMap.addAttribute("totalElements", page.getTotalElements());
         modelMap.addAttribute("elements", page.getContent());
         return modelMap;

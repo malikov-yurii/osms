@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.service.impl;
 
 import com.malikov.shopsystem.DbOperation;
+import com.malikov.shopsystem.dto.GenericFilter;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
 import com.malikov.shopsystem.dto.OrderUpdateDto;
@@ -56,9 +57,9 @@ public class OrderServiceImpl implements OrderService {
     private ProductVariationRepository productVariationRepository;
 
     @SuppressWarnings("unchecked assignments")
-    public Page<OrderDto> getFilteredPage(OrderFilterDto orderFilterDto, int pageNumber, int pageCapacity) {
-        return convertToFilteredOrderDtoPage(orderRepository.findAll(buildFilterRestrictions(orderFilterDto),
-                new PageRequest(pageNumber, pageCapacity, DESC_SORT_ORDER)));
+    public Page<OrderDto> getFilteredPage(GenericFilter<OrderFilterDto, OrderDto> filter) {
+        return convertToOrderDtoPage(orderRepository.findAll(buildFilterRestrictions(filter.getFilteringFields()),
+                new PageRequest(filter.getPaging().getPage(), filter.getPaging().getSize(), DESC_SORT_ORDER)));
     }
 
     private BooleanBuilder buildFilterRestrictions(OrderFilterDto filter) {
@@ -126,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
-    private PageImpl<OrderDto> convertToFilteredOrderDtoPage(Page<Order> page) {
+    private PageImpl<OrderDto> convertToOrderDtoPage(Page<Order> page) {
         return new PageImpl<>(
                 page.getContent().stream()
                         .map(OrderUtil::asTo)
@@ -319,7 +320,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<OrderDto> getPage(int pageNumber, int pageCapacity) {
-        return convertToFilteredOrderDtoPage(
+        return convertToOrderDtoPage(
                 orderRepository.findAll(new PageRequest(pageNumber,pageCapacity, DESC_SORT_ORDER)));
     }
 
