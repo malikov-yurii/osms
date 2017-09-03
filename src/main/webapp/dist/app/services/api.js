@@ -46,9 +46,7 @@ var ApiService = (function () {
             .map(this.getJson)
             .do(this.updateSession);
     };
-    ApiService.prototype.put = function (path, body, json) {
-        if (json === void 0) { json = true; }
-        var headers = json ? this.headersJson : this.headersForm;
+    ApiService.prototype.put = function (path, body) {
         return this.http.put(path, body, this.headersJson)
             .map(this.checkForError)
             .catch(function (err) { return Observable_1.Observable.throw(err); })
@@ -87,7 +85,7 @@ var ApiService = (function () {
         clearTimeout(sessionTimeout);
         sessionTimeout = setTimeout(function () {
             exports.sessionTimeoutStream.next();
-        }, models_1.StaticDATA.sessionTime);
+        }, models_1.STATIC_DATA.sessionTime);
     };
     return ApiService;
 }());

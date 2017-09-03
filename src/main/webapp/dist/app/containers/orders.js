@@ -41,8 +41,7 @@ var Orders = (function () {
         this.pageLength = 10;
         this.pageStream = new Subject_1.Subject();
         this.subs = [];
-        this.infoBlocks = models_1.StaticDATA.infoBlocks;
-        this.showSuppliers = false;
+        this.infoBlocks = models_1.STATIC_DATA.infoBlocks;
         this.showFilters = false;
     }
     Orders.prototype.ngOnInit = function () {
@@ -100,7 +99,7 @@ var Orders = (function () {
             var orderId = _a.orderId, orderItemId = _a.orderItemId;
             _this.notyService.renderNoty("Order \u2116 " + orderId + " has been added");
         });
-        var apiGet = this.page === 1 ? false : true; // Tracing if it's needed to send http GET request for orders
+        var apiGet = this.page !== 1; // Tracing if it's needed to send http GET request for orders
         this.paginationChanged({ page: 1, length: this.pageLength, apiGet: apiGet });
     };
     Orders.prototype.onDeleteOrder = function (orderId) {
@@ -169,8 +168,27 @@ var Orders = (function () {
         this.orderService.persistCustomer(orderId);
     };
     // Manage filter
-    Orders.prototype.onFilterChange = function (event) {
-        console.log(event);
+    Orders.prototype.onFilterSubmit = function (filters) {
+        var transformed = {};
+        for (var key in filters) {
+            if (filters.hasOwnProperty(key)) {
+                if (filters[key]) {
+                    if (key.toLowerCase().indexOf('date') !== -1) {
+                        transformed[key] = filters[key] + "T00:00:00";
+                    }
+                    else {
+                        transformed[key] = filters[key];
+                    }
+                }
+            }
+        }
+        var body = {
+            filter: transformed,
+            pageNumber: this.page - 1,
+            pageCapacity: this.pageLength
+        };
+        this.orderService.filterOrders(body)
+            .subscribe(function (r) { return console.log(r); });
     };
     // @TODO remove this
     Orders.prototype.onGetAllOrders = function () {

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from "rxjs/Observable";
-import { Subject } from "rxjs/Subject";
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/merge';
@@ -15,37 +15,37 @@ import { OrderService } from '../services/orders';
 import { PopupService } from '../services/popup';
 import { NotyService } from '../services/noty';
 import { Store } from '../store';
-import { Order, StaticDATA } from '../models';
+import { Order, STATIC_DATA, IOrderFilter, IPageStream } from '../models';
 import { slideToLeft, appear, changeWidth } from '../ui/animations';
 
 
 @Component({
-  templateUrl: '../../../assets/templates/containers/orders.html',
-  animations: [slideToLeft(), appear(), changeWidth()],
-  host: {'[@slideToLeft]': ''},
-  providers: [PopupService]
+  templateUrl : '../../../assets/templates/containers/orders.html',
+  animations  : [slideToLeft(), appear(), changeWidth()],
+  host        : {'[@slideToLeft]': ''},
+  providers   : [PopupService]
 })
 
 export class Orders implements OnInit, OnDestroy {
-  orders$: Observable<Order[]>;
+  private orders$          : Observable<Order[]>;
 
-  private searchStream: FormControl = new FormControl();
-  searchQuery: string = '';
-  searchInputState = 'collapsed';
-  filteredOrders$: Observable<number>;
+  private searchStream     : FormControl = new FormControl();
+  private searchQuery      : string = '';
+  private searchInputState : string = 'collapsed';
+  private filteredOrders$  : Observable<number>;
 
-  totalOrders: number = 0;
-  preloadedOrders: number = 0;
-  page: number = 1;
-  pageLength: number = 10;
-  private pageStream = new Subject<{page: number, length: number, apiGet?: boolean}>();
+  private totalOrders      : number = 0;
+  private preloadedOrders  : number = 0;
+  private page             : number = 1;
+  private pageLength       : number = 10;
+  private pageStream       : Subject<IPageStream> = new Subject();
 
   private subs: Subscription[] = [];
 
-  infoBlocks = StaticDATA.infoBlocks;
+  private infoBlocks = STATIC_DATA.infoBlocks;
 
-  private showSuppliers: boolean = false;
   private showFilters: boolean = false;
+
 
   constructor(
     private store: Store,
@@ -96,7 +96,6 @@ export class Orders implements OnInit, OnDestroy {
     this.filteredOrders$ = source.pluck('filtered');
 
     this.popupService.viewContainerRef = this.viewRef;
-
   }
 
 
@@ -120,7 +119,7 @@ export class Orders implements OnInit, OnDestroy {
       this.notyService.renderNoty(`Order № ${orderId} has been added`)
     });
 
-    let apiGet = this.page === 1 ? false : true; // Tracing if it's needed to send http GET request for orders
+    let apiGet = this.page !== 1; // Tracing if it's needed to send http GET request for orders
     this.paginationChanged({page: 1, length: this.pageLength, apiGet});
   }
 
@@ -137,10 +136,6 @@ export class Orders implements OnInit, OnDestroy {
   paginationChanged({page, length, apiGet}) {
     this.pageStream.next({page, length, apiGet});
   }
-
-
-
-
 
 
 
@@ -211,8 +206,29 @@ export class Orders implements OnInit, OnDestroy {
 
 
   // Manage filter
-  onFilterChange(event) {
-    console.log(event);
+  private onFilterSubmit(filters: IOrderFilter) {
+    let transformed = {};
+
+    for (let key in filters) {
+      if (filters[key] && filters.hasOwnProperty(key)) {
+        if (key.toLowerCase().indexOf('date') !== -1) {
+          transformed[key] = `${filters[key]}T00:00:00`;
+        } else {
+          transformed[key] = filters[key];
+        }
+      }
+    }
+
+    let body = {
+      filter: transformed,
+      pageNumber: this.page - 1,
+      pageCapacity: this.pageLength
+    };
+
+
+
+    this.orderService.filterOrders(body)
+      .subscribe(r => console.log(r));
   }
 
 

@@ -63,7 +63,7 @@ export class ProductService {
     if (productVarId !== 0) {
       body['variationId'] = productVarId;
     }
-    return this.api.put(`${this.productsPath}/${productId}`, body, true);
+    return this.api.put(`${this.productsPath}/${productId}`, body);
   }
 
   purgeStore() {

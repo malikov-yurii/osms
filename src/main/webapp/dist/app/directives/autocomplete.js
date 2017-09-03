@@ -19,7 +19,7 @@ var Autocomplete = (function () {
         this.viewRef = viewRef;
         this.compiler = compiler;
         this.selected = new core_1.EventEmitter();
-        this.fieldsToAutocomplete = models_1.StaticDATA.autocompleteBlocks;
+        this.fieldsToAutocomplete = models_1.STATIC_DATA.autocompleteBlocks;
         this.refreshTimer = undefined;
         this.searchRequired = false;
         this.searchInProgress = false;
@@ -51,7 +51,7 @@ var Autocomplete = (function () {
                         return false;
                 }
             }
-            if (models_1.StaticDATA.keycodesNotToAutocomplete.indexOf(e.which) === -1) {
+            if (models_1.STATIC_DATA.keycodesNotToAutocomplete.indexOf(e.which) === -1) {
                 setTimeout(function () { return _this.onKeyUp(e); }, 0);
             }
         }

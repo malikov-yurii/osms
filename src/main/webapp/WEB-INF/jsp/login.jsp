@@ -31,7 +31,7 @@
 
     <div class="login-block">
         <form:form class="login-form" role="form" action="spring_security_check" method="post">
-            <input type="text" placeholder="Login" class="input login-input" name='username'>
+            <input type="text" placeholder="Login" class="input login-input" name='username' autofocus>
             <input type="password" placeholder="Password" class="input login-input" name='password'>
             <button type="submit" class="btn login-submit"><fmt:message key="app.login"/></button>
         </form:form>

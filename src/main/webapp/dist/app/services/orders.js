@@ -28,6 +28,7 @@ var OrderService = (function () {
     OrderService.prototype.purgeStore = function () {
         this.storeHelper.update(this.ordersPath, []);
     };
+    // Manage orders
     OrderService.prototype.getOrders = function (start, length) {
         var _this = this;
         return this.api.get("/" + this.ordersPath + "?pageNumber=" + start + "&pageCapacity=" + length)
@@ -51,6 +52,10 @@ var OrderService = (function () {
         this.storeHelper.findAndDelete(this.ordersPath, orderId);
         return this.api.apiDelete(this.ordersPath + "/" + orderId);
     };
+    OrderService.prototype.filterOrders = function (body) {
+        return this.api.put("/" + this.ordersPath + "/filter", body);
+    };
+    // Manage order info
     // Changing order info common field (e.g., firstName, phoneNumber)
     OrderService.prototype.updateInfoField = function (orderId, fieldName, value) {
         return this.api.put(this.ordersPath + "/" + orderId, (_a = {},
@@ -68,6 +73,7 @@ var OrderService = (function () {
         this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
         this.api.put(this.ordersPath + "/" + orderId + "/set-customer", { customerId: object.customerId }).subscribe();
     };
+    // Manage products
     OrderService.prototype.addProduct = function (orderId) {
         var _this = this;
         var newProduct = new models_1.Product();
@@ -113,6 +119,7 @@ var OrderService = (function () {
         this.storeHelper.findDeepAndDelete(this.ordersPath, orderId, this.productsPath, productId);
         return this.api.apiDelete("order-item/" + productId);
     };
+    // Manage Customers
     OrderService.prototype.getCustomer = function (customerId) {
         return this.api.get("customer/" + customerId);
     };

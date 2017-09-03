@@ -42,17 +42,13 @@ var AutocompleteItem = (function () {
     return AutocompleteItem;
 }());
 exports.AutocompleteItem = AutocompleteItem;
-var StaticDATA = (function () {
-    function StaticDATA() {
-    }
-    return StaticDATA;
-}());
-StaticDATA.infoBlocks = {
-    status: ['SHP', 'WFP', 'OK', 'NEW', 'NOT'],
-    paymentType: ['PB', 'SV', 'NP']
+exports.STATIC_DATA = {
+    infoBlocks: {
+        status: ['SHP', 'WFP', 'OK', 'NEW', 'NOT'],
+        paymentType: ['PB', 'SV', 'NP']
+    },
+    autocompleteBlocks: ['lastName', 'phoneNumber', 'city', 'name'],
+    keycodesNotToAutocomplete: [9, 13, 16, 17, 18, 20],
+    sessionTime: 235 * 60 * 1000 // minutes
 };
-StaticDATA.autocompleteBlocks = ['lastName', 'phoneNumber', 'city', 'name'];
-StaticDATA.keycodesNotToAutocomplete = [9, 13, 16, 17, 18, 20]; // Tab, Enter, Shift, Ctrl, Alt, Caps Lock
-StaticDATA.sessionTime = 235 * 60 * 1000; // minutes
-exports.StaticDATA = StaticDATA;
 //# sourceMappingURL=models.js.map

@@ -25,7 +25,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
     public ModelMap getFilteredPage(@RequestBody OrderFilterDto orderFilterDto,
                                     @RequestParam("pageNumber") int pageNumber,
                                     @RequestParam("pageCapacity") int pageCapacity) {

@@ -1,14 +1,15 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Observable } from "rxjs/Observable";
 
 import { appear } from '../animations';
 
 @Component({
   selector: 'filter',
   template: `
-    <form class="filter-container" [formGroup]="form" [@appear]>
+    <form [formGroup]="form" (ngSubmit)="onSubmit($event)" [@appear] class="filter-container">
       <div
-        class="filter"
+        class="filter filter__block"
         *ngFor="let filter of filters"
       >
         <div class="filter__label">
@@ -37,20 +38,27 @@ import { appear } from '../animations';
         </ng-container>
 
       </div>
+      
+      <button type="submit" class="btn filter__block filter__submit">Submit</button>
     </form>
   `,
   styles: [`
     .filter-container {
         display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
         flex-wrap: wrap;
         margin-bottom: 20px;
+    }
+    
+    .filter__block {
+        width: 27%;
+        margin: 5px 0 0 0;
     }
     
     .filter {
         display: flex;
         align-items: center;
-        width: 30%;
-        margin: 5px 3% 0 0;
     }
     
     .filter__label {
@@ -64,6 +72,11 @@ import { appear } from '../animations';
         width: 140px;
         cursor: pointer;
         font-size: 15px;
+    }
+    .filter__submit {
+        height: 35px;
+        margin-top: 10px;
+        margin-left: auto;
     }
     
     @media only screen and (max-width: 900px) {
@@ -89,20 +102,14 @@ import { appear } from '../animations';
   `],
   animations: [appear()]
 })
-export class Filter implements OnInit, OnChanges {
-  @Input() filters: {code: string; label: string; type: string; value?: any}[];
-  @Output() filtered = new EventEmitter<{any}>();
-
+export class Filter implements OnChanges {
   private form: FormGroup;
+
+  @Input() filters: {code: string; label: string; type: string; value?: any}[];
+  @Output() filterSubmit = new EventEmitter<Observable<any>>();
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({});
-  }
-
-  ngOnInit() {
-    this.form.valueChanges
-      .debounceTime(500)
-      .subscribe(value => this.filtered.emit(value));
   }
 
   ngOnChanges() {
@@ -115,5 +122,9 @@ export class Filter implements OnInit, OnChanges {
       this.form = this.fb.group(filters);
     } catch (e) {console.warn(e)}
 
+  }
+
+  onSubmit() {
+    this.filterSubmit.emit(this.form.value);
   }
 }

@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
-
 * {
     margin: 0;
     padding: 0;
@@ -16,7 +15,6 @@ body {
 .pull-left {
     margin-right: auto;
 }
-
 .wrapper {
     max-width: 1140px;
     margin: 0 auto;
@@ -29,23 +27,20 @@ body {
     font: 400 16px 'Roboto';
     transition: box-shadow .15s linear;
 }
-
 .input:hover {
     box-shadow: 0 1px 0 0 #000;
 }
-
 .input:focus {
     outline: none;
     box-shadow: 0 1px 0 0 #00bcd4;
 }
-
 .btn {
     display: inline-block;
     padding: 8px 12px;
     background: #00bcd4;
     border: 0;
     border-radius: 2px;
-    box-shadow: 0 1px 5px 0 rgba(0,0,0,.2);
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .2);
     color: #fff;
     font: 500 14px 'Roboto', Arial, sans-serif;
     text-transform: uppercase;
@@ -54,13 +49,13 @@ body {
 }
 .btn:hover {
     background: #00b5cc;
-    box-shadow: 0 2px 9px 0 rgba(0,0,0,.3);
+    box-shadow: 0 2px 9px 0 rgba(0, 0, 0, .3);
 }
 .btn:active,
 .btn:focus {
     background: #00b5cc;
     outline: none;
-    box-shadow: 0.2px 4px 9px 1px rgba(0,0,0,.3);
+    box-shadow: 0.2px 4px 9px 1px rgba(0, 0, 0, .3);
 }
 .btn--warning {
     background: #cc3737;
@@ -80,24 +75,24 @@ body {
     margin-top: 0;
 }
 .order--OK,
-.order--OK .order-manage{
+.order--OK .order-manage {
     background: #deedd9;
 }
 .order--SHP,
-.order--SHP .order-manage{
+.order--SHP .order-manage {
     background: #FCE5CD;
 }
 .order--WFP,
-.order--WFP .order-manage{
+.order--WFP .order-manage {
     background: #F4CCCC;
 }
 .order--NOT,
-.order--NOT .order-manage{
+.order--NOT .order-manage {
     background: #a70000;
     color: #fff;
 }
 .order--NEW,
-.order--NEW .order-manage{
+.order--NEW .order-manage {
     background: #fff;
 }
 .order-info {
@@ -109,7 +104,6 @@ body {
     padding: 0 0 7px;
     border-bottom: 1px solid rgba(0, 188, 212, 0.49);
 }
-
 .order-info__block {
     display: flex;
     align-items: center;
@@ -132,7 +126,7 @@ body {
 .order-info__block--customerFirstName,
 .order-info__block--destinationCity,
 .order-info__block--note {
-    width: calc((100% - 55px - 105px - 45px - 45px - 70px - 95px - 52px - 14px) / 4);
+    width: calc((100% - 55px - 105px - 45px - 105px - 70px - 95px - 52px - 14px) / 4);
 }
 .order-info__block--customerPhoneNumber {
     width: 105px;
@@ -177,11 +171,9 @@ body {
     border: 0;
     border-top: 1px solid rgba(0, 188, 212, 0.49);
 }
-
 .order-info__block--customerNote {
     width: 30%;
 }
-
 .order-product {
     display: flex;
     align-items: center;
@@ -217,7 +209,6 @@ body {
     text-align: center;
     border-right: 1px solid rgba(0, 188, 212, 0.49);
 }
-
 .order-product__block--delete {
     line-height: 1;
 }
@@ -321,7 +312,6 @@ body {
     align-items: center;
     margin: 15px 0;
 }
-
 .btn-orders--add {
     margin: 15px 0 0;
 }
@@ -329,7 +319,6 @@ body {
     flex-grow: 2;
     text-align: center;
 }
-
 .orders-info__block {
     display: inline-block;
     vertical-align: top;
@@ -346,7 +335,7 @@ body {
     border-collapse: collapse;
     width: 100%;
     font-size: 13px;
-    color: rgba(0,0,0,.87);
+    color: rgba(0, 0, 0, .87);
 }
 .table td, .table th {
     padding: 5px 20px;
@@ -359,7 +348,7 @@ body {
     vertical-align: middle;
     font-size: 12px;
     font-weight: normal;
-    color: rgba(0,0,0,.54);
+    color: rgba(0, 0, 0, .54);
 }
 .table tr:hover {
     background: #eee;
@@ -367,12 +356,11 @@ body {
 .table .numeric {
     text-align: right;
 }
-
 .table-container {
     overflow-x: auto;
 }
 .table-products,
-.table-customers{
+.table-customers {
     min-width: 1000px;
 }
 .table-products th {
@@ -390,7 +378,6 @@ th.product-cell--quantity {
     text-decoration: underline;
     text-decoration-style: dashed;
 }
-
 td.product-cell--id,
 td.product-cell--price,
 td.product-cell--variationId,
@@ -400,8 +387,33 @@ td.product-cell--quantity {
 td.product-cell--supplier {
     word-break: break-word;
 }
-.search-input {
+.search-input,
+.search-input-container {
     width: 190px;
+}
+.order-page .search-input-container {
+    position: relative;
+    height: 37px;
+}
+.order-page .search-input-container:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150px;
+    display: block;
+    width: 50px;
+    height: 38px;
+    background: linear-gradient(to left, #fff 25%, transparent);
+    transform: translateX(0);
+    transition: transform .3s ease;
+}
+.orders-page .search-input-container.expanded:before {
+    transform: translateX(-200px);
+}
+.order-page .search-input {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 .table-customers .headcell {
     width: 20%;
@@ -413,7 +425,6 @@ td.product-cell--supplier {
 .table-customers td {
     word-break: break-word;
 }
-
 @media only screen and (max-width: 1000px) {
     .order {
         padding-left: 2px;
@@ -504,37 +515,12 @@ td.product-cell--supplier {
     .order-product__block--price {
         width: 13%;
     }
-
     .order-product__block--delete {
         width: 10%;
         text-align: center;
     }
 }
-
 @media only screen and (max-width: 500px) {
-    .order-page .search-input-container {
-        position: relative;
-        height: 37px;
-    }
-    .order-page .search-input-container:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -150px;
-        display: block;
-        width: 50px;
-        height: 38px;
-        background: linear-gradient(to left, #fff 25%, transparent);
-        transition: left .3s ease;
-    }
-    .orders-page .search-input-container.expanded:before {
-        left: -350px;
-    }
-    .order-page .search-input {
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
     .search-input {
         width: 150px;
     }
@@ -615,7 +601,6 @@ td.product-cell--supplier {
         font-size: 13px;
         line-height: 1.5;
     }
-
     .products-page .service-block {
         flex-wrap: wrap;
     }

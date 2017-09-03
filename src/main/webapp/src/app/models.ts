@@ -33,16 +33,26 @@ export class AutocompleteItem {
   label: string = '';
 }
 
-export class StaticDATA {
-  static readonly infoBlocks = {
+export const STATIC_DATA = {
+  infoBlocks: {
     status: ['SHP', 'WFP', 'OK', 'NEW', 'NOT'],
     paymentType: ['PB', 'SV', 'NP']
-  };
-
-  static readonly autocompleteBlocks = ['lastName', 'phoneNumber', 'city', 'name'];
-
-  static readonly keycodesNotToAutocomplete = [9, 13, 16, 17, 18, 20]; // Tab, Enter, Shift, Ctrl, Alt, Caps Lock
-
-  static readonly sessionTime = 235 * 60 * 1000; // minutes
+  },
+  autocompleteBlocks: ['lastName', 'phoneNumber', 'city', 'name'],
+  keycodesNotToAutocomplete: [9, 13, 16, 17, 18, 20], // Tab, Enter, Shift, Ctrl, Alt, Caps Lock
+  sessionTime: 235 * 60 * 1000 // minutes
 }
 
+export interface IOrderFilter {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  city: string;
+  date: string;
+}
+
+export interface IPageStream {
+  page: number;
+  length: number;
+  apiGet?: boolean
+}

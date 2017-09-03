@@ -24,6 +24,8 @@ export class OrderService {
     this.storeHelper.update(this.ordersPath, []);
   }
 
+
+  // Manage orders
   getOrders(start: number, length: number): Observable<any> {
     return this.api.get(`/${this.ordersPath}?pageNumber=${start}&pageCapacity=${length}`)
       .do(resp => {
@@ -36,6 +38,7 @@ export class OrderService {
     let newOrderId = newOrder.id;
     let newOrderItemId = newOrder[this.productsPath][0].id;
     this.storeHelper.add(this.ordersPath, newOrder);
+
     return this.api.post(this.ordersPath)
       .do(resp => {
         this.storeHelper.findAndUpdate(this.ordersPath, newOrderId, 'id', resp.orderId);
@@ -51,11 +54,19 @@ export class OrderService {
     return this.api.apiDelete(`${this.ordersPath}/${orderId}`);
   }
 
+  filterOrders(body): Observable<any> {
+    return this.api.put(
+      `/${this.ordersPath}/filter`,
+      body
+    )
+  }
 
 
 
 
 
+
+  // Manage order info
 
   // Changing order info common field (e.g., firstName, phoneNumber)
   updateInfoField(orderId, fieldName, value) {
@@ -87,6 +98,7 @@ export class OrderService {
 
 
 
+  // Manage products
   addProduct(orderId) {
     let newProduct = new Product();
     let newProductId = newProduct.id;
@@ -156,6 +168,8 @@ export class OrderService {
 
 
 
+
+  // Manage Customers
   getCustomer(customerId): Observable<any> {
     return this.api.get(`customer/${customerId}`);
   }
@@ -168,6 +182,8 @@ export class OrderService {
         this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'customerId', customerId);
       });
   }
+
+
 
 
   list(searchQuery: string = '', page: number = 1, length: number = 10) {

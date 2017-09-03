@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/observable/throw';
 
-import {StaticDATA} from '../models';
+import {STATIC_DATA} from '../models';
 
 var sessionTimeout;
 export const sessionTimeoutStream = new Subject();
@@ -87,7 +87,7 @@ export class ApiService {
     clearTimeout(sessionTimeout);
     sessionTimeout = setTimeout(() => {
       sessionTimeoutStream.next();
-    }, StaticDATA.sessionTime);
+    }, STATIC_DATA.sessionTime);
   }
 
 }

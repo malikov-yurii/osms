@@ -2,7 +2,7 @@ import { Directive, Input, Output, ViewContainerRef, ComponentFactoryResolver, C
 
 import { OrderService } from '../services/index';
 import { AutocompleteList } from '../ui/index';
-import { StaticDATA } from '../models';
+import { STATIC_DATA } from '../models';
 
 @Directive({
   selector: '[autocomplete]',
@@ -16,7 +16,7 @@ export class Autocomplete {
   @Input('autocomplete') types: string[];
   @Output('selectedAutocomplete') selected = new EventEmitter();
 
-  private fieldsToAutocomplete = StaticDATA.autocompleteBlocks;
+  private fieldsToAutocomplete = STATIC_DATA.autocompleteBlocks;
   private term: string;
   private refreshTimer: any = undefined;
   private searchRequired: boolean = false;
@@ -59,7 +59,7 @@ export class Autocomplete {
 
       }
 
-      if (StaticDATA.keycodesNotToAutocomplete.indexOf(e.which) === -1 ) {
+      if (STATIC_DATA.keycodesNotToAutocomplete.indexOf(e.which) === -1 ) {
         setTimeout(() => this.onKeyUp(e), 0);
       }
 
