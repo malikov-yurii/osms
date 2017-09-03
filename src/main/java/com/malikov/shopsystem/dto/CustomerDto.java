@@ -1,6 +1,5 @@
 package com.malikov.shopsystem.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.malikov.shopsystem.HasId;
 
 import java.io.Serializable;
@@ -23,14 +22,14 @@ public class CustomerDto implements Serializable, HasId {
 
     private String note;
 
-    public CustomerDto(@JsonProperty("id") Long id,
-                       @JsonProperty("name") String firstName,
-                       @JsonProperty("lastName") String lastName,
-                       @JsonProperty("phoneNumber") String phoneNumber,
-                       @JsonProperty("city") String city,
-                       @JsonProperty("postOffice") String postOffice,
-                       @JsonProperty("email") String email,
-                       @JsonProperty("note") String note
+    public CustomerDto(Long id,
+                       String firstName,
+                       String lastName,
+                       String phoneNumber,
+                       String city,
+                       String postOffice,
+                       String email,
+                       String note
     ) {
         this.id = id;
         this.firstName = firstName;

@@ -5,8 +5,6 @@ import com.malikov.shopsystem.dto.OrderFilterDto;
 import com.malikov.shopsystem.model.Order;
 import org.springframework.data.domain.Page;
 
-import java.util.Collection;
-
 public interface OrderService {
 
     Order createEmpty();

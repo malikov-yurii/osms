@@ -158,15 +158,22 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void update(OrderDto orderDto) {
         Order order = get(orderDto.getId());
-        if (order == null) {
-            throw new RuntimeException(String.format("order with id=%d not found", orderDto.getId()));
-        }
+        checkOrderNotFound(order, orderDto);
 
         setCustomerInfoToOrder(order, orderDto);
         setPaymentType(order, orderDto.getPaymentType());
         setNote(order, orderDto.getNote());
         setTotalSum(order, orderDto.getTotalSum());
+        setStatus(order, orderDto);
+    }
 
+    private void checkOrderNotFound(Order order, OrderDto orderDto) {
+        if (order == null) {
+            throw new RuntimeException(String.format("order with id=%d not found", orderDto.getId()));
+        }
+    }
+
+    private void setStatus(Order order, OrderDto orderDto) {
         if (orderDto.getStatus() != null) {
             OrderStatus oldStatus = orderDto.getStatus();
             order.setStatus(orderDto.getStatus());
@@ -175,7 +182,6 @@ public class OrderServiceImpl implements OrderService {
         } else {
             orderRepository.save(order);
         }
-
     }
 
     private void setCustomerInfoToOrder(Order order, OrderDto orderDto) {
@@ -192,7 +198,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional(propagation = Propagation.MANDATORY)
     public void setCustomer(Order order, Long customerId) {
-
         Customer customer = customerRepository.findOne(customerId);
         if (customer == null) {
             throw new RuntimeException(String.format("Customer with id=%d not found", customerId));

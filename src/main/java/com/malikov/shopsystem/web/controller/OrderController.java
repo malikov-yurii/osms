@@ -15,8 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @RestController
 @RequestMapping(value = "/order")
 public class OrderController {
@@ -76,12 +74,11 @@ public class OrderController {
         return model;
     }
 
-
-
     @PutMapping(value = "/{orderId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@PathVariable("orderId") Long orderId, @RequestParam OrderDto order) {
-        order.setId(orderId);
-        orderService.update(order);
+    public void updateCustomer(@PathVariable("orderId") Long orderId,
+                               @RequestBody OrderDto orderDto) {
+        orderDto.setId(orderId);
+        orderService.update(orderDto);
     }
 
 }

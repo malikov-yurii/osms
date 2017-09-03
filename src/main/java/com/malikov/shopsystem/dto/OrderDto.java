@@ -1,17 +1,17 @@
 package com.malikov.shopsystem.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.malikov.shopsystem.HasId;
 import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.model.PaymentType;
 import com.malikov.shopsystem.util.DateTimeUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.List;
 
-public class OrderDto {
+public class OrderDto  implements Serializable, HasId {
 
     private Long id;
 
@@ -40,12 +40,13 @@ public class OrderDto {
 
     private String note;
 
-    private List<OrderItemDto> orderItems;
+    private OrderItemDto[] orderItems;
 
     public OrderDto(
-            Long id, Long customerId, String customerFirstName, String customerLastName, String customerPhoneNumber, String destinationCity,
-            String destinationPostOffice, String customerNote, PaymentType paymentType, LocalDateTime createdDateTime, OrderStatus status,
-            String note, BigDecimal totalSum, List<OrderItemDto> orderItems) {
+            Long id, Long customerId, String customerFirstName, String customerLastName, String customerPhoneNumber,
+            String destinationCity, String destinationPostOffice, String customerNote, PaymentType paymentType,
+            LocalDateTime createdDateTime, OrderStatus status,
+            String note, BigDecimal totalSum, OrderItemDto[] orderItems) {
         this.id = id;
         this.customerId = customerId == null ? 0 : customerId;
         this.customerFirstName = customerFirstName != null ? customerFirstName : "";
@@ -66,7 +67,6 @@ public class OrderDto {
     public OrderDto() {
     }
 
-    @JsonIgnore
     public boolean isNew() {
         return id == null;
     }
@@ -170,11 +170,11 @@ public class OrderDto {
         this.note = note;
     }
 
-    public List<OrderItemDto> getOrderItems() {
+    public OrderItemDto[] getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(List<OrderItemDto> orderItems) {
+    public void setOrderItems(OrderItemDto[] orderItems) {
         this.orderItems = orderItems;
     }
 
@@ -186,4 +186,21 @@ public class OrderDto {
         this.customerId = customerId;
     }
 
+    @Override
+    public String toString() {
+        return "OrderDto{" +
+                "id=" + id +
+                ", customerId=" + customerId +
+                ", customerLastName='" + customerLastName + '\'' +
+                ", customerFirstName='" + customerFirstName + '\'' +
+                ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
+                ", destinationCity='" + destinationCity + '\'' +
+                ", destinationPostOffice='" + destinationPostOffice + '\'' +
+                ", customerNote='" + customerNote + '\'' +
+                ", paymentType=" + paymentType +
+                ", totalSum=" + totalSum +
+                ", status=" + status +
+                ", note='" + note + '\'' +
+                '}';
+    }
 }
