@@ -149,7 +149,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     private boolean setName(OrderItemDto orderItemDto, OrderItem orderItem) {
-        if (orderItemDto.getName() != null) {
+        if (orderItemDto.getName() == null) {
             return false;
         }
         orderItem.setProductName(orderItemDto.getName());

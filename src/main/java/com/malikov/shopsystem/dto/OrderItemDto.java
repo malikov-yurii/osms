@@ -1,12 +1,12 @@
 package com.malikov.shopsystem.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
+import com.malikov.shopsystem.HasId;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class OrderItemDto implements Serializable {
+public class OrderItemDto implements Serializable, HasId {
 
     private Long id;
 
@@ -22,7 +22,7 @@ public class OrderItemDto implements Serializable {
 
     private String supplier;
 
-    @JsonCreator
+    //@JsonCreator
     public OrderItemDto(
             Long orderItemId,
             Long productId,
@@ -99,5 +99,20 @@ public class OrderItemDto implements Serializable {
 
     public void setProductVariationId(Long productVariationId) {
         this.productVariationId = productVariationId;
+    }
+
+    @Override
+    public Long getId() {
+        return null;
+    }
+
+    @Override
+    public void setId(Long id) {
+
+    }
+
+    @Override
+    public boolean isNew() {
+        return false;
     }
 }
