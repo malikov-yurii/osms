@@ -15,15 +15,13 @@ public class GenericFilter<F, R> {
     private Paging paging;
     @JsonUnwrapped
     private F filteringFields;
-    private List<R> filterResult;
 
     public GenericFilter() {
         // Empty constructor
     }
 
-    public GenericFilter(F filteringFields, List<R> filterResult, Paging paging) {
+    public GenericFilter(F filteringFields, Paging paging) {
         this.filteringFields = filteringFields;
-        this.filterResult = filterResult;
         this.paging = paging;
     }
 
@@ -48,13 +46,6 @@ public class GenericFilter<F, R> {
         this.filteringFields = filteringFields;
     }
 
-    public List<R> getFilterResult() {
-        return filterResult;
-    }
-
-    public void setFilterResult(List<R> filterResult) {
-        this.filterResult = filterResult;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -71,7 +62,6 @@ public class GenericFilter<F, R> {
         return new EqualsBuilder()
                 .append(paging, that.paging)
                 .append(filteringFields, that.filteringFields)
-                .append(filterResult, that.filterResult)
                 .isEquals();
     }
 
@@ -80,7 +70,6 @@ public class GenericFilter<F, R> {
         return new HashCodeBuilder(17, 37)
                 .append(paging)
                 .append(filteringFields)
-                .append(filterResult)
                 .toHashCode();
     }
 }

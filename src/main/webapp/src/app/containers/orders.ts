@@ -144,7 +144,7 @@ export class Orders implements OnInit, OnDestroy {
       .subscribe(
         response => {
           this.totalOrders = response.totalElements;
-          () => this.filterLoads = false;
+          this.filterLoads = false;
         },
         () => this.filterLoads = false,
         () => this.filterLoads = false

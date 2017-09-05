@@ -121,7 +121,7 @@ var Orders = (function () {
         this.orderService.filterOrders(this.page, this.pageLength, filters)
             .subscribe(function (response) {
             _this.totalOrders = response.totalElements;
-            (function () { return _this.filterLoads = false; });
+            _this.filterLoads = false;
         }, function () { return _this.filterLoads = false; }, function () { return _this.filterLoads = false; });
     };
     // Manage order info

@@ -12,7 +12,7 @@ import { Order, Product } from '../models';
 @Injectable()
 export class OrderService {
   ordersPath: string = 'order';
-  productsPath: string = 'orderItemDtos';
+  productsPath: string = 'orderItems';
 
   constructor(
     private api: ApiService,

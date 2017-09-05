@@ -23,7 +23,7 @@ var OrderService = (function () {
         this.storeHelper = storeHelper;
         this.searchService = searchService;
         this.ordersPath = 'order';
-        this.productsPath = 'orderItemDtos';
+        this.productsPath = 'orderItems';
     }
     OrderService.prototype.purgeStore = function () {
         this.storeHelper.update(this.ordersPath, []);
