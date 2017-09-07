@@ -8,7 +8,7 @@ export class NotyService {
 
   constructor(private compiler: ComponentFactoryResolver) {}
 
-  renderNoty(msg, data?: any) {
+  renderNoty(message, isError?) {
     let notyFactory = this.compiler.resolveComponentFactory(NotyComponent);
     let notyComponent: ComponentRef<NotyComponent> = this.viewContainerRef.createComponent(notyFactory);
 
@@ -16,7 +16,11 @@ export class NotyService {
       notyComponent.destroy();
     });
 
-    notyComponent.instance.message = msg;
+    if (isError) {
+      notyComponent.instance.isError = isError;
+      message = JSON.parse(message.text()).detail || message;
+    }
+    notyComponent.instance.message = message;
 
   }
 

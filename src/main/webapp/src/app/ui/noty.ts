@@ -9,6 +9,7 @@ import { appearNoty } from "./animations";
       [@appearNoty]="animationState"
       (@appearNoty.done)="onAnimationDone($event)"
       (click)="animationState = 'destroyed'"
+      [class.error]="isError"
     >
       {{ message }}
     </div>
@@ -25,18 +26,23 @@ import { appearNoty } from "./animations";
       background: #323232;
       border-radius: 2px;
       color: #fff;
-    }  
+    }
+    .noty.error {
+      background: #990000;
+    }
   `],
   animations: [appearNoty()]
 })
 export class NotyComponent {
   public destroyedStream: Subject<any>;
   public message: string;
+  public isError: boolean;
   private animationState: string;
 
   constructor() {
     this.destroyedStream = new Subject();
     this.message = 'Noty message!';
+    this.isError = false;
     this.animationState = 'idle';
 
     setTimeout(() => this.animationState = 'destroyed', 3000);

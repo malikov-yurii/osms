@@ -6,13 +6,13 @@ import 'rxjs/add/observable/of';
 import { ApiService} from './api';
 import { StoreHelper } from './store-helper';
 import { SearchService } from './search';
-import { Order, Product } from '../models';
+import { Order, Product, STATIC_DATA } from '../models';
 
 
 @Injectable()
 export class OrderService {
-  ordersPath: string = 'order';
-  productsPath: string = 'orderItems';
+  ordersPath   : string = STATIC_DATA.ordersPath;
+  productsPath : string = STATIC_DATA.orderItemsPath;
 
   constructor(
     private api: ApiService,
@@ -33,23 +33,23 @@ export class OrderService {
       });
   }
 
-  addOrder() {
+  addOrder(): Observable<any> {
     let newOrder = new Order();
     let newOrderId = newOrder.id;
     let newOrderItemId = newOrder[this.productsPath][0].id;
     this.storeHelper.add(this.ordersPath, newOrder);
 
     return this.api.post(this.ordersPath)
-      .do(resp => {
-        this.storeHelper.findAndUpdate(this.ordersPath, newOrderId, 'id', resp.orderId);
+      .do(response => {
+        this.storeHelper.findAndUpdate(this.ordersPath, newOrderId, 'id', response.orderId);
         this.storeHelper.findDeepAndUpdate(
-          this.ordersPath, resp.orderId, this.productsPath,
-          newOrderItemId, 'id', resp.orderItemId
+          this.ordersPath, response.orderId, this.productsPath,
+          newOrderItemId, 'id', response.orderItemId
         );
       })
   }
 
-  deleteOrder(orderId) {
+  deleteOrder(orderId): Observable<any> {
     this.storeHelper.findAndDelete(this.ordersPath, orderId);
     return this.api.apiDelete(`${this.ordersPath}/${orderId}`);
   }
@@ -90,7 +90,7 @@ export class OrderService {
     return this.api.put(
       `${this.ordersPath}/${orderId}`,
       {
-        [fieldName]: value
+        [fieldName]: value.replace(/^\s+|\s+$/g, '')
       }
     );
   }
@@ -105,37 +105,35 @@ export class OrderService {
     );
   }
 
-  autocompleteInfo(orderId, object) {
+  autocompleteInfo(orderId, object): Observable<any> {
     this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
-    this.api.put(
-      `${this.ordersPath}/${orderId}/set-customer`,
+    return this.api.put(
+      `${this.ordersPath}/${orderId}`,
       {customerId: object.customerId}
-    ).subscribe();
+    );
   }
 
 
 
   // Manage products
-  addProduct(orderId) {
+  addProduct(orderId): Observable<any> {
     let newProduct = new Product();
     let newProductId = newProduct.id;
 
     this.storeHelper.findDeepAndAdd(this.ordersPath, orderId, this.productsPath, newProduct);
 
-    this.api.post(`order-item/create-empty-for/${orderId}`)
-      .subscribe(productId => {
-        this.storeHelper.findDeepAndUpdate(
+    return this.api.post(`order-item/create-empty-for/${orderId}`)
+      .do(productId => this.storeHelper.findDeepAndUpdate(
           this.ordersPath, orderId, this.productsPath,
-          newProductId, 'id', productId
-        );
-      });
+          newProductId, 'id', productId)
+      );
   }
 
   // Changing order item editable field (e.g., name, price)
-  updateProductField(orderId, productId, fieldName, value) {
+  updateProductField(orderId, productId, fieldName, value): Observable<any> {
     return this.api.put(
       `order-item/${productId}`,
-      {[fieldName]: value}
+      {[fieldName]: value.replace(/^\s+|\s+$/g, '')}
     ).do(
       data => {
         if (data) { this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'totalSum', data); }
@@ -145,37 +143,32 @@ export class OrderService {
   }
 
   // Changing order item INPUT (quantity)
-  updateProductInput(orderId, productId, fieldName, value) {
+  updateProductInput(orderId, productId, fieldName, value): Observable<any> {
     this.storeHelper.findDeepAndUpdate(
       this.ordersPath, orderId, this.productsPath,
       productId, fieldName, value
     );
 
-    this.api.put(
-      `order-item/${productId}`,
-      {[fieldName]: value}
-    ).subscribe(
-      data => {
-        if (data) { this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'totalSum', data); }
-      }
-    );
+    return this.api.put(`order-item/${productId}`, {
+      [fieldName]: value
+    })
+      .do(data => {
+        if (data) {
+          this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'totalSum', data);
+        }
+      });
   }
 
-  autocompleteProduct(orderId, productId, data) {
+  autocompleteProduct(orderId, productId, data): Observable<any> {
     data['quantity'] = 1;
     this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, data);
 
-    if (data.productVariationId) {
-      this.api.put(
-        `order-item/${productId}`,
-        {productVariationId: data.productVariationId}
-      ).subscribe();
-    } else {
-      this.api.put(
-        `order-item/${productId}`,
-        {productId: data.productId}
-      ).subscribe();
-    }
+    let productIdName = data.productVariationId ? 'productId' : 'productVariationId';
+
+    return this.api.put(
+      `order-item/${productId}`,
+      {[productIdName]: data[productIdName]}
+    );
   }
 
   deleteProduct(orderId, productId): Observable<any> {
@@ -193,9 +186,9 @@ export class OrderService {
   saveCustomer(customerId, customerInfo): Observable<any> {
     return this.api.put(`customer/${customerId}`, customerInfo);
   }
-  persistCustomer(orderId) {
-    this.api.post(`customer/persist-customer-from-order/${orderId}`)
-      .subscribe(customerId => {
+  persistCustomer(orderId): Observable<any> {
+    return this.api.post(`customer/persist-customer-from-order/${orderId}`)
+      .do(customerId => {
         this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'customerId', customerId);
       });
   }
@@ -214,14 +207,14 @@ export class OrderService {
     });
   }
 
-  autocomplete(types: string[], term: string) {
-    if (types[1] === 'lastName' || types[1] === 'firstName') {
+  requestAutocomplete(types: string[], term: string) {
+    if (types[1] === 'customerLastName' || types[1] === 'customerFirstName') {
       return this.api.get(`customer/autocomplete-by-last-name-mask/${term}`);
 
-    } else if (types[1] === 'phoneNumber') {
+    } else if (types[1] === 'customerPhoneNumber') {
       return this.api.get(`customer/autocomplete-by-phone-number-mask/${term}`);
 
-    } else if (types[1] === 'city') {
+    } else if (types[1] === 'destinationCity') {
       return this.api.get(`customer/autocomplete-by-city-mask/${term}`);
 
     } else if (types[0] === 'product') {

@@ -17,6 +17,7 @@ var NotyComponent = (function () {
         var _this = this;
         this.destroyedStream = new Subject_1.Subject();
         this.message = 'Noty message!';
+        this.isError = false;
         this.animationState = 'idle';
         setTimeout(function () { return _this.animationState = 'destroyed'; }, 3000);
     }
@@ -29,8 +30,8 @@ var NotyComponent = (function () {
 }());
 NotyComponent = __decorate([
     core_1.Component({
-        template: "\n    <div class=\"noty\"\n      [@appearNoty]=\"animationState\"\n      (@appearNoty.done)=\"onAnimationDone($event)\"\n      (click)=\"animationState = 'destroyed'\"\n    >\n      {{ message }}\n    </div>\n  ",
-        styles: ["\n    .noty {\n      position: fixed;\n      left: 50%;\n      bottom: 0;\n      transform: translateX(-50%);\n      min-width: 288px;\n      max-width: 568px;\n      padding: 14px 24px;\n      background: #323232;\n      border-radius: 2px;\n      color: #fff;\n    }  \n  "],
+        template: "\n    <div class=\"noty\"\n      [@appearNoty]=\"animationState\"\n      (@appearNoty.done)=\"onAnimationDone($event)\"\n      (click)=\"animationState = 'destroyed'\"\n      [class.error]=\"isError\"\n    >\n      {{ message }}\n    </div>\n  ",
+        styles: ["\n    .noty {\n      position: fixed;\n      left: 50%;\n      bottom: 0;\n      transform: translateX(-50%);\n      min-width: 288px;\n      max-width: 568px;\n      padding: 14px 24px;\n      background: #323232;\n      border-radius: 2px;\n      color: #fff;\n    }\n    .noty.error {\n      background: #990000;\n    }\n  "],
         animations: [animations_1.appearNoty()]
     }),
     __metadata("design:paramtypes", [])

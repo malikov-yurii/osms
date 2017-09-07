@@ -23,7 +23,7 @@ var ContenteditableModel = (function () {
         }
     };
     ContenteditableModel.prototype.onKeydown = function (e) {
-        if (e.code === 'Enter' || e.code === 'Escape') {
+        if (e.keyCode === 13 || e.keyCode === 27) {
             this.el.nativeElement.blur();
             return false;
         }

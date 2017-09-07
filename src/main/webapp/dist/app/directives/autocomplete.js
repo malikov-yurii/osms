@@ -19,7 +19,6 @@ var Autocomplete = (function () {
         this.viewRef = viewRef;
         this.compiler = compiler;
         this.selected = new core_1.EventEmitter();
-        this.fieldsToAutocomplete = models_1.STATIC_DATA.autocompleteBlocks;
         this.refreshTimer = undefined;
         this.searchRequired = false;
         this.searchInProgress = false;
@@ -28,7 +27,7 @@ var Autocomplete = (function () {
     }
     Autocomplete.prototype.onKeyDown = function (e) {
         var _this = this;
-        if (this.fieldsToAutocomplete.indexOf(this.types[1]) > -1) {
+        if (models_1.STATIC_DATA.fieldsToAutocomplete.indexOf(this.types[1]) > -1) {
             if (this.listComponent) {
                 switch (e.code) {
                     case 'ArrowDown':
@@ -85,13 +84,13 @@ var Autocomplete = (function () {
         var _this = this;
         this.refreshTimer = undefined;
         this.searchInProgress = true;
-        this.orderService.autocomplete(this.types, this.term).subscribe(function (resp) {
+        this.orderService.requestAutocomplete(this.types, this.term).subscribe(function (resp) {
             _this.searchInProgress = false;
             if (_this.searchRequired) {
                 _this.searchRequired = false;
                 _this.doSearch();
             }
-            else {
+            else if (resp.length) {
                 _this.renderList(resp);
             }
         });

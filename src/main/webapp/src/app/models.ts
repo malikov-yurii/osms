@@ -3,17 +3,18 @@ export class Order {
 
   id: any = `0-${Order.count++}`;
   customerId: number = 0;
-  lastName: string = '';
-  firstName: string = '';
-  phoneNumber: string = '';
-  city: string = '';
-  postOffice: string = '';
-  totalSum: number = 0;
+  customerLastName: string = '';
+  customerFirstName: string = '';
+  customerPhoneNumber: string = '';
+  destinationCity: string = '';
+  destinationPostOffice: string = '';
   paymentType: string = 'NP';
-  date: any = new Date();
+  totalSum: number = 0;
+  createdDateTime: any = new Date();
   status: string = 'NEW';
-  comment: string = '';
-  orderItemDtos: Product[] = [new Product()];
+  note: string = '';
+  customerNote: string = '';
+  orderItems: Product[] = [new Product()];
 }
 
 export class Product {
@@ -38,10 +39,13 @@ export const STATIC_DATA = {
     status: ['SHP', 'WFP', 'OK', 'NEW', 'NOT'],
     paymentType: ['PB', 'SV', 'NP']
   },
-  autocompleteBlocks: ['lastName', 'phoneNumber', 'city', 'name'],
+  fieldsToAutocomplete: ['customerLastName', 'customerPhoneNumber', 'destionationCity', 'name'],
   keycodesNotToAutocomplete: [9, 13, 16, 17, 18, 20], // Tab, Enter, Shift, Ctrl, Alt, Caps Lock
-  sessionTime: 235 * 60 * 1000 // minutes
-}
+  sessionTime: 235 * 60 * 1000, // minutes
+
+  ordersPath: 'order',
+  orderItemsPath: 'orderItems'
+};
 
 export interface IOrderFilter {
   firstName: string;

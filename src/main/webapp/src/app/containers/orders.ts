@@ -114,9 +114,10 @@ export class Orders implements OnInit, OnDestroy {
   }
 
   onAddOrder() {
-    this.orderService.addOrder().subscribe(({orderId, orderItemId}) => {
-      this.notyService.renderNoty(`Order № ${orderId} has been added`)
-    });
+    this.orderService.addOrder().subscribe(
+      ({orderId, orderItemId}) => this.notyService.renderNoty(`Order № ${orderId} has been added`),
+      error => this.notyService.renderNoty(error, true)
+    );
 
     let apiGet = this.page !== 1; // Tracing if it's needed to send http GET request for orders
     this.paginationChanged({page: 1, length: this.pageLength, apiGet});
@@ -124,9 +125,10 @@ export class Orders implements OnInit, OnDestroy {
 
   onDeleteOrder(orderId) {
     if (confirm('Действительно удалить этот заказ?')) {
-      this.orderService.deleteOrder(orderId).subscribe(() => {
-        this.notyService.renderNoty(`Order № ${orderId} has been deleted`);
-      });
+      this.orderService.deleteOrder(orderId).subscribe(
+        () => this.notyService.renderNoty(`Order № ${orderId} has been deleted`),
+        error => this.notyService.renderNoty(error, true)
+      );
     }
   }
 
@@ -142,11 +144,8 @@ export class Orders implements OnInit, OnDestroy {
     this.filterLoads = true;
     this.orderService.filterOrders(this.page, this.pageLength, filters)
       .subscribe(
-        response => {
-          this.totalOrders = response.totalElements;
-          this.filterLoads = false;
-        },
-        () => this.filterLoads = false,
+        response => this.totalOrders = response.totalElements,
+        null,
         () => this.filterLoads = false
       );
   }
@@ -157,18 +156,25 @@ export class Orders implements OnInit, OnDestroy {
   // Manage order info
   onUpdateInfoField(orderId, fieldName, {newValue, oldValue}) {
     this.orderService.updateInfoField(orderId, fieldName, newValue)
-      .subscribe(() => {
-        this.notyService.renderNoty(`${oldValue} has been changed to ${newValue}`);
-      });
+      .subscribe(
+        () => this.notyService.renderNoty(`${oldValue} has been changed to ${newValue}`),
+        error => this.notyService.renderNoty(error, true)
+      );
   }
 
-  onUpdateInfoInput(orderId, fieldName, e) {
-    this.orderService.updateInfoInput(orderId, fieldName, e.target.value)
-      .subscribe();
+  onUpdateInfoInput(orderId, fieldName, value) {
+    this.orderService.updateInfoInput(orderId, fieldName, value)
+      .subscribe(
+        () => this.notyService.renderNoty(`${fieldName} has been changed to ${value}`),
+        error => this.notyService.renderNoty(error, true)
+      );
   }
 
   onAutocompleteInfo(orderId, data) {
-    this.orderService.autocompleteInfo(orderId, data);
+    this.orderService.autocompleteInfo(orderId, data).subscribe(
+      () => this.notyService.renderNoty(`${data.label} has been added`),
+      error => this.notyService.renderNoty(error, true)
+    );
   }
 
 
@@ -177,27 +183,41 @@ export class Orders implements OnInit, OnDestroy {
 
   // Manage order products
   onAddProduct(orderId) {
-    this.orderService.addProduct(orderId);
+    this.orderService.addProduct(orderId).subscribe(
+      () => this.notyService.renderNoty(`Product for order ${orderId} has been added`),
+      error => this.notyService.renderNoty(error, true)
+    );
   }
 
   onUpdateProductField(orderId, productId, fieldName, {newValue, oldValue}) {
     this.orderService.updateProductField(orderId, productId, fieldName, newValue)
-      .subscribe(() => {
-        this.notyService.renderNoty(`${oldValue} has been changed to ${newValue}`);
-      });
+      .subscribe(
+        () => this.notyService.renderNoty(`${oldValue} has been changed to ${newValue}`),
+        error => this.notyService.renderNoty(error, true)
+      );
   }
 
   onUpdateProductInput(orderId, productId, fieldName, value) {
-    this.orderService.updateProductInput(orderId, productId, fieldName, value);
+    this.orderService.updateProductInput(orderId, productId, fieldName, value)
+      .subscribe(
+        () => this.notyService.renderNoty(`${fieldName} has been changed to ${value}`),
+        error => this.notyService.renderNoty(error, true)
+      );
   }
 
   onAutocompleteProduct(orderId, productId, data) {
-    this.orderService.autocompleteProduct(orderId, productId, data);
+    this.orderService.autocompleteProduct(orderId, productId, data).subscribe(
+      () => this.notyService.renderNoty(`${data.label} has been added`),
+      error => this.notyService.renderNoty(error, true)
+    );
   }
 
   onDeleteProduct(id, productId) {
     if (confirm('Действительно удалить эту позицию?')) {
-      this.orderService.deleteProduct(id, productId).subscribe();
+      this.orderService.deleteProduct(id, productId).subscribe(
+        () => this.notyService.renderNoty(`Product ${productId} has been deleted`),
+        error => this.notyService.renderNoty(error, true)
+      );
     }
   }
 
@@ -206,7 +226,10 @@ export class Orders implements OnInit, OnDestroy {
   // Manage customers
   onEditCustomer(customerId) {
     this.popupService.renderPopup('Update customer').subscribe(customer => {
-      this.orderService.saveCustomer(customerId, customer).subscribe();
+      this.orderService.saveCustomer(customerId, customer).subscribe(
+        () => this.notyService.renderNoty(`Customer ${customerId} has been edited`),
+        error => this.notyService.renderNoty(error, true)
+      );
     });
     this.orderService.getCustomer(customerId).subscribe(customer => {
       this.popupService.onProvideWithFormData(customer);
@@ -214,38 +237,15 @@ export class Orders implements OnInit, OnDestroy {
   }
 
   onPersistCustomer(orderId) {
-    this.orderService.persistCustomer(orderId);
+    this.orderService.persistCustomer(orderId).subscribe(
+      () => this.notyService.renderNoty(`Customer for order ${orderId} has been saved`),
+      error => this.notyService.renderNoty(error, true)
+    );
   }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-// @TODO remove this
-  onGetAllOrders() {
-    this.orderService.getAllOrders().subscribe(resp => console.log(resp.data));
-  }
-
-  onGetStore() {
-    this.orderService.getStore();
-  }
-
-  console() {
-    console.log(this.searchStream);
-  }
-
-
-
-
+  // General functions
   hasInput(key) {
     return key === 'status' || key === 'paymentType' || key === 'quantity' ? true : false;
   }
@@ -268,6 +268,21 @@ export class Orders implements OnInit, OnDestroy {
 
   toggleAnimState() {
     this.searchInputState = this.searchInputState === 'collapsed' ? 'expanded' : 'collapsed';
+  }
+
+
+
+// @TODO remove this
+  onGetAllOrders() {
+    this.orderService.getAllOrders().subscribe(resp => console.log(resp.data));
+  }
+
+  onGetStore() {
+    this.orderService.getStore();
+  }
+
+  console() {
+    console.log(this.searchStream);
   }
 
 

@@ -4,17 +4,18 @@ var Order = (function () {
     function Order() {
         this.id = "0-" + Order.count++;
         this.customerId = 0;
-        this.lastName = '';
-        this.firstName = '';
-        this.phoneNumber = '';
-        this.city = '';
-        this.postOffice = '';
-        this.totalSum = 0;
+        this.customerLastName = '';
+        this.customerFirstName = '';
+        this.customerPhoneNumber = '';
+        this.destinationCity = '';
+        this.destinationPostOffice = '';
         this.paymentType = 'NP';
-        this.date = new Date();
+        this.totalSum = 0;
+        this.createdDateTime = new Date();
         this.status = 'NEW';
-        this.comment = '';
-        this.orderItemDtos = [new Product()];
+        this.note = '';
+        this.customerNote = '';
+        this.orderItems = [new Product()];
     }
     return Order;
 }());
@@ -47,8 +48,10 @@ exports.STATIC_DATA = {
         status: ['SHP', 'WFP', 'OK', 'NEW', 'NOT'],
         paymentType: ['PB', 'SV', 'NP']
     },
-    autocompleteBlocks: ['lastName', 'phoneNumber', 'city', 'name'],
+    fieldsToAutocomplete: ['customerLastName', 'customerPhoneNumber', 'destionationCity', 'name'],
     keycodesNotToAutocomplete: [9, 13, 16, 17, 18, 20],
-    sessionTime: 235 * 60 * 1000 // minutes
+    sessionTime: 235 * 60 * 1000,
+    ordersPath: 'order',
+    orderItemsPath: 'orderItems'
 };
 //# sourceMappingURL=models.js.map

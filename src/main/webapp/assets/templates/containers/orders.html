@@ -76,6 +76,7 @@
               <div
                 class="order-info__block order-info__block--{{ key }}"
                 contenteditable
+                [attr.hotkeys]="key === 'customerPhoneNumber' ? '' : null"
                 [autocomplete]="['info', key]"
                 [(contenteditableModel)]="order[key]"
                 (selectedAutocomplete)="onAutocompleteInfo(order.id, $event)"
@@ -95,7 +96,7 @@
             <div class="order-info__block order-info__block--{{ key }}">
               <select
                 name="{{ key }}"
-                (change)="onUpdateInfoInput(order.id, key, $event)"
+                (change)="onUpdateInfoInput(order.id, key, $event.target.value)"
               >
                 <option
                   *ngFor="let value of infoBlocks[key]"
@@ -139,7 +140,7 @@
           </div>
         </div>
 
-        <div class="order-info__block order-info__block--note">
+        <div class="order-info__block order-info__block--customer-note">
           {{ order.customerNote }}
         </div>
 

@@ -96,17 +96,15 @@ var Orders = (function () {
         var _this = this;
         this.orderService.addOrder().subscribe(function (_a) {
             var orderId = _a.orderId, orderItemId = _a.orderItemId;
-            _this.notyService.renderNoty("Order \u2116 " + orderId + " has been added");
-        });
+            return _this.notyService.renderNoty("Order \u2116 " + orderId + " has been added");
+        }, function (error) { return _this.notyService.renderNoty(error, true); });
         var apiGet = this.page !== 1; // Tracing if it's needed to send http GET request for orders
         this.paginationChanged({ page: 1, length: this.pageLength, apiGet: apiGet });
     };
     Orders.prototype.onDeleteOrder = function (orderId) {
         var _this = this;
         if (confirm('Действительно удалить этот заказ?')) {
-            this.orderService.deleteOrder(orderId).subscribe(function () {
-                _this.notyService.renderNoty("Order \u2116 " + orderId + " has been deleted");
-            });
+            this.orderService.deleteOrder(orderId).subscribe(function () { return _this.notyService.renderNoty("Order \u2116 " + orderId + " has been deleted"); }, function (error) { return _this.notyService.renderNoty(error, true); });
         }
     };
     // Pagination
@@ -119,73 +117,65 @@ var Orders = (function () {
         var _this = this;
         this.filterLoads = true;
         this.orderService.filterOrders(this.page, this.pageLength, filters)
-            .subscribe(function (response) {
-            _this.totalOrders = response.totalElements;
-            _this.filterLoads = false;
-        }, function () { return _this.filterLoads = false; }, function () { return _this.filterLoads = false; });
+            .subscribe(function (response) { return _this.totalOrders = response.totalElements; }, null, function () { return _this.filterLoads = false; });
     };
     // Manage order info
     Orders.prototype.onUpdateInfoField = function (orderId, fieldName, _a) {
         var _this = this;
         var newValue = _a.newValue, oldValue = _a.oldValue;
         this.orderService.updateInfoField(orderId, fieldName, newValue)
-            .subscribe(function () {
-            _this.notyService.renderNoty(oldValue + " has been changed to " + newValue);
-        });
+            .subscribe(function () { return _this.notyService.renderNoty(oldValue + " has been changed to " + newValue); }, function (error) { return _this.notyService.renderNoty(error, true); });
     };
-    Orders.prototype.onUpdateInfoInput = function (orderId, fieldName, e) {
-        this.orderService.updateInfoInput(orderId, fieldName, e.target.value)
-            .subscribe();
+    Orders.prototype.onUpdateInfoInput = function (orderId, fieldName, value) {
+        var _this = this;
+        this.orderService.updateInfoInput(orderId, fieldName, value)
+            .subscribe(function () { return _this.notyService.renderNoty(fieldName + " has been changed to " + value); }, function (error) { return _this.notyService.renderNoty(error, true); });
     };
     Orders.prototype.onAutocompleteInfo = function (orderId, data) {
-        this.orderService.autocompleteInfo(orderId, data);
+        var _this = this;
+        this.orderService.autocompleteInfo(orderId, data).subscribe(function () { return _this.notyService.renderNoty(data.label + " has been added"); }, function (error) { return _this.notyService.renderNoty(error, true); });
     };
     // Manage order products
     Orders.prototype.onAddProduct = function (orderId) {
-        this.orderService.addProduct(orderId);
+        var _this = this;
+        this.orderService.addProduct(orderId).subscribe(function () { return _this.notyService.renderNoty("Product for order " + orderId + " has been added"); }, function (error) { return _this.notyService.renderNoty(error, true); });
     };
     Orders.prototype.onUpdateProductField = function (orderId, productId, fieldName, _a) {
         var _this = this;
         var newValue = _a.newValue, oldValue = _a.oldValue;
         this.orderService.updateProductField(orderId, productId, fieldName, newValue)
-            .subscribe(function () {
-            _this.notyService.renderNoty(oldValue + " has been changed to " + newValue);
-        });
+            .subscribe(function () { return _this.notyService.renderNoty(oldValue + " has been changed to " + newValue); }, function (error) { return _this.notyService.renderNoty(error, true); });
     };
     Orders.prototype.onUpdateProductInput = function (orderId, productId, fieldName, value) {
-        this.orderService.updateProductInput(orderId, productId, fieldName, value);
+        var _this = this;
+        this.orderService.updateProductInput(orderId, productId, fieldName, value)
+            .subscribe(function () { return _this.notyService.renderNoty(fieldName + " has been changed to " + value); }, function (error) { return _this.notyService.renderNoty(error, true); });
     };
     Orders.prototype.onAutocompleteProduct = function (orderId, productId, data) {
-        this.orderService.autocompleteProduct(orderId, productId, data);
+        var _this = this;
+        this.orderService.autocompleteProduct(orderId, productId, data).subscribe(function () { return _this.notyService.renderNoty(data.label + " has been added"); }, function (error) { return _this.notyService.renderNoty(error, true); });
     };
     Orders.prototype.onDeleteProduct = function (id, productId) {
+        var _this = this;
         if (confirm('Действительно удалить эту позицию?')) {
-            this.orderService.deleteProduct(id, productId).subscribe();
+            this.orderService.deleteProduct(id, productId).subscribe(function () { return _this.notyService.renderNoty("Product " + productId + " has been deleted"); }, function (error) { return _this.notyService.renderNoty(error, true); });
         }
     };
     // Manage customers
     Orders.prototype.onEditCustomer = function (customerId) {
         var _this = this;
         this.popupService.renderPopup('Update customer').subscribe(function (customer) {
-            _this.orderService.saveCustomer(customerId, customer).subscribe();
+            _this.orderService.saveCustomer(customerId, customer).subscribe(function () { return _this.notyService.renderNoty("Customer " + customerId + " has been edited"); }, function (error) { return _this.notyService.renderNoty(error, true); });
         });
         this.orderService.getCustomer(customerId).subscribe(function (customer) {
             _this.popupService.onProvideWithFormData(customer);
         });
     };
     Orders.prototype.onPersistCustomer = function (orderId) {
-        this.orderService.persistCustomer(orderId);
+        var _this = this;
+        this.orderService.persistCustomer(orderId).subscribe(function () { return _this.notyService.renderNoty("Customer for order " + orderId + " has been saved"); }, function (error) { return _this.notyService.renderNoty(error, true); });
     };
-    // @TODO remove this
-    Orders.prototype.onGetAllOrders = function () {
-        this.orderService.getAllOrders().subscribe(function (resp) { return console.log(resp.data); });
-    };
-    Orders.prototype.onGetStore = function () {
-        this.orderService.getStore();
-    };
-    Orders.prototype.console = function () {
-        console.log(this.searchStream);
-    };
+    // General functions
     Orders.prototype.hasInput = function (key) {
         return key === 'status' || key === 'paymentType' || key === 'quantity' ? true : false;
     };
@@ -206,6 +196,16 @@ var Orders = (function () {
     };
     Orders.prototype.toggleAnimState = function () {
         this.searchInputState = this.searchInputState === 'collapsed' ? 'expanded' : 'collapsed';
+    };
+    // @TODO remove this
+    Orders.prototype.onGetAllOrders = function () {
+        this.orderService.getAllOrders().subscribe(function (resp) { return console.log(resp.data); });
+    };
+    Orders.prototype.onGetStore = function () {
+        this.orderService.getStore();
+    };
+    Orders.prototype.console = function () {
+        console.log(this.searchStream);
     };
     return Orders;
 }());

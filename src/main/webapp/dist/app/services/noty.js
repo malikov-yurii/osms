@@ -15,13 +15,17 @@ var NotyService = (function () {
     function NotyService(compiler) {
         this.compiler = compiler;
     }
-    NotyService.prototype.renderNoty = function (msg, data) {
+    NotyService.prototype.renderNoty = function (message, isError) {
         var notyFactory = this.compiler.resolveComponentFactory(index_1.NotyComponent);
         var notyComponent = this.viewContainerRef.createComponent(notyFactory);
         notyComponent.instance.destroyedStream.subscribe(function () {
             notyComponent.destroy();
         });
-        notyComponent.instance.message = msg;
+        if (isError) {
+            notyComponent.instance.isError = isError;
+            message = JSON.parse(message.text()).detail || message;
+        }
+        notyComponent.instance.message = message;
     };
     return NotyService;
 }());

@@ -22,8 +22,8 @@ var OrderService = (function () {
         this.api = api;
         this.storeHelper = storeHelper;
         this.searchService = searchService;
-        this.ordersPath = 'order';
-        this.productsPath = 'orderItems';
+        this.ordersPath = models_1.STATIC_DATA.ordersPath;
+        this.productsPath = models_1.STATIC_DATA.orderItemsPath;
     }
     OrderService.prototype.purgeStore = function () {
         this.storeHelper.update(this.ordersPath, []);
@@ -43,9 +43,9 @@ var OrderService = (function () {
         var newOrderItemId = newOrder[this.productsPath][0].id;
         this.storeHelper.add(this.ordersPath, newOrder);
         return this.api.post(this.ordersPath)
-            .do(function (resp) {
-            _this.storeHelper.findAndUpdate(_this.ordersPath, newOrderId, 'id', resp.orderId);
-            _this.storeHelper.findDeepAndUpdate(_this.ordersPath, resp.orderId, _this.productsPath, newOrderItemId, 'id', resp.orderItemId);
+            .do(function (response) {
+            _this.storeHelper.findAndUpdate(_this.ordersPath, newOrderId, 'id', response.orderId);
+            _this.storeHelper.findDeepAndUpdate(_this.ordersPath, response.orderId, _this.productsPath, newOrderItemId, 'id', response.orderItemId);
         });
     };
     OrderService.prototype.deleteOrder = function (orderId) {
@@ -78,7 +78,7 @@ var OrderService = (function () {
     // Changing order info common field (e.g., firstName, phoneNumber)
     OrderService.prototype.updateInfoField = function (orderId, fieldName, value) {
         return this.api.put(this.ordersPath + "/" + orderId, (_a = {},
-            _a[fieldName] = value,
+            _a[fieldName] = value.replace(/^\s+|\s+$/g, ''),
             _a));
         var _a;
     };
@@ -90,7 +90,7 @@ var OrderService = (function () {
     };
     OrderService.prototype.autocompleteInfo = function (orderId, object) {
         this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
-        this.api.put(this.ordersPath + "/" + orderId + "/set-customer", { customerId: object.customerId }).subscribe();
+        return this.api.put(this.ordersPath + "/" + orderId, { customerId: object.customerId });
     };
     // Manage products
     OrderService.prototype.addProduct = function (orderId) {
@@ -98,15 +98,13 @@ var OrderService = (function () {
         var newProduct = new models_1.Product();
         var newProductId = newProduct.id;
         this.storeHelper.findDeepAndAdd(this.ordersPath, orderId, this.productsPath, newProduct);
-        this.api.post("order-item/create-empty-for/" + orderId)
-            .subscribe(function (productId) {
-            _this.storeHelper.findDeepAndUpdate(_this.ordersPath, orderId, _this.productsPath, newProductId, 'id', productId);
-        });
+        return this.api.post("order-item/create-empty-for/" + orderId)
+            .do(function (productId) { return _this.storeHelper.findDeepAndUpdate(_this.ordersPath, orderId, _this.productsPath, newProductId, 'id', productId); });
     };
     // Changing order item editable field (e.g., name, price)
     OrderService.prototype.updateProductField = function (orderId, productId, fieldName, value) {
         var _this = this;
-        return this.api.put("order-item/" + productId, (_a = {}, _a[fieldName] = value, _a)).do(function (data) {
+        return this.api.put("order-item/" + productId, (_a = {}, _a[fieldName] = value.replace(/^\s+|\s+$/g, ''), _a)).do(function (data) {
             if (data) {
                 _this.storeHelper.findAndUpdate(_this.ordersPath, orderId, 'totalSum', data);
             }
@@ -117,7 +115,10 @@ var OrderService = (function () {
     OrderService.prototype.updateProductInput = function (orderId, productId, fieldName, value) {
         var _this = this;
         this.storeHelper.findDeepAndUpdate(this.ordersPath, orderId, this.productsPath, productId, fieldName, value);
-        this.api.put("order-item/" + productId, (_a = {}, _a[fieldName] = value, _a)).subscribe(function (data) {
+        return this.api.put("order-item/" + productId, (_a = {},
+            _a[fieldName] = value,
+            _a))
+            .do(function (data) {
             if (data) {
                 _this.storeHelper.findAndUpdate(_this.ordersPath, orderId, 'totalSum', data);
             }
@@ -127,12 +128,9 @@ var OrderService = (function () {
     OrderService.prototype.autocompleteProduct = function (orderId, productId, data) {
         data['quantity'] = 1;
         this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, data);
-        if (data.productVariationId) {
-            this.api.put("order-item/" + productId, { productVariationId: data.productVariationId }).subscribe();
-        }
-        else {
-            this.api.put("order-item/" + productId, { productId: data.productId }).subscribe();
-        }
+        var productIdName = data.productVariationId ? 'productId' : 'productVariationId';
+        return this.api.put("order-item/" + productId, (_a = {}, _a[productIdName] = data[productIdName], _a));
+        var _a;
     };
     OrderService.prototype.deleteProduct = function (orderId, productId) {
         this.storeHelper.findDeepAndDelete(this.ordersPath, orderId, this.productsPath, productId);
@@ -147,8 +145,8 @@ var OrderService = (function () {
     };
     OrderService.prototype.persistCustomer = function (orderId) {
         var _this = this;
-        this.api.post("customer/persist-customer-from-order/" + orderId)
-            .subscribe(function (customerId) {
+        return this.api.post("customer/persist-customer-from-order/" + orderId)
+            .do(function (customerId) {
             _this.storeHelper.findAndUpdate(_this.ordersPath, orderId, 'customerId', customerId);
         });
     };
@@ -163,14 +161,14 @@ var OrderService = (function () {
             filtered: orderResult.length
         });
     };
-    OrderService.prototype.autocomplete = function (types, term) {
-        if (types[1] === 'lastName' || types[1] === 'firstName') {
+    OrderService.prototype.requestAutocomplete = function (types, term) {
+        if (types[1] === 'customerLastName' || types[1] === 'customerFirstName') {
             return this.api.get("customer/autocomplete-by-last-name-mask/" + term);
         }
-        else if (types[1] === 'phoneNumber') {
+        else if (types[1] === 'customerPhoneNumber') {
             return this.api.get("customer/autocomplete-by-phone-number-mask/" + term);
         }
-        else if (types[1] === 'city') {
+        else if (types[1] === 'destinationCity') {
             return this.api.get("customer/autocomplete-by-city-mask/" + term);
         }
         else if (types[0] === 'product') {
