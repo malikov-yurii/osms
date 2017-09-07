@@ -14,17 +14,22 @@ var Subject_1 = require("rxjs/Subject");
 var animations_1 = require("./animations");
 var NotyComponent = (function () {
     function NotyComponent() {
-        var _this = this;
         this.destroyedStream = new Subject_1.Subject();
         this.message = 'Noty message!';
         this.isError = false;
         this.animationState = 'idle';
-        setTimeout(function () { return _this.animationState = 'destroyed'; }, 3000);
+        this.destroy();
     }
     NotyComponent.prototype.onAnimationDone = function (e) {
         if (e.toState === 'destroyed') {
             this.destroyedStream.next();
         }
+    };
+    NotyComponent.prototype.destroy = function (delay) {
+        var _this = this;
+        if (delay === void 0) { delay = 3000; }
+        clearTimeout(this.destroyTimeout);
+        this.destroyTimeout = setTimeout(function () { return _this.animationState = 'destroyed'; }, delay);
     };
     return NotyComponent;
 }());

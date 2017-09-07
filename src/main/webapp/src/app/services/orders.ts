@@ -163,7 +163,7 @@ export class OrderService {
     data['quantity'] = 1;
     this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, data);
 
-    let productIdName = data.productVariationId ? 'productId' : 'productVariationId';
+    let productIdName = data.productVariationId ? 'productVariationId' : 'productId';
 
     return this.api.put(
       `order-item/${productId}`,

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { appearNoty } from "./animations";
 
-
 @Component({
   template: `
     <div class="noty"
@@ -38,6 +37,7 @@ export class NotyComponent {
   public message: string;
   public isError: boolean;
   private animationState: string;
+  private destroyTimeout;
 
   constructor() {
     this.destroyedStream = new Subject();
@@ -45,13 +45,18 @@ export class NotyComponent {
     this.isError = false;
     this.animationState = 'idle';
 
-    setTimeout(() => this.animationState = 'destroyed', 3000);
+    this.destroy();
   }
 
   private onAnimationDone(e) {
     if (e.toState === 'destroyed') {
       this.destroyedStream.next();
     }
+  }
+
+  public destroy(delay = 3000) {
+    clearTimeout(this.destroyTimeout);
+    this.destroyTimeout = setTimeout(() => this.animationState = 'destroyed', delay);
   }
 
 }

@@ -49,6 +49,6 @@ AppModule = __decorate([
     })
 ], AppModule);
 exports.AppModule = AppModule;
-// enableProdMode();
+core_1.enableProdMode();
 platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(AppModule);
 //# sourceMappingURL=boot.js.map

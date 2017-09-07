@@ -24,6 +24,7 @@ var NotyService = (function () {
         if (isError) {
             notyComponent.instance.isError = isError;
             message = JSON.parse(message.text()).detail || message;
+            notyComponent.instance.destroy(60000);
         }
         notyComponent.instance.message = message;
     };

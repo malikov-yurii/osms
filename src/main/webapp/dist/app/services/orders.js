@@ -128,7 +128,7 @@ var OrderService = (function () {
     OrderService.prototype.autocompleteProduct = function (orderId, productId, data) {
         data['quantity'] = 1;
         this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, data);
-        var productIdName = data.productVariationId ? 'productId' : 'productVariationId';
+        var productIdName = data.productVariationId ? 'productVariationId' : 'productId';
         return this.api.put("order-item/" + productId, (_a = {}, _a[productIdName] = data[productIdName], _a));
         var _a;
     };

@@ -37,5 +37,5 @@ import { HotkeysDirective, Autocomplete, ContenteditableModel } from './app/dire
 
 export class AppModule {}
 
-// enableProdMode();
+enableProdMode();
 platformBrowserDynamic().bootstrapModule(AppModule);
