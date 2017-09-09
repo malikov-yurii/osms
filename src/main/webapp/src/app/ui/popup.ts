@@ -38,10 +38,10 @@ import { Subject } from 'rxjs/Subject';
           <div class="popup__content">
             <div class="popup__formgroup">
               <label class="popup__label">ID</label>
-              <div class="popup__input">{{ data.id }}</div>
+              <div class="popup__input">{{ data.id || data.customerId }}</div>
             </div>
           
-            <div class="popup__formgroup" *ngFor="let key of data | keys:['id']">
+            <div class="popup__formgroup" *ngFor="let key of data | keys:['id', 'customerId']">
               <label class="popup__label" for="{{ key }}">{{ key }}</label>
               <input class="input popup__input" id="{{ key }}" type="text" formControlName="{{ key }}">
             </div>

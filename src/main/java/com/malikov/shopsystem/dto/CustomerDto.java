@@ -18,7 +18,7 @@ public class CustomerDto implements Serializable, HasId {
 
     private String destinationPostOffice;
 
-    private String custonerEmail;
+    private String customerEmail;
 
     private String customerNote;
 
@@ -28,7 +28,7 @@ public class CustomerDto implements Serializable, HasId {
                        String customerPhoneNumber,
                        String destinationCity,
                        String destinationPostOffice,
-                       String custonerEmail,
+                       String customerEmail,
                        String customerNote
     ) {
         this.customerId = customerId;
@@ -37,7 +37,7 @@ public class CustomerDto implements Serializable, HasId {
         this.customerPhoneNumber = customerPhoneNumber;
         this.destinationCity = destinationCity;
         this.destinationPostOffice = destinationPostOffice;
-        this.custonerEmail = custonerEmail;
+        this.customerEmail = customerEmail;
         this.customerNote = customerNote;
     }
 
@@ -96,12 +96,12 @@ public class CustomerDto implements Serializable, HasId {
         this.destinationPostOffice = destinationPostOffice;
     }
 
-    public String getCustonerEmail() {
-        return custonerEmail;
+    public String getCustomerEmail() {
+        return customerEmail;
     }
 
-    public void setCustonerEmail(String custonerEmail) {
-        this.custonerEmail = custonerEmail;
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
     }
 
     public String getCustomerNote() {
@@ -121,7 +121,7 @@ public class CustomerDto implements Serializable, HasId {
                 ", phoneNumber='" + customerPhoneNumber + '\'' +
                 ", city='" + destinationCity + '\'' +
                 ", postOffice='" + destinationPostOffice + '\'' +
-                ", email='" + custonerEmail + '\'' +
+                ", email='" + customerEmail + '\'' +
                 '}';
     }
 

@@ -226,7 +226,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 50%;
+    width: 60%;
 }
 .order-manage.collapsible {
     position: absolute;
@@ -395,21 +395,6 @@ td.product-cell--supplier {
     position: relative;
     height: 37px;
 }
-.order-page .search-input-container:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -150px;
-    display: block;
-    width: 50px;
-    height: 38px;
-    background: linear-gradient(to left, #fff 25%, transparent);
-    transform: translateX(0);
-    transition: transform .3s ease;
-}
-.orders-page .search-input-container.expanded:before {
-    transform: translateX(-200px);
-}
 .order-page .search-input {
     position: absolute;
     top: 0;
@@ -459,7 +444,7 @@ td.product-cell--supplier {
     }
     .order-info__block--destinationCity {
         order: 7;
-        width: calc((100% - 32px - 35px - 70px) / 2);
+        width: calc((100% - 35px - 32px - 35px - 70px) / 2);
     }
     .order-info__block--destinationPostOffice {
         order: 8;
@@ -471,7 +456,7 @@ td.product-cell--supplier {
     }
     .order-info__block--note {
         order: 9;
-        width: calc((100% - 32px - 35px - 70px) / 2);
+        width: calc((100% - 35px - 32px - 35px - 70px) / 2);
         border-right-width: 1px !important;
     }
     .order-info__block--paymentType {
@@ -520,6 +505,21 @@ td.product-cell--supplier {
         text-align: center;
     }
 }
+@media only screen and (max-width: 700px) {
+    .service-block {
+        flex-wrap: wrap;
+    }
+    .order-page .search-input-container {
+        width: 100%;
+        margin: 10px 0;
+        text-align: center;
+    }
+    .order-page .search-input {
+        position: initial;
+        width: 300px;
+        max-width: 100%;
+    }
+}
 @media only screen and (max-width: 500px) {
     .search-input {
         width: 150px;
@@ -533,6 +533,7 @@ td.product-cell--supplier {
     }
     .order-info__block {
         border-bottom: 1px solid rgba(0, 188, 212, 0.49);
+        flex-grow: 2;
     }
     .order-info__block--id {
         order: 1;

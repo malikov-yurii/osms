@@ -17,6 +17,7 @@ var api_1 = require("./api");
 var store_helper_1 = require("./store-helper");
 var search_1 = require("./search");
 var models_1 = require("../models");
+//noinspection TsLint
 var OrderService = (function () {
     function OrderService(api, storeHelper, searchService) {
         this.api = api;
@@ -24,6 +25,7 @@ var OrderService = (function () {
         this.searchService = searchService;
         this.ordersPath = models_1.STATIC_DATA.ordersPath;
         this.productsPath = models_1.STATIC_DATA.orderItemsPath;
+        this.totalSumField = 'totalSum';
     }
     OrderService.prototype.purgeStore = function () {
         this.storeHelper.update(this.ordersPath, []);
@@ -85,12 +87,16 @@ var OrderService = (function () {
     // Changing order info INPUT (e.g., Status, Payment type)
     OrderService.prototype.updateInfoInput = function (orderId, fieldName, value) {
         this.storeHelper.findAndUpdate(this.ordersPath, orderId, fieldName, value);
-        return this.api.put(this.ordersPath + "/" + orderId, (_a = {}, _a[fieldName] = value, _a));
+        return this.api.put(this.ordersPath + "/" + orderId, (_a = {},
+            _a[fieldName] = value,
+            _a));
         var _a;
     };
     OrderService.prototype.autocompleteInfo = function (orderId, object) {
         this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
-        return this.api.put(this.ordersPath + "/" + orderId, { customerId: object.customerId });
+        return this.api.put(this.ordersPath + "/" + orderId, {
+            customerId: object.customerId
+        });
     };
     // Manage products
     OrderService.prototype.addProduct = function (orderId) {
@@ -104,9 +110,11 @@ var OrderService = (function () {
     // Changing order item editable field (e.g., name, price)
     OrderService.prototype.updateProductField = function (orderId, productId, fieldName, value) {
         var _this = this;
-        return this.api.put("order-item/" + productId, (_a = {}, _a[fieldName] = value.replace(/^\s+|\s+$/g, ''), _a)).do(function (data) {
-            if (data) {
-                _this.storeHelper.findAndUpdate(_this.ordersPath, orderId, 'totalSum', data);
+        return this.api.put("order-item/" + productId, (_a = {},
+            _a[fieldName] = value.replace(/^\s+|\s+$/g, ''),
+            _a)).do(function (data) {
+            if (data && typeof data === 'number') {
+                _this.storeHelper.findAndUpdate(_this.ordersPath, orderId, _this.totalSumField, data);
             }
         });
         var _a;
@@ -119,17 +127,24 @@ var OrderService = (function () {
             _a[fieldName] = value,
             _a))
             .do(function (data) {
-            if (data) {
-                _this.storeHelper.findAndUpdate(_this.ordersPath, orderId, 'totalSum', data);
+            if (data && typeof data === 'number') {
+                _this.storeHelper.findAndUpdate(_this.ordersPath, orderId, _this.totalSumField, data);
             }
         });
         var _a;
     };
     OrderService.prototype.autocompleteProduct = function (orderId, productId, data) {
+        var _this = this;
         data['quantity'] = 1;
         this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, data);
         var productIdName = data.productVariationId ? 'productVariationId' : 'productId';
-        return this.api.put("order-item/" + productId, (_a = {}, _a[productIdName] = data[productIdName], _a));
+        return this.api.put("order-item/" + productId, (_a = {},
+            _a[productIdName] = data[productIdName],
+            _a)).do(function (data) {
+            if (data && typeof data === 'number') {
+                _this.storeHelper.findAndUpdate(_this.ordersPath, orderId, _this.totalSumField, data);
+            }
+        });
         var _a;
     };
     OrderService.prototype.deleteProduct = function (orderId, productId) {

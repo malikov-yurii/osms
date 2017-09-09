@@ -12,7 +12,7 @@ public class CustomerConverter {
     public static Customer createNewFromTo(CustomerDto customerDto) {
         return new Customer(null, customerDto.getCustomerFirstName(), customerDto.getCustomerLastName(),
                 customerDto.getCustomerPhoneNumber(), customerDto.getDestinationCity(),
-                customerDto.getDestinationPostOffice(), customerDto.getCustonerEmail(),
+                customerDto.getDestinationPostOffice(), customerDto.getCustomerEmail(),
                 customerDto.getCustomerNote());
     }
 
@@ -45,7 +45,7 @@ public class CustomerConverter {
             customer.setPostOffice(customerDto.getDestinationPostOffice());
         }
         if (customerDto.getCustomerPhoneNumber() != null) {
-            customer.setEmail(customerDto.getCustonerEmail());
+            customer.setEmail(customerDto.getCustomerEmail());
         }
         if (customerDto.getCustomerNote() != null) {
             customer.setNote(customerDto.getCustomerNote());

@@ -9,10 +9,12 @@ import { SearchService } from './search';
 import { Order, Product, STATIC_DATA } from '../models';
 
 
+//noinspection TsLint
 @Injectable()
 export class OrderService {
   ordersPath   : string = STATIC_DATA.ordersPath;
   productsPath : string = STATIC_DATA.orderItemsPath;
+  totalSumField: string = 'totalSum';
 
   constructor(
     private api: ApiService,
@@ -87,30 +89,25 @@ export class OrderService {
 
   // Changing order info common field (e.g., firstName, phoneNumber)
   updateInfoField(orderId, fieldName, value) {
-    return this.api.put(
-      `${this.ordersPath}/${orderId}`,
-      {
+    return this.api.put(`${this.ordersPath}/${orderId}`, {
         [fieldName]: value.replace(/^\s+|\s+$/g, '')
-      }
-    );
+      });
   }
 
   // Changing order info INPUT (e.g., Status, Payment type)
   updateInfoInput(orderId, fieldName, value) {
     this.storeHelper.findAndUpdate(this.ordersPath, orderId, fieldName, value);
 
-    return this.api.put(
-      `${this.ordersPath}/${orderId}`,
-      {[fieldName]: value}
-    );
+    return this.api.put(`${this.ordersPath}/${orderId}`, {
+      [fieldName]: value
+    });
   }
 
   autocompleteInfo(orderId, object): Observable<any> {
     this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
-    return this.api.put(
-      `${this.ordersPath}/${orderId}`,
-      {customerId: object.customerId}
-    );
+    return this.api.put(`${this.ordersPath}/${orderId}`, {
+      customerId: object.customerId
+    });
   }
 
 
@@ -131,12 +128,14 @@ export class OrderService {
 
   // Changing order item editable field (e.g., name, price)
   updateProductField(orderId, productId, fieldName, value): Observable<any> {
-    return this.api.put(
-      `order-item/${productId}`,
-      {[fieldName]: value.replace(/^\s+|\s+$/g, '')}
-    ).do(
+
+    return this.api.put(`order-item/${productId}`,{
+      [fieldName]: value.replace(/^\s+|\s+$/g, '')
+    }).do(
       data => {
-        if (data) { this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'totalSum', data); }
+        if (data && typeof data === 'number') {
+          this.storeHelper.findAndUpdate(this.ordersPath, orderId, this.totalSumField, data);
+        }
       }
     );
 
@@ -153,8 +152,8 @@ export class OrderService {
       [fieldName]: value
     })
       .do(data => {
-        if (data) {
-          this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'totalSum', data);
+        if (data && typeof data === 'number') {
+          this.storeHelper.findAndUpdate(this.ordersPath, orderId, this.totalSumField, data);
         }
       });
   }
@@ -165,10 +164,13 @@ export class OrderService {
 
     let productIdName = data.productVariationId ? 'productVariationId' : 'productId';
 
-    return this.api.put(
-      `order-item/${productId}`,
-      {[productIdName]: data[productIdName]}
-    );
+    return this.api.put(`order-item/${productId}`, {
+      [productIdName]: data[productIdName]
+    }).do(data => {
+      if (data && typeof data === 'number') {
+        this.storeHelper.findAndUpdate(this.ordersPath, orderId, this.totalSumField, data);
+      }
+    });
   }
 
   deleteProduct(orderId, productId): Observable<any> {
