@@ -34,7 +34,7 @@ export class ContenteditableModel {
   }
 
   onKeydown(e) {
-    if (e.code === 'Enter' || e.code === 'Escape') {
+    if (e.keyCode === 13 || e.keyCode === 27) { // Enter and Escape
       this.el.nativeElement.blur();
       return false;
     }

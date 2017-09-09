@@ -1,7 +1,9 @@
 package com.malikov.shopsystem.web.controller;
 
+import com.malikov.shopsystem.dto.GenericFilter;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
+import com.malikov.shopsystem.dto.OrderUpdateDto;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderStatus;
 import com.malikov.shopsystem.model.PaymentType;
@@ -24,12 +26,12 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ModelMap getFilteredPage(@RequestBody OrderFilterDto orderFilterDto,
-                                    @RequestParam("pageNumber") int pageNumber,
-                                    @RequestParam("pageCapacity") int pageCapacity) {
+    @PutMapping(value = "/filter",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ModelMap getFilteredPage(@RequestBody GenericFilter<OrderFilterDto, OrderDto> orderFilterDto) {
         ModelMap modelMap = new ModelMap();
-        Page<OrderDto> page = orderService.getFilteredPage(orderFilterDto, pageNumber, pageCapacity);;
+        Page<OrderDto> page = orderService.getFilteredPage(orderFilterDto);
         modelMap.addAttribute("totalElements", page.getTotalElements());
         modelMap.addAttribute("elements", page.getContent());
         return modelMap;
@@ -74,12 +76,11 @@ public class OrderController {
         return model;
     }
 
-
-
-    @PutMapping(value = "/{orderId}/status")
-    public void update(@PathVariable("orderId") Long orderId, @RequestBody OrderDto orderDto) {
-        orderDto.setId(orderId);
-        orderService.update(orderDto);
+    @PutMapping(value = "/{orderId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateCustomer(@PathVariable("orderId") Long orderId,
+                               @RequestBody OrderUpdateDto orderUpdateDto) {
+        orderUpdateDto.setId(orderId);
+        orderService.update(orderUpdateDto);
     }
 
 }

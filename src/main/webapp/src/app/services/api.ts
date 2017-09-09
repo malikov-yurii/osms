@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/observable/throw';
 
-import {StaticDATA} from '../models';
+import {STATIC_DATA} from '../models';
 
 var sessionTimeout;
 export const sessionTimeoutStream = new Subject();
@@ -45,9 +45,8 @@ export class ApiService {
       .do(this.updateSession);
   }
 
-  put(path: string, body: any, json: boolean = false): Observable<any> {
-    let headers = json ? this.headersJson : this.headersForm;
-    return this.http.put(path, body, {headers})
+  put(path: string, body: any): Observable<any> {
+    return this.http.put(path, body, this.headersJson)
       .map(this.checkForError)
       .catch(err => Observable.throw(err))
       .map(this.getJson)
@@ -88,7 +87,7 @@ export class ApiService {
     clearTimeout(sessionTimeout);
     sessionTimeout = setTimeout(() => {
       sessionTimeoutStream.next();
-    }, StaticDATA.sessionTime);
+    }, STATIC_DATA.sessionTime);
   }
 
 }

@@ -42,6 +42,9 @@ public class OrderFilterDto {
         this.toDateTimeCreated = toDateTimeCreated;
     }
 
+    public OrderFilterDto() {
+    }
+
     public Long getCustomerId() {
         return customerId;
     }

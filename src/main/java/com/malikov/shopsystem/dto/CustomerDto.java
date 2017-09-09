@@ -1,128 +1,127 @@
 package com.malikov.shopsystem.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.malikov.shopsystem.HasId;
 
 import java.io.Serializable;
 
 public class CustomerDto implements Serializable, HasId {
 
-    private Long id;
+    private Long customerId;
 
-    private String firstName;
+    private String customerFirstName;
 
-    private String lastName;
+    private String customerLastName;
 
-    private String phoneNumber;
+    private String customerPhoneNumber;
 
-    private String city;
+    private String destinationCity;
 
-    private String postOffice;
+    private String destinationPostOffice;
 
-    private String email;
+    private String customerEmail;
 
-    private String note;
+    private String customerNote;
 
-    public CustomerDto(@JsonProperty("id") Long id,
-                       @JsonProperty("name") String firstName,
-                       @JsonProperty("lastName") String lastName,
-                       @JsonProperty("phoneNumber") String phoneNumber,
-                       @JsonProperty("city") String city,
-                       @JsonProperty("postOffice") String postOffice,
-                       @JsonProperty("email") String email,
-                       @JsonProperty("note") String note
+    public CustomerDto(Long customerId,
+                       String customerFirstName,
+                       String customerLastName,
+                       String customerPhoneNumber,
+                       String destinationCity,
+                       String destinationPostOffice,
+                       String customerEmail,
+                       String customerNote
     ) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.city = city;
-        this.postOffice = postOffice;
-        this.email = email;
-        this.note = note;
+        this.customerId = customerId;
+        this.customerFirstName = customerFirstName;
+        this.customerLastName = customerLastName;
+        this.customerPhoneNumber = customerPhoneNumber;
+        this.destinationCity = destinationCity;
+        this.destinationPostOffice = destinationPostOffice;
+        this.customerEmail = customerEmail;
+        this.customerNote = customerNote;
     }
 
     public CustomerDto() {
     }
 
     public boolean isNew() {
-        return id == null;
+        return customerId == null;
     }
 
     public Long getId() {
-        return id;
+        return customerId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.customerId = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getCustomerFirstName() {
+        return customerFirstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setCustomerFirstName(String customerFirstName) {
+        this.customerFirstName = customerFirstName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getCustomerLastName() {
+        return customerLastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setCustomerLastName(String customerLastName) {
+        this.customerLastName = customerLastName;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getCustomerPhoneNumber() {
+        return customerPhoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setCustomerPhoneNumber(String customerPhoneNumber) {
+        this.customerPhoneNumber = customerPhoneNumber;
     }
 
-    public String getCity() {
-        return city;
+    public String getDestinationCity() {
+        return destinationCity;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setDestinationCity(String destinationCity) {
+        this.destinationCity = destinationCity;
     }
 
-    public String getPostOffice() {
-        return postOffice;
+    public String getDestinationPostOffice() {
+        return destinationPostOffice;
     }
 
-    public void setPostOffice(String postOffice) {
-        this.postOffice = postOffice;
+    public void setDestinationPostOffice(String destinationPostOffice) {
+        this.destinationPostOffice = destinationPostOffice;
     }
 
-    public String getEmail() {
-        return email;
+    public String getCustomerEmail() {
+        return customerEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
     }
 
-    public String getNote() {
-        return note;
+    public String getCustomerNote() {
+        return customerNote;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setCustomerNote(String customerNote) {
+        this.customerNote = customerNote;
     }
 
     @Override
     public String toString() {
         return "CustomerDto{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", city='" + city + '\'' +
-                ", postOffice='" + postOffice + '\'' +
-                ", email='" + email + '\'' +
+                "id=" + customerId +
+                ", firstName='" + customerFirstName + '\'' +
+                ", lastName='" + customerLastName + '\'' +
+                ", phoneNumber='" + customerPhoneNumber + '\'' +
+                ", city='" + destinationCity + '\'' +
+                ", postOffice='" + destinationPostOffice + '\'' +
+                ", email='" + customerEmail + '\'' +
                 '}';
     }
 

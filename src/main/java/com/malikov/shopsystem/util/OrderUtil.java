@@ -8,8 +8,6 @@ import com.malikov.shopsystem.model.OrderStatus;
 
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class OrderUtil {
 
@@ -31,7 +29,7 @@ public class OrderUtil {
     }
 
     public static OrderDto asTo(Order order) {
-        List<OrderItemDto> orderItemDtos = order.getOrderItems()
+        OrderItemDto[] orderItemDtos = order.getOrderItems()
                 .stream()
                 .map(oi -> new OrderItemDto(oi.getId(),
                         oi.getProduct() != null ? oi.getProduct().getId() : null,
@@ -45,12 +43,13 @@ public class OrderUtil {
                                 : " ")
                                 : ""
                 ))
-                .collect(Collectors.toList());
+                .toArray(OrderItemDto[]::new);
         return new OrderDto(order.getId(),
                 order.getCustomer() != null? order.getCustomer().getId(): 0,
                 order.getCustomerFirstName(), order.getCustomerLastName(),
                 order.getCustomerPhoneNumber(), order.getDestinationCity(),
-                order.getDestinationPostOffice(), order.getCustomer() != null ? order.getCustomer().getNote() : null,
+                order.getDestinationPostOffice(),
+                order.getCustomer() != null ? order.getCustomer().getNote() : null,
                 order.getPaymentType(), order.getDateTimeCreated(), order.getStatus(),
                 order.getComment() == null ? "" : order.getComment(),
                 order.getTotalSum() == null ? BigDecimal.ZERO : order.getTotalSum(),

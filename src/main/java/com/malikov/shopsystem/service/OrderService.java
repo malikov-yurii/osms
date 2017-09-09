@@ -1,11 +1,11 @@
 package com.malikov.shopsystem.service;
 
+import com.malikov.shopsystem.dto.GenericFilter;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
+import com.malikov.shopsystem.dto.OrderUpdateDto;
 import com.malikov.shopsystem.model.Order;
 import org.springframework.data.domain.Page;
-
-import java.util.Collection;
 
 public interface OrderService {
 
@@ -13,7 +13,7 @@ public interface OrderService {
 
     Order save(OrderDto orderDto);
 
-    void update(OrderDto orderDto);
+    void update(OrderUpdateDto orderUpdateDto);
 
     Order get(Long id);
 
@@ -21,5 +21,5 @@ public interface OrderService {
 
     Page<OrderDto> getPage(int pageNumber, int pageCapacity);
 
-    Page<OrderDto> getFilteredPage(OrderFilterDto orderFilterDto, int pageNumber, int pageCapacity);
+    Page<OrderDto> getFilteredPage(GenericFilter<OrderFilterDto, OrderDto> genericFilter);
 }

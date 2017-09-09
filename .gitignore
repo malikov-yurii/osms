@@ -3,5 +3,3 @@ target/
 /.idea/
 *.iml
 /src/node_modules
-/src/main/webapp/vendor
-/src/main/webapp/dist

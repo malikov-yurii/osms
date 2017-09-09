@@ -2,7 +2,7 @@ import { Directive, Input, Output, ViewContainerRef, ComponentFactoryResolver, C
 
 import { OrderService } from '../services/index';
 import { AutocompleteList } from '../ui/index';
-import { StaticDATA } from '../models';
+import { STATIC_DATA } from '../models';
 
 @Directive({
   selector: '[autocomplete]',
@@ -16,7 +16,6 @@ export class Autocomplete {
   @Input('autocomplete') types: string[];
   @Output('selectedAutocomplete') selected = new EventEmitter();
 
-  private fieldsToAutocomplete = StaticDATA.autocompleteBlocks;
   private term: string;
   private refreshTimer: any = undefined;
   private searchRequired: boolean = false;
@@ -33,7 +32,7 @@ export class Autocomplete {
 
 
   onKeyDown(e) {
-    if (this.fieldsToAutocomplete.indexOf(this.types[1]) > -1) {
+    if (STATIC_DATA.fieldsToAutocomplete.indexOf(this.types[1]) > -1) {
 
       if (this.listComponent) {
         switch (e.code) {
@@ -59,7 +58,7 @@ export class Autocomplete {
 
       }
 
-      if (StaticDATA.keycodesNotToAutocomplete.indexOf(e.which) === -1 ) {
+      if (STATIC_DATA.keycodesNotToAutocomplete.indexOf(e.which) === -1 ) {
         setTimeout(() => this.onKeyUp(e), 0);
       }
 
@@ -100,13 +99,13 @@ export class Autocomplete {
     this.refreshTimer = undefined;
     this.searchInProgress = true;
 
-    this.orderService.autocomplete(this.types, this.term).subscribe(
+    this.orderService.requestAutocomplete(this.types, this.term).subscribe(
       resp => {
         this.searchInProgress = false;
         if (this.searchRequired) {
           this.searchRequired = false;
           this.doSearch();
-        } else {
+        } else if (resp.length) {
           this.renderList(resp);
         }
       }

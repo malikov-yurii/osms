@@ -6,7 +6,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { App, providers, routes, KeysPipe, SearchPipe } from './app/index';
 import { Orders, Products, Customers } from './app/containers/index';
-import { Header, Order, AutocompleteList, Pagination, PopupComponent, Filter, NotyComponent } from './app/ui/index';
+import { Header, Order, AutocompleteList, Pagination, PopupComponent, Filter, FilterStatic, NotyComponent } from './app/ui/index';
 import { HotkeysDirective, Autocomplete, ContenteditableModel } from './app/directives/index';
 
 @NgModule({
@@ -26,6 +26,7 @@ import { HotkeysDirective, Autocomplete, ContenteditableModel } from './app/dire
     Pagination,
     PopupComponent,
     Filter,
+    FilterStatic,
     NotyComponent
   ],
   providers,
@@ -36,5 +37,5 @@ import { HotkeysDirective, Autocomplete, ContenteditableModel } from './app/dire
 
 export class AppModule {}
 
-// enableProdMode();
+enableProdMode();
 platformBrowserDynamic().bootstrapModule(AppModule);

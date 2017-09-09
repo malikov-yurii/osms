@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from "rxjs/Observable";
-import { Subject } from "rxjs/Subject";
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/merge';
@@ -15,34 +15,38 @@ import { OrderService } from '../services/orders';
 import { PopupService } from '../services/popup';
 import { NotyService } from '../services/noty';
 import { Store } from '../store';
-import { Order, StaticDATA } from '../models';
+import { Order, STATIC_DATA, IOrderFilter, IPageStream } from '../models';
 import { slideToLeft, appear, changeWidth } from '../ui/animations';
 
 
 @Component({
-  templateUrl: '../../../assets/templates/containers/orders.html',
-  animations: [slideToLeft(), appear(), changeWidth()],
-  host: {'[@slideToLeft]': ''},
-  providers: [PopupService]
+  templateUrl : '../../../assets/templates/containers/orders.html',
+  animations  : [slideToLeft(), appear(), changeWidth()],
+  host        : {'[@slideToLeft]': ''},
+  providers   : [PopupService]
 })
 
 export class Orders implements OnInit, OnDestroy {
-  orders$: Observable<Order[]>;
+  private orders$          : Observable<Order[]>;
 
-  private searchStream: FormControl = new FormControl();
-  searchQuery: string = '';
-  searchInputState = 'collapsed';
-  filteredOrders$: Observable<number>;
+  private searchStream     : FormControl = new FormControl();
+  private searchQuery      : string = '';
+  private searchInputState : string = 'collapsed';
+  private filteredOrders$  : Observable<number>;
 
-  totalOrders: number = 0;
-  preloadedOrders: number = 0;
-  page: number = 1;
-  pageLength: number = 10;
-  private pageStream = new Subject<{page: number, length: number, apiGet?: boolean}>();
+  private totalOrders      : number = 0;
+  private preloadedOrders  : number = 0;
+  private page             : number = 1;
+  private pageLength       : number = 10;
+  private pageStream       : Subject<IPageStream> = new Subject();
 
   private subs: Subscription[] = [];
 
-  infoBlocks = StaticDATA.infoBlocks;
+  private infoBlocks = STATIC_DATA.infoBlocks;
+
+  private showFilters: boolean = false;
+  private filterLoads: boolean = false;
+
 
   constructor(
     private store: Store,
@@ -93,7 +97,6 @@ export class Orders implements OnInit, OnDestroy {
     this.filteredOrders$ = source.pluck('filtered');
 
     this.popupService.viewContainerRef = this.viewRef;
-
   }
 
 
@@ -107,25 +110,25 @@ export class Orders implements OnInit, OnDestroy {
   onGetOrders() {
     this.subs[this.subs.length] = this.orderService
       .getOrders(this.page - 1, this.pageLength)
-      .subscribe(resp => {
-        this.totalOrders = resp.totalElements;
-      });
+      .subscribe(resp => this.totalOrders = resp.totalElements);
   }
 
   onAddOrder() {
-    this.orderService.addOrder().subscribe(({orderId, orderItemId}) => {
-      this.notyService.renderNoty(`Order № ${orderId} has been added`)
-    });
+    this.orderService.addOrder().subscribe(
+      ({orderId, orderItemId}) => this.notyService.renderNoty(`Order № ${orderId} has been added`),
+      error => this.notyService.renderNoty(error, true)
+    );
 
-    let apiGet = this.page === 1 ? false : true; // Tracing if it's needed to send http GET request for orders
+    let apiGet = this.page !== 1; // Tracing if it's needed to send http GET request for orders
     this.paginationChanged({page: 1, length: this.pageLength, apiGet});
   }
 
   onDeleteOrder(orderId) {
     if (confirm('Действительно удалить этот заказ?')) {
-      this.orderService.deleteOrder(orderId).subscribe(() => {
-        this.notyService.renderNoty(`Order № ${orderId} has been deleted`);
-      });
+      this.orderService.deleteOrder(orderId).subscribe(
+        () => this.notyService.renderNoty(`Order № ${orderId} has been deleted`),
+        error => this.notyService.renderNoty(error, true)
+      );
     }
   }
 
@@ -136,9 +139,16 @@ export class Orders implements OnInit, OnDestroy {
   }
 
 
-
-
-
+  // Manage filter
+  private onFilterSubmit(filters: IOrderFilter) {
+    this.filterLoads = true;
+    this.orderService.filterOrders(this.page, this.pageLength, filters)
+      .subscribe(
+        response => this.totalOrders = response.totalElements,
+        null,
+        () => this.filterLoads = false
+      );
+  }
 
 
 
@@ -146,19 +156,25 @@ export class Orders implements OnInit, OnDestroy {
   // Manage order info
   onUpdateInfoField(orderId, fieldName, {newValue, oldValue}) {
     this.orderService.updateInfoField(orderId, fieldName, newValue)
-      .subscribe(() => {
-        this.notyService.renderNoty(`"${oldValue}" has been changed to "${newValue}"`);
-      });
+      .subscribe(
+        () => this.notyService.renderNoty(`${oldValue} has been changed to ${newValue}`),
+        error => this.notyService.renderNoty(error, true)
+      );
   }
 
-  onUpdateInfoInput(orderId, fieldName, e) {
-    console.log(e);
-    this.orderService.updateInfoInput(orderId, fieldName, e.target.value)
-      .subscribe();
+  onUpdateInfoInput(orderId, fieldName, value) {
+    this.orderService.updateInfoInput(orderId, fieldName, value)
+      .subscribe(
+        () => this.notyService.renderNoty(`${fieldName} has been changed to ${value}`),
+        error => this.notyService.renderNoty(error, true)
+      );
   }
 
   onAutocompleteInfo(orderId, data) {
-    this.orderService.autocompleteInfo(orderId, data);
+    this.orderService.autocompleteInfo(orderId, data).subscribe(
+      () => this.notyService.renderNoty(`${data.label} has been added`),
+      error => this.notyService.renderNoty(error, true)
+    );
   }
 
 
@@ -167,27 +183,41 @@ export class Orders implements OnInit, OnDestroy {
 
   // Manage order products
   onAddProduct(orderId) {
-    this.orderService.addProduct(orderId);
+    this.orderService.addProduct(orderId).subscribe(
+      () => this.notyService.renderNoty(`Product for order ${orderId} has been added`),
+      error => this.notyService.renderNoty(error, true)
+    );
   }
 
   onUpdateProductField(orderId, productId, fieldName, {newValue, oldValue}) {
     this.orderService.updateProductField(orderId, productId, fieldName, newValue)
-      .subscribe(() => {
-        this.notyService.renderNoty(`"${oldValue}" has been changed to "${newValue}"`);
-      });
+      .subscribe(
+        () => this.notyService.renderNoty(`${oldValue} has been changed to ${newValue}`),
+        error => this.notyService.renderNoty(error, true)
+      );
   }
 
   onUpdateProductInput(orderId, productId, fieldName, value) {
-    this.orderService.updateProductInput(orderId, productId, fieldName, value);
+    this.orderService.updateProductInput(orderId, productId, fieldName, value)
+      .subscribe(
+        () => this.notyService.renderNoty(`${fieldName} has been changed to ${value}`),
+        error => this.notyService.renderNoty(error, true)
+      );
   }
 
   onAutocompleteProduct(orderId, productId, data) {
-    this.orderService.autocompleteProduct(orderId, productId, data);
+    this.orderService.autocompleteProduct(orderId, productId, data).subscribe(
+      () => this.notyService.renderNoty(`${data.label} has been added`),
+      error => this.notyService.renderNoty(error, true)
+    );
   }
 
   onDeleteProduct(id, productId) {
     if (confirm('Действительно удалить эту позицию?')) {
-      this.orderService.deleteProduct(id, productId).subscribe();
+      this.orderService.deleteProduct(id, productId).subscribe(
+        () => this.notyService.renderNoty(`Product ${productId} has been deleted`),
+        error => this.notyService.renderNoty(error, true)
+      );
     }
   }
 
@@ -196,7 +226,10 @@ export class Orders implements OnInit, OnDestroy {
   // Manage customers
   onEditCustomer(customerId) {
     this.popupService.renderPopup('Update customer').subscribe(customer => {
-      this.orderService.saveCustomer(customerId, customer).subscribe();
+      this.orderService.saveCustomer(customerId, customer).subscribe(
+        () => this.notyService.renderNoty(`Customer ${customerId} has been edited`),
+        error => this.notyService.renderNoty(error, true)
+      );
     });
     this.orderService.getCustomer(customerId).subscribe(customer => {
       this.popupService.onProvideWithFormData(customer);
@@ -204,38 +237,15 @@ export class Orders implements OnInit, OnDestroy {
   }
 
   onPersistCustomer(orderId) {
-    this.orderService.persistCustomer(orderId);
+    this.orderService.persistCustomer(orderId).subscribe(
+      () => this.notyService.renderNoty(`Customer for order ${orderId} has been saved`),
+      error => this.notyService.renderNoty(error, true)
+    );
   }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-// @TODO remove this
-  onGetAllOrders() {
-    this.orderService.getAllOrders().subscribe(resp => console.log(resp.data));
-  }
-
-  onGetStore() {
-    this.orderService.getStore();
-  }
-
-  console() {
-    console.log(this.searchStream);
-  }
-
-
-
-
+  // General functions
   hasInput(key) {
     return key === 'status' || key === 'paymentType' || key === 'quantity' ? true : false;
   }
@@ -258,6 +268,21 @@ export class Orders implements OnInit, OnDestroy {
 
   toggleAnimState() {
     this.searchInputState = this.searchInputState === 'collapsed' ? 'expanded' : 'collapsed';
+  }
+
+
+
+// @TODO remove this
+  onGetAllOrders() {
+    this.orderService.getAllOrders().subscribe(resp => console.log(resp.data));
+  }
+
+  onGetStore() {
+    this.orderService.getStore();
+  }
+
+  console() {
+    console.log(this.searchStream);
   }
 
 

@@ -6,13 +6,15 @@ import 'rxjs/add/observable/of';
 import { ApiService} from './api';
 import { StoreHelper } from './store-helper';
 import { SearchService } from './search';
-import { Order, Product } from '../models';
+import { Order, Product, STATIC_DATA } from '../models';
 
 
+//noinspection TsLint
 @Injectable()
 export class OrderService {
-  ordersPath: string = 'order';
-  productsPath: string = 'orderItemDtos';
+  ordersPath   : string = STATIC_DATA.ordersPath;
+  productsPath : string = STATIC_DATA.orderItemsPath;
+  totalSumField: string = 'totalSum';
 
   constructor(
     private api: ApiService,
@@ -24,6 +26,8 @@ export class OrderService {
     this.storeHelper.update(this.ordersPath, []);
   }
 
+
+  // Manage orders
   getOrders(start: number, length: number): Observable<any> {
     return this.api.get(`/${this.ordersPath}?pageNumber=${start}&pageCapacity=${length}`)
       .do(resp => {
@@ -31,124 +35,142 @@ export class OrderService {
       });
   }
 
-  addOrder() {
+  addOrder(): Observable<any> {
     let newOrder = new Order();
     let newOrderId = newOrder.id;
     let newOrderItemId = newOrder[this.productsPath][0].id;
     this.storeHelper.add(this.ordersPath, newOrder);
+
     return this.api.post(this.ordersPath)
-      .do(resp => {
-        this.storeHelper.findAndUpdate(this.ordersPath, newOrderId, 'id', resp.orderId);
+      .do(response => {
+        this.storeHelper.findAndUpdate(this.ordersPath, newOrderId, 'id', response.orderId);
         this.storeHelper.findDeepAndUpdate(
-          this.ordersPath, resp.orderId, this.productsPath,
-          newOrderItemId, 'id', resp.orderItemId
+          this.ordersPath, response.orderId, this.productsPath,
+          newOrderItemId, 'id', response.orderItemId
         );
       })
   }
 
-  deleteOrder(orderId) {
+  deleteOrder(orderId): Observable<any> {
     this.storeHelper.findAndDelete(this.ordersPath, orderId);
     return this.api.apiDelete(`${this.ordersPath}/${orderId}`);
   }
 
+  filterOrders(page, pageLength, filters): Observable<any> {
+    let payload = {};
 
+    for (let key in filters) {
+      if (filters[key] && filters.hasOwnProperty(key)) {
+        if (key.toLowerCase().indexOf('date') !== -1) {
+          payload[key] = `${filters[key]}T00:00:00`;
+        } else {
+          payload[key] = filters[key];
+        }
+      }
+    }
 
+    payload['paging'] = {
+      page: page - 1,
+      size: pageLength
+    };
 
-
-
-
-  updateInfoField(orderId, fieldName, value) {
-    // Changing order info common field (e.g., firstName, phoneNumber)
-
-    return this.api.put(
-      `${this.ordersPath}/${orderId}/${this.camelCaseToDash(fieldName)}`,
-      `${fieldName}=${value}`
-    );
+    return this.api.put(`/${this.ordersPath}/filter`, payload)
+      .do(response => {
+        this.storeHelper.update('order', response.elements)
+      });
   }
 
-  updateInfoInput(orderId, fieldName, value) {
-    // Changing order info INPUT (e.g., Status, Payment type)
 
+
+
+
+
+  // Manage order info
+
+  // Changing order info common field (e.g., firstName, phoneNumber)
+  updateInfoField(orderId, fieldName, value) {
+    return this.api.put(`${this.ordersPath}/${orderId}`, {
+        [fieldName]: value.replace(/^\s+|\s+$/g, '')
+      });
+  }
+
+  // Changing order info INPUT (e.g., Status, Payment type)
+  updateInfoInput(orderId, fieldName, value) {
     this.storeHelper.findAndUpdate(this.ordersPath, orderId, fieldName, value);
 
-    return this.api.put(
-      `${this.ordersPath}/${orderId}/${this.camelCaseToDash(fieldName)}`,
-      `${fieldName}=${value}`
-    );
+    return this.api.put(`${this.ordersPath}/${orderId}`, {
+      [fieldName]: value
+    });
   }
 
-  autocompleteInfo(orderId, object) {
+  autocompleteInfo(orderId, object): Observable<any> {
     this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
-    this.api.put(
-      `${this.ordersPath}/${orderId}/set-customer`,
-      `customerId=${object.customerId}`
-    ).subscribe();
+    return this.api.put(`${this.ordersPath}/${orderId}`, {
+      customerId: object.customerId
+    });
   }
 
 
 
-  addProduct(orderId) {
+  // Manage products
+  addProduct(orderId): Observable<any> {
     let newProduct = new Product();
     let newProductId = newProduct.id;
 
     this.storeHelper.findDeepAndAdd(this.ordersPath, orderId, this.productsPath, newProduct);
 
-    this.api.post(`order-item/create-empty-for/${orderId}`)
-      .subscribe(productId => {
-        this.storeHelper.findDeepAndUpdate(
+    return this.api.post(`order-item/create-empty-for/${orderId}`)
+      .do(productId => this.storeHelper.findDeepAndUpdate(
           this.ordersPath, orderId, this.productsPath,
-          newProductId, 'id', productId
-        );
-      });
+          newProductId, 'id', productId)
+      );
   }
 
-  updateProductField(orderId, productId, fieldName, value) {
-    // Changing order item editable field (e.g., name, price)
+  // Changing order item editable field (e.g., name, price)
+  updateProductField(orderId, productId, fieldName, value): Observable<any> {
 
-    return this.api.put(
-      `order-item/${productId}/${this.camelCaseToDash(fieldName)}`,
-      `${fieldName}=${value}`
-    ).do(
+    return this.api.put(`order-item/${productId}`,{
+      [fieldName]: value.replace(/^\s+|\s+$/g, '')
+    }).do(
       data => {
-        if (data) { this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'totalSum', data); }
+        if (data && typeof data === 'number') {
+          this.storeHelper.findAndUpdate(this.ordersPath, orderId, this.totalSumField, data);
+        }
       }
     );
 
   }
 
-  updateProductInput(orderId, productId, fieldName, value) {
-    // Changing order item INPUT (quantity)
-
+  // Changing order item INPUT (quantity)
+  updateProductInput(orderId, productId, fieldName, value): Observable<any> {
     this.storeHelper.findDeepAndUpdate(
       this.ordersPath, orderId, this.productsPath,
       productId, fieldName, value
     );
 
-    this.api.put(
-      `order-item/${productId}/${this.camelCaseToDash(fieldName)}`,
-      `${fieldName}=${value}`
-    ).subscribe(
-      data => {
-        if (data) { this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'totalSum', data); }
-      }
-    );
+    return this.api.put(`order-item/${productId}`, {
+      [fieldName]: value
+    })
+      .do(data => {
+        if (data && typeof data === 'number') {
+          this.storeHelper.findAndUpdate(this.ordersPath, orderId, this.totalSumField, data);
+        }
+      });
   }
 
-  autocompleteProduct(orderId, productId, data) {
+  autocompleteProduct(orderId, productId, data): Observable<any> {
     data['quantity'] = 1;
     this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, data);
 
-    if (data.productVariationId) {
-      this.api.put(
-        `order-item/${productId}`,
-        `productVariationId=${data.productVariationId}`
-      ).subscribe();
-    } else {
-      this.api.put(
-        `order-item/${productId}`,
-        `productId=${data.productId}`
-      ).subscribe();
-    }
+    let productIdName = data.productVariationId ? 'productVariationId' : 'productId';
+
+    return this.api.put(`order-item/${productId}`, {
+      [productIdName]: data[productIdName]
+    }).do(data => {
+      if (data && typeof data === 'number') {
+        this.storeHelper.findAndUpdate(this.ordersPath, orderId, this.totalSumField, data);
+      }
+    });
   }
 
   deleteProduct(orderId, productId): Observable<any> {
@@ -158,18 +180,22 @@ export class OrderService {
 
 
 
+
+  // Manage Customers
   getCustomer(customerId): Observable<any> {
     return this.api.get(`customer/${customerId}`);
   }
   saveCustomer(customerId, customerInfo): Observable<any> {
-    return this.api.put(`customer/${customerId}`, customerInfo, true);
+    return this.api.put(`customer/${customerId}`, customerInfo);
   }
-  persistCustomer(orderId) {
-    this.api.post(`customer/persist-customer-from-order/${orderId}`)
-      .subscribe(customerId => {
+  persistCustomer(orderId): Observable<any> {
+    return this.api.post(`customer/persist-customer-from-order/${orderId}`)
+      .do(customerId => {
         this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'customerId', customerId);
       });
   }
+
+
 
 
   list(searchQuery: string = '', page: number = 1, length: number = 10) {
@@ -183,14 +209,14 @@ export class OrderService {
     });
   }
 
-  autocomplete(types: string[], term: string) {
-    if (types[1] === 'lastName' || types[1] === 'firstName') {
+  requestAutocomplete(types: string[], term: string) {
+    if (types[1] === 'customerLastName' || types[1] === 'customerFirstName') {
       return this.api.get(`customer/autocomplete-by-last-name-mask/${term}`);
 
-    } else if (types[1] === 'phoneNumber') {
+    } else if (types[1] === 'customerPhoneNumber') {
       return this.api.get(`customer/autocomplete-by-phone-number-mask/${term}`);
 
-    } else if (types[1] === 'city') {
+    } else if (types[1] === 'destinationCity') {
       return this.api.get(`customer/autocomplete-by-city-mask/${term}`);
 
     } else if (types[0] === 'product') {

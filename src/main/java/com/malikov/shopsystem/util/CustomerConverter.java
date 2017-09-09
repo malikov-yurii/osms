@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 public class CustomerConverter {
 
     public static Customer createNewFromTo(CustomerDto customerDto) {
-        return new Customer(null, customerDto.getFirstName(), customerDto.getLastName(),
-                customerDto.getPhoneNumber(), customerDto.getCity(),
-                customerDto.getPostOffice(), customerDto.getEmail(),
-                customerDto.getNote());
+        return new Customer(null, customerDto.getCustomerFirstName(), customerDto.getCustomerLastName(),
+                customerDto.getCustomerPhoneNumber(), customerDto.getDestinationCity(),
+                customerDto.getDestinationPostOffice(), customerDto.getCustomerEmail(),
+                customerDto.getCustomerNote());
     }
 
     public static CustomerDto asDto(Customer customer){
@@ -29,15 +29,29 @@ public class CustomerConverter {
     }
 
     public static Customer updateFromTo(Customer customer, CustomerDto customerDto) {
-        customer.setName(customerDto.getFirstName());
-        customer.setLastName(customerDto.getLastName());
-        customer.setPhoneNumber(customerDto.getPhoneNumber());
-        customer.setCity(customerDto.getCity());
-        customer.setPostOffice(customerDto.getPostOffice());
-        customer.setEmail(customerDto.getEmail());
-        customer.setNote(customerDto.getNote());
-        return customer;
-    }
+        if (customerDto.getCustomerFirstName() != null) {
+            customer.setName(customerDto.getCustomerFirstName());
+        }
+        if (customerDto.getCustomerLastName() != null) {
+            customer.setLastName(customerDto.getCustomerLastName());
+        }
+        if (customerDto.getCustomerPhoneNumber() != null) {
+            customer.setPhoneNumber(customerDto.getCustomerPhoneNumber());
+        }
+        if (customerDto.getDestinationCity() != null) {
+            customer.setCity(customerDto.getDestinationCity());
+        }
+        if (customerDto.getDestinationPostOffice() != null) {
+            customer.setPostOffice(customerDto.getDestinationPostOffice());
+        }
+        if (customerDto.getCustomerPhoneNumber() != null) {
+            customer.setEmail(customerDto.getCustomerEmail());
+        }
+        if (customerDto.getCustomerNote() != null) {
+            customer.setNote(customerDto.getCustomerNote());
+        }
+            return customer;
+        }
 
     public static List<CustomerAutocompleteDto> CustomerAutocompleteDtoListOf(
             List<Customer> customers) {

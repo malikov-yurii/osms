@@ -1,8 +1,10 @@
 package com.malikov.shopsystem.service.impl;
 
 import com.malikov.shopsystem.DbOperation;
+import com.malikov.shopsystem.dto.GenericFilter;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
+import com.malikov.shopsystem.dto.OrderUpdateDto;
 import com.malikov.shopsystem.model.*;
 import com.malikov.shopsystem.repository.*;
 import com.malikov.shopsystem.service.OrderService;
@@ -55,9 +57,9 @@ public class OrderServiceImpl implements OrderService {
     private ProductVariationRepository productVariationRepository;
 
     @SuppressWarnings("unchecked assignments")
-    public Page<OrderDto> getFilteredPage(OrderFilterDto orderFilterDto, int pageNumber, int pageCapacity) {
-        return convertToFilteredOrderDtoPage(orderRepository.findAll(buildFilterRestrictions(orderFilterDto),
-                new PageRequest(pageNumber, pageCapacity, DESC_SORT_ORDER)));
+    public Page<OrderDto> getFilteredPage(GenericFilter<OrderFilterDto, OrderDto> filter) {
+        return convertToOrderDtoPage(orderRepository.findAll(buildFilterRestrictions(filter.getFilteringFields()),
+                new PageRequest(filter.getPaging().getPage(), filter.getPaging().getSize(), DESC_SORT_ORDER)));
     }
 
     private BooleanBuilder buildFilterRestrictions(OrderFilterDto filter) {
@@ -125,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
-    private PageImpl<OrderDto> convertToFilteredOrderDtoPage(Page<Order> page) {
+    private PageImpl<OrderDto> convertToOrderDtoPage(Page<Order> page) {
         return new PageImpl<>(
                 page.getContent().stream()
                         .map(OrderUtil::asTo)
@@ -156,43 +158,48 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void update(OrderDto orderDto) {
-        Order order = get(orderDto.getId());
-        if (order == null) {
-            throw new RuntimeException(String.format("order with id=%d not found", orderDto.getId()));
-        }
+    public void update(OrderUpdateDto orderUpdateDto) {
+        Order order = get(orderUpdateDto.getId());
+        checkOrderNotFound(order, orderUpdateDto);
 
-        setCustomerInfoToOrder(order, orderDto);
-        setPaymentType(order, orderDto.getPaymentType());
-        setNote(order, orderDto.getNote());
-        setTotalSum(order, orderDto.getTotalSum());
-
-        if (orderDto.getStatus() != null) {
-            OrderStatus oldStatus = orderDto.getStatus();
-            order.setStatus(orderDto.getStatus());
-            orderRepository.save(order);
-            updateOrderItemProductStock(order, orderDto.getStatus(), oldStatus);
-        } else {
-            orderRepository.save(order);
-        }
-
+        setCustomerInfoToOrder(order, orderUpdateDto);
+        setPaymentType(order, orderUpdateDto.getPaymentType());
+        setNote(order, orderUpdateDto.getNote());
+        setTotalSum(order, orderUpdateDto.getTotalSum());
+        setStatus(order, orderUpdateDto);
     }
 
-    private void setCustomerInfoToOrder(Order order, OrderDto orderDto) {
-        if (orderDto.getCustomerId() != null) {
-            setCustomer(order, orderDto.getCustomerId());
+    private void checkOrderNotFound(Order order, OrderUpdateDto orderUpdateDto) {
+        if (order == null) {
+            throw new RuntimeException(String.format("order with id=%d not found", orderUpdateDto.getId()));
+        }
+    }
+
+    private void setStatus(Order order, OrderUpdateDto orderUpdateDto) {
+        if (orderUpdateDto.getStatus() != null) {
+            OrderStatus oldStatus = orderUpdateDto.getStatus();
+            order.setStatus(orderUpdateDto.getStatus());
+            orderRepository.save(order);
+            updateOrderItemProductStock(order, orderUpdateDto.getStatus(), oldStatus);
         } else {
-            setCustomerFirstName(order, orderDto.getCustomerFirstName());
-            setCustomerLastName(order, orderDto.getCustomerLastName());
-            setCustomerPhoneNumber(order, orderDto.getCustomerPhoneNumber());
-            setDestinationCity(order, orderDto.getDestinationCity());
-            setDestinationPostOffice(order, orderDto.getDestinationPostOffice());
+            orderRepository.save(order);
+        }
+    }
+
+    private void setCustomerInfoToOrder(Order order, OrderUpdateDto orderUpdateDto) {
+        if (orderUpdateDto.getCustomerId() != null) {
+            setCustomer(order, orderUpdateDto.getCustomerId());
+        } else {
+            setCustomerFirstName(order, orderUpdateDto.getCustomerFirstName());
+            setCustomerLastName(order, orderUpdateDto.getCustomerLastName());
+            setCustomerPhoneNumber(order, orderUpdateDto.getCustomerPhoneNumber());
+            setDestinationCity(order, orderUpdateDto.getDestinationCity());
+            setDestinationPostOffice(order, orderUpdateDto.getDestinationPostOffice());
         }
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
     public void setCustomer(Order order, Long customerId) {
-
         Customer customer = customerRepository.findOne(customerId);
         if (customer == null) {
             throw new RuntimeException(String.format("Customer with id=%d not found", customerId));
@@ -313,7 +320,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<OrderDto> getPage(int pageNumber, int pageCapacity) {
-        return convertToFilteredOrderDtoPage(
+        return convertToOrderDtoPage(
                 orderRepository.findAll(new PageRequest(pageNumber,pageCapacity, DESC_SORT_ORDER)));
     }
 
