@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var orders_component_1 = require("./orders/orders.component");
+exports.OrdersComponent = orders_component_1.OrdersComponent;
+var products_component_1 = require("./products/products.component");
+exports.ProductsComponent = products_component_1.ProductsComponent;
+var customers_component_1 = require("./customers/customers.component");
+exports.CustomersComponent = customers_component_1.CustomersComponent;
+
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvbnRhaW5lcnMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSw4REFBNEQ7QUFBbkQsNkNBQUEsZUFBZSxDQUFBO0FBQ3hCLG9FQUFrRTtBQUF6RCxpREFBQSxpQkFBaUIsQ0FBQTtBQUMxQix1RUFBcUU7QUFBNUQsbURBQUEsa0JBQWtCLENBQUEiLCJmaWxlIjoiY29udGFpbmVycy9pbmRleC5qcyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCB7IE9yZGVyc0NvbXBvbmVudCB9IGZyb20gJy4vb3JkZXJzL29yZGVycy5jb21wb25lbnQnO1xuZXhwb3J0IHsgUHJvZHVjdHNDb21wb25lbnQgfSBmcm9tICcuL3Byb2R1Y3RzL3Byb2R1Y3RzLmNvbXBvbmVudCc7XG5leHBvcnQgeyBDdXN0b21lcnNDb21wb25lbnQgfSBmcm9tICcuL2N1c3RvbWVycy9jdXN0b21lcnMuY29tcG9uZW50JztcbiJdfQ==

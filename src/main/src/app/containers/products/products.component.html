@@ -1,0 +1,76 @@
+<div class="wrapper products-page">
+
+  <div class="service-block">
+
+    <filter-static
+      [filters]="{
+            categories: categories,
+            supplier: suppliers
+          }"
+      (filtered)="onFilterChange($event)"
+    ></filter-static>
+
+    <input type="text" name="searchStream" id=""
+           class="input search-input"
+           placeholder="Search in products..."
+           [@changeWidth]="searchExpanded"
+           #searchControl
+           [formControl]="searchStream"
+           [(ngModel)]="searchQuery"
+           (focusin)="toggleAnimState()"
+           (focusout)="toggleAnimState()"
+    >
+
+  </div>
+
+
+  <div class="table-container">
+    <table class="table table-products">
+      <thead>
+      <th class="product-cell--id numeric">ID</th>
+      <th class="product-cell--varId numeric">Variation ID</th>
+      <th class="product-cell--name">Name</th>
+      <th class="product-cell--categories">Category</th>
+      <th class="product-cell--price numeric">Price</th>
+      <th class="product-cell--quantity numeric">Quantity</th>
+      <th class="product-cell--supplier">Supplier</th>
+      </thead>
+      <tbody>
+      <tr
+        *ngFor="let product of products$ | async; let odd = odd; let even = even;"
+        [ngClass]="{'product': true, 'odd': odd, 'even': even}"
+      >
+        <ng-container
+          *ngFor="let key of product | keys:['unlimited']"
+        >
+
+          <ng-template [ngIf]="isEditable(key)">
+            <td
+              class="product-cell--{{ key }} editable"
+              contenteditable
+              [(contenteditableModel)]="product[key]"
+              (contentChanged)="onUpdateProductField(product.id, product.variationId, key, $event)"
+            ></td>
+          </ng-template>
+
+
+          <ng-template [ngIf]="!isEditable(key)">
+            <td class="product-cell--{{ key }}">
+              {{ product[key] }}
+            </td>
+          </ng-template>
+
+        </ng-container>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <pagination
+    [total]="filteredProducts$ | async"
+    [length]="pageLength"
+    [current]="page"
+    (dataChanged)="paginationChanged($event)"
+  >
+  </pagination>
+</div>

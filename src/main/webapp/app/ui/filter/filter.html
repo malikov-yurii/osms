@@ -1,0 +1,39 @@
+<div [@appear] class="filter-container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit($event)" class="filter__form">
+    <div
+      class="filter filter__block"
+      *ngFor="let filter of filters"
+    >
+      <div class="filter__label">
+        {{ filter.label }} :
+      </div>
+
+      <ng-container [ngSwitch]="filter.type">
+        <input *ngSwitchCase="'text'" type="text" class="input filter__input" formControlName="{{filter.code}}">
+
+        <input *ngSwitchCase="'date'" type="date" class="input filter__input" formControlName="{{filter.code}}">
+
+        <select
+          *ngSwitchCase="'select'"
+          formControlName="{{ filter.code }}"
+          class="filter__select input"
+        >
+          <option value="" selected>- Show all -</option>
+          <option
+            *ngFor="let option of filters[filter]"
+            value="{{ option }}"
+          >
+            {{ option }}
+          </option>
+        </select>
+
+      </ng-container>
+
+    </div>
+
+    <button type="submit" class="btn filter__block filter__submit">Submit</button>
+  </form>
+  <div *ngIf="loads" [@fadeInOut] class="filter-overlay">
+    <img class="filter-overlay__image" src="/assets/images/loading.svg" alt="">
+  </div>
+</div>

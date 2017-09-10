@@ -28,11 +28,6 @@ public class RootController {
         return "/index.html";
     }
 
-//    @GetMapping("/users")
-//    public String users() {
-//        return "users";
-//    }
-
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(ModelMap model,
                         @RequestParam(value = "error", required = false) boolean error,
@@ -41,19 +36,4 @@ public class RootController {
         model.put("message", message);
         return "/WEB-INF/jsp/login.jsp";
     }
-
-//    @GetMapping("/products")
-//    public String products() {
-//        return "products";
-//    }
-//
-//    @GetMapping("/orders")
-//    public String orders() {
-//        return "orders";
-//    }
-//
-//    @GetMapping("/customers")
-//    public String customers() {
-//        return "customers";
-//    }
 }
