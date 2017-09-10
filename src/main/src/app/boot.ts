@@ -1,14 +1,16 @@
-import { NgModule, enableProdMode } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { NgModule, enableProdMode, LOCALE_ID } from '@angular/core';
+import { platformBrowser, BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { App, providers, routes, KeysPipe, SearchPipe } from './index';
+import { App, routes, KeysPipe, SearchPipe, Store } from './index';
 import { OrdersComponent, ProductsComponent, CustomersComponent } from './containers/index';
 import { Header, AutocompleteList, Pagination, PopupComponent, Filter, FilterStatic, NotyComponent } from './ui/index';
 import { HotkeysDirective, Autocomplete, ContenteditableModel } from './directives/index';
-import { environment } from './environment';
+import { ApiService, CustomerService, NotyService, OrderService, ProductService, SearchService, StoreHelper} from './services/index';
+
+import { AppModuleNgFactory } from '../aot/src/main/src/app/boot.ngfactory';
+
 
 @NgModule({
   declarations: [
@@ -29,7 +31,17 @@ import { environment } from './environment';
     FilterStatic,
     NotyComponent
   ],
-  providers,
+  providers: [
+    { provide: LOCALE_ID, useValue: "ru-RU" },
+    Store,
+    ApiService,
+    CustomerService,
+    NotyService,
+    OrderService,
+    ProductService,
+    SearchService,
+    StoreHelper
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -44,7 +56,5 @@ import { environment } from './environment';
 
 export class AppModule {}
 
-if (environment.production) {
-  enableProdMode();
-}
-platformBrowserDynamic().bootstrapModule(AppModule);
+enableProdMode();
+platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);

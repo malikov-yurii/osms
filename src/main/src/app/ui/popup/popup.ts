@@ -36,11 +36,11 @@ import { Subject } from 'rxjs/Subject';
   ],
 })
 export class PopupComponent {
-  private data = {};
-  private form: FormGroup;
-  private hasData: boolean = false;
-  private hasFormData: boolean = false;
-  private animationState: string = 'idle';
+  public data = {};
+  public form: FormGroup;
+  public hasData: boolean = false;
+  public hasFormData: boolean = false;
+  public animationState: string = 'idle';
   public header: string = 'Popup header';
   public destroyedStream = new Subject();
   public submittedStream = new Subject();

@@ -28,25 +28,27 @@ import { slideToLeft, appear, changeWidth } from '../../ui/animations';
 })
 
 export class OrdersComponent implements OnInit, OnDestroy {
-  private orders$          : Observable<Order[]>;
+  public orders$          : Observable<Order[]>;
 
-  private searchStream     : FormControl = new FormControl();
-  private searchQuery      : string = '';
-  private searchInputState : string = 'collapsed';
-  private filteredOrders$  : Observable<number>;
+  public searchStream     : FormControl = new FormControl();
+  public searchQuery      : string = '';
+  public searchInputState : string = 'collapsed';
+  public filteredOrders$  : Observable<number>;
 
-  private totalOrders      : number = 0;
-  private preloadedOrders  : number = 0;
-  private page             : number = 1;
-  private pageLength       : number = 10;
-  private pageStream       : Subject<IPageStream> = new Subject();
+  public totalOrders      : number = 0;
+  public preloadedOrders  : number = 0;
+  public page             : number = 1;
+  public pageLength       : number = 10;
+  public pageStream       : Subject<IPageStream> = new Subject();
 
-  private subs: Subscription[] = [];
+  public subs: Subscription[] = [];
 
-  private infoBlocks = STATIC_DATA.infoBlocks;
+  public infoBlocks = STATIC_DATA.infoBlocks;
 
-  private showFilters: boolean = false;
-  private filterLoads: boolean = false;
+  public showFilters: boolean = false;
+  public filterLoads: boolean = false;
+
+  public showSuppliers: boolean = false;
 
 
   constructor(

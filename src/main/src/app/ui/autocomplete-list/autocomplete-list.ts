@@ -16,7 +16,7 @@ export class AutocompleteList implements OnInit {
   public focusMoved = new Subject();
   public selectedStream = new Subject();
   public selectedSource;
-  private selectedIndex: number = 0;
+  public selectedIndex: number = 0;
 
   public styleTop;
   public styleLeft;

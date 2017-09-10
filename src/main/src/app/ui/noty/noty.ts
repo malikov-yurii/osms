@@ -37,8 +37,8 @@ export class NotyComponent {
   public destroyedStream: Subject<any>;
   public message: string;
   public isError: boolean;
-  private animationState: string;
-  private destroyTimeout;
+  public animationState: string;
+  public destroyTimeout;
 
   constructor() {
     this.destroyedStream = new Subject();
@@ -49,7 +49,7 @@ export class NotyComponent {
     this.destroy();
   }
 
-  private onAnimationDone(e) {
+  public onAnimationDone(e) {
     if (e.toState === 'destroyed') {
       this.destroyedStream.next();
     }

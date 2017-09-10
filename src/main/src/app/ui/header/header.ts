@@ -5,12 +5,12 @@ import { fadeInOut } from '../animations';
 @Component({
   moduleId: module.id,
   selector: 'nav-header',
-  templateUrl: '/app/ui/header/header.html',
-  styleUrls: ['./header.css'],
+  templateUrl: 'header.html',
+  styleUrls: ['header.css'],
   animations: [fadeInOut({paramsVoid: 'collapsed', paramsAny: 'expanded'})]
 })
 export class Header {
-  private menuState: string;
+  public menuState: string;
 
   constructor() {
     this.menuState = 'collapsed';

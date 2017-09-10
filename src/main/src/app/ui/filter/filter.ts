@@ -12,7 +12,7 @@ import { appear, fadeInOut } from '../animations';
   animations: [appear(), fadeInOut()]
 })
 export class Filter implements OnChanges {
-  private form: FormGroup;
+  public form: FormGroup;
 
   @Input()  filters       : {code: string; label: string; type: string; value?: any}[];
   @Input()  loads         : boolean;
@@ -21,6 +21,7 @@ export class Filter implements OnChanges {
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({});
   }
+
 
   ngOnChanges() {
     let filters = {};

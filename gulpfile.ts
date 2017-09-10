@@ -30,7 +30,7 @@ gulp.task('html-index:prod', () => {
     .pipe(gulp.dest(buildDirectory));
 });
 
-gulp.task('html', () => {
+gulp.task('templates', () => {
   return gulp.src(`${srcDirectory}/app/**/*.html`, {base: srcDirectory})
     .pipe(gulp.dest(buildDirectory));
 });
@@ -56,7 +56,8 @@ gulp.task('web-inf', () => gulp.src(`${srcDirectory}/WEB-INF/**`, {base: srcDire
 );
 
 
-// Transpile typescript files
+// Handle TypeScript files
+// Lint
 gulp.task('tslint', () => {
   return gulp.src(`${srcDirectory}/app/**/*.ts`)
     .pipe(tslint({
@@ -65,8 +66,12 @@ gulp.task('tslint', () => {
     .pipe(tslint.report());
 });
 
+// Transpile
 gulp.task('ts', () => {
-  return gulp.src(`${srcDirectory}/app/**/*.ts`)
+  return gulp.src([
+    `${srcDirectory}/app/**/*.ts`,
+    `!${srcDirectory}/app/boot.ts`
+    ])
     .pipe(sourcemaps.init())
     .pipe(tsProject())
     .js
@@ -89,13 +94,6 @@ gulp.task('js:libs', () => {
     .pipe(gulp.dest(`${buildDirectory}/app/vendor`));
 });
 
-gulp.task('systemjs-lib', () => {
-  return gulp.src(`${srcDirectory}/systemjs.config.ts`)
-    .pipe(tsProject())
-    .js
-    .pipe(gulp.dest(buildDirectory));
-});
-
 // Bundle polyfills
 gulp.task('js:polyfills', () => {
   return gulp.src([
@@ -106,17 +104,6 @@ gulp.task('js:polyfills', () => {
     ])
     .pipe(concat('polyfills.js'))
     .pipe(gulp.dest(buildDirectory));
-});
-
-
-// Set environment
-gulp.task('set-environment:dev', ['html-index:dev', 'systemjs-lib'], () => {
-  return gulp.src(`${srcDirectory}/environment.ts`)
-    .pipe(rename('environment.ts'))
-    .pipe(replace('"valueToReplace"', match => false))
-    .pipe(tsProject())
-    .js
-    .pipe(gulp.dest(`${buildDirectory}/app`));
 });
 
 
@@ -154,6 +141,10 @@ gulp.task('watch', () => {
 
 });
 
-gulp.task('build', ['html', 'css', 'ts', 'web-inf', 'js:libs', 'js:polyfills']);
+gulp.task('resources', ['css', 'images', 'web-inf', 'js:polyfills']);
 
-gulp.task('build-dev', sync.sync(['clean', 'build', 'set-environment:dev']));
+gulp.task('build', ['resources', 'templates', 'ts', 'js:libs']);
+
+gulp.task('build-dev',  sync.sync(['clean', 'html-index:dev', 'build']));
+
+gulp.task('build-prod', sync.sync(['clean', 'html-index:prod', 'resources']));

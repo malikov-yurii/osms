@@ -24,19 +24,19 @@ import { slideToLeft, changeWidth } from '../../ui/animations';
 })
 export class CustomersComponent implements OnInit, OnDestroy {
 
-  private customers$: Observable<any[]>;
-  private filteredCustomers$: Observable<number>;
+  public customers$: Observable<any[]>;
+  public filteredCustomers$: Observable<number>;
 
-  private searchStream: FormControl = new FormControl();
+  public searchStream: FormControl = new FormControl();
   searchQuery: string = '';
 
-  private pageStream = new Subject<{page: number, length: number}>();
+  public pageStream = new Subject<{page: number, length: number}>();
   page: number = 1;
   pageLength: number = 10;
 
-  private subs: Subscription[] = [];
+  public subs: Subscription[] = [];
 
-  private searchExpanded = 'collapsed';
+  public searchExpanded = 'collapsed';
 
   constructor(
     private customerService: CustomerService,

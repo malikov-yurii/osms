@@ -24,25 +24,25 @@ import { slideToLeft, changeWidth } from '../../ui/animations';
 })
 export class ProductsComponent implements OnInit, OnDestroy {
 
-  private products$: Observable<Product[]>;
-  private totalProducts: any;
-  private filteredProducts$: Observable<number>;
+  public products$: Observable<Product[]>;
+  public totalProducts: any;
+  public filteredProducts$: Observable<number>;
 
-  private searchStream: FormControl = new FormControl();
+  public searchStream: FormControl = new FormControl();
   searchQuery: string = '';
 
-  private pageStream = new Subject<{page: number, length: number}>();
+  public pageStream = new Subject<{page: number, length: number}>();
   page: number = 1;
   pageLength: number = 10;
 
-  private filterStream = new Subject<any>();
-  private filterData = {supplier: '', categories: ''};
+  public filterStream = new Subject<any>();
+  public filterData = {supplier: '', categories: ''};
 
-  private subs: Subscription[] = [];
-  private categories: string[] = [''];
-  private suppliers: string[] = [''];
+  public subs: Subscription[] = [];
+  public categories: string[] = [''];
+  public suppliers: string[] = [''];
 
-  private searchExpanded = 'collapsed';
+  public searchExpanded = 'collapsed';
 
   constructor(
     private productService: ProductService,

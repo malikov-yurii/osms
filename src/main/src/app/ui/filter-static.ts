@@ -66,7 +66,7 @@ export class FilterStatic implements OnChanges {
   @Input() filters: {any};
   @Output() filtered = new EventEmitter<{any}>();
 
-  private form: FormGroup;
+  public form: FormGroup;
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({});

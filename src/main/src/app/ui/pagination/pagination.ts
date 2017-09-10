@@ -11,11 +11,11 @@ export class Pagination implements OnInit, OnChanges {
   @Input('total') totalItems: number = 0;
   @Input('length') pageLength: number = 10;
   @Input('current') currentParentPage: number = 1;
-  private currentPageNumber: number;
-  private currentPageStream = new BehaviorSubject<number>(1);
-  private lastPage: number;
-  private pages: number[];
-  private pagesToDisplay: number = 3;
+  public currentPageNumber: number;
+  public currentPageStream = new BehaviorSubject<number>(1);
+  public lastPage: number;
+  public pages: number[];
+  public pagesToDisplay: number = 3;
   @Output() dataChanged = new EventEmitter<{page: number, length: number}>();
   @Output() lengthChanged = new EventEmitter<number>();
 
