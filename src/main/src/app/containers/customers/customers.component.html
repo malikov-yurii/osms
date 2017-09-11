@@ -1,0 +1,48 @@
+<div class="wrapper customers-page">
+
+  <div class="service-block">
+    <input type="text" name="searchStream" id=""
+           class="input customers-search pull-right"
+           placeholder="Search in customers..."
+           [@changeWidth]="searchExpanded"
+           [formControl]="searchStream"
+           [(ngModel)]="searchQuery"
+           (focusin)="toggleAnimState()"
+           (focusout)="toggleAnimState()"
+    >
+  </div>
+
+  <div class="table-container">
+    <table class="table table-customers">
+      <thead>
+      <th class="headcell headcell--id">ID</th>
+      <th class="headcell headcell--name">Name</th>
+      <th class="headcell headcell--lastName">Last name</th>
+      <th class="headcell headcell--phone">Phone</th>
+      <th class="headcell headcell--city">City</th>
+      <th class="headcell headcell--post">Post</th>
+      <th class="headcell headcell--email">Email</th>
+      <th class="headcell headcell--comment">Comment</th>
+      </thead>
+      <tbody>
+      <tr
+        *ngFor="let customer of customers$ | async"
+      >
+        <td
+          *ngFor="let key of customer | keys"
+        >
+          {{ customer[key] }}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <pagination
+    [total]="filteredCustomers$ | async"
+    [length]="pageLength"
+    [current]="page"
+    (dataChanged)="paginationChanged($event)"
+  >
+  </pagination>
+</div>

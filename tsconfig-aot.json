@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "module": "es2015",
+    "target": "es5",
+    "sourceMap": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "types": [
+      "node",
+      "core-js"
+    ],
+    "lib": [
+      "dom",
+      "es6"
+    ]
+  },
+  "include": [
+    "src/main/src/app/**/*.ts"
+  ],
+  "exclude": [
+    "src/main/src/app/boot-jit.ts",
+    "node_modules"
+  ],
+  "compileOnSave": false,
+  "buildOnSave": false,
+
+  "angularCompilerOptions": {
+    "genDir": "src/main/src/aot",
+    "skipMetadataEmit" : true
+  }
+}
