@@ -128,15 +128,15 @@ gulp.task('update:ts', ['ts'], () => {
 gulp.task('watch', () => {
 
   gulp.watch([`${srcDirectory}/**/*.html`], ['update:html']).on('change', e => {
-    console.log(`HTML ${e.path.slice(e.path.indexOf('main\\src') + 9)} has been ${e.type}. Copying...`);
+    console.log(`HTML ${e.path.slice(e.path.indexOf('app'))} has been ${e.type}. Copying...`);
   });
 
   gulp.watch([`${srcDirectory}/**/*.css`], ['update:css']).on('change', e => {
-    console.log(`CSS ${e.path.slice(e.path.indexOf('main\\src') + 9)} has been ${e.type}. Copying...`);
+    console.log(`CSS ${e.path.slice(e.path.indexOf('app'))} has been ${e.type}. Copying...`);
   });
 
   gulp.watch([`${srcDirectory}/**/*.ts`], ['update:ts']).on('change', e => {
-    console.log(`TypeScript ${e.path.slice(e.path.indexOf('main\\src') + 9)} has been ${e.type}. Compiling...`);
+    console.log(`TypeScript ${e.path.slice(e.path.indexOf('app'))} has been ${e.type}. Compiling...`);
   });
 
 });
