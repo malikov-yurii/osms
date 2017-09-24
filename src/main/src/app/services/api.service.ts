@@ -45,6 +45,14 @@ export class ApiService {
       .do(this.updateSession);
   }
 
+  postBody(path: string, body: any): Observable<any> {
+    return this.http.post(path, body, {headers: this.headersJson})
+      .map(this.checkForError)
+      .catch(err => Observable.throw(err))
+      .map(this.getJson)
+      .do(this.updateSession);
+  }
+
   put(path: string, body: any): Observable<any> {
     return this.http.put(path, body, {headers: this.headersJson})
       .map(this.checkForError)

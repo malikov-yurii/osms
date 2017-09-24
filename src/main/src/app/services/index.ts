@@ -5,3 +5,4 @@ export { SearchService } from './search.service';
 export { ProductService } from './products.service';
 export { CustomerService } from './customers.service';
 export { NotyService } from './noty.service';
+export { PoshtaService } from './poshta.service';

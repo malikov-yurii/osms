@@ -28,6 +28,11 @@ public class RootController {
         return "/index.html";
     }
 
+    @GetMapping("/poshta")
+    public String poshta() {
+        return "/index.html";
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(ModelMap model,
                         @RequestParam(value = "error", required = false) boolean error,

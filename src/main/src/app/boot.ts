@@ -1,15 +1,32 @@
-import { NgModule, enableProdMode, LOCALE_ID } from '@angular/core';
-import { platformBrowser, BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpModule } from '@angular/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { App, routes, KeysPipe, SearchPipe, Store } from './index';
-import { OrdersComponent, ProductsComponent, CustomersComponent } from './containers/index';
-import { Header, AutocompleteList, Pagination, PopupComponent, Filter, FilterStatic, NotyComponent } from './ui/index';
-import { HotkeysDirective, Autocomplete, ContenteditableModel } from './directives/index';
-import { ApiService, CustomerService, NotyService, OrderService, ProductService, SearchService, StoreHelper} from './services/index';
+import { NgModule, enableProdMode, LOCALE_ID }    from '@angular/core';
+import { platformBrowser, BrowserModule }         from '@angular/platform-browser';
+import { BrowserAnimationsModule }                from '@angular/platform-browser/animations';
+import { HttpModule }                             from '@angular/http';
+import { FormsModule, ReactiveFormsModule }       from '@angular/forms';
+import {
+  App, routes, KeysPipe,
+  SearchPipe, Store
+}                                                 from './index';
+import {
+  OrdersComponent, ProductsComponent,
+  CustomersComponent, PoshtaComponent
+}                                                 from './containers/index';
+import {
+  Header, AutocompleteList, Pagination,
+  PopupComponent, Filter, FilterStatic,
+  NotyComponent
+}                                                 from './ui/index';
+import {
+  HotkeysDirective, Autocomplete,
+  ContenteditableModel
+}                                                 from './directives/index';
+import {
+  ApiService, CustomerService, NotyService,
+  OrderService, ProductService, SearchService,
+  StoreHelper, PoshtaService
+}                                                 from './services/index';
 
-import { AppModuleNgFactory } from '../aot/src/main/src/app/boot.ngfactory';
+import { AppModuleNgFactory }                     from '../aot/src/main/src/app/boot.ngfactory';
 
 
 @NgModule({
@@ -19,6 +36,7 @@ import { AppModuleNgFactory } from '../aot/src/main/src/app/boot.ngfactory';
     OrdersComponent,
     ProductsComponent,
     CustomersComponent,
+    PoshtaComponent,
     KeysPipe,
     SearchPipe,
     HotkeysDirective,
@@ -40,6 +58,7 @@ import { AppModuleNgFactory } from '../aot/src/main/src/app/boot.ngfactory';
     OrderService,
     ProductService,
     SearchService,
+    PoshtaService,
     StoreHelper
   ],
   imports: [

@@ -1,13 +1,11 @@
-import { RouterModule } from '@angular/router';
-import { ModuleWithProviders } from '@angular/core';
-import { OrdersComponent, ProductsComponent, CustomersComponent } from './containers/index';
+import { RouterModule }          from '@angular/router';
+import { ModuleWithProviders }   from '@angular/core';
+import {
+  OrdersComponent, ProductsComponent,
+  CustomersComponent, PoshtaComponent
+}                                from './containers/index';
 
 export const routes: ModuleWithProviders = RouterModule.forRoot([
-  // {
-  //   path: '',
-  //   redirectTo: '/orders',
-  //   pathMatch: 'full'
-  // },
   {
     path: '',
     component: OrdersComponent
@@ -19,5 +17,9 @@ export const routes: ModuleWithProviders = RouterModule.forRoot([
   {
     path: 'customers',
     component: CustomersComponent
+  },
+  {
+    path: 'poshta',
+    component: PoshtaComponent
   }
 ]);
