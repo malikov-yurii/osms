@@ -1,6 +1,6 @@
 package com.malikov.shopsystem.service.impl;
 
-import com.malikov.shopsystem.DbOperation;
+import com.malikov.shopsystem.enumtype.DbOperation;
 import com.malikov.shopsystem.dto.GenericFilter;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
@@ -29,8 +29,8 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
-import static com.malikov.shopsystem.DbOperation.DECREASE_IN_STOCK;
-import static com.malikov.shopsystem.DbOperation.INCREASE_IN_STOCK;
+import static com.malikov.shopsystem.enumtype.DbOperation.DECREASE_IN_STOCK;
+import static com.malikov.shopsystem.enumtype.DbOperation.INCREASE_IN_STOCK;
 import static com.malikov.shopsystem.util.OrderStatusUtil.isWithdrawalStatus;
 
 @Service

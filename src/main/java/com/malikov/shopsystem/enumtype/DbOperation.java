@@ -1,4 +1,4 @@
-package com.malikov.shopsystem;
+package com.malikov.shopsystem.enumtype;
 
 /**
  * @author Yurii Malikov
