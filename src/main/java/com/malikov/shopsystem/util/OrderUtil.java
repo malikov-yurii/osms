@@ -4,7 +4,7 @@ import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderItemDto;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderItem;
-import com.malikov.shopsystem.model.OrderStatus;
+import com.malikov.shopsystem.enumtype.OrderStatus;
 
 import java.math.BigDecimal;
 import java.util.Collection;

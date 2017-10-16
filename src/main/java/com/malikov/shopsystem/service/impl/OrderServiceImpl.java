@@ -5,6 +5,8 @@ import com.malikov.shopsystem.dto.GenericFilter;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
 import com.malikov.shopsystem.dto.OrderUpdateDto;
+import com.malikov.shopsystem.enumtype.OrderStatus;
+import com.malikov.shopsystem.enumtype.PaymentType;
 import com.malikov.shopsystem.model.*;
 import com.malikov.shopsystem.repository.*;
 import com.malikov.shopsystem.service.OrderService;

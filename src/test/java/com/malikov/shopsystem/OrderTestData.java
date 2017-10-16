@@ -3,8 +3,8 @@ package com.malikov.shopsystem;
 import com.malikov.shopsystem.matcher.ModelMatcher;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderItem;
-import com.malikov.shopsystem.model.OrderStatus;
-import com.malikov.shopsystem.model.PaymentType;
+import com.malikov.shopsystem.enumtype.OrderStatus;
+import com.malikov.shopsystem.enumtype.PaymentType;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;

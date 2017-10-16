@@ -1,7 +1,7 @@
 package com.malikov.shopsystem.util;
 
 import com.malikov.shopsystem.dto.UserDto;
-import com.malikov.shopsystem.model.Role;
+import com.malikov.shopsystem.enumtype.Role;
 import com.malikov.shopsystem.model.User;
 
 public class UserUtil {

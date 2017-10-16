@@ -1,7 +1,7 @@
 package com.malikov.shopsystem;
 
 import com.malikov.shopsystem.matcher.ModelMatcher;
-import com.malikov.shopsystem.model.Role;
+import com.malikov.shopsystem.enumtype.Role;
 import com.malikov.shopsystem.model.User;
 
 import java.util.Objects;
