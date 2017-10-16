@@ -22,8 +22,6 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.malikov.shopsystem.util.OrderStatusUtil.isWithdrawalStatus;
-
 @Service
 @Transactional(readOnly = true)
 public class OrderItemServiceImpl implements OrderItemService {
@@ -32,15 +30,14 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Autowired
     private OrderItemRepository orderItemRepository;
-
     @Autowired
     private OrderRepository orderRepository;
-
     @Autowired
     private ProductRepository productRepository;
-
     @Autowired
     private ProductVariationRepository productVariationRepository;
+    @Autowired
+    private UpdateStockService updateStockService;
 
     @Override
     @Transactional
@@ -63,7 +60,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         }
 
         boolean isPriceOrQuantityUpdated = setPrice(orderItemDto, orderItem)
-                || setQuantityAndUpdateInDb(orderItemDto, orderItem);
+                || setQuantityAndUpdateStock(orderItemDto, orderItem);
 
         if (isNameUpdated || isPriceOrQuantityUpdated || isProductOrProductVariationUpdated) {
             orderItemRepository.save(orderItem);
@@ -78,15 +75,10 @@ public class OrderItemServiceImpl implements OrderItemService {
         if (orderItemDto.getProductId() == null) {
             return false;
         }
-
-        returnToStockPreviousProducts(orderItem);
-
+        returnToStockPreviousProduct(orderItem);
         Product newProduct = productRepository.findOne(orderItemDto.getProductId());
-
         setProductForOrderItem(orderItem, newProduct);
-
-        decreaseQuantityInDb(orderItem, newProduct);
-
+        updateStockService.updateStock(orderItem, (-1) * NEW_PRODUCT_QUANTITY);
         orderItem.setProductQuantity(NEW_PRODUCT_QUANTITY);
         return true;
     }
@@ -95,43 +87,17 @@ public class OrderItemServiceImpl implements OrderItemService {
         if (orderItemDto.getProductVariationId() == null) {
             return false;
         }
-
-        returnToStockPreviousProducts(orderItem);
-
+        returnToStockPreviousProduct(orderItem);
         ProductVariation newProductVariation = productVariationRepository.findOne(orderItemDto.getProductVariationId());
-
         setProductVariationForOrderItem(orderItem, newProductVariation);
-
-        decreaseQuantityInDb(orderItem, newProductVariation);
+        updateStockService.updateStock(orderItem, (-1) * NEW_PRODUCT_QUANTITY);
 
         orderItem.setProductQuantity(NEW_PRODUCT_QUANTITY);
         return true;
     }
 
-    private void returnToStockPreviousProducts(OrderItem orderItem) {
-        if (orderItem.getProductVariation() != null) {
-            ProductVariation oldProductVariation = orderItem.getProductVariation();
-            oldProductVariation.setQuantity(oldProductVariation.getQuantity() + orderItem.getProductQuantity());
-            productVariationRepository.save(oldProductVariation);
-        } else if (orderItem.getProduct() != null) {
-            Product oldProduct = orderItem.getProduct();
-            oldProduct.setQuantity(oldProduct.getQuantity() + orderItem.getProductQuantity());
-            productRepository.save(oldProduct);
-        }
-    }
-
-    private void decreaseQuantityInDb(OrderItem orderItem, Product newProduct) {
-        if (isWithdrawalStatus(orderItem.getOrder().getStatus())) {
-            newProduct.setQuantity(newProduct.getQuantity() - NEW_PRODUCT_QUANTITY);
-            productRepository.save(newProduct);
-        }
-    }
-
-    private void decreaseQuantityInDb(OrderItem orderItem, ProductVariation newProductVariation) {
-        if (isWithdrawalStatus(orderItem.getOrder().getStatus())) {
-            newProductVariation.setQuantity(newProductVariation.getQuantity() - NEW_PRODUCT_QUANTITY);
-            productVariationRepository.save(newProductVariation);
-        }
+    private void returnToStockPreviousProduct(OrderItem orderItem) {
+        updateStockService.updateStock(orderItem, orderItem.getProductQuantity());
     }
 
     private void setProductVariationForOrderItem(OrderItem orderItem, ProductVariation newProductVariation) {
@@ -164,32 +130,15 @@ public class OrderItemServiceImpl implements OrderItemService {
         return true;
     }
 
-    private boolean setQuantityAndUpdateInDb(OrderItemDto orderItemDto, OrderItem orderItem) {
+    private boolean setQuantityAndUpdateStock(OrderItemDto orderItemDto, OrderItem orderItem) {
         if (orderItemDto.getQuantity() == null) {
             return false;
         }
-
-        final int quantityDelta = orderItemDto.getQuantity() - orderItem.getProductQuantity();
+        updateStockService.updateStock(orderItem, orderItem.getProductQuantity() - orderItemDto.getQuantity());
         orderItem.setProductQuantity(orderItemDto.getQuantity());
         orderItemRepository.save(orderItem);
 
-        if (isWithdrawalStatus(orderItem.getOrder().getStatus())) {
-            updateProductQuantityInDb(orderItem, quantityDelta);
-        }
-
         return true;
-    }
-
-    private void updateProductQuantityInDb(OrderItem orderItem, int quantityDelta) {
-        if (orderItem.getProductVariation() != null) {
-            ProductVariation productVariation = orderItem.getProductVariation();
-            productVariation.setQuantity(productVariation.getQuantity() - quantityDelta);
-            productVariationRepository.save(productVariation);
-        } else if (orderItem.getProduct() != null) {
-            Product product = orderItem.getProduct();
-            product.setQuantity(product.getQuantity() - quantityDelta);
-            productRepository.save(product);
-        }
     }
 
     private BigDecimal recalculateAndUpdateTotalSum(OrderItem orderItem) {
@@ -210,13 +159,8 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Transactional
     public BigDecimal delete(Long orderItemId) {
         OrderItem orderItem = get(orderItemId);
-        Order order = orderItem.getOrder();
-
-        if (isWithdrawalStatus(order.getStatus())) {
-            returnToStockPreviousProducts(orderItem);
-        }
-
-        order.getOrderItems().remove(orderItem);
+        returnToStockPreviousProduct(orderItem);
+        orderItem.getOrder().getOrderItems().remove(orderItem);
         orderItemRepository.delete(orderItem);
 
         return recalculateAndUpdateTotalSum(orderItem);

@@ -43,19 +43,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private CustomerRepository customerRepository;
-
     @Autowired
     private ProductRepository productRepository;
-
     @Autowired
     private ProductVariationRepository productVariationRepository;
-
     @Autowired
     private UpdateStockService updateStockService;
 
@@ -178,7 +173,7 @@ public class OrderServiceImpl implements OrderService {
 
     private void updateOrderStatus(Order order, OrderStatus newStatus) {
         if (nonNull(newStatus)) {
-            updateStockService.updateStock(order, newStatus);
+            updateStockService.updateStockDependingOnNewStatus(order, newStatus);
             order.setStatus(newStatus);
             orderRepository.save(order);
         } else {
@@ -259,7 +254,6 @@ public class OrderServiceImpl implements OrderService {
             order.setTotalSum(totalSum);
         }
     }
-
 
     @Override
     public Page<OrderDto> getPage(int pageNumber, int pageCapacity) {
