@@ -5,5 +5,5 @@ package com.malikov.shopsystem.enumtype;
  */
 public enum DbOperation {
 
-    INCREASE_IN_STOCK, DECREASE_IN_STOCK
+    INCREASE_STOCK, DECREASE_STOCK
 }

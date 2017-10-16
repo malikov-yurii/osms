@@ -77,7 +77,7 @@ public class OrderController {
     }
 
     @PutMapping(value = "/{orderId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateCustomer(@PathVariable("orderId") Long orderId,
+    public void updateOrder(@PathVariable("orderId") Long orderId,
                                @RequestBody OrderUpdateDto orderUpdateDto) {
         orderUpdateDto.setId(orderId);
         orderService.update(orderUpdateDto);

@@ -1,6 +1,5 @@
 package com.malikov.shopsystem.service.impl;
 
-import com.malikov.shopsystem.enumtype.DbOperation;
 import com.malikov.shopsystem.dto.GenericFilter;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
@@ -29,9 +28,8 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
-import static com.malikov.shopsystem.enumtype.DbOperation.DECREASE_IN_STOCK;
-import static com.malikov.shopsystem.enumtype.DbOperation.INCREASE_IN_STOCK;
-import static com.malikov.shopsystem.util.OrderStatusUtil.isWithdrawalStatus;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -58,6 +56,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ProductVariationRepository productVariationRepository;
 
+    @Autowired
+    private UpdateStockService updateStockService;
+
     @SuppressWarnings("unchecked assignments")
     public Page<OrderDto> getFilteredPage(GenericFilter<OrderFilterDto, OrderDto> filter) {
         return convertToOrderDtoPage(orderRepository.findAll(buildFilterRestrictions(filter.getFilteringFields()),
@@ -75,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
 
     private void addDateTimeCreatedFilterRestrictions(OrderFilterDto filter,
                                                       QOrder qOrder, BooleanBuilder booleanBuilder) {
-        if (filter.getFromDateTimeCreated() != null || filter.getToDateTimeCreated() != null) {
+        if (nonNull(filter.getFromDateTimeCreated()) || nonNull(filter.getToDateTimeCreated())) {
             BooleanExpression isCreatedBetween =
                     qOrder.dateTimeCreated.between(filter.getFromDateTimeCreated(), filter.getToDateTimeCreated());
             booleanBuilder.and(isCreatedBetween);
@@ -83,45 +84,47 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private void addProductFilterRestrictions(OrderFilterDto filter, QOrder qOrder, BooleanBuilder booleanBuilder) {
-        if(filter.getProductVariationId() != null) {
+        if (nonNull(filter.getProductVariationId())) {
             ProductVariation productVariation = productVariationRepository.findOne(filter.getProductVariationId());
             BooleanExpression isIncludeProduct = qOrder.orderItems.any().productVariation.eq(productVariation);
             booleanBuilder.and(isIncludeProduct);
-        } else if(filter.getProductId() != null) {
+        } else if (nonNull(filter.getProductId())) {
             Product product = productRepository.findOne(filter.getProductId());
             BooleanExpression isIncludeProduct = qOrder.orderItems.any().product.eq(product);
             booleanBuilder.and(isIncludeProduct);
-        } else if(filter.getProductNameMask() != null) {
-            BooleanExpression isIncludeProductWithLikeProductName =
-                    qOrder.orderItems.any().productName.like("%" + filter.getProductNameMask() + "%");
-            booleanBuilder.and(isIncludeProductWithLikeProductName);
+        } else {
+            if (nonNull(filter.getProductNameMask())) {
+                BooleanExpression isIncludeProductWithLikeProductName =
+                        qOrder.orderItems.any().productName.like("%" + filter.getProductNameMask() + "%");
+                booleanBuilder.and(isIncludeProductWithLikeProductName);
+            }
         }
 
     }
 
     private void addCustomerFilterRestrictions(OrderFilterDto filter, QOrder qOrder, BooleanBuilder booleanBuilder) {
-        if(filter.getCustomerId() != null) {
+        if (nonNull(filter.getCustomerId())) {
             Customer customer = customerRepository.findOne(filter.getCustomerId());
             BooleanExpression isCustomer = qOrder.customer.eq(customer);
             booleanBuilder.and(isCustomer);
         } else {
             BooleanExpression isLikeCustomerPhoneNumber;
-            if(filter.getCustomerFirstNameMask() != null) {
+            if (nonNull(filter.getCustomerFirstNameMask())) {
                 isLikeCustomerPhoneNumber = qOrder.customerFirstName.like("%" + filter.getCustomerFirstNameMask() + "%");
                 booleanBuilder.and(isLikeCustomerPhoneNumber);
             }
 
-            if(filter.getCustomerLastNameMask() != null) {
+            if (nonNull(filter.getCustomerLastNameMask())) {
                 isLikeCustomerPhoneNumber = qOrder.customerLastName.like("%" + filter.getCustomerLastNameMask() + "%");
                 booleanBuilder.and(isLikeCustomerPhoneNumber);
             }
 
-            if(filter.getDestinationCityMask() != null) {
+            if (nonNull(filter.getDestinationCityMask())) {
                 isLikeCustomerPhoneNumber = qOrder.destinationCity.like("%" + filter.getDestinationCityMask() + "%");
                 booleanBuilder.and(isLikeCustomerPhoneNumber);
             }
 
-            if(filter.getCustomerPhoneMask() != null) {
+            if (nonNull(filter.getCustomerPhoneMask())) {
                 isLikeCustomerPhoneNumber = qOrder.customerPhoneNumber.like("%" + filter.getCustomerPhoneMask() + "%");
                 booleanBuilder.and(isLikeCustomerPhoneNumber);
             }
@@ -146,11 +149,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void delete(Long id) {
         Order order = get(id);
-
-        if (isWithdrawalStatus(order.getStatus())) {
-            updateProductQuantityInDbForAllOrderItems(order, INCREASE_IN_STOCK);
-        }
-
+        updateStockService.updateStockForDeletedOrder(order);
         orderRepository.delete(order);
     }
 
@@ -168,28 +167,27 @@ public class OrderServiceImpl implements OrderService {
         setPaymentType(order, orderUpdateDto.getPaymentType());
         setNote(order, orderUpdateDto.getNote());
         setTotalSum(order, orderUpdateDto.getTotalSum());
-        setStatus(order, orderUpdateDto);
+        updateOrderStatus(order, orderUpdateDto.getStatus());
     }
 
     private void checkOrderNotFound(Order order, OrderUpdateDto orderUpdateDto) {
-        if (order == null) {
+        if (isNull(order)) {
             throw new RuntimeException(String.format("order with id=%d not found", orderUpdateDto.getId()));
         }
     }
 
-    private void setStatus(Order order, OrderUpdateDto orderUpdateDto) {
-        if (orderUpdateDto.getStatus() != null) {
-            OrderStatus oldStatus = orderUpdateDto.getStatus();
-            order.setStatus(orderUpdateDto.getStatus());
+    private void updateOrderStatus(Order order, OrderStatus newStatus) {
+        if (nonNull(newStatus)) {
+            updateStockService.updateStock(order, newStatus);
+            order.setStatus(newStatus);
             orderRepository.save(order);
-            updateOrderItemProductStock(order, orderUpdateDto.getStatus(), oldStatus);
         } else {
             orderRepository.save(order);
         }
     }
 
     private void setCustomerInfoToOrder(Order order, OrderUpdateDto orderUpdateDto) {
-        if (orderUpdateDto.getCustomerId() != null) {
+        if (nonNull(orderUpdateDto.getCustomerId())) {
             setCustomer(order, orderUpdateDto.getCustomerId());
         } else {
             setCustomerFirstName(order, orderUpdateDto.getCustomerFirstName());
@@ -203,7 +201,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(propagation = Propagation.MANDATORY)
     public void setCustomer(Order order, Long customerId) {
         Customer customer = customerRepository.findOne(customerId);
-        if (customer == null) {
+        if (isNull(customer)) {
             throw new RuntimeException(String.format("Customer with id=%d not found", customerId));
         }
         order.setCustomer(customer);
@@ -215,115 +213,58 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private void setCustomerFirstName(Order order, String firstName) {
-        if (firstName != null) {
+        if (nonNull(firstName)) {
             order.setCustomerFirstName(firstName);
         }
     }
 
     private void setCustomerLastName(Order order, String lastName) {
-        if (lastName != null) {
+        if (nonNull(lastName)) {
             order.setCustomerLastName(lastName);
         }
     }
 
     private void setCustomerPhoneNumber(Order order, String phoneNumber) {
-        if (phoneNumber != null) {
+        if (nonNull(phoneNumber)) {
             order.setCustomerPhoneNumber(phoneNumber);
         }
     }
 
     private void setDestinationCity(Order order, String destinationCity) {
-        if (destinationCity != null) {
+        if (nonNull(destinationCity)) {
             order.setDestinationCity(destinationCity);
         }
     }
 
     private void setDestinationPostOffice(Order order, String destinationPostOffice) {
-        if (destinationPostOffice != null) {
+        if (nonNull(destinationPostOffice)) {
             order.setDestinationPostOffice(destinationPostOffice);
         }
     }
 
     private void setPaymentType(Order order, PaymentType paymentType) {
-        if (paymentType != null) {
+        if (nonNull(paymentType)) {
             order.setPaymentType(paymentType);
         }
     }
 
     private void setNote(Order order, String comment) {
-        if (comment != null) {
+        if (nonNull(comment)) {
             order.setComment(comment);
         }
     }
 
     private void setTotalSum(Order order, BigDecimal totalSum) {
-        if (totalSum != null) {
+        if (nonNull(totalSum)) {
             order.setTotalSum(totalSum);
         }
     }
 
-    private void updateOrderItemProductStock(Order order, OrderStatus newStatus, OrderStatus oldStatus) {
-        if (newStatus.equals(oldStatus) || (isWithdrawalStatus(newStatus) == isWithdrawalStatus(oldStatus))) {
-            return;
-        }
-
-        if (!isWithdrawalStatus(oldStatus) && isWithdrawalStatus(newStatus)) {
-            updateProductQuantityInDbForAllOrderItems(order, DECREASE_IN_STOCK);
-        } else {
-            updateProductQuantityInDbForAllOrderItems(order, INCREASE_IN_STOCK);
-        }
-    }
-
-    private void updateProductQuantityInDbForAllOrderItems(Order order, DbOperation dbOperation) {
-        for (OrderItem orderItem : order.getOrderItems()) {
-            if (orderItem.getProduct() == null) {
-                continue;
-            }
-
-            if (orderItem.getProductVariation() != null) {
-                updateProductVariationQuantityInDb(orderItem, dbOperation);
-            } else {
-                updateProductQuantityInDb(orderItem, dbOperation);
-            }
-        }
-    }
-
-    private void updateProductQuantityInDb(OrderItem orderItem, DbOperation dbOperation) {
-        Product product = orderItem.getProduct();
-        int productQuantityToPersist = calculateProductQuantityToPersist(product.getQuantity(),
-                orderItem.getProductQuantity(), dbOperation);
-        product.setQuantity(productQuantityToPersist);
-        productRepository.save(product);
-    }
-
-    private void updateProductVariationQuantityInDb(OrderItem orderItem, DbOperation dbOperation) {
-        ProductVariation productVariation = orderItem.getProductVariation();
-        int productQuantityToPersist = calculateProductQuantityToPersist(productVariation.getQuantity(),
-                orderItem.getProductQuantity(), dbOperation);
-        productVariation.setQuantity(productQuantityToPersist);
-        productVariationRepository.save(productVariation);
-    }
-
-    private int calculateProductQuantityToPersist(int productQuantityInDb, int productQuantityInOrderItem,
-                                                  DbOperation dbOperation) {
-        int productQuantityToPersist;
-        switch (dbOperation) {
-            case INCREASE_IN_STOCK:
-                productQuantityToPersist = productQuantityInDb + productQuantityInOrderItem;
-                break;
-            case DECREASE_IN_STOCK:
-                productQuantityToPersist = productQuantityInDb - productQuantityInOrderItem;
-                break;
-            default:
-                throw new RuntimeException("only INCREASE_IN_STOCK or DECREASE_IN_STOCK supported");
-        }
-        return productQuantityToPersist;
-    }
 
     @Override
     public Page<OrderDto> getPage(int pageNumber, int pageCapacity) {
         return convertToOrderDtoPage(
-                orderRepository.findAll(new PageRequest(pageNumber,pageCapacity, DESC_SORT_ORDER)));
+                orderRepository.findAll(new PageRequest(pageNumber, pageCapacity, DESC_SORT_ORDER)));
     }
 
     @Override

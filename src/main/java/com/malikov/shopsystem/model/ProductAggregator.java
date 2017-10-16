@@ -8,15 +8,17 @@ import javax.persistence.*;
  * @author Yurii Malikov
  */
 @Entity
-@Table(name = "jos_jshopping_products")
+@Table(name = "osms_product_aggregator")
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(name = "product_aggregator_id"))
 })
 public class ProductAggregator extends NamedEntity{
 
+    @Column(name = "quantity")
     private Integer quantity;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "product_aggregator_type")
     private ProductAggregatorType productAggregatorType;
 
     public ProductAggregator() {
