@@ -39,18 +39,6 @@ public class ProductServiceImpl implements ProductService {
         }
         return new PageImpl<>(allProductDtos, null, page.getTotalElements());
     }
-/*
-
-    @Override
-    public Page<ProductDto> getPageByCategoryName(String categoryName, int pageNumber, int pageCapacity) {
-        List<ProductDto> allProductDtos = new ArrayList<>();
-        Page<Product> page = productRepository.findAllByCategoryName(new PageRequest(pageNumber, pageCapacity));
-        for (Product product : page.getContent()) {
-            allProductDtos.addAll(ProductUtil.getDtosFrom(product));
-        }
-        return new PageImpl<>(allProductDtos, null, page.getTotalElements());
-    }
-*/
 
     @Override
     public void delete(Long id) {
@@ -74,7 +62,6 @@ public class ProductServiceImpl implements ProductService {
                             productVariation.setQuantity(productDto.getQuantity());
                         }
                     });
-
         } else {
             if (productDto.getPrice() != null) {
                 product.setPrice(productDto.getPrice());
