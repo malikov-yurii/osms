@@ -5,5 +5,5 @@ package com.malikov.shopsystem.enumtype;
  */
 public enum ProductAggregatorType {
 
-    PG_GLUE, SIMPLE
+    SIMPLE, PG_GLUE, WIRE
 }

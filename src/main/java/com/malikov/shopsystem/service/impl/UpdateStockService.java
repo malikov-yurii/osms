@@ -21,6 +21,19 @@ import static java.util.Objects.nonNull;
 @Service
 public class UpdateStockService {
 
+    public static final int PG_5_ID = 2;
+    public static final int PG_7_ID = 8;
+    public static final int PG_10_ID = 6;
+    public static final int PG_14_ID = 5;
+    public static final int PACKING_100_ML = 100;
+    public static final int MILLIGRAMS_1500 = 1500;
+    public static final int PACKING_500_ML = 500;
+    public static final int MILLIGRAMS_7500 = 7500;
+    public static final int PG_5_TRANSFORMATIONAL_COEFFICIENT = 1;
+    public static final double PG_14_TRANSFORMATIONAL_COEFFICIENT = 0.55;
+    public static final double PG_10_TRANSFORMATIONAL_COEFFICIENT = 0.66;
+    public static final double PG_7_TRANSFORMATIONAL_COEFFICIENT = 0.95;
+
     @Autowired
     private ProductRepository productRepository;
     @Autowired
@@ -106,11 +119,13 @@ public class UpdateStockService {
         int result;
         switch (productAggregator.getProductAggregatorType()) {
             case SIMPLE:
-                result = productAggregator.getQuantity() + orderItem.getProductVariation().getVariationValue().getValueAmount() * orderItemQuantityDelta;
+                result = calculateStockSimpleAggregatorQuantity(productAggregator, orderItem, orderItemQuantityDelta);
                 break;
             case PG_GLUE:
-                // TODO: 10/16/2017 implement pg quantity calculation
-                result = productAggregator.getQuantity() + orderItem.getProductVariation().getVariationValue().getValueAmount() * orderItemQuantityDelta;
+                result = calculateStockPG5AggregatorQuantity(productAggregator, orderItem, orderItemQuantityDelta);
+                break;
+            case WIRE:
+                result = calculateStockWireAggregatorQuantity(productAggregator, orderItem, orderItemQuantityDelta);
                 break;
             default:
                 throw new RuntimeException("only SIMPLE or PG_GLUE supported");
@@ -118,10 +133,56 @@ public class UpdateStockService {
         return result;
     }
 
-    private int calculateNewStockAggregatorQuantityPG(ProductAggregator productAggregator,
-                                                      OrderItem orderItem) {
-        // TODO: 10/16/2017 implement pg quantity calculation
-        return productAggregator.getQuantity() + orderItem.getProductVariation().getVariationValue().getValueAmount() * orderItem.getProductQuantity();
+    private int calculateStockSimpleAggregatorQuantity(ProductAggregator productAggregator, OrderItem orderItem,
+                                                       Integer orderItemQuantityDelta) {
+        return productAggregator.getQuantity()
+                + orderItem.getProductVariation().getVariationValue().getValueAmount() * orderItemQuantityDelta;
     }
 
+    private int calculateStockPG5AggregatorQuantity(ProductAggregator productAggregator,
+                                                    OrderItem orderItem,
+                                                    Integer orderItemQuantityDelta) {
+        return productAggregator.getQuantity() + calculatePG5AggregatorAmount(orderItem) * orderItemQuantityDelta;
+    }
+
+    private Integer calculatePG5AggregatorAmount(OrderItem orderItem) {
+        Integer result = orderItem.getProductVariation().getVariationValue().getValueAmount();
+        Product pgProduct = orderItem.getProduct();
+        double pg5Coefficient;
+        switch (pgProduct.getId().intValue()) {
+            case PG_5_ID:
+                pg5Coefficient = PG_5_TRANSFORMATIONAL_COEFFICIENT;
+                break;
+            case PG_14_ID:
+                pg5Coefficient = PG_14_TRANSFORMATIONAL_COEFFICIENT;
+                break;
+            case PG_10_ID:
+                pg5Coefficient = PG_10_TRANSFORMATIONAL_COEFFICIENT;
+                break;
+            case PG_7_ID:
+                pg5Coefficient = PG_7_TRANSFORMATIONAL_COEFFICIENT;
+                break;
+            default:
+                throw new RuntimeException("not suitable product for pg5 amount change aggregator stock calculation");
+        }
+        return (int) (result * pg5Coefficient);
+    }
+
+    private int calculateStockWireAggregatorQuantity(ProductAggregator productAggregator, OrderItem orderItem,
+                                                     Integer orderItemQuantityDelta) {
+        ProductVariation wireVariation = orderItem.getProductVariation();
+        VariationValue wireVariationValue = wireVariation.getVariationValue();
+        Integer wireInMilligrams;
+        switch (wireVariationValue.getValueAmount()) {
+            case PACKING_100_ML:
+                wireInMilligrams = MILLIGRAMS_1500;
+                break;
+            case PACKING_500_ML:
+                wireInMilligrams = MILLIGRAMS_7500;
+                break;
+            default:
+                throw new RuntimeException("not suitable product for wire amount change aggregator stock calculation");
+        }
+        return productAggregator.getQuantity() + wireInMilligrams * orderItemQuantityDelta;
+    }
 }
