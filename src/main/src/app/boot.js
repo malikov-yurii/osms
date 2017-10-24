@@ -10,10 +10,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { App, routes, KeysPipe, SearchPipe, Store } from './index';
-import { OrdersComponent, ProductsComponent, CustomersComponent } from './containers/index';
+import { OrdersComponent, ProductsComponent, CustomersComponent, PoshtaComponent } from './containers/index';
 import { Header, AutocompleteList, Pagination, PopupComponent, Filter, FilterStatic, NotyComponent } from './ui/index';
 import { HotkeysDirective, Autocomplete, ContenteditableModel } from './directives/index';
-import { ApiService, CustomerService, NotyService, OrderService, ProductService, SearchService, StoreHelper } from './services/index';
+import { ApiService, CustomerService, NotyService, OrderService, ProductService, SearchService, StoreHelper, PoshtaService } from './services/index';
 import { AppModuleNgFactory } from '../aot/src/main/src/app/boot.ngfactory';
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -26,6 +26,7 @@ var AppModule = /** @class */ (function () {
                 OrdersComponent,
                 ProductsComponent,
                 CustomersComponent,
+                PoshtaComponent,
                 KeysPipe,
                 SearchPipe,
                 HotkeysDirective,
@@ -47,6 +48,7 @@ var AppModule = /** @class */ (function () {
                 OrderService,
                 ProductService,
                 SearchService,
+                PoshtaService,
                 StoreHelper
             ],
             imports: [

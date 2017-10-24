@@ -1,17 +1,30 @@
 import { Component, OnInit } from '@angular/core';
+
 import { PoshtaService } from '../../services/index';
+import { slideToLeft } from '../../ui/animations';
+import { Parcel } from '../../models/poshta.interface';
 
 @Component({
   moduleId: module.id,
-  templateUrl: 'poshta.html'
+  templateUrl : 'poshta.component.html',
+  styleUrls   : ['poshta.component.css'],
+  animations  : [slideToLeft()],
+  host        : {'[@slideToLeft]': ''},
 })
 export class PoshtaComponent implements OnInit {
-  info: any;
+  currentTab: string;
+  parcels: Parcel[];
 
-  constructor(private poshtaService: PoshtaService) {}
+  constructor(private poshtaService: PoshtaService) {
+    this.currentTab = 'list';
+    this.parcels = [];
+  }
 
   ngOnInit() {
-    this.poshtaService.getCounterparties().subscribe(response => this.info = response);
+    this.poshtaService.getCounterpartyContactPerson().subscribe(response => console.log(response));
+    this.poshtaService.getCounterparties().subscribe(response => console.log(response));
+
+    this.poshtaService.getDocumentList().subscribe(response => this.parcels = response.data);
   }
 
 

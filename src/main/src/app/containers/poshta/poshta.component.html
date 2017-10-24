@@ -1,0 +1,63 @@
+<div class="poshta-page">
+  <div class="wrapper">
+
+    <div class="tabs">
+      <button (click)="currentTab = 'new'" [class.active]="currentTab === 'new'" class="tab">
+        New parcel
+      </button>
+      <button (click)="currentTab = 'list'" [class.active]="currentTab === 'list'" class="tab">
+        List of parcels
+      </button>
+    </div>
+
+    <div class="tab-content" [ngSwitch]="currentTab">
+      <div class="new" *ngSwitchCase="'new'">
+
+        <section>
+          <header class="section-header">
+            Sender
+          </header>
+
+
+
+        </section>
+
+      </div>
+      <div class="new" *ngSwitchCase="'list'">
+        <div class="table-container">
+          <table *ngIf="parcels.length" class="table table-parcels">
+            <tr *ngFor="let parcel of parcels" class="parcel">
+              <td>{{ parcel.IntDocNumber }}</td>
+              <td>{{ parcel.DateTime}}</td>
+              <td>{{ parcel.EstimatedDeliveryDate | date:'shortDate'}}</td>
+              <td>
+                <b>{{ parcel.CitySenderDescription }}</b><br>
+                {{ parcel.SenderDescription }}<br>
+                {{ parcel.SenderAddressDescription }}
+              </td>
+              <td>
+                <b>{{ parcel.CityRecipientDescription }}</b><br>
+                {{ parcel.RecipientAddressDescription }}
+              </td>
+              <td>
+                <b>{{ parcel.RecipientsPhone }}</b><br>
+                {{ parcel.RecipientContactPerson }}
+              </td>
+              <td>
+                {{ parcel.Weight }} кг<br>
+                {{ parcel.SeatsAmount }} место
+              </td>
+              <td>
+                {{ parcel.Cost | number:'1.0-0' }} грн<br>
+                <ng-container *ngIf="parcel.BackwardDeliverySum">({{ parcel.BackwardDeliverySum }} грн)</ng-container>
+              </td>
+              <td>{{ parcel.CostOnSite | number:'1.0-0' }} грн</td>
+              <td>{{ parcel.StateName }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -12,7 +12,7 @@ import * as i4 from '../../../../../../../app/directives/autocomplete.directive'
 import * as i5 from '../../../../../../../app/services/orders.service';
 import * as i6 from '../../../../../../../app/directives/contenteditable-model.directive';
 import * as i7 from '@angular/common';
-import * as i8 from '../../../../../../../app/directives/hotkey.directives';
+import * as i8 from '../../../../../../../app/directives/hotkey.directive';
 import * as i9 from '../../../../../../../app/pipes/keys.pipe';
 import * as i10 from '../../../../../../../app/containers/orders/orders.component';
 import * as i11 from '../../ui/pagination/pagination.ngfactory';
@@ -425,7 +425,7 @@ export function View_OrdersComponent_0(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i0.ɵted(null, ['SHow suppliers'])),
+        }, null, null)), (_l()(), i0.ɵted(null, ['Show suppliers'])),
         (_l()(), i0.ɵted(null, ['\n'])), (_l()(), i0.ɵted(null, ['\n\n'])),
         (_l()(), i0.ɵeld(0, null, null, 34, 'div', [['class', 'wrapper order-page']], null, null, null, null, null)),
         (_l()(), i0.ɵted(null, ['\n\n\n  '])), (_l()(), i0.ɵeld(0, null, null, 17, 'div', [['class', 'service-block']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['\n    '])), (_l()(), i0.ɵeld(0, null, null, 1, 'div', [['class',

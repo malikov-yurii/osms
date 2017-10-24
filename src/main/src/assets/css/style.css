@@ -360,7 +360,8 @@ body {
     overflow-x: auto;
 }
 .table-products,
-.table-customers {
+.table-customers,
+.table-parcels {
     min-width: 1000px;
 }
 .table-products th {

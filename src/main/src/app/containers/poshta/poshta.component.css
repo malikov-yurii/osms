@@ -1,0 +1,52 @@
+.poshta-page {
+    min-height: calc(100vh - 48px);
+    background: #ededed;
+    padding: 30px 0 0;
+}
+
+.wrapper {
+    padding: 0;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 1px 5px 0 rgba(0,0,0,0.4);
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 48px;
+    border-bottom: 1px solid #ededed;
+}
+
+.tab {
+    padding: 0 25px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid transparent;
+    color: #000;
+    font: 500 13px/48px 'Roboto';
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all .15s ease;
+}
+
+.tab:hover,
+.tab:active {
+    background: rgba(183, 183, 183, 0.1);
+    color: #338ea0;
+}
+
+.tab:focus {
+    outline: none;
+}
+
+.tab.active {
+    border-bottom-color: #42bcd4;
+    box-shadow: 0 1px 0 #42bcd4;
+    color: #42bcd4;
+}
+
+.tab-content {
+    padding: 30px 5%;
+}

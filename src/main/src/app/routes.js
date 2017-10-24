@@ -1,11 +1,6 @@
 import { RouterModule } from '@angular/router';
-import { OrdersComponent, ProductsComponent, CustomersComponent } from './containers/index';
+import { OrdersComponent, ProductsComponent, CustomersComponent, PoshtaComponent } from './containers/index';
 export var routes = RouterModule.forRoot([
-    // {
-    //   path: '',
-    //   redirectTo: '/orders',
-    //   pathMatch: 'full'
-    // },
     {
         path: '',
         component: OrdersComponent
@@ -17,5 +12,9 @@ export var routes = RouterModule.forRoot([
     {
         path: 'customers',
         component: CustomersComponent
+    },
+    {
+        path: 'poshta',
+        component: PoshtaComponent
     }
 ]);

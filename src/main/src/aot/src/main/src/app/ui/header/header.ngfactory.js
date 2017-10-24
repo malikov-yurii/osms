@@ -17,9 +17,9 @@ export var RenderType_Header = i1.ɵcrt({ encapsulation: 0, styles: styles_Heade
                         options: undefined }, { type: 1, expr: 'collapsed <=> expanded', animation: { type: 4,
                             styles: null, timings: '.2s ease' }, options: null }], options: {} }] } });
 export function View_Header_0(_l) {
-    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, null, null, 54, 'div', [['class',
+    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, null, null, 63, 'div', [['class',
                 'header']], null, null, null, null, null)),
-        (_l()(), i1.ɵted(null, ['\n  '])), (_l()(), i1.ɵeld(0, null, null, 49, 'div', [['class', 'wrapper']], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['\n    '])),
+        (_l()(), i1.ɵted(null, ['\n  '])), (_l()(), i1.ɵeld(0, null, null, 58, 'div', [['class', 'wrapper']], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['\n    '])),
         (_l()(), i1.ɵeld(0, null, null, 6, 'div', [['class', 'header__logo']], null, null, null, null, null)),
         (_l()(), i1.ɵted(null, ['\n      '])), (_l()(), i1.ɵeld(0, null, null, 3, 'a', [['class', 'logo']], [[1, 'target', 0], [8, 'href', 4]], [[null,
                 'click']], function (_v, en, $event) {
@@ -43,7 +43,7 @@ export function View_Header_0(_l) {
             return ad;
         }, null, null)), (_l()(), i1.ɵted(null, ['menu'])),
         (_l()(), i1.ɵted(null, ['\n    '])), (_l()(), i1.ɵted(null, ['\n    '])),
-        (_l()(), i1.ɵeld(0, null, null, 32, 'nav', [['class', 'header__nav']], [[2, 'expanded', null]], null, null, null, null)), (_l()(), i1.ɵted(null, ['\n      '])), (_l()(), i1.ɵeld(0, null, null, 29, 'ul', [], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['\n        '])), (_l()(), i1.ɵeld(0, null, null, 4, 'li', [], null, null, null, null, null)),
+        (_l()(), i1.ɵeld(0, null, null, 41, 'nav', [['class', 'header__nav']], [[2, 'expanded', null]], null, null, null, null)), (_l()(), i1.ɵted(null, ['\n      '])), (_l()(), i1.ɵeld(0, null, null, 38, 'ul', [], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['\n        '])), (_l()(), i1.ɵeld(0, null, null, 4, 'li', [], null, null, null, null, null)),
         (_l()(), i1.ɵeld(0, null, null, 3, 'a', [], [[1, 'target',
                 0], [8, 'href', 4]], [[null, 'click']], function (_v, en, $event) {
             var ad = true;
@@ -73,6 +73,16 @@ export function View_Header_0(_l) {
             return ad;
         }, null, null)), i1.ɵdid(671744, [[4, 4]], 0, i2.RouterLinkWithHref, [i2.Router, i2.ActivatedRoute, i3.LocationStrategy], { routerLink: [0, 'routerLink'] }, null), i1.ɵpad(1), i1.ɵdid(1720320, null, 2, i2.RouterLinkActive, [i2.Router, i1.ElementRef, i1.Renderer2, i1.ChangeDetectorRef], { routerLinkActive: [0,
                 'routerLinkActive'] }, null), i1.ɵqud(603979776, 3, { links: 1 }), i1.ɵqud(603979776, 4, { linksWithHrefs: 1 }), (_l()(), i1.ɵted(null, ['Customers'])), (_l()(),
+            i1.ɵted(null, ['\n        '])), (_l()(), i1.ɵeld(0, null, null, 7, 'li', [], null, null, null, null, null)), (_l()(), i1.ɵeld(0, null, null, 6, 'a', [['routerLinkActive',
+                'active']], [[1, 'target', 0], [8, 'href', 4]], [[null, 'click']], function (_v, en, $event) {
+            var ad = true;
+            if (('click' === en)) {
+                var pd_0 = (i1.ɵnov(_v, 48).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
+                ad = (pd_0 && ad);
+            }
+            return ad;
+        }, null, null)), i1.ɵdid(671744, [[6, 4]], 0, i2.RouterLinkWithHref, [i2.Router, i2.ActivatedRoute, i3.LocationStrategy], { routerLink: [0, 'routerLink'] }, null), i1.ɵpad(1), i1.ɵdid(1720320, null, 2, i2.RouterLinkActive, [i2.Router, i1.ElementRef, i1.Renderer2, i1.ChangeDetectorRef], { routerLinkActive: [0,
+                'routerLinkActive'] }, null), i1.ɵqud(603979776, 5, { links: 1 }), i1.ɵqud(603979776, 6, { linksWithHrefs: 1 }), (_l()(), i1.ɵted(null, ['Nova Poshta'])), (_l()(),
             i1.ɵted(null, ['\n        '])), (_l()(), i1.ɵeld(0, null, null, 2, 'li', [], null, null, null, null, null)), (_l()(), i1.ɵeld(0, null, null, 1, 'a', [['class',
                 'logout'], ['href', '/logout']], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['Log out'])),
         (_l()(), i1.ɵted(null, ['\n      '])), (_l()(), i1.ɵted(null, ['\n    '])),
@@ -98,6 +108,10 @@ export function View_Header_0(_l) {
         _ck(_v, 39, 0, currVal_13);
         var currVal_14 = 'active';
         _ck(_v, 41, 0, currVal_14);
+        var currVal_17 = _ck(_v, 49, 0, 'poshta');
+        _ck(_v, 48, 0, currVal_17);
+        var currVal_18 = 'active';
+        _ck(_v, 50, 0, currVal_18);
     }, function (_ck, _v) {
         var _co = _v.component;
         var currVal_0 = i1.ɵnov(_v, 7).target;
@@ -114,8 +128,11 @@ export function View_Header_0(_l) {
         var currVal_11 = i1.ɵnov(_v, 39).target;
         var currVal_12 = i1.ɵnov(_v, 39).href;
         _ck(_v, 38, 0, currVal_11, currVal_12);
-        var currVal_15 = _co.menuState;
-        _ck(_v, 53, 0, currVal_15);
+        var currVal_15 = i1.ɵnov(_v, 48).target;
+        var currVal_16 = i1.ɵnov(_v, 48).href;
+        _ck(_v, 47, 0, currVal_15, currVal_16);
+        var currVal_19 = _co.menuState;
+        _ck(_v, 62, 0, currVal_19);
     });
 }
 export function View_Header_Host_0(_l) {

@@ -5,15 +5,12 @@ const sourcemaps   = require('gulp-sourcemaps');
 const rename       = require('gulp-rename');
 const concat       = require('gulp-concat');
 const del          = require('del');
-const replace      = require('gulp-replace');
 const sync         = require('gulp-sync')(gulp);
 const tsProject    = tsc.createProject('tsconfig.json');
 
 const srcDirectory    = './src/main/src';
 const buildDirectory  = './src/main/webapp';
 const targetDirectory = './target/shopsystem';
-
-
 
 
 

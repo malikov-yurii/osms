@@ -44,6 +44,13 @@ var ApiService = /** @class */ (function () {
             .map(this.getJson)
             .do(this.updateSession);
     };
+    ApiService.prototype.postBody = function (path, body) {
+        return this.http.post(path, body, { headers: this.headersJson })
+            .map(this.checkForError)
+            .catch(function (err) { return Observable.throw(err); })
+            .map(this.getJson)
+            .do(this.updateSession);
+    };
     ApiService.prototype.put = function (path, body) {
         return this.http.put(path, body, { headers: this.headersJson })
             .map(this.checkForError)
