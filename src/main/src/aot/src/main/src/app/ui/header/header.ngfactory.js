@@ -17,67 +17,63 @@ export var RenderType_Header = i1.ɵcrt({ encapsulation: 0, styles: styles_Heade
                         options: undefined }, { type: 1, expr: 'collapsed <=> expanded', animation: { type: 4,
                             styles: null, timings: '.2s ease' }, options: null }], options: {} }] } });
 export function View_Header_0(_l) {
-    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, null, null, 54, 'div', [['class',
+    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 54, 'div', [['class',
                 'header']], null, null, null, null, null)),
-        (_l()(), i1.ɵted(null, ['\n  '])), (_l()(), i1.ɵeld(0, null, null, 49, 'div', [['class', 'wrapper']], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['\n    '])),
-        (_l()(), i1.ɵeld(0, null, null, 6, 'div', [['class', 'header__logo']], null, null, null, null, null)),
-        (_l()(), i1.ɵted(null, ['\n      '])), (_l()(), i1.ɵeld(0, null, null, 3, 'a', [['class', 'logo']], [[1, 'target', 0], [8, 'href', 4]], [[null,
-                'click']], function (_v, en, $event) {
-            var ad = true;
-            if (('click' === en)) {
-                var pd_0 = (i1.ɵnov(_v, 7).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
-                ad = (pd_0 && ad);
-            }
-            return ad;
-        }, null, null)), i1.ɵdid(671744, null, 0, i2.RouterLinkWithHref, [i2.Router, i2.ActivatedRoute, i3.LocationStrategy], { routerLink: [0, 'routerLink'] }, null), i1.ɵpad(1), (_l()(), i1.ɵted(null, ['OSMS'])), (_l()(),
-            i1.ɵted(null, ['\n    '])), (_l()(), i1.ɵted(null, ['\n    '])),
-        (_l()(), i1.ɵeld(0, null, null, 4, 'div', [['class', 'header__nav-toggle']], null, null, null, null, null)),
-        (_l()(), i1.ɵted(null, ['\n      '])), (_l()(), i1.ɵeld(0, null, null, 1, 'i', [['class', 'material-icons']], null, [[null,
-                'click']], function (_v, en, $event) {
-            var ad = true;
-            var _co = _v.component;
-            if (('click' === en)) {
-                var pd_0 = (_co.toggleMenuState() !== false);
-                ad = (pd_0 && ad);
-            }
-            return ad;
-        }, null, null)), (_l()(), i1.ɵted(null, ['menu'])),
-        (_l()(), i1.ɵted(null, ['\n    '])), (_l()(), i1.ɵted(null, ['\n    '])),
-        (_l()(), i1.ɵeld(0, null, null, 32, 'nav', [['class', 'header__nav']], [[2, 'expanded', null]], null, null, null, null)), (_l()(), i1.ɵted(null, ['\n      '])), (_l()(), i1.ɵeld(0, null, null, 29, 'ul', [], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['\n        '])), (_l()(), i1.ɵeld(0, null, null, 4, 'li', [], null, null, null, null, null)),
-        (_l()(), i1.ɵeld(0, null, null, 3, 'a', [], [[1, 'target',
-                0], [8, 'href', 4]], [[null, 'click']], function (_v, en, $event) {
+        (_l()(), i1.ɵted(-1, null, ['\n  '])), (_l()(), i1.ɵeld(2, 0, null, null, 49, 'div', [['class', 'wrapper']], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ['\n    '])), (_l()(), i1.ɵeld(4, 0, null, null, 6, 'div', [['class',
+                'header__logo']], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ['\n      '])), (_l()(),
+            i1.ɵeld(6, 0, null, null, 3, 'a', [['class', 'logo']], [[1, 'target',
+                    0], [8, 'href', 4]], [[null, 'click']], function (_v, en, $event) {
+                var ad = true;
+                if (('click' === en)) {
+                    var pd_0 = (i1.ɵnov(_v, 7).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
+                    ad = (pd_0 && ad);
+                }
+                return ad;
+            }, null, null)), i1.ɵdid(7, 671744, null, 0, i2.RouterLinkWithHref, [i2.Router, i2.ActivatedRoute, i3.LocationStrategy], { routerLink: [0, 'routerLink'] }, null), i1.ɵpad(8, 1), (_l()(), i1.ɵted(-1, null, ['OSMS'])),
+        (_l()(), i1.ɵted(-1, null, ['\n    '])), (_l()(), i1.ɵted(-1, null, ['\n    '])), (_l()(), i1.ɵeld(12, 0, null, null, 4, 'div', [['class',
+                'header__nav-toggle']], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ['\n      '])), (_l()(),
+            i1.ɵeld(14, 0, null, null, 1, 'i', [['class', 'material-icons']], null, [[null, 'click']], function (_v, en, $event) {
+                var ad = true;
+                var _co = _v.component;
+                if (('click' === en)) {
+                    var pd_0 = (_co.toggleMenuState() !== false);
+                    ad = (pd_0 && ad);
+                }
+                return ad;
+            }, null, null)), (_l()(), i1.ɵted(-1, null, ['menu'])),
+        (_l()(), i1.ɵted(-1, null, ['\n    '])), (_l()(), i1.ɵted(-1, null, ['\n    '])), (_l()(), i1.ɵeld(18, 0, null, null, 32, 'nav', [['class',
+                'header__nav']], [[2, 'expanded', null]], null, null, null, null)), (_l()(), i1.ɵted(-1, null, ['\n      '])),
+        (_l()(), i1.ɵeld(20, 0, null, null, 29, 'ul', [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ['\n        '])), (_l()(), i1.ɵeld(22, 0, null, null, 4, 'li', [], null, null, null, null, null)), (_l()(), i1.ɵeld(23, 0, null, null, 3, 'a', [], [[1, 'target', 0], [8, 'href', 4]], [[null, 'click']], function (_v, en, $event) {
             var ad = true;
             if (('click' === en)) {
                 var pd_0 = (i1.ɵnov(_v, 24).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), i1.ɵdid(671744, null, 0, i2.RouterLinkWithHref, [i2.Router, i2.ActivatedRoute, i3.LocationStrategy], { routerLink: [0, 'routerLink'] }, null), i1.ɵpad(1), (_l()(), i1.ɵted(null, ['Orders'])), (_l()(),
-            i1.ɵted(null, ['\n        '])), (_l()(), i1.ɵeld(0, null, null, 7, 'li', [], null, null, null, null, null)), (_l()(), i1.ɵeld(0, null, null, 6, 'a', [['routerLinkActive',
-                'active']], [[1, 'target', 0], [8, 'href', 4]], [[null, 'click']], function (_v, en, $event) {
+        }, null, null)), i1.ɵdid(24, 671744, null, 0, i2.RouterLinkWithHref, [i2.Router, i2.ActivatedRoute, i3.LocationStrategy], { routerLink: [0, 'routerLink'] }, null), i1.ɵpad(25, 1), (_l()(), i1.ɵted(-1, null, ['Orders'])),
+        (_l()(), i1.ɵted(-1, null, ['\n        '])), (_l()(), i1.ɵeld(28, 0, null, null, 7, 'li', [], null, null, null, null, null)), (_l()(), i1.ɵeld(29, 0, null, null, 6, 'a', [['routerLinkActive', 'active']], [[1, 'target', 0], [8, 'href', 4]], [[null,
+                'click']], function (_v, en, $event) {
             var ad = true;
             if (('click' === en)) {
                 var pd_0 = (i1.ɵnov(_v, 30).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), i1.ɵdid(671744, [[2, 4]], 0, i2.RouterLinkWithHref, [i2.Router, i2.ActivatedRoute, i3.LocationStrategy], { routerLink: [0, 'routerLink'] }, null), i1.ɵpad(1), i1.ɵdid(1720320, null, 2, i2.RouterLinkActive, [i2.Router, i1.ElementRef, i1.Renderer2, i1.ChangeDetectorRef], { routerLinkActive: [0,
-                'routerLinkActive'] }, null), i1.ɵqud(603979776, 1, { links: 1 }), i1.ɵqud(603979776, 2, { linksWithHrefs: 1 }), (_l()(), i1.ɵted(null, ['Products'])), (_l()(),
-            i1.ɵted(null, ['\n        '])), (_l()(), i1.ɵeld(0, null, null, 7, 'li', [], null, null, null, null, null)), (_l()(), i1.ɵeld(0, null, null, 6, 'a', [['routerLinkActive',
-                'active']], [[1, 'target', 0], [8, 'href', 4]], [[null, 'click']], function (_v, en, $event) {
+        }, null, null)), i1.ɵdid(30, 671744, [[2, 4]], 0, i2.RouterLinkWithHref, [i2.Router, i2.ActivatedRoute, i3.LocationStrategy], { routerLink: [0, 'routerLink'] }, null), i1.ɵpad(31, 1), i1.ɵdid(32, 1720320, null, 2, i2.RouterLinkActive, [i2.Router, i1.ElementRef, i1.Renderer2, i1.ChangeDetectorRef], { routerLinkActive: [0,
+                'routerLinkActive'] }, null), i1.ɵqud(603979776, 1, { links: 1 }), i1.ɵqud(603979776, 2, { linksWithHrefs: 1 }), (_l()(), i1.ɵted(-1, null, ['Products'])), (_l()(),
+            i1.ɵted(-1, null, ['\n        '])), (_l()(), i1.ɵeld(37, 0, null, null, 7, 'li', [], null, null, null, null, null)), (_l()(), i1.ɵeld(38, 0, null, null, 6, 'a', [['routerLinkActive', 'active']], [[1, 'target', 0], [8, 'href', 4]], [[null,
+                'click']], function (_v, en, $event) {
             var ad = true;
             if (('click' === en)) {
                 var pd_0 = (i1.ɵnov(_v, 39).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), i1.ɵdid(671744, [[4, 4]], 0, i2.RouterLinkWithHref, [i2.Router, i2.ActivatedRoute, i3.LocationStrategy], { routerLink: [0, 'routerLink'] }, null), i1.ɵpad(1), i1.ɵdid(1720320, null, 2, i2.RouterLinkActive, [i2.Router, i1.ElementRef, i1.Renderer2, i1.ChangeDetectorRef], { routerLinkActive: [0,
-                'routerLinkActive'] }, null), i1.ɵqud(603979776, 3, { links: 1 }), i1.ɵqud(603979776, 4, { linksWithHrefs: 1 }), (_l()(), i1.ɵted(null, ['Customers'])), (_l()(),
-            i1.ɵted(null, ['\n        '])), (_l()(), i1.ɵeld(0, null, null, 2, 'li', [], null, null, null, null, null)), (_l()(), i1.ɵeld(0, null, null, 1, 'a', [['class',
-                'logout'], ['href', '/logout']], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['Log out'])),
-        (_l()(), i1.ɵted(null, ['\n      '])), (_l()(), i1.ɵted(null, ['\n    '])),
-        (_l()(), i1.ɵted(null, ['\n  '])), (_l()(), i1.ɵted(null, ['\n  '])),
-        (_l()(), i1.ɵeld(0, null, null, 0, 'div', [['class', 'menu-overlay']], [[24, '@fadeInOut', 0]], [[null, 'click']], function (_v, en, $event) {
+        }, null, null)), i1.ɵdid(39, 671744, [[4, 4]], 0, i2.RouterLinkWithHref, [i2.Router, i2.ActivatedRoute, i3.LocationStrategy], { routerLink: [0, 'routerLink'] }, null), i1.ɵpad(40, 1), i1.ɵdid(41, 1720320, null, 2, i2.RouterLinkActive, [i2.Router, i1.ElementRef, i1.Renderer2, i1.ChangeDetectorRef], { routerLinkActive: [0,
+                'routerLinkActive'] }, null), i1.ɵqud(603979776, 3, { links: 1 }), i1.ɵqud(603979776, 4, { linksWithHrefs: 1 }), (_l()(), i1.ɵted(-1, null, ['Customers'])), (_l()(),
+            i1.ɵted(-1, null, ['\n        '])), (_l()(), i1.ɵeld(46, 0, null, null, 2, 'li', [], null, null, null, null, null)), (_l()(), i1.ɵeld(47, 0, null, null, 1, 'a', [['class', 'logout'], ['href', '/logout']], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ['Log out'])), (_l()(), i1.ɵted(-1, null, ['\n      '])), (_l()(), i1.ɵted(-1, null, ['\n    '])), (_l()(), i1.ɵted(-1, null, ['\n  '])), (_l()(),
+            i1.ɵted(-1, null, ['\n  '])), (_l()(), i1.ɵeld(53, 0, null, null, 0, 'div', [['class', 'menu-overlay']], [[24, '@fadeInOut', 0]], [[null,
+                'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('click' === en)) {
@@ -85,7 +81,7 @@ export function View_Header_0(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i1.ɵted(null, ['\n']))], function (_ck, _v) {
+        }, null, null)), (_l()(), i1.ɵted(-1, null, ['\n']))], function (_ck, _v) {
         var currVal_2 = _ck(_v, 8, 0, '');
         _ck(_v, 7, 0, currVal_2);
         var currVal_6 = _ck(_v, 25, 0, '');
@@ -119,7 +115,7 @@ export function View_Header_0(_l) {
     });
 }
 export function View_Header_Host_0(_l) {
-    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, null, null, 1, 'nav-header', [], null, null, null, View_Header_0, RenderType_Header)),
-        i1.ɵdid(49152, null, 0, i4.Header, [], null, null)], null, null);
+    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, 'nav-header', [], null, null, null, View_Header_0, RenderType_Header)),
+        i1.ɵdid(1, 49152, null, 0, i4.Header, [], null, null)], null, null);
 }
 export var HeaderNgFactory = i1.ɵccf('nav-header', i4.Header, View_Header_Host_0, {}, {}, []);

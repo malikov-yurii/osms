@@ -112,12 +112,13 @@ export const AppModuleNgFactory:i0.NgModuleFactory<i1.AppModule> = i0.ɵcmf(i1.A
               ([] as any[])),i0.ɵmpd(512,i0.NgModuleFactoryLoader,i0.SystemJsNgModuleLoader,
               [i0.Compiler,[2,i0.SystemJsNgModuleLoaderConfig]]),i0.ɵmpd(1024,i17.ROUTES,
               () => {
-                return [[{path:'',component:i26.OrdersComponent},{path:'products',
-                    component:i27.ProductsComponent},{path:'customers',component:i28.CustomersComponent}]];
+                return [[{path:'',component:i26.OrdersComponent},{path:'orders',redirectTo:'/',
+                    pathMatch:'full'},{path:'products',component:i27.ProductsComponent},
+                    {path:'customers',component:i28.CustomersComponent}]];
               },([] as any[])),i0.ɵmpd(1024,i17.Router,i17.ɵe,[i0.ApplicationRef,i17.UrlSerializer,
               i17.ChildrenOutletContexts,i10.Location,i0.Injector,i0.NgModuleFactoryLoader,
               i0.Compiler,i17.ROUTES,i17.ROUTER_CONFIGURATION,[2,i17.UrlHandlingStrategy],
               [2,i17.RouteReuseStrategy]]),i0.ɵmpd(512,i17.RouterModule,i17.RouterModule,
               [[2,i17.ɵa],[2,i17.Router]]),i0.ɵmpd(512,i1.AppModule,i1.AppModule,([] as any[]))]);
     });
-//# sourceMappingURL=data:application/json;base64,eyJmaWxlIjoiRTovT1NNUy9zcmMvbWFpbi9zcmMvYXBwL2Jvb3QubmdmYWN0b3J5LnRzIiwidmVyc2lvbiI6Mywic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsibmc6Ly8vRTovT1NNUy9zcmMvbWFpbi9zcmMvYXBwL2Jvb3QudHMiXSwic291cmNlc0NvbnRlbnQiOlsiICJdLCJtYXBwaW5ncyI6IkFBQUE7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7In0=
+//# sourceMappingURL=data:application/json;base64,eyJmaWxlIjoiL2hvbWUvbWFsaWtvdi9JZGVhUHJvamVjdHMvb3Ntcy9zcmMvbWFpbi9zcmMvYXBwL2Jvb3QubmdmYWN0b3J5LnRzIiwidmVyc2lvbiI6Mywic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsibmc6Ly8vaG9tZS9tYWxpa292L0lkZWFQcm9qZWN0cy9vc21zL3NyYy9tYWluL3NyYy9hcHAvYm9vdC50cyJdLCJzb3VyY2VzQ29udGVudCI6WyIgIl0sIm1hcHBpbmdzIjoiQUFBQTs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7In0=

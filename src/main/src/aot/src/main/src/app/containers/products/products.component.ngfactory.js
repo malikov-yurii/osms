@@ -33,30 +33,31 @@ export var RenderType_ProductsComponent = i0.ɵcrt({ encapsulation: 2,
                         options: undefined }, { type: 1, expr: 'collapsed <=> expanded', animation: { type: 4,
                             styles: null, timings: '.3s ease' }, options: null }], options: {} }] } });
 function View_ProductsComponent_3(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵted(null, ['\n            '])), (_l()(), i0.ɵeld(0, null, null, 1, 'td', [['contenteditable', '']], [[8, 'className',
-                0]], [[null, 'contenteditableModelChange'], [null, 'contentChanged'],
-            [null, 'blur'], [null, 'keypress']], function (_v, en, $event) {
-            var ad = true;
-            var _co = _v.component;
-            if (('blur' === en)) {
-                var pd_0 = (i0.ɵnov(_v, 2).onBlur() !== false);
-                ad = (pd_0 && ad);
-            }
-            if (('keypress' === en)) {
-                var pd_1 = (i0.ɵnov(_v, 2).onKeydown($event) !== false);
-                ad = (pd_1 && ad);
-            }
-            if (('contenteditableModelChange' === en)) {
-                var pd_2 = ((_v.parent.parent.context.$implicit[_v.parent.context.$implicit] = $event) !== false);
-                ad = (pd_2 && ad);
-            }
-            if (('contentChanged' === en)) {
-                var pd_3 = (_co.onUpdateProductField(_v.parent.parent.context.$implicit.id, _v.parent.parent.context.$implicit.variationId, _v.parent.context.$implicit, $event) !== false);
-                ad = (pd_3 && ad);
-            }
-            return ad;
-        }, null, null)), i0.ɵdid(540672, null, 0, i1.ContenteditableModel, [i0.ElementRef], { model: [0, 'model'] }, { update: 'contenteditableModelChange', changed: 'contentChanged' }),
-        (_l()(), i0.ɵted(null, ['\n          ']))], function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵted(-1, null, ['\n            '])), (_l()(),
+            i0.ɵeld(1, 0, null, null, 1, 'td', [['contenteditable', '']], [[8,
+                    'className', 0]], [[null, 'contenteditableModelChange'], [null,
+                    'contentChanged'], [null, 'blur'], [null, 'keypress']], function (_v, en, $event) {
+                var ad = true;
+                var _co = _v.component;
+                if (('blur' === en)) {
+                    var pd_0 = (i0.ɵnov(_v, 2).onBlur() !== false);
+                    ad = (pd_0 && ad);
+                }
+                if (('keypress' === en)) {
+                    var pd_1 = (i0.ɵnov(_v, 2).onKeydown($event) !== false);
+                    ad = (pd_1 && ad);
+                }
+                if (('contenteditableModelChange' === en)) {
+                    var pd_2 = ((_v.parent.parent.context.$implicit[_v.parent.context.$implicit] = $event) !== false);
+                    ad = (pd_2 && ad);
+                }
+                if (('contentChanged' === en)) {
+                    var pd_3 = (_co.onUpdateProductField(_v.parent.parent.context.$implicit.id, _v.parent.parent.context.$implicit.variationId, _v.parent.context.$implicit, $event) !== false);
+                    ad = (pd_3 && ad);
+                }
+                return ad;
+            }, null, null)), i0.ɵdid(2, 540672, null, 0, i1.ContenteditableModel, [i0.ElementRef], { model: [0, 'model'] }, { update: 'contenteditableModelChange', changed: 'contentChanged' }),
+        (_l()(), i0.ɵted(-1, null, ['\n          ']))], function (_ck, _v) {
         var currVal_1 = _v.parent.parent.context.$implicit[_v.parent.context.$implicit];
         _ck(_v, 2, 0, currVal_1);
     }, function (_ck, _v) {
@@ -65,8 +66,9 @@ function View_ProductsComponent_3(_l) {
     });
 }
 function View_ProductsComponent_4(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵted(null, ['\n            '])), (_l()(), i0.ɵeld(0, null, null, 1, 'td', [], [[8, 'className', 0]], null, null, null, null)), (_l()(), i0.ɵted(null, ['\n              ',
-            '\n            '])), (_l()(), i0.ɵted(null, ['\n          ']))], null, function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵted(-1, null, ['\n            '])), (_l()(),
+            i0.ɵeld(1, 0, null, null, 1, 'td', [], [[8, 'className',
+                    0]], null, null, null, null)), (_l()(), i0.ɵted(2, null, ['\n              ', '\n            '])), (_l()(), i0.ɵted(-1, null, ['\n          ']))], null, function (_ck, _v) {
         var currVal_0 = i0.ɵinlineInterpolate(1, 'product-cell--', _v.parent.context.$implicit, '');
         _ck(_v, 1, 0, currVal_0);
         var currVal_1 = _v.parent.parent.context.$implicit[_v.parent.context.$implicit];
@@ -74,11 +76,11 @@ function View_ProductsComponent_4(_l) {
     });
 }
 function View_ProductsComponent_2(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, null, null, 7, null, null, null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['\n\n          '])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ProductsComponent_3)), i0.ɵdid(16384, null, 0, i2.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, 'ngIf'] }, null), (_l()(), i0.ɵted(null, ['\n\n\n          '])), (_l()(),
-            i0.ɵand(16777216, null, null, 1, null, View_ProductsComponent_4)),
-        i0.ɵdid(16384, null, 0, i2.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0,
-                'ngIf'] }, null), (_l()(), i0.ɵted(null, ['\n\n        ']))], function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 7, null, null, null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['\n\n          '])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ProductsComponent_3)), i0.ɵdid(3, 16384, null, 0, i2.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0,
+                'ngIf'] }, null), (_l()(), i0.ɵted(-1, null, ['\n\n\n          '])),
+        (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ProductsComponent_4)),
+        i0.ɵdid(6, 16384, null, 0, i2.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, 'ngIf'] }, null), (_l()(), i0.ɵted(-1, null, ['\n\n        ']))], function (_ck, _v) {
         var _co = _v.component;
         var currVal_0 = _co.isEditable(_v.context.$implicit);
         _ck(_v, 3, 0, currVal_0);
@@ -87,9 +89,13 @@ function View_ProductsComponent_2(_l) {
     }, null);
 }
 function View_ProductsComponent_1(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, null, null, 8, 'tr', [], null, null, null, null, null)), i0.ɵdid(278528, null, 0, i2.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef,
-            i0.Renderer], { ngClass: [0, 'ngClass'] }, null), i0.ɵpod({ 'product': 0,
-            'odd': 1, 'even': 2 }), (_l()(), i0.ɵted(null, ['\n        '])), (_l()(), i0.ɵand(16777216, null, null, 3, null, View_ProductsComponent_2)), i0.ɵdid(802816, null, 0, i2.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null), i0.ɵpad(1), i0.ɵppd(2), (_l()(), i0.ɵted(null, ['\n      ']))], function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 8, 'tr', [], null, null, null, null, null)), i0.ɵdid(1, 278528, null, 0, i2.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef,
+            i0.Renderer], { ngClass: [0, 'ngClass'] }, null), i0.ɵpod(2, { 'product': 0,
+            'odd': 1, 'even': 2 }), (_l()(), i0.ɵted(-1, null, ['\n        '])), (_l()(),
+            i0.ɵand(16777216, null, null, 3, null, View_ProductsComponent_2)),
+        i0.ɵdid(5, 802816, null, 0, i2.NgForOf, [i0.ViewContainerRef, i0.TemplateRef,
+            i0.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null), i0.ɵpad(6, 1),
+        i0.ɵppd(7, 2), (_l()(), i0.ɵted(-1, null, ['\n      ']))], function (_ck, _v) {
         var currVal_0 = _ck(_v, 2, 0, true, _v.context.odd, _v.context.even);
         _ck(_v, 1, 0, currVal_0);
         var currVal_1 = i0.ɵunv(_v, 5, 0, _ck(_v, 7, 0, i0.ɵnov(_v.parent, 0), _v.context.$implicit, _ck(_v, 6, 0, 'unlimited')));
@@ -97,9 +103,9 @@ function View_ProductsComponent_1(_l) {
     }, null);
 }
 export function View_ProductsComponent_0(_l) {
-    return i0.ɵvid(0, [i0.ɵpid(0, i3.KeysPipe, []), (_l()(), i0.ɵeld(0, null, null, 57, 'div', [['class', 'wrapper products-page']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['\n\n  '])),
-        (_l()(), i0.ɵeld(0, null, null, 12, 'div', [['class', 'service-block']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['\n\n    '])), (_l()(), i0.ɵeld(0, null, null, 2, 'filter-static', [], null, [[null,
+    return i0.ɵvid(0, [i0.ɵpid(0, i3.KeysPipe, []), (_l()(), i0.ɵeld(1, 0, null, null, 57, 'div', [['class', 'wrapper products-page']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['\n\n  '])), (_l()(), i0.ɵeld(3, 0, null, null, 12, 'div', [['class',
+                'service-block']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['\n\n    '])), (_l()(), i0.ɵeld(5, 0, null, null, 2, 'filter-static', [], null, [[null,
                 'filtered']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
@@ -108,10 +114,10 @@ export function View_ProductsComponent_0(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, i5.View_FilterStatic_0, i5.RenderType_FilterStatic)), i0.ɵdid(638976, null, 0, i6.FilterStatic, [i7.FormBuilder], { filters: [0, 'filters'] }, { filtered: 'filtered' }),
-        i0.ɵpod({ categories: 0, supplier: 1 }), (_l()(), i0.ɵted(null, ['\n\n    '])),
-        (_l()(), i0.ɵeld(0, [['searchControl', 1]], null, 5, 'input', [['class', 'input search-input'],
-            ['id', ''], ['name', 'searchStream'], ['placeholder', 'Search in products...'],
+        }, i5.View_FilterStatic_0, i5.RenderType_FilterStatic)), i0.ɵdid(6, 638976, null, 0, i6.FilterStatic, [i7.FormBuilder], { filters: [0, 'filters'] }, { filtered: 'filtered' }),
+        i0.ɵpod(7, { categories: 0, supplier: 1 }), (_l()(), i0.ɵted(-1, null, ['\n\n    '])),
+        (_l()(), i0.ɵeld(9, 0, [['searchControl', 1]], null, 5, 'input', [['class',
+                'input search-input'], ['id', ''], ['name', 'searchStream'], ['placeholder', 'Search in products...'],
             ['type', 'text']], [[24, '@changeWidth', 0], [2, 'ng-untouched', null],
             [2, 'ng-touched', null], [2, 'ng-pristine', null], [2, 'ng-dirty',
                 null], [2, 'ng-valid', null], [2, 'ng-invalid', null],
@@ -149,26 +155,26 @@ export function View_ProductsComponent_0(_l) {
                 ad = (pd_6 && ad);
             }
             return ad;
-        }, null, null)), i0.ɵdid(16384, null, 0, i7.DefaultValueAccessor, [i0.Renderer2, i0.ElementRef, [2, i7.COMPOSITION_BUFFER_MODE]], null, null), i0.ɵprd(1024, null, i7.NG_VALUE_ACCESSOR, function (p0_0) {
+        }, null, null)), i0.ɵdid(10, 16384, null, 0, i7.DefaultValueAccessor, [i0.Renderer2, i0.ElementRef, [2, i7.COMPOSITION_BUFFER_MODE]], null, null), i0.ɵprd(1024, null, i7.NG_VALUE_ACCESSOR, function (p0_0) {
             return [p0_0];
-        }, [i7.DefaultValueAccessor]), i0.ɵdid(540672, null, 0, i7.FormControlDirective, [[8, null], [8, null], [2, i7.NG_VALUE_ACCESSOR]], { form: [0,
-                'form'], model: [1, 'model'] }, { update: 'ngModelChange' }), i0.ɵprd(2048, null, i7.NgControl, null, [i7.FormControlDirective]), i0.ɵdid(16384, null, 0, i7.NgControlStatus, [i7.NgControl], null, null), (_l()(),
-            i0.ɵted(null, ['\n\n  '])), (_l()(), i0.ɵted(null, ['\n\n\n  '])),
-        (_l()(), i0.ɵeld(0, null, null, 35, 'div', [['class', 'table-container']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['\n    '])), (_l()(), i0.ɵeld(0, null, null, 32, 'table', [['class', 'table table-products']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵeld(0, null, null, 22, 'thead', [], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵeld(0, null, null, 1, 'th', [['class', 'product-cell--id numeric']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['ID'])), (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵeld(0, null, null, 1, 'th', [['class', 'product-cell--varId numeric']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['Variation ID'])), (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵeld(0, null, null, 1, 'th', [['class',
-                'product-cell--name']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['Name'])), (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵeld(0, null, null, 1, 'th', [['class',
-                'product-cell--categories']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['Category'])), (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵeld(0, null, null, 1, 'th', [['class',
-                'product-cell--price numeric']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['Price'])),
-        (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵeld(0, null, null, 1, 'th', [['class', 'product-cell--quantity numeric']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['Quantity'])), (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵeld(0, null, null, 1, 'th', [['class', 'product-cell--supplier']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['Supplier'])), (_l()(), i0.ɵted(null, ['\n      '])),
-        (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵeld(0, null, null, 5, 'tbody', [], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['\n      '])),
+        }, [i7.DefaultValueAccessor]), i0.ɵdid(12, 540672, null, 0, i7.FormControlDirective, [[8, null], [8, null], [2, i7.NG_VALUE_ACCESSOR]], { form: [0,
+                'form'], model: [1, 'model'] }, { update: 'ngModelChange' }), i0.ɵprd(2048, null, i7.NgControl, null, [i7.FormControlDirective]), i0.ɵdid(14, 16384, null, 0, i7.NgControlStatus, [i7.NgControl], null, null), (_l()(),
+            i0.ɵted(-1, null, ['\n\n  '])), (_l()(), i0.ɵted(-1, null, ['\n\n\n  '])),
+        (_l()(), i0.ɵeld(17, 0, null, null, 35, 'div', [['class', 'table-container']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['\n    '])), (_l()(), i0.ɵeld(19, 0, null, null, 32, 'table', [['class', 'table table-products']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵeld(21, 0, null, null, 22, 'thead', [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(),
+            i0.ɵeld(23, 0, null, null, 1, 'th', [['class', 'product-cell--id numeric']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['ID'])), (_l()(), i0.ɵted(-1, null, ['\n      '])),
+        (_l()(), i0.ɵeld(26, 0, null, null, 1, 'th', [['class', 'product-cell--varId numeric']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['Variation ID'])), (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵeld(29, 0, null, null, 1, 'th', [['class',
+                'product-cell--name']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['Name'])), (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵeld(32, 0, null, null, 1, 'th', [['class', 'product-cell--categories']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['Category'])), (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵeld(35, 0, null, null, 1, 'th', [['class', 'product-cell--price numeric']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['Price'])), (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵeld(38, 0, null, null, 1, 'th', [['class',
+                'product-cell--quantity numeric']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['Quantity'])),
+        (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵeld(41, 0, null, null, 1, 'th', [['class', 'product-cell--supplier']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['Supplier'])), (_l()(), i0.ɵted(-1, null, ['\n      '])),
+        (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵeld(45, 0, null, null, 5, 'tbody', [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['\n      '])),
         (_l()(), i0.ɵand(16777216, null, null, 2, null, View_ProductsComponent_1)),
-        i0.ɵdid(802816, null, 0, i2.NgForOf, [i0.ViewContainerRef, i0.TemplateRef,
-            i0.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null), i0.ɵpid(131072, i2.AsyncPipe, [i0.ChangeDetectorRef]), (_l()(), i0.ɵted(null, ['\n      '])),
-        (_l()(), i0.ɵted(null, ['\n    '])), (_l()(), i0.ɵted(null, ['\n  '])),
-        (_l()(), i0.ɵted(null, ['\n\n  '])), (_l()(), i0.ɵeld(0, null, null, 3, 'pagination', [], null, [[null, 'dataChanged']], function (_v, en, $event) {
+        i0.ɵdid(48, 802816, null, 0, i2.NgForOf, [i0.ViewContainerRef, i0.TemplateRef,
+            i0.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null), i0.ɵpid(131072, i2.AsyncPipe, [i0.ChangeDetectorRef]), (_l()(), i0.ɵted(-1, null, ['\n      '])),
+        (_l()(), i0.ɵted(-1, null, ['\n    '])), (_l()(), i0.ɵted(-1, null, ['\n  '])), (_l()(), i0.ɵted(-1, null, ['\n\n  '])), (_l()(), i0.ɵeld(54, 0, null, null, 3, 'pagination', [], null, [[null, 'dataChanged']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('dataChanged' === en)) {
@@ -176,9 +182,9 @@ export function View_ProductsComponent_0(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, i8.View_Pagination_0, i8.RenderType_Pagination)), i0.ɵdid(638976, null, 0, i9.Pagination, [], { totalItems: [0, 'totalItems'], pageLength: [1,
+        }, i8.View_Pagination_0, i8.RenderType_Pagination)), i0.ɵdid(55, 638976, null, 0, i9.Pagination, [], { totalItems: [0, 'totalItems'], pageLength: [1,
                 'pageLength'], currentParentPage: [2, 'currentParentPage'] }, { dataChanged: 'dataChanged' }),
-        i0.ɵpid(131072, i2.AsyncPipe, [i0.ChangeDetectorRef]), (_l()(), i0.ɵted(null, ['\n  '])), (_l()(), i0.ɵted(null, ['\n']))], function (_ck, _v) {
+        i0.ɵpid(131072, i2.AsyncPipe, [i0.ChangeDetectorRef]), (_l()(), i0.ɵted(-1, null, ['\n  '])), (_l()(), i0.ɵted(-1, null, ['\n']))], function (_ck, _v) {
         var _co = _v.component;
         var currVal_0 = _ck(_v, 7, 0, _co.categories, _co.suppliers);
         _ck(_v, 6, 0, currVal_0);
@@ -205,7 +211,7 @@ export function View_ProductsComponent_0(_l) {
     });
 }
 export function View_ProductsComponent_Host_0(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, null, null, 1, 'ng-component', [], [[40, '@slideToLeft', 0]], null, null, View_ProductsComponent_0, RenderType_ProductsComponent)), i0.ɵdid(245760, null, 0, i4.ProductsComponent, [i10.ProductService, i11.NotyService, i12.Store], null, null)], function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, 'ng-component', [], [[40, '@slideToLeft', 0]], null, null, View_ProductsComponent_0, RenderType_ProductsComponent)), i0.ɵdid(1, 245760, null, 0, i4.ProductsComponent, [i10.ProductService, i11.NotyService, i12.Store], null, null)], function (_ck, _v) {
         _ck(_v, 1, 0);
     }, function (_ck, _v) {
         var currVal_0 = undefined;

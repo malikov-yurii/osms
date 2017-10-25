@@ -30,10 +30,17 @@ var OrderService = /** @class */ (function () {
     // Manage orders
     OrderService.prototype.getOrders = function (start, length) {
         var _this = this;
-        return this.api.get("/" + this.ordersPath + "?pageNumber=" + start + "&pageCapacity=" + length)
-            .do(function (resp) {
-            _this.storeHelper.update('order', resp.elements);
-        });
+        if (dbOrders.elements.length) {
+            this.storeHelper.update('order', dbOrders.elements);
+            dbOrders.elements = [];
+            return Observable.of(dbOrders);
+        }
+        else {
+            return this.api.get("/" + this.ordersPath + "?pageNumber=" + start + "&pageCapacity=" + length)
+                .do(function (resp) {
+                _this.storeHelper.update('order', resp.elements);
+            });
+        }
     };
     OrderService.prototype.addOrder = function () {
         var _this = this;

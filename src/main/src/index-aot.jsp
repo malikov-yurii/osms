@@ -27,7 +27,13 @@
   </div>
 </app>
 
-<script>window.module = 'aot';</script>
+<script>
+    var dbOrders = {
+        elements: ${orders},
+        totalElements: ${ordersTotal}
+    }
+    window.module = 'aot';
+</script>
 </body>
 <script src="/app.js"></script>
 </html>

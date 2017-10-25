@@ -44,7 +44,7 @@ export var RenderType_OrdersComponent = i0.ɵcrt({ encapsulation: 2,
                         options: undefined }, { type: 1, expr: 'collapsed <=> expanded', animation: { type: 4,
                             styles: null, timings: '.3s ease' }, options: null }], options: {} }] } });
 function View_OrdersComponent_1(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, null, null, 8, 'filter', [], null, [[null, 'filterSubmit']], function (_v, en, $event) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 8, 'filter', [], null, [[null, 'filterSubmit']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('filterSubmit' === en)) {
@@ -52,10 +52,9 @@ function View_OrdersComponent_1(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, i1.View_Filter_0, i1.RenderType_Filter)), i0.ɵdid(573440, null, 0, i2.Filter, [i3.FormBuilder], { filters: [0, 'filters'], loads: [1, 'loads'] }, { filterSubmit: 'filterSubmit' }),
-        i0.ɵpod({ code: 0, label: 1, type: 2 }), i0.ɵpod({ code: 0, label: 1, type: 2 }), i0.ɵpod({ code: 0,
-            label: 1, type: 2 }), i0.ɵpod({ code: 0, label: 1, type: 2 }), i0.ɵpod({ code: 0, label: 1,
-            type: 2 }), i0.ɵpod({ code: 0, label: 1, type: 2 }), i0.ɵpad(6)], function (_ck, _v) {
+        }, i1.View_Filter_0, i1.RenderType_Filter)), i0.ɵdid(1, 573440, null, 0, i2.Filter, [i3.FormBuilder], { filters: [0, 'filters'], loads: [1, 'loads'] }, { filterSubmit: 'filterSubmit' }),
+        i0.ɵpod(2, { code: 0, label: 1, type: 2 }), i0.ɵpod(3, { code: 0, label: 1, type: 2 }), i0.ɵpod(4, { code: 0, label: 1, type: 2 }), i0.ɵpod(5, { code: 0, label: 1, type: 2 }), i0.ɵpod(6, { code: 0,
+            label: 1, type: 2 }), i0.ɵpod(7, { code: 0, label: 1, type: 2 }), i0.ɵpad(8, 6)], function (_ck, _v) {
         var _co = _v.component;
         var currVal_0 = _ck(_v, 8, 0, _ck(_v, 2, 0, 'customerFirstNameMask', 'First Name', 'text'), _ck(_v, 3, 0, 'customerLastNameMask', 'Last Name', 'text'), _ck(_v, 4, 0, 'customerPhoneMask', 'Phone', 'text'), _ck(_v, 5, 0, 'destinationCityMask', 'City', 'text'), _ck(_v, 6, 0, 'fromDateTimeCreated', 'From date', 'date'), _ck(_v, 7, 0, 'toDateTimeCreated', 'To date', 'date'));
         var currVal_1 = _co.filterLoads;
@@ -63,44 +62,43 @@ function View_OrdersComponent_1(_l) {
     }, null);
 }
 function View_OrdersComponent_5(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵted(null, ['\n              '])), (_l()(), i0.ɵeld(16777216, null, null, 3, 'div', [['contenteditable', '']], [[8, 'className',
-                0], [1, 'hotkeys', 0]], [[null, 'contenteditableModelChange'], [null,
-                'selectedAutocomplete'], [null, 'contentChanged'], [null,
-                'keydown'], [null, 'blur'], [null, 'keypress']], function (_v, en, $event) {
-            var ad = true;
-            var _co = _v.component;
-            if (('keydown' === en)) {
-                var pd_0 = (i0.ɵnov(_v, 2).onKeyDown($event) !== false);
-                ad = (pd_0 && ad);
-            }
-            if (('blur' === en)) {
-                var pd_1 = (i0.ɵnov(_v, 2).onBlur($event) !== false);
-                ad = (pd_1 && ad);
-            }
-            if (('blur' === en)) {
-                var pd_2 = (i0.ɵnov(_v, 4).onBlur() !== false);
-                ad = (pd_2 && ad);
-            }
-            if (('keypress' === en)) {
-                var pd_3 = (i0.ɵnov(_v, 4).onKeydown($event) !== false);
-                ad = (pd_3 && ad);
-            }
-            if (('contenteditableModelChange' === en)) {
-                var pd_4 = ((_v.parent.parent.parent.context.$implicit[_v.parent.parent.context.$implicit] = $event) !== false);
-                ad = (pd_4 && ad);
-            }
-            if (('selectedAutocomplete' === en)) {
-                var pd_5 = (_co.onAutocompleteInfo(_v.parent.parent.parent.context.$implicit.id, $event) !== false);
-                ad = (pd_5 && ad);
-            }
-            if (('contentChanged' === en)) {
-                var pd_6 = (_co.onUpdateInfoField(_v.parent.parent.parent.context.$implicit.id, _v.parent.parent.context.$implicit, $event) !== false);
-                ad = (pd_6 && ad);
-            }
-            return ad;
-        }, null, null)), i0.ɵdid(16384, null, 0, i4.Autocomplete, [i5.OrderService, i0.ViewContainerRef, i0.ComponentFactoryResolver], { types: [0,
-                'types'] }, { selected: 'selectedAutocomplete' }), i0.ɵpad(2), i0.ɵdid(540672, null, 0, i6.ContenteditableModel, [i0.ElementRef], { model: [0, 'model'] }, { update: 'contenteditableModelChange',
-            changed: 'contentChanged' }), (_l()(), i0.ɵted(null, ['\n            ']))], function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵted(-1, null, ['\n              '])), (_l()(),
+            i0.ɵeld(1, 16777216, null, null, 3, 'div', [['contenteditable', '']], [[8, 'className', 0], [1, 'hotkeys', 0]], [[null, 'contenteditableModelChange'],
+                [null, 'selectedAutocomplete'], [null, 'contentChanged'],
+                [null, 'keydown'], [null, 'blur'], [null, 'keypress']], function (_v, en, $event) {
+                var ad = true;
+                var _co = _v.component;
+                if (('keydown' === en)) {
+                    var pd_0 = (i0.ɵnov(_v, 2).onKeyDown($event) !== false);
+                    ad = (pd_0 && ad);
+                }
+                if (('blur' === en)) {
+                    var pd_1 = (i0.ɵnov(_v, 2).onBlur($event) !== false);
+                    ad = (pd_1 && ad);
+                }
+                if (('blur' === en)) {
+                    var pd_2 = (i0.ɵnov(_v, 4).onBlur() !== false);
+                    ad = (pd_2 && ad);
+                }
+                if (('keypress' === en)) {
+                    var pd_3 = (i0.ɵnov(_v, 4).onKeydown($event) !== false);
+                    ad = (pd_3 && ad);
+                }
+                if (('contenteditableModelChange' === en)) {
+                    var pd_4 = ((_v.parent.parent.parent.context.$implicit[_v.parent.parent.context.$implicit] = $event) !== false);
+                    ad = (pd_4 && ad);
+                }
+                if (('selectedAutocomplete' === en)) {
+                    var pd_5 = (_co.onAutocompleteInfo(_v.parent.parent.parent.context.$implicit.id, $event) !== false);
+                    ad = (pd_5 && ad);
+                }
+                if (('contentChanged' === en)) {
+                    var pd_6 = (_co.onUpdateInfoField(_v.parent.parent.parent.context.$implicit.id, _v.parent.parent.context.$implicit, $event) !== false);
+                    ad = (pd_6 && ad);
+                }
+                return ad;
+            }, null, null)), i0.ɵdid(2, 16384, null, 0, i4.Autocomplete, [i5.OrderService, i0.ViewContainerRef, i0.ComponentFactoryResolver], { types: [0,
+                'types'] }, { selected: 'selectedAutocomplete' }), i0.ɵpad(3, 2), i0.ɵdid(4, 540672, null, 0, i6.ContenteditableModel, [i0.ElementRef], { model: [0, 'model'] }, { update: 'contenteditableModelChange', changed: 'contentChanged' }), (_l()(), i0.ɵted(-1, null, ['\n            ']))], function (_ck, _v) {
         var currVal_2 = _ck(_v, 3, 0, 'info', _v.parent.parent.context.$implicit);
         _ck(_v, 2, 0, currVal_2);
         var currVal_3 = _v.parent.parent.parent.context.$implicit[_v.parent.parent.context.$implicit];
@@ -112,19 +110,20 @@ function View_OrdersComponent_5(_l) {
     });
 }
 function View_OrdersComponent_6(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵted(null, ['\n              '])), (_l()(), i0.ɵeld(0, null, null, 2, 'div', [['class', 'order-info__block order-info__block--date']], null, null, null, null, null)), (_l()(),
-            i0.ɵted(null, ['\n                ', '\n              '])), i0.ɵppd(2),
-        (_l()(), i0.ɵted(null, ['\n            ']))], null, function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵted(-1, null, ['\n              '])), (_l()(),
+            i0.ɵeld(1, 0, null, null, 2, 'div', [['class', 'order-info__block order-info__block--date']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(2, null, ['\n                ', '\n              '])),
+        i0.ɵppd(3, 2), (_l()(), i0.ɵted(-1, null, ['\n            ']))], null, function (_ck, _v) {
         var currVal_0 = i0.ɵunv(_v, 2, 0, _ck(_v, 3, 0, i0.ɵnov(_v.parent.parent.parent.parent, 1), _v.parent.parent.parent.context.$implicit[_v.parent.parent.context.$implicit], 'dd MMM HH:mm'));
         _ck(_v, 2, 0, currVal_0);
     });
 }
 function View_OrdersComponent_4(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, null, null, 7, null, null, null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['\n\n            '])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_5)), i0.ɵdid(16384, null, 0, i7.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, 'ngIf'] }, null), (_l()(), i0.ɵted(null, ['\n\n            '])), (_l()(),
-            i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_6)),
-        i0.ɵdid(16384, null, 0, i7.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0,
-                'ngIf'] }, null), (_l()(), i0.ɵted(null, ['\n\n          ']))], function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 7, null, null, null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['\n\n            '])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_5)), i0.ɵdid(3, 16384, null, 0, i7.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0,
+                'ngIf'] }, null), (_l()(), i0.ɵted(-1, null, ['\n\n            '])),
+        (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_6)),
+        i0.ɵdid(6, 16384, null, 0, i7.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, 'ngIf'] }, null), (_l()(), i0.ɵted(-1, null, ['\n\n          ']))], function (_ck, _v) {
         var currVal_0 = (_v.parent.context.$implicit !== 'createdDateTime');
         _ck(_v, 3, 0, currVal_0);
         var currVal_1 = (_v.parent.context.$implicit === 'createdDateTime');
@@ -132,9 +131,9 @@ function View_OrdersComponent_4(_l) {
     }, null);
 }
 function View_OrdersComponent_8(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, null, null, 3, 'option', [], [[1, 'selected', 0]], null, null, null, null)),
-        i0.ɵdid(147456, null, 0, i3.NgSelectOption, [i0.ElementRef, i0.Renderer2,
-            [8, null]], { value: [0, 'value'] }, null), i0.ɵdid(147456, null, 0, i3.ɵq, [i0.ElementRef, i0.Renderer2, [8, null]], { value: [0, 'value'] }, null), (_l()(), i0.ɵted(null, ['\n                  ', '\n                ']))], function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 3, 'option', [], [[1, 'selected', 0]], null, null, null, null)),
+        i0.ɵdid(1, 147456, null, 0, i3.NgSelectOption, [i0.ElementRef, i0.Renderer2,
+            [8, null]], { value: [0, 'value'] }, null), i0.ɵdid(2, 147456, null, 0, i3.ɵq, [i0.ElementRef, i0.Renderer2, [8, null]], { value: [0, 'value'] }, null), (_l()(), i0.ɵted(3, null, ['\n                  ', '\n                ']))], function (_ck, _v) {
         var currVal_1 = _v.context.$implicit;
         _ck(_v, 1, 0, currVal_1);
         var currVal_2 = _v.context.$implicit;
@@ -147,9 +146,9 @@ function View_OrdersComponent_8(_l) {
     });
 }
 function View_OrdersComponent_7(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵted(null, ['\n            '])), (_l()(), i0.ɵeld(0, null, null, 7, 'div', [], [[8, 'className', 0]], null, null, null, null)), (_l()(), i0.ɵted(null, ['\n              '])),
-        (_l()(), i0.ɵeld(0, null, null, 4, 'select', [], [[8, 'name',
-                0]], [[null, 'change']], function (_v, en, $event) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵted(-1, null, ['\n            '])), (_l()(),
+            i0.ɵeld(1, 0, null, null, 7, 'div', [], [[8, 'className',
+                    0]], null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['\n              '])), (_l()(), i0.ɵeld(3, 0, null, null, 4, 'select', [], [[8, 'name', 0]], [[null, 'change']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('change' === en)) {
@@ -157,11 +156,11 @@ function View_OrdersComponent_7(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i0.ɵted(null, ['\n                '])),
+        }, null, null)), (_l()(), i0.ɵted(-1, null, ['\n                '])),
         (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_8)),
-        i0.ɵdid(802816, null, 0, i7.NgForOf, [i0.ViewContainerRef, i0.TemplateRef,
-            i0.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null), (_l()(), i0.ɵted(null, ['\n              '])), (_l()(), i0.ɵted(null, ['\n            '])),
-        (_l()(), i0.ɵted(null, ['\n          ']))], function (_ck, _v) {
+        i0.ɵdid(6, 802816, null, 0, i7.NgForOf, [i0.ViewContainerRef, i0.TemplateRef,
+            i0.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null), (_l()(), i0.ɵted(-1, null, ['\n              '])), (_l()(), i0.ɵted(-1, null, ['\n            '])),
+        (_l()(), i0.ɵted(-1, null, ['\n          ']))], function (_ck, _v) {
         var _co = _v.component;
         var currVal_2 = _co.infoBlocks[_v.parent.context.$implicit];
         _ck(_v, 6, 0, currVal_2);
@@ -173,11 +172,11 @@ function View_OrdersComponent_7(_l) {
     });
 }
 function View_OrdersComponent_3(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, null, null, 7, null, null, null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['\n\n          '])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_4)), i0.ɵdid(16384, null, 0, i7.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, 'ngIf'] }, null), (_l()(), i0.ɵted(null, ['\n\n          '])), (_l()(),
-            i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_7)),
-        i0.ɵdid(16384, null, 0, i7.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0,
-                'ngIf'] }, null), (_l()(), i0.ɵted(null, ['\n\n        ']))], function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 7, null, null, null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['\n\n          '])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_4)), i0.ɵdid(3, 16384, null, 0, i7.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0,
+                'ngIf'] }, null), (_l()(), i0.ɵted(-1, null, ['\n\n          '])),
+        (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_7)),
+        i0.ɵdid(6, 16384, null, 0, i7.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, 'ngIf'] }, null), (_l()(), i0.ɵted(-1, null, ['\n\n        ']))], function (_ck, _v) {
         var _co = _v.component;
         var currVal_0 = !_co.hasInput(_v.context.$implicit);
         _ck(_v, 3, 0, currVal_0);
@@ -186,7 +185,7 @@ function View_OrdersComponent_3(_l) {
     }, null);
 }
 function View_OrdersComponent_9(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, null, null, 7, 'div', [['class',
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 7, 'div', [['class',
                 'order-manage__block order-manage__block--save'], ['title', 'Save customer']], null, [[null, 'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
@@ -195,14 +194,13 @@ function View_OrdersComponent_9(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i0.ɵted(null, ['\n            '])),
-        (_l()(), i0.ɵeld(0, null, null, 1, 'i', [['class', 'material-icons']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['save'])), (_l()(), i0.ɵted(null, ['\n            '])),
-        (_l()(), i0.ɵeld(0, null, null, 1, 'div', [['class', 'order-manage__text']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['Save customer'])), (_l()(), i0.ɵted(null, ['\n          ']))], null, null);
+        }, null, null)), (_l()(), i0.ɵted(-1, null, ['\n            '])),
+        (_l()(), i0.ɵeld(2, 0, null, null, 1, 'i', [['class', 'material-icons']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['save'])), (_l()(), i0.ɵted(-1, null, ['\n            '])), (_l()(), i0.ɵeld(5, 0, null, null, 1, 'div', [['class', 'order-manage__text']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['Save customer'])),
+        (_l()(), i0.ɵted(-1, null, ['\n          ']))], null, null);
 }
 function View_OrdersComponent_10(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, null, null, 7, 'div', [['class',
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 7, 'div', [['class',
                 'order-manage__block order-manage__block--edit'], ['title', 'Edit customer']], null, [[null, 'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
@@ -211,50 +209,50 @@ function View_OrdersComponent_10(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i0.ɵted(null, ['\n            '])),
-        (_l()(), i0.ɵeld(0, null, null, 1, 'i', [['class', 'material-icons']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['mode_edit'])), (_l()(), i0.ɵted(null, ['\n            '])), (_l()(), i0.ɵeld(0, null, null, 1, 'div', [['class', 'order-manage__text']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['Edit customer'])),
-        (_l()(), i0.ɵted(null, ['\n          ']))], null, null);
+        }, null, null)), (_l()(), i0.ɵted(-1, null, ['\n            '])),
+        (_l()(), i0.ɵeld(2, 0, null, null, 1, 'i', [['class', 'material-icons']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['mode_edit'])), (_l()(), i0.ɵted(-1, null, ['\n            '])), (_l()(), i0.ɵeld(5, 0, null, null, 1, 'div', [['class', 'order-manage__text']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['Edit customer'])),
+        (_l()(), i0.ɵted(-1, null, ['\n          ']))], null, null);
 }
 function View_OrdersComponent_13(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵted(null, ['\n              '])), (_l()(), i0.ɵeld(16777216, [['productBlock', 1]], null, 3, 'div', [['contenteditable', '']], [[8, 'className',
-                0]], [[null, 'contenteditableModelChange'], [null, 'selectedAutocomplete'],
-            [null, 'contentChanged'], [null, 'keydown'], [null,
-                'blur'], [null, 'keypress']], function (_v, en, $event) {
-            var ad = true;
-            var _co = _v.component;
-            if (('keydown' === en)) {
-                var pd_0 = (i0.ɵnov(_v, 2).onKeyDown($event) !== false);
-                ad = (pd_0 && ad);
-            }
-            if (('blur' === en)) {
-                var pd_1 = (i0.ɵnov(_v, 2).onBlur($event) !== false);
-                ad = (pd_1 && ad);
-            }
-            if (('blur' === en)) {
-                var pd_2 = (i0.ɵnov(_v, 4).onBlur() !== false);
-                ad = (pd_2 && ad);
-            }
-            if (('keypress' === en)) {
-                var pd_3 = (i0.ɵnov(_v, 4).onKeydown($event) !== false);
-                ad = (pd_3 && ad);
-            }
-            if (('contenteditableModelChange' === en)) {
-                var pd_4 = ((_v.parent.parent.context.$implicit[_v.parent.context.$implicit] = $event) !== false);
-                ad = (pd_4 && ad);
-            }
-            if (('selectedAutocomplete' === en)) {
-                var pd_5 = (_co.onAutocompleteProduct(_v.parent.parent.parent.context.$implicit.id, _v.parent.parent.context.$implicit.id, $event) !== false);
-                ad = (pd_5 && ad);
-            }
-            if (('contentChanged' === en)) {
-                var pd_6 = (_co.onUpdateProductField(_v.parent.parent.parent.context.$implicit.id, _v.parent.parent.context.$implicit.id, _v.parent.context.$implicit, $event) !== false);
-                ad = (pd_6 && ad);
-            }
-            return ad;
-        }, null, null)), i0.ɵdid(16384, null, 0, i4.Autocomplete, [i5.OrderService, i0.ViewContainerRef, i0.ComponentFactoryResolver], { types: [0,
-                'types'] }, { selected: 'selectedAutocomplete' }), i0.ɵpad(2), i0.ɵdid(540672, null, 0, i6.ContenteditableModel, [i0.ElementRef], { model: [0, 'model'] }, { update: 'contenteditableModelChange',
-            changed: 'contentChanged' }), (_l()(), i0.ɵted(null, ['\n            ']))], function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵted(-1, null, ['\n              '])), (_l()(),
+            i0.ɵeld(1, 16777216, [['productBlock', 1]], null, 3, 'div', [['contenteditable',
+                    '']], [[8, 'className', 0]], [[null, 'contenteditableModelChange'], [null,
+                    'selectedAutocomplete'], [null, 'contentChanged'], [null,
+                    'keydown'], [null, 'blur'], [null, 'keypress']], function (_v, en, $event) {
+                var ad = true;
+                var _co = _v.component;
+                if (('keydown' === en)) {
+                    var pd_0 = (i0.ɵnov(_v, 2).onKeyDown($event) !== false);
+                    ad = (pd_0 && ad);
+                }
+                if (('blur' === en)) {
+                    var pd_1 = (i0.ɵnov(_v, 2).onBlur($event) !== false);
+                    ad = (pd_1 && ad);
+                }
+                if (('blur' === en)) {
+                    var pd_2 = (i0.ɵnov(_v, 4).onBlur() !== false);
+                    ad = (pd_2 && ad);
+                }
+                if (('keypress' === en)) {
+                    var pd_3 = (i0.ɵnov(_v, 4).onKeydown($event) !== false);
+                    ad = (pd_3 && ad);
+                }
+                if (('contenteditableModelChange' === en)) {
+                    var pd_4 = ((_v.parent.parent.context.$implicit[_v.parent.context.$implicit] = $event) !== false);
+                    ad = (pd_4 && ad);
+                }
+                if (('selectedAutocomplete' === en)) {
+                    var pd_5 = (_co.onAutocompleteProduct(_v.parent.parent.parent.context.$implicit.id, _v.parent.parent.context.$implicit.id, $event) !== false);
+                    ad = (pd_5 && ad);
+                }
+                if (('contentChanged' === en)) {
+                    var pd_6 = (_co.onUpdateProductField(_v.parent.parent.parent.context.$implicit.id, _v.parent.parent.context.$implicit.id, _v.parent.context.$implicit, $event) !== false);
+                    ad = (pd_6 && ad);
+                }
+                return ad;
+            }, null, null)), i0.ɵdid(2, 16384, null, 0, i4.Autocomplete, [i5.OrderService, i0.ViewContainerRef, i0.ComponentFactoryResolver], { types: [0,
+                'types'] }, { selected: 'selectedAutocomplete' }), i0.ɵpad(3, 2), i0.ɵdid(4, 540672, null, 0, i6.ContenteditableModel, [i0.ElementRef], { model: [0, 'model'] }, { update: 'contenteditableModelChange', changed: 'contentChanged' }), (_l()(), i0.ɵted(-1, null, ['\n            ']))], function (_ck, _v) {
         var currVal_1 = _ck(_v, 3, 0, 'product', _v.parent.context.$implicit);
         _ck(_v, 2, 0, currVal_1);
         var currVal_2 = _v.parent.parent.context.$implicit[_v.parent.context.$implicit];
@@ -265,9 +263,10 @@ function View_OrdersComponent_13(_l) {
     });
 }
 function View_OrdersComponent_14(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵted(null, ['\n              '])), (_l()(), i0.ɵeld(0, null, null, 4, 'div', [], [[8, 'className', 0]], null, null, null, null)), (_l()(), i0.ɵted(null, ['\n                '])),
-        (_l()(), i0.ɵeld(0, null, null, 1, 'input', [['hotkeys', ''], ['type',
-                'number']], [[8, 'value', 0]], [[null, 'blur'], [null, 'keypress']], function (_v, en, $event) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵted(-1, null, ['\n              '])), (_l()(),
+            i0.ɵeld(1, 0, null, null, 4, 'div', [], [[8, 'className',
+                    0]], null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['\n                '])), (_l()(), i0.ɵeld(3, 0, null, null, 1, 'input', [['hotkeys', ''], ['type', 'number']], [[8, 'value', 0]], [[null,
+                'blur'], [null, 'keypress']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('keypress' === en)) {
@@ -279,7 +278,7 @@ function View_OrdersComponent_14(_l) {
                 ad = (pd_1 && ad);
             }
             return ad;
-        }, null, null)), i0.ɵdid(16384, null, 0, i8.HotkeysDirective, [i0.ElementRef], null, null), (_l()(), i0.ɵted(null, ['\n              '])), (_l()(), i0.ɵted(null, ['\n            ']))], null, function (_ck, _v) {
+        }, null, null)), i0.ɵdid(4, 16384, null, 0, i8.HotkeysDirective, [i0.ElementRef], null, null), (_l()(), i0.ɵted(-1, null, ['\n              '])), (_l()(), i0.ɵted(-1, null, ['\n            ']))], null, function (_ck, _v) {
         var currVal_0 = i0.ɵinlineInterpolate(1, 'order-product__block order-product__block--', _v.parent.context.$implicit, '');
         _ck(_v, 1, 0, currVal_0);
         var currVal_1 = i0.ɵinlineInterpolate(1, '', _v.parent.parent.context.$implicit[_v.parent.context.$implicit], '');
@@ -287,11 +286,11 @@ function View_OrdersComponent_14(_l) {
     });
 }
 function View_OrdersComponent_12(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, null, null, 7, null, null, null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['\n\n            '])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_13)), i0.ɵdid(16384, null, 0, i7.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, 'ngIf'] }, null), (_l()(), i0.ɵted(null, ['\n\n            '])), (_l()(),
-            i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_14)),
-        i0.ɵdid(16384, null, 0, i7.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0,
-                'ngIf'] }, null), (_l()(), i0.ɵted(null, ['\n\n          ']))], function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 7, null, null, null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['\n\n            '])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_13)), i0.ɵdid(3, 16384, null, 0, i7.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0,
+                'ngIf'] }, null), (_l()(), i0.ɵted(-1, null, ['\n\n            '])),
+        (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_14)),
+        i0.ɵdid(6, 16384, null, 0, i7.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, 'ngIf'] }, null), (_l()(), i0.ɵted(-1, null, ['\n\n          ']))], function (_ck, _v) {
         var _co = _v.component;
         var currVal_0 = !_co.hasInput(_v.context.$implicit);
         _ck(_v, 3, 0, currVal_0);
@@ -300,13 +299,13 @@ function View_OrdersComponent_12(_l) {
     }, null);
 }
 function View_OrdersComponent_11(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, null, null, 14, 'div', [], null, null, null, null, null)), i0.ɵdid(278528, null, 0, i7.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef,
-            i0.Renderer], { ngClass: [0, 'ngClass'] }, null), i0.ɵpod({ 'order-product': 0,
-            'show-supplier': 1, odd: 2, even: 3 }), (_l()(), i0.ɵted(null, ['\n\n          '])),
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 14, 'div', [], null, null, null, null, null)), i0.ɵdid(1, 278528, null, 0, i7.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef,
+            i0.Renderer], { ngClass: [0, 'ngClass'] }, null), i0.ɵpod(2, { 'order-product': 0,
+            'show-supplier': 1, odd: 2, even: 3 }), (_l()(), i0.ɵted(-1, null, ['\n\n          '])),
         (_l()(), i0.ɵand(16777216, null, null, 3, null, View_OrdersComponent_12)),
-        i0.ɵdid(802816, null, 0, i7.NgForOf, [i0.ViewContainerRef, i0.TemplateRef,
-            i0.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null), i0.ɵpad(5), i0.ɵppd(2),
-        (_l()(), i0.ɵted(null, ['\n\n          '])), (_l()(), i0.ɵeld(0, null, null, 4, 'div', [['class', 'order-product__block order-product__block--delete']], null, [[null, 'click']], function (_v, en, $event) {
+        i0.ɵdid(5, 802816, null, 0, i7.NgForOf, [i0.ViewContainerRef, i0.TemplateRef,
+            i0.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null), i0.ɵpad(6, 5),
+        i0.ɵppd(7, 2), (_l()(), i0.ɵted(-1, null, ['\n\n          '])), (_l()(), i0.ɵeld(9, 0, null, null, 4, 'div', [['class', 'order-product__block order-product__block--delete']], null, [[null, 'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('click' === en)) {
@@ -314,10 +313,9 @@ function View_OrdersComponent_11(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i0.ɵted(null, ['\n            '])),
-        (_l()(), i0.ɵeld(0, null, null, 1, 'i', [['class', 'material-icons']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['delete'])), (_l()(), i0.ɵted(null, ['\n          '])),
-        (_l()(), i0.ɵted(null, ['\n\n        ']))], function (_ck, _v) {
+        }, null, null)), (_l()(), i0.ɵted(-1, null, ['\n            '])),
+        (_l()(), i0.ɵeld(11, 0, null, null, 1, 'i', [['class', 'material-icons']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['delete'])), (_l()(), i0.ɵted(-1, null, ['\n          '])), (_l()(), i0.ɵted(-1, null, ['\n\n        ']))], function (_ck, _v) {
         var _co = _v.component;
         var currVal_0 = _ck(_v, 2, 0, true, (_co.showSuppliers && ((_v.context.$implicit.supplier == 'MISHA') || (_v.context.$implicit.supplier == 'ANTON'))), _v.context.odd, _v.context.even);
         _ck(_v, 1, 0, currVal_0);
@@ -326,11 +324,10 @@ function View_OrdersComponent_11(_l) {
     }, null);
 }
 function View_OrdersComponent_2(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, null, null, 50, 'div', [], [[8, 'className', 0], [24, '@appear', 0]], null, null, null, null)), (_l()(), i0.ɵted(null, ['\n\n      '])), (_l()(), i0.ɵeld(0, null, null, 41, 'div', [['class', 'order-info']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['\n\n        '])), (_l()(), i0.ɵeld(0, null, null, 1, 'div', [['class',
-                'order-info__block order-info__block--id']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['\n          ',
-            '\n        '])), (_l()(), i0.ɵted(null, ['\n\n        '])), (_l()(), i0.ɵand(16777216, null, null, 3, null, View_OrdersComponent_3)), i0.ɵdid(802816, null, 0, i7.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null), i0.ɵpad(4), i0.ɵppd(2), (_l()(), i0.ɵted(null, ['\n\n        '])), (_l()(), i0.ɵeld(0, null, null, 0, 'hr', [], null, null, null, null, null)), (_l()(),
-            i0.ɵted(null, ['\n\n        '])), (_l()(), i0.ɵeld(0, null, null, 25, 'div', [['class', 'order-manage']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['\n          '])),
-        (_l()(), i0.ɵeld(0, null, null, 7, 'div', [['class', 'order-manage__block order-manage__block--add'],
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 50, 'div', [], [[8, 'className', 0], [24, '@appear', 0]], null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['\n\n      '])), (_l()(), i0.ɵeld(2, 0, null, null, 41, 'div', [['class', 'order-info']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['\n\n        '])), (_l()(), i0.ɵeld(4, 0, null, null, 1, 'div', [['class', 'order-info__block order-info__block--id']], null, null, null, null, null)), (_l()(), i0.ɵted(5, null, ['\n          ', '\n        '])), (_l()(), i0.ɵted(-1, null, ['\n\n        '])), (_l()(), i0.ɵand(16777216, null, null, 3, null, View_OrdersComponent_3)), i0.ɵdid(8, 802816, null, 0, i7.NgForOf, [i0.ViewContainerRef,
+            i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null), i0.ɵpad(9, 4), i0.ɵppd(10, 2), (_l()(), i0.ɵted(-1, null, ['\n\n        '])), (_l()(),
+            i0.ɵeld(12, 0, null, null, 0, 'hr', [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['\n\n        '])), (_l()(), i0.ɵeld(14, 0, null, null, 25, 'div', [['class', 'order-manage']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['\n          '])),
+        (_l()(), i0.ɵeld(16, 0, null, null, 7, 'div', [['class', 'order-manage__block order-manage__block--add'],
             ['title', 'Add product']], null, [[null, 'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
@@ -339,18 +336,13 @@ function View_OrdersComponent_2(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i0.ɵted(null, ['\n            '])),
-        (_l()(), i0.ɵeld(0, null, null, 1, 'i', [['class', 'material-icons']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['add_box'])), (_l()(), i0.ɵted(null, ['\n            '])),
-        (_l()(), i0.ɵeld(0, null, null, 1, 'div', [['class', 'order-manage__text']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['Add product'])), (_l()(), i0.ɵted(null, ['\n          '])), (_l()(), i0.ɵted(null, ['\n          '])), (_l()(),
-            i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_9)),
-        i0.ɵdid(16384, null, 0, i7.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0,
-                'ngIf'] }, null), (_l()(), i0.ɵted(null, ['\n          '])),
-        (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_10)),
-        i0.ɵdid(16384, null, 0, i7.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0,
-                'ngIf'] }, null), (_l()(), i0.ɵted(null, ['\n          '])),
-        (_l()(), i0.ɵeld(0, null, null, 7, 'div', [['class', 'order-manage__block order-manage__block--delete'],
+        }, null, null)), (_l()(), i0.ɵted(-1, null, ['\n            '])),
+        (_l()(), i0.ɵeld(18, 0, null, null, 1, 'i', [['class', 'material-icons']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['add_box'])), (_l()(), i0.ɵted(-1, null, ['\n            '])), (_l()(), i0.ɵeld(21, 0, null, null, 1, 'div', [['class', 'order-manage__text']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['Add product'])),
+        (_l()(), i0.ɵted(-1, null, ['\n          '])), (_l()(), i0.ɵted(-1, null, ['\n          '])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_9)), i0.ɵdid(26, 16384, null, 0, i7.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, 'ngIf'] }, null),
+        (_l()(), i0.ɵted(-1, null, ['\n          '])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_10)), i0.ɵdid(29, 16384, null, 0, i7.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0,
+                'ngIf'] }, null), (_l()(), i0.ɵted(-1, null, ['\n          '])),
+        (_l()(), i0.ɵeld(31, 0, null, null, 7, 'div', [['class', 'order-manage__block order-manage__block--delete'],
             ['title', 'Delete order']], null, [[null, 'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
@@ -359,16 +351,14 @@ function View_OrdersComponent_2(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i0.ɵted(null, ['\n            '])),
-        (_l()(), i0.ɵeld(0, null, null, 1, 'i', [['class', 'material-icons']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['delete_forever'])), (_l()(), i0.ɵted(null, ['\n            '])), (_l()(), i0.ɵeld(0, null, null, 1, 'div', [['class', 'order-manage__text']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['Delete order'])),
-        (_l()(), i0.ɵted(null, ['\n          '])), (_l()(), i0.ɵted(null, ['\n        '])), (_l()(), i0.ɵted(null, ['\n\n        '])), (_l()(),
-            i0.ɵeld(0, null, null, 1, 'div', [['class', 'order-info__block order-info__block--customer-note']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['\n          ', '\n        '])), (_l()(), i0.ɵted(null, ['\n\n      '])), (_l()(), i0.ɵted(null, ['\n\n\n      '])), (_l()(),
-            i0.ɵeld(0, null, null, 4, 'div', [['class', 'order-products']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['\n        '])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_11)), i0.ɵdid(802816, null, 0, i7.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0,
-                'ngForOf'] }, null), (_l()(), i0.ɵted(null, ['\n      '])),
-        (_l()(), i0.ɵted(null, ['\n\n    ']))], function (_ck, _v) {
+        }, null, null)), (_l()(), i0.ɵted(-1, null, ['\n            '])),
+        (_l()(), i0.ɵeld(33, 0, null, null, 1, 'i', [['class', 'material-icons']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['delete_forever'])), (_l()(), i0.ɵted(-1, null, ['\n            '])), (_l()(), i0.ɵeld(36, 0, null, null, 1, 'div', [['class', 'order-manage__text']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['Delete order'])),
+        (_l()(), i0.ɵted(-1, null, ['\n          '])), (_l()(), i0.ɵted(-1, null, ['\n        '])), (_l()(), i0.ɵted(-1, null, ['\n\n        '])), (_l()(),
+            i0.ɵeld(41, 0, null, null, 1, 'div', [['class', 'order-info__block order-info__block--customer-note']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(42, null, ['\n          ', '\n        '])), (_l()(), i0.ɵted(-1, null, ['\n\n      '])), (_l()(), i0.ɵted(-1, null, ['\n\n\n      '])),
+        (_l()(), i0.ɵeld(45, 0, null, null, 4, 'div', [['class', 'order-products']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['\n        '])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_11)), i0.ɵdid(48, 802816, null, 0, i7.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null), (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵted(-1, null, ['\n\n    ']))], function (_ck, _v) {
         var currVal_3 = i0.ɵunv(_v, 8, 0, _ck(_v, 10, 0, i0.ɵnov(_v.parent, 0), _v.context.$implicit, _ck(_v, 9, 0, 'id', 'customerId', 'customerNote', 'orderItems')));
         _ck(_v, 8, 0, currVal_3);
         var currVal_4 = (_v.context.$implicit.customerId === 0);
@@ -389,8 +379,9 @@ function View_OrdersComponent_2(_l) {
 }
 export function View_OrdersComponent_0(_l) {
     return i0.ɵvid(0, [i0.ɵpid(0, i9.KeysPipe, []), i0.ɵpid(0, i7.DatePipe, [i0.LOCALE_ID]),
-        (_l()(), i0.ɵeld(0, null, null, 13, 'div', [['style', 'display: none;']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['\n  '])), (_l()(), i0.ɵeld(0, null, null, 1, 'div', [['class', 'get-orders']], null, [[null, 'click']], function (_v, en, $event) {
+        (_l()(), i0.ɵeld(2, 0, null, null, 13, 'div', [['style', 'display: none;']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['\n  '])), (_l()(), i0.ɵeld(4, 0, null, null, 1, 'div', [['class', 'get-orders']], null, [[null,
+                'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('click' === en)) {
@@ -398,8 +389,9 @@ export function View_OrdersComponent_0(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i0.ɵted(null, ['Get All OrdersComponent'])),
-        (_l()(), i0.ɵted(null, ['\n\n  '])), (_l()(), i0.ɵeld(0, null, null, 1, 'div', [['class', 'consolestore']], null, [[null, 'click']], function (_v, en, $event) {
+        }, null, null)), (_l()(), i0.ɵted(-1, null, ['Get All OrdersComponent'])),
+        (_l()(), i0.ɵted(-1, null, ['\n\n  '])), (_l()(), i0.ɵeld(7, 0, null, null, 1, 'div', [['class', 'consolestore']], null, [[null,
+                'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('click' === en)) {
@@ -407,8 +399,9 @@ export function View_OrdersComponent_0(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i0.ɵted(null, ['Console current state'])),
-        (_l()(), i0.ɵted(null, ['\n\n  '])), (_l()(), i0.ɵeld(0, null, null, 1, 'div', [['class', 'consoleorders']], null, [[null, 'click']], function (_v, en, $event) {
+        }, null, null)), (_l()(), i0.ɵted(-1, null, ['Console current state'])),
+        (_l()(), i0.ɵted(-1, null, ['\n\n  '])), (_l()(), i0.ɵeld(10, 0, null, null, 1, 'div', [['class', 'consoleorders']], null, [[null,
+                'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('click' === en)) {
@@ -416,8 +409,8 @@ export function View_OrdersComponent_0(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i0.ɵted(null, ['Console'])),
-        (_l()(), i0.ɵted(null, ['\n\n  '])), (_l()(), i0.ɵeld(0, null, null, 1, 'div', [], null, [[null, 'click']], function (_v, en, $event) {
+        }, null, null)), (_l()(), i0.ɵted(-1, null, ['Console'])),
+        (_l()(), i0.ɵted(-1, null, ['\n\n  '])), (_l()(), i0.ɵeld(13, 0, null, null, 1, 'div', [], null, [[null, 'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('click' === en)) {
@@ -425,10 +418,10 @@ export function View_OrdersComponent_0(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i0.ɵted(null, ['SHow suppliers'])),
-        (_l()(), i0.ɵted(null, ['\n'])), (_l()(), i0.ɵted(null, ['\n\n'])),
-        (_l()(), i0.ɵeld(0, null, null, 34, 'div', [['class', 'wrapper order-page']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['\n\n\n  '])), (_l()(), i0.ɵeld(0, null, null, 17, 'div', [['class', 'service-block']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['\n    '])), (_l()(), i0.ɵeld(0, null, null, 1, 'div', [['class',
+        }, null, null)), (_l()(), i0.ɵted(-1, null, ['SHow suppliers'])),
+        (_l()(), i0.ɵted(-1, null, ['\n'])), (_l()(), i0.ɵted(-1, null, ['\n\n'])),
+        (_l()(), i0.ɵeld(17, 0, null, null, 34, 'div', [['class', 'wrapper order-page']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['\n\n\n  '])), (_l()(), i0.ɵeld(19, 0, null, null, 17, 'div', [['class', 'service-block']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['\n    '])), (_l()(), i0.ɵeld(21, 0, null, null, 1, 'div', [['class',
                 'btn btn-orders-add']], null, [[null, 'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
@@ -437,8 +430,8 @@ export function View_OrdersComponent_0(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i0.ɵted(null, ['Add New Order\n    '])),
-        (_l()(), i0.ɵted(null, ['\n\n    '])), (_l()(), i0.ɵeld(0, null, null, 1, 'div', [['class', 'btn btn-show-filters']], [[2, 'active', null]], [[null, 'click']], function (_v, en, $event) {
+        }, null, null)), (_l()(), i0.ɵted(-1, null, ['Add New Order\n    '])),
+        (_l()(), i0.ɵted(-1, null, ['\n\n    '])), (_l()(), i0.ɵeld(24, 0, null, null, 1, 'div', [['class', 'btn btn-show-filters']], [[2, 'active', null]], [[null, 'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('click' === en)) {
@@ -446,10 +439,10 @@ export function View_OrdersComponent_0(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i0.ɵted(null, ['Toggle filters'])),
-        (_l()(), i0.ɵted(null, ['\n\n    '])), (_l()(), i0.ɵeld(0, null, null, 8, 'div', [['class', 'search-input-container']], [[2, 'expanded',
+        }, null, null)), (_l()(), i0.ɵted(-1, null, ['Toggle filters'])),
+        (_l()(), i0.ɵted(-1, null, ['\n\n    '])), (_l()(), i0.ɵeld(27, 0, null, null, 8, 'div', [['class', 'search-input-container']], [[2, 'expanded',
                 null]], null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵeld(0, null, null, 5, 'input', [['class', 'input search-input'], ['id', ''], ['name',
+        (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵeld(29, 0, null, null, 5, 'input', [['class', 'input search-input'], ['id', ''], ['name',
                 'searchStream'], ['placeholder', 'Search in orders...'], ['type', 'text']], [[24, '@changeWidth', 0], [2, 'ng-untouched', null], [2, 'ng-touched',
                 null], [2, 'ng-pristine', null], [2, 'ng-dirty', null],
             [2, 'ng-valid', null], [2, 'ng-invalid', null], [2, 'ng-pending',
@@ -487,15 +480,14 @@ export function View_OrdersComponent_0(_l) {
                 ad = (pd_6 && ad);
             }
             return ad;
-        }, null, null)), i0.ɵdid(16384, null, 0, i3.DefaultValueAccessor, [i0.Renderer2, i0.ElementRef, [2, i3.COMPOSITION_BUFFER_MODE]], null, null), i0.ɵprd(1024, null, i3.NG_VALUE_ACCESSOR, function (p0_0) {
+        }, null, null)), i0.ɵdid(30, 16384, null, 0, i3.DefaultValueAccessor, [i0.Renderer2, i0.ElementRef, [2, i3.COMPOSITION_BUFFER_MODE]], null, null), i0.ɵprd(1024, null, i3.NG_VALUE_ACCESSOR, function (p0_0) {
             return [p0_0];
-        }, [i3.DefaultValueAccessor]), i0.ɵdid(540672, null, 0, i3.FormControlDirective, [[8, null], [8, null], [2, i3.NG_VALUE_ACCESSOR]], { form: [0,
-                'form'], model: [1, 'model'] }, { update: 'ngModelChange' }), i0.ɵprd(2048, null, i3.NgControl, null, [i3.FormControlDirective]), i0.ɵdid(16384, null, 0, i3.NgControlStatus, [i3.NgControl], null, null), (_l()(),
-            i0.ɵted(null, ['\n    '])), (_l()(), i0.ɵted(null, ['\n  '])),
-        (_l()(), i0.ɵted(null, ['\n\n  '])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_1)), i0.ɵdid(16384, null, 0, i7.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, 'ngIf'] }, null),
-        (_l()(), i0.ɵted(null, ['\n\n  '])), (_l()(), i0.ɵeld(0, null, null, 5, 'div', [['class', 'orders']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['\n    '])), (_l()(), i0.ɵand(16777216, null, null, 2, null, View_OrdersComponent_2)), i0.ɵdid(802816, null, 0, i7.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null), i0.ɵpid(131072, i7.AsyncPipe, [i0.ChangeDetectorRef]),
-        (_l()(), i0.ɵted(null, ['\n  '])), (_l()(), i0.ɵted(null, ['\n\n\n  '])),
-        (_l()(), i0.ɵeld(0, null, null, 2, 'pagination', [], null, [[null, 'dataChanged']], function (_v, en, $event) {
+        }, [i3.DefaultValueAccessor]), i0.ɵdid(32, 540672, null, 0, i3.FormControlDirective, [[8, null], [8, null], [2, i3.NG_VALUE_ACCESSOR]], { form: [0,
+                'form'], model: [1, 'model'] }, { update: 'ngModelChange' }), i0.ɵprd(2048, null, i3.NgControl, null, [i3.FormControlDirective]), i0.ɵdid(34, 16384, null, 0, i3.NgControlStatus, [i3.NgControl], null, null), (_l()(),
+            i0.ɵted(-1, null, ['\n    '])), (_l()(), i0.ɵted(-1, null, ['\n  '])),
+        (_l()(), i0.ɵted(-1, null, ['\n\n  '])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OrdersComponent_1)), i0.ɵdid(39, 16384, null, 0, i7.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, 'ngIf'] }, null), (_l()(), i0.ɵted(-1, null, ['\n\n  '])), (_l()(), i0.ɵeld(41, 0, null, null, 5, 'div', [['class', 'orders']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['\n    '])), (_l()(), i0.ɵand(16777216, null, null, 2, null, View_OrdersComponent_2)), i0.ɵdid(44, 802816, null, 0, i7.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0,
+                'ngForOf'] }, null), i0.ɵpid(131072, i7.AsyncPipe, [i0.ChangeDetectorRef]),
+        (_l()(), i0.ɵted(-1, null, ['\n  '])), (_l()(), i0.ɵted(-1, null, ['\n\n\n  '])), (_l()(), i0.ɵeld(48, 0, null, null, 2, 'pagination', [], null, [[null, 'dataChanged']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('dataChanged' === en)) {
@@ -503,9 +495,9 @@ export function View_OrdersComponent_0(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, i11.View_Pagination_0, i11.RenderType_Pagination)), i0.ɵdid(638976, null, 0, i12.Pagination, [], { totalItems: [0, 'totalItems'], pageLength: [1,
+        }, i11.View_Pagination_0, i11.RenderType_Pagination)), i0.ɵdid(49, 638976, null, 0, i12.Pagination, [], { totalItems: [0, 'totalItems'], pageLength: [1,
                 'pageLength'], currentParentPage: [2, 'currentParentPage'] }, { dataChanged: 'dataChanged' }),
-        (_l()(), i0.ɵted(null, ['\n  '])), (_l()(), i0.ɵted(null, ['\n\n']))], function (_ck, _v) {
+        (_l()(), i0.ɵted(-1, null, ['\n  '])), (_l()(), i0.ɵted(-1, null, ['\n\n']))], function (_ck, _v) {
         var _co = _v.component;
         var currVal_10 = _co.searchStream;
         var currVal_11 = _co.searchQuery;
@@ -536,7 +528,7 @@ export function View_OrdersComponent_0(_l) {
     });
 }
 export function View_OrdersComponent_Host_0(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(16777216, null, null, 2, 'ng-component', [], [[40, '@slideToLeft', 0]], null, null, View_OrdersComponent_0, RenderType_OrdersComponent)), i0.ɵprd(512, null, i13.PopupService, i13.PopupService, [i0.ComponentFactoryResolver]), i0.ɵdid(245760, null, 0, i10.OrdersComponent, [i14.Store, i5.OrderService, i13.PopupService, i15.NotyService, i0.ViewContainerRef], null, null)], function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 16777216, null, null, 2, 'ng-component', [], [[40, '@slideToLeft', 0]], null, null, View_OrdersComponent_0, RenderType_OrdersComponent)), i0.ɵprd(512, null, i13.PopupService, i13.PopupService, [i0.ComponentFactoryResolver]), i0.ɵdid(2, 245760, null, 0, i10.OrdersComponent, [i14.Store, i5.OrderService, i13.PopupService, i15.NotyService, i0.ViewContainerRef], null, null)], function (_ck, _v) {
         _ck(_v, 2, 0);
     }, function (_ck, _v) {
         var currVal_0 = undefined;

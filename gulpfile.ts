@@ -5,7 +5,6 @@ const sourcemaps   = require('gulp-sourcemaps');
 const rename       = require('gulp-rename');
 const concat       = require('gulp-concat');
 const del          = require('del');
-const replace      = require('gulp-replace');
 const sync         = require('gulp-sync')(gulp);
 const tsProject    = tsc.createProject('tsconfig.json');
 
@@ -14,20 +13,17 @@ const buildDirectory  = './src/main/webapp';
 const targetDirectory = './target/shopsystem';
 
 
-
-
-
 // Handle HTML files
 gulp.task('html-index:dev', () => {
-  return gulp.src(`${srcDirectory}/index-jit.html`)
-    .pipe(rename('index.html'))
-    .pipe(gulp.dest(buildDirectory));
+  return gulp.src(`${srcDirectory}/index-jit.jsp`)
+    .pipe(rename('index.jsp'))
+    .pipe(gulp.dest(`${buildDirectory}/WEB-INF/jsp/`));
 });
 
 gulp.task('html-index:prod', () => {
-  return gulp.src(`${srcDirectory}/index-aot.html`)
-    .pipe(rename('index.html'))
-    .pipe(gulp.dest(buildDirectory));
+  return gulp.src(`${srcDirectory}/index-aot.jsp`)
+    .pipe(rename('index.jsp'))
+    .pipe(gulp.dest(`${buildDirectory}/WEB-INF/jsp/`));
 });
 
 gulp.task('templates', () => {

@@ -15,16 +15,16 @@ var styles_App = [];
 export var RenderType_App = i0.ɵcrt({ encapsulation: 2, styles: styles_App,
     data: {} });
 export function View_App_0(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵted(null, ['\n    '])), (_l()(), i0.ɵeld(0, null, null, 1, 'nav-header', [], null, null, null, i1.View_Header_0, i1.RenderType_Header)), i0.ɵdid(49152, null, 0, i2.Header, [], null, null), (_l()(), i0.ɵted(null, ['\n    '])),
-        (_l()(), i0.ɵeld(16777216, null, null, 1, 'router-outlet', [], null, null, null, null, null)),
-        i0.ɵdid(212992, null, 0, i3.RouterOutlet, [i3.ChildrenOutletContexts, i0.ViewContainerRef,
-            i0.ComponentFactoryResolver, [8, null], i0.ChangeDetectorRef], null, null), (_l()(), i0.ɵted(null, ['\n  ']))], function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵted(-1, null, ['\n    '])), (_l()(), i0.ɵeld(1, 0, null, null, 1, 'nav-header', [], null, null, null, i1.View_Header_0, i1.RenderType_Header)), i0.ɵdid(2, 49152, null, 0, i2.Header, [], null, null), (_l()(), i0.ɵted(-1, null, ['\n    '])), (_l()(), i0.ɵeld(4, 16777216, null, null, 1, 'router-outlet', [], null, null, null, null, null)),
+        i0.ɵdid(5, 212992, null, 0, i3.RouterOutlet, [i3.ChildrenOutletContexts,
+            i0.ViewContainerRef, i0.ComponentFactoryResolver, [8, null], i0.ChangeDetectorRef], null, null), (_l()(), i0.ɵted(-1, null, ['\n  ']))], function (_ck, _v) {
         _ck(_v, 5, 0);
     }, null);
 }
 export function View_App_Host_0(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(16777216, null, null, 2, 'app', [], null, null, null, View_App_0, RenderType_App)), i0.ɵprd(512, null, i4.PopupService, i4.PopupService, [i0.ComponentFactoryResolver]),
-        i0.ɵdid(114688, null, 0, i5.App, [i4.PopupService, i6.NotyService, i0.ViewContainerRef], null, null)], function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 16777216, null, null, 2, 'app', [], null, null, null, View_App_0, RenderType_App)),
+        i0.ɵprd(512, null, i4.PopupService, i4.PopupService, [i0.ComponentFactoryResolver]),
+        i0.ɵdid(2, 114688, null, 0, i5.App, [i4.PopupService, i6.NotyService, i0.ViewContainerRef], null, null)], function (_ck, _v) {
         _ck(_v, 2, 0);
     }, null);
 }
