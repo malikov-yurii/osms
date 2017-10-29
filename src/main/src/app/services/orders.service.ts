@@ -8,6 +8,7 @@ import { StoreHelper } from './store-helper.service';
 import { SearchService } from './search.service';
 import { Order, Product, STATIC_DATA } from '../models/index';
 
+declare var dbOrders;
 
 @Injectable()
 export class OrderService {
@@ -28,10 +29,17 @@ export class OrderService {
 
   // Manage orders
   getOrders(start: number, length: number): Observable<any> {
-    return this.api.get(`/${this.ordersPath}?pageNumber=${start}&pageCapacity=${length}`)
-      .do(resp => {
-        this.storeHelper.update('order', resp.elements);
-      });
+    if (dbOrders.elements.length) {
+      this.storeHelper.update('order', dbOrders.elements);
+      dbOrders.elements = [];
+      return Observable.of(dbOrders);
+
+    } else {
+      return this.api.get(`/${this.ordersPath}?pageNumber=${start}&pageCapacity=${length}`)
+        .do(resp => {
+          this.storeHelper.update('order', resp.elements);
+        });
+    }
   }
 
   addOrder(): Observable<any> {

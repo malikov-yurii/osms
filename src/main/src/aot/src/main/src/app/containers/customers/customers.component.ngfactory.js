@@ -29,28 +29,29 @@ export var RenderType_CustomersComponent = i0.ɵcrt({ encapsulation: 2,
                         options: undefined }, { type: 1, expr: 'collapsed <=> expanded', animation: { type: 4,
                             styles: null, timings: '.3s ease' }, options: null }], options: {} }] } });
 function View_CustomersComponent_2(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, null, null, 1, 'td', [], null, null, null, null, null)), (_l()(),
-            i0.ɵted(null, ['\n          ', '\n        ']))], null, function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, 'td', [], null, null, null, null, null)), (_l()(),
+            i0.ɵted(1, null, ['\n          ', '\n        ']))], null, function (_ck, _v) {
         var currVal_0 = _v.parent.context.$implicit[_v.context.$implicit];
         _ck(_v, 1, 0, currVal_0);
     });
 }
 function View_CustomersComponent_1(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, null, null, 5, 'tr', [], null, null, null, null, null)), (_l()(),
-            i0.ɵted(null, ['\n        '])), (_l()(), i0.ɵand(16777216, null, null, 2, null, View_CustomersComponent_2)), i0.ɵdid(802816, null, 0, i1.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0,
-                'ngForOf'] }, null), i0.ɵppd(1), (_l()(), i0.ɵted(null, ['\n      ']))], function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 5, 'tr', [], null, null, null, null, null)), (_l()(),
+            i0.ɵted(-1, null, ['\n        '])), (_l()(), i0.ɵand(16777216, null, null, 2, null, View_CustomersComponent_2)), i0.ɵdid(3, 802816, null, 0, i1.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0,
+                'ngForOf'] }, null), i0.ɵppd(4, 1), (_l()(), i0.ɵted(-1, null, ['\n      ']))], function (_ck, _v) {
         var currVal_0 = i0.ɵunv(_v, 3, 0, _ck(_v, 4, 0, i0.ɵnov(_v.parent, 0), _v.context.$implicit));
         _ck(_v, 3, 0, currVal_0);
     }, null);
 }
 export function View_CustomersComponent_0(_l) {
-    return i0.ɵvid(0, [i0.ɵpid(0, i2.KeysPipe, []), (_l()(), i0.ɵeld(0, null, null, 56, 'div', [['class', 'wrapper customers-page']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['\n\n  '])),
-        (_l()(), i0.ɵeld(0, null, null, 8, 'div', [['class', 'service-block']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['\n    '])), (_l()(), i0.ɵeld(0, null, null, 5, 'input', [['class', 'input customers-search pull-right'], ['id', ''], ['name',
-                'searchStream'], ['placeholder', 'Search in customers...'], ['type', 'text']], [[24, '@changeWidth', 0], [2, 'ng-untouched', null], [2, 'ng-touched',
-                null], [2, 'ng-pristine', null], [2, 'ng-dirty', null],
-            [2, 'ng-valid', null], [2, 'ng-invalid', null], [2, 'ng-pending',
-                null]], [[null, 'ngModelChange'], [null,
+    return i0.ɵvid(0, [i0.ɵpid(0, i2.KeysPipe, []), (_l()(), i0.ɵeld(1, 0, null, null, 56, 'div', [['class', 'wrapper customers-page']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['\n\n  '])), (_l()(), i0.ɵeld(3, 0, null, null, 8, 'div', [['class',
+                'service-block']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['\n    '])), (_l()(), i0.ɵeld(5, 0, null, null, 5, 'input', [['class', 'input customers-search pull-right'], ['id',
+                ''], ['name', 'searchStream'], ['placeholder', 'Search in customers...'],
+            ['type', 'text']], [[24, '@changeWidth', 0], [2, 'ng-untouched', null],
+            [2, 'ng-touched', null], [2, 'ng-pristine', null], [2, 'ng-dirty',
+                null], [2, 'ng-valid', null], [2, 'ng-invalid', null],
+            [2, 'ng-pending', null]], [[null, 'ngModelChange'], [null,
                 'focusin'], [null, 'focusout'], [null, 'input'], [null,
                 'blur'], [null, 'compositionstart'], [null, 'compositionend']], function (_v, en, $event) {
             var ad = true;
@@ -84,27 +85,24 @@ export function View_CustomersComponent_0(_l) {
                 ad = (pd_6 && ad);
             }
             return ad;
-        }, null, null)), i0.ɵdid(16384, null, 0, i4.DefaultValueAccessor, [i0.Renderer2, i0.ElementRef, [2, i4.COMPOSITION_BUFFER_MODE]], null, null), i0.ɵprd(1024, null, i4.NG_VALUE_ACCESSOR, function (p0_0) {
+        }, null, null)), i0.ɵdid(6, 16384, null, 0, i4.DefaultValueAccessor, [i0.Renderer2, i0.ElementRef, [2, i4.COMPOSITION_BUFFER_MODE]], null, null), i0.ɵprd(1024, null, i4.NG_VALUE_ACCESSOR, function (p0_0) {
             return [p0_0];
-        }, [i4.DefaultValueAccessor]), i0.ɵdid(540672, null, 0, i4.FormControlDirective, [[8, null], [8, null], [2, i4.NG_VALUE_ACCESSOR]], { form: [0,
-                'form'], model: [1, 'model'] }, { update: 'ngModelChange' }), i0.ɵprd(2048, null, i4.NgControl, null, [i4.FormControlDirective]), i0.ɵdid(16384, null, 0, i4.NgControlStatus, [i4.NgControl], null, null), (_l()(),
-            i0.ɵted(null, ['\n  '])), (_l()(), i0.ɵted(null, ['\n\n  '])),
-        (_l()(), i0.ɵeld(0, null, null, 38, 'div', [['class', 'table-container']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['\n    '])), (_l()(), i0.ɵeld(0, null, null, 35, 'table', [['class', 'table table-customers']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵeld(0, null, null, 25, 'thead', [], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵeld(0, null, null, 1, 'th', [['class', 'headcell headcell--id']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['ID'])), (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵeld(0, null, null, 1, 'th', [['class', 'headcell headcell--name']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['Name'])), (_l()(), i0.ɵted(null, ['\n      '])),
-        (_l()(), i0.ɵeld(0, null, null, 1, 'th', [['class', 'headcell headcell--lastName']], null, null, null, null, null)),
-        (_l()(), i0.ɵted(null, ['Last name'])), (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵeld(0, null, null, 1, 'th', [['class',
-                'headcell headcell--phone']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['Phone'])), (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵeld(0, null, null, 1, 'th', [['class',
-                'headcell headcell--city']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['City'])), (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵeld(0, null, null, 1, 'th', [['class',
-                'headcell headcell--post']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['Post'])), (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵeld(0, null, null, 1, 'th', [['class',
-                'headcell headcell--email']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['Email'])), (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵeld(0, null, null, 1, 'th', [['class',
-                'headcell headcell--comment']], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['Comment'])),
-        (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵted(null, ['\n      '])),
-        (_l()(), i0.ɵeld(0, null, null, 5, 'tbody', [], null, null, null, null, null)), (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵand(16777216, null, null, 2, null, View_CustomersComponent_1)), i0.ɵdid(802816, null, 0, i1.NgForOf, [i0.ViewContainerRef,
-            i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null),
-        i0.ɵpid(131072, i1.AsyncPipe, [i0.ChangeDetectorRef]), (_l()(), i0.ɵted(null, ['\n      '])), (_l()(), i0.ɵted(null, ['\n    '])), (_l()(), i0.ɵted(null, ['\n  '])), (_l()(), i0.ɵted(null, ['\n\n  '])), (_l()(), i0.ɵeld(0, null, null, 3, 'pagination', [], null, [[null,
-                'dataChanged']], function (_v, en, $event) {
+        }, [i4.DefaultValueAccessor]), i0.ɵdid(8, 540672, null, 0, i4.FormControlDirective, [[8, null], [8, null], [2, i4.NG_VALUE_ACCESSOR]], { form: [0,
+                'form'], model: [1, 'model'] }, { update: 'ngModelChange' }), i0.ɵprd(2048, null, i4.NgControl, null, [i4.FormControlDirective]), i0.ɵdid(10, 16384, null, 0, i4.NgControlStatus, [i4.NgControl], null, null), (_l()(),
+            i0.ɵted(-1, null, ['\n  '])), (_l()(), i0.ɵted(-1, null, ['\n\n  '])),
+        (_l()(), i0.ɵeld(13, 0, null, null, 38, 'div', [['class', 'table-container']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['\n    '])), (_l()(), i0.ɵeld(15, 0, null, null, 35, 'table', [['class', 'table table-customers']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵeld(17, 0, null, null, 25, 'thead', [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(),
+            i0.ɵeld(19, 0, null, null, 1, 'th', [['class', 'headcell headcell--id']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['ID'])), (_l()(), i0.ɵted(-1, null, ['\n      '])),
+        (_l()(), i0.ɵeld(22, 0, null, null, 1, 'th', [['class', 'headcell headcell--name']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['Name'])), (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵeld(25, 0, null, null, 1, 'th', [['class',
+                'headcell headcell--lastName']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['Last name'])),
+        (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵeld(28, 0, null, null, 1, 'th', [['class', 'headcell headcell--phone']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['Phone'])), (_l()(), i0.ɵted(-1, null, ['\n      '])),
+        (_l()(), i0.ɵeld(31, 0, null, null, 1, 'th', [['class', 'headcell headcell--city']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['City'])), (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵeld(34, 0, null, null, 1, 'th', [['class',
+                'headcell headcell--post']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['Post'])), (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵeld(37, 0, null, null, 1, 'th', [['class', 'headcell headcell--email']], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['Email'])), (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵeld(40, 0, null, null, 1, 'th', [['class', 'headcell headcell--comment']], null, null, null, null, null)),
+        (_l()(), i0.ɵted(-1, null, ['Comment'])), (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵeld(44, 0, null, null, 5, 'tbody', [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵand(16777216, null, null, 2, null, View_CustomersComponent_1)), i0.ɵdid(47, 802816, null, 0, i1.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null), i0.ɵpid(131072, i1.AsyncPipe, [i0.ChangeDetectorRef]), (_l()(),
+            i0.ɵted(-1, null, ['\n      '])), (_l()(), i0.ɵted(-1, null, ['\n    '])), (_l()(), i0.ɵted(-1, null, ['\n  '])), (_l()(), i0.ɵted(-1, null, ['\n\n  '])), (_l()(), i0.ɵeld(53, 0, null, null, 3, 'pagination', [], null, [[null, 'dataChanged']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('dataChanged' === en)) {
@@ -112,9 +110,9 @@ export function View_CustomersComponent_0(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, i5.View_Pagination_0, i5.RenderType_Pagination)), i0.ɵdid(638976, null, 0, i6.Pagination, [], { totalItems: [0, 'totalItems'], pageLength: [1,
+        }, i5.View_Pagination_0, i5.RenderType_Pagination)), i0.ɵdid(54, 638976, null, 0, i6.Pagination, [], { totalItems: [0, 'totalItems'], pageLength: [1,
                 'pageLength'], currentParentPage: [2, 'currentParentPage'] }, { dataChanged: 'dataChanged' }),
-        i0.ɵpid(131072, i1.AsyncPipe, [i0.ChangeDetectorRef]), (_l()(), i0.ɵted(null, ['\n  '])), (_l()(), i0.ɵted(null, ['\n']))], function (_ck, _v) {
+        i0.ɵpid(131072, i1.AsyncPipe, [i0.ChangeDetectorRef]), (_l()(), i0.ɵted(-1, null, ['\n  '])), (_l()(), i0.ɵted(-1, null, ['\n']))], function (_ck, _v) {
         var _co = _v.component;
         var currVal_8 = _co.searchStream;
         var currVal_9 = _co.searchQuery;
@@ -139,7 +137,7 @@ export function View_CustomersComponent_0(_l) {
     });
 }
 export function View_CustomersComponent_Host_0(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, null, null, 1, 'ng-component', [], [[40, '@slideToLeft', 0]], null, null, View_CustomersComponent_0, RenderType_CustomersComponent)), i0.ɵdid(245760, null, 0, i3.CustomersComponent, [i7.CustomerService, i8.Store], null, null)], function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, 'ng-component', [], [[40, '@slideToLeft', 0]], null, null, View_CustomersComponent_0, RenderType_CustomersComponent)), i0.ɵdid(1, 245760, null, 0, i3.CustomersComponent, [i7.CustomerService, i8.Store], null, null)], function (_ck, _v) {
         _ck(_v, 1, 0);
     }, function (_ck, _v) {
         var currVal_0 = undefined;

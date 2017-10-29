@@ -18,7 +18,9 @@ export var RenderType_NotyComponent = i0.ɵcrt({ encapsulation: 0,
                                     styles: { transform: 'translate(-50%, 100%)', easing: 'cubic-bezier(0.4, 0.0, 1, 1)' },
                                     offset: null }, timings: '250ms' }], options: null }], options: {} }] } });
 export function View_NotyComponent_0(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵted(null, ['\n    '])), (_l()(), i0.ɵeld(0, null, null, 1, 'div', [['class', 'noty']], [[24, '@appearNoty', 0], [2, 'error', null]], [[null, '@appearNoty.done'], [null, 'click']], function (_v, en, $event) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵted(-1, null, ['\n    '])), (_l()(), i0.ɵeld(1, 0, null, null, 1, 'div', [['class', 'noty']], [[24, '@appearNoty',
+                0], [2, 'error', null]], [[null, '@appearNoty.done'], [null,
+                'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('@appearNoty.done' === en)) {
@@ -30,8 +32,8 @@ export function View_NotyComponent_0(_l) {
                 ad = (pd_1 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i0.ɵted(null, ['\n      ', '\n    '])),
-        (_l()(), i0.ɵted(null, ['\n  ']))], null, function (_ck, _v) {
+        }, null, null)), (_l()(), i0.ɵted(2, null, ['\n      ',
+            '\n    '])), (_l()(), i0.ɵted(-1, null, ['\n  ']))], null, function (_ck, _v) {
         var _co = _v.component;
         var currVal_0 = _co.animationState;
         var currVal_1 = _co.isError;
@@ -41,6 +43,6 @@ export function View_NotyComponent_0(_l) {
     });
 }
 export function View_NotyComponent_Host_0(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, null, null, 1, 'ng-component', [], null, null, null, View_NotyComponent_0, RenderType_NotyComponent)), i0.ɵdid(49152, null, 0, i1.NotyComponent, [], null, null)], null, null);
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, 'ng-component', [], null, null, null, View_NotyComponent_0, RenderType_NotyComponent)), i0.ɵdid(1, 49152, null, 0, i1.NotyComponent, [], null, null)], null, null);
 }
 export var NotyComponentNgFactory = i0.ɵccf('ng-component', i1.NotyComponent, View_NotyComponent_Host_0, {}, {}, []);

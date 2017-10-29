@@ -3,3 +3,4 @@ target/
 /.idea/
 *.iml
 node_modules
+src/main/webapp

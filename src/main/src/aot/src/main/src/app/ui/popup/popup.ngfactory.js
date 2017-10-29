@@ -32,28 +32,32 @@ export var RenderType_PopupComponent = i1.ɵcrt({ encapsulation: 0,
                             styles: null, timings: '0.2s ease' }, options: null }],
                 options: {} }] } });
 function View_PopupComponent_1(_l) {
-    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, null, null, 6, 'div', [['class',
+    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 6, 'div', [['class',
                 'popup__loading']], null, null, null, null, null)),
-        (_l()(), i1.ɵted(null, ['\n      '])), (_l()(), i1.ɵeld(0, null, null, 1, 'div', [['class', 'popup__loading-text']], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['Loading...'])), (_l()(), i1.ɵted(null, ['\n      '])), (_l()(), i1.ɵeld(0, null, null, 0, 'img', [['alt', ''], ['class', 'popup__loading-image'],
-            ['src', '/assets/images/loading.svg']], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['\n    ']))], null, null);
+        (_l()(), i1.ɵted(-1, null, ['\n      '])), (_l()(), i1.ɵeld(2, 0, null, null, 1, 'div', [['class', 'popup__loading-text']], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ['Loading...'])), (_l()(), i1.ɵted(-1, null, ['\n      '])), (_l()(),
+            i1.ɵeld(5, 0, null, null, 0, 'img', [['alt', ''], ['class', 'popup__loading-image'],
+                ['src', '/assets/images/loading.svg']], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ['\n    ']))], null, null);
 }
 function View_PopupComponent_2(_l) {
-    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, null, null, 4, 'div', [['class',
+    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, 'div', [['class',
                 'popup__content']], null, null, null, null, null)),
-        (_l()(), i1.ɵted(null, ['\n      '])), (_l()(), i1.ɵeld(0, null, null, 1, 'div', [['class', 'popup__content-text']], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['', ''])), (_l()(), i1.ɵted(null, ['\n    ']))], null, function (_ck, _v) {
+        (_l()(), i1.ɵted(-1, null, ['\n      '])), (_l()(), i1.ɵeld(2, 0, null, null, 1, 'div', [['class', 'popup__content-text']], null, null, null, null, null)), (_l()(), i1.ɵted(3, null, ['', ''])), (_l()(), i1.ɵted(-1, null, ['\n    ']))], null, function (_ck, _v) {
         var _co = _v.component;
         var currVal_0 = _co.data;
         _ck(_v, 3, 0, currVal_0);
     });
 }
 function View_PopupComponent_4(_l) {
-    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, null, null, 11, 'div', [['class',
-                'popup__formgroup']], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['\n          '])), (_l()(), i1.ɵeld(0, null, null, 1, 'label', [['class', 'popup__label']], [[8, 'htmlFor',
-                0]], null, null, null, null)), (_l()(), i1.ɵted(null, ['', ''])), (_l()(), i1.ɵted(null, ['\n          '])), (_l()(), i1.ɵeld(0, null, null, 5, 'input', [['class', 'input popup__input'], ['type',
-                'text']], [[8, 'id', 0], [2, 'ng-untouched', null], [2, 'ng-touched', null],
-            [2, 'ng-pristine', null], [2, 'ng-dirty', null], [2, 'ng-valid',
-                null], [2, 'ng-invalid', null], [2, 'ng-pending', null]], [[null, 'input'], [null, 'blur'], [null, 'compositionstart'],
-            [null, 'compositionend']], function (_v, en, $event) {
+    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 11, 'div', [['class',
+                'popup__formgroup']], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ['\n          '])), (_l()(),
+            i1.ɵeld(2, 0, null, null, 1, 'label', [['class', 'popup__label']], [[8, 'htmlFor', 0]], null, null, null, null)),
+        (_l()(), i1.ɵted(3, null, ['', ''])), (_l()(), i1.ɵted(-1, null, ['\n          '])),
+        (_l()(), i1.ɵeld(5, 0, null, null, 5, 'input', [['class', 'input popup__input'],
+            ['type', 'text']], [[8, 'id', 0], [2, 'ng-untouched', null], [2, 'ng-touched',
+                null], [2, 'ng-pristine', null], [2, 'ng-dirty', null],
+            [2, 'ng-valid', null], [2, 'ng-invalid', null], [2, 'ng-pending',
+                null]], [[null, 'input'], [null, 'blur'], [null,
+                'compositionstart'], [null, 'compositionend']], function (_v, en, $event) {
             var ad = true;
             if (('input' === en)) {
                 var pd_0 = (i1.ɵnov(_v, 6)._handleInput($event.target.value) !== false);
@@ -72,10 +76,9 @@ function View_PopupComponent_4(_l) {
                 ad = (pd_3 && ad);
             }
             return ad;
-        }, null, null)), i1.ɵdid(16384, null, 0, i2.DefaultValueAccessor, [i1.Renderer2, i1.ElementRef, [2, i2.COMPOSITION_BUFFER_MODE]], null, null),
-        i1.ɵprd(1024, null, i2.NG_VALUE_ACCESSOR, function (p0_0) {
+        }, null, null)), i1.ɵdid(6, 16384, null, 0, i2.DefaultValueAccessor, [i1.Renderer2, i1.ElementRef, [2, i2.COMPOSITION_BUFFER_MODE]], null, null), i1.ɵprd(1024, null, i2.NG_VALUE_ACCESSOR, function (p0_0) {
             return [p0_0];
-        }, [i2.DefaultValueAccessor]), i1.ɵdid(671744, null, 0, i2.FormControlName, [[3, i2.ControlContainer], [8, null], [8, null], [2, i2.NG_VALUE_ACCESSOR]], { name: [0, 'name'] }, null), i1.ɵprd(2048, null, i2.NgControl, null, [i2.FormControlName]), i1.ɵdid(16384, null, 0, i2.NgControlStatus, [i2.NgControl], null, null), (_l()(), i1.ɵted(null, ['\n        ']))], function (_ck, _v) {
+        }, [i2.DefaultValueAccessor]), i1.ɵdid(8, 671744, null, 0, i2.FormControlName, [[3, i2.ControlContainer], [8, null], [8, null], [2, i2.NG_VALUE_ACCESSOR]], { name: [0, 'name'] }, null), i1.ɵprd(2048, null, i2.NgControl, null, [i2.FormControlName]), i1.ɵdid(10, 16384, null, 0, i2.NgControlStatus, [i2.NgControl], null, null), (_l()(), i1.ɵted(-1, null, ['\n        ']))], function (_ck, _v) {
         var currVal_10 = i1.ɵinlineInterpolate(1, '', _v.context.$implicit, '');
         _ck(_v, 8, 0, currVal_10);
     }, function (_ck, _v) {
@@ -95,7 +98,7 @@ function View_PopupComponent_4(_l) {
     });
 }
 function View_PopupComponent_3(_l) {
-    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, null, null, 37, 'form', [['novalidate',
+    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 37, 'form', [['novalidate',
                 '']], [[2, 'ng-untouched', null], [2, 'ng-touched', null], [2, 'ng-pristine',
                 null], [2, 'ng-dirty', null], [2, 'ng-valid', null], [2,
                 'ng-invalid', null], [2, 'ng-pending', null]], [[null,
@@ -115,17 +118,15 @@ function View_PopupComponent_3(_l) {
                 ad = (pd_2 && ad);
             }
             return ad;
-        }, null, null)), i1.ɵdid(16384, null, 0, i2.ɵbf, [], null, null), i1.ɵdid(540672, null, 0, i2.FormGroupDirective, [[8, null], [8, null]], { form: [0, 'form'] }, { ngSubmit: 'ngSubmit' }),
+        }, null, null)), i1.ɵdid(1, 16384, null, 0, i2.ɵbf, [], null, null), i1.ɵdid(2, 540672, null, 0, i2.FormGroupDirective, [[8, null], [8, null]], { form: [0, 'form'] }, { ngSubmit: 'ngSubmit' }),
         i1.ɵprd(2048, null, i2.ControlContainer, null, [i2.FormGroupDirective]),
-        i1.ɵdid(16384, null, 0, i2.NgControlStatusGroup, [i2.ControlContainer], null, null), (_l()(), i1.ɵted(null, ['\n\n      '])),
-        (_l()(), i1.ɵeld(0, null, null, 15, 'div', [['class', 'popup__content']], null, null, null, null, null)),
-        (_l()(), i1.ɵted(null, ['\n        '])), (_l()(), i1.ɵeld(0, null, null, 7, 'div', [['class', 'popup__formgroup']], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['\n          '])), (_l()(), i1.ɵeld(0, null, null, 1, 'label', [['class', 'popup__label']], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['ID'])), (_l()(), i1.ɵted(null, ['\n          '])), (_l()(), i1.ɵeld(0, null, null, 1, 'div', [['class', 'popup__input']], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['', ''])), (_l()(), i1.ɵted(null, ['\n        '])), (_l()(), i1.ɵted(null, ['\n\n        '])), (_l()(),
-            i1.ɵand(16777216, null, null, 3, null, View_PopupComponent_4)),
-        i1.ɵdid(802816, null, 0, i3.NgForOf, [i1.ViewContainerRef, i1.TemplateRef,
-            i1.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null), i1.ɵpad(2), i1.ɵppd(2),
-        (_l()(), i1.ɵted(null, ['\n      '])), (_l()(), i1.ɵted(null, ['\n\n      '])),
-        (_l()(), i1.ɵeld(0, null, null, 13, 'div', [['class', 'popup__btns']], null, null, null, null, null)),
-        (_l()(), i1.ɵted(null, ['\n        '])), (_l()(), i1.ɵeld(0, null, null, 4, 'button', [['class', 'btn btn--warning popup__btn popup__btn--reset'],
+        i1.ɵdid(4, 16384, null, 0, i2.NgControlStatusGroup, [i2.ControlContainer], null, null), (_l()(), i1.ɵted(-1, null, ['\n\n      '])),
+        (_l()(), i1.ɵeld(6, 0, null, null, 15, 'div', [['class', 'popup__content']], null, null, null, null, null)),
+        (_l()(), i1.ɵted(-1, null, ['\n        '])), (_l()(), i1.ɵeld(8, 0, null, null, 7, 'div', [['class', 'popup__formgroup']], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ['\n          '])), (_l()(), i1.ɵeld(10, 0, null, null, 1, 'label', [['class', 'popup__label']], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ['ID'])), (_l()(), i1.ɵted(-1, null, ['\n          '])), (_l()(), i1.ɵeld(13, 0, null, null, 1, 'div', [['class', 'popup__input']], null, null, null, null, null)), (_l()(), i1.ɵted(14, null, ['', ''])),
+        (_l()(), i1.ɵted(-1, null, ['\n        '])), (_l()(), i1.ɵted(-1, null, ['\n\n        '])), (_l()(), i1.ɵand(16777216, null, null, 3, null, View_PopupComponent_4)), i1.ɵdid(18, 802816, null, 0, i3.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0,
+                'ngForOf'] }, null), i1.ɵpad(19, 2), i1.ɵppd(20, 2), (_l()(), i1.ɵted(-1, null, ['\n      '])), (_l()(), i1.ɵted(-1, null, ['\n\n      '])),
+        (_l()(), i1.ɵeld(23, 0, null, null, 13, 'div', [['class', 'popup__btns']], null, null, null, null, null)),
+        (_l()(), i1.ɵted(-1, null, ['\n        '])), (_l()(), i1.ɵeld(25, 0, null, null, 4, 'button', [['class', 'btn btn--warning popup__btn popup__btn--reset'],
             ['type', 'button']], null, [[null, 'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
@@ -134,14 +135,14 @@ function View_PopupComponent_3(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i1.ɵted(null, ['\n          '])),
-        (_l()(), i1.ɵeld(0, null, null, 1, 'i', [['class', 'material-icons']], null, null, null, null, null)),
-        (_l()(), i1.ɵted(null, ['restore'])), (_l()(), i1.ɵted(null, [' Reset\n        '])),
-        (_l()(), i1.ɵted(null, ['\n        '])), (_l()(), i1.ɵeld(0, null, null, 4, 'button', [['class', 'btn popup__btn popup__btn--submit'],
-            ['type', 'submit']], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['\n          '])), (_l()(),
-            i1.ɵeld(0, null, null, 1, 'i', [['class', 'material-icons']], null, null, null, null, null)),
-        (_l()(), i1.ɵted(null, ['save'])), (_l()(), i1.ɵted(null, [' Submit\n        '])),
-        (_l()(), i1.ɵted(null, ['\n      '])), (_l()(), i1.ɵted(null, ['\n    ']))], function (_ck, _v) {
+        }, null, null)), (_l()(), i1.ɵted(-1, null, ['\n          '])),
+        (_l()(), i1.ɵeld(27, 0, null, null, 1, 'i', [['class', 'material-icons']], null, null, null, null, null)),
+        (_l()(), i1.ɵted(-1, null, ['restore'])), (_l()(), i1.ɵted(-1, null, [' Reset\n        '])), (_l()(), i1.ɵted(-1, null, ['\n        '])),
+        (_l()(), i1.ɵeld(31, 0, null, null, 4, 'button', [['class', 'btn popup__btn popup__btn--submit'],
+            ['type', 'submit']], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ['\n          '])), (_l()(),
+            i1.ɵeld(33, 0, null, null, 1, 'i', [['class', 'material-icons']], null, null, null, null, null)),
+        (_l()(), i1.ɵted(-1, null, ['save'])), (_l()(), i1.ɵted(-1, null, [' Submit\n        '])), (_l()(), i1.ɵted(-1, null, ['\n      '])),
+        (_l()(), i1.ɵted(-1, null, ['\n    ']))], function (_ck, _v) {
         var _co = _v.component;
         var currVal_7 = _co.form;
         _ck(_v, 2, 0, currVal_7);
@@ -162,8 +163,8 @@ function View_PopupComponent_3(_l) {
     });
 }
 export function View_PopupComponent_0(_l) {
-    return i1.ɵvid(0, [i1.ɵpid(0, i4.KeysPipe, []), (_l()(), i1.ɵeld(0, null, null, 24, 'div', [['class', 'popup-wrapper']], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['\n  '])),
-        (_l()(), i1.ɵeld(0, null, null, 0, 'div', [['class', 'popup-overlay']], [[24, '@fadeInOut', 0]], [[null, 'click']], function (_v, en, $event) {
+    return i1.ɵvid(0, [i1.ɵpid(0, i4.KeysPipe, []), (_l()(), i1.ɵeld(1, 0, null, null, 24, 'div', [['class', 'popup-wrapper']], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ['\n  '])), (_l()(), i1.ɵeld(3, 0, null, null, 0, 'div', [['class',
+                'popup-overlay']], [[24, '@fadeInOut', 0]], [[null, 'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('click' === en)) {
@@ -171,19 +172,19 @@ export function View_PopupComponent_0(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i1.ɵted(null, ['\n  '])),
-        (_l()(), i1.ɵeld(0, null, null, 19, 'div', [['class', 'popup']], [[24,
-                '@expandHeight', 0], [24, '@flyInOut', 0]], [[null, '@flyInOut.done']], function (_v, en, $event) {
-            var ad = true;
-            var _co = _v.component;
-            if (('@flyInOut.done' === en)) {
-                var pd_0 = (_co.onAnimationDone($event) !== false);
-                ad = (pd_0 && ad);
-            }
-            return ad;
-        }, null, null)), (_l()(), i1.ɵted(null, ['\n    '])),
-        (_l()(), i1.ɵeld(0, null, null, 7, 'div', [['class', 'popup__head']], null, null, null, null, null)),
-        (_l()(), i1.ɵted(null, ['\n      ', '\n\n      '])), (_l()(), i1.ɵeld(0, null, null, 4, 'div', [['class', 'popup__close']], null, [[null, 'click']], function (_v, en, $event) {
+        }, null, null)), (_l()(), i1.ɵted(-1, null, ['\n  '])), (_l()(),
+            i1.ɵeld(5, 0, null, null, 19, 'div', [['class', 'popup']], [[24, '@expandHeight',
+                    0], [24, '@flyInOut', 0]], [[null, '@flyInOut.done']], function (_v, en, $event) {
+                var ad = true;
+                var _co = _v.component;
+                if (('@flyInOut.done' === en)) {
+                    var pd_0 = (_co.onAnimationDone($event) !== false);
+                    ad = (pd_0 && ad);
+                }
+                return ad;
+            }, null, null)), (_l()(), i1.ɵted(-1, null, ['\n    '])),
+        (_l()(), i1.ɵeld(7, 0, null, null, 7, 'div', [['class', 'popup__head']], null, null, null, null, null)),
+        (_l()(), i1.ɵted(8, null, ['\n      ', '\n\n      '])), (_l()(), i1.ɵeld(9, 0, null, null, 4, 'div', [['class', 'popup__close']], null, [[null, 'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('click' === en)) {
@@ -191,20 +192,12 @@ export function View_PopupComponent_0(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i1.ɵted(null, ['\n        '])),
-        (_l()(), i1.ɵeld(0, null, null, 1, 'i', [['class', 'material-icons']], null, null, null, null, null)),
-        (_l()(), i1.ɵted(null, ['close'])), (_l()(), i1.ɵted(null, ['\n      '])),
-        (_l()(), i1.ɵted(null, ['\n    '])), (_l()(), i1.ɵted(null, ['\n\n    '])),
-        (_l()(), i1.ɵand(16777216, null, null, 1, null, View_PopupComponent_1)),
-        i1.ɵdid(16384, null, 0, i3.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0,
-                'ngIf'] }, null), (_l()(), i1.ɵted(null, ['\n\n    '])), (_l()(),
-            i1.ɵand(16777216, null, null, 1, null, View_PopupComponent_2)),
-        i1.ɵdid(16384, null, 0, i3.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0,
-                'ngIf'] }, null), (_l()(), i1.ɵted(null, ['\n\n    '])), (_l()(),
-            i1.ɵand(16777216, null, null, 1, null, View_PopupComponent_3)),
-        i1.ɵdid(16384, null, 0, i3.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0,
-                'ngIf'] }, null), (_l()(), i1.ɵted(null, ['\n  '])), (_l()(),
-            i1.ɵted(null, ['\n']))], function (_ck, _v) {
+        }, null, null)), (_l()(), i1.ɵted(-1, null, ['\n        '])),
+        (_l()(), i1.ɵeld(11, 0, null, null, 1, 'i', [['class', 'material-icons']], null, null, null, null, null)),
+        (_l()(), i1.ɵted(-1, null, ['close'])), (_l()(), i1.ɵted(-1, null, ['\n      '])), (_l()(), i1.ɵted(-1, null, ['\n    '])), (_l()(), i1.ɵted(-1, null, ['\n\n    '])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_PopupComponent_1)), i1.ɵdid(17, 16384, null, 0, i3.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, 'ngIf'] }, null),
+        (_l()(), i1.ɵted(-1, null, ['\n\n    '])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_PopupComponent_2)), i1.ɵdid(20, 16384, null, 0, i3.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, 'ngIf'] }, null),
+        (_l()(), i1.ɵted(-1, null, ['\n\n    '])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_PopupComponent_3)), i1.ɵdid(23, 16384, null, 0, i3.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, 'ngIf'] }, null),
+        (_l()(), i1.ɵted(-1, null, ['\n  '])), (_l()(), i1.ɵted(-1, null, ['\n']))], function (_ck, _v) {
         var _co = _v.component;
         var currVal_4 = (!_co.hasData && !_co.hasFormData);
         _ck(_v, 17, 0, currVal_4);
@@ -224,6 +217,6 @@ export function View_PopupComponent_0(_l) {
     });
 }
 export function View_PopupComponent_Host_0(_l) {
-    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, null, null, 1, 'ng-component', [], null, null, null, View_PopupComponent_0, RenderType_PopupComponent)), i1.ɵdid(49152, null, 0, i5.PopupComponent, [i2.FormBuilder], null, null)], null, null);
+    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, 'ng-component', [], null, null, null, View_PopupComponent_0, RenderType_PopupComponent)), i1.ɵdid(1, 49152, null, 0, i5.PopupComponent, [i2.FormBuilder], null, null)], null, null);
 }
 export var PopupComponentNgFactory = i1.ɵccf('ng-component', i5.PopupComponent, View_PopupComponent_Host_0, {}, {}, []);

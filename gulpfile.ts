@@ -5,7 +5,6 @@ const sourcemaps   = require('gulp-sourcemaps');
 const rename       = require('gulp-rename');
 const concat       = require('gulp-concat');
 const del          = require('del');
-const replace      = require('gulp-replace');
 const sync         = require('gulp-sync')(gulp);
 const tsProject    = tsc.createProject('tsconfig.json');
 
@@ -14,20 +13,17 @@ const buildDirectory  = './src/main/webapp';
 const targetDirectory = './target/shopsystem';
 
 
-
-
-
 // Handle HTML files
 gulp.task('html-index:dev', () => {
-  return gulp.src(`${srcDirectory}/index-jit.html`)
-    .pipe(rename('index.html'))
-    .pipe(gulp.dest(buildDirectory));
+  return gulp.src(`${srcDirectory}/index-jit.jsp`)
+    .pipe(rename('index.jsp'))
+    .pipe(gulp.dest(`${buildDirectory}/WEB-INF/jsp/`));
 });
 
 gulp.task('html-index:prod', () => {
-  return gulp.src(`${srcDirectory}/index-aot.html`)
-    .pipe(rename('index.html'))
-    .pipe(gulp.dest(buildDirectory));
+  return gulp.src(`${srcDirectory}/index-aot.jsp`)
+    .pipe(rename('index.jsp'))
+    .pipe(gulp.dest(`${buildDirectory}/WEB-INF/jsp/`));
 });
 
 gulp.task('templates', () => {
@@ -128,15 +124,15 @@ gulp.task('update:ts', ['ts'], () => {
 gulp.task('watch', () => {
 
   gulp.watch([`${srcDirectory}/**/*.html`], ['update:html']).on('change', e => {
-    console.log(`HTML ${e.path.slice(e.path.indexOf('main\\src') + 9)} has been ${e.type}. Copying...`);
+    console.log(`HTML ${e.path.slice(e.path.indexOf('app'))} has been ${e.type}. Copying...`);
   });
 
   gulp.watch([`${srcDirectory}/**/*.css`], ['update:css']).on('change', e => {
-    console.log(`CSS ${e.path.slice(e.path.indexOf('main\\src') + 9)} has been ${e.type}. Copying...`);
+    console.log(`CSS ${e.path.slice(e.path.indexOf('app'))} has been ${e.type}. Copying...`);
   });
 
   gulp.watch([`${srcDirectory}/**/*.ts`], ['update:ts']).on('change', e => {
-    console.log(`TypeScript ${e.path.slice(e.path.indexOf('main\\src') + 9)} has been ${e.type}. Compiling...`);
+    console.log(`TypeScript ${e.path.slice(e.path.indexOf('app'))} has been ${e.type}. Compiling...`);
   });
 
 });

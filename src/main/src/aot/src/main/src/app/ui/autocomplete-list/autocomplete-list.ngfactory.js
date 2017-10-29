@@ -11,7 +11,7 @@ var styles_AutocompleteList = [];
 export var RenderType_AutocompleteList = i0.ɵcrt({ encapsulation: 2,
     styles: styles_AutocompleteList, data: {} });
 function View_AutocompleteList_1(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, null, null, 1, 'li', [], [[2, 'active', null]], [[null, 'mouseenter']], function (_v, en, $event) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, 'li', [], [[2, 'active', null]], [[null, 'mouseenter']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('mouseenter' === en)) {
@@ -19,7 +19,7 @@ function View_AutocompleteList_1(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i0.ɵted(null, ['\n    ', '\n  ']))], null, function (_ck, _v) {
+        }, null, null)), (_l()(), i0.ɵted(1, null, ['\n    ', '\n  ']))], null, function (_ck, _v) {
         var _co = _v.component;
         var currVal_0 = (_v.context.index === _co.selectedIndex);
         _ck(_v, 0, 0, currVal_0);
@@ -28,7 +28,7 @@ function View_AutocompleteList_1(_l) {
     });
 }
 export function View_AutocompleteList_0(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, null, null, 4, 'ul', [['class',
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 4, 'ul', [['class',
                 'autocomplete']], [[4, 'top', null], [4, 'left', null]], [[null,
                 'click']], function (_v, en, $event) {
             var ad = true;
@@ -38,10 +38,10 @@ export function View_AutocompleteList_0(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i0.ɵted(null, ['\n\n  '])), (_l()(),
+        }, null, null)), (_l()(), i0.ɵted(-1, null, ['\n\n  '])), (_l()(),
             i0.ɵand(16777216, null, null, 1, null, View_AutocompleteList_1)),
-        i0.ɵdid(802816, null, 0, i2.NgForOf, [i0.ViewContainerRef, i0.TemplateRef,
-            i0.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null), (_l()(), i0.ɵted(null, ['\n\n']))], function (_ck, _v) {
+        i0.ɵdid(3, 802816, null, 0, i2.NgForOf, [i0.ViewContainerRef, i0.TemplateRef,
+            i0.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null), (_l()(), i0.ɵted(-1, null, ['\n\n']))], function (_ck, _v) {
         var _co = _v.component;
         var currVal_2 = _co.list;
         _ck(_v, 3, 0, currVal_2);
@@ -53,7 +53,7 @@ export function View_AutocompleteList_0(_l) {
     });
 }
 export function View_AutocompleteList_Host_0(_l) {
-    return i0.ɵvid(0, [(_l()(), i0.ɵeld(16777216, null, null, 1, 'ng-component', [], null, null, null, View_AutocompleteList_0, RenderType_AutocompleteList)), i0.ɵdid(114688, null, 0, i1.AutocompleteList, [i0.ViewContainerRef], null, null)], function (_ck, _v) {
+    return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 16777216, null, null, 1, 'ng-component', [], null, null, null, View_AutocompleteList_0, RenderType_AutocompleteList)), i0.ɵdid(1, 114688, null, 0, i1.AutocompleteList, [i0.ViewContainerRef], null, null)], function (_ck, _v) {
         _ck(_v, 1, 0);
     }, null);
 }

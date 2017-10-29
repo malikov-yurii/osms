@@ -13,9 +13,9 @@ var styles_Pagination = [i0.styles];
 export var RenderType_Pagination = i1.ɵcrt({ encapsulation: 0, styles: styles_Pagination,
     data: {} });
 function View_Pagination_1(_l) {
-    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, null, null, 3, 'option', [], [[1, 'selected', 0]], null, null, null, null)),
-        i1.ɵdid(147456, null, 0, i2.NgSelectOption, [i1.ElementRef, i1.Renderer2,
-            [8, null]], { value: [0, 'value'] }, null), i1.ɵdid(147456, null, 0, i2.ɵq, [i1.ElementRef, i1.Renderer2, [8, null]], { value: [0, 'value'] }, null), (_l()(), i1.ɵted(null, ['\n        ', '\n      ']))], function (_ck, _v) {
+    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, 'option', [], [[1, 'selected', 0]], null, null, null, null)),
+        i1.ɵdid(1, 147456, null, 0, i2.NgSelectOption, [i1.ElementRef, i1.Renderer2,
+            [8, null]], { value: [0, 'value'] }, null), i1.ɵdid(2, 147456, null, 0, i2.ɵq, [i1.ElementRef, i1.Renderer2, [8, null]], { value: [0, 'value'] }, null), (_l()(), i1.ɵted(3, null, ['\n        ', '\n      ']))], function (_ck, _v) {
         var currVal_1 = i1.ɵinlineInterpolate(1, '', _v.context.$implicit, '');
         _ck(_v, 1, 0, currVal_1);
         var currVal_2 = i1.ɵinlineInterpolate(1, '', _v.context.$implicit, '');
@@ -29,12 +29,12 @@ function View_Pagination_1(_l) {
     });
 }
 function View_Pagination_3(_l) {
-    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, null, null, 1, 'li', [['class',
+    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, 'li', [['class',
                 'spread']], null, null, null, null, null)),
-        (_l()(), i1.ɵted(null, ['...']))], null, null);
+        (_l()(), i1.ɵted(-1, null, ['...']))], null, null);
 }
 function View_Pagination_4(_l) {
-    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, null, null, 1, 'li', [], [[2, 'active', null]], [[null, 'click']], function (_v, en, $event) {
+    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, 'li', [], [[2, 'active', null]], [[null, 'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('click' === en)) {
@@ -42,7 +42,7 @@ function View_Pagination_4(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i1.ɵted(null, ['\n        ',
+        }, null, null)), (_l()(), i1.ɵted(1, null, ['\n        ',
             '\n      ']))], null, function (_ck, _v) {
         var _co = _v.component;
         var currVal_0 = (_v.context.$implicit === _co.currentPageNumber);
@@ -52,13 +52,13 @@ function View_Pagination_4(_l) {
     });
 }
 function View_Pagination_5(_l) {
-    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, null, null, 1, 'li', [['class',
+    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, 'li', [['class',
                 'spread']], null, null, null, null, null)),
-        (_l()(), i1.ɵted(null, ['...']))], null, null);
+        (_l()(), i1.ɵted(-1, null, ['...']))], null, null);
 }
 function View_Pagination_2(_l) {
-    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, null, null, 22, 'ul', [['class',
-                'pagination__selector']], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['\n      '])), (_l()(), i1.ɵeld(0, null, null, 1, 'li', [], [[2, 'disabled', null]], [[null, 'click']], function (_v, en, $event) {
+    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 22, 'ul', [['class',
+                'pagination__selector']], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ['\n      '])), (_l()(), i1.ɵeld(2, 0, null, null, 1, 'li', [], [[2, 'disabled', null]], [[null, 'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('click' === en)) {
@@ -66,8 +66,9 @@ function View_Pagination_2(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i1.ɵted(null, ['Prev'])), (_l()(),
-            i1.ɵted(null, ['\n      '])), (_l()(), i1.ɵeld(0, null, null, 1, 'li', [], [[2, 'active', null]], [[null, 'click']], function (_v, en, $event) {
+        }, null, null)), (_l()(), i1.ɵted(-1, null, ['Prev'])),
+        (_l()(), i1.ɵted(-1, null, ['\n      '])), (_l()(), i1.ɵeld(5, 0, null, null, 1, 'li', [], [[2, 'active', null]], [[null,
+                'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('click' === en)) {
@@ -75,24 +76,23 @@ function View_Pagination_2(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i1.ɵted(null, ['1'])), (_l()(),
-            i1.ɵted(null, ['\n      '])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_Pagination_3)), i1.ɵdid(16384, null, 0, i3.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, 'ngIf'] }, null),
-        (_l()(), i1.ɵted(null, ['\n\n      '])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_Pagination_4)), i1.ɵdid(802816, null, 0, i3.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0,
-                'ngForOf'] }, null), (_l()(), i1.ɵted(null, ['\n\n      '])),
+        }, null, null)), (_l()(), i1.ɵted(-1, null, ['1'])),
+        (_l()(), i1.ɵted(-1, null, ['\n      '])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_Pagination_3)), i1.ɵdid(9, 16384, null, 0, i3.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, 'ngIf'] }, null),
+        (_l()(), i1.ɵted(-1, null, ['\n\n      '])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_Pagination_4)), i1.ɵdid(12, 802816, null, 0, i3.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0,
+                'ngForOf'] }, null), (_l()(), i1.ɵted(-1, null, ['\n\n      '])),
         (_l()(), i1.ɵand(16777216, null, null, 1, null, View_Pagination_5)),
-        i1.ɵdid(16384, null, 0, i3.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0,
-                'ngIf'] }, null), (_l()(), i1.ɵted(null, ['\n      '])), (_l()(),
-            i1.ɵeld(0, null, null, 1, 'li', [], [[2, 'active',
-                    null]], [[null, 'click']], function (_v, en, $event) {
-                var ad = true;
-                var _co = _v.component;
-                if (('click' === en)) {
-                    var pd_0 = (_co.selectPage(_co.lastPage) !== false);
-                    ad = (pd_0 && ad);
-                }
-                return ad;
-            }, null, null)), (_l()(), i1.ɵted(null, ['\n        ',
-            '\n      '])), (_l()(), i1.ɵted(null, ['\n      '])), (_l()(), i1.ɵeld(0, null, null, 1, 'li', [], [[2, 'disabled', null]], [[null, 'click']], function (_v, en, $event) {
+        i1.ɵdid(15, 16384, null, 0, i3.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, 'ngIf'] }, null), (_l()(), i1.ɵted(-1, null, ['\n      '])),
+        (_l()(), i1.ɵeld(17, 0, null, null, 1, 'li', [], [[2, 'active',
+                null]], [[null, 'click']], function (_v, en, $event) {
+            var ad = true;
+            var _co = _v.component;
+            if (('click' === en)) {
+                var pd_0 = (_co.selectPage(_co.lastPage) !== false);
+                ad = (pd_0 && ad);
+            }
+            return ad;
+        }, null, null)), (_l()(), i1.ɵted(18, null, ['\n        ',
+            '\n      '])), (_l()(), i1.ɵted(-1, null, ['\n      '])), (_l()(), i1.ɵeld(20, 0, null, null, 1, 'li', [], [[2, 'disabled', null]], [[null, 'click']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('click' === en)) {
@@ -100,8 +100,8 @@ function View_Pagination_2(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i1.ɵted(null, ['Next'])),
-        (_l()(), i1.ɵted(null, ['\n    ']))], function (_ck, _v) {
+        }, null, null)), (_l()(), i1.ɵted(-1, null, ['Next'])),
+        (_l()(), i1.ɵted(-1, null, ['\n    ']))], function (_ck, _v) {
         var _co = _v.component;
         var currVal_2 = _co.isPrevSpreadShown();
         _ck(_v, 9, 0, currVal_2);
@@ -124,12 +124,11 @@ function View_Pagination_2(_l) {
     });
 }
 export function View_Pagination_0(_l) {
-    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, null, null, 17, 'div', [['class',
+    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 17, 'div', [['class',
                 'pagination']], null, null, null, null, null)),
-        (_l()(), i1.ɵted(null, ['\n\n  '])), (_l()(), i1.ɵeld(0, null, null, 1, 'div', [['class', 'pagination__info']], null, null, null, null, null)), (_l()(), i1.ɵted(null, ['\n    Displaying ',
-            ' – ', ' of ', ' items\n  '])), (_l()(), i1.ɵted(null, ['\n\n  '])),
-        (_l()(), i1.ɵeld(0, null, null, 11, 'div', [['class', 'pagination__right']], null, null, null, null, null)),
-        (_l()(), i1.ɵted(null, ['\n    '])), (_l()(), i1.ɵeld(0, null, null, 5, 'select', [['class', 'pagination__length input'], ['id', ''], ['name', '']], null, [[null, 'change']], function (_v, en, $event) {
+        (_l()(), i1.ɵted(-1, null, ['\n\n  '])), (_l()(), i1.ɵeld(2, 0, null, null, 1, 'div', [['class', 'pagination__info']], null, null, null, null, null)), (_l()(), i1.ɵted(3, null, ['\n    Displaying ', ' – ', ' of ', ' items\n  '])), (_l()(), i1.ɵted(-1, null, ['\n\n  '])), (_l()(), i1.ɵeld(5, 0, null, null, 11, 'div', [['class',
+                'pagination__right']], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ['\n    '])), (_l()(), i1.ɵeld(7, 0, null, null, 5, 'select', [['class', 'pagination__length input'],
+            ['id', ''], ['name', '']], null, [[null, 'change']], function (_v, en, $event) {
             var ad = true;
             var _co = _v.component;
             if (('change' === en)) {
@@ -137,15 +136,12 @@ export function View_Pagination_0(_l) {
                 ad = (pd_0 && ad);
             }
             return ad;
-        }, null, null)), (_l()(), i1.ɵted(null, ['\n      '])),
+        }, null, null)), (_l()(), i1.ɵted(-1, null, ['\n      '])),
         (_l()(), i1.ɵand(16777216, null, null, 2, null, View_Pagination_1)),
-        i1.ɵdid(802816, null, 0, i3.NgForOf, [i1.ViewContainerRef, i1.TemplateRef,
-            i1.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null), i1.ɵpad(5), (_l()(),
-            i1.ɵted(null, ['\n    '])), (_l()(), i1.ɵted(null, ['\n\n    '])),
-        (_l()(), i1.ɵand(16777216, null, null, 1, null, View_Pagination_2)),
-        i1.ɵdid(16384, null, 0, i3.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0,
-                'ngIf'] }, null), (_l()(), i1.ɵted(null, ['\n\n  '])), (_l()(),
-            i1.ɵted(null, ['\n']))], function (_ck, _v) {
+        i1.ɵdid(10, 802816, null, 0, i3.NgForOf, [i1.ViewContainerRef, i1.TemplateRef,
+            i1.IterableDiffers], { ngForOf: [0, 'ngForOf'] }, null), i1.ɵpad(11, 5),
+        (_l()(), i1.ɵted(-1, null, ['\n    '])), (_l()(), i1.ɵted(-1, null, ['\n\n    '])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_Pagination_2)), i1.ɵdid(15, 16384, null, 0, i3.NgIf, [i1.ViewContainerRef,
+            i1.TemplateRef], { ngIf: [0, 'ngIf'] }, null), (_l()(), i1.ɵted(-1, null, ['\n\n  '])), (_l()(), i1.ɵted(-1, null, ['\n']))], function (_ck, _v) {
         var _co = _v.component;
         var currVal_3 = _ck(_v, 11, 0, 10, 20, 50, 100, 200);
         _ck(_v, 10, 0, currVal_3);
@@ -160,8 +156,8 @@ export function View_Pagination_0(_l) {
     });
 }
 export function View_Pagination_Host_0(_l) {
-    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, null, null, 1, 'pagination', [], null, null, null, View_Pagination_0, RenderType_Pagination)),
-        i1.ɵdid(638976, null, 0, i4.Pagination, [], null, null)], function (_ck, _v) {
+    return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, 'pagination', [], null, null, null, View_Pagination_0, RenderType_Pagination)),
+        i1.ɵdid(1, 638976, null, 0, i4.Pagination, [], null, null)], function (_ck, _v) {
         _ck(_v, 1, 0);
     }, null);
 }

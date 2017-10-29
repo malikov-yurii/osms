@@ -67,8 +67,9 @@ export var AppModuleNgFactory = i0.ɵcmf(i1.AppModule, [i2.App], function (_l) {
         i0.ɵmpd(512, i16.ReactiveFormsModule, i16.ReactiveFormsModule, []),
         i0.ɵmpd(1024, i17.ɵa, i17.ɵd, [[3, i17.Router]]), i0.ɵmpd(512, i17.UrlSerializer, i17.DefaultUrlSerializer, []), i0.ɵmpd(512, i17.ChildrenOutletContexts, i17.ChildrenOutletContexts, []), i0.ɵmpd(256, i17.ROUTER_CONFIGURATION, {}, []), i0.ɵmpd(1024, i10.LocationStrategy, i17.ɵc, [i10.PlatformLocation,
             [2, i10.APP_BASE_HREF], i17.ROUTER_CONFIGURATION]), i0.ɵmpd(512, i10.Location, i10.Location, [i10.LocationStrategy]), i0.ɵmpd(512, i0.Compiler, i0.Compiler, []), i0.ɵmpd(512, i0.NgModuleFactoryLoader, i0.SystemJsNgModuleLoader, [i0.Compiler, [2, i0.SystemJsNgModuleLoaderConfig]]), i0.ɵmpd(1024, i17.ROUTES, function () {
-            return [[{ path: '', component: i26.OrdersComponent }, { path: 'products',
-                        component: i27.ProductsComponent }, { path: 'customers', component: i28.CustomersComponent }]];
+            return [[{ path: '', component: i26.OrdersComponent }, { path: 'orders', redirectTo: '/',
+                        pathMatch: 'full' }, { path: 'products', component: i27.ProductsComponent },
+                    { path: 'customers', component: i28.CustomersComponent }]];
         }, []), i0.ɵmpd(1024, i17.Router, i17.ɵe, [i0.ApplicationRef, i17.UrlSerializer,
             i17.ChildrenOutletContexts, i10.Location, i0.Injector, i0.NgModuleFactoryLoader,
             i0.Compiler, i17.ROUTES, i17.ROUTER_CONFIGURATION, [2, i17.UrlHandlingStrategy],

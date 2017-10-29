@@ -20,9 +20,10 @@ export const RenderType_NotyComponent:i0.RendererType2 = i0.ɵcrt({encapsulation
         styles:{transform:'translate(-50%, 100%)',easing:'cubic-bezier(0.4, 0.0, 1, 1)'},
         offset:(null as any)},timings:'250ms'}],options:(null as any)}],options:{}}]}});
 export function View_NotyComponent_0(_l:any):i0.ɵViewDefinition {
-  return i0.ɵvid(0,[(_l()(),i0.ɵted((null as any),['\n    '])),(_l()(),i0.ɵeld(0,(null as any),
-      (null as any),1,'div',[['class','noty']],[[24,'@appearNoty',0],[2,'error',(null as any)]],
-      [[(null as any),'@appearNoty.done'],[(null as any),'click']],(_v,en,$event) => {
+  return i0.ɵvid(0,[(_l()(),i0.ɵted(-1,(null as any),['\n    '])),(_l()(),i0.ɵeld(1,
+      0,(null as any),(null as any),1,'div',[['class','noty']],[[24,'@appearNoty',
+          0],[2,'error',(null as any)]],[[(null as any),'@appearNoty.done'],[(null as any),
+          'click']],(_v,en,$event) => {
         var ad:boolean = true;
         var _co:i1.NotyComponent = _v.component;
         if (('@appearNoty.done' === en)) {
@@ -34,8 +35,9 @@ export function View_NotyComponent_0(_l:any):i0.ɵViewDefinition {
           ad = (pd_1 && ad);
         }
         return ad;
-      },(null as any),(null as any))),(_l()(),i0.ɵted((null as any),['\n      ','\n    '])),
-      (_l()(),i0.ɵted((null as any),['\n  ']))],(null as any),(_ck,_v) => {
+      },(null as any),(null as any))),(_l()(),i0.ɵted(2,(null as any),['\n      ',
+      '\n    '])),(_l()(),i0.ɵted(-1,(null as any),['\n  ']))],(null as any),(_ck,
+      _v) => {
     var _co:i1.NotyComponent = _v.component;
     const currVal_0:any = _co.animationState;
     const currVal_1:any = _co.isError;
@@ -45,11 +47,11 @@ export function View_NotyComponent_0(_l:any):i0.ɵViewDefinition {
   });
 }
 export function View_NotyComponent_Host_0(_l:any):i0.ɵViewDefinition {
-  return i0.ɵvid(0,[(_l()(),i0.ɵeld(0,(null as any),(null as any),1,'ng-component',
+  return i0.ɵvid(0,[(_l()(),i0.ɵeld(0,0,(null as any),(null as any),1,'ng-component',
       ([] as any[]),(null as any),(null as any),(null as any),View_NotyComponent_0,
-      RenderType_NotyComponent)),i0.ɵdid(49152,(null as any),0,i1.NotyComponent,([] as any[]),
-      (null as any),(null as any))],(null as any),(null as any));
+      RenderType_NotyComponent)),i0.ɵdid(1,49152,(null as any),0,i1.NotyComponent,
+      ([] as any[]),(null as any),(null as any))],(null as any),(null as any));
 }
 export const NotyComponentNgFactory:i0.ComponentFactory<i1.NotyComponent> = i0.ɵccf('ng-component',
     i1.NotyComponent,View_NotyComponent_Host_0,{},{},([] as any[]));
-//# sourceMappingURL=data:application/json;base64,eyJmaWxlIjoiRTovT1NNUy9zcmMvbWFpbi9zcmMvYXBwL3VpL25vdHkvbm90eS5uZ2ZhY3RvcnkudHMiLCJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJuZzovLy9FOi9PU01TL3NyYy9tYWluL3NyYy9hcHAvdWkvbm90eS9ub3R5LnRzIiwibmc6Ly8vRTovT1NNUy9zcmMvbWFpbi9zcmMvYXBwL3VpL25vdHkvbm90eS50cy5Ob3R5Q29tcG9uZW50Lmh0bWwiLCJuZzovLy9FOi9PU01TL3NyYy9tYWluL3NyYy9hcHAvdWkvbm90eS9ub3R5LnRzLk5vdHlDb21wb25lbnRfSG9zdC5odG1sIl0sInNvdXJjZXNDb250ZW50IjpbIiAiLCJcbiAgICA8ZGl2IGNsYXNzPVwibm90eVwiXG4gICAgICBbQGFwcGVhck5vdHldPVwiYW5pbWF0aW9uU3RhdGVcIlxuICAgICAgKEBhcHBlYXJOb3R5LmRvbmUpPVwib25BbmltYXRpb25Eb25lKCRldmVudClcIlxuICAgICAgKGNsaWNrKT1cImFuaW1hdGlvblN0YXRlID0gJ2Rlc3Ryb3llZCdcIlxuICAgICAgW2NsYXNzLmVycm9yXT1cImlzRXJyb3JcIlxuICAgID5cbiAgICAgIHt7IG1lc3NhZ2UgfX1cbiAgICA8L2Rpdj5cbiAgIiwiPG5nLWNvbXBvbmVudD48L25nLWNvbXBvbmVudD4iXSwibWFwcGluZ3MiOiJBQUFBOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O29CQ0FBLDJDQUNJO01BQUE7TUFBQTtRQUFBO1FBQUE7UUFFRTtVQUFBO1VBQUE7UUFBQTtRQUNBO1VBQUE7VUFBQTtRQUFBO1FBSEY7TUFBQSxnQ0FLQztNQUVLOztJQU5KO0lBR0E7SUFKRixXQUNFLFVBR0EsU0FKRjtJQUtDO0lBQUE7Ozs7b0JDTkw7TUFBQTs4QkFBQSxVQUFBO01BQUE7OzsifQ==
+//# sourceMappingURL=data:application/json;base64,eyJmaWxlIjoiL2hvbWUvbWFsaWtvdi9JZGVhUHJvamVjdHMvb3Ntcy9zcmMvbWFpbi9zcmMvYXBwL3VpL25vdHkvbm90eS5uZ2ZhY3RvcnkudHMiLCJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJuZzovLy9ob21lL21hbGlrb3YvSWRlYVByb2plY3RzL29zbXMvc3JjL21haW4vc3JjL2FwcC91aS9ub3R5L25vdHkudHMiLCJuZzovLy9ob21lL21hbGlrb3YvSWRlYVByb2plY3RzL29zbXMvc3JjL21haW4vc3JjL2FwcC91aS9ub3R5L25vdHkudHMuTm90eUNvbXBvbmVudC5odG1sIiwibmc6Ly8vaG9tZS9tYWxpa292L0lkZWFQcm9qZWN0cy9vc21zL3NyYy9tYWluL3NyYy9hcHAvdWkvbm90eS9ub3R5LnRzLk5vdHlDb21wb25lbnRfSG9zdC5odG1sIl0sInNvdXJjZXNDb250ZW50IjpbIiAiLCJcbiAgICA8ZGl2IGNsYXNzPVwibm90eVwiXG4gICAgICBbQGFwcGVhck5vdHldPVwiYW5pbWF0aW9uU3RhdGVcIlxuICAgICAgKEBhcHBlYXJOb3R5LmRvbmUpPVwib25BbmltYXRpb25Eb25lKCRldmVudClcIlxuICAgICAgKGNsaWNrKT1cImFuaW1hdGlvblN0YXRlID0gJ2Rlc3Ryb3llZCdcIlxuICAgICAgW2NsYXNzLmVycm9yXT1cImlzRXJyb3JcIlxuICAgID5cbiAgICAgIHt7IG1lc3NhZ2UgfX1cbiAgICA8L2Rpdj5cbiAgIiwiPG5nLWNvbXBvbmVudD48L25nLWNvbXBvbmVudD4iXSwibWFwcGluZ3MiOiJBQUFBOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O29CQ0FBLDhDQUNJO01BQUE7VUFBQTtVQUFBO1FBQUE7UUFBQTtRQUVFO1VBQUE7VUFBQTtRQUFBO1FBQ0E7VUFBQTtVQUFBO1FBQUE7UUFIRjtNQUFBLGdDQUtDO01BQUEsWUFFSzs7O0lBTko7SUFHQTtJQUpGLFdBQ0UsVUFHQSxTQUpGO0lBS0M7SUFBQTs7OztvQkNOTDtNQUFBOzhCQUFBLFVBQUE7TUFBQTs7OyJ9

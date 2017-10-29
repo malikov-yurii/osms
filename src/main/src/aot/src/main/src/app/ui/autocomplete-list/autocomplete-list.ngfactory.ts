@@ -13,7 +13,7 @@ const styles_AutocompleteList:any[] = ([] as any[]);
 export const RenderType_AutocompleteList:i0.RendererType2 = i0.ɵcrt({encapsulation:2,
     styles:styles_AutocompleteList,data:{}});
 function View_AutocompleteList_1(_l:any):i0.ɵViewDefinition {
-  return i0.ɵvid(0,[(_l()(),i0.ɵeld(0,(null as any),(null as any),1,'li',([] as any[]),
+  return i0.ɵvid(0,[(_l()(),i0.ɵeld(0,0,(null as any),(null as any),1,'li',([] as any[]),
       [[2,'active',(null as any)]],[[(null as any),'mouseenter']],(_v,en,$event) => {
         var ad:boolean = true;
         var _co:any = _v.component;
@@ -22,7 +22,7 @@ function View_AutocompleteList_1(_l:any):i0.ɵViewDefinition {
           ad = (pd_0 && ad);
         }
         return ad;
-      },(null as any),(null as any))),(_l()(),i0.ɵted((null as any),['\n    ','\n  ']))],
+      },(null as any),(null as any))),(_l()(),i0.ɵted(1,(null as any),['\n    ','\n  ']))],
       (null as any),(_ck,_v) => {
         var _co:any = _v.component;
         const currVal_0:any = (_v.context.index === _co.selectedIndex);
@@ -32,7 +32,7 @@ function View_AutocompleteList_1(_l:any):i0.ɵViewDefinition {
       });
 }
 export function View_AutocompleteList_0(_l:any):i0.ɵViewDefinition {
-  return i0.ɵvid(0,[(_l()(),i0.ɵeld(0,(null as any),(null as any),4,'ul',[['class',
+  return i0.ɵvid(0,[(_l()(),i0.ɵeld(0,0,(null as any),(null as any),4,'ul',[['class',
       'autocomplete']],[[4,'top',(null as any)],[4,'left',(null as any)]],[[(null as any),
       'click']],(_v,en,$event) => {
     var ad:boolean = true;
@@ -42,11 +42,11 @@ export function View_AutocompleteList_0(_l:any):i0.ɵViewDefinition {
       ad = (pd_0 && ad);
     }
     return ad;
-  },(null as any),(null as any))),(_l()(),i0.ɵted((null as any),['\n\n  '])),(_l()(),
+  },(null as any),(null as any))),(_l()(),i0.ɵted(-1,(null as any),['\n\n  '])),(_l()(),
       i0.ɵand(16777216,(null as any),(null as any),1,(null as any),View_AutocompleteList_1)),
-      i0.ɵdid(802816,(null as any),0,i2.NgForOf,[i0.ViewContainerRef,i0.TemplateRef,
-          i0.IterableDiffers],{ngForOf:[0,'ngForOf']},(null as any)),(_l()(),i0.ɵted((null as any),
-          ['\n\n']))],(_ck,_v) => {
+      i0.ɵdid(3,802816,(null as any),0,i2.NgForOf,[i0.ViewContainerRef,i0.TemplateRef,
+          i0.IterableDiffers],{ngForOf:[0,'ngForOf']},(null as any)),(_l()(),i0.ɵted(-1,
+          (null as any),['\n\n']))],(_ck,_v) => {
     var _co:i1.AutocompleteList = _v.component;
     const currVal_2:any = _co.list;
     _ck(_v,3,0,currVal_2);
@@ -58,13 +58,13 @@ export function View_AutocompleteList_0(_l:any):i0.ɵViewDefinition {
   });
 }
 export function View_AutocompleteList_Host_0(_l:any):i0.ɵViewDefinition {
-  return i0.ɵvid(0,[(_l()(),i0.ɵeld(16777216,(null as any),(null as any),1,'ng-component',
+  return i0.ɵvid(0,[(_l()(),i0.ɵeld(0,16777216,(null as any),(null as any),1,'ng-component',
       ([] as any[]),(null as any),(null as any),(null as any),View_AutocompleteList_0,
-      RenderType_AutocompleteList)),i0.ɵdid(114688,(null as any),0,i1.AutocompleteList,
+      RenderType_AutocompleteList)),i0.ɵdid(1,114688,(null as any),0,i1.AutocompleteList,
       [i0.ViewContainerRef],(null as any),(null as any))],(_ck,_v) => {
     _ck(_v,1,0);
   },(null as any));
 }
 export const AutocompleteListNgFactory:i0.ComponentFactory<i1.AutocompleteList> = i0.ɵccf('ng-component',
     i1.AutocompleteList,View_AutocompleteList_Host_0,{},{},([] as any[]));
-//# sourceMappingURL=data:application/json;base64,eyJmaWxlIjoiRTovT1NNUy9zcmMvbWFpbi9zcmMvYXBwL3VpL2F1dG9jb21wbGV0ZS1saXN0L2F1dG9jb21wbGV0ZS1saXN0Lm5nZmFjdG9yeS50cyIsInZlcnNpb24iOjMsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIm5nOi8vL0U6L09TTVMvc3JjL21haW4vc3JjL2FwcC91aS9hdXRvY29tcGxldGUtbGlzdC9hdXRvY29tcGxldGUtbGlzdC50cyIsIm5nOi8vL0U6L09TTVMvc3JjL21haW4vc3JjL2FwcC91aS9hdXRvY29tcGxldGUtbGlzdC9hdXRvY29tcGxldGUtbGlzdC5odG1sIiwibmc6Ly8vRTovT1NNUy9zcmMvbWFpbi9zcmMvYXBwL3VpL2F1dG9jb21wbGV0ZS1saXN0L2F1dG9jb21wbGV0ZS1saXN0LnRzLkF1dG9jb21wbGV0ZUxpc3RfSG9zdC5odG1sIl0sInNvdXJjZXNDb250ZW50IjpbIiAiLCI8dWwgY2xhc3M9XCJhdXRvY29tcGxldGVcIlxyXG4gICAgW3N0eWxlLnRvcF09XCJzdHlsZVRvcCArICdweCdcIlxyXG4gICAgW3N0eWxlLmxlZnRdPVwic3R5bGVMZWZ0ICsgJ3B4J1wiXHJcbiAgICAoY2xpY2spPVwib25DbGljaygpXCJcclxuPlxyXG5cclxuICA8bGlcclxuICAgICpuZ0Zvcj1cImxldCBpdGVtIG9mIGxpc3Q7IGxldCBpID0gaW5kZXg7XCJcclxuICAgIChtb3VzZWVudGVyKT1cInNldFNlbGVjdGVkKGkpXCJcclxuICAgIFtjbGFzcy5hY3RpdmVdPVwiaSA9PT0gc2VsZWN0ZWRJbmRleFwiXHJcbiAgPlxyXG4gICAge3sgaXRlbS5sYWJlbCB9fVxyXG4gIDwvbGk+XHJcblxyXG48L3VsPiIsIjxuZy1jb21wb25lbnQ+PC9uZy1jb21wb25lbnQ+Il0sIm1hcHBpbmdzIjoiQUFBQTs7Ozs7Ozs7Ozs7Ozs7O29CQ01FO01BQUE7UUFBQTtRQUFBO1FBRUU7VUFBQTtVQUFBO1FBQUE7UUFGRjtNQUFBLGdDQUlDOzs7UUFEQztRQUhGLFdBR0UsU0FIRjtRQUlDO1FBQUE7Ozs7b0JBVkg7TUFBQTtNQUFBO0lBQUE7SUFBQTtJQUdJO01BQUE7TUFBQTtJQUFBO0lBSEo7RUFBQSxnQ0FJQywyQ0FFQzthQUFBO2FBQUE7NEJBQUEseUNBTUs7VUFBQTs7SUFMSDtJQURGLFdBQ0UsU0FERjs7O0lBTEU7SUFDQTtJQUZKLFdBQ0ksVUFDQSxTQUZKOzs7O29CQ0FBO01BQUE7aUNBQUEsVUFBQTtNQUFBO0lBQUE7Ozs7In0=
+//# sourceMappingURL=data:application/json;base64,eyJmaWxlIjoiL2hvbWUvbWFsaWtvdi9JZGVhUHJvamVjdHMvb3Ntcy9zcmMvbWFpbi9zcmMvYXBwL3VpL2F1dG9jb21wbGV0ZS1saXN0L2F1dG9jb21wbGV0ZS1saXN0Lm5nZmFjdG9yeS50cyIsInZlcnNpb24iOjMsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIm5nOi8vL2hvbWUvbWFsaWtvdi9JZGVhUHJvamVjdHMvb3Ntcy9zcmMvbWFpbi9zcmMvYXBwL3VpL2F1dG9jb21wbGV0ZS1saXN0L2F1dG9jb21wbGV0ZS1saXN0LnRzIiwibmc6Ly8vaG9tZS9tYWxpa292L0lkZWFQcm9qZWN0cy9vc21zL3NyYy9tYWluL3NyYy9hcHAvdWkvYXV0b2NvbXBsZXRlLWxpc3QvYXV0b2NvbXBsZXRlLWxpc3QuaHRtbCIsIm5nOi8vL2hvbWUvbWFsaWtvdi9JZGVhUHJvamVjdHMvb3Ntcy9zcmMvbWFpbi9zcmMvYXBwL3VpL2F1dG9jb21wbGV0ZS1saXN0L2F1dG9jb21wbGV0ZS1saXN0LnRzLkF1dG9jb21wbGV0ZUxpc3RfSG9zdC5odG1sIl0sInNvdXJjZXNDb250ZW50IjpbIiAiLCI8dWwgY2xhc3M9XCJhdXRvY29tcGxldGVcIlxuICAgIFtzdHlsZS50b3BdPVwic3R5bGVUb3AgKyAncHgnXCJcbiAgICBbc3R5bGUubGVmdF09XCJzdHlsZUxlZnQgKyAncHgnXCJcbiAgICAoY2xpY2spPVwib25DbGljaygpXCJcbj5cblxuICA8bGlcbiAgICAqbmdGb3I9XCJsZXQgaXRlbSBvZiBsaXN0OyBsZXQgaSA9IGluZGV4O1wiXG4gICAgKG1vdXNlZW50ZXIpPVwic2V0U2VsZWN0ZWQoaSlcIlxuICAgIFtjbGFzcy5hY3RpdmVdPVwiaSA9PT0gc2VsZWN0ZWRJbmRleFwiXG4gID5cbiAgICB7eyBpdGVtLmxhYmVsIH19XG4gIDwvbGk+XG5cbjwvdWw+IiwiPG5nLWNvbXBvbmVudD48L25nLWNvbXBvbmVudD4iXSwibWFwcGluZ3MiOiJBQUFBOzs7Ozs7Ozs7Ozs7Ozs7b0JDTUU7TUFBQTtRQUFBO1FBQUE7UUFFRTtVQUFBO1VBQUE7UUFBQTtRQUZGO01BQUEsZ0NBSUM7OztRQURDO1FBSEYsV0FHRSxTQUhGO1FBSUM7UUFBQTs7OztvQkFWSDtNQUFBO01BQUE7SUFBQTtJQUFBO0lBR0k7TUFBQTtNQUFBO0lBQUE7SUFISjtFQUFBLGdDQUlDLDhDQUVDO2FBQUE7YUFBQTs0QkFBQSx5Q0FNSztVQUFBOztJQUxIO0lBREYsV0FDRSxTQURGOzs7SUFMRTtJQUNBO0lBRkosV0FDSSxVQUNBLFNBRko7Ozs7b0JDQUE7TUFBQTtpQ0FBQSxVQUFBO01BQUE7SUFBQTs7OzsifQ==
