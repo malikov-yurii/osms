@@ -50,25 +50,25 @@
         <plugins>
 
             <!--<plugin>-->
-                <!--<groupId>org.codehaus.mojo</groupId>-->
-                <!--<artifactId>build-helper-maven-plugin</artifactId>-->
-                <!--<version>1.7</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>add-source</id>-->
-                        <!--<phase>generate-sources</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>add-source</goal>-->
-                            <!--<goal>add-test-source</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<sources>-->
-                                <!--<source>target/generated-sources</source>-->
-                                <!--<source>src/main/java</source>-->
-                            <!--</sources>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
+            <!--<groupId>org.codehaus.mojo</groupId>-->
+            <!--<artifactId>build-helper-maven-plugin</artifactId>-->
+            <!--<version>1.7</version>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<id>add-source</id>-->
+            <!--<phase>generate-sources</phase>-->
+            <!--<goals>-->
+            <!--<goal>add-source</goal>-->
+            <!--<goal>add-test-source</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+            <!--<sources>-->
+            <!--<source>target/generated-sources</source>-->
+            <!--<source>src/main/java</source>-->
+            <!--</sources>-->
+            <!--</configuration>-->
+            <!--</execution>-->
+            <!--</executions>-->
             <!--</plugin>-->
             <!--Spring Data dinamic queries (Querydsl)-->
             <plugin>
@@ -146,6 +146,14 @@
                             </properties>
                         </deployable>
                     </deployables>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
         </plugins>

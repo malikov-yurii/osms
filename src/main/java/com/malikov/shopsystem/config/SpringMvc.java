@@ -56,13 +56,6 @@ public class SpringMvc extends WebMvcConfigurerAdapter {
         return converter;
     }
 
-  /*  @Bean
-    public FormattingConversionServiceFactoryBean formatter() {
-        FormattingConversionServiceFactoryBean formattingConversionServiceFactoryBean = new FormattingConversionServiceFactoryBean();
-        formattingConversionServiceFactoryBean.setFormatters(localDateTimeFormatter());
-        return formattingConversionServiceFactoryBean;
-    } */
-
     @Bean
     public Formatter localTimeFormatter() {
         return new DateTimeFormatters.LocalTimeFormatter();

@@ -5,7 +5,6 @@ import org.apache.tomcat.jdbc.pool.PoolConfiguration;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.util.HashMap;
 import java.util.Properties;
 
 /**
@@ -29,7 +27,6 @@ import java.util.Properties;
 
 public class SpringDB {
     @Bean
-    @Profile("mySql")
     public DataSource dataSource() {
         PoolConfiguration poolConfiguration = new PoolProperties();
         poolConfiguration.setDriverClassName("com.mysql.jdbc.Driver");
@@ -46,18 +43,16 @@ public class SpringDB {
         poolConfiguration.setMaxIdle(5);
         poolConfiguration.setInitialSize(2);
         poolConfiguration.setTestOnConnect(true);
-        DataSource dataSource = new org.apache.tomcat.jdbc.pool.DataSource(poolConfiguration);
-
-        return dataSource;
+        return new org.apache.tomcat.jdbc.pool.DataSource(poolConfiguration);
     }
 
     @Bean
-    @Profile("jpa")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
         em.setPackagesToScan("com.malikov.**.model");
-        em.setJpaPropertyMap(ImmutableMap.of("hibernate.formal_sql","false","hibernate.use_sql_comments","false"));
+        em.setJpaPropertyMap(ImmutableMap.of("hibernate.formal_sql", "false", "hibernate.use_sql_comments",
+                "false"));
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 
         em.setJpaVendorAdapter(vendorAdapter);
@@ -67,7 +62,6 @@ public class SpringDB {
     }
 
     @Bean
-    @Profile("jpa")
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
         jpaTransactionManager.setDataSource(dataSource());
@@ -77,8 +71,6 @@ public class SpringDB {
 
     private Properties additionalProperties() {
         Properties properties = new Properties();
-
-        //properties.setProperty("hibernate.dialect", "org.hibernate.dialect.OracleDialect");
         return properties;
     }
 }
