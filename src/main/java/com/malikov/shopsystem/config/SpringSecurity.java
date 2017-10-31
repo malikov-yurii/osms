@@ -3,6 +3,7 @@ package com.malikov.shopsystem.config;
 import com.malikov.shopsystem.service.UserService;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,7 +21,7 @@ import javax.annotation.Resource;
 @Configuration
 @EnableWebSecurity
 public class SpringSecurity extends WebSecurityConfigurerAdapter {
-    @Resource(name = "UserService")
+    @Resource(name = "userService")
     UserService userService;
 
     @Override
