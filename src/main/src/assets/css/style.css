@@ -387,6 +387,7 @@ td.product-cell--quantity {
 td.product-cell--supplier {
     word-break: break-word;
 }
+
 .search-input,
 .search-input-container {
     width: 190px;

@@ -71,7 +71,9 @@
 
 
               <ng-template #isNotEditableCell>
-                <td class="product-cell--{{ key }}">
+                <td class="product-cell--{{ key }}"
+                    [class.aggregated]="key === 'quantity' && product.isAggregated"
+                >
                   {{ product[key] }}
                 </td>
               </ng-template>
