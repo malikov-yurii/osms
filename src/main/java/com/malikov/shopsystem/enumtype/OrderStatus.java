@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.model;
+package com.malikov.shopsystem.enumtype;
 
 public enum OrderStatus {
 

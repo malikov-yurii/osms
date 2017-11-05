@@ -300,7 +300,7 @@ function View_OrdersComponent_13(_l:any):i0.ɵViewDefinition {
           ad = (pd_5 && ad);
         }
         if (('contentChanged' === en)) {
-          const pd_6:any = ((<any>_co.onUpdateProductField((<any>(<any>(<any>_v.parent).parent).parent).context.$implicit.id,
+          const pd_6:any = ((<any>_co.onUpdateField((<any>(<any>(<any>_v.parent).parent).parent).context.$implicit.id,
               (<any>(<any>_v.parent).parent).context.$implicit.id,(<any>_v.parent).context.$implicit,
               $event)) !== false);
           ad = (pd_6 && ad);

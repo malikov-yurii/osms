@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.model;
+package com.malikov.shopsystem.enumtype;
 
 import org.springframework.security.core.GrantedAuthority;
 

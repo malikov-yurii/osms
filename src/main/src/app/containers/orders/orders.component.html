@@ -172,7 +172,7 @@
                 [autocomplete]="['product', key]"
                 [(contenteditableModel)]="product[key]"
                 (selectedAutocomplete)="onAutocompleteProduct(order.id, product.id, $event)"
-                (contentChanged)="onUpdateProductField(order.id, product.id, key, $event)"
+                (contentChanged)="onUpdateField(order.id, product.id, key, $event)"
               ></div>
             </ng-template>
 

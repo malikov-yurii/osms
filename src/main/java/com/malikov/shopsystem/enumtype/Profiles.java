@@ -1,4 +1,4 @@
-package com.malikov.shopsystem;
+package com.malikov.shopsystem.enumtype;
 
 public class Profiles {
 

@@ -23,6 +23,8 @@ public class ProductDto implements Serializable {
 
     private String supplier;
 
+    private Boolean isAggregated;
+
     public ProductDto(
             Long id,
             Long variationId,
@@ -31,7 +33,8 @@ public class ProductDto implements Serializable {
             BigDecimal price,
             Integer quantity,
             Boolean unlimited,
-            String supplier
+            String supplier,
+            Boolean isAggregated
     ) {
         this.id = id;
         this.variationId = variationId;
@@ -41,6 +44,7 @@ public class ProductDto implements Serializable {
         this.quantity = quantity;
         this.unlimited = unlimited;
         this.supplier = supplier;
+        this.isAggregated = isAggregated;
     }
 
     public ProductDto() {
@@ -112,5 +116,29 @@ public class ProductDto implements Serializable {
 
     public void setSupplier(String supplier) {
         this.supplier = supplier;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getVariationId() {
+        return variationId;
+    }
+
+    public void setVariationId(Long variationId) {
+        this.variationId = variationId;
+    }
+
+    public Boolean getAggregated() {
+        return isAggregated;
+    }
+
+    public void setAggregated(Boolean aggregated) {
+        isAggregated = aggregated;
     }
 }

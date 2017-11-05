@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.nonNull;
+
 public class ProductUtil {
 
     public static Product createNewFromTo(ProductDto productDto) {
@@ -36,13 +38,14 @@ public class ProductUtil {
                             productVariation.getPrice(),
                             productVariation.getQuantity(),
                             product.getUnlimited(),
-                            product.getSupplier()))
+                            product.getSupplier(),
+                            nonNull(productVariation.getProductAggregator())))
                     .collect(Collectors.toList()));
         } else {
             productDtos.add(new ProductDto(
                     product.getId(), 0L, product.getName(),
                     getCategoryNames(product),
-                    product.getPrice(),product.getQuantity(), product.getUnlimited(), product.getSupplier()));
+                    product.getPrice(),product.getQuantity(), product.getUnlimited(), product.getSupplier(), false));
         }
         return productDtos;
     }

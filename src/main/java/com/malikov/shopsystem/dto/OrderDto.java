@@ -1,8 +1,8 @@
 package com.malikov.shopsystem.dto;
 
 import com.malikov.shopsystem.HasId;
-import com.malikov.shopsystem.model.OrderStatus;
-import com.malikov.shopsystem.model.PaymentType;
+import com.malikov.shopsystem.enumtype.OrderStatus;
+import com.malikov.shopsystem.enumtype.PaymentType;
 import com.malikov.shopsystem.util.DateTimeUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 
