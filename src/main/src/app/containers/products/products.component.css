@@ -1,3 +1,45 @@
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 48px;
+    border-bottom: 1px solid #ededed;
+}
+
+.tab {
+    padding: 0 25px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid transparent;
+    color: #000;
+    font: 500 13px/48px 'Roboto';
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all .15s ease;
+}
+
+.tab:hover,
+.tab:active {
+    background: rgba(183, 183, 183, 0.1);
+    color: #338ea0;
+}
+
+.tab:focus {
+    outline: none;
+}
+
+.tab.active {
+    border-bottom-color: #42bcd4;
+    box-shadow: 0 1px 0 #42bcd4;
+    color: #42bcd4;
+}
+
+.tab-content {
+    padding: 30px 5%;
+}
+
+
 .aggregators {
     margin: 15px 0 20px;
 }
@@ -13,7 +55,6 @@
 .aggregators-list li {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     font-size: 13px;
 }
 .aggregators-head .list-cell,
@@ -29,6 +70,11 @@
 }
 .aggregators-list li:hover {
     background: #eee;
+}
+.aggregators-list .list-cell {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 .aggregators-list .list-cell:last-child {
     min-width: 100px;

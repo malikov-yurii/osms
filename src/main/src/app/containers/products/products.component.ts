@@ -45,6 +45,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   public suppliers: string[] = [''];
 
   public searchExpanded: string = 'collapsed';
+  public currentTab: string = 'products';
 
   constructor(
     private productService: ProductService,
@@ -155,7 +156,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   isCategory(key: string): boolean {
-    return key === 'categories' ? true : false;
+    return key === 'categories';
   }
 
   toggleAnimState() {

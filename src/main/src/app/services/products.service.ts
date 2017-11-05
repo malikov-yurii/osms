@@ -50,7 +50,7 @@ export class ProductService {
         }
       }
 
-      return flag === Object.keys(filterData).length ? true : false;
+      return flag === Object.keys(filterData).length;
     });
 
     let productResultPage = filterResult.slice((page - 1) * length, page * length);
