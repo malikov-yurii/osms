@@ -11,7 +11,7 @@ var SearchService = /** @class */ (function () {
     SearchService_1 = SearchService;
     SearchService.prototype.search = function (items, searchQuery) {
         // To enable deep search, change "_search" to "_deepSearch" in following line
-        return items.length && searchQuery ? items.filter(SearchService_1._search.bind(this, searchQuery)) : items;
+        return items.length && searchQuery ? items.filter(SearchService_1._deepSearch.bind(this, searchQuery)) : items;
     };
     SearchService._ifValueConsistQuery = function (query, value) {
         // Return true if given value isn't empty and matches search text

@@ -10,6 +10,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 var defaultState = {
     order: [],
     product: [],
+    productAggregators: [],
     customer: []
 };
 var _store = new BehaviorSubject(defaultState);

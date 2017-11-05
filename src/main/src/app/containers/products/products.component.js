@@ -18,7 +18,7 @@ import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/pluck';
 import { Store } from '../../store';
 import { ProductService, NotyService } from '../../services/index';
-import { slideToLeft, changeWidth } from '../../ui/animations';
+import { slideToLeft, changeWidth, appear } from '../../ui/animations';
 var ProductsComponent = /** @class */ (function () {
     function ProductsComponent(productService, notyService, store) {
         this.productService = productService;
@@ -35,13 +35,15 @@ var ProductsComponent = /** @class */ (function () {
         this.categories = [''];
         this.suppliers = [''];
         this.searchExpanded = 'collapsed';
+        this.currentTab = 'products';
     }
     ProductsComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.subs[this.subs.length] = this.productService.getAllProducts().subscribe(function (_a) {
-            var totalElements = _a.totalElements, elements = _a.elements;
+            var totalElements = _a.totalElements, elements = _a.elements, productAggregators = _a.productAggregators;
             _this.totalProducts = totalElements;
             _this.getFiltersList(elements);
+            _this.productAggregators = productAggregators;
         });
         var storeSource = this.store.changes
             .map(function (store) {
@@ -104,20 +106,28 @@ var ProductsComponent = /** @class */ (function () {
     ProductsComponent.prototype.onFilterChange = function (e) {
         this.filterStream.next(e);
     };
-    ProductsComponent.prototype.onUpdateProductField = function (productId, productVarId, fieldName, _a) {
+    ProductsComponent.prototype.onUpdateField = function (productId, productVarId, fieldName, _a, isAggregator) {
         var _this = this;
         var newValue = _a.newValue, oldValue = _a.oldValue;
-        this.productService.updateProductField(productId, productVarId, (_b = {}, _b[fieldName] = newValue, _b))
+        if (isAggregator === void 0) { isAggregator = false; }
+        this.productService.updateField(productId, productVarId, (_b = {}, _b[fieldName] = newValue, _b), isAggregator)
             .subscribe(function () {
             _this.notyService.renderNoty("\"" + oldValue + "\" has been changed to \"" + newValue + "\"");
         });
         var _b;
     };
-    ProductsComponent.prototype.isEditable = function (key) {
-        return key === 'price' || key === 'quantity' ? true : false;
+    ProductsComponent.prototype.isEditable = function (product, key) {
+        switch (key) {
+            case 'price':
+                return true;
+            case 'quantity':
+                return !product.isAggregated;
+            default:
+                return false;
+        }
     };
     ProductsComponent.prototype.isCategory = function (key) {
-        return key === 'categories' ? true : false;
+        return key === 'categories';
     };
     ProductsComponent.prototype.toggleAnimState = function () {
         this.searchExpanded = this.searchExpanded === 'collapsed' ? 'expanded' : 'collapsed';
@@ -126,7 +136,8 @@ var ProductsComponent = /** @class */ (function () {
         Component({
             moduleId: module.id,
             templateUrl: 'products.component.html',
-            animations: [slideToLeft(), changeWidth()],
+            styleUrls: ['products.component.css'],
+            animations: [slideToLeft(), changeWidth(), appear()],
             host: { '[@slideToLeft]': '' }
         }),
         __metadata("design:paramtypes", [ProductService,

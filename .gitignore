@@ -4,3 +4,4 @@ git/nbproject
 *.iml
 node_modules
 src/main/webapp/
+src/main/src/aot/

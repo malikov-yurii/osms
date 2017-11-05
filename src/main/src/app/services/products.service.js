@@ -16,18 +16,20 @@ var ProductService = /** @class */ (function () {
         this.storeHelper = storeHelper;
         this.searchService = searchService;
         this.productsPath = 'product';
+        this.aggregatorsPath = 'aggregators';
     }
     ProductService.prototype.getAllProducts = function () {
         var _this = this;
         return this.api.get(this.productsPath + "?pageNumber=0&pageCapacity=10000")
             .do(function (_a) {
-            var totalElements = _a.totalElements, elements = _a.elements;
+            var totalElements = _a.totalElements, elements = _a.elements, productAggregators = _a.productAggregators;
             elements.sort(function (a, b) { return a.id - b.id; });
             elements = elements.map(function (el) {
                 el.categories = el.categories.join('; ');
                 return el;
             });
             _this.storeHelper.update(_this.productsPath, elements);
+            _this.storeHelper.update(_this.aggregatorsPath, productAggregators);
         });
     };
     ProductService.prototype.list = function (searchQuery, page, length, filterData) {
@@ -49,7 +51,7 @@ var ProductService = /** @class */ (function () {
                     }
                 }
             }
-            return flag === Object.keys(filterData).length ? true : false;
+            return flag === Object.keys(filterData).length;
         });
         var productResultPage = filterResult.slice((page - 1) * length, page * length);
         return Observable.of({
@@ -57,11 +59,12 @@ var ProductService = /** @class */ (function () {
             filtered: filterResult.length
         });
     };
-    ProductService.prototype.updateProductField = function (productId, productVarId, body) {
-        if (productVarId !== 0) {
-            body['variationId'] = productVarId;
+    ProductService.prototype.updateField = function (id, variationId, body, isAggregator) {
+        var path = isAggregator ? 'product-aggregator' : this.productsPath;
+        if (variationId !== 0) {
+            body['variationId'] = variationId;
         }
-        return this.api.put(this.productsPath + "/" + productId, body);
+        return this.api.put(path + "/" + id, body);
     };
     ProductService.prototype.purgeStore = function () {
         this.storeHelper.update(this.productsPath, []);

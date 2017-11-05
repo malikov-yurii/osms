@@ -8,24 +8,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 var FilterStatic = /** @class */ (function () {
     function FilterStatic(fb) {
         this.fb = fb;
         this.filtered = new EventEmitter();
         this.form = this.fb.group({});
     }
+    FilterStatic.prototype.ngOnChanges = function () {
+        var _this = this;
+        Object.keys(this.filters).map(function (key) {
+            _this.form.setControl(key, new FormControl(''));
+        });
+    };
     FilterStatic.prototype.ngOnInit = function () {
         var _this = this;
-        this.form.valueChanges.subscribe(function (value) { return _this.filtered.emit(value); });
+        this.subscription = this.form.valueChanges.subscribe(function (value) { return _this.filtered.emit(value); });
     };
-    FilterStatic.prototype.ngOnChanges = function () {
-        try {
-            this.form = this.fb.group(this.filters);
-        }
-        catch (e) {
-            console.warn(e);
-        }
+    FilterStatic.prototype.ngOnDestroy = function () {
+        this.subscription.unsubscribe();
     };
     __decorate([
         Input(),
@@ -39,7 +40,7 @@ var FilterStatic = /** @class */ (function () {
         Component({
             moduleId: module.id,
             selector: 'filter-static',
-            template: "\n    <form class=\"filter-container\" [formGroup]=\"form\">\n      <div\n        class=\"filter\"\n        *ngFor=\"let filter of filters | keys\"\n      >\n        <div class=\"filter__label\">\n          {{ filter }} :\n        </div>\n\n        <select\n          class=\"filter__select input\"\n          formControlName=\"{{ filter }}\"\n        >\n          <option value=\"\" selected>- Show all -</option>\n          <option\n            *ngFor=\"let option of filters[filter]\"\n            value=\"{{ option }}\"\n          >\n            {{ option }}\n          </option>\n        </select>\n      </div>\n    </form>\n  ",
+            template: "\n    <form class=\"filter-container\" [formGroup]=\"form\">\n      <div class=\"filter\"\n           *ngFor=\"let filter of filters | keys\"\n      >\n        <div class=\"filter__label\">\n          {{ filter }} :\n        </div>\n\n        <select class=\"filter__select input\"\n                [formControlName]=\"filter\"\n        >\n          <option value=\"\" selected>- Show all -</option>\n          <option *ngFor=\"let option of filters[filter]\"\n                  [ngValue]=\"option\"\n          >\n            {{ option }}\n          </option>\n        </select>\n      </div>\n    </form>\n  ",
             styles: ["\n    .filter {\n        display: flex;\n        align-items: center;\n        margin: 5px 0;\n    }\n\n    .filter__label {\n        margin: 0 10px 0 0;\n        width: 100px;\n        text-transform: capitalize;\n        font-size: 15px;\n        word-break: break-word;\n    }\n    .filter__select {\n        width: 140px;\n        cursor: pointer;\n        font-size: 15px;\n    }\n    @media only screen and (max-width: 500px) {\n      .filter {\n          justify-content: space-between;\n      }\n      .filter__label {\n          width: 42%;\n      }\n\n      .filter__select {\n          width: 47%;\n      }\n    }\n  "]
         }),
         __metadata("design:paramtypes", [FormBuilder])
