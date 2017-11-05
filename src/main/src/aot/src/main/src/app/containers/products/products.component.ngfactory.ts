@@ -55,7 +55,7 @@ function View_ProductsComponent_3(_l:any):i0.ɵViewDefinition {
           ad = (pd_2 && ad);
         }
         if (('contentChanged' === en)) {
-          const pd_3:any = ((<any>_co.onUpdateProductField((<any>(<any>_v.parent).parent).context.$implicit.id,
+          const pd_3:any = ((<any>_co.onUpdateField((<any>(<any>_v.parent).parent).context.$implicit.id,
               (<any>(<any>_v.parent).parent).context.$implicit.variationId,(<any>_v.parent).context.$implicit,
               $event)) !== false);
           ad = (pd_3 && ad);

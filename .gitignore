@@ -1,6 +1,6 @@
 target/
-/git/nbproject
-/.idea/
+git/nbproject
+.idea/
 *.iml
 node_modules
-src/main/webapp
+src/main/webapp/

@@ -107,7 +107,7 @@ gulp.task('clean', () => del(buildDirectory));
 
 
 gulp.task('update:html', () => {
-  return gulp.src(`${srcDirectory}/app/**/*.html`)
+  return gulp.src(`${srcDirectory}/app/**/*.html`, {base: srcDirectory})
     .pipe(gulp.dest(targetDirectory));
 });
 

@@ -13,18 +13,20 @@ import 'rxjs/add/operator/pluck';
 import { Store } from '../../store';
 import { Product } from '../../models/index';
 import { ProductService, NotyService } from '../../services/index';
-import { slideToLeft, changeWidth } from '../../ui/animations';
+import { slideToLeft, changeWidth, appear } from '../../ui/animations';
 
 
 @Component({
   moduleId: module.id,
   templateUrl: 'products.component.html',
-  animations: [slideToLeft(), changeWidth()],
+  styleUrls: ['products.component.css'],
+  animations: [slideToLeft(), changeWidth(), appear()],
   host: {'[@slideToLeft]': ''}
 })
 export class ProductsComponent implements OnInit, OnDestroy {
 
   public products$: Observable<Product[]>;
+  public productAggregators: any[];
   public totalProducts: any;
   public filteredProducts$: Observable<number>;
 
@@ -42,7 +44,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   public categories: string[] = [''];
   public suppliers: string[] = [''];
 
-  public searchExpanded = 'collapsed';
+  public searchExpanded: string = 'collapsed';
 
   constructor(
     private productService: ProductService,
@@ -52,9 +54,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subs[this.subs.length] = this.productService.getAllProducts().subscribe(
-      ({totalElements, elements}) => {
+      ({totalElements, elements, productAggregators}) => {
         this.totalProducts = totalElements;
         this.getFiltersList(elements);
+        this.productAggregators = productAggregators;
       }
     );
 
@@ -132,24 +135,26 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.filterStream.next(e);
   }
 
-  onUpdateProductField(productId, productVarId, fieldName, {newValue, oldValue}) {
-    this.productService.updateProductField(productId, productVarId, {[fieldName]: newValue})
+  onUpdateField(productId: number, productVarId: number, fieldName: string, {newValue, oldValue}, isAggregator: boolean = false) {
+    this.productService.updateField(productId, productVarId, {[fieldName]: newValue}, isAggregator)
       .subscribe(() => {
         this.notyService.renderNoty(`"${oldValue}" has been changed to "${newValue}"`);
       });
   }
 
 
-
-
-
-
-
-  isEditable(key) {
-    return key === 'price' || key === 'quantity' ? true : false;
+  isEditable(product: Product, key: string): boolean {
+    switch (key) {
+      case 'price':
+        return true;
+      case 'quantity':
+        return !product.isAggregated;
+      default:
+        return false;
+    }
   }
 
-  isCategory(key) {
+  isCategory(key: string): boolean {
     return key === 'categories' ? true : false;
   }
 

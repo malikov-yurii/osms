@@ -9,4 +9,5 @@ export class Product {
   quantity: string = '0';
   price: string = '0';
   supplier: string = '';
+  isAggregated: boolean;
 }

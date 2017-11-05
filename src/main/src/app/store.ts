@@ -7,6 +7,7 @@ import { IState }            from './models/index';
 const defaultState: IState = {
   order: [],
   product: [],
+  productAggregators: [],
   customer: []
 };
 

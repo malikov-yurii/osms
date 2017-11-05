@@ -24,8 +24,8 @@ public class ProductController {
                                          @RequestParam("pageCapacity") int pageCapacity) {
         ModelMap modelMap = new ModelMap();
         Page<ProductDto> page = productService.getPage(pageNumber, pageCapacity);
-        modelMap.addAttribute("totalProducts", page.getTotalElements());
-        modelMap.addAttribute("products", page.getContent());
+        modelMap.addAttribute("totalElements", page.getTotalElements());
+        modelMap.addAttribute("elements", page.getContent());
         modelMap.addAttribute("productAggregators", productAggregatorService.findAll());
         return modelMap;
     }

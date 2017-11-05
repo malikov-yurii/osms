@@ -52,7 +52,7 @@ function View_ProductsComponent_3(_l) {
                     ad = (pd_2 && ad);
                 }
                 if (('contentChanged' === en)) {
-                    var pd_3 = (_co.onUpdateProductField(_v.parent.parent.context.$implicit.id, _v.parent.parent.context.$implicit.variationId, _v.parent.context.$implicit, $event) !== false);
+                    var pd_3 = (_co.onUpdateField(_v.parent.parent.context.$implicit.id, _v.parent.parent.context.$implicit.variationId, _v.parent.context.$implicit, $event) !== false);
                     ad = (pd_3 && ad);
                 }
                 return ad;

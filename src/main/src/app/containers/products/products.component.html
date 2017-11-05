@@ -23,6 +23,7 @@
 
   </div>
 
+  <h3>Products</h3>
 
   <div class="table-container">
     <table class="table table-products">
@@ -41,20 +42,20 @@
         [ngClass]="{'product': true, 'odd': odd, 'even': even}"
       >
         <ng-container
-          *ngFor="let key of product | keys:['unlimited']"
+          *ngFor="let key of product | keys:['unlimited', 'isAggregated']"
         >
 
-          <ng-template [ngIf]="isEditable(key)">
+          <ng-container *ngIf="isEditable(product, key); else isNotEditableCell">
             <td
               class="product-cell--{{ key }} editable"
               contenteditable
               [(contenteditableModel)]="product[key]"
-              (contentChanged)="onUpdateProductField(product.id, product.variationId, key, $event)"
+              (contentChanged)="onUpdateField(product.id, product.variationId, key, $event)"
             ></td>
-          </ng-template>
+          </ng-container>
 
 
-          <ng-template [ngIf]="!isEditable(key)">
+          <ng-template #isNotEditableCell>
             <td class="product-cell--{{ key }}">
               {{ product[key] }}
             </td>
@@ -73,4 +74,33 @@
     (dataChanged)="paginationChanged($event)"
   >
   </pagination>
+
+  <h3>Aggregators</h3>
+
+  <div class="aggregators table-container">
+    <ul class="aggregators-head">
+      <li>
+        <div class="list-cell">Name</div>
+        <div class="list-cell">Quantity</div>
+      </li>
+      <li>
+        <div class="list-cell">Name</div>
+        <div class="list-cell">Quantity</div>
+      </li>
+    </ul>
+    <ul class="aggregators-list">
+      <li *ngFor="let aggregator of productAggregators; odd as odd; even as even"
+          [ngClass]="{'odd': odd, 'even': even}"
+      >
+        <div class="list-cell">{{ aggregator.name }}</div>
+        <div class="list-cell"
+             contenteditable
+             [(contenteditableModel)]="aggregator['quantity']"
+             (contentChanged)="onUpdateField(aggregator.id, null, 'quantity', $event, true)"
+        >
+        </div>
+      </li>
+    </ul>
+  </div>
+
 </div>

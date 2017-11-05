@@ -247,7 +247,7 @@ function View_OrdersComponent_13(_l) {
                     ad = (pd_5 && ad);
                 }
                 if (('contentChanged' === en)) {
-                    var pd_6 = (_co.onUpdateProductField(_v.parent.parent.parent.context.$implicit.id, _v.parent.parent.context.$implicit.id, _v.parent.context.$implicit, $event) !== false);
+                    var pd_6 = (_co.onUpdateField(_v.parent.parent.parent.context.$implicit.id, _v.parent.parent.context.$implicit.id, _v.parent.context.$implicit, $event) !== false);
                     ad = (pd_6 && ad);
                 }
                 return ad;
