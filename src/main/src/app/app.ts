@@ -8,6 +8,7 @@ import { NotyService }          from "./services/noty.service";
   moduleId: module.id,
   selector: 'app',
   template: `
+    <progress-bar></progress-bar>
     <nav-header></nav-header>
     <router-outlet></router-outlet>
   `,
