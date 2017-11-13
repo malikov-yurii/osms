@@ -32,12 +32,12 @@ body {
 }
 .input:focus {
     outline: none;
-    box-shadow: 0 1px 0 0 #00bcd4;
+    box-shadow: 0 1px 0 0 #3fb0ac;
 }
 .btn {
     display: inline-block;
     padding: 8px 12px;
-    background: #00bcd4;
+    background: #3fb0ac;
     border: 0;
     border-radius: 2px;
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .2);
@@ -48,12 +48,12 @@ body {
     cursor: pointer;
 }
 .btn:hover {
-    background: #00b5cc;
+    background: #37a09d;
     box-shadow: 0 2px 9px 0 rgba(0, 0, 0, .3);
 }
 .btn:active,
 .btn:focus {
-    background: #00b5cc;
+    background: #37a09d;
     outline: none;
     box-shadow: 0.2px 4px 9px 1px rgba(0, 0, 0, .3);
 }

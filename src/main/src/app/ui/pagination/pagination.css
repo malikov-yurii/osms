@@ -23,7 +23,7 @@ li {
 }
 li:hover,
 li.active {
-    background: #00bcd4;
+    background: #3fb0ac;
     color: #fff;
 }
 li.disabled,

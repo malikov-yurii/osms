@@ -1,5 +1,5 @@
 .header {
-    background: #00bcd4;
+    background: #3fb0ac;
     box-shadow: 0 2px 5px rgba(0,0,0,.26);
     color: #fff;
 }
@@ -27,7 +27,7 @@ a {
 }
 a:hover,
 .active {
-    background: #008ba3;
+    background: #00807d;
 }
 .header__nav-toggle {
     display: none;
@@ -72,7 +72,7 @@ a:hover,
     .header__nav a:hover,
     .header__nav .active {
         background: initial;
-        color: #008ba3;
+        color: #00807d;
     }
     .header__nav a.logout {
         color: #9e0202;
