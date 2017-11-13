@@ -1,12 +1,15 @@
 package com.malikov.shopsystem.util;
 
-import com.malikov.shopsystem.model.Product;
 import com.malikov.shopsystem.dto.ProductDto;
+import com.malikov.shopsystem.model.Product;
 import com.malikov.shopsystem.model.ProductCategory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.nonNull;
 
 public class ProductUtil {
 
@@ -31,17 +34,23 @@ public class ProductUtil {
                             product.getId(), productVariation.getId(),
                             product.getName() + " "
                                     + productVariation.getVariationValue().getName(),
+                            getCategoryNames(product),
                             productVariation.getPrice(),
                             productVariation.getQuantity(),
                             product.getUnlimited(),
-                            product.getCategories()))
+                            product.getSupplier(),
+                            nonNull(productVariation.getProductAggregator())))
                     .collect(Collectors.toList()));
         } else {
             productDtos.add(new ProductDto(
-                    product.getId(), 0L, product.getName(), product.getPrice(),
-                    product.getQuantity(), product.getUnlimited(),
-                    product.getCategories()));
+                    product.getId(), 0L, product.getName(),
+                    getCategoryNames(product),
+                    product.getPrice(),product.getQuantity(), product.getUnlimited(), product.getSupplier(), false));
         }
         return productDtos;
+    }
+
+    private static Set<String> getCategoryNames(Product product) {
+        return product.getCategories().stream().map(ProductCategory::getName).collect(Collectors.toSet());
     }
 }

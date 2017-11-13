@@ -1,0 +1,26 @@
+<div class="header">
+  <div class="wrapper">
+    <div class="header__logo">
+      <a [routerLink]="['']" class="logo">OSMS</a>
+    </div>
+    <div class="header__nav-toggle">
+      <i
+        class="material-icons"
+        (click)="toggleMenuState()"
+      >menu</i>
+    </div>
+    <nav class="header__nav" [class.expanded]="menuState === 'expanded'">
+      <ul>
+        <li><a [routerLink]="['']">Orders</a></li>
+        <li><a [routerLink]="['products']" routerLinkActive="active">Products</a></li>
+        <li><a [routerLink]="['customers']" routerLinkActive="active">Customers</a></li>
+        <li><a href="/logout" class="logout">Log out</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div
+    class="menu-overlay"
+    [@fadeInOut]="menuState"
+    (click)="toggleMenuState()"
+  ></div>
+</div>

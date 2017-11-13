@@ -1,9 +1,12 @@
 package com.malikov.shopsystem;
 
 import com.malikov.shopsystem.matcher.ModelMatcher;
-import com.malikov.shopsystem.model.*;
+import com.malikov.shopsystem.model.Order;
+import com.malikov.shopsystem.model.OrderItem;
+import com.malikov.shopsystem.enumtype.OrderStatus;
+import com.malikov.shopsystem.enumtype.PaymentType;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Objects;
@@ -18,7 +21,7 @@ public class OrderTestData {
             PaymentType.PB,
             OrderStatus.WFP,
             null,
-            LocalDate.of(2016, 9, 15),
+            LocalDateTime.of(2016, 9, 15, 1,1,1),
             Arrays.asList(
                     new OrderItem(1L, POTAL_NAZIONALE, POTAL_NAZIONALE_100, POTAL_NAZIONALE.getName(), POTAL_NAZIONALE_100.getPrice(), 1),
                     new OrderItem(2L, FERRARIO_ROZOVYJ, FERRARIO_ROZOVYJ_250ML, FERRARIO_ROZOVYJ.getName(), FERRARIO_ROZOVYJ_250ML.getPrice(), 2)
@@ -27,7 +30,7 @@ public class OrderTestData {
             PaymentType.NP,
             OrderStatus.SHP,
             null,
-            LocalDate.of(2016, 11, 17),
+            LocalDateTime.of(2016, 11, 17, 1, 1, 1),
             Arrays.asList(
                     new OrderItem(3L, SHELLAC_MANETTI, SHELLAC_MANETTI_250ML, SHELLAC_MANETTI.getName(), SHELLAC_MANETTI_250ML.getPrice(), 3),
                     new OrderItem(4L, POTAL_KITAJ, POTAL_KITAJ_100, POTAL_KITAJ.getName(), POTAL_KITAJ_100.getPrice(), 4)
@@ -37,7 +40,7 @@ public class OrderTestData {
             PaymentType.PB,
             OrderStatus.SHP,
             null,
-            LocalDate.of(2016, 10, 11),
+            LocalDateTime.of(2016, 10, 11, 1, 1, 1),
             Collections.singletonList(
                     new OrderItem(5L, POTAL_KITAJ, POTAL_KITAJ_100, POTAL_KITAJ.getName(), POTAL_KITAJ_100.getPrice(), 5)
             ));
@@ -46,7 +49,7 @@ public class OrderTestData {
             PaymentType.NP,
             OrderStatus.SHP,
             null,
-            LocalDate.of(2016, 12, 22),
+            LocalDateTime.of(2016, 12, 22, 1, 1, 1),
             Arrays.asList(
                     new OrderItem(6L, SHELLAC_MANETTI, SHELLAC_MANETTI_250ML, SHELLAC_MANETTI.getName(), SHELLAC_MANETTI_250ML.getPrice(), 6),
                     new OrderItem(7L, POTAL_NAZIONALE, POTAL_NAZIONALE_100, POTAL_NAZIONALE.getName(), POTAL_NAZIONALE_100.getPrice(), 7),
@@ -61,7 +64,7 @@ public class OrderTestData {
                             && Objects.equals(expected.getPaymentType(), actual.getPaymentType())
                             && Objects.equals(expected.getStatus(), actual.getStatus())
                             && Objects.equals(expected.getComment(), actual.getComment())
-                            && Objects.equals(expected.getDatePlaced(), actual.getDatePlaced())
+                            && Objects.equals(expected.getDateTimeCreated(), actual.getDateTimeCreated())
                             && Objects.equals(expected.getOrderItems(), actual.getOrderItems())
                     )
     );

@@ -15,6 +15,9 @@ public class VariationValue extends NamedEntity {
     @JoinColumn(name = "attr_id")
     private VariationType variationType;
 
+    @Column(name = "value_amount")
+    private Integer valueAmount;
+
 
     public VariationValue() {}
 
@@ -30,6 +33,14 @@ public class VariationValue extends NamedEntity {
 
     public void setVariationType(VariationType variationType) {
         this.variationType = variationType;
+    }
+
+    public Integer getValueAmount() {
+        return valueAmount;
+    }
+
+    public void setValueAmount(Integer valueAmount) {
+        this.valueAmount = valueAmount;
     }
 
     @Override

@@ -1,0 +1,127 @@
+<div class="wrapper products-page">
+
+  <div class="tabs">
+    <button class="tab"
+            (click)="currentTab = 'products'"
+            [class.active]="currentTab === 'products'"
+    >
+      Products
+    </button>
+    <button class="tab"
+            (click)="currentTab = 'aggregators'"
+            [class.active]="currentTab === 'aggregators'"
+    >
+      Aggregators
+    </button>
+  </div>
+
+  <div class="tab-content" [ngSwitch]="currentTab">
+    <div *ngSwitchCase="'products'">
+      <div class="service-block">
+
+        <filter-static
+          [filters]="{
+            categories: categories,
+            supplier: suppliers
+          }"
+          (filtered)="onFilterChange($event)"
+        ></filter-static>
+
+        <input type="text" name="searchStream" id=""
+               class="input search-input"
+               placeholder="Search in products..."
+               [@changeWidth]="searchExpanded"
+               #searchControl
+               [formControl]="searchStream"
+               [(ngModel)]="searchQuery"
+               (focusin)="toggleAnimState()"
+               (focusout)="toggleAnimState()"
+        >
+
+      </div>
+
+      <div class="table-container">
+        <table class="table table-products">
+          <thead>
+          <th class="product-cell--id numeric">ID</th>
+          <th class="product-cell--varId numeric">Variation ID</th>
+          <th class="product-cell--name">Name</th>
+          <th class="product-cell--categories">Category</th>
+          <th class="product-cell--price numeric">Price</th>
+          <th class="product-cell--quantity numeric">Quantity</th>
+          <th class="product-cell--supplier">Supplier</th>
+          </thead>
+          <tbody>
+          <tr
+            *ngFor="let product of products$ | async; let odd = odd; let even = even;"
+            [ngClass]="{'product': true, 'odd': odd, 'even': even}"
+          >
+            <ng-container
+              *ngFor="let key of product | keys:['unlimited', 'isAggregated']"
+            >
+
+              <ng-container *ngIf="isEditable(product, key); else isNotEditableCell">
+                <td
+                  class="product-cell--{{ key }} editable"
+                  contenteditable
+                  [(contenteditableModel)]="product[key]"
+                  (contentChanged)="onUpdateField(product.id, product.variationId, key, $event)"
+                ></td>
+              </ng-container>
+
+
+              <ng-template #isNotEditableCell>
+                <td class="product-cell--{{ key }}"
+                    [class.aggregated]="key === 'quantity' && product.isAggregated"
+                >
+                  {{ product[key] }}
+                </td>
+              </ng-template>
+
+            </ng-container>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <pagination
+        [total]="filteredProducts$ | async"
+        [length]="pageLength"
+        [current]="page"
+        (dataChanged)="paginationChanged($event)"
+      >
+      </pagination>
+    </div>
+
+    <div *ngSwitchCase="'aggregators'">
+      <div class="aggregators table-container">
+        <ul class="aggregators-head">
+          <li>
+            <div class="list-cell">Name</div>
+            <div class="list-cell">Quantity</div>
+          </li>
+          <li>
+            <div class="list-cell">Name</div>
+            <div class="list-cell">Quantity</div>
+          </li>
+        </ul>
+        <ul class="aggregators-list">
+          <li *ngFor="let aggregator of productAggregators; odd as odd; even as even"
+              [ngClass]="{'odd': odd, 'even': even}"
+          >
+            <div class="list-cell">{{ aggregator.name }}</div>
+            <div class="list-cell"
+                 contenteditable
+                 [(contenteditableModel)]="aggregator['quantity']"
+                 (contentChanged)="onUpdateField(aggregator.id, null, 'quantity', $event, true)"
+            >
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>

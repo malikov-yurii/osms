@@ -40,13 +40,13 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void update(CustomerDto customerDto) {
         checkIsNotNew(customerDto, "customer must not be new");
-        Customer customer = get(customerDto.getId());
+        Customer customer = customerRepository.findOne(customerDto.getId());
         customerRepository.save(updateFromTo(customer, customerDto));
     }
 
     @Override
-    public Customer get(Long id) {
-        return checkNotFoundById(customerRepository.findOne(id), id);
+    public CustomerDto get(Long id) {
+        return CustomerConverter.asDto(checkNotFoundById(customerRepository.findOne(id), id));
     }
 
     @Override
@@ -66,22 +66,24 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<CustomerAutocompleteDto> getByFirstNameMask(String firstNameMask) {
-        return CustomerAutocompleteDtoListOf(customerRepository.getByNameLike(firstNameMask));
+        return CustomerAutocompleteDtoListOf(customerRepository.getByNameLike("%" +firstNameMask + "%"));
     }
 
     @Override
     public List<CustomerAutocompleteDto> getByLastNameMask(String lastNameMask) {
-        return CustomerAutocompleteDtoListOf(customerRepository.getByLastNameLike(lastNameMask));
+        return CustomerAutocompleteDtoListOf(
+                customerRepository.getByLastNameLike("%" + lastNameMask + "%"));
     }
 
     @Override
     public List<CustomerAutocompleteDto> getByPhoneNumberMask(String phoneNumberMask) {
-        return CustomerAutocompleteDtoListOf(customerRepository.getByPhoneNumberLike(phoneNumberMask));
+        return CustomerAutocompleteDtoListOf(
+                customerRepository.getByPhoneNumberLike("%" + phoneNumberMask + "%"));
     }
 
     @Override
     public List<CustomerAutocompleteDto> getByCityMask(String cityMask) {
-        return CustomerAutocompleteDtoListOf(customerRepository.getByCityLike(cityMask));
+        return CustomerAutocompleteDtoListOf(customerRepository.getByCityLike("%" + cityMask + "%"));
     }
 
     @Override
@@ -106,11 +108,11 @@ public class CustomerServiceImpl implements CustomerService {
             checkIsNew(order.getCustomer(), "Customer is not new");
         }
         order.setCustomer(customerRepository.save(
-                new Customer(order.getCustomerName()
+                new Customer(order.getCustomerFirstName()
                         , order.getCustomerLastName()
                         , order.getCustomerPhoneNumber()
-                        , order.getCustomerCity()
-                        , order.getCustomerPostOffice()
+                        , order.getDestinationCity()
+                        , order.getDestinationPostOffice()
                         , null
                         , null)));
         return orderRepository.save(order).getCustomer();

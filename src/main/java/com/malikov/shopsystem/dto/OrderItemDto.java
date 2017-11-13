@@ -1,39 +1,44 @@
 package com.malikov.shopsystem.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
+import com.malikov.shopsystem.HasId;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
-public class OrderItemDto implements Serializable {
+public class OrderItemDto implements Serializable, HasId {
 
-    private Long orderItemId;
+    private Long id;
 
-    private Long orderProductId;
+    private Long productId;
+
+    private Long productVariationId;
 
     private String name;
 
-    private BigDecimal price;
-
     private Integer quantity;
+
+    private BigDecimal price;
 
     private String supplier;
 
-    @JsonCreator
+    //@JsonCreator
     public OrderItemDto(
             Long orderItemId,
-            Long orderProductId,
+            Long productId,
+            Long productVariationId,
             String name,
-            BigDecimal price,
             Integer quantity,
+            BigDecimal price,
             String  supplier
     ) {
 
-        this.orderItemId = orderItemId;
-        this.orderProductId = orderProductId;
+        this.id = orderItemId;
+        this.productId = productId;
+        this.productVariationId = productVariationId;
         this.name = name;
-        this.price = price;
         this.quantity = quantity;
+        this.price = price.setScale(0, RoundingMode.HALF_UP);
         this.supplier = supplier;
     }
 
@@ -53,7 +58,7 @@ public class OrderItemDto implements Serializable {
     }
 
     public void setPrice(BigDecimal price) {
-        this.price = price;
+        this.price = price.setScale(0, RoundingMode.HALF_UP);
     }
 
     public Integer getQuantity() {
@@ -65,19 +70,19 @@ public class OrderItemDto implements Serializable {
     }
 
     public Long getOrderItemId() {
-        return orderItemId;
+        return id;
     }
 
     public void setOrderItemId(Long orderItemId) {
-        this.orderItemId = orderItemId;
+        this.id = orderItemId;
     }
 
-    public Long getOrderProductId() {
-        return orderProductId;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setOrderProductId(Long orderProductId) {
-        this.orderProductId = orderProductId;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public String getSupplier() {
@@ -88,16 +93,26 @@ public class OrderItemDto implements Serializable {
         this.supplier = supplier;
     }
 
-    @Override
-    public String toString() {
-        return "OrderItemDto{" +
-                "orderItemId=" + orderItemId +
-                ", orderProductId=" + orderProductId +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", supplier=" + supplier +
-                '}';
+    public Long getProductVariationId() {
+        return productVariationId;
     }
 
+    public void setProductVariationId(Long productVariationId) {
+        this.productVariationId = productVariationId;
+    }
+
+    @Override
+    public Long getId() {
+        return null;
+    }
+
+    @Override
+    public void setId(Long id) {
+
+    }
+
+    @Override
+    public boolean isNew() {
+        return false;
+    }
 }

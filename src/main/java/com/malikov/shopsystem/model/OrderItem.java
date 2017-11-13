@@ -9,12 +9,12 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-@SuppressWarnings("JpaQlInspection")
 @Entity
 @Table(name = "osms_order_items")
 public class OrderItem extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    //@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "order_id")
     private Order order;
@@ -44,7 +44,7 @@ public class OrderItem extends BaseEntity {
     public OrderItem() {
         this.productName = "";
         this.productPrice = new BigDecimal(0);
-        this.productQuantity = 1;
+        this.productQuantity = 0;
     }
 
     public OrderItem(Order order, Product product, String productName,
@@ -53,7 +53,7 @@ public class OrderItem extends BaseEntity {
         this.order = order;
     }
 
-    public OrderItem(Long orderItemId, Product product,
+    public OrderItem(Long id, Product product,
                      ProductVariation variation, String productName,
                      BigDecimal productPrice, Integer productQuantity) {
         this.product = product;
@@ -63,7 +63,7 @@ public class OrderItem extends BaseEntity {
                 : productName;
         this.productPrice = productPrice;
         this.productQuantity = productQuantity;
-        this.id = orderItemId;
+        this.id = id;
     }
 
 

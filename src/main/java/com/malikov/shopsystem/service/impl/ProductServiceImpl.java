@@ -33,22 +33,12 @@ public class ProductServiceImpl implements ProductService {
         List<ProductDto> allProductDtos = new ArrayList<>();
         Page<Product> page = productRepository.findAll(new PageRequest(pageNumber, pageCapacity));
         for (Product product : page.getContent()) {
-            allProductDtos.addAll(ProductUtil.getDtosFrom(product));
+            if (product.getCategories().size() != 0) {
+                allProductDtos.addAll(ProductUtil.getDtosFrom(product));
+            }
         }
         return new PageImpl<>(allProductDtos, null, page.getTotalElements());
     }
-/*
-
-    @Override
-    public Page<ProductDto> getPageByCategoryName(String categoryName, int pageNumber, int pageCapacity) {
-        List<ProductDto> allProductDtos = new ArrayList<>();
-        Page<Product> page = productRepository.findAllByCategoryName(new PageRequest(pageNumber, pageCapacity));
-        for (Product product : page.getContent()) {
-            allProductDtos.addAll(ProductUtil.getDtosFrom(product));
-        }
-        return new PageImpl<>(allProductDtos, null, page.getTotalElements());
-    }
-*/
 
     @Override
     public void delete(Long id) {
@@ -59,6 +49,7 @@ public class ProductServiceImpl implements ProductService {
     public void update(ProductDto productDto) {
         Product product;
         checkNotFoundById(product = productRepository.findOne(productDto.getProductId()), productDto.getProductId());
+
         if (productDto.getProductVariationId() != null) {
             product.getVariations().stream()
                     .filter(productVariation -> Objects.equals(productVariation.getId(), productDto.getProductVariationId()))
@@ -71,7 +62,6 @@ public class ProductServiceImpl implements ProductService {
                             productVariation.setQuantity(productDto.getQuantity());
                         }
                     });
-
         } else {
             if (productDto.getPrice() != null) {
                 product.setPrice(productDto.getPrice());
@@ -99,6 +89,6 @@ public class ProductServiceImpl implements ProductService {
 */
     @Override
     public List<Product> getByProductNameMask(String productNameMask) {
-        return productRepository.getByNameLike(productNameMask);
+        return productRepository.getByNameLike("%" + productNameMask + "%");
     }
 }

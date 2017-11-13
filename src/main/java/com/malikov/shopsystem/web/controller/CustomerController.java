@@ -19,14 +19,26 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+    @GetMapping(value = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CustomerDto getCustomer(@PathVariable("customerId") Long customerId) {
+        return customerService.get(customerId);
+    }
+
+    @PutMapping(value = "/{customerId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateCustomer(@PathVariable("customerId") Long customerId,
+                               @RequestBody CustomerDto customerDto) {
+        customerDto.setId(customerId);
+        customerService.update(customerDto);
+    }
+
     @PostMapping
     public void createCustomer(@Valid CustomerDto customerDto) {
         customerService.create(customerDto);
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateCustomer(@Valid CustomerDto customerDto) {
-        customerService.update(customerDto);
+    @PostMapping(value = "/persist-customer-from-order/{orderId}")
+    public Long persistCustomerFromOrder(@PathVariable("orderId") Long orderId) {
+        return customerService.persistCustomerFromOrder(orderId).getId();
     }
 
     @DeleteMapping(value = "/{customerId}")
@@ -48,14 +60,11 @@ public class CustomerController {
         return customerService.getByPhoneNumberMask(phoneNumberMask);
     }
 
-    @PostMapping(value = "/autocomplete-by-city-mask", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CustomerAutocompleteDto> autocompleteCity(@RequestParam("term") String cityMask) {
+    @GetMapping(value = "/autocomplete-by-city-mask/{cityMask}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CustomerAutocompleteDto> autocompleteCity(
+            @PathVariable("cityMask") String cityMask) {
         return customerService.getByCityMask(cityMask);
-    }
-
-    @PostMapping(value = "/persist-customer-from-order/{orderId}")
-    public void persistCustomerFromOrder(@PathVariable("orderId") Long orderId) {
-        customerService.persistCustomerFromOrder(orderId);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

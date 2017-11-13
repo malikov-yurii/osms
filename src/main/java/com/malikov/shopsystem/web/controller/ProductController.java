@@ -2,6 +2,7 @@ package com.malikov.shopsystem.web.controller;
 
 import com.malikov.shopsystem.dto.ProductDto;
 import com.malikov.shopsystem.model.Product;
+import com.malikov.shopsystem.service.impl.ProductAggregatorService;
 import com.malikov.shopsystem.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,8 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ProductAggregatorService productAggregatorService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ModelMap getProductTablePage(@RequestParam("pageNumber") int pageNumber,
@@ -23,21 +26,9 @@ public class ProductController {
         Page<ProductDto> page = productService.getPage(pageNumber, pageCapacity);
         modelMap.addAttribute("totalElements", page.getTotalElements());
         modelMap.addAttribute("elements", page.getContent());
+        modelMap.addAttribute("productAggregators", productAggregatorService.findAll());
         return modelMap;
     }
-/*
-
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ModelMap getByCategoryName(@RequestParam("pageNumber") int pageNumber,
-                                       @RequestParam("pageCapacity") int pageCapacity,
-                                       @RequestParam("categoryName") String categoryName) {
-        ModelMap modelMap = new ModelMap();
-        Page<ProductDto> page = productService.getPageByCategoryName(categoryName, pageNumber, pageCapacity);
-        modelMap.addAttribute("totalElements", page.getTotalElements());
-        modelMap.addAttribute("elements", page.getContent());
-        return modelMap;
-    }
-*/
 
     @GetMapping(value = "/{id}")
     public Product get(@PathVariable("id") Long id) {
@@ -49,19 +40,10 @@ public class ProductController {
         productService.delete(id);
     }
 
-    @PutMapping(value = "/{id}")
-    public void updateProduct(@PathVariable("id") Long id, ProductDto productDto){
-        productDto.setProductId(id);
+    @PutMapping(value = "/{productId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateProduct(@PathVariable("productId") Long productId,
+                              @RequestBody ProductDto productDto){
+        productDto.setProductId(productId);
         productService.update(productDto);
     }
-/*
-    @PutMapping(value = "/{id}/unlimited-state")
-    public void changeUnlimited(@PathVariable("id") Long id, @RequestParam("unlimited") boolean unlimited) {
-        productService.enableUnlimited(id, unlimited);
-    }
-
-    @PutMapping(value = "/{id}/has-variations-state")
-    public void changeHasVariations(@PathVariable("id") Long id, @RequestParam("hasVariations") boolean hasVariations) {
-        productService.enableHasVariations(id, hasVariations);
-    }*/
 }

@@ -1,30 +1,24 @@
 package com.malikov.shopsystem.service;
 
-import com.malikov.shopsystem.dto.OrderItemAutocompleteDto;
-import com.malikov.shopsystem.dto.OrderItemLiteDto;
+import com.malikov.shopsystem.dto.OrderItemDto;
+import com.malikov.shopsystem.dto.ProductAutocompleteDto;
 import com.malikov.shopsystem.model.OrderItem;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface OrderItemService{
+public interface OrderItemService {
 
     OrderItem save(OrderItem orderItem);
 
-    void  update(Long itemId, OrderItemLiteDto orderItemLiteDto);
+    BigDecimal updateAndReturnTotalSum(OrderItemDto orderItemDto);
 
     OrderItem get(Long id);
 
-    void delete(Long id);
-
-    void updateProductName(Long id, String newProductName);
-
-    BigDecimal updateOrderItemProductQuantity(Long itemId, int quantity);
-    BigDecimal updateOrderItemProductPrice(Long itemId, BigDecimal price);
+    BigDecimal delete(Long id);
 
     OrderItem createNewEmpty(Long orderId);
 
-    List<OrderItemAutocompleteDto> getByProductMask(String productNameMask);
+    List<ProductAutocompleteDto> getByProductMask(String productNameMask);
 
-    //List<OrderItemDto> getPage(int pageNumber, int pageCapacity);
 }

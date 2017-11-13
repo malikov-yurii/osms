@@ -1,5 +1,11 @@
 package com.malikov.shopsystem.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.malikov.shopsystem.service.OrderService;
+import com.malikov.shopsystem.service.ProductService;
+import com.malikov.shopsystem.web.json.JacksonObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,37 +19,22 @@ public class RootController {
     //@Autowired
     //private ApplicationContext appContext;
 
-    @GetMapping("/")
-    public String root() {
-        return "redirect:orders";
-    }
+    @Autowired private OrderService orderService;
 
-    @GetMapping("/users")
-    public String users() {
-        return "users";
+    @GetMapping({"/", "/orders", "/products", "/customers"})
+    public String root(ModelMap model) throws JsonProcessingException {
+        Page ordersPage = orderService.getPage(0, 10);
+        model.put("orders", JacksonObjectMapper.getMapper().writeValueAsString(ordersPage.getContent()));
+        model.put("ordersTotal", JacksonObjectMapper.getMapper().writeValueAsString(ordersPage.getTotalElements()));
+        return "/WEB-INF/jsp/index.jsp";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(ModelMap model,
                         @RequestParam(value = "error", required = false) boolean error,
-                        @RequestParam(value = "message", required = false) String message) {
+                        @RequestParam(value = "message", required = false) String message) throws JsonProcessingException {
         model.put("error", error);
         model.put("message", message);
-        return "login";
-    }
-
-    @GetMapping("/products")
-    public String products() {
-        return "products";
-    }
-
-    @GetMapping("/orders")
-    public String orders() {
-        return "orders";
-    }
-
-    @GetMapping("/customers")
-    public String customers() {
-        return "customers";
+        return "/WEB-INF/jsp/login.jsp";
     }
 }

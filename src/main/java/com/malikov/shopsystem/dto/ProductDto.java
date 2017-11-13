@@ -1,18 +1,19 @@
 package com.malikov.shopsystem.dto;
 
-import com.malikov.shopsystem.model.ProductCategory;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Set;
 
 public class ProductDto implements Serializable {
 
-    private Long productId;
+    private Long id;
 
-    private Long productVariationId;
+    private Long variationId;
 
     private String name;
+
+    private Set<String> categories;
 
     private BigDecimal price;
 
@@ -20,43 +21,57 @@ public class ProductDto implements Serializable {
 
     private Boolean unlimited;
 
-    private Set<ProductCategory> categories;
+    private String supplier;
+
+    private Boolean isAggregated;
 
     public ProductDto(
-            Long productId,
-            Long productVariationId,
+            Long id,
+            Long variationId,
             String name,
+            Set<String> categories,
             BigDecimal price,
             Integer quantity,
             Boolean unlimited,
-            Set<ProductCategory> categories
+            String supplier,
+            Boolean isAggregated
     ) {
-        this.productId = productId;
-        this.productVariationId = productVariationId;
+        this.id = id;
+        this.variationId = variationId;
         this.name = name;
-        this.price = price;
+        this.categories = categories;
+        this.price = price.setScale(0, RoundingMode.HALF_UP);
         this.quantity = quantity;
         this.unlimited = unlimited;
-        this.categories = categories;
+        this.supplier = supplier;
+        this.isAggregated = isAggregated;
     }
 
     public ProductDto() {
     }
 
     public Long getProductVariationId() {
-        return productVariationId;
+        return variationId;
     }
 
-    public void setProductVariationId(Long productVariationId) {
-        this.productVariationId = productVariationId;
+    public void setProductVariationId(Long variationId) {
+        this.variationId = variationId;
     }
 
     public Long getProductId() {
-        return productId;
+        return id;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProductId(Long id) {
+        this.id = id;
+    }
+
+    public Set<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<String> categories) {
+        this.categories = categories;
     }
 
     public String getName() {
@@ -72,7 +87,7 @@ public class ProductDto implements Serializable {
     }
 
     public void setPrice(BigDecimal price) {
-        this.price = price;
+        this.price = price.setScale(0, RoundingMode.HALF_UP);
     }
 
     public Integer getQuantity() {
@@ -84,7 +99,7 @@ public class ProductDto implements Serializable {
     }
 
     public boolean isNew() {
-        return productVariationId == null;
+        return variationId == null;
     }
 
     public Boolean getUnlimited() {
@@ -95,24 +110,35 @@ public class ProductDto implements Serializable {
         this.unlimited = unlimited;
     }
 
-    public Set<ProductCategory> getCategories() {
-        return categories;
+    public String getSupplier() {
+        return supplier;
     }
 
-    public void setCategories(Set<ProductCategory> categories) {
-        this.categories = categories;
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
     }
 
-    @Override
-    public String toString() {
-        return "ProductDto{" +
-                "productId=" + productId +
-                ", productVariationId=" + productVariationId +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", unlimited=" + unlimited +
-                '}';
+    public Long getId() {
+        return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getVariationId() {
+        return variationId;
+    }
+
+    public void setVariationId(Long variationId) {
+        this.variationId = variationId;
+    }
+
+    public Boolean getAggregated() {
+        return isAggregated;
+    }
+
+    public void setAggregated(Boolean aggregated) {
+        isAggregated = aggregated;
+    }
 }

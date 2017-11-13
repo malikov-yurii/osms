@@ -40,12 +40,12 @@
 
     <context:component-scan base-package="com.malikov.**.web"/>
 
-    <mvc:resources mapping="/resources/**" location="/resources/"/>
-    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+    <mvc:resources mapping="/assets/**" location="/assets/"/>
+    <!--<mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>-->
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-          p:prefix="/WEB-INF/jsp/"
-          p:suffix=".jsp"/>
+          p:prefix=""
+          p:suffix=""/>
 
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
           p:cacheSeconds="60"
