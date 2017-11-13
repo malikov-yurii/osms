@@ -7,8 +7,9 @@
     opacity: 0;
     background: rgba(255,255,255,.5);
     animation: appear 0.2s linear forwards;
-    animation-delay: 0.3s;
+    animation-delay: 0.1s;
     overflow: hidden;
+    z-index: 10;
 }
 @keyframes appear {
     0% {opacity: 0; top: 2.5px; height: 0;}
@@ -22,7 +23,7 @@
     animation-duration: 2s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
-    animation-delay: 0.5s;
+    animation-delay: 0.2s;
 }
 .progress-bar:before {
     top: 0;

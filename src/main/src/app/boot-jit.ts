@@ -6,7 +6,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { App, routes, KeysPipe, SearchPipe, Store } from './index';
 import { OrdersComponent, ProductsComponent, CustomersComponent } from './containers/index';
-import { Header, AutocompleteList, Pagination, PopupComponent, Filter, FilterStatic, NotyComponent, ProgressBarComponent } from './ui/index';
+import { Header, AutocompleteList, Pagination, PopupComponent, DataFilter, FilterStatic, NotyComponent, ProgressBarComponent } from './ui/index';
 import { HotkeysDirective, Autocomplete, ContenteditableModel } from './directives/index';
 import { ApiService, CustomerService, NotyService, OrderService, ProductService, SearchService, StoreHelper} from './services/index';
 import { ProgressBarService } from './ui/progress-bar/progress-bar.service';
@@ -26,7 +26,7 @@ import { ProgressBarService } from './ui/progress-bar/progress-bar.service';
     ContenteditableModel,
     Pagination,
     PopupComponent,
-    Filter,
+    DataFilter,
     FilterStatic,
     NotyComponent,
     ProgressBarComponent

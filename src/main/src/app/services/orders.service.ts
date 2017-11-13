@@ -66,15 +66,15 @@ export class OrderService {
   filterOrders(page, pageLength, filters): Observable<any> {
     let payload = {};
 
-    for (let key in filters) {
-      if (filters[key] && filters.hasOwnProperty(key)) {
-        if (key.toLowerCase().indexOf('date') !== -1) {
+    Object.keys(filters)
+      .filter(key => filters[key])
+      .forEach(key => {
+        if (key.toLowerCase().includes('date')) {
           payload[key] = `${filters[key]}T00:00:00`;
         } else {
           payload[key] = filters[key];
         }
-      }
-    }
+      });
 
     payload['paging'] = {
       page: page - 1,
@@ -205,8 +205,8 @@ export class OrderService {
 
 
 
-  list(searchQuery: string = '', page: number = 1, length: number = 10) {
-    let orderResult = this.searchService.search(this.storeHelper.get(this.ordersPath), searchQuery);
+  list(page: number = 1, length: number = 10) {
+    let orderResult = this.storeHelper.get(this.ordersPath);
 
     let orderResultPage = orderResult.slice(0, length);
 

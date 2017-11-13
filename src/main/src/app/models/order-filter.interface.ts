@@ -4,4 +4,5 @@ export interface IOrderFilter {
   phoneNumber: string;
   city: string;
   date: string;
+  productNameMask: string;
 }

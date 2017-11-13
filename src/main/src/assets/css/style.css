@@ -35,6 +35,7 @@ body {
     box-shadow: 0 1px 0 0 #3fb0ac;
 }
 .btn {
+    min-width: 145px;
     display: inline-block;
     padding: 8px 12px;
     background: #3fb0ac;
@@ -43,6 +44,7 @@ body {
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .2);
     color: #fff;
     font: 500 14px 'Roboto', Arial, sans-serif;
+    text-align: center;
     text-transform: uppercase;
     transition: box-shadow .2s;
     cursor: pointer;
@@ -57,13 +59,31 @@ body {
     outline: none;
     box-shadow: 0.2px 4px 9px 1px rgba(0, 0, 0, .3);
 }
-.btn--warning {
+.btn--danger {
     background: #cc3737;
 }
-.btn--warning:hover,
-.btn--warning:active,
-.btn--warning:focus {
+.btn--danger:hover,
+.btn--danger:active,
+.btn--danger:focus {
     background: #bf3737;
+}
+.btn--default {
+    background: #dddfd4;
+    color: inherit;
+}
+.btn--default:hover,
+.btn--default:active,
+.btn--default:focus {
+    background: #abada3;
+}
+.btn-reset-orders {
+    display: flex;
+    align-items: center;
+}
+.btn-reset-orders i {
+    margin-right: 3px;
+    font-size: 20px;
+    line-height: 17px;
 }
 .order {
     position: relative;
