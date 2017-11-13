@@ -5,3 +5,4 @@ git/nbproject
 node_modules
 src/main/webapp/
 src/main/src/aot/
+src/main/src/*.js
