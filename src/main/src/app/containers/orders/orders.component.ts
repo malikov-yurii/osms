@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -17,23 +17,19 @@ import { NotyService } from '../../services/noty.service';
 import { Store } from '../../store';
 import { Order, STATIC_DATA, IOrderFilter, IPageStream } from '../../models/index';
 import { slideToLeft, appear, changeWidth } from '../../ui/animations';
+import { DataFilter } from '../../ui/index';
 
 
 @Component({
   moduleId    : module.id,
   templateUrl : 'orders.component.html',
-  animations  : [slideToLeft(), appear(), changeWidth()],
+  animations  : [slideToLeft(), appear()],
   host        : {'[@slideToLeft]': ''},
   providers   : [PopupService]
 })
 
 export class OrdersComponent implements OnInit, OnDestroy {
   public orders$          : Observable<Order[]>;
-
-  public searchStream     : FormControl = new FormControl();
-  public searchQuery      : string = '';
-  public searchInputState : string = 'collapsed';
-  public filteredOrders$  : Observable<number>;
 
   public totalOrders      : number = 0;
   public preloadedOrders  : number = 0;
@@ -47,8 +43,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
   public showFilters: boolean = false;
   public filterLoads: boolean = false;
+  public filterSubmitted: boolean = false;
 
   public showSuppliers: boolean = false;
+  @ViewChild('dataFilter') dataFilter: DataFilter;
 
 
   constructor(
@@ -66,15 +64,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     let storeSource = this.store.changes
       .map(store => {
         this.preloadedOrders = store.order.length;
-        return {search: this.searchQuery, page: this.page, length: this.pageLength};
-      });
-
-    let searchSource = this.searchStream
-      .valueChanges
-      .debounceTime(100)
-      .distinctUntilChanged()
-      .map(searchQuery => {
-        return {search: searchQuery, page: this.page, length: this.pageLength};
+        return {page: this.page, length: this.pageLength};
       });
 
     let pageSource = this.pageStream
@@ -82,22 +72,25 @@ export class OrdersComponent implements OnInit, OnDestroy {
         this.page = params.page;
         this.pageLength = params.length;
         if (params.apiGet !== false) {
-          this.onGetOrders();
+          if (this.filterSubmitted) {
+            this.onFilterSubmit();
+          } else {
+            this.onGetOrders();
+          }
         }
 
-        return {search: this.searchQuery, page: params.page, length: params.length};
+        return {page: params.page, length: params.length};
       });
 
     let source = storeSource
-      .merge(searchSource, pageSource)
-      .startWith({search: this.searchQuery, page: this.page, length: this.pageLength})
-      .switchMap(({search, page, length}) => {
-        return this.orderService.list(search, page, length);
+      .merge(pageSource)
+      .startWith({page: this.page, length: this.pageLength})
+      .switchMap(({page, length}) => {
+        return this.orderService.list(page, length);
       })
       .share();
 
     this.orders$ = source.pluck('orders');
-    this.filteredOrders$ = source.pluck('filtered');
 
     this.popupService.viewContainerRef = this.viewRef;
   }
@@ -122,7 +115,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
       error => this.notyService.renderNoty(error, true)
     );
 
-    let apiGet = this.page !== 1; // Tracing if it's needed to send http GET request for orders
+    let apiGet = this.page !== 1; // Trace if it's needed to send http GET request for orders
     this.paginationChanged({page: 1, length: this.pageLength, apiGet});
   }
 
@@ -136,24 +129,34 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
 
-  // Pagination
+  // Manage pagination
   paginationChanged({page, length, apiGet}) {
     this.pageStream.next({page, length, apiGet});
   }
 
 
   // Manage filter
-  private onFilterSubmit(filters: IOrderFilter) {
+  private onFilterSubmit() {
+    if (!this.filterSubmitted) {
+      this.page = 1;
+      if (this.pageLength === 10) {
+        this.pageLength = 20;
+      }
+    }
+    const filters: IOrderFilter = this.dataFilter.form.value;
     this.filterLoads = true;
+    this.filterSubmitted = true;
     this.orderService.filterOrders(this.page, this.pageLength, filters)
-      .subscribe(
-        response => this.totalOrders = response.totalElements,
-        null,
-        () => this.filterLoads = false
-      );
+      .finally(() => this.filterLoads = false)
+      .subscribe(response => this.totalOrders = response.totalElements);
   }
 
-
+  resetFilter() {
+    this.showFilters = false;
+    this.filterSubmitted = false;
+    this.page = 1;
+    this.onGetOrders();
+  }
 
 
   // Manage order info
@@ -269,10 +272,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleAnimState() {
-    this.searchInputState = this.searchInputState === 'collapsed' ? 'expanded' : 'collapsed';
-  }
-
 
 
 // @TODO remove this
@@ -285,8 +284,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   console() {
-    console.log(this.searchStream);
+    // console.log(this.searchStream);
   }
-
-
 }

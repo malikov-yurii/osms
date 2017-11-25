@@ -1,20 +1,20 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Observable } from "rxjs/Observable";
 
 import { appear, fadeInOut } from '../animations';
 
 @Component({
   moduleId: module.id,
-  selector: 'filter',
+  selector: 'data-filter',
   templateUrl: './filter.html',
   styleUrls: ['./filter.css'],
   animations: [appear(), fadeInOut()]
 })
-export class Filter implements OnChanges {
+export class DataFilter implements OnChanges, OnInit {
   public form: FormGroup;
 
-  @Input()  filters       : {code: string; label: string; type: string; value?: any}[];
+  @Input()  filters       : {code: string; label: string; type: string; value?: any; autocomplete?: boolean}[];
   @Input()  loads         : boolean;
   @Output() filterSubmit  : EventEmitter<Observable<any>> = new EventEmitter();
 
@@ -22,22 +22,20 @@ export class Filter implements OnChanges {
     this.form = this.fb.group({});
   }
 
-
-  ngOnChanges() {
-    let filters = {};
-    this.filters.forEach(filter => {
-      filters[filter.code] = filter.value || '';
-    });
-
-    try {
-      this.form = this.fb.group(filters);
-    } catch (e) {
-      console.warn(e);
+  ngOnChanges(changes: SimpleChanges) {
+    const loads = changes.loads;
+    if (!loads.isFirstChange() && loads.previousValue !== loads.currentValue) {
+      loads.currentValue ? this.form.disable() : this.form.enable();
     }
+  }
 
+  ngOnInit() {
+    this.filters.map(filter => {
+      this.form.setControl(filter.code, new FormControl(filter.value || ''));
+    })
   }
 
   onSubmit(e) {
-    this.filterSubmit.emit(this.form.value);
+    this.filterSubmit.emit();
   }
 }

@@ -7,6 +7,7 @@ import { ApiService, StoreHelper, SearchService } from './index';
 export class ProductService {
 
   private productsPath: string = 'product';
+  private aggregatorsPath: string = 'aggregators';
 
   constructor(
     private api: ApiService,
@@ -16,13 +17,14 @@ export class ProductService {
 
   getAllProducts() {
     return this.api.get(`${this.productsPath}?pageNumber=0&pageCapacity=10000`)
-      .do(({totalElements, elements}) => {
+      .do(({totalElements, elements, productAggregators}) => {
         elements.sort((a, b) => a.id - b.id);
         elements = elements.map(el => {
           el.categories = el.categories.join('; ');
           return el;
         });
         this.storeHelper.update(this.productsPath, elements);
+        this.storeHelper.update(this.aggregatorsPath, productAggregators);
       });
   }
 
@@ -48,7 +50,7 @@ export class ProductService {
         }
       }
 
-      return flag === Object.keys(filterData).length ? true : false;
+      return flag === Object.keys(filterData).length;
     });
 
     let productResultPage = filterResult.slice((page - 1) * length, page * length);
@@ -59,11 +61,12 @@ export class ProductService {
     });
   }
 
-  updateProductField(productId, productVarId, body) {
-    if (productVarId !== 0) {
-      body['variationId'] = productVarId;
+  updateField(id: number, variationId: number, body: any, isAggregator: boolean) {
+    const path = isAggregator ? 'product-aggregator' : this.productsPath;
+    if (variationId !== 0) {
+      body['variationId'] = variationId;
     }
-    return this.api.put(`${this.productsPath}/${productId}`, body);
+    return this.api.put(`${path}/${id}`, body);
   }
 
   purgeStore() {

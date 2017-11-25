@@ -5,7 +5,7 @@ export class SearchService {
 
   search(items: any[], searchQuery: string): any[] {
     // To enable deep search, change "_search" to "_deepSearch" in following line
-    return items.length && searchQuery ? items.filter(SearchService._search.bind(this, searchQuery)) : items;
+    return items.length && searchQuery ? items.filter(SearchService._deepSearch.bind(this, searchQuery)) : items;
   }
 
   private static _ifValueConsistQuery(query, value): boolean {

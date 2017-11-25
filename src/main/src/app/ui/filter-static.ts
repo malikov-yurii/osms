@@ -1,27 +1,25 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   moduleId: module.id,
   selector: 'filter-static',
   template: `
     <form class="filter-container" [formGroup]="form">
-      <div
-        class="filter"
-        *ngFor="let filter of filters | keys"
+      <div class="filter"
+           *ngFor="let filter of filters | keys"
       >
         <div class="filter__label">
           {{ filter }} :
         </div>
 
-        <select
-          class="filter__select input"
-          formControlName="{{ filter }}"
+        <select class="filter__select input"
+                [formControlName]="filter"
         >
           <option value="" selected>- Show all -</option>
-          <option
-            *ngFor="let option of filters[filter]"
-            value="{{ option }}"
+          <option *ngFor="let option of filters[filter]"
+                  [ngValue]="option"
           >
             {{ option }}
           </option>
@@ -62,25 +60,28 @@ import { FormGroup, FormBuilder } from '@angular/forms';
     }
   `]
 })
-export class FilterStatic implements OnChanges {
+export class FilterStatic implements OnChanges, OnInit, OnDestroy {
   @Input() filters: {any};
   @Output() filtered = new EventEmitter<{any}>();
 
-  public form: FormGroup;
+  form: FormGroup;
+  subscription: Subscription;
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({});
   }
 
-  ngOnInit() {
-    this.form.valueChanges.subscribe(value => this.filtered.emit(value));
+  ngOnChanges() {
+    Object.keys(this.filters).map(key => {
+      this.form.setControl(key, new FormControl(''));
+    });
   }
 
-  ngOnChanges() {
-    try {
-      this.form = this.fb.group(this.filters);
-    } catch (e) {
-      console.warn(e);
-    }
+  ngOnInit() {
+    this.subscription = this.form.valueChanges.subscribe(value => this.filtered.emit(value));
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

@@ -1,5 +1,7 @@
 package com.malikov.shopsystem.model;
 
+import com.malikov.shopsystem.enumtype.OrderStatus;
+import com.malikov.shopsystem.enumtype.PaymentType;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;

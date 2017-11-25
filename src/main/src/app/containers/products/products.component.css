@@ -1,0 +1,82 @@
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 48px;
+    border-bottom: 1px solid #ededed;
+}
+
+.tab {
+    padding: 0 25px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid transparent;
+    color: #000;
+    font: 500 13px/48px 'Roboto';
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all .15s ease;
+}
+
+.tab:hover,
+.tab:active {
+    background: rgba(183, 183, 183, 0.1);
+    color: #3fb0ac;
+}
+
+.tab:focus {
+    outline: none;
+}
+
+.tab.active {
+    border-bottom-color: #00807d;
+    box-shadow: 0 1px 0 #00807d;
+    color: #00807d;
+}
+
+
+.aggregators {
+    margin: 15px 0 20px;
+}
+.aggregators-head,
+.aggregators-list {
+    column-count: 2;
+    column-gap: 2.5em;
+}
+.aggregators-head {
+    color: rgba(0, 0, 0, .54);
+}
+.aggregators-head li,
+.aggregators-list li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+}
+.aggregators-head .list-cell,
+.aggregators-list .list-cell {
+    padding: 5px 10px;
+}
+.aggregators-head .list-cell:last-child {
+    text-decoration: underline dashed;
+}
+
+.aggregators-list li {
+    border-bottom: 1px solid #ccc;
+}
+.aggregators-list li:hover {
+    background: #eee;
+}
+.aggregators-list .list-cell {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.aggregators-list .list-cell:last-child {
+    min-width: 100px;
+    text-align: right;
+}
+.aggregated {
+    color: #777;
+    cursor: not-allowed;
+}

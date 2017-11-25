@@ -56,7 +56,7 @@
 }
 
 @media only screen and (max-width: 900px) {
-    .filter {
+    .filter__block {
         justify-content: space-between;
         width: 100%;
         max-width: 450px;

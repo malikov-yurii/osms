@@ -5,9 +5,11 @@ import { Subject }                  from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/finally';
 import 'rxjs/add/observable/throw';
 
 import { STATIC_DATA }              from '../models/index';
+import { ProgressBarService } from '../ui/progress-bar/progress-bar.service';
 
 let sessionTimeout;
 export const sessionTimeoutStream = new Subject();
@@ -27,37 +29,50 @@ export class ApiService {
 
 
 
-  constructor(private http: Http) {}
+  constructor(private http: Http, private progressBar: ProgressBarService) {}
 
   get(path: string): Observable<any> {
+    this.progressBar.show();
+
     return this.http.get(path, {headers: this.headersForm})
+      .finally(() => this.onRequestEnd())
       .map(this.checkForError)
       .catch(err => Observable.throw(err))
       .map(this.getJson)
-      .do(this.updateSession);
   }
 
   post(path: string): Observable<any> {
+    this.progressBar.show();
+
     return this.http.post(path, {headers: this.headersForm})
+      .finally(() => this.onRequestEnd())
       .map(this.checkForError)
       .catch(err => Observable.throw(err))
       .map(this.getJson)
-      .do(this.updateSession);
   }
 
   put(path: string, body: any): Observable<any> {
+    this.progressBar.show();
+
     return this.http.put(path, body, {headers: this.headersJson})
+      .finally(() => this.onRequestEnd())
       .map(this.checkForError)
       .catch(err => Observable.throw(err))
       .map(this.getJson)
-      .do(this.updateSession);
   }
 
   apiDelete(path: string): Observable<any> {
+    this.progressBar.show();
+
     return this.http.delete(path, {headers: this.headersForm})
+      .finally(() => this.onRequestEnd())
       .map(this.checkForError)
       .catch(err => Observable.throw(err))
-      .do(this.updateSession);
+  }
+
+  private onRequestEnd() {
+    this.updateSession();
+    this.progressBar.hide();
   }
 
   private getJson(resp: Response) {
@@ -85,9 +100,7 @@ export class ApiService {
 
   private updateSession() {
     clearTimeout(sessionTimeout);
-    sessionTimeout = setTimeout(() => {
-      sessionTimeoutStream.next();
-    }, STATIC_DATA.sessionTime);
+    sessionTimeout = setTimeout(() => sessionTimeoutStream.next(), STATIC_DATA.sessionTime);
   }
 
 }

@@ -18,28 +18,18 @@
     >Add New Order
     </div>
 
+    <button class="btn btn--default btn-reset-orders" *ngIf="filterSubmitted" (click)="resetFilter()">
+      <i class="material-icons">refresh</i>
+      <span class="btn-text">Reset orders</span>
+    </button>
+
     <div (click)="showFilters = !showFilters"
          [class.active]="showFilters"
          class="btn btn-show-filters"
-    >Toggle filters</div>
-
-    <div
-      class="search-input-container"
-      [class.expanded]="searchInputState === 'expanded'"
-    >
-      <input type="text" name="searchStream" id=""
-             placeholder="Search in orders..."
-             class="input search-input"
-             [@changeWidth]="searchInputState"
-             [formControl]="searchStream"
-             [(ngModel)]="searchQuery"
-             (focusin)="toggleAnimState()"
-             (focusout)="toggleAnimState()"
-      >
-    </div>
+    >Filters</div>
   </div>
 
-  <filter
+  <data-filter
     *ngIf="showFilters"
     [filters]="[
       {code: 'customerFirstNameMask', label: 'First Name',  type: 'text'},
@@ -47,11 +37,13 @@
       {code: 'customerPhoneMask',     label: 'Phone',       type: 'text'},
       {code: 'destinationCityMask',   label: 'City',        type: 'text'},
       {code: 'fromDateTimeCreated',   label: 'From date',   type: 'date'},
-      {code: 'toDateTimeCreated',     label: 'To date',     type: 'date'}
+      {code: 'toDateTimeCreated',     label: 'To date',     type: 'date'},
+      {code: 'productNameMask',       label: 'Product',     type: 'text', autocomplete: true}
     ]"
     [loads]="filterLoads"
-    (filterSubmit)="onFilterSubmit($event)"
-  ></filter>
+    (filterSubmit)="onFilterSubmit()"
+    #dataFilter
+  ></data-filter>
 
   <div class="orders">
     <div

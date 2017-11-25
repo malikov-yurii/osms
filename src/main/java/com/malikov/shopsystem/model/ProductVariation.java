@@ -1,5 +1,8 @@
 package com.malikov.shopsystem.model;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -24,6 +27,10 @@ public class ProductVariation extends BaseEntity {
     @JoinColumn(name = "attr_value_id")
     private VariationValue variationValue;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_aggregator_id")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private ProductAggregator productAggregator;
 
     public ProductVariation() {}
 
@@ -66,6 +73,14 @@ public class ProductVariation extends BaseEntity {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public ProductAggregator getProductAggregator() {
+        return productAggregator;
+    }
+
+    public void setProductAggregator(ProductAggregator productAggregator) {
+        this.productAggregator = productAggregator;
     }
 
     @Override

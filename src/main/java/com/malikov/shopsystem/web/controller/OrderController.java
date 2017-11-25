@@ -5,8 +5,8 @@ import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
 import com.malikov.shopsystem.dto.OrderUpdateDto;
 import com.malikov.shopsystem.model.Order;
-import com.malikov.shopsystem.model.OrderStatus;
-import com.malikov.shopsystem.model.PaymentType;
+import com.malikov.shopsystem.enumtype.OrderStatus;
+import com.malikov.shopsystem.enumtype.PaymentType;
 import com.malikov.shopsystem.service.OrderService;
 import com.malikov.shopsystem.util.OrderUtil;
 import org.slf4j.Logger;
@@ -77,7 +77,7 @@ public class OrderController {
     }
 
     @PutMapping(value = "/{orderId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateCustomer(@PathVariable("orderId") Long orderId,
+    public void updateOrder(@PathVariable("orderId") Long orderId,
                                @RequestBody OrderUpdateDto orderUpdateDto) {
         orderUpdateDto.setId(orderId);
         orderService.update(orderUpdateDto);

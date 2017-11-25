@@ -2,8 +2,8 @@ package com.malikov.shopsystem.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.malikov.shopsystem.model.OrderStatus;
-import com.malikov.shopsystem.model.PaymentType;
+import com.malikov.shopsystem.enumtype.OrderStatus;
+import com.malikov.shopsystem.enumtype.PaymentType;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

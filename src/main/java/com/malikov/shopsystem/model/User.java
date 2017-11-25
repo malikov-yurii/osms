@@ -1,5 +1,7 @@
 package com.malikov.shopsystem.model;
 
+import com.malikov.shopsystem.enumtype.Role;
+
 import javax.persistence.*;
 import java.util.Collections;
 import java.util.HashSet;

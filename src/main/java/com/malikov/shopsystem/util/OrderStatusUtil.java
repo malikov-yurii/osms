@@ -1,12 +1,12 @@
 package com.malikov.shopsystem.util;
 
-import com.malikov.shopsystem.model.OrderStatus;
+import com.malikov.shopsystem.enumtype.OrderStatus;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.malikov.shopsystem.model.OrderStatus.*;
+import static com.malikov.shopsystem.enumtype.OrderStatus.*;
 
 /**
  * @author Yurii Malikov

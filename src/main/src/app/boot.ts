@@ -5,9 +5,10 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { App, routes, KeysPipe, SearchPipe, Store } from './index';
 import { OrdersComponent, ProductsComponent, CustomersComponent } from './containers/index';
-import { Header, AutocompleteList, Pagination, PopupComponent, Filter, FilterStatic, NotyComponent } from './ui/index';
+import { Header, AutocompleteList, Pagination, PopupComponent, DataFilter, FilterStatic, NotyComponent, ProgressBarComponent } from './ui/index';
 import { HotkeysDirective, Autocomplete, ContenteditableModel } from './directives/index';
 import { ApiService, CustomerService, NotyService, OrderService, ProductService, SearchService, StoreHelper} from './services/index';
+import { ProgressBarService } from './ui/progress-bar/progress-bar.service';
 
 import { AppModuleNgFactory } from '../aot/src/main/src/app/boot.ngfactory';
 
@@ -27,9 +28,10 @@ import { AppModuleNgFactory } from '../aot/src/main/src/app/boot.ngfactory';
     ContenteditableModel,
     Pagination,
     PopupComponent,
-    Filter,
+    DataFilter,
     FilterStatic,
-    NotyComponent
+    NotyComponent,
+    ProgressBarComponent
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "ru-RU" },
@@ -40,7 +42,8 @@ import { AppModuleNgFactory } from '../aot/src/main/src/app/boot.ngfactory';
     OrderService,
     ProductService,
     SearchService,
-    StoreHelper
+    StoreHelper,
+    ProgressBarService
   ],
   imports: [
     BrowserModule,
