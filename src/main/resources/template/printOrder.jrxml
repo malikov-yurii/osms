@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="jasper_report_template" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="50" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="168053d2-dc6a-4e6b-8775-71f035c14022">
+    <style name="printOrderReport" isDefault="true" fontName="DejaVu Sans" fontSize="8" isStrikeThrough="false" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+    <parameter name="totalOrderAmount" class="java.math.BigDecimal"/>
+    <queryString>
+        <![CDATA[]]>
+    </queryString>
+    <field name="orderLineIndex" class="java.lang.Integer">
+        <fieldDescription><![CDATA[orderLineIndex]]></fieldDescription>
+    </field>
+    <field name="name" class="java.lang.String">
+        <fieldDescription><![CDATA[name]]></fieldDescription>
+    </field>
+    <field name="quantity" class="java.lang.Integer">
+        <fieldDescription><![CDATA[quantity]]></fieldDescription>
+    </field>
+    <field name="itemValue" class="java.math.BigDecimal">
+        <fieldDescription><![CDATA[itemValue]]></fieldDescription>
+    </field>
+    <field name="orderLineValue" class="java.math.BigDecimal">
+        <fieldDescription><![CDATA[orderLineValue]]></fieldDescription>
+    </field>
+    <title>
+        <band height="126" splitType="Stretch">
+            <staticText>
+                <reportElement x="0" y="10" width="230" height="15" uuid="f60d1675-6fb6-4569-93ca-de32b3a8e861"/>
+                <text><![CDATA[Постачальник:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="100" y="10" width="230" height="15" uuid="f60d1675-6fb6-4569-93ca-de32b3a8e861"/>
+                <text><![CDATA["Лавка Позолотчика"]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="0" y="30" width="130" height="15" uuid="f60d1675-6fb6-4569-93ca-de32b3a8e861"/>
+                <text><![CDATA[телефон]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="100" y="30" width="130" height="15" uuid="f60d1675-6fb6-4569-93ca-de32b3a8e861"/>
+                <text><![CDATA[8-050-26-27-214]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="100" y="45" width="130" height="15" uuid="f60d1675-6fb6-4569-93ca-de32b3a8e861"/>
+                <text><![CDATA[8-067-88-11-962]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="100" y="60" width="130" height="15" uuid="f60d1675-6fb6-4569-93ca-de32b3a8e861"/>
+                <text><![CDATA[8-093-34-44-342]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="0" y="75" width="130" height="15" uuid="f60d1675-6fb6-4569-93ca-de32b3a8e861"/>
+                <text><![CDATA[web:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="100" y="75" width="130" height="15" uuid="f60d1675-6fb6-4569-93ca-de32b3a8e861"/>
+                <text><![CDATA[http://gilder-shop.com.ua]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="0" y="90" width="130" height="15" uuid="f60d1675-6fb6-4569-93ca-de32b3a8e861"/>
+                <text><![CDATA[email:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="100" y="90" width="130" height="15" uuid="f60d1675-6fb6-4569-93ca-de32b3a8e861"/>
+                <text><![CDATA[info@gilder-shop.com.ua]]></text>
+            </staticText>
+        </band>
+    </title>
+    <columnHeader>
+        <band height="20" splitType="Stretch">
+            <staticText>
+                <reportElement x="0" y="0" width="20" height="20" uuid="f60d1675-6fb6-4569-93ca-de32b3a8e861"/>
+                <box>
+                    <topPen lineWidth="1.0"/>
+                    <leftPen lineWidth="1.0"/>
+                    <bottomPen lineWidth="1.0"/>
+                    <rightPen lineWidth="1.0"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <text><![CDATA[№]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="20" y="0" width="380" height="20" uuid="16679b95-2e6e-4ca1-b8b6-dd7b74267c56"/>
+                <box>
+                    <topPen lineWidth="1.0"/>
+                    <leftPen lineWidth="1.0"/>
+                    <bottomPen lineWidth="1.0"/>
+                    <rightPen lineWidth="1.0"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <text><![CDATA[Найменування товару]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="400" y="0" width="50" height="20" uuid="cc74343f-4a38-4024-8391-e9abae2c0048"/>
+                <box>
+                    <topPen lineWidth="1.0"/>
+                    <leftPen lineWidth="1.0"/>
+                    <bottomPen lineWidth="1.0"/>
+                    <rightPen lineWidth="1.0"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <text><![CDATA[Кількість]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="450" y="0" width="50" height="20" uuid="0855fc9e-3690-42a7-9b2e-02ebde60ee4f"/>
+                <box>
+                    <topPen lineWidth="1.0"/>
+                    <leftPen lineWidth="1.0"/>
+                    <bottomPen lineWidth="1.0"/>
+                    <rightPen lineWidth="1.0"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <text><![CDATA[Ціна за
+одиницю]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="500" y="0" width="50" height="20" uuid="46ad0eb6-4c4c-4e3d-bfef-42707082de58"/>
+                <box>
+                    <topPen lineWidth="1.0"/>
+                    <leftPen lineWidth="1.0"/>
+                    <bottomPen lineWidth="1.0"/>
+                    <rightPen lineWidth="1.0"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <text><![CDATA[Сумма]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="20" splitType="Stretch">
+            <textField>
+                <reportElement x="0" y="0" width="20" height="20" uuid="f1de366a-b36f-4200-9b1e-7a0009be5373"/>
+                <box>
+                    <topPen lineWidth="1.0"/>
+                    <leftPen lineWidth="1.0"/>
+                    <bottomPen lineWidth="1.0"/>
+                    <rightPen lineWidth="1.0"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{orderLineIndex}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="20" y="0" width="380" height="20" uuid="341e7faf-9680-4941-a9a4-ac78b8f4aae0"/>
+                <box leftPadding="2" rightPadding="2">
+                    <topPen lineWidth="1.0"/>
+                    <leftPen lineWidth="1.0"/>
+                    <bottomPen lineWidth="1.0"/>
+                    <rightPen lineWidth="1.0"/>
+                </box>
+                <textElement verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="400" y="0" width="50" height="20" uuid="aaf89409-b1d7-428b-8e1d-b385cf8138cc"/>
+                <box>
+                    <topPen lineWidth="1.0"/>
+                    <leftPen lineWidth="1.0"/>
+                    <bottomPen lineWidth="1.0"/>
+                    <rightPen lineWidth="1.0"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="450" y="0" width="50" height="20" uuid="aed75d1f-4ff4-46bf-8bfe-ea973fab110e"/>
+                <box>
+                    <topPen lineWidth="1.0"/>
+                    <leftPen lineWidth="1.0"/>
+                    <bottomPen lineWidth="1.0"/>
+                    <rightPen lineWidth="1.0"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{itemValue}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="500" y="0" width="50" height="20" uuid="7a1d7bc8-f103-43fa-bfcf-909f391d5ed4"/>
+                <box>
+                    <topPen lineWidth="1.0"/>
+                    <leftPen lineWidth="1.0"/>
+                    <bottomPen lineWidth="1.0"/>
+                    <rightPen lineWidth="1.0"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{orderLineValue}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <columnFooter>
+        <band height="30" splitType="Stretch">
+            <staticText>
+                <reportElement x="450" y="0" width="50" height="30" uuid="e1463836-6698-42e1-bf31-9d5fedc5c943"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <text><![CDATA[Разом]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="500" y="0" width="50" height="30" uuid="648eb4dc-420b-44b7-ac61-5892c3e5d99c"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$P{totalOrderAmount}]]></textFieldExpression>
+            </textField>
+        </band>
+    </columnFooter>
+    <pageFooter>
+        <band height="30">
+            <staticText>
+                <reportElement x="0" y="0" width="550" height="30" uuid="f60d1675-6fb6-4569-93ca-de32b3a8e861"/>
+                <text><![CDATA[Відвантажив(ла):  ____________________                                               Отримав(ла):  ____________________]]></text>
+            </staticText>
+        </band>
+    </pageFooter>
+</jasperReport>

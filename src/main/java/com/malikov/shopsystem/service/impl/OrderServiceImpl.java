@@ -251,7 +251,7 @@ public class OrderServiceImpl implements OrderService {
 
     private void setTotalSum(Order order, BigDecimal totalSum) {
         if (nonNull(totalSum)) {
-            order.setTotalSum(totalSum);
+            order.setTotalValue(totalSum);
         }
     }
 
@@ -265,7 +265,7 @@ public class OrderServiceImpl implements OrderService {
     public Order createEmpty() {
         Order newOrder = new Order(null,
                 userRepository.getByLogin(SecurityContextHolder.getContext().getAuthentication().getName()),
-                PaymentType.NP, OrderStatus.NEW, null, Collections.singletonList(new OrderItem()));
+                PaymentType.NP, OrderStatus.NEW, null, Collections.singletonList(new OrderLine()));
         LOG.info("create new {}", newOrder);
         return orderRepository.save(newOrder);
     }

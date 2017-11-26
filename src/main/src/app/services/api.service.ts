@@ -27,8 +27,6 @@ export class ApiService {
     'Accept': 'application/json'
   });
 
-
-
   constructor(private http: Http, private progressBar: ProgressBarService) {}
 
   get(path: string): Observable<any> {
@@ -102,5 +100,4 @@ export class ApiService {
     clearTimeout(sessionTimeout);
     sessionTimeout = setTimeout(() => sessionTimeoutStream.next(), STATIC_DATA.sessionTime);
   }
-
 }

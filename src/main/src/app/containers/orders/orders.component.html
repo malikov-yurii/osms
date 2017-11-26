@@ -130,6 +130,12 @@
             <i class="material-icons">delete_forever</i>
             <div class="order-manage__text">Delete order</div>
           </div>
+          <div title="Print order" class="order-manage__block order-manage__block--print"
+               (click)="onPrintOrder(order, link)">
+            <i class="material-icons">print</i>
+            <div class="order-manage__text">Print order</div>
+          </div>
+          <a href="#" #link></a>
         </div>
 
         <div class="order-info__block order-info__block--customer-note">

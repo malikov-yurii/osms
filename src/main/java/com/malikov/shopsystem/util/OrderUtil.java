@@ -1,9 +1,9 @@
 package com.malikov.shopsystem.util;
 
 import com.malikov.shopsystem.dto.OrderDto;
-import com.malikov.shopsystem.dto.OrderItemDto;
+import com.malikov.shopsystem.dto.OrderLineDto;
 import com.malikov.shopsystem.model.Order;
-import com.malikov.shopsystem.model.OrderItem;
+import com.malikov.shopsystem.model.OrderLine;
 import com.malikov.shopsystem.enumtype.OrderStatus;
 
 import java.math.BigDecimal;
@@ -18,20 +18,20 @@ public class OrderUtil {
         order.setDestinationCity(orderDto.getDestinationCity());
         order.setDestinationPostOffice(orderDto.getDestinationPostOffice());
         order.setComment(orderDto.getNote());
-        order.setTotalSum(orderDto.getTotalSum());
+        order.setTotalValue(orderDto.getTotalSum());
         return order;
     }
 
-    public static int calculateTotalSumOfTos(Collection<OrderItemDto> orderItemDtos) {
-        return orderItemDtos.stream().mapToInt(p ->
+    public static int calculateTotalSumOfTos(Collection<OrderLineDto> orderLineDtos) {
+        return orderLineDtos.stream().mapToInt(p ->
                 (p.getPrice().intValue() * p.getQuantity()))
                 .sum();
     }
 
     public static OrderDto asTo(Order order) {
-        OrderItemDto[] orderItemDtos = order.getOrderItems()
+        OrderLineDto[] orderLineDtos = order.getOrderItems()
                 .stream()
-                .map(oi -> new OrderItemDto(oi.getId(),
+                .map(oi -> new OrderLineDto(oi.getId(),
                         oi.getProduct() != null ? oi.getProduct().getId() : null,
                         oi.getProductVariation() != null ? oi.getProductVariation().getId() : null,
                         oi.getProductName(),
@@ -43,7 +43,7 @@ public class OrderUtil {
                                 : " ")
                                 : ""
                 ))
-                .toArray(OrderItemDto[]::new);
+                .toArray(OrderLineDto[]::new);
         return new OrderDto(order.getId(),
                 order.getCustomer() != null? order.getCustomer().getId(): 0,
                 order.getCustomerFirstName(), order.getCustomerLastName(),
@@ -52,12 +52,12 @@ public class OrderUtil {
                 order.getCustomer() != null ? order.getCustomer().getNote() : null,
                 order.getPaymentType(), order.getDateTimeCreated(), order.getStatus(),
                 order.getComment() == null ? "" : order.getComment(),
-                order.getTotalSum() == null ? BigDecimal.ZERO : order.getTotalSum(),
-                orderItemDtos);
+                order.getTotalValue() == null ? BigDecimal.ZERO : order.getTotalValue(),
+                orderLineDtos);
     }
 
-    public static BigDecimal calculateTotalSum(Collection<OrderItem> orderItems) {
-        return orderItems.stream().
+    public static BigDecimal calculateTotalSum(Collection<OrderLine> orderLines) {
+        return orderLines.stream().
                 reduce(
                         BigDecimal.ZERO,
                         (sum, oi) -> sum.add(oi.getProductPrice().multiply(new BigDecimal(oi.getProductQuantity()))),

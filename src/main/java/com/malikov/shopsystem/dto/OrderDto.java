@@ -40,13 +40,13 @@ public class OrderDto  implements Serializable, HasId {
 
     private String note;
 
-    private OrderItemDto[] orderItems;
+    private OrderLineDto[] orderItems;
 
     public OrderDto(
             Long id, Long customerId, String customerFirstName, String customerLastName, String customerPhoneNumber,
             String destinationCity, String destinationPostOffice, String customerNote, PaymentType paymentType,
             LocalDateTime createdDateTime, OrderStatus status,
-            String note, BigDecimal totalSum, OrderItemDto[] orderItems) {
+            String note, BigDecimal totalSum, OrderLineDto[] orderItems) {
         this.id = id;
         this.customerId = customerId == null ? 0 : customerId;
         this.customerFirstName = customerFirstName != null ? customerFirstName : "";
@@ -170,11 +170,11 @@ public class OrderDto  implements Serializable, HasId {
         this.note = note;
     }
 
-    public OrderItemDto[] getOrderItems() {
+    public OrderLineDto[] getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(OrderItemDto[] orderItems) {
+    public void setOrderItems(OrderLineDto[] orderItems) {
         this.orderItems = orderItems;
     }
 

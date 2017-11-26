@@ -57,10 +57,10 @@ public class Order extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "order")
     @Fetch(FetchMode.SELECT)
     @OrderBy("id ASC")
-    private List<OrderItem> orderItems;
+    private List<OrderLine> orderItems;
 
     @Column(name = "total_sum")
-    private BigDecimal totalSum;
+    private BigDecimal totalValue;
 
     @Column(name = "comment")
     private String comment;
@@ -72,13 +72,13 @@ public class Order extends BaseEntity {
     public Order() {}
 
     public Order(Customer customer, User user, PaymentType paymentType,
-                 OrderStatus status, String comment, List<OrderItem> items) {
+                 OrderStatus status, String comment, List<OrderLine> items) {
         this(null, customer, user, paymentType, status, comment, null, items);
     }
 
     public Order(Long id, Customer customer, User user, PaymentType paymentType,
                  OrderStatus status, String comment, LocalDateTime dateTimeCreated,
-                 List<OrderItem> orderItems) {
+                 List<OrderLine> orderItems) {
         super(id);
         if (customer != null) {
             this.customer = customer;
@@ -98,9 +98,9 @@ public class Order extends BaseEntity {
         if (orderItems != null) {
             this.orderItems = orderItems;
             this.orderItems.forEach(orderItem -> orderItem.setOrder(this));
-            this.totalSum = OrderUtil.calculateTotalSum(orderItems);
+            this.totalValue = OrderUtil.calculateTotalSum(orderItems);
         } else {
-            this.totalSum = BigDecimal.ZERO;
+            this.totalValue = BigDecimal.ZERO;
         }
 
         this.statusSortOrder = OrderUtil.getStatusSortOrder(status);
@@ -171,11 +171,11 @@ public class Order extends BaseEntity {
         this.statusSortOrder = OrderUtil.getStatusSortOrder(status);
     }
 
-    public List<OrderItem> getOrderItems() {
+    public List<OrderLine> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(List<OrderItem> orderItems) {
+    public void setOrderItems(List<OrderLine> orderItems) {
         this.orderItems = orderItems;
     }
 
@@ -195,12 +195,12 @@ public class Order extends BaseEntity {
         this.user = user;
     }
 
-    public BigDecimal getTotalSum() {
-        return totalSum;
+    public BigDecimal getTotalValue() {
+        return totalValue;
     }
 
-    public void setTotalSum(BigDecimal totalSum) {
-        this.totalSum = totalSum;
+    public void setTotalValue(BigDecimal totalSum) {
+        this.totalValue = totalSum;
     }
 
     public String getComment() {
@@ -252,8 +252,8 @@ public class Order extends BaseEntity {
                 ", paymentType=" + paymentType +
                 ", dateTimePlaced=" + dateTimeCreated +
                 ", orderItems=" + orderItems +
-                ", totalSum=" + totalSum +
-                ", comment=" + totalSum +
+                ", totalValue=" + totalValue +
+                ", comment=" + totalValue +
                 '}';
     }
 }

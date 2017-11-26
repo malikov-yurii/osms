@@ -63,6 +63,10 @@ export class OrderService {
     return this.api.apiDelete(`${this.ordersPath}/${orderId}`);
   }
 
+  printOrder(orderId: any) {
+    return this.api.get(`print-order/${orderId}`);
+  }
+
   filterOrders(page, pageLength, filters): Observable<any> {
     let payload = {};
 

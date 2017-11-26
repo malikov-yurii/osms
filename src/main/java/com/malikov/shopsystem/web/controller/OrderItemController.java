@@ -1,6 +1,6 @@
 package com.malikov.shopsystem.web.controller;
 
-import com.malikov.shopsystem.dto.OrderItemDto;
+import com.malikov.shopsystem.dto.OrderLineDto;
 import com.malikov.shopsystem.dto.ProductAutocompleteDto;
 import com.malikov.shopsystem.service.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +34,9 @@ public class OrderItemController {
 
     @PutMapping(value = "/{itemId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public BigDecimal updateOrderItem(@PathVariable("itemId") Long itemId,
-                                @RequestBody OrderItemDto orderItemDto) {
-        orderItemDto.setOrderItemId(itemId);
-        return orderItemService.updateAndReturnTotalSum(orderItemDto).setScale(0, RoundingMode.HALF_UP);
+                                @RequestBody OrderLineDto orderLineDto) {
+        orderLineDto.setOrderItemId(itemId);
+        return orderItemService.updateAndReturnTotalSum(orderLineDto).setScale(0, RoundingMode.HALF_UP);
     }
 
     @DeleteMapping(value = "/{orderItemId}")

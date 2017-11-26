@@ -54,9 +54,9 @@ public class UpdateStockService {
         }
     }
 
-    public void updateStock(OrderItem orderItem, int orderItemQuantityDelta) {
-        if (isWithdrawalStatus(orderItem.getOrder().getStatus())) {
-            updateStockForOrderItem(orderItem, orderItemQuantityDelta);
+    public void updateStock(OrderLine orderLine, int orderItemQuantityDelta) {
+        if (isWithdrawalStatus(orderLine.getOrder().getStatus())) {
+            updateStockForOrderItem(orderLine, orderItemQuantityDelta);
         }
     }
 
@@ -67,37 +67,37 @@ public class UpdateStockService {
     }
 
     private void updateStockForAllOrderItems(Order order, DbOperation dbOperation) {
-        for (OrderItem orderItem : order.getOrderItems()) {
-            if (isNull(orderItem.getProduct())) {
+        for (OrderLine orderLine : order.getOrderItems()) {
+            if (isNull(orderLine.getProduct())) {
                 continue;
             }
-            updateStockForOrderItem(orderItem,
+            updateStockForOrderItem(orderLine,
                     dbOperation == INCREASE_STOCK
-                            ? orderItem.getProductQuantity()
-                            : (-1) * orderItem.getProductQuantity());
+                            ? orderLine.getProductQuantity()
+                            : (-1) * orderLine.getProductQuantity());
         }
     }
 
-    private void updateStockForOrderItem(OrderItem orderItem,
+    private void updateStockForOrderItem(OrderLine orderLine,
                                          Integer orderItemProductQuantityDelta) {
-        if (nonNull(orderItem.getProductVariation())) {
-            updateProductVariationStock(orderItem, orderItemProductQuantityDelta);
-        } else if(nonNull(orderItem.getProduct())) {
-            updateProductStock(orderItem, orderItemProductQuantityDelta);
+        if (nonNull(orderLine.getProductVariation())) {
+            updateProductVariationStock(orderLine, orderItemProductQuantityDelta);
+        } else if(nonNull(orderLine.getProduct())) {
+            updateProductStock(orderLine, orderItemProductQuantityDelta);
         }
     }
 
-    private void updateProductStock(OrderItem orderItem,
+    private void updateProductStock(OrderLine orderLine,
                                     Integer orderItemProductQuantityDelta) {
-        Product product = orderItem.getProduct();
+        Product product = orderLine.getProduct();
         int productQuantityToPersist = product.getQuantity() + orderItemProductQuantityDelta;
         product.setQuantity(productQuantityToPersist);
         productRepository.save(product);
     }
 
-    private void updateProductVariationStock(OrderItem orderItem,
+    private void updateProductVariationStock(OrderLine orderLine,
                                              Integer orderItemProductQuantityDelta) {
-        ProductVariation productVariation = orderItem.getProductVariation();
+        ProductVariation productVariation = orderLine.getProductVariation();
         if (isNull(productVariation)) {
             return;
         }
@@ -107,25 +107,25 @@ public class UpdateStockService {
             productVariation.setQuantity(productQuantityToPersist);
             productVariationRepository.save(productVariation);
         } else {
-            int aggregatorQuantity = calculateAggregatorQuantity(productAggregator, orderItem,
+            int aggregatorQuantity = calculateAggregatorQuantity(productAggregator, orderLine,
                     orderItemProductQuantityDelta);
             productAggregator.setQuantity(aggregatorQuantity);
             productAggregatorRepository.save(productAggregator);
         }
     }
 
-    private int calculateAggregatorQuantity(ProductAggregator productAggregator, OrderItem orderItem,
+    private int calculateAggregatorQuantity(ProductAggregator productAggregator, OrderLine orderLine,
                                             Integer orderItemQuantityDelta) {
         int result;
         switch (productAggregator.getProductAggregatorType()) {
             case SIMPLE:
-                result = calculateStockSimpleAggregatorQuantity(productAggregator, orderItem, orderItemQuantityDelta);
+                result = calculateStockSimpleAggregatorQuantity(productAggregator, orderLine, orderItemQuantityDelta);
                 break;
             case PG_GLUE:
-                result = calculateStockPG5AggregatorQuantity(productAggregator, orderItem, orderItemQuantityDelta);
+                result = calculateStockPG5AggregatorQuantity(productAggregator, orderLine, orderItemQuantityDelta);
                 break;
             case WIRE:
-                result = calculateStockWireAggregatorQuantity(productAggregator, orderItem, orderItemQuantityDelta);
+                result = calculateStockWireAggregatorQuantity(productAggregator, orderLine, orderItemQuantityDelta);
                 break;
             default:
                 throw new RuntimeException("only SIMPLE or PG_GLUE supported");
@@ -133,21 +133,21 @@ public class UpdateStockService {
         return result;
     }
 
-    private int calculateStockSimpleAggregatorQuantity(ProductAggregator productAggregator, OrderItem orderItem,
+    private int calculateStockSimpleAggregatorQuantity(ProductAggregator productAggregator, OrderLine orderLine,
                                                        Integer orderItemQuantityDelta) {
         return productAggregator.getQuantity()
-                + orderItem.getProductVariation().getVariationValue().getValueAmount() * orderItemQuantityDelta;
+                + orderLine.getProductVariation().getVariationValue().getValueAmount() * orderItemQuantityDelta;
     }
 
     private int calculateStockPG5AggregatorQuantity(ProductAggregator productAggregator,
-                                                    OrderItem orderItem,
+                                                    OrderLine orderLine,
                                                     Integer orderItemQuantityDelta) {
-        return productAggregator.getQuantity() + calculatePG5AggregatorAmount(orderItem) * orderItemQuantityDelta;
+        return productAggregator.getQuantity() + calculatePG5AggregatorAmount(orderLine) * orderItemQuantityDelta;
     }
 
-    private Integer calculatePG5AggregatorAmount(OrderItem orderItem) {
-        Integer result = orderItem.getProductVariation().getVariationValue().getValueAmount();
-        Product pgProduct = orderItem.getProduct();
+    private Integer calculatePG5AggregatorAmount(OrderLine orderLine) {
+        Integer result = orderLine.getProductVariation().getVariationValue().getValueAmount();
+        Product pgProduct = orderLine.getProduct();
         double pg5Coefficient;
         switch (pgProduct.getId().intValue()) {
             case PG_5_ID:
@@ -168,9 +168,9 @@ public class UpdateStockService {
         return (int) (result * pg5Coefficient);
     }
 
-    private int calculateStockWireAggregatorQuantity(ProductAggregator productAggregator, OrderItem orderItem,
+    private int calculateStockWireAggregatorQuantity(ProductAggregator productAggregator, OrderLine orderLine,
                                                      Integer orderItemQuantityDelta) {
-        ProductVariation wireVariation = orderItem.getProductVariation();
+        ProductVariation wireVariation = orderLine.getProductVariation();
         VariationValue wireVariationValue = wireVariation.getVariationValue();
         Integer wireInMilligrams;
         switch (wireVariationValue.getValueAmount()) {
