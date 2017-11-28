@@ -131,7 +131,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
             resp => {
                 const date = new Date(order.createdDateTime);
                 const name = this.transliterate(order.customerLastName);
-                const fileName = `${name}_${date.getFullYear()}-${date.getMonth()}-${date.getDate()}.pdf`;
+                const fileName = `${name}_${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}.pdf`;
                 setTimeout(() => {
                     link.href = `data:application/octet-stream;base64,${resp}`;
                     link.download = fileName;
