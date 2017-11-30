@@ -9,19 +9,38 @@
       </div>
 
       <ng-container [ngSwitch]="filter.type">
-        <input *ngSwitchCase="'text'" type="text" class="input filter__input" formControlName="{{filter.code}}">
+        <ng-container *ngSwitchCase="'text'">
+          <input class="input filter__input"
+                 *ngIf="filter.autocomplete; else noAutocomplete"
+                 [formControlName]="filter.code"
+                 [autocomplete]="['product', 'name']"
+                 (selectedAutocomplete)="onAutocomplete($event, filter.code)"
+                 type="text"
+          >
+          <ng-template #noAutocomplete>
+            <input class="input filter__input"
+                   type="text"
+                   [formControlName]="filter.code"
+            >
+          </ng-template>
 
-        <input *ngSwitchCase="'date'" type="date" class="input filter__input" formControlName="{{filter.code}}">
+        </ng-container>
+
+        <input *ngSwitchCase="'date'"
+               [formControlName]="filter.code"
+               class="input filter__input"
+               type="date"
+        >
 
         <select
           *ngSwitchCase="'select'"
-          formControlName="{{ filter.code }}"
+          [formControlName]="filter.code"
           class="filter__select input"
         >
           <option value="" selected>- Show all -</option>
           <option
             *ngFor="let option of filters[filter]"
-            value="{{ option }}"
+            [value]="option"
           >
             {{ option }}
           </option>

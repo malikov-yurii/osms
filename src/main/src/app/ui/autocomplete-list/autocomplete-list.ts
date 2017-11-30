@@ -43,8 +43,6 @@ export class AutocompleteList implements OnInit {
   }
 
   onClick() {
-    console.log(this.selectedIndex);
-    console.log(this.list[this.selectedIndex]);
     this.selectedStream.next();
   }
 

@@ -68,7 +68,7 @@ export class Autocomplete {
 
   onKeyUp(e) {
     this.isBlurred = false;
-    this.term = e.target.innerText;
+    this.term = e.target.innerText || e.target.value || '';
     if (this.term && !this.refreshTimer) {
       this.refreshTimer = setTimeout(
         () => {

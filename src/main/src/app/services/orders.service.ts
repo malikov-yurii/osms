@@ -220,20 +220,23 @@ export class OrderService {
     });
   }
 
-  requestAutocomplete(types: string[], term: string) {
+  requestAutocomplete(types: string[], query: string) {
+    let url = '';
     if (types[1] === 'customerLastName' || types[1] === 'customerFirstName') {
-      return this.api.get(`customer/autocomplete-by-last-name-mask/${term}`);
+      url = `customer/autocomplete-by-last-name-mask`;
 
     } else if (types[1] === 'customerPhoneNumber') {
-      return this.api.get(`customer/autocomplete-by-phone-number-mask/${term}`);
+      url = `customer/autocomplete-by-phone-number-mask`;
 
     } else if (types[1] === 'destinationCity') {
-      return this.api.get(`customer/autocomplete-by-city-mask/${term}`);
+      url = `customer/autocomplete-by-city-mask`;
 
     } else if (types[0] === 'product') {
-      return this.api.get(`order-item/autocomplete-by-product-name/${term}`);
+      url = `order-item/autocomplete-by-product-name`;
 
     }
+
+    return this.api.get(`${url}/${query}`);
   }
 
   private camelCaseToDash(str) {

@@ -35,7 +35,11 @@ export class DataFilter implements OnChanges, OnInit {
     })
   }
 
-  onSubmit(e) {
-    this.filterSubmit.emit();
+  onSubmit() {
+    this.filterSubmit.emit(this.form.value);
+  }
+
+  onAutocomplete(event, code) {
+    this.form.get(code).setValue(event.name || event.productVariationId || event.productId);
   }
 }
