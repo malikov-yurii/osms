@@ -3,6 +3,7 @@ package com.malikov.shopsystem.model;
 import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.enumtype.PaymentType;
 import com.malikov.shopsystem.util.OrderUtil;
+import com.malikov.shopsystem.util.converter.LocalDateTimeAttributeConverter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -18,8 +19,20 @@ import java.util.Objects;
 public class Order extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", updatable = false, insertable = false)
     private Customer customer;
+
+
+    @Column(name = "customer_id")
+    private Long customerId;
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
 
     @Column(name = "customer_name")
     private String customerFirstName;
@@ -50,6 +63,7 @@ public class Order extends BaseEntity {
 
     @Column(name = "date_placed", columnDefinition = "timestamp default now()")
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime dateTimeCreated = LocalDateTime.now();
 
     //@OneToMany(fetch = FetchType.EAGER, mappedBy = "order")

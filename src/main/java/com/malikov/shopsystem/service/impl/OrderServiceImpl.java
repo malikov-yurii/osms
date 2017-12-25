@@ -6,12 +6,12 @@ import com.malikov.shopsystem.dto.OrderFilterDto;
 import com.malikov.shopsystem.dto.OrderUpdateDto;
 import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.enumtype.PaymentType;
-import com.malikov.shopsystem.model.*;
+import com.malikov.shopsystem.model.Customer;
+import com.malikov.shopsystem.model.Order;
+import com.malikov.shopsystem.model.OrderLine;
 import com.malikov.shopsystem.repository.*;
 import com.malikov.shopsystem.service.OrderService;
 import com.malikov.shopsystem.util.OrderUtil;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -28,6 +30,7 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
+import static com.malikov.shopsystem.repository.specification.OrderSpecification.*;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
@@ -36,10 +39,7 @@ public class OrderServiceImpl implements OrderService {
 
     private static final Logger LOG = LoggerFactory.getLogger(OrderServiceImpl.class);
 
-    private static final Sort DESC_SORT_ORDER = new Sort(
-            //new Sort.Order(Sort.Direction.ASC, "statusSortOrder"),
-            new Sort.Order(Sort.Direction.DESC, "id")
-    );
+    private static final Sort DESC_SORT_ORDER = new Sort(new Sort.Order(Sort.Direction.DESC, "id"));
 
     @Autowired
     private OrderRepository orderRepository;
@@ -60,71 +60,37 @@ public class OrderServiceImpl implements OrderService {
                 new PageRequest(filter.getPaging().getPage(), filter.getPaging().getSize(), DESC_SORT_ORDER)));
     }
 
-    private BooleanBuilder buildFilterRestrictions(OrderFilterDto filter) {
-        QOrder order = QOrder.order;
-        BooleanBuilder filterRestrictions = new BooleanBuilder();
-        addCustomerFilterRestrictions(filter, order, filterRestrictions);
-        addProductFilterRestrictions(filter, order, filterRestrictions);
-        addDateTimeCreatedFilterRestrictions(filter, order, filterRestrictions);
-        return filterRestrictions;
+    @SuppressWarnings("unchecked assignments")
+    private Specifications buildFilterRestrictions(OrderFilterDto filter) {
+        return createSpecification()
+                .and(addCustomerSpecifications(filter))
+                .and(createdBetween(filter.getFromDateTimeCreated(), filter.getToDateTimeCreated()))
+                .and(containProduct(filter));
     }
 
-    private void addDateTimeCreatedFilterRestrictions(OrderFilterDto filter,
-                                                      QOrder qOrder, BooleanBuilder booleanBuilder) {
-        if (nonNull(filter.getFromDateTimeCreated()) || nonNull(filter.getToDateTimeCreated())) {
-            BooleanExpression isCreatedBetween =
-                    qOrder.dateTimeCreated.between(filter.getFromDateTimeCreated(), filter.getToDateTimeCreated());
-            booleanBuilder.and(isCreatedBetween);
-        }
-    }
-
-    private void addProductFilterRestrictions(OrderFilterDto filter, QOrder qOrder, BooleanBuilder booleanBuilder) {
+    private Specification<Order> containProduct(OrderFilterDto filter) {
         if (nonNull(filter.getProductVariationId())) {
-            ProductVariation productVariation = productVariationRepository.findOne(filter.getProductVariationId());
-            BooleanExpression isIncludeProduct = qOrder.orderItems.any().productVariation.eq(productVariation);
-            booleanBuilder.and(isIncludeProduct);
+            return orderContainsProductVariation(productVariationRepository.findOne(filter.getProductVariationId()));
         } else if (nonNull(filter.getProductId())) {
-            Product product = productRepository.findOne(filter.getProductId());
-            BooleanExpression isIncludeProduct = qOrder.orderItems.any().product.eq(product);
-            booleanBuilder.and(isIncludeProduct);
-        } else {
-            if (nonNull(filter.getProductNameMask())) {
-                BooleanExpression isIncludeProductWithLikeProductName =
-                        qOrder.orderItems.any().productName.like("%" + filter.getProductNameMask() + "%");
-                booleanBuilder.and(isIncludeProductWithLikeProductName);
-            }
+            return orderContainsProduct(productRepository.findOne(filter.getProductId()));
+        } else if (nonNull(filter.getProductNameMask())) {
+            return productNameLike(filter.getProductNameMask());
         }
-
+        return Specifications.where(null);
     }
 
-    private void addCustomerFilterRestrictions(OrderFilterDto filter, QOrder qOrder, BooleanBuilder booleanBuilder) {
-        if (nonNull(filter.getCustomerId())) {
-            Customer customer = customerRepository.findOne(filter.getCustomerId());
-            BooleanExpression isCustomer = qOrder.customer.eq(customer);
-            booleanBuilder.and(isCustomer);
-        } else {
-            BooleanExpression isLikeCustomerPhoneNumber;
-            if (nonNull(filter.getCustomerFirstNameMask())) {
-                isLikeCustomerPhoneNumber = qOrder.customerFirstName.like("%" + filter.getCustomerFirstNameMask() + "%");
-                booleanBuilder.and(isLikeCustomerPhoneNumber);
-            }
+    private Specifications<Order> createSpecification() {
+        return Specifications.where(null);
+    }
 
-            if (nonNull(filter.getCustomerLastNameMask())) {
-                isLikeCustomerPhoneNumber = qOrder.customerLastName.like("%" + filter.getCustomerLastNameMask() + "%");
-                booleanBuilder.and(isLikeCustomerPhoneNumber);
-            }
-
-            if (nonNull(filter.getDestinationCityMask())) {
-                isLikeCustomerPhoneNumber = qOrder.destinationCity.like("%" + filter.getDestinationCityMask() + "%");
-                booleanBuilder.and(isLikeCustomerPhoneNumber);
-            }
-
-            if (nonNull(filter.getCustomerPhoneMask())) {
-                isLikeCustomerPhoneNumber = qOrder.customerPhoneNumber.like("%" + filter.getCustomerPhoneMask() + "%");
-                booleanBuilder.and(isLikeCustomerPhoneNumber);
-            }
-        }
-
+    private Specifications addCustomerSpecifications(OrderFilterDto filter) {
+        return nonNull(filter.getCustomerId())
+                    ? Specifications.where(customerIdEquals(filter.getCustomerId()))
+                    : createSpecification()
+                            .and(customerFirstNameLike(filter.getCustomerFirstNameMask()))
+                            .and(customerLastNameLike(filter.getCustomerLastNameMask()))
+                            .and(customerDestinationCityLike(filter.getDestinationCityMask()))
+                            .and(customerPhoneLike(filter.getCustomerPhoneMask()));
     }
 
     private PageImpl<OrderDto> convertToOrderDtoPage(Page<Order> page) {
