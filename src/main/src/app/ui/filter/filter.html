@@ -1,5 +1,5 @@
 <div [@appear] class="filter-container">
-  <form [formGroup]="form" (ngSubmit)="onSubmit($event)" class="filter__form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="filter__form">
     <div
       class="filter filter__block"
       *ngFor="let filter of filters"

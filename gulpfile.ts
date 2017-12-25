@@ -10,7 +10,7 @@ const tsProject    = tsc.createProject('tsconfig.json');
 
 const srcDirectory    = './src/main/src';
 const buildDirectory  = './src/main/webapp';
-const targetDirectory = './target/shopsystem';
+const targetDirectory = './build/libs/exploded/shopsystem';
 
 
 // Handle HTML files

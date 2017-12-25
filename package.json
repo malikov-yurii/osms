@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "npm run ngc-init && npm run rollup-init",
+    "start": "npm run gulp && npm run ngc-init && npm run rollup-init",
     "ngc-init": "ngc -p tsconfig-aot.json",
-    "rollup-init": "rollup -c rollup-config.js"
+    "rollup-init": "rollup -c rollup-config.js",
+    "gulp": "gulp build-prod"
   },
   "author": "",
   "license": "ISC",

@@ -30,9 +30,9 @@ public class SpringDB {
     public DataSource dataSource() {
         PoolConfiguration poolConfiguration = new PoolProperties();
         poolConfiguration.setDriverClassName("com.mysql.jdbc.Driver");
-        poolConfiguration.setUsername("root");
-        poolConfiguration.setPassword("root");
-        poolConfiguration.setUrl("jdbc:mysql://localhost:3306/new_schema");
+        poolConfiguration.setUsername("malikovs_gilder");
+        poolConfiguration.setPassword("tele230786");
+        poolConfiguration.setUrl("jdbc:mysql://malikovs.mysql.ukraine.com.ua:3306/malikovs_gilder");
         poolConfiguration.setRemoveAbandoned(true);
         poolConfiguration.setMaxWait(20000);
         poolConfiguration.setTestWhileIdle(true);
