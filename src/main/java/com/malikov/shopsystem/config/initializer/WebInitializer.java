@@ -11,9 +11,9 @@ import java.util.EnumSet;
 
 /**
  * @author Oleh Surkov
- * @version 0.1
  */
 public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         super.onStartup(servletContext);

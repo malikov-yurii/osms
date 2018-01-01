@@ -29,12 +29,12 @@ import java.util.Locale;
 
 /**
  * @author Oleh Surkov
- * @version 0.1
  */
 @EnableWebMvc
 @ComponentScan(basePackages = "com.malikov.**.web")
 @Configuration
 public class SpringMvc extends WebMvcConfigurerAdapter {
+
     @Bean
     public JacksonObjectMapper objectMapper() {
         return (JacksonObjectMapper) JacksonObjectMapper.getMapper();
@@ -107,4 +107,5 @@ public class SpringMvc extends WebMvcConfigurerAdapter {
         registry.addFormatter(localDateFormatter());
         registry.addFormatter(localTimeFormatter());
     }
+
 }

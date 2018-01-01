@@ -19,13 +19,12 @@ import java.util.Properties;
 
 /**
  * @author Oleh Surkov
- * @version 0.1
  */
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.malikov.shopsystem.repository")
-
 public class SpringDB {
+
     @Bean
     public DataSource dataSource() {
         PoolConfiguration poolConfiguration = new PoolProperties();
@@ -73,4 +72,5 @@ public class SpringDB {
         Properties properties = new Properties();
         return properties;
     }
+
 }

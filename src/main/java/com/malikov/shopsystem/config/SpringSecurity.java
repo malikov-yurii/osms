@@ -16,11 +16,11 @@ import javax.annotation.Resource;
 
 /**
  * @author Oleh Surkov
- * @version 0.1
  */
 @Configuration
 @EnableWebSecurity
 public class SpringSecurity extends WebSecurityConfigurerAdapter {
+
     @Resource(name = "userService")
     UserService userService;
 
