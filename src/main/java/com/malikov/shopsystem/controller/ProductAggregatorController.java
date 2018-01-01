@@ -1,7 +1,7 @@
-package com.malikov.shopsystem.web.controller;
+package com.malikov.shopsystem.controller;
 
 import com.malikov.shopsystem.dto.ProductAggregatorDto;
-import com.malikov.shopsystem.service.impl.ProductAggregatorService;
+import com.malikov.shopsystem.service.ProductAggregatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

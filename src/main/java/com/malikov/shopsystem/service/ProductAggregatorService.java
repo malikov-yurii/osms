@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.service.impl;
+package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.dto.ProductAggregatorDto;
 import com.malikov.shopsystem.model.ProductAggregator;
@@ -36,4 +36,5 @@ public class ProductAggregatorService {
         productAggregator.setQuantity(productAggregatorDto.getQuantity());
         productAggregatorRepository.save(productAggregator);
     }
+
 }

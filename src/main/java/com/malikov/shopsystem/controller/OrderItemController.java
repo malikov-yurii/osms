@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.web.controller;
+package com.malikov.shopsystem.controller;
 
 import com.malikov.shopsystem.dto.OrderLineDto;
 import com.malikov.shopsystem.dto.ProductAutocompleteDto;

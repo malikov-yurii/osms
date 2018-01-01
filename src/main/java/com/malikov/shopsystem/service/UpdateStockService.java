@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.service.impl;
+package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.enumtype.DbOperation;
 import com.malikov.shopsystem.enumtype.OrderStatus;

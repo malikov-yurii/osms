@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.web.controller;
+package com.malikov.shopsystem.controller;
 
 import com.malikov.shopsystem.dto.GenericFilter;
 import com.malikov.shopsystem.dto.OrderDto;

@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Import;
  * @author Oleh Surkov
  * @version 0.1
  */
-@Import({SpringSecurity.class,SpringDB.class})
+@Import({SpringSecurity.class, SpringDB.class})
 @Configuration
-@ComponentScan("com.malikov.**.service")
+@ComponentScan("com.malikov.shopsystem.service")
 public class SpringApp {
 }

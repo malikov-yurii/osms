@@ -1,21 +1,47 @@
 package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.model.ProductCategory;
+import com.malikov.shopsystem.repository.ProductCategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-public interface ProductCategoryService {
+import static com.malikov.shopsystem.util.ValidationUtil.checkNotFoundById;
 
-    ProductCategory create(ProductCategory productCategory);
+@Service
+public class ProductCategoryService {
 
-    void update(ProductCategory productCategory);
+    @Autowired
+    private ProductCategoryRepository productCategoryRepository;
 
-    ProductCategory get(Long id);
+    public ProductCategory create(ProductCategory productCategory) {
+        return productCategoryRepository.save(productCategory);
+    }
 
-    void delete(Long id);
+    public void update(ProductCategory productCategory) {
+        checkNotFoundById(productCategoryRepository.save(productCategory), productCategory.getId());
+    }
 
-    List<ProductCategory> getAll();
+    public ProductCategory get(Long id) {
+        return checkNotFoundById(productCategoryRepository.findOne(id), id);
+    }
 
-    List<String> getAllNames();
+    public void delete(Long id) {
+        productCategoryRepository.delete(id);
+    }
 
+    public List<ProductCategory> getAll() {
+        return productCategoryRepository.findAll(new PageRequest(0, 200))
+                .getContent();
+    }
+
+    public List<String> getAllNames() {
+        return productCategoryRepository.findAll(new PageRequest(0, 200))
+                .getContent().stream()
+                .map(ProductCategory::getName)
+                .collect(Collectors.toList());
+    }
 }

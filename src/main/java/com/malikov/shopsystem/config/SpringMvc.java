@@ -31,7 +31,7 @@ import java.util.Locale;
  * @author Oleh Surkov
  */
 @EnableWebMvc
-@ComponentScan(basePackages = "com.malikov.**.web")
+@ComponentScan("com.malikov.shopsystem.controller")
 @Configuration
 public class SpringMvc extends WebMvcConfigurerAdapter {
 

@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.web;
+package com.malikov.shopsystem.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.malikov.shopsystem.service.OrderService;
@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class RootController {
-
-    //@Autowired
-    //private ApplicationContext appContext;
 
     @Autowired private OrderService orderService;
 
@@ -36,4 +33,5 @@ public class RootController {
         model.put("message", message);
         return "/WEB-INF/jsp/login.jsp";
     }
+
 }

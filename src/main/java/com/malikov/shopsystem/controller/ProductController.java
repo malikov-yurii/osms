@@ -1,8 +1,8 @@
-package com.malikov.shopsystem.web.controller;
+package com.malikov.shopsystem.controller;
 
 import com.malikov.shopsystem.dto.ProductDto;
 import com.malikov.shopsystem.model.Product;
-import com.malikov.shopsystem.service.impl.ProductAggregatorService;
+import com.malikov.shopsystem.service.ProductAggregatorService;
 import com.malikov.shopsystem.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

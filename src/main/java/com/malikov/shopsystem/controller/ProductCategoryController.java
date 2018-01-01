@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.web.controller;
+package com.malikov.shopsystem.controller;
 
 import com.malikov.shopsystem.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
