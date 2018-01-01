@@ -26,7 +26,7 @@ public class OrderSpecification {
 
     public static Specification<Order> customerFirstNameLike(String customerFirstNameMask) {
         return isNull(customerFirstNameMask)
-                ? Specifications.where(null)
+                ? null
                 : (root, query, cb) ->
                 cb.like(cb.lower(root.get("customerFirstName")),
                         MatchMode.ANYWHERE.toMatchString(customerFirstNameMask.trim().toLowerCase()));
@@ -34,7 +34,7 @@ public class OrderSpecification {
 
     public static Specification<Order> customerLastNameLike(String customerLastNameMask) {
         return isNull(customerLastNameMask)
-                ? Specifications.where(null)
+                ? null
                 : (root, query, cb) ->
                 cb.like(cb.lower(root.get("customerLastName")),
                         MatchMode.ANYWHERE.toMatchString(customerLastNameMask.trim().toLowerCase()));
@@ -42,7 +42,7 @@ public class OrderSpecification {
 
     public static Specification<Order> customerDestinationCityLike(String customerDestinationCityMask) {
         return isNull(customerDestinationCityMask)
-                ? Specifications.where(null)
+                ? null
                 : (root, query, cb) ->
                 cb.like(cb.lower(root.get("destinationCity")),
                         MatchMode.ANYWHERE.toMatchString(customerDestinationCityMask.trim().toLowerCase()));
@@ -50,7 +50,7 @@ public class OrderSpecification {
 
     public static Specification<Order> customerPhoneLike(String customerPhoneMask) {
         return isNull(customerPhoneMask)
-                ? Specifications.where(null)
+                ? null
                 : (root, query, cb) ->
                 cb.like(cb.lower(root.get("customerPhoneNumber")),
                         MatchMode.ANYWHERE.toMatchString(customerPhoneMask.trim().toLowerCase()));
@@ -58,14 +58,14 @@ public class OrderSpecification {
 
     public static Specification<Order> productNameLike(String productNameMask) {
         return isNull(productNameMask)
-                ? Specifications.where(null)
+                ? null
                 : (root, query, cb) ->
                 cb.like(cb.lower(root.get("orderItems").get("productName")),
                         MatchMode.ANYWHERE.toMatchString(productNameMask.trim().toLowerCase()));
     }
 
     public static Specification<Order> createdBetween(LocalDateTime from, LocalDateTime to) {
-        return isNull(from) && isNull(to) ? Specifications.where(null) : betweenDates(from, to);
+        return isNull(from) && isNull(to) ? null : betweenDates(from, to);
     }
 
     private static Specification<Order> betweenDates(LocalDateTime from, LocalDateTime to) {
@@ -82,6 +82,10 @@ public class OrderSpecification {
     public static Specification<Order> orderContainsProductVariation(ProductVariation productVariation) {
         return (root, query, cb) ->
                 cb.equal(root.get("orderItems").get("productVariation").get("id"), productVariation.getId());
+    }
+
+    public static Specifications<Order> emptySpecification() {
+        return Specifications.where(null);
     }
 
 }
