@@ -165,7 +165,7 @@ public class OrderServiceImpl implements OrderService {
         if (isNull(customer)) {
             throw new RuntimeException(String.format("Customer with id=%d not found", customerId));
         }
-        order.setCustomer(customer);
+        order.setCustomerId(customer.getId());
         order.setCustomerFirstName(customer.getName());
         order.setCustomerLastName(customer.getLastName());
         order.setCustomerPhoneNumber(customer.getPhoneNumber());
