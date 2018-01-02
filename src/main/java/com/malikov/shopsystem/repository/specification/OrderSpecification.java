@@ -3,6 +3,7 @@ package com.malikov.shopsystem.repository.specification;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.Product;
 import com.malikov.shopsystem.model.ProductVariation;
+import com.malikov.shopsystem.util.DateTimeUtil;
 import org.hibernate.criterion.MatchMode;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
@@ -60,7 +61,7 @@ public class OrderSpecification {
         return isNull(productNameMask)
                 ? null
                 : (root, query, cb) ->
-                cb.like(cb.lower(root.get("orderItems").get("productName")),
+                cb.like(cb.lower(root.join("orderItems").get("productName")),
                         MatchMode.ANYWHERE.toMatchString(productNameMask.trim().toLowerCase()));
     }
 
@@ -71,17 +72,17 @@ public class OrderSpecification {
     private static Specification<Order> betweenDates(LocalDateTime from, LocalDateTime to) {
         return (root, query, cb) ->
                 cb.between(root.get("dateTimeCreated"),
-                        isNull(from) ? LocalDateTime.MIN : from,
-                        isNull(to) ? LocalDateTime.MAX : to);
+                        isNull(from) ? DateTimeUtil.MIN : from,
+                        isNull(to) ? DateTimeUtil.MAX : to);
     }
 
     public static Specification<Order> orderContainsProduct(Product product) {
-        return (root, query, cb) -> cb.equal(root.get("orderItems").get("product").get("id"), product.getId());
+        return (root, query, cb) -> cb.equal(root.join("orderItems").join("product").get("id"), product.getId());
     }
 
     public static Specification<Order> orderContainsProductVariation(ProductVariation productVariation) {
         return (root, query, cb) ->
-                cb.equal(root.get("orderItems").get("productVariation").get("id"), productVariation.getId());
+                cb.equal(root.join("orderItems").join("productVariation").get("id"), productVariation.getId());
     }
 
     public static Specifications<Order> emptySpecification() {
