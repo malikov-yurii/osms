@@ -8,6 +8,7 @@ import com.malikov.shopsystem.repository.ProductRepository;
 import com.malikov.shopsystem.repository.ProductVariationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.malikov.shopsystem.enumtype.DbOperation.DECREASE_STOCK;
 import static com.malikov.shopsystem.enumtype.DbOperation.INCREASE_STOCK;
@@ -41,6 +42,7 @@ public class UpdateStockService {
     @Autowired
     private ProductAggregatorRepository productAggregatorRepository;
 
+    @Transactional
     public void updateStockDependingOnNewStatus(Order order, OrderStatus newStatus) {
         OrderStatus oldStatus = order.getStatus();
         if (newStatus.equals(oldStatus) || (isWithdrawalStatus(newStatus) == isWithdrawalStatus(oldStatus))) {
@@ -54,12 +56,14 @@ public class UpdateStockService {
         }
     }
 
+    @Transactional
     public void updateStock(OrderLine orderLine, int orderItemQuantityDelta) {
         if (isWithdrawalStatus(orderLine.getOrder().getStatus())) {
             updateStockForOrderItem(orderLine, orderItemQuantityDelta);
         }
     }
 
+    @Transactional
     public void updateStockForDeletedOrder(Order order) {
         if (isWithdrawalStatus(order.getStatus())) {
             updateStockForAllOrderItems(order, INCREASE_STOCK);
@@ -165,6 +169,7 @@ public class UpdateStockService {
             default:
                 throw new RuntimeException("not suitable product for pg5 amount change aggregator stock calculation");
         }
+
         return (int) (result * pg5Coefficient);
     }
 
@@ -183,6 +188,7 @@ public class UpdateStockService {
             default:
                 throw new RuntimeException("not suitable product for wire amount change aggregator stock calculation");
         }
+
         return productAggregator.getQuantity() + wireInMilligrams * orderItemQuantityDelta;
     }
 }

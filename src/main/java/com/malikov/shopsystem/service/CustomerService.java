@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,12 +30,13 @@ public class CustomerService {
     @Autowired
     private OrderRepository orderRepository;
 
-
+    @Transactional
     public Customer create(CustomerDto customerDto) {
         checkIsNew(customerDto, "customer must be new");
         return customerRepository.save(CustomerConverter.createNewFromTo(customerDto));
     }
 
+    @Transactional
     public void update(CustomerDto customerDto) {
         checkIsNotNew(customerDto, "customer must not be new");
         Customer customer = customerRepository.findOne(customerDto.getId());
@@ -45,6 +47,7 @@ public class CustomerService {
         return CustomerConverter.asDto(checkNotFoundById(customerRepository.findOne(id), id));
     }
 
+    @Transactional
     public void delete(Long id) {
         customerRepository.delete(id);
     }
@@ -63,6 +66,7 @@ public class CustomerService {
         return CustomerAutocompleteDtoListOf(customerRepository.getByCityLike("%" + cityMask + "%"));
     }
 
+    @Transactional
     public Customer persistCustomerFromOrder(Long orderId) {
         Order order = orderRepository.findOne(orderId);
         if (order.getCustomer() != null) {

@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
 public class OrderItemService {
 
     private static final int NEW_PRODUCT_QUANTITY = 1;
@@ -37,12 +36,14 @@ public class OrderItemService {
     @Autowired
     private UpdateStockService updateStockService;
 
+    @Transactional
     public OrderLine save(OrderLine orderLine) {
         orderLine = orderItemRepository.save(orderLine);
         recalculateAndUpdateTotalSum(orderLine);
         return orderLine;
     }
 
+    @Transactional
     public BigDecimal updateAndReturnTotalSum(OrderLineDto orderLineDto) {
         OrderLine orderLine = get(orderLineDto.getOrderItemId());
 
@@ -147,6 +148,7 @@ public class OrderItemService {
         return orderItemRepository.findOne(id);
     }
 
+    @Transactional
     public BigDecimal delete(Long orderItemId) {
         OrderLine orderLine = get(orderItemId);
         returnToStockPreviousProduct(orderLine);
@@ -156,6 +158,7 @@ public class OrderItemService {
         return recalculateAndUpdateTotalSum(orderLine);
     }
 
+    @Transactional
     public OrderLine createNewEmpty(Long orderId) {
         return orderItemRepository.save(new OrderLine(orderRepository.findOne(orderId),
                 null, "", new BigDecimal(0), 0));
@@ -191,6 +194,7 @@ public class OrderItemService {
                 );
             }
         });
+
         return productAutocompleteDtos;
     }
 

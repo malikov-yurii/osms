@@ -5,6 +5,7 @@ import com.malikov.shopsystem.repository.ProductCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,10 +18,12 @@ public class ProductCategoryService {
     @Autowired
     private ProductCategoryRepository productCategoryRepository;
 
+    @Transactional
     public ProductCategory create(ProductCategory productCategory) {
         return productCategoryRepository.save(productCategory);
     }
 
+    @Transactional
     public void update(ProductCategory productCategory) {
         checkNotFoundById(productCategoryRepository.save(productCategory), productCategory.getId());
     }
@@ -29,6 +32,7 @@ public class ProductCategoryService {
         return checkNotFoundById(productCategoryRepository.findOne(id), id);
     }
 
+    @Transactional
     public void delete(Long id) {
         productCategoryRepository.delete(id);
     }

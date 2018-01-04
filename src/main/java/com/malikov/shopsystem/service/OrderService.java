@@ -22,7 +22,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -101,12 +100,14 @@ public class OrderService {
         return orderRepository.findOne(id);
     }
 
+    @Transactional
     public void delete(Long id) {
         Order order = get(id);
         updateStockService.updateStockForDeletedOrder(order);
         orderRepository.delete(order);
     }
 
+    @Transactional
     public Order createEmpty() {
         Order newOrder = new Order(null,
                 userRepository.getByLogin(SecurityContextHolder.getContext().getAuthentication().getName()),
@@ -115,6 +116,7 @@ public class OrderService {
         return orderRepository.save(newOrder);
     }
 
+    @Transactional
     public void update(OrderUpdateDto orderUpdateDto) {
         Order order = get(orderUpdateDto.getId());
         checkOrderNotFound(order, orderUpdateDto);
@@ -154,7 +156,7 @@ public class OrderService {
         }
     }
 
-    @Transactional(propagation = Propagation.MANDATORY)
+    @Transactional
     public void setCustomer(Order order, Long customerId) {
         Customer customer = customerRepository.findOne(customerId);
         if (isNull(customer)) {

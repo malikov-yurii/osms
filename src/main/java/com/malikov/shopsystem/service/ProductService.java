@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,10 +38,12 @@ public class ProductService {
         return new PageImpl<>(allProductDtos, null, page.getTotalElements());
     }
 
+    @Transactional
     public void delete(Long id) {
         productRepository.delete(id);
     }
 
+    @Transactional
     public void update(ProductDto productDto) {
         Product product;
         checkNotFoundById(product = productRepository.findOne(productDto.getProductId()), productDto.getProductId());
