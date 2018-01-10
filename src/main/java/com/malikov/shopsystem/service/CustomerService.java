@@ -67,20 +67,22 @@ public class CustomerService {
     }
 
     @Transactional
-    public Customer persistCustomerFromOrder(Long orderId) {
+    public Long persistCustomerFromOrder(Long orderId) {
         Order order = orderRepository.findOne(orderId);
         if (order.getCustomer() != null) {
             checkIsNew(order.getCustomer(), "Customer is not new");
         }
-        order.setCustomer(customerRepository.save(
+        Customer customer = customerRepository.save(
                 new Customer(order.getCustomerFirstName()
                         , order.getCustomerLastName()
                         , order.getCustomerPhoneNumber()
                         , order.getDestinationCity()
                         , order.getDestinationPostOffice()
                         , null
-                        , null)));
-        return orderRepository.save(order).getCustomer();
+                        , null));
+        order.setCustomerId(customer.getId());
+        orderRepository.save(order);
+        return customer.getId();
     }
 
     public Page<CustomerDto> getPage(int pageNumber, int pageCapacity) {

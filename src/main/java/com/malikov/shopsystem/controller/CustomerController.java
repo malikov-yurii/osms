@@ -38,7 +38,7 @@ public class CustomerController {
 
     @PostMapping(value = "/persist-customer-from-order/{orderId}")
     public Long persistCustomerFromOrder(@PathVariable("orderId") Long orderId) {
-        return customerService.persistCustomerFromOrder(orderId).getId();
+        return customerService.persistCustomerFromOrder(orderId);
     }
 
     @DeleteMapping(value = "/{customerId}")
