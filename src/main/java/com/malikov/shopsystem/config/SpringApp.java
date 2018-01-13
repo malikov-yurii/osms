@@ -1,8 +1,11 @@
 package com.malikov.shopsystem.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * @author Oleh Surkov
@@ -10,6 +13,13 @@ import org.springframework.context.annotation.Import;
  */
 @Import({SpringSecurity.class, SpringDB.class})
 @Configuration
+@EnableScheduling
 @ComponentScan("com.malikov.shopsystem.service")
 public class SpringApp {
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
 }
