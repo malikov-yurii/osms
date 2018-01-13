@@ -9,21 +9,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.malikov.shopsystem.util.CalculateProductPriceUtil.calculateProductPrice;
+import static com.malikov.shopsystem.util.CalculateProductPriceUtil.calculateProductVariationPrice;
 import static java.util.Objects.nonNull;
 
 public class ProductUtil {
-
-    public static Product createNewFromTo(ProductDto productDto) {
-        return new Product(null, productDto.getName(), productDto.getPrice(),
-                false, productDto.getQuantity(), false, null);
-    }
-
-    public static Product updateFromTo(Product product, ProductDto productDto) {
-        product.setName(productDto.getName());
-        product.setPrice(productDto.getPrice());
-        product.setQuantity(productDto.getQuantity());
-        return product;
-    }
 
     public static List<ProductDto> getDtosFrom(Product product) {
         List<ProductDto> productDtos = new ArrayList<>();
@@ -35,7 +25,7 @@ public class ProductUtil {
                             product.getName() + " "
                                     + productVariation.getVariationValue().getName(),
                             getCategoryNames(product),
-                            productVariation.getPrice(),
+                            calculateProductVariationPrice(productVariation),
                             productVariation.getQuantity(),
                             product.getUnlimited(),
                             product.getSupplier(),
@@ -45,7 +35,8 @@ public class ProductUtil {
             productDtos.add(new ProductDto(
                     product.getId(), 0L, product.getName(),
                     getCategoryNames(product),
-                    product.getPrice(),product.getQuantity(), product.getUnlimited(), product.getSupplier(), false));
+                    calculateProductPrice(product),
+                    product.getQuantity(), product.getUnlimited(), product.getSupplier(), false));
         }
         return productDtos;
     }

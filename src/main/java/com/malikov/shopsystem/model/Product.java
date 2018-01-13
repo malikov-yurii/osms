@@ -1,10 +1,12 @@
 package com.malikov.shopsystem.model;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -23,6 +25,9 @@ public class Product extends NamedEntity {
 
     @Column(name = "product_quantity")
     private Integer quantity;
+
+    @Column(name = "discount")
+    private Integer discount;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -51,6 +56,11 @@ public class Product extends NamedEntity {
 
     @Column(name = "supplier")
     private String supplier;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "currency_id")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private Currency currency;
 
     public Product() {}
 
@@ -120,6 +130,22 @@ public class Product extends NamedEntity {
 
     public void setSupplier(String supplier) {
         this.supplier = supplier;
+    }
+
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 
     @Override

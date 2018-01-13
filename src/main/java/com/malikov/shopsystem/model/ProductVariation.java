@@ -21,7 +21,10 @@ public class ProductVariation extends BaseEntity {
     private BigDecimal price;
 
     @Column(name = "count")
-    private int quantity;
+    private Integer quantity;
+
+    @Column(name = "discount")
+    private Integer discount;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "attr_value_id")
@@ -51,11 +54,11 @@ public class ProductVariation extends BaseEntity {
         this.price = price;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -83,6 +86,14 @@ public class ProductVariation extends BaseEntity {
         this.productAggregator = productAggregator;
     }
 
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,7 +107,11 @@ public class ProductVariation extends BaseEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), price, quantity, variationValue);
+        int result = super.hashCode();
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
+        result = 31 * result + (variationValue != null ? variationValue.hashCode() : 0);
+        return result;
     }
 
     @Override

@@ -1,5 +1,8 @@
 package com.malikov.shopsystem.model;
 
+import com.malikov.shopsystem.enumtype.CurrencyCode;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -15,6 +18,10 @@ public class Currency {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "currency_id")
     private BigInteger currencyId;
+
+    @Type(type = "com.malikov.shopsystem.util.converter.CurrencyCodeUserType")
+    @Column(name = "currency_code_iso")
+    private CurrencyCode currencyCode;
 
     @Column(name = "currency_value")
     private BigDecimal currencyRate;
@@ -35,4 +42,11 @@ public class Currency {
         this.currencyRate = currencyRate;
     }
 
+    public CurrencyCode getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(CurrencyCode currencyCode) {
+        this.currencyCode = currencyCode;
+    }
 }

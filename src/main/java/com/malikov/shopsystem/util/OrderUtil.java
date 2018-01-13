@@ -11,23 +11,6 @@ import java.util.Collection;
 
 public class OrderUtil {
 
-    public static Order updateFromTo(Order order, OrderDto orderDto) {
-        order.setCustomerFirstName(orderDto.getCustomerFirstName());
-        order.setCustomerLastName(orderDto.getCustomerLastName());
-        order.setCustomerPhoneNumber(orderDto.getCustomerPhoneNumber());
-        order.setDestinationCity(orderDto.getDestinationCity());
-        order.setDestinationPostOffice(orderDto.getDestinationPostOffice());
-        order.setComment(orderDto.getNote());
-        order.setTotalValue(orderDto.getTotalSum());
-        return order;
-    }
-
-    public static int calculateTotalSumOfTos(Collection<OrderLineDto> orderLineDtos) {
-        return orderLineDtos.stream().mapToInt(p ->
-                (p.getPrice().intValue() * p.getQuantity()))
-                .sum();
-    }
-
     public static OrderDto asTo(Order order) {
         OrderLineDto[] orderLineDtos = order.getOrderItems()
                 .stream()

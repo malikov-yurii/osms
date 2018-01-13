@@ -1,5 +1,8 @@
 package com.malikov.shopsystem.model;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -28,6 +31,11 @@ public class Customer extends NamedEntity {
 
     @Column(name = "note")
     private String note;
+
+    @OneToOne
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(name = "parent_id")
+    private Customer parent;
 
     public Customer() {
     }
@@ -100,6 +108,14 @@ public class Customer extends NamedEntity {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Customer getParent() {
+        return parent;
+    }
+
+    public void setParent(Customer parent) {
+        this.parent = parent;
     }
 
     @Override

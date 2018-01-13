@@ -16,9 +16,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.malikov.shopsystem.util.CalculateProductPriceUtil.calculateProductPrice;
+import static com.malikov.shopsystem.util.CalculateProductPriceUtil.calculateProductVariationPrice;
 
 @Service
 public class OrderItemService {
@@ -100,13 +102,13 @@ public class OrderItemService {
         orderLine.setProductVariation(newProductVariation);
         orderLine.setProductName(newProductVariation.getProduct().getName() + " "
                 + newProductVariation.getVariationValue().getName());
-        orderLine.setProductPrice(newProductVariation.getPrice());
+        orderLine.setProductPrice(calculateProductVariationPrice(newProductVariation));
     }
 
     private void setProductForOrderItem(OrderLine orderLine, Product newProduct) {
         orderLine.setProduct(newProduct);
         orderLine.setProductName(newProduct.getName());
-        orderLine.setProductPrice(newProduct.getPrice());
+        orderLine.setProductPrice(calculateProductPrice(newProduct));
     }
 
     private boolean setName(OrderLineDto orderLineDto, OrderLine orderLine) {
@@ -173,23 +175,23 @@ public class OrderItemService {
                             new ProductAutocompleteDto(
                                     product.getName() + " "
                                             + productVariation.getVariationValue().getName() + " "
-                                            + productVariation.getPrice().setScale(0, RoundingMode.HALF_UP),
+                                            + calculateProductVariationPrice(productVariation),
                                     product.getId(),
                                     productVariation.getId(),
                                     product.getName() + " "
                                             + productVariation.getVariationValue().getName(),
-                                    productVariation.getPrice()
+                                    calculateProductVariationPrice(productVariation)
                             )
                     );
                 }
             } else {
                 productAutocompleteDtos.add(
                         new ProductAutocompleteDto(
-                                product.getName() + " " + product.getPrice().setScale(0, RoundingMode.HALF_UP),
+                                product.getName() + " " + calculateProductPrice(product),
                                 product.getId(),
                                 0L,
                                 product.getName(),
-                                product.getPrice()
+                                calculateProductPrice(product)
                         )
                 );
             }
