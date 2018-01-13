@@ -68,7 +68,7 @@ export class OrderService {
   }
 
   filterOrders(page, pageLength, filters): Observable<any> {
-    let payload = {};
+    let payload = {} as any;
 
     Object.keys(filters)
       .filter(key => filters[key])
@@ -82,7 +82,11 @@ export class OrderService {
         }
       });
 
-    payload['paging'] = {
+    if (payload.productVariationId || payload.productId) {
+      delete payload.productNameMask;
+    }
+
+    payload.paging = {
       page: page - 1,
       size: pageLength
     };

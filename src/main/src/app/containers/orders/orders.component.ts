@@ -42,7 +42,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
     public infoBlocks = STATIC_DATA.infoBlocks;
 
     public showFilters: boolean = false;
-    public filterLoads: boolean = false;
     public filterSubmitted: boolean = false;
 
     public showSuppliers: boolean = false;
@@ -167,10 +166,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
             }
         }
         const filters: IOrderFilter = this.dataFilter.form.value;
-        this.filterLoads = true;
         this.filterSubmitted = true;
         this.orderService.filterOrders(this.page, this.pageLength, filters)
-            .finally(() => this.filterLoads = false)
             .subscribe(response => this.totalOrders = response.totalElements);
     }
 
