@@ -26,14 +26,6 @@ public class Order extends BaseEntity {
     @Column(name = "customer_id")
     private Long customerId;
 
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
     @Column(name = "customer_name")
     private String customerFirstName;
 
@@ -118,6 +110,14 @@ public class Order extends BaseEntity {
         }
 
         this.statusSortOrder = OrderUtil.getStatusSortOrder(status);
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public String getCustomerFirstName() {
