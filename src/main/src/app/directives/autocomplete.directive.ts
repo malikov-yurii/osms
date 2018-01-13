@@ -76,6 +76,7 @@ export class Autocomplete {
             this.doSearch();
           } else {
             this.searchRequired = true;
+            this.refreshTimer = undefined;
           }
         },
         800
@@ -107,6 +108,8 @@ export class Autocomplete {
           this.doSearch();
         } else if (resp.length) {
           this.renderList(resp);
+        } else {
+          this.removeList();
         }
       }
     );

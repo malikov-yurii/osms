@@ -9,3 +9,4 @@ src/main/src/**/*.js
 log
 *.log
 package-lock.json
+build/
