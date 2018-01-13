@@ -73,8 +73,10 @@ export class OrderService {
     Object.keys(filters)
       .filter(key => filters[key])
       .forEach(key => {
-        if (key.toLowerCase().includes('date')) {
+        if (key.toLowerCase().includes('fromdate')) {
           payload[key] = `${filters[key]}T00:00:00`;
+        } else if (key.toLowerCase().includes('todate')) {
+          payload[key] = `${filters[key]}T23:59:00`;
         } else {
           payload[key] = filters[key];
         }
