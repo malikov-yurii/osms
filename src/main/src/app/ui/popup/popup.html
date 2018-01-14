@@ -1,7 +1,7 @@
 <div class="popup-wrapper">
   <div class="popup-overlay" (click)="close()" [@fadeInOut]="animationState"></div>
   <div class="popup"
-       [@expandHeight]="hasData || hasFormData"
+       [@expandHeight]="hasData || hasFormData || imageUrl"
        [@flyInOut]="animationState"
        (@flyInOut.done)="onAnimationDone($event)"
   >
@@ -13,13 +13,13 @@
       </div>
     </div>
 
-    <div class="popup__loading" *ngIf="!this.hasData && !this.hasFormData">
+    <div class="popup__loading" *ngIf="!hasData && !hasFormData && !imageUrl">
       <div class="popup__loading-text">Loading...</div>
       <img src="/assets/images/loading.svg" alt="" class="popup__loading-image">
     </div>
 
     <div class="popup__content" *ngIf="hasData">
-      <div class="popup__content-text">{{ this.data }}</div>
+      <div class="popup__content-text">{{ data }}</div>
     </div>
 
     <form
@@ -49,5 +49,11 @@
         </button>
       </div>
     </form>
+
+    <img class="popup__image"
+         *ngIf="imageUrl"
+         [src]="'https://gilder-shop.com.ua/components/com_jshopping/files/img_products/full_' + imageUrl"
+         alt=""
+    >
   </div>
 </div>

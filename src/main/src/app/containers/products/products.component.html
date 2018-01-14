@@ -43,21 +43,30 @@
       <div class="table-container">
         <table class="table table-products">
           <thead>
-          <th class="product-cell--id numeric">ID</th>
-          <th class="product-cell--varId numeric">Variation ID</th>
-          <th class="product-cell--name">Name</th>
-          <th class="product-cell--categories">Category</th>
-          <th class="product-cell--price numeric">Price</th>
-          <th class="product-cell--quantity numeric">Quantity</th>
-          <th class="product-cell--supplier">Supplier</th>
+            <th class="product-cell--image">Image</th>
+            <th class="product-cell--name">Name</th>
+            <th class="product-cell--categories">Category</th>
+            <th class="product-cell--price numeric">Price</th>
+            <th class="product-cell--quantity numeric">Quantity</th>
+            <th class="product-cell--supplier">Supplier</th>
+            <th class="product-cell--id numeric">ID</th>
+            <th class="product-cell--varId numeric">Variation ID</th>
           </thead>
           <tbody>
           <tr
             *ngFor="let product of products$ | async; let odd = odd; let even = even;"
             [ngClass]="{'product': true, 'odd': odd, 'even': even}"
           >
+
+            <td class="product-cell--image" (click)="lightbox(product)">
+              <img class="product-cell__image"
+                   [src]="'https://gilder-shop.com.ua/components/com_jshopping/files/img_products/thumb_' + product.image"
+                   alt=""
+              >
+            </td>
+
             <ng-container
-              *ngFor="let key of product | keys:['unlimited', 'isAggregated']"
+              *ngFor="let key of product | keys:['unlimited', 'isAggregated', 'image']"
             >
 
               <ng-container *ngIf="isEditable(product, key); else isNotEditableCell">

@@ -247,7 +247,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
     // Manage customers
     onEditCustomer(customerId) {
-        this.popupService.renderPopup('Update customer').subscribe(customer => {
+        this.popupService.renderPopup('form', 'Update customer').subscribe(customer => {
             this.orderService.saveCustomer(customerId, customer).subscribe(
                 () => this.notyService.renderNoty(`Customer ${customerId} has been edited`),
                 error => this.notyService.renderNoty(error, true)

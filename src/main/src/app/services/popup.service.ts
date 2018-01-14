@@ -10,7 +10,7 @@ export class PopupService {
 
   constructor(private compiler: ComponentFactoryResolver) {}
 
-  renderPopup(header, data?: any) {
+  renderPopup(type: 'text' | 'form' | 'image' | 'data', header: string, data?: any) {
     let popupFactory = this.compiler.resolveComponentFactory(PopupComponent);
     this.popupComponent = this.viewContainerRef.createComponent(popupFactory);
 
@@ -19,9 +19,16 @@ export class PopupService {
     });
 
     this.popupComponent.instance.header = header;
-    if (data) {
-      this.popupComponent.instance.provideWithData(data);
+
+    switch (type) {
+      case 'data':
+        this.popupComponent.instance.provideWithData(data);
+        break;
+      case 'image':
+        this.popupComponent.instance.provideWithImage(data);
+        break;
     }
+
 
     return this.popupComponent.instance.submittedStream;
   }

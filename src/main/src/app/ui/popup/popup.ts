@@ -19,10 +19,10 @@ import { Subject } from 'rxjs/Subject';
       ])
     ]),
     trigger('flyInOut', [
-      state('destroyed', style({opacity: 0, transform: 'translateX(-10%)'})),
+      state('destroyed', style({opacity: 0, transform: 'translateX(90%)'})),
       transition(':enter', [
         style({opacity: 0, transform: 'translateX(-90%)'}),
-        animate('0.2s ease', style({opacity: 1, transform: 'translateX(-50%)'}))
+        animate('0.2s ease', style({opacity: 1, transform: 'translateX(0)'}))
       ]),
       transition('* => destroyed', [
         animate('0.2s ease')
@@ -44,6 +44,7 @@ export class PopupComponent {
   public header: string = 'Popup header';
   public destroyedStream = new Subject();
   public submittedStream = new Subject();
+  public imageUrl: string;
 
   constructor(private formBuilder: FormBuilder) {}
 
@@ -56,6 +57,10 @@ export class PopupComponent {
     this.data = data;
     this.hasFormData = true;
     this.form = this.formBuilder.group(data);
+  }
+
+  provideWithImage(url: string) {
+    this.imageUrl = url;
   }
 
   onSubmit() {

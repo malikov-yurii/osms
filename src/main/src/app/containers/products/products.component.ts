@@ -14,6 +14,7 @@ import { Store } from '../../store';
 import { Product } from '../../models/index';
 import { ProductService, NotyService } from '../../services/index';
 import { slideToLeft, changeWidth, appear } from '../../ui/animations';
+import { PopupService } from '../../services/popup.service';
 
 
 @Component({
@@ -50,7 +51,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   constructor(
     private productService: ProductService,
     private notyService: NotyService,
-    private store: Store
+    private store: Store,
+    public popupService: PopupService
   ) {}
 
   ngOnInit() {
@@ -161,6 +163,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   toggleAnimState() {
     this.searchExpanded = this.searchExpanded === 'collapsed' ? 'expanded' : 'collapsed';
+  }
+
+  lightbox(product: any) {
+    this.popupService.renderPopup('image', product.name, product.image).subscribe();
   }
 
 }

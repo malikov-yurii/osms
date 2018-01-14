@@ -28,7 +28,7 @@ export class App implements OnInit {
 
     sessionTimeoutStream.subscribe(() => {
       this.popupService
-        .renderPopup('Warning!', 'You session has timed out!\nPlease, reload the page')
+        .renderPopup('text', 'Warning!', 'You session has timed out!\nPlease, reload the page')
         .subscribe();
     });
   }

@@ -140,13 +140,13 @@ body {
     border-right-width: 0;
 }
 .order-info__block--id {
-    width: 55px;
+    width: 57px;
 }
 .order-info__block--customerLastName,
 .order-info__block--customerFirstName,
 .order-info__block--destinationCity,
 .order-info__block--note {
-    width: calc((100% - 55px - 105px - 45px - 105px - 70px - 95px - 52px - 14px) / 4);
+    width: calc((100% - 57px - 105px - 45px - 105px - 70px - 95px - 52px - 14px) / 4);
 }
 .order-info__block--customerPhoneNumber {
     width: 105px;
@@ -384,7 +384,7 @@ body {
     min-width: 1000px;
 }
 .table-products th {
-    width: 78px;
+    width: 70px;
 }
 th.product-cell--supplier {
     width: 150px;
@@ -406,6 +406,16 @@ td.product-cell--quantity {
 }
 td.product-cell--supplier {
     word-break: break-word;
+}
+td.product-cell--image {
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+.product-cell__image {
+    max-height: 50px;
+    max-width: 50px;
 }
 
 .search-input,

@@ -62,8 +62,11 @@ a:hover,
     .header__nav.expanded {
         transform: translateX(-200px);
     }
+    ul {
+        flex-wrap: wrap;
+    }
     li {
-        display: block;
+        width: 100%;
     }
     .header__nav a {
         padding: 0 15px;

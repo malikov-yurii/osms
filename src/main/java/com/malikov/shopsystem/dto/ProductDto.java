@@ -7,16 +7,16 @@ import java.util.Set;
 
 public class ProductDto implements Serializable {
 
-    private Set<String> categories;
-    private Long id;
-    private Long variationId;
     private String name;
+    private Set<String> categories;
     private BigDecimal price;
     private Integer quantity;
     private Boolean unlimited;
     private String supplier;
     private Boolean isAggregated;
-    private String imageFileName;
+    private String image;
+    private Long id;
+    private Long variationId;
 
     public ProductDto(
             Long id,
@@ -28,7 +28,7 @@ public class ProductDto implements Serializable {
             Boolean unlimited,
             String supplier,
             Boolean isAggregated,
-            String imageFileName
+            String image
     ) {
         this.id = id;
         this.variationId = variationId;
@@ -39,7 +39,7 @@ public class ProductDto implements Serializable {
         this.unlimited = unlimited;
         this.supplier = supplier;
         this.isAggregated = isAggregated;
-        this.imageFileName = imageFileName;
+        this.image = image;
     }
 
     public ProductDto() {
@@ -138,10 +138,10 @@ public class ProductDto implements Serializable {
     }
 
     public String getImageFileName() {
-        return imageFileName;
+        return image;
     }
 
-    public void setImageFileName(String imageFileName) {
-        this.imageFileName = imageFileName;
+    public void setImageFileName(String image) {
+        this.image = image;
     }
 }
