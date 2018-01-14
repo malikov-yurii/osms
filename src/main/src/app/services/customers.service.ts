@@ -24,7 +24,7 @@ export class CustomerService {
 
 
   list(searchQuery: string = '', page: number = 1, length: number = 10) {
-    let customerResult = this.searchService.search(this.storeHelper.get(this.customersPath), searchQuery);
+    let customerResult = this.searchService.search(this.storeHelper.get(this.customersPath), searchQuery, ['customerFirstName', 'customerLastName', 'customerEmail', 'customerNote', 'customerPhoneNumber', 'destinationCity']);
 
     let customerResultPage = customerResult.slice((page - 1) * length, page * length);
 

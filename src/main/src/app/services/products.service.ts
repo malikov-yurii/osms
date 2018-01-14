@@ -30,7 +30,7 @@ export class ProductService {
 
 
   list(searchQuery: string, page: number, length: number, filterData: {any}) {
-    let searchResult = this.searchService.search(this.storeHelper.get(this.productsPath), searchQuery);
+    let searchResult = this.searchService.search(this.storeHelper.get(this.productsPath), searchQuery, ['name', 'price']);
     let filterResult = searchResult.filter(product => {
       let flag = 0;
 

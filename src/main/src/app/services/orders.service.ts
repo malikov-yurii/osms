@@ -212,9 +212,6 @@ export class OrderService {
       });
   }
 
-
-
-
   list(page: number = 1, length: number = 10) {
     let orderResult = this.storeHelper.get(this.ordersPath);
 

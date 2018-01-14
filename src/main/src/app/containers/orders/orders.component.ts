@@ -340,6 +340,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
 
     console() {
-        // console.log(this.searchStream);
+        // this.orderService.hello();
     }
 }
