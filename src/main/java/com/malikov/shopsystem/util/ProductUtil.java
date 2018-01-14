@@ -22,21 +22,24 @@ public class ProductUtil {
                     .stream()
                     .map(productVariation -> new ProductDto(
                             product.getId(), productVariation.getId(),
-                            product.getName() + " "
-                                    + productVariation.getVariationValue().getName(),
+                            product.getName() + " " + productVariation.getVariationValue().getName(),
                             getCategoryNames(product),
                             calculateProductVariationPrice(productVariation),
                             productVariation.getQuantity(),
                             product.getUnlimited(),
                             product.getSupplier(),
-                            nonNull(productVariation.getProductAggregator())))
+                            nonNull(productVariation.getProductAggregator()),
+                            product.getImageFileName()
+                    ))
                     .collect(Collectors.toList()));
         } else {
             productDtos.add(new ProductDto(
                     product.getId(), 0L, product.getName(),
                     getCategoryNames(product),
                     calculateProductPrice(product),
-                    product.getQuantity(), product.getUnlimited(), product.getSupplier(), false));
+                    product.getQuantity(), product.getUnlimited(), product.getSupplier(), false,
+                    product.getImageFileName()
+            ));
         }
         return productDtos;
     }

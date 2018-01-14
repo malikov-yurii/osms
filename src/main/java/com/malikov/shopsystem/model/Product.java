@@ -62,6 +62,9 @@ public class Product extends NamedEntity {
     @NotFound(action = NotFoundAction.IGNORE)
     private Currency currency;
 
+    @Column(name = "image")
+    private String imageFileName;
+
     public Product() {}
 
     public Product(Long id, String name, BigDecimal price, boolean unlimited,
@@ -146,6 +149,14 @@ public class Product extends NamedEntity {
 
     public void setCurrency(Currency currency) {
         this.currency = currency;
+    }
+
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
     }
 
     @Override
