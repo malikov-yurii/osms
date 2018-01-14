@@ -16,7 +16,7 @@ public class CustomerConverter {
                 customerDto.getCustomerNote());
     }
 
-    public static CustomerDto asDto(Customer customer){
+    public static CustomerDto asDto(Customer customer) {
         return new CustomerDto(
                 customer.getId(),
                 customer.getName() == null ? "" : customer.getName(),
@@ -44,14 +44,14 @@ public class CustomerConverter {
         if (customerDto.getDestinationPostOffice() != null) {
             customer.setPostOffice(customerDto.getDestinationPostOffice());
         }
-        if (customerDto.getCustomerPhoneNumber() != null) {
+        if (customerDto.getCustomerEmail() != null) {
             customer.setEmail(customerDto.getCustomerEmail());
         }
         if (customerDto.getCustomerNote() != null) {
             customer.setNote(customerDto.getCustomerNote());
         }
-            return customer;
-        }
+        return customer;
+    }
 
     public static List<CustomerAutocompleteDto> CustomerAutocompleteDtoListOf(
             List<Customer> customers) {
