@@ -71,6 +71,7 @@ a:hover,
     .header__nav a {
         padding: 0 15px;
         color: #333;
+        transition: all .15s;
     }
     .header__nav a:hover,
     .header__nav .active {

@@ -80,9 +80,15 @@
 
 
               <ng-template #isNotEditableCell>
-                <td class="product-cell--{{ key }}"
-                    [class.aggregated]="key === 'quantity' && product.isAggregated"
+                <td
+                  [class]="'product-cell--' + key"
+                  [class.aggregated]="product.isAggregated"
+                  *ngIf="key === 'quantity'"
                 >
+                  AGR
+                </td>
+
+                <td [class]="'product-cell--' + key" *ngIf="key !== 'quantity'">
                   {{ product[key] }}
                 </td>
               </ng-template>
