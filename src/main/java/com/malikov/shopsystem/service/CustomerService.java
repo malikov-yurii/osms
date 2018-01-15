@@ -72,16 +72,17 @@ public class CustomerService {
         if (order.getCustomer() != null) {
             checkIsNew(order.getCustomer(), "Customer is not new");
         }
-        Customer customer = customerRepository.save(
-                new Customer(order.getCustomerFirstName()
-                        , order.getCustomerLastName()
-                        , order.getCustomerPhoneNumber()
-                        , order.getDestinationCity()
-                        , order.getDestinationPostOffice()
-                        , null
-                        , null));
+        Customer customer = new Customer();
+        customer.setName(order.getCustomerFirstName());
+        customer.setLastName(order.getCustomerLastName());
+        customer.setPhoneNumber(order.getCustomerPhoneNumber());
+        customer.setCity(order.getDestinationCity());
+        customer.setPostOffice(order.getDestinationPostOffice());
+
+        customer = customerRepository.save(customer);
         order.setCustomerId(customer.getId());
         orderRepository.save(order);
+
         return customer.getId();
     }
 

@@ -1,15 +1,19 @@
 package com.malikov.shopsystem.model;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "jos_jshopping_attr_values")
-@AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name = "value_id")),
-        @AttributeOverride(name = "name", column = @Column(name = "`name_ru-RU`")),
-})
-public class VariationValue extends NamedEntity {
+public class VariationValue {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "value_id")
+    @Access(value = AccessType.PROPERTY)
+    private Long id;
+
+    @Column(name = "`name_ru-RU`")
+    private String name;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "attr_id")
@@ -18,14 +22,21 @@ public class VariationValue extends NamedEntity {
     @Column(name = "value_amount")
     private Integer valueAmount;
 
-
-    public VariationValue() {}
-
-    public VariationValue(Long id, String name, VariationType variationType) {
-        super(id, name);
-        this.variationType = variationType;
+    public Long getId() {
+        return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public VariationType getVariationType() {
         return variationType;
@@ -43,24 +54,4 @@ public class VariationValue extends NamedEntity {
         this.valueAmount = valueAmount;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof VariationValue)) return false;
-        if (!super.equals(o)) return false;
-        VariationValue that = (VariationValue) o;
-        return Objects.equals(variationType, that.variationType);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), variationType);
-    }
-
-    @Override
-    public String toString() {
-        return "{variationValueName=" + name +
-                ", type=" + variationType +
-                '}';
-    }
 }

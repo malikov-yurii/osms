@@ -25,10 +25,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import static com.malikov.shopsystem.repository.specification.OrderSpecification.*;
+import static com.malikov.shopsystem.util.OrderUtil.calcStatusSortOrder;
+import static java.util.Collections.singleton;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
@@ -41,14 +43,19 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private CustomerRepository customerRepository;
+
     @Autowired
     private ProductRepository productRepository;
+
     @Autowired
     private ProductVariationRepository productVariationRepository;
+
     @Autowired
     private UpdateStockService updateStockService;
 
@@ -79,12 +86,12 @@ public class OrderService {
 
     private Specifications orderOfCustomer(OrderFilterDto filter) {
         return nonNull(filter.getCustomerId())
-                    ? Specifications.where(customerIdEquals(filter.getCustomerId()))
-                    : emptySpecification()
-                            .and(customerFirstNameLike(filter.getCustomerFirstNameMask()))
-                            .and(customerLastNameLike(filter.getCustomerLastNameMask()))
-                            .and(customerDestinationCityLike(filter.getDestinationCityMask()))
-                            .and(customerPhoneLike(filter.getCustomerPhoneMask()));
+                ? Specifications.where(customerIdEquals(filter.getCustomerId()))
+                : emptySpecification()
+                .and(customerFirstNameLike(filter.getCustomerFirstNameMask()))
+                .and(customerLastNameLike(filter.getCustomerLastNameMask()))
+                .and(customerDestinationCityLike(filter.getDestinationCityMask()))
+                .and(customerPhoneLike(filter.getCustomerPhoneMask()));
     }
 
     private PageImpl<OrderDto> convertToOrderDtoPage(Page<Order> page) {
@@ -109,11 +116,15 @@ public class OrderService {
 
     @Transactional
     public Order createEmpty() {
-        Order newOrder = new Order(null,
-                userRepository.getByLogin(SecurityContextHolder.getContext().getAuthentication().getName()),
-                PaymentType.NP, OrderStatus.NEW, null, Collections.singletonList(new OrderLine()));
-        LOG.info("create new {}", newOrder);
-        return orderRepository.save(newOrder);
+        Order order = new Order();
+        order.setUser(userRepository.getByLogin(SecurityContextHolder.getContext().getAuthentication().getName()));
+        order.setPaymentType(PaymentType.NP);
+        order.setStatus(OrderStatus.NEW);
+        OrderLine orderLine = new OrderLine();
+        orderLine.setOrder(order);
+        order.setOrderItems(new ArrayList<>(singleton(orderLine)));
+        order.setStatusSortOrder(calcStatusSortOrder(OrderStatus.NEW));
+        return orderRepository.save(order);
     }
 
     @Transactional

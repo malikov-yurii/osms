@@ -3,6 +3,7 @@ package com.malikov.shopsystem.model;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OrderBy;
@@ -13,11 +14,16 @@ import java.util.*;
 @SuppressWarnings("JpaQlInspection")
 @Entity
 @Table(name = "jos_jshopping_products")
-@AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name = "product_id")),
-        @AttributeOverride(name = "name", column = @Column(name = "`name_ru-RU`")),
-})
-public class Product extends NamedEntity {
+public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
+    @Access(value = AccessType.PROPERTY)
+    private Long id;
+
+    @Column(name = "`name_ru-RU`")
+    private String name;
 
     @Column(name = "product_price", columnDefinition = "decimal",
             precision = 12, scale = 2)
@@ -48,10 +54,6 @@ public class Product extends NamedEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "product")
     @Fetch(FetchMode.SELECT)
     @OrderBy("id ASC")
-    //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    //@Fetch(FetchMode.SELECT)
-    //@JoinColumn(name = "product_id")
-    //@OrderBy("id ASC")
     private List<ProductVariation> variations;
 
     @Column(name = "supplier")
@@ -65,19 +67,21 @@ public class Product extends NamedEntity {
     @Column(name = "image")
     private String imageFileName;
 
-    public Product() {}
-
-    public Product(Long id, String name, BigDecimal price, boolean unlimited,
-                   int quantity, boolean hasVariations,
-                   Collection<ProductCategory> categories) {
-        super(id, name);
-        this.price = price;
-        this.unlimited = unlimited;
-        this.quantity = quantity;
-        this.categories = new HashSet<>(categories);
-        this.hasVariations = hasVariations;
+    public Long getId() {
+        return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public BigDecimal getPrice() {
         return price;
@@ -93,6 +97,14 @@ public class Product extends NamedEntity {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
     }
 
     public Set<ProductCategory> getCategories() {
@@ -135,14 +147,6 @@ public class Product extends NamedEntity {
         this.supplier = supplier;
     }
 
-    public Integer getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Integer discount) {
-        this.discount = discount;
-    }
-
     public Currency getCurrency() {
         return currency;
     }
@@ -157,41 +161,5 @@ public class Product extends NamedEntity {
 
     public void setImageFileName(String imageFileName) {
         this.imageFileName = imageFileName;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Product)) return false;
-        if (!super.equals(o)) return false;
-        Product product = (Product) o;
-        return Objects.equals(price, product.price) &&
-                Objects.equals(quantity, product.quantity) &&
-                Objects.equals(categories, product.categories) &&
-                Objects.equals(hasVariations, product.hasVariations) &&
-                Objects.equals(unlimited, product.unlimited) &&
-                Objects.equals(supplier, product.supplier) &&
-                Objects.equals(variations, product.variations);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), price, quantity, categories,
-                hasVariations, unlimited, variations);
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", categories=" + categories +
-                ", hasVariations=" + hasVariations +
-                ", unlimited=" + unlimited +
-                ", supplier=" + supplier +
-                ", variations=" + variations +
-                '}';
     }
 }

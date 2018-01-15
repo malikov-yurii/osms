@@ -5,25 +5,30 @@ import javax.persistence.*;
 @SuppressWarnings("JpaQlInspection")
 @Entity
 @Table(name = "jos_jshopping_categories")
-@AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name = "category_id")),
-        @AttributeOverride(name = "name", column = @Column(name = "`name_ru-RU`")),
-})
-public class ProductCategory extends NamedEntity {
+public class ProductCategory {
 
-    public ProductCategory() {}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "category_id")
+    @Access(value = AccessType.PROPERTY)
+    private Long id;
 
-    public ProductCategory(Long id, String name) {
+    @Column(name = "`name_ru-RU`")
+    private String name;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
-    }
-
-
-    public ProductCategory(String name) {
-        this(null, name);
-    }
-
-    public ProductCategory(ProductCategory pc) {
-        this(pc.getId(), pc.getName());
     }
 }

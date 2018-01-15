@@ -162,8 +162,9 @@ public class OrderItemService {
 
     @Transactional
     public OrderLine createNewEmpty(Long orderId) {
-        return orderItemRepository.save(new OrderLine(orderRepository.findOne(orderId),
-                null, "", new BigDecimal(0), 0));
+        OrderLine orderLine = new OrderLine();
+        orderLine.setOrder(orderRepository.findOne(orderId));
+        return orderItemRepository.save(orderLine);
     }
 
     public List<ProductAutocompleteDto> getByProductMask(String productNameMask) {

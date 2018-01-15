@@ -5,13 +5,21 @@ import com.malikov.shopsystem.enumtype.Role;
 import javax.persistence.*;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @SuppressWarnings("JpaQlInspection")
 @Entity
 @Table(name = "osms_users")
-public class User extends NamedEntity {
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    @Access(value = AccessType.PROPERTY)
+    private Long id;
+
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "password")
     private String password;
@@ -22,16 +30,32 @@ public class User extends NamedEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-
-    public User() {}
+    public User() {
+    }
 
     public User(Long id, String name, String password, Role... roles) {
-        super(id, name);
+        this.id = id;
+        this.name = name;
         this.password = password;
         this.roles = new HashSet<>();
         Collections.addAll(this.roles, roles);
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getPassword() {
         return password;
@@ -49,26 +73,4 @@ public class User extends NamedEntity {
         this.roles = roles;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        if (!super.equals(o)) return false;
-        User user = (User) o;
-        return Objects.equals(password, user.password) &&
-                Objects.equals(roles, user.roles);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), password, roles);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "login='" + name + '\'' +
-                ", roles=" + roles +
-                '}';
-    }
 }

@@ -34,4 +34,5 @@ public class UserServiceImpl implements UserService {
     public List<User> getPage(int pageNumber, int pageCapacity) {
         return userRepository.findAll(new PageRequest(pageNumber, pageCapacity)).getContent();
     }
+
 }

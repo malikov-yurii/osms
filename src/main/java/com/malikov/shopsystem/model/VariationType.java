@@ -4,22 +4,31 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "jos_jshopping_attr")
-@AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name = "attr_id")),
-        @AttributeOverride(name = "name", column = @Column(name = "`name_ru-RU`")),
-})
-public class VariationType extends NamedEntity {
+public class VariationType {
 
-    public VariationType() {}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "attr_id")
+    @Access(value = AccessType.PROPERTY)
+    private Long id;
 
-    public VariationType(Long id, String name) {
-        super(id, name);
+    @Column(name = "`name_ru-RU`")
+    private String name;
+
+    public Long getId() {
+        return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    @Override
-    public String toString() {
+    public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

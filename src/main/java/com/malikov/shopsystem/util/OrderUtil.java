@@ -48,7 +48,7 @@ public class OrderUtil {
                 );
     }
 
-    public static Integer getStatusSortOrder(OrderStatus status) {
+    public static Integer calcStatusSortOrder(OrderStatus status) {
         switch (status) {
             case OK:  return 5;
             case SHP: return 1;

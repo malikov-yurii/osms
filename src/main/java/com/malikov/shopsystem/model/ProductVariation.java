@@ -5,13 +5,17 @@ import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Objects;
 
 @SuppressWarnings("JpaQlInspection")
 @Entity
 @Table(name = "jos_jshopping_products_attr")
-@AttributeOverride(name = "id", column = @Column(name = "product_attr_id"))
-public class ProductVariation extends BaseEntity {
+public class ProductVariation {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_attr_id")
+    @Access(value = AccessType.PROPERTY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
@@ -35,16 +39,21 @@ public class ProductVariation extends BaseEntity {
     @NotFound(action = NotFoundAction.IGNORE)
     private ProductAggregator productAggregator;
 
-    public ProductVariation() {}
-
-    public ProductVariation(Long id, BigDecimal price, int quantity, Product product, VariationValue variationValue) {
-        super(id);
-        this.price = price;
-        this.quantity = quantity;
-        this.product = product;
-        this.variationValue = variationValue;
+    public Long getId() {
+        return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
     public BigDecimal getPrice() {
         return price;
@@ -62,30 +71,6 @@ public class ProductVariation extends BaseEntity {
         this.quantity = quantity;
     }
 
-    public VariationValue getVariationValue() {
-        return variationValue;
-    }
-
-    public void setVariationValue(VariationValue variationValue) {
-        this.variationValue = variationValue;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public ProductAggregator getProductAggregator() {
-        return productAggregator;
-    }
-
-    public void setProductAggregator(ProductAggregator productAggregator) {
-        this.productAggregator = productAggregator;
-    }
-
     public Integer getDiscount() {
         return discount;
     }
@@ -94,33 +79,19 @@ public class ProductVariation extends BaseEntity {
         this.discount = discount;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ProductVariation)) return false;
-        if (!super.equals(o)) return false;
-        ProductVariation that = (ProductVariation) o;
-        return price == that.price &&
-                quantity == that.quantity &&
-                Objects.equals(variationValue, that.variationValue);
+    public VariationValue getVariationValue() {
+        return variationValue;
     }
 
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
-        result = 31 * result + (variationValue != null ? variationValue.hashCode() : 0);
-        return result;
+    public void setVariationValue(VariationValue variationValue) {
+        this.variationValue = variationValue;
     }
 
-    @Override
-    public String toString() {
-        return "ProductVariation{" +
-                "id='" + id + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", variationValue=" + variationValue +
-                '}';
+    public ProductAggregator getProductAggregator() {
+        return productAggregator;
+    }
+
+    public void setProductAggregator(ProductAggregator productAggregator) {
+        this.productAggregator = productAggregator;
     }
 }

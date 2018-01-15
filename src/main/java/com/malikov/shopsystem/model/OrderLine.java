@@ -7,13 +7,17 @@ import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Objects;
 
 @Entity
 @Table(name = "osms_order_items")
-public class OrderLine extends BaseEntity {
+public class OrderLine {
 
-    //@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    @Access(value = AccessType.PROPERTY)
+    private Long id;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "order_id")
@@ -35,37 +39,26 @@ public class OrderLine extends BaseEntity {
     private String productName;
 
     @Column(name = "product_price")
-    private BigDecimal productPrice;
+    private BigDecimal productPrice = BigDecimal.ZERO;
 
     @Column(name = "product_quantity")
-    private Integer productQuantity;
+    private Integer productQuantity = 0;
 
-
-    public OrderLine() {
-        this.productName = "";
-        this.productPrice = new BigDecimal(0);
-        this.productQuantity = 0;
+    public Long getId() {
+        return id;
     }
 
-    public OrderLine(Order order, Product product, String productName,
-                     BigDecimal productPrice, Integer productQuantity) {
-        this(null, product, null, productName, productPrice, productQuantity);
-        this.order = order;
-    }
-
-    public OrderLine(Long id, Product product,
-                     ProductVariation variation, String productName,
-                     BigDecimal productPrice, Integer productQuantity) {
-        this.product = product;
-        this.productVariation = variation;
-        this.productName = variation != null
-                ? productName + " " + variation.getVariationValue().getName()
-                : productName;
-        this.productPrice = productPrice;
-        this.productQuantity = productQuantity;
+    public void setId(Long id) {
         this.id = id;
     }
 
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 
     public ProductVariation getProductVariation() {
         return productVariation;
@@ -81,14 +74,6 @@ public class OrderLine extends BaseEntity {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
     }
 
     public String getProductName() {
@@ -113,36 +98,5 @@ public class OrderLine extends BaseEntity {
 
     public void setProductQuantity(Integer productQuantity) {
         this.productQuantity = productQuantity;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof OrderLine)) return false;
-        if (!super.equals(o)) return false;
-        OrderLine orderLine = (OrderLine) o;
-        return Objects.equals(product, orderLine.product) &&
-                Objects.equals(productName, orderLine.productName) &&
-                Objects.equals(productPrice, orderLine.productPrice) &&
-                Objects.equals(productQuantity, orderLine.productQuantity);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), product, productName,
-                productPrice, productQuantity);
-    }
-
-    @Override
-    public String toString() {
-        return "OrderLine{" +
-                " id=" + id +
-                ", order_id=" + order.getId() +
-                ", productVariation=" + productVariation +
-                ", product=" + product +
-                ", productName='" + productName + '\'' +
-                ", productPrice=" + productPrice +
-                ", productQuantity=" + productQuantity +
-                '}';
     }
 }

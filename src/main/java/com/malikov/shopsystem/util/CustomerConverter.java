@@ -10,10 +10,15 @@ import java.util.stream.Collectors;
 public class CustomerConverter {
 
     public static Customer createNewFromTo(CustomerDto customerDto) {
-        return new Customer(null, customerDto.getCustomerFirstName(), customerDto.getCustomerLastName(),
-                customerDto.getCustomerPhoneNumber(), customerDto.getDestinationCity(),
-                customerDto.getDestinationPostOffice(), customerDto.getCustomerEmail(),
-                customerDto.getCustomerNote());
+        Customer customer = new Customer();
+        customer.setName(customerDto.getCustomerFirstName());
+        customer.setLastName((customerDto.getCustomerLastName()));
+        customer.setPhoneNumber((customerDto.getCustomerPhoneNumber()));
+        customer.setCity((customerDto.getDestinationCity()));
+        customer.setPostOffice((customerDto.getDestinationPostOffice()));
+        customer.setEmail((customerDto.getCustomerEmail()));
+        customer.setNote((customerDto.getCustomerNote()));
+        return customer;
     }
 
     public static CustomerDto asDto(Customer customer) {
