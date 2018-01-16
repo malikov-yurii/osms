@@ -14,7 +14,11 @@ import org.springframework.web.client.RestTemplate;
 @Import({SpringSecurity.class, SpringDB.class})
 @Configuration
 @EnableScheduling
-@ComponentScan("com.malikov.shopsystem.service")
+@ComponentScan(
+        basePackages = {
+                "com.malikov.shopsystem.service",
+                "com.malikov.shopsystem.mapper"
+        })
 public class SpringApp {
 
     @Bean

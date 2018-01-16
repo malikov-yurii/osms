@@ -11,7 +11,7 @@ public abstract class ProductRepositoryTest extends AbstractRepositoryTest {
     public void testSave() throws Exception {
         Product newProduct = new Product("newProductName", 100, false, 111, false, Collections.singleton(CATEGORY_KLEI), null);
         Product created = service.create(newProduct);
-        newProduct.setId(created.getId());
+        newProduct.setCustomerId(created.getCustomerId());
         ProductTestData.MATCHER.assertCollectionEquals(
                 Arrays.asList(POTAL_KITAJ, POTAL_NAZIONALE, SHELLAC_MANETTI, FERRARIO_ROZOVYJ, newProduct),
                 service.getPage());
@@ -22,12 +22,12 @@ public abstract class ProductRepositoryTest extends AbstractRepositoryTest {
         Product updated = new Product(POTAL_KITAJ);
         updated.setName("Kitaj_upd");
         service.update(updated);
-        ProductTestData.MATCHER.assertEquals(updated, service.get(POTAL_KITAJ.getId()));
+        ProductTestData.MATCHER.assertEquals(updated, service.get(POTAL_KITAJ.getCustomerId()));
     }
 
     @Test
     public void testGet() throws Exception {
-        Product product = service.get(POTAL_NAZIONALE.getId());
+        Product product = service.get(POTAL_NAZIONALE.getCustomerId());
         ProductTestData.MATCHER.assertEquals(POTAL_NAZIONALE, product);
     }
 
@@ -40,14 +40,14 @@ public abstract class ProductRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void testDelete() throws Exception {
-        service.delete(POTAL_NAZIONALE.getId());
+        service.delete(POTAL_NAZIONALE.getCustomerId());
         ProductTestData.MATCHER.assertCollectionEquals(Arrays.asList(
                 POTAL_KITAJ, SHELLAC_MANETTI, FERRARIO_ROZOVYJ), service.getPage());
     }
 
     @Test
     public void testGetByCategoryId() throws Exception {
-        Collection<Product> productsByCategoryId = service.getByCategoryId(CATEGORY_POTAL_I_ZOLOTO.getId());
+        Collection<Product> productsByCategoryId = service.getByCategoryId(CATEGORY_POTAL_I_ZOLOTO.getCustomerId());
         ProductTestData.MATCHER.assertCollectionEquals(Arrays.asList(POTAL_NAZIONALE, POTAL_KITAJ), productsByCategoryId);
     }
 

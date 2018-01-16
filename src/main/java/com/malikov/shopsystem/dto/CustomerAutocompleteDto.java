@@ -17,18 +17,7 @@ public class CustomerAutocompleteDto {
 
     private String destinationPostOffice;
 
-    public CustomerAutocompleteDto(
-            String label,
-            Long customerId,
-            String customerFirstName, String customerLastName, String customerPhoneNumber, String destinationCity, String destinationPostOffice) {
-        this.label = label;
-        this.customerId = customerId;
-        this.customerFirstName = customerFirstName;
-        this.customerLastName = customerLastName;
-        this.customerPhoneNumber = customerPhoneNumber;
-        this.destinationCity = destinationCity;
-        this.destinationPostOffice = destinationPostOffice;
-    }
+
 
     public Long getCustomerId() {
         return customerId;

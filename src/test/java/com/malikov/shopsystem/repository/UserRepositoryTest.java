@@ -25,12 +25,12 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
         User updated = new User(USER);
         updated.setName("User_Updated");
         userRepository.update(updated);
-        assertEquals(updated, userRepository.get(USER.getId()));
+        assertEquals(updated, userRepository.get(USER.getCustomerId()));
     }
 
     @Test
     public void testGet() throws Exception {
-        User user = userRepository.get(ADMIN.getId());
+        User user = userRepository.get(ADMIN.getCustomerId());
         assertEquals(ADMIN, user);
     }
 
@@ -48,7 +48,7 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void testDelete() throws Exception {
-        userRepository.delete(USER.getId());
+        userRepository.delete(USER.getCustomerId());
         assertEquals(Collections.singletonList(ADMIN), userRepository.getAll());
     }*/
 }

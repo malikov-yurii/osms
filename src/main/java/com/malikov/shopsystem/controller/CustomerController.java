@@ -27,7 +27,7 @@ public class CustomerController {
     @PutMapping(value = "/{customerId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateCustomer(@PathVariable("customerId") Long customerId,
                                @RequestBody CustomerDto customerDto) {
-        customerDto.setId(customerId);
+        customerDto.setCustomerId(customerId);
         customerService.update(customerDto);
     }
 

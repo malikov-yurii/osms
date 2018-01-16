@@ -2,11 +2,11 @@ package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.dto.CustomerAutocompleteDto;
 import com.malikov.shopsystem.dto.CustomerDto;
+import com.malikov.shopsystem.mapper.CustomerMapper;
 import com.malikov.shopsystem.model.Customer;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.repository.CustomerRepository;
 import com.malikov.shopsystem.repository.OrderRepository;
-import com.malikov.shopsystem.util.CustomerConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -17,8 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.malikov.shopsystem.util.CustomerConverter.CustomerAutocompleteDtoListOf;
-import static com.malikov.shopsystem.util.CustomerConverter.updateFromTo;
 import static com.malikov.shopsystem.util.ValidationUtil.*;
 
 @Service
@@ -26,25 +24,26 @@ public class CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
-
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private CustomerMapper customerMapper;
 
     @Transactional
     public Customer create(CustomerDto customerDto) {
         checkIsNew(customerDto, "customer must be new");
-        return customerRepository.save(CustomerConverter.createNewFromTo(customerDto));
+        return customerRepository.save(customerMapper.toEntity(customerDto));
     }
 
     @Transactional
     public void update(CustomerDto customerDto) {
         checkIsNotNew(customerDto, "customer must not be new");
-        Customer customer = customerRepository.findOne(customerDto.getId());
-        customerRepository.save(updateFromTo(customer, customerDto));
+        Customer customer = customerRepository.findOne(customerDto.getCustomerId());
+        customerRepository.save(customerMapper.updateCustomer(customerDto, customer));
     }
 
     public CustomerDto get(Long id) {
-        return CustomerConverter.asDto(checkNotFoundById(customerRepository.findOne(id), id));
+        return customerMapper.toDto(checkNotFoundById(customerRepository.findOne(id), id));
     }
 
     @Transactional
@@ -53,33 +52,29 @@ public class CustomerService {
     }
 
     public List<CustomerAutocompleteDto> getByLastNameMask(String lastNameMask) {
-        return CustomerAutocompleteDtoListOf(
+        return customerMapper.toCustomerAutocompleteDto(
                 customerRepository.getByLastNameLike("%" + lastNameMask + "%"));
     }
 
     public List<CustomerAutocompleteDto> getByPhoneNumberMask(String phoneNumberMask) {
-        return CustomerAutocompleteDtoListOf(
+        return customerMapper.toCustomerAutocompleteDto(
                 customerRepository.getByPhoneNumberLike("%" + phoneNumberMask + "%"));
     }
 
     public List<CustomerAutocompleteDto> getByCityMask(String cityMask) {
-        return CustomerAutocompleteDtoListOf(customerRepository.getByCityLike("%" + cityMask + "%"));
+        return customerMapper.toCustomerAutocompleteDto(customerRepository.getByCityLike("%" + cityMask + "%"));
     }
 
     @Transactional
     public Long persistCustomerFromOrder(Long orderId) {
         Order order = orderRepository.findOne(orderId);
+
         if (order.getCustomer() != null) {
             checkIsNew(order.getCustomer(), "Customer is not new");
         }
-        Customer customer = new Customer();
-        customer.setName(order.getCustomerFirstName());
-        customer.setLastName(order.getCustomerLastName());
-        customer.setPhoneNumber(order.getCustomerPhoneNumber());
-        customer.setCity(order.getDestinationCity());
-        customer.setPostOffice(order.getDestinationPostOffice());
 
-        customer = customerRepository.save(customer);
+        Customer customer = customerRepository.save(customerMapper.toCustomer(order));
+
         order.setCustomerId(customer.getId());
         orderRepository.save(order);
 
@@ -90,7 +85,7 @@ public class CustomerService {
         Page<Customer> page = customerRepository.findAll(new PageRequest(pageNumber, pageCapacity));
         return new PageImpl<>(
                 page.getContent().stream()
-                        .map(CustomerConverter::asDto)
+                        .map(customerMapper::toDto)
                         .collect(Collectors.toList()),
                 null,
                 page.getTotalElements());

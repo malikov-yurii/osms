@@ -1,16 +1,5 @@
 package com.malikov.shopsystem.repository;
 
-import com.malikov.shopsystem.model.Customer;
-import com.malikov.shopsystem.service.CustomerService;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-
-import static com.malikov.shopsystem.CustomerTestData.*;
-
 public abstract class CustomerRepositoryTest extends AbstractRepositoryTest {
 /*
     @Autowired
@@ -21,7 +10,7 @@ public abstract class CustomerRepositoryTest extends AbstractRepositoryTest {
         Customer newCustomer = new Customer(
                 "NewName", "NewLastName", "0671234567", "newCity", "1", "new@gmail.com", "");
         Customer created = service.create(newCustomer);
-        newCustomer.setId(created.getId());
+        newCustomer.setCustomerId(created.getCustomerId());
         MATCHER.assertCollectionEquals(
                 Arrays.asList(CUSTOMER_DROGOV, CUSTOMER_GOLOV, CUSTOMER_DUNOV,
                         CUSTOMER_WITHOUT_ANY_ORDER, newCustomer), service.getAll());
@@ -32,12 +21,12 @@ public abstract class CustomerRepositoryTest extends AbstractRepositoryTest {
         Customer updated = new Customer(CUSTOMER_GOLOV);
         updated.setName("Golov_Updated");
         service.update(updated);
-        MATCHER.assertEquals(updated, service.get(CUSTOMER_GOLOV.getId()));
+        MATCHER.assertEquals(updated, service.get(CUSTOMER_GOLOV.getCustomerId()));
     }
 
     @Test
     public void testGet() throws Exception {
-        Customer customer = service.get(CUSTOMER_DUNOV.getId());
+        Customer customer = service.get(CUSTOMER_DUNOV.getCustomerId());
         MATCHER.assertEquals(CUSTOMER_DUNOV, customer);
     }
 
@@ -80,7 +69,7 @@ public abstract class CustomerRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void testDelete() throws Exception {
-        service.delete(CUSTOMER_WITHOUT_ANY_ORDER.getId());
+        service.delete(CUSTOMER_WITHOUT_ANY_ORDER.getCustomerId());
         MATCHER.assertCollectionEquals(Arrays.asList(CUSTOMER_DROGOV, CUSTOMER_GOLOV, CUSTOMER_DUNOV), service.getAll());
     }
  */

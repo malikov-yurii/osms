@@ -44,15 +44,25 @@ public class CustomerDto implements Serializable, HasId {
     public CustomerDto() {
     }
 
+    @Override
+    public Long getId() {
+        return getCustomerId();
+    }
+
+    @Override
+    public void setId(Long id) {
+        setCustomerId(id);
+    }
+
     public boolean isNew() {
         return customerId == null;
     }
 
-    public Long getId() {
+    public Long getCustomerId() {
         return customerId;
     }
 
-    public void setId(Long id) {
+    public void setCustomerId(Long id) {
         this.customerId = id;
     }
 
