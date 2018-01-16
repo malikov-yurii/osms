@@ -88,4 +88,6 @@ dependencies {
     testCompile group: 'org.springframework', name: 'spring-test', version: '4.3.2.RELEASE'
     compile group: 'org.apache.tomcat', name: 'tomcat-servlet-api', version: '8.0.33'
     compile group: 'com.lowagie', name: 'itext', version: '2.1.7'
+    compile group: 'org.mapstruct', name: 'mapstruct-jdk8', version: '1.2.0.Final'
+    compile 'org.mapstruct:mapstruct-processor:1.2.0.Final'
 }
