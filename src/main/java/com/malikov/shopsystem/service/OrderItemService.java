@@ -10,13 +10,13 @@ import com.malikov.shopsystem.repository.OrderItemRepository;
 import com.malikov.shopsystem.repository.OrderRepository;
 import com.malikov.shopsystem.repository.ProductRepository;
 import com.malikov.shopsystem.repository.ProductVariationRepository;
-import com.malikov.shopsystem.util.OrderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static com.malikov.shopsystem.util.CalculateProductPriceUtil.calculateProductPrice;
@@ -140,10 +140,19 @@ public class OrderItemService {
 
     private BigDecimal recalculateAndUpdateTotalSum(OrderLine orderLine) {
         Order order = orderRepository.findOne(orderLine.getOrder().getId());
-        BigDecimal totalSum = OrderUtil.calculateTotalSum(order.getOrderItems());
+        BigDecimal totalSum = calculateTotalSum(order.getOrderItems());
         order.setTotalValue(totalSum);
         orderRepository.save(order);
         return totalSum;
+    }
+
+    private BigDecimal calculateTotalSum(Collection<OrderLine> orderLines) {
+        return orderLines.stream().
+                reduce(
+                        BigDecimal.ZERO,
+                        (sum, oi) -> sum.add(oi.getProductPrice().multiply(new BigDecimal(oi.getProductQuantity()))),
+                        BigDecimal::add
+                );
     }
 
     public OrderLine get(Long id) {

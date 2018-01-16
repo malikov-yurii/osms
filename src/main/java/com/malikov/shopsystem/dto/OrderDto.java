@@ -14,58 +14,22 @@ import java.time.LocalDateTime;
 public class OrderDto  implements Serializable, HasId {
 
     private Long id;
-
     private Long customerId;
-
     private String customerLastName;
-
     private String customerFirstName;
-
     private String customerPhoneNumber;
-
     private String destinationCity;
-
     private String destinationPostOffice;
-
     private String customerNote;
-
     private PaymentType paymentType;
-
     private BigDecimal totalSum;
-
-    @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
-    private LocalDateTime createdDateTime;
-
     private OrderStatus status;
-
     private String note;
 
     private OrderLineDto[] orderItems;
 
-    public OrderDto(
-            Long id, Long customerId, String customerFirstName, String customerLastName, String customerPhoneNumber,
-            String destinationCity, String destinationPostOffice, String customerNote, PaymentType paymentType,
-            LocalDateTime createdDateTime, OrderStatus status,
-            String note, BigDecimal totalSum, OrderLineDto[] orderItems) {
-        this.id = id;
-        this.customerId = customerId == null ? 0 : customerId;
-        this.customerFirstName = customerFirstName != null ? customerFirstName : "";
-        this.customerLastName = customerLastName != null ? customerLastName : "";
-        this.customerPhoneNumber = customerPhoneNumber != null ? customerPhoneNumber : "";
-        this.destinationCity = destinationCity != null ? destinationCity : "";
-        this.destinationPostOffice = destinationPostOffice != null ? destinationPostOffice : "";
-        this.customerNote = customerNote != null ? customerNote : "";
-        this.paymentType = paymentType;
-        this.createdDateTime = createdDateTime;
-        this.status = status;
-        this.note = note;
-        this.totalSum = totalSum.setScale(0, RoundingMode.HALF_UP);
-
-        this.orderItems = orderItems;
-    }
-
-    public OrderDto() {
-    }
+    @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
+    private LocalDateTime createdDateTime;
 
     public boolean isNew() {
         return id == null;
@@ -186,21 +150,4 @@ public class OrderDto  implements Serializable, HasId {
         this.customerId = customerId;
     }
 
-    @Override
-    public String toString() {
-        return "OrderDto{" +
-                "id=" + id +
-                ", customerId=" + customerId +
-                ", customerLastName='" + customerLastName + '\'' +
-                ", customerFirstName='" + customerFirstName + '\'' +
-                ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
-                ", destinationCity='" + destinationCity + '\'' +
-                ", destinationPostOffice='" + destinationPostOffice + '\'' +
-                ", customerNote='" + customerNote + '\'' +
-                ", paymentType=" + paymentType +
-                ", totalSum=" + totalSum +
-                ", status=" + status +
-                ", note='" + note + '\'' +
-                '}';
-    }
 }

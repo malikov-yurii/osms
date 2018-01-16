@@ -9,41 +9,12 @@ import java.math.RoundingMode;
 public class OrderLineDto implements Serializable, HasId {
 
     private Long id;
-
     private Long productId;
-
     private Long productVariationId;
-
     private String name;
-
     private Integer quantity;
-
     private BigDecimal price;
-
     private String supplier;
-
-    //@JsonCreator
-    public OrderLineDto(
-            Long orderItemId,
-            Long productId,
-            Long productVariationId,
-            String name,
-            Integer quantity,
-            BigDecimal price,
-            String  supplier
-    ) {
-
-        this.id = orderItemId;
-        this.productId = productId;
-        this.productVariationId = productVariationId;
-        this.name = name;
-        this.quantity = quantity;
-        this.price = price.setScale(0, RoundingMode.HALF_UP);
-        this.supplier = supplier;
-    }
-
-    public OrderLineDto() {
-    }
 
     public String getName() {
         return name;

@@ -6,11 +6,11 @@ import com.malikov.shopsystem.dto.OrderFilterDto;
 import com.malikov.shopsystem.dto.OrderUpdateDto;
 import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.enumtype.PaymentType;
+import com.malikov.shopsystem.mapper.OrderMapper;
 import com.malikov.shopsystem.model.Customer;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderLine;
 import com.malikov.shopsystem.repository.*;
-import com.malikov.shopsystem.util.OrderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import static com.malikov.shopsystem.repository.specification.OrderSpecification.*;
-import static com.malikov.shopsystem.util.OrderUtil.calcStatusSortOrder;
 import static java.util.Collections.singleton;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -43,21 +42,18 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private CustomerRepository customerRepository;
-
     @Autowired
     private ProductRepository productRepository;
-
     @Autowired
     private ProductVariationRepository productVariationRepository;
-
     @Autowired
     private UpdateStockService updateStockService;
+    @Autowired
+    private OrderMapper orderMapper;
 
     @SuppressWarnings("unchecked assignments")
     public Page<OrderDto> getFilteredPage(GenericFilter<OrderFilterDto, OrderDto> filter) {
@@ -97,7 +93,7 @@ public class OrderService {
     private PageImpl<OrderDto> convertToOrderDtoPage(Page<Order> page) {
         return new PageImpl<>(
                 page.getContent().stream()
-                        .map(OrderUtil::asTo)
+                        .map(orderMapper::toDto)
                         .collect(Collectors.toList()),
                 null,
                 page.getTotalElements());
@@ -123,8 +119,20 @@ public class OrderService {
         OrderLine orderLine = new OrderLine();
         orderLine.setOrder(order);
         order.setOrderItems(new ArrayList<>(singleton(orderLine)));
+
         order.setStatusSortOrder(calcStatusSortOrder(OrderStatus.NEW));
         return orderRepository.save(order);
+    }
+
+    private Integer calcStatusSortOrder(OrderStatus status) {
+        switch (status) {
+            case OK:  return 5;
+            case SHP: return 1;
+            case WFP: return 2;
+            case NEW: return 1;
+            case NOT: return 4;
+            default:  return 0;
+        }
     }
 
     @Transactional

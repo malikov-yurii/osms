@@ -4,11 +4,11 @@ import com.malikov.shopsystem.dto.GenericFilter;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
 import com.malikov.shopsystem.dto.OrderUpdateDto;
-import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.enumtype.PaymentType;
+import com.malikov.shopsystem.mapper.OrderMapper;
+import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.service.OrderService;
-import com.malikov.shopsystem.util.OrderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,8 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private OrderMapper orderMapper;
 
     @PutMapping(value = "/filter",
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -39,7 +41,7 @@ public class OrderController {
     }
     @GetMapping(value = "/{id}")
     public OrderDto get(@PathVariable("id") Long orderId) {
-        return OrderUtil.asTo(orderService.get(orderId));
+        return orderMapper.toDto(orderService.get(orderId));
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
