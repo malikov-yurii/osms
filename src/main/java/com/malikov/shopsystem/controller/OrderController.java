@@ -72,7 +72,7 @@ public class OrderController {
     @PostMapping
     public ModelMap createEmpty() {
         ModelMap model = new ModelMap();
-        Order order = orderService.createEmpty();
+        Order order = orderService.create();
         model.put("orderId", order.getId());
         model.put("orderItemId", order.getOrderLines().get(0).getId());
         return model;
