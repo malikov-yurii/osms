@@ -2,7 +2,9 @@ package com.malikov.shopsystem.util;
 
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
@@ -17,6 +19,7 @@ public class DateTimeUtil {
     public static final LocalDateTime MAX = LocalDateTime.of(2030, 1, 1, 1, 1);
 
     private DateTimeUtil() {
+        // util class
     }
 
     public static LocalDateTime parseToLocalDateTime(String str) {
@@ -37,5 +40,21 @@ public class DateTimeUtil {
 
     public static String toString(LocalDateTime localDateTime) {
         return localDateTime == null ? "" : localDateTime.format(DATE_TIME_FORMATTER);
+    }
+
+    public static LocalDate parseLocalDate(String str) {
+        return StringUtils.isEmpty(str) ? null : LocalDate.parse(str);
+    }
+
+    public static LocalTime parseLocalTime(String str) {
+        return StringUtils.isEmpty(str) ? null : LocalTime.parse(str);
+    }
+
+    public static LocalDateTime parseLocalDateTime(String str) {
+        return parseLocalDateTime(str, DATE_TIME_FORMATTER);
+    }
+
+    public static LocalDateTime parseLocalDateTime(String str, DateTimeFormatter formatter) {
+        return StringUtils.isEmpty(str) ? LocalDateTime.now() : LocalDateTime.parse(str, formatter);
     }
 }

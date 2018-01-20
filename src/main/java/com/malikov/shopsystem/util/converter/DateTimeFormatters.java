@@ -1,6 +1,6 @@
 package com.malikov.shopsystem.util.converter;
 
-import com.malikov.shopsystem.util.TimeUtil;
+import com.malikov.shopsystem.util.DateTimeUtil;
 import org.springframework.format.Formatter;
 
 import java.text.ParseException;
@@ -15,7 +15,7 @@ public class DateTimeFormatters {
 
         @Override
         public LocalDate parse(String text, Locale locale) throws ParseException {
-            return TimeUtil.parseLocalDate(text);
+            return DateTimeUtil.parseLocalDate(text);
         }
 
         @Override
@@ -28,7 +28,7 @@ public class DateTimeFormatters {
 
         @Override
         public LocalTime parse(String text, Locale locale) throws ParseException {
-            return TimeUtil.parseLocalTime(text);
+            return DateTimeUtil.parseLocalTime(text);
         }
 
         @Override
