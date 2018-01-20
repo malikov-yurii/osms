@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.dto.ProductAggregatorDto;
+import com.malikov.shopsystem.mapper.ProductAggregatorMapper;
 import com.malikov.shopsystem.model.ProductAggregator;
 import com.malikov.shopsystem.repository.ProductAggregatorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +22,24 @@ public class ProductAggregatorService {
 
     @Autowired
     private ProductAggregatorRepository productAggregatorRepository;
+    @Autowired
+    private ProductAggregatorMapper productAggregatorMapper;
 
     public List<ProductAggregatorDto> findAll() {
+
         return stream(productAggregatorRepository.findAll())
-                .map(ProductAggregatorDto::new)
+                .map(productAggregatorMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public void update(ProductAggregatorDto productAggregatorDto) {
-        ProductAggregator productAggregator;
-        checkNotFoundById(productAggregator = productAggregatorRepository.findOne(productAggregatorDto.getId()),
-                productAggregatorDto.getId());
-        productAggregator.setQuantity(productAggregatorDto.getQuantity());
+    public void update(ProductAggregatorDto dto) {
+
+        ProductAggregator productAggregator =
+                checkNotFoundById(productAggregatorRepository.findOne(dto.getId()), dto.getId());
+
+        productAggregator.setQuantity(dto.getQuantity());
+
         productAggregatorRepository.save(productAggregator);
     }
 
