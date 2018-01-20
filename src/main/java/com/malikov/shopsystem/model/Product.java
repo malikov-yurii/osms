@@ -123,7 +123,7 @@ public class Product {
         this.hasVariations = hasVariations;
     }
 
-    public Boolean getUnlimited() {
+    public Boolean isUnlimited() {
         return unlimited;
     }
 

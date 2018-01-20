@@ -97,14 +97,6 @@ public class ProductDto implements Serializable {
         return variationId == null;
     }
 
-    public Boolean getUnlimited() {
-        return unlimited;
-    }
-
-    public void setUnlimited(Boolean unlimited) {
-        this.unlimited = unlimited;
-    }
-
     public String getSupplier() {
         return supplier;
     }
@@ -137,11 +129,19 @@ public class ProductDto implements Serializable {
         isAggregated = aggregated;
     }
 
-    public String getImageFileName() {
+    public String getImage() {
         return image;
     }
 
-    public void setImageFileName(String image) {
+    public void setImage(String image) {
         this.image = image;
+    }
+
+    public Boolean isUnlimited() {
+        return unlimited;
+    }
+
+    public void setUnlimited(Boolean unlimited) {
+        this.unlimited = unlimited;
     }
 }

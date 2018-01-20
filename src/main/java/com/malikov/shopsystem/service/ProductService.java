@@ -1,9 +1,9 @@
 package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.dto.ProductDto;
+import com.malikov.shopsystem.mapper.ProductMapper;
 import com.malikov.shopsystem.model.Product;
 import com.malikov.shopsystem.repository.ProductRepository;
-import com.malikov.shopsystem.util.ProductUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.malikov.shopsystem.util.ValidationUtil.checkNotFoundById;
 
@@ -22,20 +23,35 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private ProductMapper mapper;
 
     public Product get(Long id) {
         return checkNotFoundById(productRepository.findOne(id), id);
     }
 
     public Page<ProductDto> getPage(int pageNumber, int pageCapacity) {
-        List<ProductDto> allProductDtos = new ArrayList<>();
+        List<ProductDto> allProducts = new ArrayList<>();
         Page<Product> page = productRepository.findAll(new PageRequest(pageNumber, pageCapacity));
         for (Product product : page.getContent()) {
             if (product.getCategories().size() != 0) {
-                allProductDtos.addAll(ProductUtil.getDtosFrom(product));
+                allProducts.addAll(getDtosFrom(product));
             }
         }
-        return new PageImpl<>(allProductDtos, null, page.getTotalElements());
+        return new PageImpl<>(allProducts, null, page.getTotalElements());
+    }
+
+    private List<ProductDto> getDtosFrom(Product product) {
+        List<ProductDto> products = new ArrayList<>();
+        if (product.getHasVariations()) {
+            products.addAll(product.getVariations()
+                    .stream()
+                    .map(mapper::toDto)
+                    .collect(Collectors.toList()));
+        } else {
+            products.add(mapper.toDto(product));
+        }
+        return products;
     }
 
     @Transactional
