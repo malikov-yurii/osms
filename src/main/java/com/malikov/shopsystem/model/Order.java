@@ -63,10 +63,10 @@ public class Order {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "order")
     @Fetch(FetchMode.SELECT)
     @OrderBy("id ASC")
-    private List<OrderLine> orderItems;
+    private List<OrderLine> orderLines;
 
     @Column(name = "total_sum")
-    private BigDecimal totalValue = BigDecimal.ZERO;
+    private BigDecimal totalSum = BigDecimal.ZERO;
 
     @Column(name = "comment")
     private String comment;
@@ -170,20 +170,20 @@ public class Order {
         this.dateTimeCreated = dateTimeCreated;
     }
 
-    public List<OrderLine> getOrderItems() {
-        return orderItems;
+    public List<OrderLine> getOrderLines() {
+        return orderLines;
     }
 
-    public void setOrderItems(List<OrderLine> orderItems) {
-        this.orderItems = orderItems;
+    public void setOrderLines(List<OrderLine> orderLines) {
+        this.orderLines = orderLines;
     }
 
-    public BigDecimal getTotalValue() {
-        return totalValue;
+    public BigDecimal getTotalSum() {
+        return totalSum;
     }
 
-    public void setTotalValue(BigDecimal totalValue) {
-        this.totalValue = totalValue;
+    public void setTotalSum(BigDecimal totalSum) {
+        this.totalSum = totalSum;
     }
 
     public String getComment() {

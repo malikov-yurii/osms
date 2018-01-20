@@ -74,7 +74,7 @@ public class OrderController {
         ModelMap model = new ModelMap();
         Order order = orderService.createEmpty();
         model.put("orderId", order.getId());
-        model.put("orderItemId", order.getOrderItems().get(0).getId());
+        model.put("orderItemId", order.getOrderLines().get(0).getId());
         return model;
     }
 

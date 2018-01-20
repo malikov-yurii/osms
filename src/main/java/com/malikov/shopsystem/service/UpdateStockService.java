@@ -64,6 +64,11 @@ public class UpdateStockService {
     }
 
     @Transactional
+    public void returnToStock(OrderLine orderLine) {
+        updateStock(orderLine, orderLine.getProductQuantity());
+    }
+
+    @Transactional
     public void updateStockForDeletedOrder(Order order) {
         if (isWithdrawalStatus(order.getStatus())) {
             updateStockForAllOrderItems(order, INCREASE_STOCK);
@@ -71,7 +76,7 @@ public class UpdateStockService {
     }
 
     private void updateStockForAllOrderItems(Order order, DbOperation dbOperation) {
-        for (OrderLine orderLine : order.getOrderItems()) {
+        for (OrderLine orderLine : order.getOrderLines()) {
             if (isNull(orderLine.getProduct())) {
                 continue;
             }
@@ -190,5 +195,9 @@ public class UpdateStockService {
         }
 
         return productAggregator.getQuantity() + wireInMilligrams * orderItemQuantityDelta;
+    }
+
+    public void decreaseStock(OrderLine orderLine, Integer productQuantity) {
+        updateStock(orderLine, (-1) * productQuantity);
     }
 }

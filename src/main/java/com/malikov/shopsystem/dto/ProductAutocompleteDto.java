@@ -6,22 +6,10 @@ import java.math.RoundingMode;
 public class ProductAutocompleteDto {
 
     private String label;
-
     private Long productId;
-
     private Long productVariationId;
-
     private String name;
-
     private BigDecimal price;
-
-    public ProductAutocompleteDto(String label, Long productId, Long productVariationId, String name, BigDecimal price) {
-        this.label = label;
-        this.productId = productId;
-        this.productVariationId = productVariationId;
-        this.name = name;
-        this.price = price.setScale(0, RoundingMode.HALF_UP);
-    }
 
     public String getLabel() {
         return label;
@@ -47,19 +35,19 @@ public class ProductAutocompleteDto {
         this.productVariationId = productVariationId;
     }
 
-    public String getOrderItemName() {
+    public String getName() {
         return name;
     }
 
-    public void setOrderItemName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public BigDecimal getOrderItemPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setOrderItemPrice(BigDecimal price) {
+    public void setPrice(BigDecimal price) {
         this.price = price.setScale(0, RoundingMode.HALF_UP);
     }
 }

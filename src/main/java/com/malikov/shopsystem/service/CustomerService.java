@@ -22,28 +22,31 @@ import static com.malikov.shopsystem.util.ValidationUtil.*;
 @Service
 public class CustomerService {
 
+    private static final String CUSTOMER_MUST_BE_NEW = "Customer must be new.";
+    private static final String CUSTOMER_MUST_NOT_BE_NEW = "Customer must not be new";
+
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
-    private CustomerMapper customerMapper;
+    private CustomerMapper mapper;
 
     @Transactional
     public Customer create(CustomerDto customerDto) {
-        checkIsNew(customerDto, "customer must be new");
-        return customerRepository.save(customerMapper.toEntity(customerDto));
+        checkIsNew(customerDto, CUSTOMER_MUST_BE_NEW);
+        return customerRepository.save(mapper.toEntity(customerDto));
     }
 
     @Transactional
     public void update(CustomerDto customerDto) {
-        checkIsNotNew(customerDto, "customer must not be new");
+        checkIsNotNew(customerDto, CUSTOMER_MUST_NOT_BE_NEW);
         Customer customer = customerRepository.findOne(customerDto.getCustomerId());
-        customerRepository.save(customerMapper.updateCustomer(customerDto, customer));
+        customerRepository.save(mapper.updateCustomer(customerDto, customer));
     }
 
     public CustomerDto get(Long id) {
-        return customerMapper.toDto(checkNotFoundById(customerRepository.findOne(id), id));
+        return mapper.toDto(checkNotFoundById(customerRepository.findOne(id), id));
     }
 
     @Transactional
@@ -52,30 +55,33 @@ public class CustomerService {
     }
 
     public List<CustomerAutocompleteDto> getByLastNameMask(String lastNameMask) {
-        return customerMapper.toCustomerAutocompleteDto(
-                customerRepository.getByLastNameLike("%" + lastNameMask + "%"));
+        return mapper.toCustomerAutocompleteDto(customerRepository.getByLastNameLike(mask(lastNameMask)));
+    }
+
+    private String mask(String lastNameMask) {
+        return "%" + lastNameMask + "%";
     }
 
     public List<CustomerAutocompleteDto> getByPhoneNumberMask(String phoneNumberMask) {
-        return customerMapper.toCustomerAutocompleteDto(
-                customerRepository.getByPhoneNumberLike("%" + phoneNumberMask + "%"));
+        return mapper.toCustomerAutocompleteDto(customerRepository.getByPhoneNumberLike(mask(phoneNumberMask)));
     }
 
     public List<CustomerAutocompleteDto> getByCityMask(String cityMask) {
-        return customerMapper.toCustomerAutocompleteDto(customerRepository.getByCityLike("%" + cityMask + "%"));
+        return mapper.toCustomerAutocompleteDto(customerRepository.getByCityLike(mask(cityMask)));
     }
 
     @Transactional
-    public Long persistCustomerFromOrder(Long orderId) {
+    public Long createCustomer(Long orderId) {
+
         Order order = orderRepository.findOne(orderId);
 
         if (order.getCustomer() != null) {
-            checkIsNew(order.getCustomer(), "Customer is not new");
+            checkIsNew(order.getCustomer(), CUSTOMER_MUST_BE_NEW);
         }
 
-        Customer customer = customerRepository.save(customerMapper.toCustomer(order));
-
+        Customer customer = customerRepository.save(mapper.toCustomer(order));
         order.setCustomerId(customer.getId());
+
         orderRepository.save(order);
 
         return customer.getId();
@@ -83,12 +89,11 @@ public class CustomerService {
 
     public Page<CustomerDto> getPage(int pageNumber, int pageCapacity) {
         Page<Customer> page = customerRepository.findAll(new PageRequest(pageNumber, pageCapacity));
-        return new PageImpl<>(
-                page.getContent().stream()
-                        .map(customerMapper::toDto)
-                        .collect(Collectors.toList()),
-                null,
-                page.getTotalElements());
+        return new PageImpl<>(toCustomerDtos(page), null, page.getTotalElements());
+    }
+
+    private List<CustomerDto> toCustomerDtos(Page<Customer> page) {
+        return page.getContent().stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
 }

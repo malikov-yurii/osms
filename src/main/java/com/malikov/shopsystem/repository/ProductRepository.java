@@ -16,7 +16,8 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, L
     @Query("SELECT p FROM Product p WHERE p.quantity < :quantity")
     Collection<Product> getAllQuantityLessThan(@Param("quantity") int quantity);
 
-    @Query(value = "SELECT * FROM jos_jshopping_products WHERE replace(`name_ru-RU`, ',', '') LIKE ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM jos_jshopping_products " +
+            "WHERE replace(`name_ru-RU`, ',', '') LIKE ?1", nativeQuery = true)
     List<Product> getByNameLike(String productNameMask);
 
 }

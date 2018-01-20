@@ -2,13 +2,11 @@ package com.malikov.shopsystem.controller;
 
 import com.malikov.shopsystem.dto.OrderLineDto;
 import com.malikov.shopsystem.dto.ProductAutocompleteDto;
-import com.malikov.shopsystem.service.OrderItemService;
+import com.malikov.shopsystem.service.OrderLineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -19,28 +17,28 @@ import java.util.List;
 public class OrderItemController {
 
     @Autowired
-    private OrderItemService orderItemService;
+    private OrderLineService orderLineService;
 
     @GetMapping(value = "/autocomplete-by-product-name/{productNameMask}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ProductAutocompleteDto> autocompleteOrderItemName(
             @PathVariable("productNameMask") String productNameMask) {
-        return orderItemService.getByProductMask(productNameMask);
+        return orderLineService.getByProductMask(productNameMask);
     }
 
-    @PostMapping(value = "/create-empty-for/{orderId}")
-    public Long createNewEmptyOrderItem(@PathVariable("orderId") Long orderId) {
-        return orderItemService.createNewEmpty(orderId).getId();
+    @PostMapping(value = "/create-empty-for/{orderLineId}")
+    public Long create(@PathVariable("orderLineId") Long orderLineId) {
+        return orderLineService.create(orderLineId).getId();
     }
 
-    @PutMapping(value = "/{itemId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public BigDecimal updateOrderItem(@PathVariable("itemId") Long itemId,
-                                @RequestBody OrderLineDto orderLineDto) {
-        orderLineDto.setOrderItemId(itemId);
-        return orderItemService.updateAndReturnTotalSum(orderLineDto).setScale(0, RoundingMode.HALF_UP);
+    @PutMapping(value = "/{orderLineId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void update(@PathVariable("orderLineId") Long orderLineId,
+                       @RequestBody OrderLineDto orderLineDto) {
+        orderLineDto.setOrderItemId(orderLineId);
+        orderLineService.update(orderLineDto);
     }
 
-    @DeleteMapping(value = "/{orderItemId}")
-    public BigDecimal deleteOrderItem(@PathVariable("orderItemId") Long orderItemId) {
-        return orderItemService.delete(orderItemId).setScale(0, RoundingMode.HALF_UP);
+    @DeleteMapping(value = "/{orderLineId}")
+    public void delete(@PathVariable("orderLineId") Long orderLineId) {
+        orderLineService.delete(orderLineId);
     }
 }

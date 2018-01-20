@@ -118,7 +118,7 @@ public class OrderService {
         order.setStatus(OrderStatus.NEW);
         OrderLine orderLine = new OrderLine();
         orderLine.setOrder(order);
-        order.setOrderItems(new ArrayList<>(singleton(orderLine)));
+        order.setOrderLines(new ArrayList<>(singleton(orderLine)));
 
         order.setStatusSortOrder(calcStatusSortOrder(OrderStatus.NEW));
         return orderRepository.save(order);
@@ -233,7 +233,7 @@ public class OrderService {
 
     private void setTotalSum(Order order, BigDecimal totalSum) {
         if (nonNull(totalSum)) {
-            order.setTotalValue(totalSum);
+            order.setTotalSum(totalSum);
         }
     }
 

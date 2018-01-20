@@ -61,14 +61,14 @@ public class PrintOrderReportService {
         parameters.put(DESTINATION, ofNullable(order.getDestinationPostOffice())
                                         .map(postOffice -> order.getDestinationCity() + ", " + postOffice)
                                         .orElse(order.getDestinationCity()));
-        parameters.put(TOTAL_ORDER_AMOUNT, order.getTotalValue());
+        parameters.put(TOTAL_ORDER_AMOUNT, order.getTotalSum());
         parameters.put(PAYMENT_TYPE, order.getPaymentType().toString());
 
         return parameters;
     }
 
     private List<OrderLineReportDto> prepareOrderLines(Order order) {
-        List<OrderLine> listOrderLines = nonNull(order.getOrderItems()) ? order.getOrderItems() : emptyList();
+        List<OrderLine> listOrderLines = nonNull(order.getOrderLines()) ? order.getOrderLines() : emptyList();
         List<OrderLineReportDto> result = new ArrayList<>();
         for (int i = 0; i < listOrderLines.size(); i++) {
             result.add(toOrderLineReportDto(i, listOrderLines.get(i)));

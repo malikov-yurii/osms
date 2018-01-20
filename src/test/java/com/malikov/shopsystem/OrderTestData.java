@@ -65,7 +65,7 @@ public class OrderTestData {
                             && Objects.equals(expected.getStatus(), actual.getStatus())
                             && Objects.equals(expected.getComment(), actual.getComment())
                             && Objects.equals(expected.getDateTimeCreated(), actual.getDateTimeCreated())
-                            && Objects.equals(expected.getOrderItems(), actual.getOrderItems())
+                            && Objects.equals(expected.getOrderLines(), actual.getOrderLines())
                     )
     );
 }
