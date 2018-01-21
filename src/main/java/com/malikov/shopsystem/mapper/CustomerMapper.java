@@ -62,9 +62,9 @@ public interface CustomerMapper {
     @Mapping(source = "phoneNumber", target = "customerPhoneNumber")
     @Mapping(source = "city", target = "destinationCity")
     @Mapping(source = "postOffice", target = "destinationPostOffice")
-    CustomerAutocompleteDto toCustomerAutocompleteDto(Customer customer);
+    CustomerAutocompleteDto toAutocompleteDto(Customer customer);
 
-    List<CustomerAutocompleteDto> toCustomerAutocompleteDto(List<Customer> customer);
+    List<CustomerAutocompleteDto> toAutocompleteDto(List<Customer> customer);
 
     @AfterMapping
     default void afterToCustomerAutocompleteDto(Customer source, @MappingTarget CustomerAutocompleteDto target)  {

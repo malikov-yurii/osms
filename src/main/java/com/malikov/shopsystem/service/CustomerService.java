@@ -55,19 +55,19 @@ public class CustomerService {
     }
 
     public List<CustomerAutocompleteDto> getByLastNameMask(String lastNameMask) {
-        return mapper.toCustomerAutocompleteDto(customerRepository.getByLastNameLike(mask(lastNameMask)));
+        return mapper.toAutocompleteDto(customerRepository.getByLastNameLike(atAnyPosition(lastNameMask)));
     }
 
-    private String mask(String lastNameMask) {
+    private String atAnyPosition(String lastNameMask) {
         return "%" + lastNameMask + "%";
     }
 
     public List<CustomerAutocompleteDto> getByPhoneNumberMask(String phoneNumberMask) {
-        return mapper.toCustomerAutocompleteDto(customerRepository.getByPhoneNumberLike(mask(phoneNumberMask)));
+        return mapper.toAutocompleteDto(customerRepository.getByPhoneNumberLike(atAnyPosition(phoneNumberMask)));
     }
 
     public List<CustomerAutocompleteDto> getByCityMask(String cityMask) {
-        return mapper.toCustomerAutocompleteDto(customerRepository.getByCityLike(mask(cityMask)));
+        return mapper.toAutocompleteDto(customerRepository.getByCityLike(atAnyPosition(cityMask)));
     }
 
     @Transactional

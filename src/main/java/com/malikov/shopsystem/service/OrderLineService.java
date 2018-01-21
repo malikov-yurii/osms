@@ -56,7 +56,7 @@ public class OrderLineService {
                 .collect(toList());
     }
 
-    public Collection<ProductAutocompleteDto> toAutocompleteDto(Product product) {
+    private Collection<ProductAutocompleteDto> toAutocompleteDto(Product product) {
 
         return product.getHasVariations()
                 ? productMapper.toAutocompleteDto(product.getVariations())
