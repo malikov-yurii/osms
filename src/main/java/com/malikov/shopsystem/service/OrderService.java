@@ -17,7 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -66,29 +65,6 @@ public class OrderService {
                 .and(orderOfCustomer(filter))
                 .and(createdBetween(filter.getFromDateTimeCreated(), filter.getToDateTimeCreated()))
                 .and(containsProduct(filter));
-    }
-
-    private Specification<Order> containsProduct(OrderFilterDto filter) {
-
-        if (nonNull(filter.getProductVariationId())) {
-            return orderContainsProductVariation(productVariationRepository.findOne(filter.getProductVariationId()));
-        } else if (nonNull(filter.getProductId())) {
-            return orderContainsProduct(productRepository.findOne(filter.getProductId()));
-        } else if (nonNull(filter.getProductNameMask())) {
-            return productNameLike(filter.getProductNameMask());
-        }
-        return null;
-    }
-
-    private Specifications orderOfCustomer(OrderFilterDto filter) {
-
-        return nonNull(filter.getCustomerId())
-                ? Specifications.where(customerIdEquals(filter.getCustomerId()))
-                : emptySpecification()
-                    .and(customerFirstNameLike(filter.getCustomerFirstNameMask()))
-                    .and(customerLastNameLike(filter.getCustomerLastNameMask()))
-                    .and(customerDestinationCityLike(filter.getDestinationCityMask()))
-                    .and(customerPhoneLike(filter.getCustomerPhoneMask()));
     }
 
     private PageImpl<OrderDto> toOrderDtoPage(Page<Order> page) {
