@@ -1,16 +1,39 @@
 package com.malikov.shopsystem.service;
 
+import com.malikov.shopsystem.AuthorizedUser;
 import com.malikov.shopsystem.model.User;
+import com.malikov.shopsystem.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Created by Yurii_Malikov on 6/21/2017.
- */
-public interface UserService extends UserDetailsService {
+@Service("userService")
+public class UserService implements UserDetailsService {
 
-    User getByLogin(String login);
+    @Autowired
+    private UserRepository userRepository;
 
-    List<User> getPage(int pageNumber, int pageCapacity);
+    @Override
+    public AuthorizedUser loadUserByUsername(String login) throws UsernameNotFoundException {
+        return new AuthorizedUser(getByLogin(login));
+    }
+
+    public User getByLogin(String login) {
+
+        User user = userRepository.getByLogin(login.toLowerCase());
+        if (user == null) {
+            throw new UsernameNotFoundException("User with login=" + login + " was not found");
+        }
+
+        return user;
+    }
+
+    public List<User> getPage(int pageNumber, int pageCapacity) {
+        return userRepository.findAll(new PageRequest(pageNumber, pageCapacity)).getContent();
+    }
+
 }
