@@ -2,21 +2,19 @@ package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.dto.ProductDto;
 import com.malikov.shopsystem.mapper.ProductMapper;
+import com.malikov.shopsystem.mapper.ProductUpdateByNotNullFieldsMapper;
 import com.malikov.shopsystem.model.Product;
+import com.malikov.shopsystem.model.ProductVariation;
 import com.malikov.shopsystem.repository.ProductRepository;
+import com.malikov.shopsystem.repository.ProductVariationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 import static com.malikov.shopsystem.util.ValidationUtil.checkNotFoundById;
+import static java.util.Objects.nonNull;
 
 @Service
 public class ProductService {
@@ -24,34 +22,18 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
-    private ProductMapper mapper;
+    private ProductVariationRepository productVariationRepository;
+    @Autowired
+    private ProductUpdateByNotNullFieldsMapper productUpdateByNotNullFieldsMapper;
+    @Autowired
+    private ProductMapper productMapper;
 
     public Product get(Long id) {
         return checkNotFoundById(productRepository.findOne(id), id);
     }
 
     public Page<ProductDto> getPage(int pageNumber, int pageCapacity) {
-        List<ProductDto> allProducts = new ArrayList<>();
-        Page<Product> page = productRepository.findAll(new PageRequest(pageNumber, pageCapacity));
-        for (Product product : page.getContent()) {
-            if (product.getCategories().size() != 0) {
-                allProducts.addAll(getDtosFrom(product));
-            }
-        }
-        return new PageImpl<>(allProducts, null, page.getTotalElements());
-    }
-
-    private List<ProductDto> getDtosFrom(Product product) {
-        List<ProductDto> products = new ArrayList<>();
-        if (product.getHasVariations()) {
-            products.addAll(product.getVariations()
-                    .stream()
-                    .map(mapper::toDto)
-                    .collect(Collectors.toList()));
-        } else {
-            products.add(mapper.toDto(product));
-        }
-        return products;
+        return productMapper.toDtoPage(productRepository.findAll(new PageRequest(pageNumber, pageCapacity)));
     }
 
     @Transactional
@@ -60,31 +42,38 @@ public class ProductService {
     }
 
     @Transactional
-    public void update(ProductDto productDto) {
-        Product product;
-        checkNotFoundById(product = productRepository.findOne(productDto.getProductId()), productDto.getProductId());
+    public void update(ProductDto dto) {
 
-        if (productDto.getProductVariationId() != null) {
-            product.getVariations().stream()
-                    .filter(productVariation -> Objects.equals(productVariation.getId(), productDto.getProductVariationId()))
-                    .findFirst()
-                    .ifPresent(productVariation -> {
-                        if (productDto.getPrice() != null) {
-                            productVariation.setPrice(productDto.getPrice());
-                        }
-                        if (productDto.getQuantity() != null) {
-                            productVariation.setQuantity(productDto.getQuantity());
-                        }
-                    });
-        } else {
-            if (productDto.getPrice() != null) {
-                product.setPrice(productDto.getPrice());
-            }
-            if (productDto.getQuantity() != null) {
-                product.setQuantity(productDto.getQuantity());
-            }
+        if (requiredDataToUpdateProductIsPresent(dto)) {
+            updateProductOrProductVariation(dto);
         }
-        productRepository.save(product);
+    }
+
+    private void updateProductOrProductVariation(ProductDto dto) {
+
+        if (nonNull(dto.getProductVariationId())) {
+            updateProductVariation(dto);
+        } else {
+            updateProduct(dto);
+        }
+    }
+
+    private void updateProduct(ProductDto dto) {
+
+        Product product = productRepository.findOne(dto.getProductId());
+        productUpdateByNotNullFieldsMapper.update(dto, product);
+    }
+
+    private void updateProductVariation(ProductDto dto) {
+
+        ProductVariation productVariation = productVariationRepository.findOne(dto.getVariationId());
+        productUpdateByNotNullFieldsMapper.update(dto, productVariation);
+    }
+
+    private boolean requiredDataToUpdateProductIsPresent(ProductDto dto) {
+
+        return (nonNull(dto.getPrice()) || nonNull(dto.getQuantity()))
+                && (nonNull(dto.getId()) || nonNull(dto.getProductVariationId()));
     }
 
 }

@@ -18,33 +18,6 @@ public class ProductDto implements Serializable {
     private Long id;
     private Long variationId;
 
-    public ProductDto(
-            Long id,
-            Long variationId,
-            String name,
-            Set<String> categories,
-            BigDecimal price,
-            Integer quantity,
-            Boolean unlimited,
-            String supplier,
-            Boolean isAggregated,
-            String image
-    ) {
-        this.id = id;
-        this.variationId = variationId;
-        this.name = name;
-        this.categories = categories;
-        this.price = price.setScale(0, RoundingMode.HALF_UP);
-        this.quantity = quantity;
-        this.unlimited = unlimited;
-        this.supplier = supplier;
-        this.isAggregated = isAggregated;
-        this.image = image;
-    }
-
-    public ProductDto() {
-    }
-
     public Long getProductVariationId() {
         return variationId;
     }
@@ -144,4 +117,5 @@ public class ProductDto implements Serializable {
     public void setUnlimited(Boolean unlimited) {
         this.unlimited = unlimited;
     }
+
 }
