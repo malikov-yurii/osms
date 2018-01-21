@@ -42,62 +42,46 @@ public class RefreshEuroExchangeRateScheduledTask {
     @Transactional
     @Scheduled(fixedDelay = TWENTY_MINUTES, initialDelay = THREE_HOURS)
     public void refreshEuroExchangeRate() {
-        BigDecimal minFinEuroExchangeRate = getMinFinEuroExchangeRate();
+
         Optional.ofNullable(currencyRepository.findOne(BigInteger.valueOf(EURO_ID)))
-                .ifPresent(euro -> euro.setCurrencyRate(exchangeRate(minFinEuroExchangeRate)));
+                .ifPresent(euro -> euro.setCurrencyRate(calcExchangeRate(requestEuroExchangeRate())));
     }
 
-    private BigDecimal exchangeRate(BigDecimal minFinEuroExchangeRate) {
-        return BigDecimal.ONE.divide(minFinEuroExchangeRate, SCALE, RoundingMode.HALF_UP);
-    }
-
-    public BigDecimal getMinFinEuroExchangeRate() {
+    private BigDecimal requestEuroExchangeRate() {
         try {
+
             return restTemplate.exchange(URI.create(AUCTION_EXCHANGE_RATE_URL), GET, new HttpEntity<>(headers()),
-                    new ParameterizedTypeReference<MinFinResponseDto>() {
-                    }).getBody().eur.bid;
+                    new ParameterizedTypeReference<MinFinResponseDto>() {}).getBody().eur.bid;
+
         } catch (RestClientException ex) {
-            throwServerNotAvailableException(ex);
-            return null;
+            throw new RestClientException("currency server is not available", ex);
         } catch (Exception ex) {
             throw new RuntimeException("refreshing currency rate failed");
         }
     }
 
     private HttpHeaders headers() {
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+
         return headers;
     }
 
-    private void throwServerNotAvailableException(RestClientException ex) {
-        throw new RestClientException("min fin server is not available", ex);
+    private BigDecimal calcExchangeRate(BigDecimal minFinEuroExchangeRate) {
+        return BigDecimal.ONE.divide(minFinEuroExchangeRate, SCALE, RoundingMode.HALF_UP);
     }
 
-    public static class MinFinResponseDto {
+    private class MinFinResponseDto {
 
         CurrencyExchangeInfo eur;
 
-        public CurrencyExchangeInfo getEur() {
-            return eur;
-        }
-
-        public void setEur(CurrencyExchangeInfo eur) {
-            this.eur = eur;
-        }
-
-        public static class CurrencyExchangeInfo {
+        private class CurrencyExchangeInfo {
 
             BigDecimal bid;
 
-            public BigDecimal getBid() {
-                return bid;
-            }
-
-            public void setBid(BigDecimal bid) {
-                this.bid = bid;
-            }
         }
+
     }
 
 }
