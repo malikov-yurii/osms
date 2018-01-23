@@ -4,22 +4,26 @@ import com.malikov.shopsystem.dto.ProductAggregatorDto;
 import com.malikov.shopsystem.service.ProductAggregatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Yurii Malikov
  */
 @RestController
-@RequestMapping(value = "/product-aggregator")
+@RequestMapping(value = "/product-aggregator", consumes = MediaType.APPLICATION_JSON_VALUE)
 public class ProductAggregatorController {
 
     @Autowired
     private ProductAggregatorService productAggregatorService;
 
-    @PutMapping(value = "/{productAggregatorId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateProduct(@PathVariable("productAggregatorId") Long productAggregatorId,
-                              @RequestBody ProductAggregatorDto productAggregatorDto) {
-        productAggregatorDto.setId(productAggregatorId);
-        productAggregatorService.update(productAggregatorDto);
+    @PutMapping("/{aggregatorId}")
+    public void update(@PathVariable Long aggregatorId, @RequestBody ProductAggregatorDto aggregatorDto) {
+        aggregatorDto.setId(aggregatorId);
+        productAggregatorService.update(aggregatorDto);
     }
+
 }

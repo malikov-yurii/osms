@@ -42,34 +42,34 @@ public class CustomerController {
     }
 
     @PostMapping("/from-order-data/{orderId}")
-    public CustomerDto createCustomerFromOrderData(@PathVariable("orderId") Long orderId) {
+    public CustomerDto createCustomerFromOrderData(@PathVariable Long orderId) {
         return customerService.createCustomerFromOrderData(orderId);
     }
 
     @PutMapping(value = "/{customerId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public CustomerDto update(@PathVariable("customerId") Long customerId, @RequestBody CustomerDto customerDto) {
+    public CustomerDto update(@PathVariable Long customerId, @RequestBody CustomerDto customerDto) {
         customerDto.setCustomerId(customerId);
         return customerService.update(customerDto);
     }
 
     @DeleteMapping("/{customerId}")
-    public void delete(@PathVariable("customerId") Long customerId) {
+    public void delete(@PathVariable Long customerId) {
         customerService.delete(customerId);
     }
 
     @GetMapping("/autocomplete-by-last-name-mask/{lastNameMask}")
-    public List<CustomerAutocompleteDto> autocompleteByLastName(@PathVariable("lastNameMask") String mask) {
-        return customerService.getByLastNameMask(mask);
+    public List<CustomerAutocompleteDto> autocompleteByLastName(@PathVariable String lastNameMask) {
+        return customerService.getByLastNameMask(lastNameMask);
     }
 
     @GetMapping("/autocomplete-by-phone-number-mask/{phoneNumberMask}")
-    public List<CustomerAutocompleteDto> autocompleteByPhoneNumber(@PathVariable("phoneNumberMask") String mask) {
-        return customerService.getByPhoneNumberMask(mask);
+    public List<CustomerAutocompleteDto> autocompleteByPhoneNumber(@PathVariable String phoneNumberMask) {
+        return customerService.getByPhoneNumberMask(phoneNumberMask);
     }
 
     @GetMapping("/autocomplete-by-city-mask/{cityMask}")
-    public List<CustomerAutocompleteDto> autocompleteByCityName(@PathVariable("cityMask") String mask) {
-        return customerService.getByCityNameMask(mask);
+    public List<CustomerAutocompleteDto> autocompleteByCityName(@PathVariable String cityMask) {
+        return customerService.getByCityNameMask(cityMask);
     }
 
 }

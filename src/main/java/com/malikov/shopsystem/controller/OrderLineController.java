@@ -27,24 +27,23 @@ public class OrderLineController {
     private OrderLineService orderLineService;
 
     @GetMapping("/autocomplete-by-product-name-mask/{productNameMask}")
-    public List<ProductAutocompleteDto> autocompleteOrderItemName(
-            @PathVariable("productNameMask") String productNameMask) {
+    public List<ProductAutocompleteDto> autocompleteOrderItemName(@PathVariable String productNameMask) {
         return orderLineService.getByProductMask(productNameMask);
     }
 
     @PostMapping("/create-empty-for-order/{orderId}")
-    public OrderLineDto create(@PathVariable("orderId") Long orderId) {
+    public OrderLineDto create(@PathVariable Long orderId) {
         return orderLineService.create(orderId);
     }
 
     @PutMapping(value = "/{orderLineId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@PathVariable("orderLineId") Long orderLineId, @RequestBody OrderLineDto orderLineDto) {
+    public void update(@PathVariable Long orderLineId, @RequestBody OrderLineDto orderLineDto) {
         orderLineDto.setId(orderLineId);
         orderLineService.update(orderLineDto);
     }
 
     @DeleteMapping("/{orderLineId}")
-    public void delete(@PathVariable("orderLineId") Long orderLineId) {
+    public void delete(@PathVariable Long orderLineId) {
         orderLineService.delete(orderLineId);
     }
 

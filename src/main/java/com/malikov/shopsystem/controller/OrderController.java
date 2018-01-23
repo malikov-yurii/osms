@@ -21,8 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(
-        value = "/order", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/order", produces = MediaType.APPLICATION_JSON_VALUE)
 public class OrderController {
 
     @Autowired
@@ -34,13 +33,12 @@ public class OrderController {
     }
 
     @GetMapping
-    public Page<OrderDto> getPage(@RequestParam("pageNumber") int pageNumber,
-                                  @RequestParam("pageCapacity") int pageCapacity) {
+    public Page<OrderDto> getPage(@RequestParam int pageNumber, @RequestParam int pageCapacity) {
         return orderService.getPage(pageNumber, pageCapacity);
     }
 
-    @GetMapping("/{id}")
-    public OrderDto get(@PathVariable("id") Long orderId) {
+    @GetMapping("/{orderId}")
+    public OrderDto get(@PathVariable Long orderId) {
         return orderService.get(orderId);
     }
 
@@ -54,9 +52,9 @@ public class OrderController {
         return OrderStatus.values();
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id) {
-        orderService.delete(id);
+    @DeleteMapping("/{orderId}")
+    public void delete(@PathVariable Long orderId) {
+        orderService.delete(orderId);
     }
 
     @PostMapping
@@ -65,8 +63,7 @@ public class OrderController {
     }
 
     @PutMapping(value = "/{orderId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateOrder(@PathVariable("orderId") Long orderId,
-                               @RequestBody OrderUpdateDto orderUpdateDto) {
+    public void updateOrder(@PathVariable Long orderId, @RequestBody OrderUpdateDto orderUpdateDto) {
         orderUpdateDto.setId(orderId);
         orderService.update(orderUpdateDto);
     }
