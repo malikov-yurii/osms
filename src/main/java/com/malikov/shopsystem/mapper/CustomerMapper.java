@@ -2,6 +2,7 @@ package com.malikov.shopsystem.mapper;
 
 import com.malikov.shopsystem.dto.CustomerAutocompleteDto;
 import com.malikov.shopsystem.dto.CustomerDto;
+import com.malikov.shopsystem.dto.Page;
 import com.malikov.shopsystem.model.Customer;
 import com.malikov.shopsystem.model.Order;
 import org.mapstruct.AfterMapping;
@@ -47,6 +48,8 @@ public interface CustomerMapper {
     @Mapping(source = "note", target = "customerNote")
     CustomerDto toDto(Customer source);
 
+    List<CustomerDto> toDto(List<Customer> source);
+
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "customerFirstName", target = "name")
@@ -71,6 +74,16 @@ public interface CustomerMapper {
 
         target.setLabel(source.getName() + " " + source.getLastName() + " " +
                 source.getCity() + " " + source.getPhoneNumber());
+    }
+
+    default Page<CustomerDto> toDtoPage(org.springframework.data.domain.Page<Customer> source) {
+
+        Page<CustomerDto> target = new Page<>();
+        target.setContent(toDto(source.getContent()));
+        target.setTotalElements(source.getTotalElements());
+        target.setTotalPages(source.getTotalPages());
+
+        return target;
     }
 
 }

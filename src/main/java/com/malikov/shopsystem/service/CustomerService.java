@@ -2,20 +2,18 @@ package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.dto.CustomerAutocompleteDto;
 import com.malikov.shopsystem.dto.CustomerDto;
+import com.malikov.shopsystem.dto.Page;
 import com.malikov.shopsystem.mapper.CustomerMapper;
 import com.malikov.shopsystem.model.Customer;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.repository.CustomerRepository;
 import com.malikov.shopsystem.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.malikov.shopsystem.util.ValidationUtil.*;
 
@@ -32,6 +30,14 @@ public class CustomerService {
     @Autowired
     private CustomerMapper mapper;
 
+    public CustomerDto get(Long id) {
+        return mapper.toDto(checkNotFoundById(customerRepository.findOne(id), id));
+    }
+
+    public Page<CustomerDto> getPage(int pageNumber, int pageCapacity) {
+        return mapper.toDtoPage(customerRepository.findAll(new PageRequest(pageNumber, pageCapacity)));
+    }
+
     @Transactional
     public Customer create(CustomerDto customerDto) {
         checkIsNew(customerDto, CUSTOMER_MUST_BE_NEW);
@@ -39,14 +45,10 @@ public class CustomerService {
     }
 
     @Transactional
-    public void update(CustomerDto customerDto) {
+    public CustomerDto update(CustomerDto customerDto) {
         checkIsNotNew(customerDto, CUSTOMER_MUST_NOT_BE_NEW);
         Customer customer = customerRepository.findOne(customerDto.getCustomerId());
-        customerRepository.save(mapper.updateCustomer(customerDto, customer));
-    }
-
-    public CustomerDto get(Long id) {
-        return mapper.toDto(checkNotFoundById(customerRepository.findOne(id), id));
+        return mapper.toDto(customerRepository.save(mapper.updateCustomer(customerDto, customer)));
     }
 
     @Transactional
@@ -66,12 +68,12 @@ public class CustomerService {
         return mapper.toAutocompleteDto(customerRepository.getByPhoneNumberLike(atAnyPosition(phoneNumberMask)));
     }
 
-    public List<CustomerAutocompleteDto> getByCityMask(String cityMask) {
+    public List<CustomerAutocompleteDto> getByCityNameMask(String cityMask) {
         return mapper.toAutocompleteDto(customerRepository.getByCityLike(atAnyPosition(cityMask)));
     }
 
     @Transactional
-    public Long createCustomer(Long orderId) {
+    public CustomerDto createCustomerFromOrderData(Long orderId) {
 
         Order order = orderRepository.findOne(orderId);
 
@@ -84,16 +86,7 @@ public class CustomerService {
 
         orderRepository.save(order);
 
-        return customer.getId();
-    }
-
-    public Page<CustomerDto> getPage(int pageNumber, int pageCapacity) {
-        Page<Customer> page = customerRepository.findAll(new PageRequest(pageNumber, pageCapacity));
-        return new PageImpl<>(toCustomerDtos(page), null, page.getTotalElements());
-    }
-
-    private List<CustomerDto> toCustomerDtos(Page<Customer> page) {
-        return page.getContent().stream().map(mapper::toDto).collect(Collectors.toList());
+        return mapper.toDto(customer);
     }
 
 }
