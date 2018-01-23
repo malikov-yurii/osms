@@ -14,8 +14,6 @@ import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderLine;
 import com.malikov.shopsystem.repository.CustomerRepository;
 import com.malikov.shopsystem.repository.OrderRepository;
-import com.malikov.shopsystem.repository.ProductRepository;
-import com.malikov.shopsystem.repository.ProductVariationRepository;
 import com.malikov.shopsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -46,10 +44,6 @@ public class OrderService {
     private UserRepository userRepository;
     @Autowired
     private CustomerRepository customerRepository;
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private ProductVariationRepository productVariationRepository;
     @Autowired
     private UpdateStockService updateStockService;
     @Autowired

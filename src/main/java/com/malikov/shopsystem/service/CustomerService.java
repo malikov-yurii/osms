@@ -23,7 +23,7 @@ import static com.malikov.shopsystem.util.ValidationUtil.checkNotFoundById;
 public class CustomerService {
 
     private static final String CUSTOMER_MUST_BE_NEW = "Customer must be new.";
-    private static final String CUSTOMER_MUST_NOT_BE_NEW = "Customer must not be new";
+    private static final String CUSTOMER_MUST_NOT_BE_NEW = "Customer must not be new.";
 
     @Autowired
     private CustomerRepository customerRepository;
