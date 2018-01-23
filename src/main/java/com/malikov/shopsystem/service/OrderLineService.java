@@ -2,6 +2,7 @@ package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.dto.OrderLineDto;
 import com.malikov.shopsystem.dto.ProductAutocompleteDto;
+import com.malikov.shopsystem.mapper.OrderLineMapper;
 import com.malikov.shopsystem.mapper.ProductMapper;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderLine;
@@ -43,6 +44,8 @@ public class OrderLineService {
     private UpdateStockService updateStockService;
     @Autowired
     private ProductMapper productMapper;
+    @Autowired
+    private OrderLineMapper orderLineMapper;
 
     public OrderLine get(Long id) {
         return orderLineRepository.findOne(id);
@@ -68,12 +71,12 @@ public class OrderLineService {
     }
 
     @Transactional
-    public OrderLine create(Long orderId) {
+    public OrderLineDto create(Long orderId) {
 
         OrderLine orderLine = new OrderLine();
         orderLine.setOrder(orderRepository.findOne(orderId));
 
-        return orderLineRepository.save(orderLine);
+        return orderLineMapper.toDto(orderLineRepository.save(orderLine));
     }
 
     @Transactional

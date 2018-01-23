@@ -44,7 +44,7 @@ public class OrderLineDto implements Serializable, HasId {
         return id;
     }
 
-    public void setOrderItemId(Long orderItemId) {
+    public void setOrderLineId(Long orderItemId) {
         this.id = orderItemId;
     }
 
