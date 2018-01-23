@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.dto.ProductDto;
+import com.malikov.shopsystem.dto.ProductPage;
 import com.malikov.shopsystem.mapper.ProductMapper;
 import com.malikov.shopsystem.mapper.ProductUpdateByNotNullFieldsMapper;
 import com.malikov.shopsystem.model.Product;
@@ -8,7 +9,6 @@ import com.malikov.shopsystem.model.ProductVariation;
 import com.malikov.shopsystem.repository.ProductRepository;
 import com.malikov.shopsystem.repository.ProductVariationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,14 +26,18 @@ public class ProductService {
     @Autowired
     private ProductUpdateByNotNullFieldsMapper productUpdateByNotNullFieldsMapper;
     @Autowired
-    private ProductMapper productMapper;
+    private ProductMapper mapper;
+    @Autowired
+    private ProductAggregatorService productAggregatorService;
 
     public Product get(Long id) {
         return checkNotFoundById(productRepository.findOne(id), id);
     }
 
-    public Page<ProductDto> getPage(int pageNumber, int pageCapacity) {
-        return productMapper.toDtoPage(productRepository.findAll(new PageRequest(pageNumber, pageCapacity)));
+    public ProductPage getPage(int pageNumber, int pageCapacity) {
+        ProductPage productPage = mapper.toPage(productRepository.findAll(new PageRequest(pageNumber, pageCapacity)));
+        productPage.setProductAggregators(productAggregatorService.findAll());
+        return productPage;
     }
 
     @Transactional

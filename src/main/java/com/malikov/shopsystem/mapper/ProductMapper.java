@@ -6,6 +6,7 @@ package com.malikov.shopsystem.mapper;
 
 import com.malikov.shopsystem.dto.ProductAutocompleteDto;
 import com.malikov.shopsystem.dto.ProductDto;
+import com.malikov.shopsystem.dto.ProductPage;
 import com.malikov.shopsystem.model.Product;
 import com.malikov.shopsystem.model.ProductCategory;
 import com.malikov.shopsystem.model.ProductVariation;
@@ -13,8 +14,6 @@ import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -90,8 +89,9 @@ public abstract class ProductMapper {
         target.setPrice(productPrice);
     }
 
-    public Page<ProductDto> toDtoPage(Page<Product> source) {
+    public ProductPage toPage(org.springframework.data.domain.Page<Product> source) {
 
+        ProductPage target = new ProductPage();
         List<ProductDto> allProducts = new ArrayList<>();
 
         for (Product product : source.getContent()) {
@@ -100,7 +100,11 @@ public abstract class ProductMapper {
             }
         }
 
-        return new PageImpl<>(allProducts, null, source.getTotalElements());
+        target.setContent(allProducts);
+        target.setTotalElements(source.getTotalElements());
+        target.setTotalPages(source.getTotalPages());
+
+        return target;
     }
 
     protected List<ProductDto> getDtosFrom(Product product) {

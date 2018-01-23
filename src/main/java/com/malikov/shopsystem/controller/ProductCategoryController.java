@@ -13,13 +13,13 @@ import java.util.List;
  * @author Yurii Malikov
  */
 @RestController
-@RequestMapping(value = "/product-category")
+@RequestMapping(value = "/product-category", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProductCategoryController {
 
     @Autowired
     private ProductCategoryService productCategoryService;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public List<String> getAll() {
         return productCategoryService.getAllNames();
     }
