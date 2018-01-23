@@ -3,8 +3,8 @@ package com.malikov.shopsystem.controller;
 import com.malikov.shopsystem.dto.GenericFilter;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
+import com.malikov.shopsystem.dto.OrderPage;
 import com.malikov.shopsystem.dto.OrderUpdateDto;
-import com.malikov.shopsystem.dto.Page;
 import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.enumtype.PaymentType;
 import com.malikov.shopsystem.service.OrderService;
@@ -28,12 +28,12 @@ public class OrderController {
     private OrderService orderService;
 
     @PutMapping(value = "/filter", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Page<OrderDto> getFilteredPage(@RequestBody GenericFilter<OrderFilterDto, OrderDto> orderFilterDto) {
+    public OrderPage getFilteredPage(@RequestBody GenericFilter<OrderFilterDto, OrderDto> orderFilterDto) {
         return orderService.getPage(orderFilterDto);
     }
 
     @GetMapping
-    public Page<OrderDto> getPage(@RequestParam int pageNumber, @RequestParam int pageCapacity) {
+    public OrderPage getPage(@RequestParam int pageNumber, @RequestParam int pageCapacity) {
         return orderService.getPage(pageNumber, pageCapacity);
     }
 

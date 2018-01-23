@@ -3,8 +3,8 @@ package com.malikov.shopsystem.service;
 import com.malikov.shopsystem.dto.GenericFilter;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
+import com.malikov.shopsystem.dto.OrderPage;
 import com.malikov.shopsystem.dto.OrderUpdateDto;
-import com.malikov.shopsystem.dto.Page;
 import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.enumtype.PaymentType;
 import com.malikov.shopsystem.mapper.OrderMapper;
@@ -52,8 +52,8 @@ public class OrderService {
     private OrderMapper orderMapper;
 
     @SuppressWarnings("unchecked assignments")
-    public Page<OrderDto> getPage(GenericFilter<OrderFilterDto, OrderDto> filter) {
-        return orderMapper.toDtoPage(orderRepository.findAll(buildFilterRestrictions(filter.getFilteringFields()),
+    public OrderPage getPage(GenericFilter<OrderFilterDto, OrderDto> filter) {
+        return orderMapper.toPage(orderRepository.findAll(buildFilterRestrictions(filter.getFilteringFields()),
                 new PageRequest(filter.getPaging().getPage(), filter.getPaging().getSize(), DESC_ID)));
     }
 
@@ -143,8 +143,8 @@ public class OrderService {
         orderMapper.updateByCustomer(customer, order);
     }
 
-    public Page<OrderDto> getPage(int pageNumber, int pageCapacity) {
-        return orderMapper.toDtoPage(orderRepository.findAll(new PageRequest(pageNumber, pageCapacity, DESC_ID)));
+    public OrderPage getPage(int pageNumber, int pageCapacity) {
+        return orderMapper.toPage(orderRepository.findAll(new PageRequest(pageNumber, pageCapacity, DESC_ID)));
     }
 
 }

@@ -2,7 +2,7 @@ package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.dto.CustomerAutocompleteDto;
 import com.malikov.shopsystem.dto.CustomerDto;
-import com.malikov.shopsystem.dto.Page;
+import com.malikov.shopsystem.dto.CustomerPage;
 import com.malikov.shopsystem.mapper.CustomerMapper;
 import com.malikov.shopsystem.model.Customer;
 import com.malikov.shopsystem.model.Order;
@@ -36,7 +36,7 @@ public class CustomerService {
         return mapper.toDto(checkNotFoundById(customerRepository.findOne(id), id));
     }
 
-    public Page<CustomerDto> getPage(int pageNumber, int pageCapacity) {
+    public CustomerPage getPage(int pageNumber, int pageCapacity) {
         return mapper.toDtoPage(customerRepository.findAll(new PageRequest(pageNumber, pageCapacity)));
     }
 

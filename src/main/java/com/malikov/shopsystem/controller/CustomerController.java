@@ -26,13 +26,12 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping("/{customerId}")
-    public CustomerDto get(@PathVariable("customerId") Long customerId) {
+    public CustomerDto get(@PathVariable Long customerId) {
         return customerService.get(customerId);
     }
 
     @GetMapping
-    public Page<CustomerDto> getCustomerTablePage(@RequestParam("pageNumber") int pageNumber,
-                                                  @RequestParam("pageCapacity") int pageCapacity) {
+    public Page<CustomerDto> getCustomerTablePage(@RequestParam int pageNumber, @RequestParam int pageCapacity) {
         return customerService.getPage(pageNumber, pageCapacity);
     }
 

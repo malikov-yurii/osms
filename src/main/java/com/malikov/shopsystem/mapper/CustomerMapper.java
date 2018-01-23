@@ -2,13 +2,14 @@ package com.malikov.shopsystem.mapper;
 
 import com.malikov.shopsystem.dto.CustomerAutocompleteDto;
 import com.malikov.shopsystem.dto.CustomerDto;
-import com.malikov.shopsystem.dto.Page;
+import com.malikov.shopsystem.dto.CustomerPage;
 import com.malikov.shopsystem.model.Customer;
 import com.malikov.shopsystem.model.Order;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -76,9 +77,9 @@ public interface CustomerMapper {
                 source.getCity() + " " + source.getPhoneNumber());
     }
 
-    default Page<CustomerDto> toDtoPage(org.springframework.data.domain.Page<Customer> source) {
+    default CustomerPage toDtoPage(Page<Customer> source) {
 
-        Page<CustomerDto> target = new Page<>();
+        CustomerPage target = new CustomerPage();
         target.setContent(toDto(source.getContent()));
         target.setTotalElements(source.getTotalElements());
         target.setTotalPages(source.getTotalPages());
