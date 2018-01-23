@@ -1,6 +1,7 @@
 package com.malikov.shopsystem.mapper;
 
 import com.malikov.shopsystem.dto.OrderDto;
+import com.malikov.shopsystem.dto.Page;
 import com.malikov.shopsystem.model.Customer;
 import com.malikov.shopsystem.model.Order;
 import org.mapstruct.Mapper;
@@ -32,5 +33,15 @@ public interface OrderMapper {
     @Mapping(source = "city", target = "destinationCity")
     @Mapping(source = "postOffice", target = "destinationPostOffice")
     void updateByCustomer(Customer source, @MappingTarget Order target);
+
+    default Page<OrderDto> toDtoPage(org.springframework.data.domain.Page<Order> source) {
+
+        Page<OrderDto> target = new Page<>();
+        target.setContent(toDto(source.getContent()));
+        target.setTotalElements(source.getTotalElements());
+        target.setTotalPages(source.getTotalPages());
+
+        return target;
+    }
 
 }

@@ -15,7 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.malikov.shopsystem.util.ValidationUtil.*;
+import static com.malikov.shopsystem.util.ValidationUtil.checkIsNew;
+import static com.malikov.shopsystem.util.ValidationUtil.checkIsNotNew;
+import static com.malikov.shopsystem.util.ValidationUtil.checkNotFoundById;
 
 @Service
 public class CustomerService {

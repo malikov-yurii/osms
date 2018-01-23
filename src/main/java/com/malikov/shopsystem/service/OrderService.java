@@ -4,6 +4,7 @@ import com.malikov.shopsystem.dto.GenericFilter;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
 import com.malikov.shopsystem.dto.OrderUpdateDto;
+import com.malikov.shopsystem.dto.Page;
 import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.enumtype.PaymentType;
 import com.malikov.shopsystem.mapper.OrderMapper;
@@ -11,10 +12,12 @@ import com.malikov.shopsystem.mapper.OrderUpdateByNotNullFieldsMapper;
 import com.malikov.shopsystem.model.Customer;
 import com.malikov.shopsystem.model.Order;
 import com.malikov.shopsystem.model.OrderLine;
-import com.malikov.shopsystem.repository.*;
+import com.malikov.shopsystem.repository.CustomerRepository;
+import com.malikov.shopsystem.repository.OrderRepository;
+import com.malikov.shopsystem.repository.ProductRepository;
+import com.malikov.shopsystem.repository.ProductVariationRepository;
+import com.malikov.shopsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specifications;
@@ -24,7 +27,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
-import static com.malikov.shopsystem.repository.specification.OrderSpecification.*;
+import static com.malikov.shopsystem.repository.specification.OrderSpecification.containsProduct;
+import static com.malikov.shopsystem.repository.specification.OrderSpecification.createdBetween;
+import static com.malikov.shopsystem.repository.specification.OrderSpecification.emptySpecification;
+import static com.malikov.shopsystem.repository.specification.OrderSpecification.orderOfCustomer;
 import static com.malikov.shopsystem.util.ValidationUtil.checkNotFoundById;
 import static java.util.Collections.singleton;
 import static java.util.Objects.nonNull;
@@ -32,7 +38,7 @@ import static java.util.Objects.nonNull;
 @Service
 public class OrderService {
 
-    private static final Sort DESC_SORT_ORDER = new Sort(new Sort.Order(Sort.Direction.DESC, "id"));
+    private static final Sort DESC_ID = new Sort(new Sort.Order(Sort.Direction.DESC, "id"));
 
     @Autowired
     private OrderRepository orderRepository;
@@ -52,10 +58,9 @@ public class OrderService {
     private OrderMapper orderMapper;
 
     @SuppressWarnings("unchecked assignments")
-    public Page<OrderDto> getFilteredPage(GenericFilter<OrderFilterDto, OrderDto> filter) {
-
-        return toOrderDtoPage(orderRepository.findAll(buildFilterRestrictions(filter.getFilteringFields()),
-                new PageRequest(filter.getPaging().getPage(), filter.getPaging().getSize(), DESC_SORT_ORDER)));
+    public Page<OrderDto> getPage(GenericFilter<OrderFilterDto, OrderDto> filter) {
+        return orderMapper.toDtoPage(orderRepository.findAll(buildFilterRestrictions(filter.getFilteringFields()),
+                new PageRequest(filter.getPaging().getPage(), filter.getPaging().getSize(), DESC_ID)));
     }
 
     @SuppressWarnings("unchecked assignments")
@@ -67,23 +72,19 @@ public class OrderService {
                 .and(containsProduct(filter));
     }
 
-    private PageImpl<OrderDto> toOrderDtoPage(Page<Order> page) {
-        return new PageImpl<>(orderMapper.toDto(page.getContent()), null, page.getTotalElements());
-    }
-
-    public Order get(Long id) {
-        return orderRepository.findOne(id);
+    public OrderDto get(Long id) {
+        return orderMapper.toDto(orderRepository.findOne(id));
     }
 
     @Transactional
     public void delete(Long id) {
-        Order order = get(id);
+        Order order = orderRepository.findOne(id);
         updateStockService.updateStockForDeletedOrder(order);
         orderRepository.delete(order);
     }
 
     @Transactional
-    public Order create() {
+    public OrderDto create() {
 
         Order order = new Order();
         order.setUser(userRepository.getByLogin(SecurityContextHolder.getContext().getAuthentication().getName()));
@@ -94,7 +95,7 @@ public class OrderService {
         order.setOrderLines(new ArrayList<>(singleton(orderLine)));
         order.setStatusSortOrder(calcStatusSortOrder(OrderStatus.NEW));
 
-        return orderRepository.save(order);
+        return orderMapper.toDto(orderRepository.save(order));
     }
 
     private Integer calcStatusSortOrder(OrderStatus status) {
@@ -118,7 +119,7 @@ public class OrderService {
     @Transactional
     public void update(OrderUpdateDto orderUpdateDto) {
 
-        Order order = checkNotFoundById(get(orderUpdateDto.getId()), orderUpdateDto.getId());
+        Order order = checkNotFoundById(orderRepository.findOne(orderUpdateDto.getId()), orderUpdateDto.getId());
 
         setCustomerInfoToOrder(order, orderUpdateDto);
         orderUpdateByNotNullFieldsMapper.updateByNonCustomerRelatedInfo(orderUpdateDto, order);
@@ -149,7 +150,7 @@ public class OrderService {
     }
 
     public Page<OrderDto> getPage(int pageNumber, int pageCapacity) {
-        return toOrderDtoPage(orderRepository.findAll(new PageRequest(pageNumber, pageCapacity, DESC_SORT_ORDER)));
+        return orderMapper.toDtoPage(orderRepository.findAll(new PageRequest(pageNumber, pageCapacity, DESC_ID)));
     }
 
 }
