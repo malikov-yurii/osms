@@ -22,16 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(
-        value = "/order",
-        produces = MediaType.APPLICATION_JSON_VALUE,
-        consumes = MediaType.APPLICATION_JSON_VALUE
-)
+        value = "/order", produces = MediaType.APPLICATION_JSON_VALUE)
 public class OrderController {
 
     @Autowired
     private OrderService orderService;
 
-    @PutMapping("/filter")
+    @PutMapping(value = "/filter", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Page<OrderDto> getFilteredPage(@RequestBody GenericFilter<OrderFilterDto, OrderDto> orderFilterDto) {
         return orderService.getPage(orderFilterDto);
     }
@@ -67,7 +64,7 @@ public class OrderController {
         return orderService.create();
     }
 
-    @PutMapping("/{orderId}")
+    @PutMapping(value = "/{orderId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateOrder(@PathVariable("orderId") Long orderId,
                                @RequestBody OrderUpdateDto orderUpdateDto) {
         orderUpdateDto.setId(orderId);

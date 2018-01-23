@@ -17,9 +17,9 @@ public class PrintOrderController {
     @Autowired
     private PrintOrderReportService printOrderReportService;
 
-    @GetMapping(value = "/{orderNumber}")
-    public byte[] print(@PathVariable("orderNumber") Long orderNumber) throws Exception {
-        return printOrderReportService.printOrder(orderNumber);
+    @GetMapping(value = "/{orderId}")
+    public byte[] print(@PathVariable("orderId") Long orderId) throws Exception {
+        return printOrderReportService.printOrder(orderId);
     }
 
 }

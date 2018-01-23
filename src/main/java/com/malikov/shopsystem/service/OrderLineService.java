@@ -82,7 +82,7 @@ public class OrderLineService {
     @Transactional
     public void update(OrderLineDto orderLineDto) {
 
-        OrderLine orderLine = get(orderLineDto.getOrderItemId());
+        OrderLine orderLine = get(orderLineDto.getId());
 
         boolean isProductNameUpdated = updateOrderLineProductName(orderLineDto, orderLine);
 

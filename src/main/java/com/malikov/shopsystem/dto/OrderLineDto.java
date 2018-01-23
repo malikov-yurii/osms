@@ -16,14 +16,6 @@ public class OrderLineDto implements Serializable, HasId {
     private BigDecimal price;
     private String supplier;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public BigDecimal getPrice() {
         return price;
     }
@@ -32,20 +24,14 @@ public class OrderLineDto implements Serializable, HasId {
         this.price = price.setScale(0, RoundingMode.HALF_UP);
     }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Long getOrderItemId() {
+    @Override
+    public Long getId() {
         return id;
     }
 
-    public void setOrderLineId(Long orderItemId) {
-        this.id = orderItemId;
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getProductId() {
@@ -56,14 +42,6 @@ public class OrderLineDto implements Serializable, HasId {
         this.productId = productId;
     }
 
-    public String getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(String supplier) {
-        this.supplier = supplier;
-    }
-
     public Long getProductVariationId() {
         return productVariationId;
     }
@@ -72,14 +50,28 @@ public class OrderLineDto implements Serializable, HasId {
         this.productVariationId = productVariationId;
     }
 
-    @Override
-    public Long getId() {
-        return null;
+    public String getName() {
+        return name;
     }
 
-    @Override
-    public void setId(Long id) {
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
     }
 
     @Override

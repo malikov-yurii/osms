@@ -19,11 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(
-        value = "/customer",
-        produces = MediaType.APPLICATION_JSON_VALUE,
-        consumes = MediaType.APPLICATION_JSON_VALUE
-)
+@RequestMapping(value = "/customer", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CustomerController {
 
     @Autowired
@@ -50,7 +46,7 @@ public class CustomerController {
         return customerService.createCustomerFromOrderData(orderId);
     }
 
-    @PutMapping("/{customerId}")
+    @PutMapping(value = "/{customerId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public CustomerDto update(@PathVariable("customerId") Long customerId, @RequestBody CustomerDto customerDto) {
         customerDto.setCustomerId(customerId);
         return customerService.update(customerDto);

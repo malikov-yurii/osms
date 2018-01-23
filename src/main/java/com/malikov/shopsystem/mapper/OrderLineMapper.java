@@ -13,7 +13,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface OrderLineMapper {
 
-    @Mapping(source = "id", target = "orderItemId")
     @Mapping(source = "product.id", target = "productId")
     @Mapping(source = "productVariation.id", target = "productVariationId")
     @Mapping(source = "productName", target = "name")

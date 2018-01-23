@@ -1,10 +1,10 @@
 package com.malikov.shopsystem.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.malikov.shopsystem.dto.Page;
 import com.malikov.shopsystem.service.OrderService;
 import com.malikov.shopsystem.web.json.JacksonObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;

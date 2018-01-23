@@ -20,11 +20,7 @@ import java.util.List;
  * @author Yurii Malikov
  */
 @RestController
-@RequestMapping(
-        value = "/order-line",
-        produces = MediaType.APPLICATION_JSON_VALUE,
-        consumes = MediaType.APPLICATION_JSON_VALUE
-)
+@RequestMapping(value = "/order-line", produces = MediaType.APPLICATION_JSON_VALUE)
 public class OrderLineController {
 
     @Autowired
@@ -41,9 +37,9 @@ public class OrderLineController {
         return orderLineService.create(orderId);
     }
 
-    @PutMapping("/{orderLineId}")
+    @PutMapping(value = "/{orderLineId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@PathVariable("orderLineId") Long orderLineId, @RequestBody OrderLineDto orderLineDto) {
-        orderLineDto.setOrderLineId(orderLineId);
+        orderLineDto.setId(orderLineId);
         orderLineService.update(orderLineDto);
     }
 
@@ -51,4 +47,5 @@ public class OrderLineController {
     public void delete(@PathVariable("orderLineId") Long orderLineId) {
         orderLineService.delete(orderLineId);
     }
+
 }
