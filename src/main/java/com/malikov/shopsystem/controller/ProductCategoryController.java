@@ -20,7 +20,7 @@ public class ProductCategoryController {
     private ProductCategoryService productCategoryService;
 
     @GetMapping
-    public List<String> getAll() {
+    public List<String> getProductCategoryNames() {
         return productCategoryService.getAllNames();
     }
 

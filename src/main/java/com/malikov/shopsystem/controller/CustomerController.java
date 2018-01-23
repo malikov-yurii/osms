@@ -56,17 +56,17 @@ public class CustomerController {
         customerService.delete(customerId);
     }
 
-    @GetMapping("/autocomplete-by-last-name-mask/{lastNameMask}")
+    @GetMapping("/autocomplete-by-last-name-mask/{lastNameMask}/")
     public List<CustomerAutocompleteDto> autocompleteByLastName(@PathVariable String lastNameMask) {
         return customerService.getByLastNameMask(lastNameMask);
     }
 
-    @GetMapping("/autocomplete-by-phone-number-mask/{phoneNumberMask}")
+    @GetMapping("/autocomplete-by-phone-number-mask/{phoneNumberMask}/")
     public List<CustomerAutocompleteDto> autocompleteByPhoneNumber(@PathVariable String phoneNumberMask) {
         return customerService.getByPhoneNumberMask(phoneNumberMask);
     }
 
-    @GetMapping("/autocomplete-by-city-mask/{cityMask}")
+    @GetMapping("/autocomplete-by-city-mask/{cityMask}/")
     public List<CustomerAutocompleteDto> autocompleteByCityName(@PathVariable String cityMask) {
         return customerService.getByCityNameMask(cityMask);
     }
