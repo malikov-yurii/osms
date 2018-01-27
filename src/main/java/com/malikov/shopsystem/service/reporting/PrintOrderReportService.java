@@ -1,8 +1,8 @@
 package com.malikov.shopsystem.service.reporting;
 
 import com.malikov.shopsystem.dto.OrderLineReportDto;
-import com.malikov.shopsystem.model.Order;
-import com.malikov.shopsystem.model.OrderLine;
+import com.malikov.shopsystem.domain.Order;
+import com.malikov.shopsystem.domain.OrderLine;
 import com.malikov.shopsystem.repository.OrderRepository;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -77,8 +77,15 @@ public class PrintOrderReportService {
     }
 
     private OrderLineReportDto toOrderLineReportDto(int i, OrderLine orderLine) {
-        return new OrderLineReportDto(i + 1, orderLine.getProductName(), orderLine.getProductQuantity(),
-                orderLine.getProductPrice(), orderLineValue(orderLine));
+
+        OrderLineReportDto orderLineReportDto = new OrderLineReportDto();
+        orderLineReportDto.setOrderLineIndex(i + 1);
+        orderLineReportDto.setName(orderLine.getProductName());
+        orderLineReportDto.setQuantity(orderLine.getProductQuantity());
+        orderLineReportDto.setItemValue(orderLine.getProductPrice());
+        orderLineReportDto.setOrderLineValue(orderLineValue(orderLine));
+
+        return orderLineReportDto;
     }
 
     private BigDecimal orderLineValue(OrderLine orderLine) {

@@ -3,12 +3,12 @@ package com.malikov.shopsystem.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Set;
+import java.util.List;
 
 public class ProductDto implements Serializable {
 
     private String name;
-    private Set<String> categories;
+    private List<String> categories;
     private BigDecimal price;
     private Integer quantity;
     private Boolean unlimited;
@@ -34,11 +34,11 @@ public class ProductDto implements Serializable {
         this.id = id;
     }
 
-    public Set<String> getCategories() {
+    public List<String> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<String> categories) {
+    public void setCategories(List<String> categories) {
         this.categories = categories;
     }
 

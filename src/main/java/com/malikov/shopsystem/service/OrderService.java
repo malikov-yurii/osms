@@ -1,6 +1,6 @@
 package com.malikov.shopsystem.service;
 
-import com.malikov.shopsystem.dto.GenericFilter;
+import com.malikov.shopsystem.dto.filter.GenericFilter;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
 import com.malikov.shopsystem.dto.OrderPage;
@@ -9,9 +9,9 @@ import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.enumtype.PaymentType;
 import com.malikov.shopsystem.mapper.OrderMapper;
 import com.malikov.shopsystem.mapper.OrderUpdateByNotNullFieldsMapper;
-import com.malikov.shopsystem.model.Customer;
-import com.malikov.shopsystem.model.Order;
-import com.malikov.shopsystem.model.OrderLine;
+import com.malikov.shopsystem.domain.Customer;
+import com.malikov.shopsystem.domain.Order;
+import com.malikov.shopsystem.domain.OrderLine;
 import com.malikov.shopsystem.repository.CustomerRepository;
 import com.malikov.shopsystem.repository.OrderRepository;
 import com.malikov.shopsystem.repository.UserRepository;
@@ -52,7 +52,8 @@ public class OrderService {
     private OrderMapper orderMapper;
 
     @SuppressWarnings("unchecked assignments")
-    public OrderPage getPage(GenericFilter<OrderFilterDto, OrderDto> filter) {
+    public OrderPage getFilteredPage(GenericFilter<OrderFilterDto, OrderDto> filter) {
+
         return orderMapper.toPage(orderRepository.findAll(buildFilterRestrictions(filter.getFilteringFields()),
                 new PageRequest(filter.getPaging().getPage(), filter.getPaging().getSize(), DESC_ID)));
     }

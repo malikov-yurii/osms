@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.model;
+package com.malikov.shopsystem.domain;
 
 import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.enumtype.PaymentType;

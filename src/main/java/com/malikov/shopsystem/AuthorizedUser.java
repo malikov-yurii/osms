@@ -1,6 +1,6 @@
 package com.malikov.shopsystem;
 
-import com.malikov.shopsystem.model.User;
+import com.malikov.shopsystem.domain.User;
 import com.malikov.shopsystem.dto.UserDto;
 import com.malikov.shopsystem.util.UserUtil;
 import org.springframework.security.core.Authentication;

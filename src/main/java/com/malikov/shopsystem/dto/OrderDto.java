@@ -1,6 +1,5 @@
 package com.malikov.shopsystem.dto;
 
-import com.malikov.shopsystem.HasId;
 import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.enumtype.PaymentType;
 import com.malikov.shopsystem.util.DateTimeUtil;
@@ -8,12 +7,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDateTime;
 
-public class OrderDto  implements Serializable, HasId {
+public class OrderDto  implements Serializable {
 
-    private Long id;
+    @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
+    private LocalDateTime createdDateTime;
+
+    private Long orderId;
     private Long customerId;
     private String customerLastName;
     private String customerFirstName;
@@ -28,27 +29,28 @@ public class OrderDto  implements Serializable, HasId {
 
     private OrderLineDto[] orderItems;
 
-    @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
-    private LocalDateTime createdDateTime;
-
-    public boolean isNew() {
-        return id == null;
+    public LocalDateTime getCreatedDateTime() {
+        return createdDateTime;
     }
 
-    public Long getId() {
-        return id;
+    public void setCreatedDateTime(LocalDateTime createdDateTime) {
+        this.createdDateTime = createdDateTime;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public String getCustomerFirstName() {
-        return customerFirstName;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
-    public void setCustomerFirstName(String customerFirstName) {
-        this.customerFirstName = customerFirstName;
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public String getCustomerLastName() {
@@ -57,6 +59,14 @@ public class OrderDto  implements Serializable, HasId {
 
     public void setCustomerLastName(String customerLastName) {
         this.customerLastName = customerLastName;
+    }
+
+    public String getCustomerFirstName() {
+        return customerFirstName;
+    }
+
+    public void setCustomerFirstName(String customerFirstName) {
+        this.customerFirstName = customerFirstName;
     }
 
     public String getCustomerPhoneNumber() {
@@ -91,14 +101,6 @@ public class OrderDto  implements Serializable, HasId {
         this.customerNote = customerNote;
     }
 
-    public BigDecimal getTotalSum() {
-        return totalSum;
-    }
-
-    public void setTotalSum(BigDecimal totalSum) {
-        this.totalSum = totalSum.setScale(0, RoundingMode.HALF_UP);
-    }
-
     public PaymentType getPaymentType() {
         return paymentType;
     }
@@ -107,15 +109,12 @@ public class OrderDto  implements Serializable, HasId {
         this.paymentType = paymentType;
     }
 
-    //@JsonSerialize(using = LocalDateSerializer.class)
-    public LocalDateTime getCreatedDateTime() {
-        return createdDateTime;
+    public BigDecimal getTotalSum() {
+        return totalSum;
     }
 
-    //@JsonDeserialize(using = LocalDateDeserializer.class)
-    public void setCreatedDateTime(LocalDateTime createdDateTime) {
-
-        this.createdDateTime = createdDateTime;
+    public void setTotalSum(BigDecimal totalSum) {
+        this.totalSum = totalSum;
     }
 
     public OrderStatus getStatus() {
@@ -141,13 +140,4 @@ public class OrderDto  implements Serializable, HasId {
     public void setOrderItems(OrderLineDto[] orderItems) {
         this.orderItems = orderItems;
     }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
 }

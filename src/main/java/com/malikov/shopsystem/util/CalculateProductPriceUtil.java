@@ -1,7 +1,7 @@
 package com.malikov.shopsystem.util;
 
-import com.malikov.shopsystem.model.Product;
-import com.malikov.shopsystem.model.ProductVariation;
+import com.malikov.shopsystem.domain.Product;
+import com.malikov.shopsystem.domain.ProductVariation;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

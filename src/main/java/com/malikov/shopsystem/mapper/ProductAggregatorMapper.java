@@ -1,7 +1,7 @@
 package com.malikov.shopsystem.mapper;
 
 import com.malikov.shopsystem.dto.ProductAggregatorDto;
-import com.malikov.shopsystem.model.ProductAggregator;
+import com.malikov.shopsystem.domain.ProductAggregator;
 import org.mapstruct.Mapper;
 
 /**

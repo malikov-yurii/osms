@@ -1,6 +1,6 @@
 package com.malikov.shopsystem.controller;
 
-import com.malikov.shopsystem.dto.GenericFilter;
+import com.malikov.shopsystem.dto.filter.GenericFilter;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
 import com.malikov.shopsystem.dto.OrderPage;
@@ -28,8 +28,9 @@ public class OrderController {
     private OrderService orderService;
 
     @PutMapping(value = "/filter", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public OrderPage getFilteredPage(@RequestBody GenericFilter<OrderFilterDto, OrderDto> orderFilterDto) {
-        return orderService.getPage(orderFilterDto);
+    public  OrderPage getFilteredPage(@RequestBody GenericFilter<OrderFilterDto, OrderDto> orderFilterDto) {
+
+        return orderService.getFilteredPage(orderFilterDto);
     }
 
     @GetMapping

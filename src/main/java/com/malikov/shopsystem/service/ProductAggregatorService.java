@@ -2,7 +2,7 @@ package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.dto.ProductAggregatorDto;
 import com.malikov.shopsystem.mapper.ProductAggregatorMapper;
-import com.malikov.shopsystem.model.ProductAggregator;
+import com.malikov.shopsystem.domain.ProductAggregator;
 import com.malikov.shopsystem.repository.ProductAggregatorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

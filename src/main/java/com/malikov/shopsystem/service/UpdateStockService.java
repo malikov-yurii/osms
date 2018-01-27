@@ -2,7 +2,7 @@ package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.enumtype.DbOperation;
 import com.malikov.shopsystem.enumtype.OrderStatus;
-import com.malikov.shopsystem.model.*;
+import com.malikov.shopsystem.domain.*;
 import com.malikov.shopsystem.repository.ProductAggregatorRepository;
 import com.malikov.shopsystem.repository.ProductRepository;
 import com.malikov.shopsystem.repository.ProductVariationRepository;

@@ -1,6 +1,6 @@
 package com.malikov.shopsystem.repository;
 
-import com.malikov.shopsystem.model.Currency;
+import com.malikov.shopsystem.domain.Currency;
 import org.springframework.data.repository.CrudRepository;
 
 import java.math.BigInteger;

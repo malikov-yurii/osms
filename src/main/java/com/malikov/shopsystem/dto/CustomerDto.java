@@ -7,44 +7,15 @@ import java.io.Serializable;
 public class CustomerDto implements Serializable, HasId {
 
     private Long customerId;
-
     private String customerFirstName;
-
     private String customerLastName;
-
     private String customerPhoneNumber;
-
     private String destinationCity;
-
     private String destinationPostOffice;
-
     private String customerEmail;
-
     private String customerNote;
 
-    public CustomerDto(Long customerId,
-                       String customerFirstName,
-                       String customerLastName,
-                       String customerPhoneNumber,
-                       String destinationCity,
-                       String destinationPostOffice,
-                       String customerEmail,
-                       String customerNote
-    ) {
-        this.customerId = customerId;
-        this.customerFirstName = customerFirstName;
-        this.customerLastName = customerLastName;
-        this.customerPhoneNumber = customerPhoneNumber;
-        this.destinationCity = destinationCity;
-        this.destinationPostOffice = destinationPostOffice;
-        this.customerEmail = customerEmail;
-        this.customerNote = customerNote;
-    }
-
-    public CustomerDto() {
-    }
-
-    @Override
+   @Override
     public Long getId() {
         return getCustomerId();
     }

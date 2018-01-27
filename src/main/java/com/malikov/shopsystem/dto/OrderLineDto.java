@@ -78,4 +78,5 @@ public class OrderLineDto implements Serializable, HasId {
     public boolean isNew() {
         return false;
     }
+
 }

@@ -1,6 +1,6 @@
 package com.malikov.shopsystem.service;
 
-import com.malikov.shopsystem.model.ProductCategory;
+import com.malikov.shopsystem.domain.ProductCategory;
 import com.malikov.shopsystem.repository.ProductCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -2,7 +2,7 @@ package com.malikov.shopsystem.controller;
 
 import com.malikov.shopsystem.dto.ProductDto;
 import com.malikov.shopsystem.dto.ProductPage;
-import com.malikov.shopsystem.model.Product;
+import com.malikov.shopsystem.domain.Product;
 import com.malikov.shopsystem.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

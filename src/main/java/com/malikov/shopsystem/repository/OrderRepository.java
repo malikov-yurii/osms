@@ -1,6 +1,6 @@
 package com.malikov.shopsystem.repository;
 
-import com.malikov.shopsystem.model.Order;
+import com.malikov.shopsystem.domain.Order;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;

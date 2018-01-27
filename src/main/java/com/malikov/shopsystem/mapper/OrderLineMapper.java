@@ -1,7 +1,7 @@
 package com.malikov.shopsystem.mapper;
 
 import com.malikov.shopsystem.dto.OrderLineDto;
-import com.malikov.shopsystem.model.OrderLine;
+import com.malikov.shopsystem.domain.OrderLine;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

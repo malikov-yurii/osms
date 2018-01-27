@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.model;
+package com.malikov.shopsystem.domain;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;

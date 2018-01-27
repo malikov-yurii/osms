@@ -4,8 +4,8 @@ import com.malikov.shopsystem.dto.CustomerAutocompleteDto;
 import com.malikov.shopsystem.dto.CustomerDto;
 import com.malikov.shopsystem.dto.CustomerPage;
 import com.malikov.shopsystem.mapper.CustomerMapper;
-import com.malikov.shopsystem.model.Customer;
-import com.malikov.shopsystem.model.Order;
+import com.malikov.shopsystem.domain.Customer;
+import com.malikov.shopsystem.domain.Order;
 import com.malikov.shopsystem.repository.CustomerRepository;
 import com.malikov.shopsystem.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +84,7 @@ public class CustomerService {
         }
 
         Customer customer = customerRepository.save(mapper.toCustomer(order));
-        order.setCustomerId(customer.getId());
+        order.setCustomerId(customer.gc.getId());
 
         orderRepository.save(order);
 

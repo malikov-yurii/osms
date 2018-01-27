@@ -1,7 +1,7 @@
 package com.malikov.shopsystem;
 
 import com.malikov.shopsystem.matcher.ModelMatcher;
-import com.malikov.shopsystem.model.Customer;
+import com.malikov.shopsystem.domain.Customer;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.model;
+package com.malikov.shopsystem.domain;
 
 import com.malikov.shopsystem.HasId;
 import org.hibernate.annotations.NotFound;

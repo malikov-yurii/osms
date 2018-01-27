@@ -1,19 +1,6 @@
 package com.malikov.shopsystem.repository;
 
 
-import com.malikov.shopsystem.OrderTestData;
-import com.malikov.shopsystem.model.Order;
-import com.malikov.shopsystem.service.OrderService;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Arrays;
-import java.util.Collection;
-
-import static com.malikov.shopsystem.CustomerTestData.CUSTOMER_GOLOV;
-import static com.malikov.shopsystem.OrderTestData.*;
-import static com.malikov.shopsystem.ProductTestData.POTAL_KITAJ;
-
 public abstract class OrderRepositoryTest extends AbstractRepositoryTest {
 /*
     @Autowired

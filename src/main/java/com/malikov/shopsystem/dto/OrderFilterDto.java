@@ -8,42 +8,15 @@ import java.time.LocalDateTime;
 public class OrderFilterDto {
 
     private Long customerId;
-
     private String customerFirstNameMask;
-
     private String customerLastNameMask;
-
     private String destinationCityMask;
-
     private String customerPhoneMask;
-
     private Long productId;
-
     private Long productVariationId;
-
     private String productNameMask;
-
     private LocalDateTime fromDateTimeCreated;
-
     private LocalDateTime toDateTimeCreated;
-
-    public OrderFilterDto(Long customerId, String customerFirstNameMask, String customerLastNameMask,
-                          String destinationCityMask, String customerPhoneMask, Long productId, Long productVariationId,
-                          String productNameMask, LocalDateTime fromDateTimeCreated, LocalDateTime toDateTimeCreated) {
-        this.customerId = customerId;
-        this.customerFirstNameMask = customerFirstNameMask;
-        this.customerLastNameMask = customerLastNameMask;
-        this.destinationCityMask = destinationCityMask;
-        this.customerPhoneMask = customerPhoneMask;
-        this.productId = productId;
-        this.productVariationId = productVariationId;
-        this.productNameMask = productNameMask;
-        this.fromDateTimeCreated = fromDateTimeCreated;
-        this.toDateTimeCreated = toDateTimeCreated;
-    }
-
-    public OrderFilterDto() {
-    }
 
     public Long getCustomerId() {
         return customerId;
@@ -124,4 +97,5 @@ public class OrderFilterDto {
     public void setToDateTimeCreated(LocalDateTime toDateTimeCreated) {
         this.toDateTimeCreated = toDateTimeCreated;
     }
+
 }

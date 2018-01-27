@@ -9,19 +9,8 @@ import java.math.RoundingMode;
 public class ProductVariationDto {
 
     private String name;
-
     private BigDecimal price;
-
     private Integer quantity;
-
-    public ProductVariationDto() {
-    }
-
-    public ProductVariationDto(String name, BigDecimal price, Integer quantity) {
-        this.name = name;
-        this.price = price.setScale(0, RoundingMode.HALF_UP);
-        this.quantity = quantity;
-    }
 
     public String getName() {
         return name;
@@ -46,4 +35,5 @@ public class ProductVariationDto {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
 }

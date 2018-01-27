@@ -1,7 +1,7 @@
 package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.AuthorizedUser;
-import com.malikov.shopsystem.model.User;
+import com.malikov.shopsystem.domain.User;
 import com.malikov.shopsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;

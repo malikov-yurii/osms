@@ -2,22 +2,13 @@ package com.malikov.shopsystem.dto;
 
 public class CustomerAutocompleteDto {
 
-    // TODO: 3/25/2017  get rid of label  - use concatenation instead
     private String label;
-
     private Long customerId;
-
     private String customerFirstName;
-
     private String customerLastName;
-
     private String customerPhoneNumber;
-
     private String destinationCity;
-
     private String destinationPostOffice;
-
-
 
     public Long getCustomerId() {
         return customerId;

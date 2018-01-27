@@ -1,8 +1,8 @@
 package com.malikov.shopsystem.mapper;
 
 import com.malikov.shopsystem.dto.ProductDto;
-import com.malikov.shopsystem.model.Product;
-import com.malikov.shopsystem.model.ProductVariation;
+import com.malikov.shopsystem.domain.Product;
+import com.malikov.shopsystem.domain.ProductVariation;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

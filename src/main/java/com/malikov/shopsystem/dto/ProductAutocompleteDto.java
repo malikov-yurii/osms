@@ -50,4 +50,5 @@ public class ProductAutocompleteDto {
     public void setPrice(BigDecimal price) {
         this.price = price.setScale(0, RoundingMode.HALF_UP);
     }
+
 }

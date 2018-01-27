@@ -1,7 +1,7 @@
 package com.malikov.shopsystem;
 
 import com.malikov.shopsystem.matcher.ModelMatcher;
-import com.malikov.shopsystem.model.ProductCategory;
+import com.malikov.shopsystem.domain.ProductCategory;
 
 import java.util.Objects;
 

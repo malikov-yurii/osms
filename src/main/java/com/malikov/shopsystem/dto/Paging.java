@@ -9,6 +9,7 @@ import java.io.Serializable;
  * @author Yurii Malikov
  */
 public class Paging implements Serializable {
+
     public static final int DEFAULT_PAGE_NUMBER = 0;
     public static final int DEFAULT_SIZE = Integer.MAX_VALUE;
 
@@ -21,10 +22,6 @@ public class Paging implements Serializable {
     }
 
     public Paging() {
-        /*
-           We use this constructor for implicitly
-           in ShippingReceivingController.java and in ShippingReceivingControllerTest.java
-        */
     }
 
     public static Paging defaultPaging() {
@@ -73,4 +70,5 @@ public class Paging implements Serializable {
                 .append(size)
                 .toHashCode();
     }
+
 }

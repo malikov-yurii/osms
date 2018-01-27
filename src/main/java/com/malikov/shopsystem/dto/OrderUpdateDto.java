@@ -8,66 +8,23 @@ import com.malikov.shopsystem.enumtype.PaymentType;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderUpdateDto  implements Serializable{
 
     private Long id;
-
     private Long customerId;
-
     private String customerLastName;
-
     private String customerFirstName;
-
     private String customerPhoneNumber;
-
     private String destinationCity;
-
     private String destinationPostOffice;
-
     private String customerNote;
-
     private PaymentType paymentType;
-
     private BigDecimal totalSum;
-
     private OrderStatus status;
-
     private String note;
-
-    public OrderUpdateDto(
-            Long id,
-            Long customerId,
-            String customerFirstName,
-            String customerLastName,
-            String customerPhoneNumber,
-            String destinationCity,
-            String destinationPostOffice,
-            String customerNote,
-            PaymentType paymentType,
-            LocalDateTime createdDateTime,
-            OrderStatus status,
-            String note,
-            BigDecimal totalSum) {
-        this.id = id == null ? 0 : id;
-        this.customerId = customerId == null ? 0 : customerId;
-        this.customerFirstName = customerFirstName != null ? customerFirstName : "";
-        this.customerLastName = customerLastName != null ? customerLastName : "";
-        this.customerPhoneNumber = customerPhoneNumber != null ? customerPhoneNumber : "";
-        this.destinationCity = destinationCity != null ? destinationCity : "";
-        this.destinationPostOffice = destinationPostOffice != null ? destinationPostOffice : "";
-        this.customerNote = customerNote != null ? customerNote : "";
-        this.paymentType = paymentType;
-        this.status = status;
-        this.note = note;
-        this.totalSum = totalSum.setScale(0, RoundingMode.HALF_UP);
-    }
-
-    public OrderUpdateDto() {
-    }
 
     public Long getId() {
         return id;
@@ -165,21 +122,4 @@ public class OrderUpdateDto  implements Serializable{
         this.customerId = customerId;
     }
 
-    @Override
-    public String toString() {
-        return "OrderUpdateDto{" +
-                "id=" + id +
-                ", customerId=" + customerId +
-                ", customerLastName='" + customerLastName + '\'' +
-                ", customerFirstName='" + customerFirstName + '\'' +
-                ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
-                ", destinationCity='" + destinationCity + '\'' +
-                ", destinationPostOffice='" + destinationPostOffice + '\'' +
-                ", customerNote='" + customerNote + '\'' +
-                ", paymentType=" + paymentType +
-                ", totalSum=" + totalSum +
-                ", status=" + status +
-                ", note='" + note + '\'' +
-                '}';
-    }
 }

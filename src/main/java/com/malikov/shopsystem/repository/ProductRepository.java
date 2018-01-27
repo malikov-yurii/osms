@@ -1,6 +1,6 @@
 package com.malikov.shopsystem.repository;
 
-import com.malikov.shopsystem.model.Product;
+import com.malikov.shopsystem.domain.Product;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;

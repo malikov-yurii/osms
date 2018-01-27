@@ -1,8 +1,8 @@
 package com.malikov.shopsystem;
 
 import com.malikov.shopsystem.matcher.ModelMatcher;
-import com.malikov.shopsystem.model.Order;
-import com.malikov.shopsystem.model.OrderLine;
+import com.malikov.shopsystem.domain.Order;
+import com.malikov.shopsystem.domain.OrderLine;
 import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.enumtype.PaymentType;
 

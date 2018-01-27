@@ -2,8 +2,8 @@ package com.malikov.shopsystem.mapper;
 
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderPage;
-import com.malikov.shopsystem.model.Customer;
-import com.malikov.shopsystem.model.Order;
+import com.malikov.shopsystem.domain.Customer;
+import com.malikov.shopsystem.domain.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

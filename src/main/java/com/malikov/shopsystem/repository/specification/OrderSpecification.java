@@ -1,7 +1,7 @@
 package com.malikov.shopsystem.repository.specification;
 
 import com.malikov.shopsystem.dto.OrderFilterDto;
-import com.malikov.shopsystem.model.Order;
+import com.malikov.shopsystem.domain.Order;
 import com.malikov.shopsystem.util.DateTimeUtil;
 import org.hibernate.criterion.MatchMode;
 import org.springframework.data.jpa.domain.Specification;

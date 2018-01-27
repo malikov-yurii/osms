@@ -13,18 +13,6 @@ public class OrderLineReportDto {
     private BigDecimal itemValue;
     private BigDecimal orderLineValue;
 
-    public OrderLineReportDto() {
-    }
-
-    public OrderLineReportDto(Integer orderLineIndex, String name, Integer quantity, BigDecimal itemValue,
-                              BigDecimal orderLineValue) {
-        this.orderLineIndex = orderLineIndex;
-        this.name = name;
-        this.quantity = quantity;
-        this.itemValue = itemValue;
-        this.orderLineValue = orderLineValue;
-    }
-
     public Integer getOrderLineIndex() {
         return orderLineIndex;
     }
@@ -64,4 +52,5 @@ public class OrderLineReportDto {
     public void setOrderLineValue(BigDecimal orderLineValue) {
         this.orderLineValue = orderLineValue;
     }
+
 }

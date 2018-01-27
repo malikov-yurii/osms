@@ -1,10 +1,10 @@
 package com.malikov.shopsystem;
 
 
-import com.malikov.shopsystem.model.Product;
-import com.malikov.shopsystem.model.ProductVariation;
-import com.malikov.shopsystem.model.VariationType;
-import com.malikov.shopsystem.model.VariationValue;
+import com.malikov.shopsystem.domain.Product;
+import com.malikov.shopsystem.domain.ProductVariation;
+import com.malikov.shopsystem.domain.VariationType;
+import com.malikov.shopsystem.domain.VariationValue;
 
 import java.math.BigDecimal;
 import java.util.Collections;

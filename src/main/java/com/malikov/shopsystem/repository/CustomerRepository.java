@@ -1,6 +1,6 @@
 package com.malikov.shopsystem.repository;
 
-import com.malikov.shopsystem.model.Customer;
+import com.malikov.shopsystem.domain.Customer;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
