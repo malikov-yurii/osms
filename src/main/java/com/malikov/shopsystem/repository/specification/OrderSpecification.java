@@ -13,9 +13,6 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static org.springframework.data.jpa.domain.Specifications.where;
 
-/**
- * @author Yurii Malikov
- */
 public class OrderSpecification {
 
     private OrderSpecification() {

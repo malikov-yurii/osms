@@ -1,8 +1,12 @@
 package com.malikov.shopsystem.service;
 
+import com.malikov.shopsystem.domain.Order;
+import com.malikov.shopsystem.domain.OrderLine;
+import com.malikov.shopsystem.domain.Product;
+import com.malikov.shopsystem.domain.ProductAggregator;
+import com.malikov.shopsystem.domain.ProductVariation;
 import com.malikov.shopsystem.enumtype.DbOperation;
 import com.malikov.shopsystem.enumtype.OrderStatus;
-import com.malikov.shopsystem.domain.*;
 import com.malikov.shopsystem.repository.ProductAggregatorRepository;
 import com.malikov.shopsystem.repository.ProductRepository;
 import com.malikov.shopsystem.repository.ProductVariationRepository;
@@ -10,18 +14,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import static com.malikov.shopsystem.enumtype.DbOperation.DECREASE_STOCK;
 import static com.malikov.shopsystem.enumtype.DbOperation.INCREASE_STOCK;
-import static com.malikov.shopsystem.enumtype.OrderStatus.*;
+import static com.malikov.shopsystem.enumtype.OrderStatus.OK;
+import static com.malikov.shopsystem.enumtype.OrderStatus.SHP;
+import static com.malikov.shopsystem.enumtype.OrderStatus.WFP;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 
-/**
- * @author Yurii Malikov
- */
 @Service
 public class UpdateStockService {
 

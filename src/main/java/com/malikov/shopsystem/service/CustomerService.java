@@ -53,8 +53,8 @@ public class CustomerService {
         return mapper.toAutocompleteDto(customerRepository.getByLastNameLike(atAnyPosition(lastNameMask)));
     }
 
-    private String atAnyPosition(String lastNameMask) {
-        return "%" + lastNameMask + "%";
+    private String atAnyPosition(String subString) {
+        return "%" + subString + "%";
     }
 
     public List<CustomerAutocompleteDto> getByPhoneNumberMask(String phoneNumberMask) {

@@ -20,9 +20,6 @@ import java.util.Optional;
 
 import static org.springframework.http.HttpMethod.GET;
 
-/**
- * @author Yurii Malikov
- */
 @Component
 public class RefreshEuroExchangeRateScheduledTask {
 

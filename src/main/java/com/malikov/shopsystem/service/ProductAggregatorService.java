@@ -13,9 +13,6 @@ import java.util.stream.Collectors;
 
 import static com.google.common.collect.Streams.stream;
 
-/**
- * @author Yurii Malikov
- */
 @Service
 public class ProductAggregatorService {
 
