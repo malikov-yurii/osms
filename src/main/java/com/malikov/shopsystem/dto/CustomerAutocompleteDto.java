@@ -7,8 +7,8 @@ public class CustomerAutocompleteDto {
     private String customerFirstName;
     private String customerLastName;
     private String customerPhoneNumber;
-    private String destinationCity;
-    private String destinationPostOffice;
+    private String customerCityName;
+    private String customerPostOffice;
 
     public Long getCustomerId() {
         return customerId;
@@ -50,20 +50,20 @@ public class CustomerAutocompleteDto {
         this.customerPhoneNumber = customerPhoneNumber;
     }
 
-    public String getDestinationCity() {
-        return destinationCity;
+    public String getCustomerCityName() {
+        return customerCityName;
     }
 
-    public void setDestinationCity(String destinationCity) {
-        this.destinationCity = destinationCity;
+    public void setCustomerCityName(String customerCityName) {
+        this.customerCityName = customerCityName;
     }
 
-    public String getDestinationPostOffice() {
-        return destinationPostOffice;
+    public String getCustomerPostOffice() {
+        return customerPostOffice;
     }
 
-    public void setDestinationPostOffice(String destinationPostOffice) {
-        this.destinationPostOffice = destinationPostOffice;
+    public void setCustomerPostOffice(String customerPostOffice) {
+        this.customerPostOffice = customerPostOffice;
     }
 
 }

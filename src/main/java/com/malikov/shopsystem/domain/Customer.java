@@ -6,13 +6,12 @@ import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 
-@SuppressWarnings("JpaQlInspection")
 @Entity
-@Table(name = "osms_customers", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "phone_number",
-                name = "customers_phone_number_idx")
-})
-public class Customer implements HasId{
+@Table(
+        name = "osms_customers",
+        uniqueConstraints = {@UniqueConstraint(columnNames = "phone_number", name = "customers_phone_number_idx")}
+)
+public class Customer implements HasId {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

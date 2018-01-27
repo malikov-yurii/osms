@@ -23,8 +23,8 @@ public interface CustomerMapper {
     @Mapping(source = "customerFirstName", target = "name")
     @Mapping(source = "customerLastName", target = "lastName")
     @Mapping(source = "customerPhoneNumber", target = "phoneNumber")
-    @Mapping(source = "destinationCity", target = "city")
-    @Mapping(source = "destinationPostOffice", target = "postOffice")
+    @Mapping(source = "customerCity", target = "city")
+    @Mapping(source = "customerPostOffice", target = "postOffice")
     @Mapping(source = "customerEmail", target = "email")
     @Mapping(source = "customerNote", target = "note")
     Customer toEntity(CustomerDto source);
@@ -33,8 +33,8 @@ public interface CustomerMapper {
     @Mapping(source = "customerFirstName", target = "name")
     @Mapping(source = "customerLastName", target = "lastName")
     @Mapping(source = "customerPhoneNumber", target = "phoneNumber")
-    @Mapping(source = "destinationCity", target = "city")
-    @Mapping(source = "destinationPostOffice", target = "postOffice")
+    @Mapping(source = "customerCity", target = "city")
+    @Mapping(source = "customerPostOffice", target = "postOffice")
     @Mapping(source = "customerEmail", target = "email")
     @Mapping(source = "customerNote", target = "note")
     Customer updateCustomer(CustomerDto source, @MappingTarget Customer customer);
@@ -43,8 +43,8 @@ public interface CustomerMapper {
     @Mapping(source = "name", target = "customerFirstName")
     @Mapping(source = "lastName", target = "customerLastName")
     @Mapping(source = "phoneNumber", target = "customerPhoneNumber")
-    @Mapping(source = "city", target = "destinationCity")
-    @Mapping(source = "postOffice", target = "destinationPostOffice")
+    @Mapping(source = "city", target = "customerCity")
+    @Mapping(source = "postOffice", target = "customerPostOffice")
     @Mapping(source = "email", target = "customerEmail")
     @Mapping(source = "note", target = "customerNote")
     CustomerDto toDto(Customer source);
@@ -56,16 +56,16 @@ public interface CustomerMapper {
     @Mapping(source = "customerFirstName", target = "name")
     @Mapping(source = "customerLastName", target = "lastName")
     @Mapping(source = "customerPhoneNumber", target = "phoneNumber")
-    @Mapping(source = "destinationCity", target = "city")
-    @Mapping(source = "destinationPostOffice", target = "postOffice")
+    @Mapping(source = "customerCity", target = "city")
+    @Mapping(source = "customerPostOffice", target = "postOffice")
     Customer toCustomer(Order source);
 
     @Mapping(source = "id", target = "customerId")
     @Mapping(source = "name", target = "customerFirstName")
     @Mapping(source = "lastName", target = "customerLastName")
     @Mapping(source = "phoneNumber", target = "customerPhoneNumber")
-    @Mapping(source = "city", target = "destinationCity")
-    @Mapping(source = "postOffice", target = "destinationPostOffice")
+    @Mapping(source = "city", target = "customerCity")
+    @Mapping(source = "postOffice", target = "customerPostOffice")
     CustomerAutocompleteDto toAutocompleteDto(Customer customer);
 
     List<CustomerAutocompleteDto> toAutocompleteDto(List<Customer> customer);
