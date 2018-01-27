@@ -3,18 +3,18 @@ package com.malikov.shopsystem.enumtype;
 /**
  * @author Yurii Malikov
  */
-public enum CurrencyCode {
+public enum CurrencyCodeIso {
 
     EUR("eur"), UAH("UAH");
 
     private String code;
 
-    CurrencyCode(String code) {
+    CurrencyCodeIso(String code) {
         this.code = code;
     }
 
-    public static CurrencyCode forCurrencyCode(String code) {
-        for(CurrencyCode currencyCode : CurrencyCode.values()) {
+    public static CurrencyCodeIso forCurrencyCode(String code) {
+        for(CurrencyCodeIso currencyCode : CurrencyCodeIso.values()) {
             if (currencyCode.code().equals(code)) {
                 return currencyCode;
             }

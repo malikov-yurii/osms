@@ -1,6 +1,6 @@
-package com.malikov.shopsystem.util.converter;
+package com.malikov.shopsystem.domain.converter;
 
-import com.malikov.shopsystem.enumtype.CurrencyCode;
+import com.malikov.shopsystem.enumtype.CurrencyCodeIso;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.usertype.UserType;
@@ -23,16 +23,16 @@ public class CurrencyCodeUserType implements UserType {
     }
 
     public Class returnedClass() {
-        return CurrencyCode.class;
+        return CurrencyCodeIso.class;
     }
 
     @Override
     public Object nullSafeGet(ResultSet rs, String[] names, SharedSessionContractImplementor session,
                               Object owner) throws HibernateException, SQLException {
         String code = rs.getString(names[0]);
-        CurrencyCode result = null;
+        CurrencyCodeIso result = null;
         if (!rs.wasNull()) {
-            result = CurrencyCode.forCurrencyCode(code);
+            result = CurrencyCodeIso.forCurrencyCode(code);
         }
         return result;
     }
@@ -43,7 +43,7 @@ public class CurrencyCodeUserType implements UserType {
         if (null == value) {
             st.setNull(index, Types.VARCHAR);
         } else {
-            st.setString(index, ((CurrencyCode) value).code());
+            st.setString(index, ((CurrencyCodeIso) value).code());
         }
 
     }
