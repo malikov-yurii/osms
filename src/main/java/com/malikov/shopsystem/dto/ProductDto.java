@@ -2,120 +2,98 @@ package com.malikov.shopsystem.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 
 public class ProductDto implements Serializable {
 
-    private String name;
-    private List<String> categories;
-    private BigDecimal price;
-    private Integer quantity;
-    private Boolean unlimited;
-    private String supplier;
-    private Boolean isAggregated;
-    private String image;
-    private Long id;
-    private Long variationId;
-
-    public Long getProductVariationId() {
-        return variationId;
-    }
-
-    public void setProductVariationId(Long variationId) {
-        this.variationId = variationId;
-    }
+    private Long productId;
+    private Long productVariationId;
+    private String productName;
+    private BigDecimal productPrice;
+    private Integer productQuantity;
+    private Boolean productQuantityUnlimited;
+    private String productSupplier;
+    private Boolean productAggregated;
+    private String productImage;
+    private List<String> productCategories;
 
     public Long getProductId() {
-        return id;
+        return productId;
     }
 
-    public void setProductId(Long id) {
-        this.id = id;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
-    public List<String> getCategories() {
-        return categories;
+    public Long getProductVariationId() {
+        return productVariationId;
     }
 
-    public void setCategories(List<String> categories) {
-        this.categories = categories;
+    public void setProductVariationId(Long productVariationId) {
+        this.productVariationId = productVariationId;
     }
 
-    public String getName() {
-        return name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getProductPrice() {
+        return productPrice;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price.setScale(0, RoundingMode.HALF_UP);
+    public void setProductPrice(BigDecimal productPrice) {
+        this.productPrice = productPrice;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getProductQuantity() {
+        return productQuantity;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setProductQuantity(Integer productQuantity) {
+        this.productQuantity = productQuantity;
     }
 
-    public boolean isNew() {
-        return variationId == null;
+    public Boolean getProductQuantityUnlimited() {
+        return productQuantityUnlimited;
     }
 
-    public String getSupplier() {
-        return supplier;
+    public void setProductQuantityUnlimited(Boolean productQuantityUnlimited) {
+        this.productQuantityUnlimited = productQuantityUnlimited;
     }
 
-    public void setSupplier(String supplier) {
-        this.supplier = supplier;
+    public String getProductSupplier() {
+        return productSupplier;
     }
 
-    public Long getId() {
-        return id;
+    public void setProductSupplier(String productSupplier) {
+        this.productSupplier = productSupplier;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Boolean getProductAggregated() {
+        return productAggregated;
     }
 
-    public Long getVariationId() {
-        return variationId;
+    public void setProductAggregated(Boolean productAggregated) {
+        this.productAggregated = productAggregated;
     }
 
-    public void setVariationId(Long variationId) {
-        this.variationId = variationId;
+    public String getProductImage() {
+        return productImage;
     }
 
-    public Boolean getAggregated() {
-        return isAggregated;
+    public void setProductImage(String productImage) {
+        this.productImage = productImage;
     }
 
-    public void setAggregated(Boolean aggregated) {
-        isAggregated = aggregated;
+    public List<String> getProductCategories() {
+        return productCategories;
     }
 
-    public String getImage() {
-        return image;
+    public void setProductCategories(List<String> productCategories) {
+        this.productCategories = productCategories;
     }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public Boolean isUnlimited() {
-        return unlimited;
-    }
-
-    public void setUnlimited(Boolean unlimited) {
-        this.unlimited = unlimited;
-    }
-
 }

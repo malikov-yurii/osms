@@ -70,14 +70,14 @@ public class ProductService {
 
     private void updateProductVariation(ProductDto dto) {
 
-        ProductVariation productVariation = productVariationRepository.findOne(dto.getVariationId());
+        ProductVariation productVariation = productVariationRepository.findOne(dto.getProductVariationId());
         productUpdateByNotNullFieldsMapper.update(dto, productVariation);
     }
 
     private boolean requiredDataToUpdateProductIsPresent(ProductDto dto) {
 
-        return (nonNull(dto.getPrice()) || nonNull(dto.getQuantity()))
-                && (nonNull(dto.getId()) || nonNull(dto.getProductVariationId()));
+        return (nonNull(dto.getProductPrice()) || nonNull(dto.getProductQuantity()))
+                && (nonNull(dto.getProductId()) || nonNull(dto.getProductVariationId()));
     }
 
 }

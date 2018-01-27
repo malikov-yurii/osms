@@ -30,35 +30,35 @@ import static java.util.Collections.singleton;
 public abstract class ProductMapper {
 
     @Mapping(target = "aggregated", expression = "java( source.getProductAggregator() != null )")
-    @Mapping(source = "id", target = "variationId")
-    @Mapping(source = "product.id", target = "id")
-    @Mapping(source = "product.categories", target = "categories")
-    @Mapping(source = "product.imageFileName", target = "image")
-    @Mapping(source = "product.unlimited", target = "unlimited")
-    @Mapping(source = "product.supplier", target = "supplier")
+    @Mapping(source = "id", target = "productVariationId")
+    @Mapping(source = "product.id", target = "productId")
+    @Mapping(source = "product.categories", target = "productCategories")
+    @Mapping(source = "product.imageFileName", target = "productImage")
+    @Mapping(source = "product.unlimited", target = "productUnlimited")
+    @Mapping(source = "product.supplier", target = "productSupplier")
     public abstract ProductDto toDto(ProductVariation source);
 
     @AfterMapping
     protected void afterToDto(ProductVariation source, @MappingTarget ProductDto target) {
-        target.setName(productVariationFullName(source));
-        target.setPrice(calculateProductVariationPrice(source));
+        target.setProductName(productVariationFullName(source));
+        target.setProductPrice(calculateProductVariationPrice(source));
     }
 
     protected String productVariationFullName(ProductVariation source) {
         return source.getProduct().getName() + " " + source.getVariationValue().getName();
     }
 
-    @Mapping(target = "variationId", constant = "0")
-    @Mapping(target = "aggregated", constant = "false")
-    @Mapping(source = "imageFileName", target = "image")
+    @Mapping(target = "productVariationId", constant = "0")
+    @Mapping(target = "productAggregated", constant = "false")
+    @Mapping(source = "imageFileName", target = "productImage")
     public abstract ProductDto toDto(Product source);
 
     @AfterMapping
     protected void afterToDto(Product source, @MappingTarget ProductDto target) {
-        target.setPrice(calculateProductPrice(source));
+        target.setProductPrice(calculateProductPrice(source));
     }
 
-    @Mapping(target = "price", ignore = true)
+    @Mapping(target = "productPrice", ignore = true)
     @Mapping(source = "product.id", target = "productId")
     @Mapping(source = "id", target = "productVariationId")
     public abstract ProductAutocompleteDto toAutocompleteDto(ProductVariation source);
@@ -74,9 +74,9 @@ public abstract class ProductMapper {
         target.setProductPrice(productVariationPrice.setScale(0, RoundingMode.HALF_UP));
     }
 
+    @Mapping(target = "productVariationId", constant = "0")
     @Mapping(target = "price", ignore = true)
     @Mapping(source = "id", target = "productId")
-    @Mapping(target = "productVariationId", constant = "0")
     public abstract ProductAutocompleteDto toAutocompleteDto(Product source);
 
     public Collection<ProductAutocompleteDto> toAutocompleteDtoSingleton(Product product) {
