@@ -7,7 +7,6 @@ import com.malikov.shopsystem.enumtype.PaymentType;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -22,7 +21,7 @@ public class OrderUpdateDto  implements Serializable{
     private String destinationPostOffice;
     private String customerNote;
     private PaymentType paymentType;
-    private BigDecimal totalSum;
+    private BigDecimal totalValue;
     private OrderStatus status;
     private String orderNote;
 
@@ -30,16 +29,16 @@ public class OrderUpdateDto  implements Serializable{
         return orderId;
     }
 
-    public void setOrderId(Long id) {
-        this.orderId = id;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
-    public String getCustomerFirstName() {
-        return customerFirstName;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomerFirstName(String customerFirstName) {
-        this.customerFirstName = customerFirstName;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public String getCustomerLastName() {
@@ -48,6 +47,14 @@ public class OrderUpdateDto  implements Serializable{
 
     public void setCustomerLastName(String customerLastName) {
         this.customerLastName = customerLastName;
+    }
+
+    public String getCustomerFirstName() {
+        return customerFirstName;
+    }
+
+    public void setCustomerFirstName(String customerFirstName) {
+        this.customerFirstName = customerFirstName;
     }
 
     public String getCustomerPhoneNumber() {
@@ -82,20 +89,20 @@ public class OrderUpdateDto  implements Serializable{
         this.customerNote = customerNote;
     }
 
-    public BigDecimal getTotalSum() {
-        return totalSum;
-    }
-
-    public void setTotalSum(BigDecimal totalSum) {
-        this.totalSum = totalSum.setScale(0, RoundingMode.HALF_UP);
-    }
-
     public PaymentType getPaymentType() {
         return paymentType;
     }
 
     public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
+    }
+
+    public BigDecimal getTotalValue() {
+        return totalValue;
+    }
+
+    public void setTotalValue(BigDecimal totalValue) {
+        this.totalValue = totalValue;
     }
 
     public OrderStatus getStatus() {
@@ -113,13 +120,4 @@ public class OrderUpdateDto  implements Serializable{
     public void setOrderNote(String orderNote) {
         this.orderNote = orderNote;
     }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
 }

@@ -13,14 +13,6 @@ public class OrderLineDto implements Serializable {
     private BigDecimal orderLineProductPrice;
     private String supplier;
 
-    public BigDecimal getOrderLineProductPrice() {
-        return orderLineProductPrice;
-    }
-
-    public void setOrderLinePrice(BigDecimal orderLineProductPrice) {
-        this.orderLineProductPrice = orderLineProductPrice;
-    }
-
     public Long getOrderLineId() {
         return orderLineId;
     }
@@ -59,6 +51,14 @@ public class OrderLineDto implements Serializable {
 
     public void setOrderLineProductQuantity(Integer orderLineProductQuantity) {
         this.orderLineProductQuantity = orderLineProductQuantity;
+    }
+
+    public BigDecimal getOrderLineProductPrice() {
+        return orderLineProductPrice;
+    }
+
+    public void setOrderLineProductPrice(BigDecimal orderLineProductPrice) {
+        this.orderLineProductPrice = orderLineProductPrice;
     }
 
     public String getSupplier() {

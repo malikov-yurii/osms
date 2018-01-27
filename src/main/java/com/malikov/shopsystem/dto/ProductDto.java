@@ -96,4 +96,5 @@ public class ProductDto implements Serializable {
     public void setProductCategories(List<String> productCategories) {
         this.productCategories = productCategories;
     }
+
 }

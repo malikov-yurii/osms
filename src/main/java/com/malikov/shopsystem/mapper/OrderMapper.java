@@ -18,7 +18,7 @@ public interface OrderMapper {
     @Mapping(source = "customer.note", target = "customerNote")
     @Mapping(source = "dateTimeCreated", target = "createdDateTime")
     @Mapping(source = "comment", target = "orderNote")
-    @Mapping(source = "totalSum", target = "totalSum", defaultValue = "0")
+    @Mapping(source = "totalSum", target = "totalValue", defaultValue = "0")
     OrderDto toDto(Order order);
 
     List<OrderDto> toDto(List<Order> order);

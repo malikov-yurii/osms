@@ -17,8 +17,8 @@ public class CustomerDto implements Serializable {
         return customerId;
     }
 
-    public void setCustomerId(Long id) {
-        this.customerId = id;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public String getCustomerFirstName() {

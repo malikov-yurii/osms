@@ -8,9 +8,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.List;
 
-/**
- * @author Yurii Malikov
- */
 public class GenericFilter<F, R> {
 
     private Paging paging;
