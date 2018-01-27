@@ -25,7 +25,7 @@ public abstract class OrderLineMapper {
 
     @AfterMapping
     protected void afterToDto(OrderLine source, @MappingTarget OrderLineDto target) {
-        target.setOrderLinePrice(source.getProductPrice().setScale(0, RoundingMode.HALF_UP));
+        target.setOrderLineProductPrice(source.getProductPrice().setScale(0, RoundingMode.HALF_UP));
     }
 
     public abstract List<OrderLineDto> toDto(List<OrderLine> source);

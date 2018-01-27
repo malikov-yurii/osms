@@ -1,17 +1,26 @@
 package com.malikov.shopsystem.domain;
 
-import com.malikov.shopsystem.HasId;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
-import javax.persistence.*;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(
         name = "osms_customers",
         uniqueConstraints = {@UniqueConstraint(columnNames = "phone_number", name = "customers_phone_number_idx")}
 )
-public class Customer implements HasId {
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -116,4 +125,5 @@ public class Customer implements HasId {
     public void setParent(Customer parent) {
         this.parent = parent;
     }
+
 }

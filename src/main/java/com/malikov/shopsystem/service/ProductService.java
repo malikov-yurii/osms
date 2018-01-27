@@ -1,11 +1,11 @@
 package com.malikov.shopsystem.service;
 
+import com.malikov.shopsystem.domain.Product;
+import com.malikov.shopsystem.domain.ProductVariation;
 import com.malikov.shopsystem.dto.ProductDto;
 import com.malikov.shopsystem.dto.ProductPage;
 import com.malikov.shopsystem.mapper.ProductMapper;
 import com.malikov.shopsystem.mapper.ProductUpdateByNotNullFieldsMapper;
-import com.malikov.shopsystem.domain.Product;
-import com.malikov.shopsystem.domain.ProductVariation;
 import com.malikov.shopsystem.repository.ProductRepository;
 import com.malikov.shopsystem.repository.ProductVariationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.malikov.shopsystem.util.ValidationUtil.checkNotFoundById;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -31,7 +30,7 @@ public class ProductService {
     private ProductAggregatorService productAggregatorService;
 
     public Product get(Long id) {
-        return checkNotFoundById(productRepository.findOne(id), id);
+        return productRepository.findOne(id);
     }
 
     public ProductPage getPage(int pageNumber, int pageCapacity) {

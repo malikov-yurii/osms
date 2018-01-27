@@ -29,12 +29,12 @@ import static java.util.Collections.singleton;
 @Mapper(componentModel = "spring")
 public abstract class ProductMapper {
 
-    @Mapping(target = "aggregated", expression = "java( source.getProductAggregator() != null )")
+    @Mapping(target = "productAggregated", expression = "java( source.getProductAggregator() != null )")
     @Mapping(source = "id", target = "productVariationId")
     @Mapping(source = "product.id", target = "productId")
     @Mapping(source = "product.categories", target = "productCategories")
     @Mapping(source = "product.imageFileName", target = "productImage")
-    @Mapping(source = "product.unlimited", target = "productUnlimited")
+    @Mapping(source = "product.unlimited", target = "productQuantityUnlimited")
     @Mapping(source = "product.supplier", target = "productSupplier")
     public abstract ProductDto toDto(ProductVariation source);
 
@@ -75,7 +75,7 @@ public abstract class ProductMapper {
     }
 
     @Mapping(target = "productVariationId", constant = "0")
-    @Mapping(target = "price", ignore = true)
+    @Mapping(target = "productPrice", ignore = true)
     @Mapping(source = "id", target = "productId")
     public abstract ProductAutocompleteDto toAutocompleteDto(Product source);
 

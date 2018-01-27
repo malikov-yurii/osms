@@ -8,7 +8,7 @@ public class CustomerDto implements Serializable {
     private String customerFirstName;
     private String customerLastName;
     private String customerPhoneNumber;
-    private String customerCity;
+    private String customerCityName;
     private String customerPostOffice;
     private String customerEmail;
     private String customerNote;
@@ -45,12 +45,12 @@ public class CustomerDto implements Serializable {
         this.customerPhoneNumber = customerPhoneNumber;
     }
 
-    public String getCustomerCity() {
-        return customerCity;
+    public String getCustomerCityName() {
+        return customerCityName;
     }
 
-    public void setCustomerCity(String customerCity) {
-        this.customerCity = customerCity;
+    public void setCustomerCityName(String customerCityName) {
+        this.customerCityName = customerCityName;
     }
 
     public String getCustomerPostOffice() {

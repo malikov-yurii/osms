@@ -1,17 +1,16 @@
 package com.malikov.shopsystem.service;
 
-import com.malikov.shopsystem.dto.filter.GenericFilter;
+import com.malikov.shopsystem.domain.Order;
+import com.malikov.shopsystem.domain.OrderLine;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
 import com.malikov.shopsystem.dto.OrderPage;
 import com.malikov.shopsystem.dto.OrderUpdateDto;
+import com.malikov.shopsystem.dto.filter.GenericFilter;
 import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.enumtype.PaymentType;
 import com.malikov.shopsystem.mapper.OrderMapper;
 import com.malikov.shopsystem.mapper.OrderUpdateByNotNullFieldsMapper;
-import com.malikov.shopsystem.domain.Customer;
-import com.malikov.shopsystem.domain.Order;
-import com.malikov.shopsystem.domain.OrderLine;
 import com.malikov.shopsystem.repository.CustomerRepository;
 import com.malikov.shopsystem.repository.OrderRepository;
 import com.malikov.shopsystem.repository.UserRepository;
@@ -29,7 +28,6 @@ import static com.malikov.shopsystem.repository.specification.OrderSpecification
 import static com.malikov.shopsystem.repository.specification.OrderSpecification.createdBetween;
 import static com.malikov.shopsystem.repository.specification.OrderSpecification.emptySpecification;
 import static com.malikov.shopsystem.repository.specification.OrderSpecification.orderOfCustomer;
-import static com.malikov.shopsystem.util.ValidationUtil.checkNotFoundById;
 import static java.util.Collections.singleton;
 import static java.util.Objects.nonNull;
 
@@ -114,7 +112,7 @@ public class OrderService {
     @Transactional
     public void update(OrderUpdateDto orderUpdateDto) {
 
-        Order order = checkNotFoundById(orderRepository.findOne(orderUpdateDto.getOrderId()), orderUpdateDto.getOrderId());
+        Order order = orderRepository.findOne(orderUpdateDto.getOrderId());
 
         setCustomerInfoToOrder(order, orderUpdateDto);
         orderUpdateByNotNullFieldsMapper.updateByNonCustomerRelatedInfo(orderUpdateDto, order);
@@ -140,8 +138,7 @@ public class OrderService {
 
     @Transactional
     public void changeOrderCustomer(Long customerId, Order order) {
-        Customer customer = checkNotFoundById(customerRepository.findOne(customerId), customerId);
-        orderMapper.updateByCustomer(customer, order);
+        orderMapper.updateByCustomer(customerRepository.findOne(customerId), order);
     }
 
     public OrderPage getPage(int pageNumber, int pageCapacity) {

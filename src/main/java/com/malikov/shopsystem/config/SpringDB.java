@@ -49,7 +49,7 @@ public class SpringDB {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan("com.malikov.**.model");
+        em.setPackagesToScan("com.malikov.**.domain");
         em.setJpaPropertyMap(ImmutableMap.of("hibernate.formal_sql", "false", "hibernate.use_sql_comments",
                 "false"));
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();

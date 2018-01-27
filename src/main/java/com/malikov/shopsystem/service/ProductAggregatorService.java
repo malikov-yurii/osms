@@ -1,8 +1,8 @@
 package com.malikov.shopsystem.service;
 
+import com.malikov.shopsystem.domain.ProductAggregator;
 import com.malikov.shopsystem.dto.ProductAggregatorDto;
 import com.malikov.shopsystem.mapper.ProductAggregatorMapper;
-import com.malikov.shopsystem.domain.ProductAggregator;
 import com.malikov.shopsystem.repository.ProductAggregatorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.google.common.collect.Streams.stream;
-import static com.malikov.shopsystem.util.ValidationUtil.checkNotFoundById;
 
 /**
  * @author Yurii Malikov
@@ -35,11 +34,8 @@ public class ProductAggregatorService {
     @Transactional
     public void update(ProductAggregatorDto dto) {
 
-        ProductAggregator productAggregator =
-                checkNotFoundById(productAggregatorRepository.findOne(dto.getAggregatorId()), dto.getAggregatorId());
-
-        productAggregator.setQuantity(dto.getQuantity());
-
+        ProductAggregator productAggregator = productAggregatorRepository.findOne(dto.getAggregatorId());
+        productAggregator.setQuantity(dto.getAggregatorQuantity());
         productAggregatorRepository.save(productAggregator);
     }
 
