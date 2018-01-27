@@ -5,9 +5,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
 
-/**
- * @author Yurii Malikov
- */
 public class Paging implements Serializable {
 
     public static final int DEFAULT_PAGE_NUMBER = 0;

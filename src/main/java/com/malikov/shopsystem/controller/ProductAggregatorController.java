@@ -22,7 +22,7 @@ public class ProductAggregatorController {
 
     @PutMapping("/{aggregatorId}")
     public void update(@PathVariable Long aggregatorId, @RequestBody ProductAggregatorDto aggregatorDto) {
-        aggregatorDto.setId(aggregatorId);
+        aggregatorDto.setAggregatorId(aggregatorId);
         productAggregatorService.update(aggregatorDto);
     }
 

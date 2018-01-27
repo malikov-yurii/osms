@@ -2,37 +2,34 @@ package com.malikov.shopsystem.dto;
 
 import java.io.Serializable;
 
-/**
- * @author Yurii Malikov
- */
 public class ProductAggregatorDto implements Serializable {
 
-    private Long id;
-    private String name;
-    private Integer quantity;
+    private Long aggregatorId;
+    private String aggregatorName;
+    private Integer aggregatorQuantity;
 
-    public Long getId() {
-        return id;
+    public Long getAggregatorId() {
+        return aggregatorId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setAggregatorId(Long aggregatorId) {
+        this.aggregatorId = aggregatorId;
     }
 
-    public String getName() {
-        return name;
+    public String getAggregatorName() {
+        return aggregatorName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAggregatorName(String aggregatorName) {
+        this.aggregatorName = aggregatorName;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getAggregatorQuantity() {
+        return aggregatorQuantity;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setAggregatorQuantity(Integer aggregatorQuantity) {
+        this.aggregatorQuantity = aggregatorQuantity;
     }
 
 }

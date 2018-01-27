@@ -36,7 +36,7 @@ public class ProductAggregatorService {
     public void update(ProductAggregatorDto dto) {
 
         ProductAggregator productAggregator =
-                checkNotFoundById(productAggregatorRepository.findOne(dto.getId()), dto.getId());
+                checkNotFoundById(productAggregatorRepository.findOne(dto.getAggregatorId()), dto.getAggregatorId());
 
         productAggregator.setQuantity(dto.getQuantity());
 
