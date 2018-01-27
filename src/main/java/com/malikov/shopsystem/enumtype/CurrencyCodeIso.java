@@ -1,8 +1,5 @@
 package com.malikov.shopsystem.enumtype;
 
-/**
- * @author Yurii Malikov
- */
 public enum CurrencyCodeIso {
 
     EUR("eur"), UAH("UAH");
