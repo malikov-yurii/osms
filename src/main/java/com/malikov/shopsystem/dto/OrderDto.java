@@ -13,7 +13,6 @@ public class OrderDto  implements Serializable {
 
     @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
     private LocalDateTime createdDateTime;
-
     private Long orderId;
     private Long customerId;
     private String customerLastName;
@@ -23,10 +22,9 @@ public class OrderDto  implements Serializable {
     private String destinationPostOffice;
     private String customerNote;
     private PaymentType paymentType;
-    private BigDecimal totalSum;
+    private BigDecimal totalValue;
     private OrderStatus status;
-    private String note;
-
+    private String orderNote;
     private OrderLineDto[] orderItems;
 
     public LocalDateTime getCreatedDateTime() {
@@ -109,12 +107,12 @@ public class OrderDto  implements Serializable {
         this.paymentType = paymentType;
     }
 
-    public BigDecimal getTotalSum() {
-        return totalSum;
+    public BigDecimal getTotalValue() {
+        return totalValue;
     }
 
-    public void setTotalSum(BigDecimal totalSum) {
-        this.totalSum = totalSum;
+    public void setTotalValue(BigDecimal totalValue) {
+        this.totalValue = totalValue;
     }
 
     public OrderStatus getStatus() {
@@ -125,12 +123,12 @@ public class OrderDto  implements Serializable {
         this.status = status;
     }
 
-    public String getNote() {
-        return note;
+    public String getOrderNote() {
+        return orderNote;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setOrderNote(String orderNote) {
+        this.orderNote = orderNote;
     }
 
     public OrderLineDto[] getOrderItems() {
@@ -140,4 +138,5 @@ public class OrderDto  implements Serializable {
     public void setOrderItems(OrderLineDto[] orderItems) {
         this.orderItems = orderItems;
     }
+
 }
