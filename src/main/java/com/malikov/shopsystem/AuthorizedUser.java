@@ -2,7 +2,6 @@ package com.malikov.shopsystem;
 
 import com.malikov.shopsystem.domain.User;
 import com.malikov.shopsystem.dto.UserDto;
-import com.malikov.shopsystem.util.UserUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -16,7 +15,7 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
 
     public AuthorizedUser(User user) {
         super(user.getName(), user.getPassword(), true, true, true, true, user.getRoles());
-        this.userDto = UserUtil.asTo(user);
+        this.userDto = new UserDto(user.getId(), user.getName(), user.getPassword());
     }
 
     public static AuthorizedUser safeGet() {
@@ -40,10 +39,6 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
 
     public void update(UserDto newTo) {
         userDto = newTo;
-    }
-
-    public UserDto getUserDto() {
-        return userDto;
     }
 
     @Override

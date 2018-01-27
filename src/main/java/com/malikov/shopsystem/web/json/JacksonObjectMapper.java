@@ -9,13 +9,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-/**
- * <p> * Handling Hibernate lazy-loading
- *
- * @link https://github.com/FasterXML/jackson
- * @link https://github.com/FasterXML/jackson-datatype-hibernate
- * @link http://wiki.fasterxml.com/JacksonHowToCustomSerializers
- */
 public class JacksonObjectMapper extends ObjectMapper {
 
     private static final ObjectMapper MAPPER = new JacksonObjectMapper();
@@ -36,7 +29,6 @@ public class JacksonObjectMapper extends ObjectMapper {
         configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
         configure(DeserializationFeature.FAIL_ON_MISSING_CREATOR_PROPERTIES, false);
         configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, false);
-        //configure(DeserializationFeature., false);
 
         setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
         setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);

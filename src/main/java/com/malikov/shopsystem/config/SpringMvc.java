@@ -1,6 +1,6 @@
 package com.malikov.shopsystem.config;
 
-import com.malikov.shopsystem.util.converter.DateTimeFormatters;
+import com.malikov.shopsystem.web.formatter.DateTimeFormatter;
 import com.malikov.shopsystem.web.json.JacksonObjectMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -58,12 +58,12 @@ public class SpringMvc extends WebMvcConfigurerAdapter {
 
     @Bean
     public Formatter localTimeFormatter() {
-        return new DateTimeFormatters.LocalTimeFormatter();
+        return new DateTimeFormatter.LocalTimeFormatter();
     }
 
     @Bean
     public Formatter localDateFormatter() {
-        return new DateTimeFormatters.LocalDateFormatter();
+        return new DateTimeFormatter.LocalDateFormatter();
     }
 
     @Bean

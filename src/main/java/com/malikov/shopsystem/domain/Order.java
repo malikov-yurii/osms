@@ -2,7 +2,7 @@ package com.malikov.shopsystem.domain;
 
 import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.enumtype.PaymentType;
-import com.malikov.shopsystem.util.converter.LocalDateTimeAttributeConverter;
+import com.malikov.shopsystem.domain.converter.LocalDateTimeAttributeConverter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
