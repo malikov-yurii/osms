@@ -1,15 +1,14 @@
 package com.malikov.shopsystem.dto;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class ProductAutocompleteDto {
 
     private String label;
     private Long productId;
     private Long productVariationId;
-    private String name;
-    private BigDecimal price;
+    private String productName;
+    private BigDecimal productPrice;
 
     public String getLabel() {
         return label;
@@ -35,20 +34,20 @@ public class ProductAutocompleteDto {
         this.productVariationId = productVariationId;
     }
 
-    public String getName() {
-        return name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getProductPrice() {
+        return productPrice;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price.setScale(0, RoundingMode.HALF_UP);
+    public void setProductPrice(BigDecimal productPrice) {
+        this.productPrice = productPrice;
     }
 
 }

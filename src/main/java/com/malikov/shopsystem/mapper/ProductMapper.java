@@ -16,6 +16,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -69,8 +70,8 @@ public abstract class ProductMapper {
         final BigDecimal productVariationPrice = calculateProductVariationPrice(source);
         final String productVariationFullName = productVariationFullName(source);
         target.setLabel(productVariationFullName + productVariationPrice);
-        target.setName(productVariationFullName);
-        target.setPrice(productVariationPrice);
+        target.setProductName(productVariationFullName);
+        target.setProductPrice(productVariationPrice.setScale(0, RoundingMode.HALF_UP));
     }
 
     @Mapping(target = "price", ignore = true)
@@ -86,7 +87,7 @@ public abstract class ProductMapper {
     protected void afterToDto(Product source, @MappingTarget ProductAutocompleteDto target) {
         final BigDecimal productPrice = calculateProductPrice(source);
         target.setLabel(source.getName() + " " + productPrice);
-        target.setPrice(productPrice);
+        target.setProductPrice(productPrice.setScale(0, RoundingMode.HALF_UP));
     }
 
     public ProductPage toPage(org.springframework.data.domain.Page<Product> source) {
