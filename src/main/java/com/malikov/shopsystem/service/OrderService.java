@@ -114,7 +114,7 @@ public class OrderService {
     @Transactional
     public void update(OrderUpdateDto orderUpdateDto) {
 
-        Order order = checkNotFoundById(orderRepository.findOne(orderUpdateDto.getId()), orderUpdateDto.getId());
+        Order order = checkNotFoundById(orderRepository.findOne(orderUpdateDto.getOrderId()), orderUpdateDto.getOrderId());
 
         setCustomerInfoToOrder(order, orderUpdateDto);
         orderUpdateByNotNullFieldsMapper.updateByNonCustomerRelatedInfo(orderUpdateDto, order);

@@ -2,9 +2,6 @@ package com.malikov.shopsystem.dto;
 
 import java.math.BigDecimal;
 
-/**
- * @author Yurii Malikov
- */
 public class OrderLineReportDto {
 
     private Integer orderLineIndex;

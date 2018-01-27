@@ -29,7 +29,7 @@ public interface OrderUpdateByNotNullFieldsMapper {
     @Mapping(target = "destinationCity", ignore = true)
     @Mapping(target = "destinationPostOffice", ignore = true)
     @Mapping(target = "status", ignore = true)
-    @Mapping(source = "note", target = "comment")
+    @Mapping(source = "orderNote", target = "comment")
     void updateByNonCustomerRelatedInfo(OrderUpdateDto source, @MappingTarget Order target);
 
 }

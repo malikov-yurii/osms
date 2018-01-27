@@ -13,7 +13,7 @@ import java.math.RoundingMode;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderUpdateDto  implements Serializable{
 
-    private Long id;
+    private Long orderId;
     private Long customerId;
     private String customerLastName;
     private String customerFirstName;
@@ -24,14 +24,14 @@ public class OrderUpdateDto  implements Serializable{
     private PaymentType paymentType;
     private BigDecimal totalSum;
     private OrderStatus status;
-    private String note;
+    private String orderNote;
 
-    public Long getId() {
-        return id;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setOrderId(Long id) {
+        this.orderId = id;
     }
 
     public String getCustomerFirstName() {
@@ -106,12 +106,12 @@ public class OrderUpdateDto  implements Serializable{
         this.status = status;
     }
 
-    public String getNote() {
-        return note;
+    public String getOrderNote() {
+        return orderNote;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setOrderNote(String orderNote) {
+        this.orderNote = orderNote;
     }
 
     public Long getCustomerId() {
