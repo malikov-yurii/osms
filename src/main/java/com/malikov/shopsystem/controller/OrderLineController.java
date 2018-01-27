@@ -38,7 +38,7 @@ public class OrderLineController {
 
     @PutMapping(value = "/{orderLineId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@PathVariable Long orderLineId, @RequestBody OrderLineDto orderLineDto) {
-        orderLineDto.setId(orderLineId);
+        orderLineDto.setOrderLineId(orderLineId);
         orderLineService.update(orderLineDto);
     }
 

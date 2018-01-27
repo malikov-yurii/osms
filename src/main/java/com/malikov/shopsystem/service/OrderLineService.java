@@ -47,8 +47,8 @@ public class OrderLineService {
     @Autowired
     private OrderLineMapper orderLineMapper;
 
-    public OrderLine get(Long id) {
-        return orderLineRepository.findOne(id);
+    public OrderLine get(Long orderLineId) {
+        return orderLineRepository.findOne(orderLineId);
     }
 
     public List<ProductAutocompleteDto> getByProductMask(String productNameMask) {
@@ -82,7 +82,7 @@ public class OrderLineService {
     @Transactional
     public void update(OrderLineDto orderLineDto) {
 
-        OrderLine orderLine = get(orderLineDto.getId());
+        OrderLine orderLine = get(orderLineDto.getOrderLineId());
 
         boolean isProductNameUpdated = updateOrderLineProductName(orderLineDto, orderLine);
 
@@ -159,34 +159,34 @@ public class OrderLineService {
 
     private boolean updateOrderLineProductName(OrderLineDto orderLineDto, OrderLine orderLine) {
 
-        if (orderLineDto.getName() == null) {
+        if (isNull(orderLineDto.getOrderLineProductName())) {
             return false;
         }
 
-        orderLine.setProductName(orderLineDto.getName());
+        orderLine.setProductName(orderLineDto.getOrderLineProductName());
 
         return true;
     }
 
     private boolean updateOrderLineProductPrice(OrderLineDto orderLineDto, OrderLine orderLine) {
 
-        if (orderLineDto.getPrice() == null) {
+        if (isNull(orderLineDto.getOrderLineProductPrice())) {
             return false;
         }
 
-        orderLine.setProductPrice(orderLineDto.getPrice());
+        orderLine.setProductPrice(orderLineDto.getOrderLineProductPrice());
 
         return true;
     }
 
     private boolean updateOrderLineProductQuantity(OrderLineDto orderLineDto, OrderLine orderLine) {
 
-        if (orderLineDto.getQuantity() == null) {
+        if (isNull(orderLineDto.getOrderLineProductQuantity() )) {
             return false;
         }
 
-        updateStockService.updateStock(orderLine, orderLine.getProductQuantity() - orderLineDto.getQuantity());
-        orderLine.setProductQuantity(orderLineDto.getQuantity());
+        updateStockService.updateStock(orderLine, orderLine.getProductQuantity() - orderLineDto.getOrderLineProductQuantity());
+        orderLine.setProductQuantity(orderLineDto.getOrderLineProductQuantity());
 
         orderLineRepository.save(orderLine);
 

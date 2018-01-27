@@ -1,37 +1,32 @@
 package com.malikov.shopsystem.dto;
 
-import com.malikov.shopsystem.HasId;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
-public class OrderLineDto implements Serializable, HasId {
+public class OrderLineDto implements Serializable {
 
-    private Long id;
+    private Long orderLineId;
     private Long productId;
     private Long productVariationId;
-    private String name;
-    private Integer quantity;
-    private BigDecimal price;
+    private String orderLineProductName;
+    private Integer orderLineProductQuantity;
+    private BigDecimal orderLineProductPrice;
     private String supplier;
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getOrderLineProductPrice() {
+        return orderLineProductPrice;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price.setScale(0, RoundingMode.HALF_UP);
+    public void setOrderLinePrice(BigDecimal orderLineProductPrice) {
+        this.orderLineProductPrice = orderLineProductPrice;
     }
 
-    @Override
-    public Long getId() {
-        return id;
+    public Long getOrderLineId() {
+        return orderLineId;
     }
 
-    @Override
-    public void setId(Long id) {
-        this.id = id;
+    public void setOrderLineId(Long orderLineId) {
+        this.orderLineId = orderLineId;
     }
 
     public Long getProductId() {
@@ -50,20 +45,20 @@ public class OrderLineDto implements Serializable, HasId {
         this.productVariationId = productVariationId;
     }
 
-    public String getName() {
-        return name;
+    public String getOrderLineProductName() {
+        return orderLineProductName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setOrderLineProductName(String orderLineProductName) {
+        this.orderLineProductName = orderLineProductName;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getOrderLineProductQuantity() {
+        return orderLineProductQuantity;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setOrderLineProductQuantity(Integer orderLineProductQuantity) {
+        this.orderLineProductQuantity = orderLineProductQuantity;
     }
 
     public String getSupplier() {
@@ -72,11 +67,6 @@ public class OrderLineDto implements Serializable, HasId {
 
     public void setSupplier(String supplier) {
         this.supplier = supplier;
-    }
-
-    @Override
-    public boolean isNew() {
-        return false;
     }
 
 }
