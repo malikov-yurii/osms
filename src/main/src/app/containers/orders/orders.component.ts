@@ -267,9 +267,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
 
     // General functions
-    hasInput(key) {
-        return key === 'status' || key === 'paymentType' || key === 'quantity' ? true : false;
-    }
 
     trackById(index: number, value) {
         return value.orderId;

@@ -146,15 +146,14 @@ export class OrderService {
   // Changing order item editable field (e.g., name, price)
   updateProductField(orderId, productId, fieldName, value): Observable<any> {
 
-    return this.api.put(`order-line/${productId}`, {
-      [fieldName]: value.replace(/^\s+|\s+$/g, '')
-    }).do(
-      data => {
-        if (data && typeof data === 'number') {
-          this.storeHelper.findAndUpdate(this.ordersPath, orderId, this.totalSumField, data);
-        }
-      }
-    );
+    return this.api.put(`order-line/${productId}`, { [fieldName]: value.replace(/^\s+|\s+$/g, '') })
+      .do(() => {
+        this.api.get(`order/${orderId}`).subscribe((order: Order) => {
+          if (order) {
+            this.storeHelper.findAndUpdate(this.ordersPath, orderId, this.totalSumField, order.totalValue);
+          }
+        });
+      });
 
   }
 
@@ -168,10 +167,12 @@ export class OrderService {
     return this.api.put(`order-line/${productId}`, {
       [fieldName]: value
     })
-      .do(data => {
-        if (data && typeof data === 'number') {
-          this.storeHelper.findAndUpdate(this.ordersPath, orderId, this.totalSumField, data);
-        }
+      .do(() => {
+        this.api.get(`order/${orderId}`).subscribe((order: Order) => {
+          if (order) {
+            this.storeHelper.findAndUpdate(this.ordersPath, orderId, this.totalSumField, order.totalValue);
+          }
+        });
       });
   }
 
@@ -181,7 +182,7 @@ export class OrderService {
       productVariationId: data.productVariationId,
       orderLineProductName: data.productName,
       orderLineProductPrice: data.productPrice,
-      orderLineQuantity: 1
+      orderLineProductQuantity: 1
     };
 
     this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, orderLineId, product);
@@ -190,10 +191,12 @@ export class OrderService {
 
     return this.api.put(`order-line/${orderLineId}`, {
       [productIdName]: data[productIdName]
-    }).do(data => {
-      if (data && typeof data === 'number') {
-        this.storeHelper.findAndUpdate(this.ordersPath, orderId, this.totalSumField, data);
-      }
+    }).do(() => {
+      this.api.get(`order/${orderId}`).subscribe((order: Order) => {
+        if (order) {
+          this.storeHelper.findAndUpdate(this.ordersPath, orderId, this.totalSumField, order.totalValue);
+        }
+      });
     });
   }
 

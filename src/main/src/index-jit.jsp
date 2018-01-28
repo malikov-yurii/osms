@@ -22,8 +22,8 @@
     <script src="/app/systemjs.config.js"></script>
     <script>
         var dbOrders = {
-            content: ${orders},
-            totalElements: ${ordersTotal}
+            content: ${orders || null},
+            totalElements: ${ordersTotal || null}
         }
         System.import('app').catch(function (err) {
             console.error(err);

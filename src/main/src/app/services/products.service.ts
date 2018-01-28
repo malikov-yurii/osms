@@ -20,7 +20,7 @@ export class ProductService {
       .do(({totalElements, content, productAggregators}) => {
         content.sort((a, b) => a.productId - b.productId);
         content = content.map(el => {
-          el.categories = el.categories.join('; ');
+          el.productCategories = el.productCategories.join('; ');
           return el;
         });
         this.storeHelper.update(this.productsPath, content);

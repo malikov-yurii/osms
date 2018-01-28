@@ -29,8 +29,8 @@
 
 <script>
     var dbOrders = {
-        content: ${orders},
-        totalElements: ${ordersTotal}
+        content: ${orders || null},
+        totalElements: ${ordersTotal || null}
     }
     window.module = 'aot';
 </script>

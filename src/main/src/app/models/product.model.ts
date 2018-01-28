@@ -5,9 +5,14 @@ export class Product {
   productId: number = 0;
   productVariationId?: number = 0;
   orderLineProductName: string = '';
-  categories?: string[] = [''];
   orderLineProductQuantity: string = '0';
   orderLineProductPrice: string = '0';
-  supplier: string = '';
-  isAggregated: boolean;
+  productCategories?: string[] = [''];
+  productAggregated?: boolean;
+  productImage?: string;
+  productName?: string;
+  productPrice?: string;
+  productSupplier?: string;
+  productQuantityUnlimited?: boolean;
+  productQuantity?: string;
 }

@@ -60,40 +60,40 @@
 
             <td class="product-cell--image" (click)="lightbox(product)">
               <img class="product-cell__image"
-                   [src]="'https://gilder-shop.com.ua/components/com_jshopping/files/img_products/thumb_' + product.image"
+                   [src]="'https://gilder-shop.com.ua/components/com_jshopping/files/img_products/thumb_' + product.productImage"
                    alt=""
               >
             </td>
 
-            <ng-container
-              *ngFor="let key of product | keys:['unlimited', 'isAggregated', 'image']"
-            >
+            <td class="product-cell--name">{{ product.productName }}</td>
+            <td class="product-cell--categories">{{ product.productCategories }}</td>
 
-              <ng-container *ngIf="isEditable(product, key); else isNotEditableCell">
-                <td
-                  class="product-cell--{{ key }} editable"
-                  contenteditable
-                  [(contenteditableModel)]="product[key]"
-                  (contentChanged)="onUpdateField(product.productId, product.variationId, key, $event)"
-                ></td>
-              </ng-container>
+            <td
+              class="product-cell--price editable"
+              contenteditable
+              [(contenteditableModel)]="product.productPrice"
+              (contentChanged)="onUpdateField(product.productId, product.productVariationId, 'productPrice', $event)"
+            ></td>
 
-
-              <ng-template #isNotEditableCell>
-                <td
-                  [class]="'product-cell--' + key"
-                  [class.aggregated]="product.isAggregated"
-                  *ngIf="key === 'quantity'"
-                >
-                  AGR
-                </td>
-
-                <td [class]="'product-cell--' + key" *ngIf="key !== 'quantity'">
-                  {{ product[key] }}
-                </td>
-              </ng-template>
-
+            <ng-container *ngIf="product.productAggregated; else editableQuantity">
+              <td class="product-cell--quantity aggregated">
+                AGR
+              </td>
             </ng-container>
+
+            <ng-template #editableQuantity>
+              <td
+                class="product-cell--quantity editable"
+                contenteditable
+                [(contenteditableModel)]="product.productQuantity"
+                (contentChanged)="onUpdateField(product.productId, product.productVariationId, 'productQuantity', $event)"
+              ></td>
+            </ng-template>
+
+            <td class="product-cell--supplier">{{ product.productSupplier }}</td>
+            <td class="product-cell--id">{{ product.productId }}</td>
+            <td class="product-cell--variationId">{{ product.productVariationId }}</td>
+
           </tr>
           </tbody>
         </table>
@@ -124,11 +124,11 @@
           <li *ngFor="let aggregator of productAggregators; odd as odd; even as even"
               [ngClass]="{'odd': odd, 'even': even}"
           >
-            <div class="list-cell">{{ aggregator.productName }}</div>
+            <div class="list-cell">{{ aggregator.aggregatorName }}</div>
             <div class="list-cell"
                  contenteditable
-                 [(contenteditableModel)]="aggregator['quantity']"
-                 (contentChanged)="onUpdateField(aggregator.id, null, 'quantity', $event, true)"
+                 [(contenteditableModel)]="aggregator['aggregatorQuantity']"
+                 (contentChanged)="onUpdateField(aggregator.aggregatorId, null, 'aggregatorQuantity', $event, true)"
             >
             </div>
           </li>

@@ -57,9 +57,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subs[this.subs.length] = this.productService.getAllProducts().subscribe(
-      ({totalElements, elements, productAggregators}) => {
+      ({totalElements, content, productAggregators}) => {
         this.totalProducts = totalElements;
-        this.getFiltersList(elements);
+        this.getFiltersList(content);
         this.productAggregators = productAggregators;
       }
     );
@@ -122,11 +122,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
     let _suppliers = [];
 
     products.forEach(product => {
-      if (product.categories) {
-        _categories = _categories.concat(product.categories);
+      if (product.productCategories) {
+        _categories = _categories.concat(product.productCategories);
       }
-      if (product.supplier) {
-        _suppliers.push(product.supplier);
+      if (product.productSupplier) {
+        _suppliers.push(product.productSupplier);
       }
     });
 
@@ -145,21 +145,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
       });
   }
 
-
-  isEditable(product: Product, key: string): boolean {
-    switch (key) {
-      case 'price':
-        return true;
-      case 'quantity':
-        return !product.isAggregated;
-      default:
-        return false;
-    }
-  }
-
-  isCategory(key: string): boolean {
-    return key === 'categories';
-  }
 
   toggleAnimState() {
     this.searchExpanded = this.searchExpanded === 'collapsed' ? 'expanded' : 'collapsed';
