@@ -86,10 +86,10 @@ export class OrderService {
       delete payload.productNameMask;
     }
 
-    payload.paging = {
-      page: page - 1,
-      size: pageLength
-    };
+    // payload.paging = {
+    //   page: page - 1,
+    //   size: pageLength
+    // };
 
     return this.api.put(`/${this.ordersPath}/filter`, payload)
       .do(response => {
@@ -132,14 +132,14 @@ export class OrderService {
   // Manage products
   addProduct(orderId): Observable<any> {
     let newProduct = new Product();
-    let newProductId = newProduct.productId;
+    let newProductId = newProduct.orderLineId;
 
     this.storeHelper.findDeepAndAdd(this.ordersPath, orderId, this.productsPath, newProduct);
 
     return this.api.post(`order-line/create-empty-for-order/${orderId}`)
-      .do(productId => this.storeHelper.findDeepAndUpdate(
+      .do(({ orderLineId }) => this.storeHelper.findDeepAndUpdate(
           this.ordersPath, orderId, this.productsPath,
-          newProductId, 'id', productId)
+          newProductId, 'orderLineId', orderLineId)
       );
   }
 
@@ -175,13 +175,20 @@ export class OrderService {
       });
   }
 
-  autocompleteProduct(orderId, productId, data): Observable<any> {
-    data['quantity'] = 1;
-    this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, productId, data);
+  autocompleteProduct(orderId, orderLineId, data): Observable<any> {
+    const product = {
+      productId: data.productId,
+      productVariationId: data.productVariationId,
+      orderLineProductName: data.productName,
+      orderLineProductPrice: data.productPrice,
+      orderLineQuantity: 1
+    };
+
+    this.storeHelper.findDeepAndUpdateWithObject(this.ordersPath, orderId, this.productsPath, orderLineId, product);
 
     let productIdName = data.productVariationId ? 'productVariationId' : 'productId';
 
-    return this.api.put(`order-line/${productId}`, {
+    return this.api.put(`order-line/${orderLineId}`, {
       [productIdName]: data[productIdName]
     }).do(data => {
       if (data && typeof data === 'number') {

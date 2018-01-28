@@ -22,7 +22,7 @@ export class ContenteditableModel {
    * flag in ngOnChanges, but implementation details of Angular change detection
    * cycle might make this not work in some edge cases?
    */
-  private lastViewModel: string;
+  private lastViewModel: string = '';
 
   constructor(private el: ElementRef) {}
 
@@ -53,6 +53,6 @@ export class ContenteditableModel {
   }
 
   private refreshView() {
-    this.el.nativeElement.innerText = this.model;
+    this.el.nativeElement.innerText = this.model || '';
   }
 }

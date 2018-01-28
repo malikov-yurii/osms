@@ -90,7 +90,7 @@ export class Autocomplete {
     this.isBlurred = true;
     setTimeout(() => {
       this.removeList();
-    }, 500);
+    }, 100);
   }
 
   private doSearch() {

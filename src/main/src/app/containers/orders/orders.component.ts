@@ -181,10 +181,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
     // Manage order info
     onUpdateInfoField(orderId, fieldName, {newValue, oldValue}) {
-        if (!newValue) {
-            return;
-        }
-
         this.orderService.updateInfoField(orderId, fieldName, newValue)
             .subscribe(
                 () => this.notyService.renderNoty(`${oldValue} has been changed to ${newValue}`),
@@ -217,10 +213,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
 
     onUpdateProductField(orderId, productId, fieldName, {newValue, oldValue}) {
-      if (!newValue) {
-        return;
-      }
-      
         this.orderService.updateProductField(orderId, productId, fieldName, newValue)
             .subscribe(
                 () => this.notyService.renderNoty(`${oldValue} has been changed to ${newValue}`),

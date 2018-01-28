@@ -31,7 +31,6 @@
     border: 1px solid #b9b9b9;
     border-radius: 4px;
     box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.42);
-    overflow-y: auto;
 }
 
 .popup__head {
@@ -135,6 +134,7 @@ form {
     .popup {
         min-width: initial;
         width: 300px;
+        overflow: auto;
     }
 
     .popup__label {

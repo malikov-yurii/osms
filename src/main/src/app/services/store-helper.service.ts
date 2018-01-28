@@ -58,7 +58,7 @@ export class StoreHelper {
   findAndDelete(prop, id) {
     const currentState = this.store.getState();
     const collection = currentState[prop];
-    this.store.setState(Object.assign({}, currentState, {[prop]: collection.filter(item => item.id !== id || item.orderId !== id || item.orderLineId !== id)}));
+    this.store.setState(Object.assign({}, currentState, {[prop]: collection.filter(item => item.id !== id && item.orderId !== id && item.orderLineId !== id)}));
   }
 
   findDeepAndAdd(prop, id, deepProp, state) {

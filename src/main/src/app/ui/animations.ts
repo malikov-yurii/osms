@@ -62,15 +62,16 @@ export function slideToTop() {
 export function appear() {
   return trigger('appear', [
     transition(':enter', [
-      style({opacity: 0.001, height: 1}),
+      style({'transform': 'translateY(-20px)', opacity: 0}),
       group([
-        animate('0.25s ease', style({height: '*'})),
+        animate('0.25s ease', style({'transform': 'translateY(0)'})),
         animate('0.35s 0.1s ease', style({opacity: 1}))
       ])
     ]),
     transition(':leave', [
+      style({'transform': 'translateX(0)', opacity: 1}),
       group([
-        animate('0.25s ease', style({height: 0, margin: 0})),
+        animate('0.25s ease', style({'transform': 'translateX(100px)'})),
         animate('0.25s 0.1s ease', style({opacity: 0}))
       ])
     ])

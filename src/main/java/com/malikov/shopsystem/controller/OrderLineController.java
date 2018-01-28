@@ -23,7 +23,7 @@ public class OrderLineController {
     @Autowired
     private OrderLineService orderLineService;
 
-    @GetMapping("/autocomplete-by-product-name-mask/{productNameMask}/")
+    @GetMapping("/autocomplete-by-product-name-mask/{productNameMask}")
     public List<ProductAutocompleteDto> autocompleteOrderItemName(@PathVariable String productNameMask) {
         return orderLineService.getByProductMask(productNameMask);
     }
