@@ -6,6 +6,7 @@ import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
 import com.malikov.shopsystem.dto.OrderPage;
 import com.malikov.shopsystem.dto.OrderUpdateDto;
+import com.malikov.shopsystem.dto.Paging;
 import com.malikov.shopsystem.dto.filter.GenericFilter;
 import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.enumtype.PaymentType;
@@ -15,19 +16,16 @@ import com.malikov.shopsystem.repository.CustomerRepository;
 import com.malikov.shopsystem.repository.OrderRepository;
 import com.malikov.shopsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
-import static com.malikov.shopsystem.repository.specification.OrderSpecification.containsProduct;
-import static com.malikov.shopsystem.repository.specification.OrderSpecification.createdBetween;
-import static com.malikov.shopsystem.repository.specification.OrderSpecification.emptySpecification;
-import static com.malikov.shopsystem.repository.specification.OrderSpecification.orderOfCustomer;
+import static com.malikov.shopsystem.repository.specification.OrderSpecification.filteringBy;
 import static java.util.Collections.singleton;
 import static java.util.Objects.nonNull;
 
@@ -49,20 +47,16 @@ public class OrderService {
     @Autowired
     private OrderMapper orderMapper;
 
-    @SuppressWarnings("unchecked assignments")
     public OrderPage getFilteredPage(GenericFilter<OrderFilterDto, OrderDto> filter) {
-
-        return orderMapper.toPage(orderRepository.findAll(buildFilterRestrictions(filter.getFilteringFields()),
-                new PageRequest(filter.getPaging().getPage(), filter.getPaging().getSize(), DESC_ID)));
+        return orderMapper.toPage(getOrderPageFilteredBy(filter));
     }
 
-    @SuppressWarnings("unchecked assignments")
-    private Specifications buildFilterRestrictions(OrderFilterDto filter) {
+    private Page getOrderPageFilteredBy(GenericFilter<OrderFilterDto, OrderDto> filter) {
+        return orderRepository.findAll(filteringBy(filter.getFilteringFields()), pageRequest(filter.getPaging()));
+    }
 
-        return emptySpecification()
-                .and(orderOfCustomer(filter))
-                .and(createdBetween(filter.getFromDateTimeCreated(), filter.getToDateTimeCreated()))
-                .and(containsProduct(filter));
+    private PageRequest pageRequest(Paging paging) {
+        return new PageRequest(paging.getPage(), paging.getSize(), DESC_ID);
     }
 
     public OrderDto get(Long id) {
@@ -86,27 +80,8 @@ public class OrderService {
         OrderLine orderLine = new OrderLine();
         orderLine.setOrder(order);
         order.setOrderLines(new ArrayList<>(singleton(orderLine)));
-        order.setStatusSortOrder(calcStatusSortOrder(OrderStatus.NEW));
 
         return orderMapper.toDto(orderRepository.save(order));
-    }
-
-    private Integer calcStatusSortOrder(OrderStatus status) {
-
-        switch (status) {
-            case OK:
-                return 5;
-            case SHP:
-                return 1;
-            case WFP:
-                return 2;
-            case NEW:
-                return 1;
-            case NOT:
-                return 4;
-            default:
-                return 0;
-        }
     }
 
     @Transactional
