@@ -86,10 +86,10 @@ export class OrderService {
       delete payload.productNameMask;
     }
 
-    // payload.paging = {
-    //   page: page - 1,
-    //   size: pageLength
-    // };
+    payload.paging = {
+      page: page - 1,
+      size: pageLength
+    };
 
     return this.api.put(`/${this.ordersPath}/filter`, payload)
       .do(response => {
