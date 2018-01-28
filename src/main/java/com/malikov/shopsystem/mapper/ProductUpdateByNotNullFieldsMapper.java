@@ -13,6 +13,8 @@ import static org.mapstruct.NullValueCheckStrategy.ALWAYS;
 public interface ProductUpdateByNotNullFieldsMapper {
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(source = "productPrice", target = "price")
+    @Mapping(source = "productQuantity", target = "quantity")
     void update(ProductDto source, @MappingTarget ProductVariation target);
 
     @Mapping(target = "id", ignore = true)
@@ -20,6 +22,8 @@ public interface ProductUpdateByNotNullFieldsMapper {
     @Mapping(target = "categories", ignore = true)
     @Mapping(target = "unlimited", ignore = true)
     @Mapping(target = "supplier", ignore = true)
+    @Mapping(source = "productPrice", target = "price")
+    @Mapping(source = "productQuantity", target = "quantity")
     void update(ProductDto source, @MappingTarget Product target);
 
 }
