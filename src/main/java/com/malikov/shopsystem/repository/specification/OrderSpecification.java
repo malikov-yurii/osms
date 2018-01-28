@@ -95,18 +95,18 @@ public class OrderSpecification {
 
     private static Specification<Order> orderContainsProductVariation(Long productVariationId) {
         return (root, query, cb) ->
-                cb.equal(root.join("orderItems").join("productVariation").get("id"), productVariationId);
+                cb.equal(root.join("orderLines").join("productVariation").get("id"), productVariationId);
     }
 
     private static Specification<Order> orderContainsProduct(Long productId) {
-        return (root, query, cb) -> cb.equal(root.join("orderItems").join("product").get("id"), productId);
+        return (root, query, cb) -> cb.equal(root.join("orderLines").join("product").get("id"), productId);
     }
 
     private static Specification<Order> productNameLike(String productNameMask) {
         return isNull(productNameMask)
                 ? null
                 : (root, query, cb) ->
-                cb.like(cb.lower(root.join("orderItems").get("productName")),
+                cb.like(cb.lower(root.join("orderLines").get("productName")),
                         MatchMode.ANYWHERE.toMatchString(productNameMask.trim().toLowerCase()));
     }
 
