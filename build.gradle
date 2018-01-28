@@ -40,8 +40,8 @@ repositories {
     }
 }
 
-npm_run_startdev.dependsOn(compileJava)
-war.dependsOn(npm_run_startdev)
+npm_run_start.dependsOn(compileJava)
+war.dependsOn(npm_run_start)
 explodedWar.dependsOn(build)
 
 dependencies {
