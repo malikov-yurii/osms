@@ -1,9 +1,5 @@
 package com.malikov.shopsystem.mapper;
 
-/**
- * @author Yurii Malikov
- */
-
 import com.malikov.shopsystem.domain.Product;
 import com.malikov.shopsystem.domain.ProductCategory;
 import com.malikov.shopsystem.domain.ProductVariation;
@@ -23,7 +19,6 @@ import java.util.stream.Collectors;
 
 import static com.malikov.shopsystem.util.CalculateProductPriceUtil.calculateProductPrice;
 import static com.malikov.shopsystem.util.CalculateProductPriceUtil.calculateProductVariationPrice;
-import static java.math.RoundingMode.HALF_UP;
 import static java.util.Collections.singleton;
 
 @Mapper(componentModel = "spring")
@@ -32,6 +27,7 @@ public abstract class ProductMapper {
     @Mapping(target = "productAggregated", expression = "java( source.getProductAggregator() != null )")
     @Mapping(source = "id", target = "productVariationId")
     @Mapping(source = "product.id", target = "productId")
+    @Mapping(source = "quantity", target = "productQuantity")
     @Mapping(source = "product.categories", target = "productCategories")
     @Mapping(source = "product.imageFileName", target = "productImage")
     @Mapping(source = "product.unlimited", target = "productQuantityUnlimited")
@@ -48,8 +44,14 @@ public abstract class ProductMapper {
         return source.getProduct().getName() + " " + source.getVariationValue().getName();
     }
 
-    @Mapping(target = "productVariationId", constant = "0")
+    @Mapping(source = "id", target = "productId")
+    @Mapping(source = "name", target = "productName")
+    @Mapping(source = "quantity", target = "productQuantity")
+    @Mapping(source = "categories", target = "productCategories")
+    @Mapping(source = "unlimited", target = "productQuantityUnlimited")
+    @Mapping(source = "supplier", target = "productSupplier")
     @Mapping(target = "productAggregated", constant = "false")
+    @Mapping(target = "productVariationId", constant = "0")
     @Mapping(source = "imageFileName", target = "productImage")
     public abstract ProductDto toDto(Product source);
 
@@ -67,7 +69,7 @@ public abstract class ProductMapper {
 
     @AfterMapping
     protected void afterToDto(ProductVariation source, @MappingTarget ProductAutocompleteDto target) {
-        final BigDecimal productVariationPrice = calculateProductVariationPrice(source).setScale(0, HALF_UP);
+        final BigDecimal productVariationPrice = calculateProductVariationPrice(source);
         final String productVariationFullName = productVariationFullName(source);
         target.setLabel(productVariationFullName + " " + productVariationPrice);
         target.setProductName(productVariationFullName);
@@ -85,7 +87,7 @@ public abstract class ProductMapper {
 
     @AfterMapping
     protected void afterToDto(Product source, @MappingTarget ProductAutocompleteDto target) {
-        final BigDecimal productPrice = calculateProductPrice(source).setScale(0, HALF_UP);
+        final BigDecimal productPrice = calculateProductPrice(source);
         target.setLabel(source.getName() + " " + productPrice);
         target.setProductPrice(productPrice);
     }
