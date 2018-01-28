@@ -17,20 +17,20 @@ export class ProductService {
 
   getAllProducts() {
     return this.api.get(`${this.productsPath}?pageNumber=0&pageCapacity=10000`)
-      .do(({totalElements, elements, productAggregators}) => {
-        elements.sort((a, b) => a.id - b.id);
-        elements = elements.map(el => {
+      .do(({totalElements, content, productAggregators}) => {
+        content.sort((a, b) => a.id - b.id);
+        content = content.map(el => {
           el.categories = el.categories.join('; ');
           return el;
         });
-        this.storeHelper.update(this.productsPath, elements);
+        this.storeHelper.update(this.productsPath, content);
         this.storeHelper.update(this.aggregatorsPath, productAggregators);
       });
   }
 
 
   list(searchQuery: string, page: number, length: number, filterData: {any}) {
-    let searchResult = this.searchService.search(this.storeHelper.get(this.productsPath), searchQuery, ['name', 'price']);
+    let searchResult = this.searchService.search(this.storeHelper.get(this.productsPath), searchQuery, ['productName', 'productPrice']);
     let filterResult = searchResult.filter(product => {
       let flag = 0;
 

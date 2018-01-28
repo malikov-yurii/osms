@@ -29,7 +29,7 @@
 
 <script>
     var dbOrders = {
-        elements: ${orders},
+        content: ${orders},
         totalElements: ${ordersTotal}
     }
     window.module = 'aot';

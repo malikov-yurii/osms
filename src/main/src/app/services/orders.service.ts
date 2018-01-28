@@ -8,13 +8,13 @@ import { StoreHelper } from './store-helper.service';
 import { SearchService } from './search.service';
 import { Order, Product, STATIC_DATA } from '../models/index';
 
-declare var dbOrders;
+declare const dbOrders;
 
 @Injectable()
 export class OrderService {
   ordersPath   : string = STATIC_DATA.ordersPath;
   productsPath : string = STATIC_DATA.orderItemsPath;
-  totalSumField: string = 'totalSum';
+  totalSumField: string = 'totalValue';
 
   constructor(
     private api: ApiService,
@@ -29,15 +29,15 @@ export class OrderService {
 
   // Manage orders
   getOrders(start: number, length: number): Observable<any> {
-    if (dbOrders.elements.length) {
-      this.storeHelper.update('order', dbOrders.elements);
-      dbOrders.elements = [];
+    if (dbOrders.content.length) {
+      this.storeHelper.update('order', dbOrders.content);
+      dbOrders.content = [];
       return Observable.of(dbOrders);
 
     } else {
       return this.api.get(`/${this.ordersPath}?pageNumber=${start}&pageCapacity=${length}`)
         .do(resp => {
-          this.storeHelper.update('order', resp.elements);
+          this.storeHelper.update('order', resp.content);
         });
     }
   }
@@ -136,7 +136,7 @@ export class OrderService {
 
     this.storeHelper.findDeepAndAdd(this.ordersPath, orderId, this.productsPath, newProduct);
 
-    return this.api.post(`order-item/create-empty-for/${orderId}`)
+    return this.api.post(`order-item/create-empty-for-order/${orderId}`)
       .do(productId => this.storeHelper.findDeepAndUpdate(
           this.ordersPath, orderId, this.productsPath,
           newProductId, 'id', productId)
@@ -206,7 +206,7 @@ export class OrderService {
     return this.api.put(`customer/${customerId}`, customerInfo);
   }
   persistCustomer(orderId): Observable<any> {
-    return this.api.post(`customer/persist-customer-from-order/${orderId}`)
+    return this.api.post(`customer/from-order-data/${orderId}`)
       .do(customerId => {
         this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'customerId', customerId);
       });
@@ -231,11 +231,11 @@ export class OrderService {
     } else if (types[1] === 'customerPhoneNumber') {
       url = `customer/autocomplete-by-phone-number-mask`;
 
-    } else if (types[1] === 'destinationCity') {
+    } else if (types[1] === 'customerCity') {
       url = `customer/autocomplete-by-city-mask`;
 
     } else if (types[0] === 'product') {
-      url = `order-item/autocomplete-by-product-name`;
+      url = `order-item/autocomplete-by-product-name-mask`;
 
     }
 

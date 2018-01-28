@@ -166,7 +166,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   lightbox(product: any) {
-    this.popupService.renderPopup('image', product.name, product.image).subscribe();
+    this.popupService.renderPopup('image', product.productName, product.image).subscribe();
   }
 
 }

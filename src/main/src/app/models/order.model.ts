@@ -11,10 +11,10 @@ export class Order {
   destinationCity: string = '';
   destinationPostOffice: string = '';
   paymentType: string = 'NP';
-  totalSum: number = 0;
+  totalValue: number = 0;
   createdDateTime: any = new Date();
   status: string = 'NEW';
-  note: string = '';
+  orderNote: string = '';
   customerNote: string = '';
   orderItems: Product[] = [new Product()];
 }

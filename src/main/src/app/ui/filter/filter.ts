@@ -36,7 +36,7 @@ export class DataFilter implements OnInit {
   }
 
   onAutocomplete(event, code) {
-    this.form.get(code).setValue(event.name);
+    this.form.get(code).setValue(event.productName);
 
     let idType;
     if (event.productVariationId) {

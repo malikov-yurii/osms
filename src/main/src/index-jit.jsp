@@ -22,7 +22,7 @@
     <script src="/app/systemjs.config.js"></script>
     <script>
         var dbOrders = {
-            elements: ${orders},
+            content: ${orders},
             totalElements: ${ordersTotal}
         }
         System.import('app').catch(function (err) {

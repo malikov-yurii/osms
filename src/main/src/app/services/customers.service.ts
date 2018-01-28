@@ -16,15 +16,15 @@ export class CustomerService {
 
   getAllCustomers() {
     return this.api.get(`${this.customersPath}?pageNumber=0&pageCapacity=10000`)
-      .do(({totalElements, elements}) => {
-        elements.sort((a, b) => a.id - b.id);
-        this.storeHelper.update(this.customersPath, elements);
+      .do(({totalElements, content}) => {
+        content.sort((a, b) => a.id - b.id);
+        this.storeHelper.update(this.customersPath, content);
       });
   }
 
 
   list(searchQuery: string = '', page: number = 1, length: number = 10) {
-    let customerResult = this.searchService.search(this.storeHelper.get(this.customersPath), searchQuery, ['customerFirstName', 'customerLastName', 'customerEmail', 'customerNote', 'customerPhoneNumber', 'destinationCity']);
+    let customerResult = this.searchService.search(this.storeHelper.get(this.customersPath), searchQuery, ['customerFirstName', 'customerLastName', 'customerEmail', 'customerNote', 'customerPhoneNumber', 'customerCity']);
 
     let customerResultPage = customerResult.slice((page - 1) * length, page * length);
 

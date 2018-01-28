@@ -124,7 +124,7 @@
           <li *ngFor="let aggregator of productAggregators; odd as odd; even as even"
               [ngClass]="{'odd': odd, 'even': even}"
           >
-            <div class="list-cell">{{ aggregator.name }}</div>
+            <div class="list-cell">{{ aggregator.productName }}</div>
             <div class="list-cell"
                  contenteditable
                  [(contenteditableModel)]="aggregator['quantity']"

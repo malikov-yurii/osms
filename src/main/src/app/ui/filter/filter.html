@@ -13,7 +13,7 @@
           <input class="input filter__input"
                  *ngIf="filter.autocomplete; else noAutocomplete"
                  [formControlName]="filter.code"
-                 [autocomplete]="['product', 'name']"
+                 [autocomplete]="['product', 'productName']"
                  (selectedAutocomplete)="onAutocomplete($event, filter.code)"
                  type="text"
           >

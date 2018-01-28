@@ -17,11 +17,16 @@ public class RootController {
 
     @Autowired private OrderService orderService;
 
-    @GetMapping({"/", "/orders", "/products", "/customers"})
+    @GetMapping({"/", "/orders"})
     public String root(ModelMap model) throws JsonProcessingException {
         Page ordersPage = orderService.getPage(0, 10);
         model.put("orders", JacksonObjectMapper.getMapper().writeValueAsString(ordersPage.getContent()));
         model.put("ordersTotal", JacksonObjectMapper.getMapper().writeValueAsString(ordersPage.getTotalElements()));
+        return "/WEB-INF/jsp/index.jsp";
+    }
+
+    @GetMapping({"/products", "/customers"})
+    public String root() throws JsonProcessingException {
         return "/WEB-INF/jsp/index.jsp";
     }
 

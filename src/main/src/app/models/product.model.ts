@@ -4,10 +4,10 @@ export class Product {
   id: any = `0-${Product.count++}`;
   productId?: number = 0;
   productVariationId?: number = 0;
-  name: string = '';
+  productName: string = '';
   categories?: string[] = [''];
   quantity: string = '0';
-  price: string = '0';
+  productPrice: string = '0';
   supplier: string = '';
   isAggregated: boolean;
 }

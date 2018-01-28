@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**
- * @author Yurii Malikov
- */
 @RestController
 @RequestMapping(value = "/order-line", produces = MediaType.APPLICATION_JSON_VALUE)
 public class OrderLineController {
