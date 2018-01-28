@@ -32,7 +32,7 @@ export class StoreHelper {
     const currentState = this.store.getState();
     const collection = currentState[prop];
     this.store.setState(Object.assign({}, currentState, {[prop]: collection.map(item => {
-      if (item.id === id && item[fieldName] !== value) {
+      if ((item.id === id || item.orderId === id || item.orderLineId === id) && item[fieldName] !== value) {
         item[fieldName] = value;
         updated = true;
       }
@@ -46,7 +46,7 @@ export class StoreHelper {
     const currentState = this.store.getState();
     const collection = currentState[prop];
     this.store.setState(Object.assign({}, currentState, {[prop]: collection.map(item => {
-      if (item.id === id) {
+      if ((item.id === id || item.orderId === id || item.orderLineId === id)) {
         item = Object.assign(item, sourceObj);
         updated = true;
       }
@@ -58,14 +58,14 @@ export class StoreHelper {
   findAndDelete(prop, id) {
     const currentState = this.store.getState();
     const collection = currentState[prop];
-    this.store.setState(Object.assign({}, currentState, {[prop]: collection.filter(item => item.id !== id)}));
+    this.store.setState(Object.assign({}, currentState, {[prop]: collection.filter(item => item.id !== id || item.orderId !== id || item.orderLineId !== id)}));
   }
 
   findDeepAndAdd(prop, id, deepProp, state) {
     const currentState = this.store.getState();
     const collection = currentState[prop];
     this.store.setState(Object.assign({}, currentState, {[prop]: collection.map(item => {
-      if (item.id === id) {
+      if ((item.id === id || item.orderId === id || item.orderLineId === id)) {
         item[deepProp].push(state);
       }
       return item;
@@ -77,9 +77,9 @@ export class StoreHelper {
     const currentState = this.store.getState();
     const collection = currentState[prop];
     this.store.setState(Object.assign({}, currentState, {[prop]: collection.map(item => {
-      if (item.id === id) {
+      if ((item.id === id || item.orderId === id || item.orderLineId === id)) {
         item[deepPropKey].map(deepItem => {
-          if (deepItem.id === deepId && deepItem[fieldName] !== value) {
+          if ((deepItem.id === deepId || deepItem.orderId === deepId || deepItem.orderLineId === deepId) && deepItem[fieldName] !== value) {
             deepItem[fieldName] = value;
             updated = true;
           }
@@ -96,9 +96,9 @@ export class StoreHelper {
     const currentState = this.store.getState();
     const collection = currentState[prop];
     this.store.setState(Object.assign({}, currentState, {[prop]: collection.map(item => {
-      if (item.id === id) {
+      if ((item.id === id || item.orderId === id || item.orderLineId === id)) {
         item[deepPropKey].map(deepItem => {
-          if (deepItem.id === deepId) {
+          if ((deepItem.id === deepId || deepItem.orderId === deepId || deepItem.orderLineId === deepId)) {
             deepItem = Object.assign(deepItem, sourceObj);
             updated = true;
           }
@@ -114,8 +114,8 @@ export class StoreHelper {
     const currentState = this.store.getState();
     const collection = currentState[prop];
     this.store.setState(Object.assign({}, currentState, {[prop]: collection.map(item => {
-      if (item.id === id) {
-        item[deepPropKey] = item[deepPropKey].filter(deepItem => deepItem.id !== deepId);
+      if ((item.id === id || item.orderId === id || item.orderLineId === id)) {
+        item[deepPropKey] = item[deepPropKey].filter(deepItem => deepItem.id !== deepId || deepItem.orderId !== deepId || deepItem.orderLineId !== deepId);
       }
       return item;
     })}));

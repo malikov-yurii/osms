@@ -32,36 +32,33 @@ export class Autocomplete {
 
 
   onKeyDown(e) {
-    if (STATIC_DATA.fieldsToAutocomplete.indexOf(this.types[1]) > -1) {
 
-      if (this.listComponent) {
-        switch (e.code) {
-          case 'ArrowDown' :
-            this.listComponent.instance.focusMoved.next('next');
-            return false;
-          case 'ArrowUp' :
-            this.listComponent.instance.focusMoved.next('prev');
-            return false;
-          case 'Enter' :
-            this.listComponent.instance.selectedStream.next();
-            return false;
-          case 'NumpadEnter' :
-            this.listComponent.instance.selectedStream.next();
-            return true;
-          case 'Tab' :
-            this.listComponent.instance.selectedStream.next();
-            return true;
-          case 'Escape' :
-            this.removeList();
-            return false;
-        }
-
+    if (this.listComponent) {
+      switch (e.code) {
+        case 'ArrowDown' :
+          this.listComponent.instance.focusMoved.next('next');
+          return false;
+        case 'ArrowUp' :
+          this.listComponent.instance.focusMoved.next('prev');
+          return false;
+        case 'Enter' :
+          this.listComponent.instance.selectedStream.next();
+          return false;
+        case 'NumpadEnter' :
+          this.listComponent.instance.selectedStream.next();
+          return true;
+        case 'Tab' :
+          this.listComponent.instance.selectedStream.next();
+          return true;
+        case 'Escape' :
+          this.removeList();
+          return false;
       }
 
-      if (STATIC_DATA.keycodesNotToAutocomplete.indexOf(e.which) === -1 ) {
-        setTimeout(() => this.onKeyUp(e), 0);
-      }
+    }
 
+    if (STATIC_DATA.keycodesNotToAutocomplete.indexOf(e.which) === -1 ) {
+      setTimeout(() => this.onKeyUp(e), 0);
     }
   }
 

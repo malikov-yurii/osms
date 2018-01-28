@@ -126,7 +126,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
 
     onPrintOrder(order: Order, link) {
-        this.orderService.printOrder(order.id).subscribe(
+        this.orderService.printOrder(order.orderId).subscribe(
             resp => {
                 const date = new Date(order.createdDateTime);
                 const name = this.transliterate(order.customerLastName);
@@ -181,6 +181,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
     // Manage order info
     onUpdateInfoField(orderId, fieldName, {newValue, oldValue}) {
+        if (!newValue) {
+            return;
+        }
+
         this.orderService.updateInfoField(orderId, fieldName, newValue)
             .subscribe(
                 () => this.notyService.renderNoty(`${oldValue} has been changed to ${newValue}`),
@@ -213,6 +217,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
 
     onUpdateProductField(orderId, productId, fieldName, {newValue, oldValue}) {
+      if (!newValue) {
+        return;
+      }
+      
         this.orderService.updateProductField(orderId, productId, fieldName, newValue)
             .subscribe(
                 () => this.notyService.renderNoty(`${oldValue} has been changed to ${newValue}`),
@@ -272,7 +280,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
 
     trackById(index: number, value) {
-        return value.id;
+        return value.orderId;
     }
 
     onMoveFocus(el, fromInfoBlock) {

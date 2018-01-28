@@ -27,8 +27,8 @@ export class ContenteditableModel {
   constructor(private el: ElementRef) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['model'] && changes['model'].currentValue !== this.lastViewModel) {
-      this.lastViewModel = this.model;
+    if (!changes.firstChange && changes['model'] && changes['model'].currentValue !== this.lastViewModel) {
+      this.lastViewModel = this.model || '';
       this.refreshView();
     }
   }

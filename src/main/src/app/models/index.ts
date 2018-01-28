@@ -10,11 +10,11 @@ export const STATIC_DATA = {
     status: ['SHP', 'WFP', 'OK', 'NEW', 'NOT'],
     paymentType: ['PB', 'SV', 'NP']
   },
-  fieldsToAutocomplete: ['customerLastName', 'customerPhoneNumber', 'destionationCity', 'productName'],
+  fieldsToAutocomplete: ['customerLastName', 'customerPhoneNumber', 'destinationCity', 'orderLineProductName'],
   keycodesNotToAutocomplete: [9, 13, 16, 17, 18, 20], // Tab, Enter, Shift, Ctrl, Alt, Caps Lock
   sessionTime: 235 * 60 * 1000, // minutes
   ordersPath: 'order',
-  orderItemsPath: 'orderItems'
+  orderItemsPath: 'orderLines'
 };
 
 

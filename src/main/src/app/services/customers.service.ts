@@ -17,7 +17,7 @@ export class CustomerService {
   getAllCustomers() {
     return this.api.get(`${this.customersPath}?pageNumber=0&pageCapacity=10000`)
       .do(({totalElements, content}) => {
-        content.sort((a, b) => a.id - b.id);
+        content.sort((a, b) => a.customerId - b.customerId);
         this.storeHelper.update(this.customersPath, content);
       });
   }

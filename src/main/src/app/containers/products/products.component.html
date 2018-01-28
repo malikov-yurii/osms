@@ -74,7 +74,7 @@
                   class="product-cell--{{ key }} editable"
                   contenteditable
                   [(contenteditableModel)]="product[key]"
-                  (contentChanged)="onUpdateField(product.id, product.variationId, key, $event)"
+                  (contentChanged)="onUpdateField(product.productId, product.variationId, key, $event)"
                 ></td>
               </ng-container>
 

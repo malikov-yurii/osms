@@ -142,26 +142,26 @@ body {
 .order-info__block--id {
     width: 57px;
 }
-.order-info__block--customerLastName,
-.order-info__block--customerFirstName,
-.order-info__block--destinationCity,
-.order-info__block--note {
+.order-info__block--last-name,
+.order-info__block--first-name,
+.order-info__block--city,
+.order-info__block--order-note {
     width: calc((100% - 57px - 105px - 45px - 105px - 70px - 95px - 52px - 14px) / 4);
 }
-.order-info__block--customerPhoneNumber {
+.order-info__block--phone {
     width: 105px;
 }
-.order-info__block--destinationPostOffice {
+.order-info__block--post-office {
     width: 45px;
 }
-.order-info__block--createdDateTime {
+.order-info__block--date {
     width: 105px;
     font-size: 13px;
 }
-.order-info__block--totalSum {
+.order-info__block--total-value {
     width: 70px;
 }
-.order-info__block--paymentType {
+.order-info__block--payment {
     width: 45px;
     padding: 0 2px;
 }
@@ -169,7 +169,7 @@ body {
     width: 52px;
     padding: 0 2px;
 }
-.order-info__block--note {
+.order-info__block--order-note {
     border-right-width: 0;
     justify-content: left;
     text-align: left;
@@ -457,15 +457,15 @@ td.product-cell--image {
         order: 1;
         width: 45px;
     }
-    .order-info__block--customerLastName {
+    .order-info__block--last-name {
         order: 2;
         width: calc((100% - 45px - 93px - 83px - 35px) / 2);
     }
-    .order-info__block--customerFirstName {
+    .order-info__block--first-name {
         order: 3;
         width: calc((100% - 45px - 93px - 83px - 35px) / 2);
     }
-    .order-info__block--customerPhoneNumber {
+    .order-info__block--phone {
         order: 4;
         width: 93px;
     }
@@ -473,28 +473,28 @@ td.product-cell--image {
         order: 6;
         width: 35px;
     }
-    .order-info__block--destinationCity {
+    .order-info__block--city {
         order: 7;
         width: calc((100% - 35px - 32px - 35px - 70px) / 2);
     }
-    .order-info__block--destinationPostOffice {
+    .order-info__block--post-office {
         order: 8;
         width: 32px;
     }
-    .order-info__block--createdDateTime {
+    .order-info__block--date {
         order: 5;
         width: 83px;
     }
-    .order-info__block--note {
+    .order-info__block--order-note {
         order: 9;
         width: calc((100% - 35px - 32px - 35px - 70px) / 2);
         border-right-width: 1px !important;
     }
-    .order-info__block--paymentType {
+    .order-info__block--payment {
         order: 10;
         width: 35px;
     }
-    .order-info__block--totalSum {
+    .order-info__block--total-value {
         order: 11;
     }
     .order-info hr {
@@ -570,15 +570,15 @@ td.product-cell--image {
         order: 1;
         width: 13%;
     }
-    .order-info__block--customerLastName {
+    .order-info__block--last-name {
         order: 5;
         width: calc(100% / 3);
     }
-    .order-info__block--customerFirstName {
+    .order-info__block--first-name {
         order: 6;
         width: calc(100% / 3);
     }
-    .order-info__block--customerPhoneNumber {
+    .order-info__block--phone {
         order: 7;
         width: calc(100% / 3);
         border-right-width: 0;
@@ -588,27 +588,27 @@ td.product-cell--image {
         width: 18%;
         border-right-width: 0;
     }
-    .order-info__block--destinationCity {
+    .order-info__block--city {
         order: 8;
         width: 57%;
     }
-    .order-info__block--destinationPostOffice {
+    .order-info__block--post-office {
         order: 9;
         width: 12%;
     }
-    .order-info__block--createdDateTime {
+    .order-info__block--date {
         order: 2;
         width: 30%;
     }
-    .order-info__block--note {
+    .order-info__block--order-note {
         order: 3;
         width: 39%;
     }
-    .order-info__block--paymentType {
+    .order-info__block--payment {
         order: 10;
         width: 15%;
     }
-    .order-info__block--totalSum {
+    .order-info__block--total-value {
         order: 11;
         width: 16%;
         border-right-width: 0;

@@ -44,16 +44,16 @@ export class OrderService {
 
   addOrder(): Observable<any> {
     let newOrder = new Order();
-    let newOrderId = newOrder.id;
-    let newOrderItemId = newOrder[this.productsPath][0].id;
+    let newOrderId = newOrder.orderId;
+    let newOrderItemId = newOrder[this.productsPath][0].orderLineId;
     this.storeHelper.add(this.ordersPath, newOrder);
 
     return this.api.post(this.ordersPath)
       .do(response => {
-        this.storeHelper.findAndUpdate(this.ordersPath, newOrderId, 'id', response.orderId);
+        this.storeHelper.findAndUpdate(this.ordersPath, newOrderId, 'orderId', response.orderId);
         this.storeHelper.findDeepAndUpdate(
           this.ordersPath, response.orderId, this.productsPath,
-          newOrderItemId, 'id', response.orderItemId
+          newOrderItemId, 'orderLineId', response.orderLines[0].orderLineId
         );
       });
   }
@@ -93,7 +93,7 @@ export class OrderService {
 
     return this.api.put(`/${this.ordersPath}/filter`, payload)
       .do(response => {
-        this.storeHelper.update('order', response.elements);
+        this.storeHelper.update('order', response.content);
       });
   }
 
@@ -132,11 +132,11 @@ export class OrderService {
   // Manage products
   addProduct(orderId): Observable<any> {
     let newProduct = new Product();
-    let newProductId = newProduct.id;
+    let newProductId = newProduct.productId;
 
     this.storeHelper.findDeepAndAdd(this.ordersPath, orderId, this.productsPath, newProduct);
 
-    return this.api.post(`order-item/create-empty-for-order/${orderId}`)
+    return this.api.post(`order-line/create-empty-for-order/${orderId}`)
       .do(productId => this.storeHelper.findDeepAndUpdate(
           this.ordersPath, orderId, this.productsPath,
           newProductId, 'id', productId)
@@ -146,7 +146,7 @@ export class OrderService {
   // Changing order item editable field (e.g., name, price)
   updateProductField(orderId, productId, fieldName, value): Observable<any> {
 
-    return this.api.put(`order-item/${productId}`, {
+    return this.api.put(`order-line/${productId}`, {
       [fieldName]: value.replace(/^\s+|\s+$/g, '')
     }).do(
       data => {
@@ -165,7 +165,7 @@ export class OrderService {
       productId, fieldName, value
     );
 
-    return this.api.put(`order-item/${productId}`, {
+    return this.api.put(`order-line/${productId}`, {
       [fieldName]: value
     })
       .do(data => {
@@ -181,7 +181,7 @@ export class OrderService {
 
     let productIdName = data.productVariationId ? 'productVariationId' : 'productId';
 
-    return this.api.put(`order-item/${productId}`, {
+    return this.api.put(`order-line/${productId}`, {
       [productIdName]: data[productIdName]
     }).do(data => {
       if (data && typeof data === 'number') {
@@ -192,7 +192,7 @@ export class OrderService {
 
   deleteProduct(orderId, productId): Observable<any> {
     this.storeHelper.findDeepAndDelete(this.ordersPath, orderId, this.productsPath, productId);
-    return this.api.apiDelete(`order-item/${productId}`);
+    return this.api.apiDelete(`order-line/${productId}`);
   }
 
 
@@ -235,7 +235,7 @@ export class OrderService {
       url = `customer/autocomplete-by-city-mask`;
 
     } else if (types[0] === 'product') {
-      url = `order-item/autocomplete-by-product-name-mask`;
+      url = `order-line/autocomplete-by-product-name-mask`;
 
     }
 

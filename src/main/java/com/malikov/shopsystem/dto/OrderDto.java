@@ -13,7 +13,6 @@ import java.util.List;
 public class OrderDto  implements Serializable {
 
     @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
-    private LocalDateTime createdDateTime;
     private Long orderId;
     private Long customerId;
     private String customerLastName;
@@ -24,6 +23,7 @@ public class OrderDto  implements Serializable {
     private String customerNote;
     private PaymentType paymentType;
     private BigDecimal totalValue;
+    private LocalDateTime createdDateTime;
     private OrderStatus status;
     private String orderNote;
     private List<OrderLineDto> orderLines;

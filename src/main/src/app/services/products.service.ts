@@ -18,7 +18,7 @@ export class ProductService {
   getAllProducts() {
     return this.api.get(`${this.productsPath}?pageNumber=0&pageCapacity=10000`)
       .do(({totalElements, content, productAggregators}) => {
-        content.sort((a, b) => a.id - b.id);
+        content.sort((a, b) => a.productId - b.productId);
         content = content.map(el => {
           el.categories = el.categories.join('; ');
           return el;
