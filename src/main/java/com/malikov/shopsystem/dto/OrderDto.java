@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class OrderDto  implements Serializable {
 
@@ -25,7 +26,7 @@ public class OrderDto  implements Serializable {
     private BigDecimal totalValue;
     private OrderStatus status;
     private String orderNote;
-    private OrderLineDto[] orderItems;
+    private List<OrderLineDto> orderLines;
 
     public LocalDateTime getCreatedDateTime() {
         return createdDateTime;
@@ -131,12 +132,12 @@ public class OrderDto  implements Serializable {
         this.orderNote = orderNote;
     }
 
-    public OrderLineDto[] getOrderItems() {
-        return orderItems;
+    public List<OrderLineDto> getOrderLines() {
+        return orderLines;
     }
 
-    public void setOrderItems(OrderLineDto[] orderItems) {
-        this.orderItems = orderItems;
+    public void setOrderLines(List<OrderLineDto> orderLines) {
+        this.orderLines = orderLines;
     }
 
 }
