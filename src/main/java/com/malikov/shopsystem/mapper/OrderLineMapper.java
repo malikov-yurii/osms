@@ -16,6 +16,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public abstract class OrderLineMapper {
 
+    @Mapping(source = "id", target = "orderLineId")
     @Mapping(source = "product.id", target = "productId")
     @Mapping(source = "productVariation.id", target = "productVariationId")
     @Mapping(source = "productName", target = "orderLineProductName")
