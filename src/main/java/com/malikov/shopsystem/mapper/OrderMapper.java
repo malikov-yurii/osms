@@ -14,6 +14,7 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {OrderLineMapper.class})
 public interface OrderMapper {
 
+    @Mapping(source = "id", target = "orderId")
     @Mapping(source = "customer.id", target = "customerId", defaultValue = "0")
     @Mapping(source = "customer.note", target = "customerNote")
     @Mapping(source = "dateTimeCreated", target = "createdDateTime")
