@@ -25,6 +25,7 @@ import static com.malikov.shopsystem.util.CalculateProductPriceUtil.calculatePro
 import static com.malikov.shopsystem.util.CalculateProductPriceUtil.calculateProductVariationPrice;
 import static java.math.BigDecimal.valueOf;
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -67,7 +68,7 @@ public class OrderLineService {
     }
 
     private String atAnyPositionIgnoreCommas(String mask) {
-        return "%" + mask.replaceAll(",", "") + "%";
+        return "%" + (nonNull(mask) ? mask.replaceAll(",", "") : "") + "%";
     }
 
     @Transactional

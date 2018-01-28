@@ -4,19 +4,18 @@ package com.malikov.shopsystem.mapper;
  * @author Yurii Malikov
  */
 
-import com.malikov.shopsystem.dto.ProductAutocompleteDto;
-import com.malikov.shopsystem.dto.ProductDto;
-import com.malikov.shopsystem.dto.ProductPage;
 import com.malikov.shopsystem.domain.Product;
 import com.malikov.shopsystem.domain.ProductCategory;
 import com.malikov.shopsystem.domain.ProductVariation;
+import com.malikov.shopsystem.dto.ProductAutocompleteDto;
+import com.malikov.shopsystem.dto.ProductDto;
+import com.malikov.shopsystem.dto.ProductPage;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -24,6 +23,7 @@ import java.util.stream.Collectors;
 
 import static com.malikov.shopsystem.util.CalculateProductPriceUtil.calculateProductPrice;
 import static com.malikov.shopsystem.util.CalculateProductPriceUtil.calculateProductVariationPrice;
+import static java.math.RoundingMode.HALF_UP;
 import static java.util.Collections.singleton;
 
 @Mapper(componentModel = "spring")
@@ -67,11 +67,11 @@ public abstract class ProductMapper {
 
     @AfterMapping
     protected void afterToDto(ProductVariation source, @MappingTarget ProductAutocompleteDto target) {
-        final BigDecimal productVariationPrice = calculateProductVariationPrice(source);
+        final BigDecimal productVariationPrice = calculateProductVariationPrice(source).setScale(0, HALF_UP);
         final String productVariationFullName = productVariationFullName(source);
-        target.setLabel(productVariationFullName + productVariationPrice);
+        target.setLabel(productVariationFullName + " " + productVariationPrice);
         target.setProductName(productVariationFullName);
-        target.setProductPrice(productVariationPrice.setScale(0, RoundingMode.HALF_UP));
+        target.setProductPrice(productVariationPrice);
     }
 
     @Mapping(target = "productVariationId", constant = "0")
@@ -85,9 +85,9 @@ public abstract class ProductMapper {
 
     @AfterMapping
     protected void afterToDto(Product source, @MappingTarget ProductAutocompleteDto target) {
-        final BigDecimal productPrice = calculateProductPrice(source);
+        final BigDecimal productPrice = calculateProductPrice(source).setScale(0, HALF_UP);
         target.setLabel(source.getName() + " " + productPrice);
-        target.setProductPrice(productPrice.setScale(0, RoundingMode.HALF_UP));
+        target.setProductPrice(productPrice);
     }
 
     public ProductPage toPage(org.springframework.data.domain.Page<Product> source) {
