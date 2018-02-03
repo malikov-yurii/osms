@@ -140,6 +140,7 @@ body {
 .order-info__block--id {
     width: 57px;
     text-align: center;
+    justify-content: center;
 }
 .order-info__block--last-name,
 .order-info__block--first-name,
@@ -150,10 +151,12 @@ body {
 .order-info__block--phone {
     width: 105px;
     text-align: center;
+    justify-content: center;
 }
 .order-info__block--post-office {
     width: 48px;
     text-align: center;
+    justify-content: center;
 }
 .order-info__block--date {
     width: 105px;

@@ -78,6 +78,7 @@
         <div
           class="order-info__block order-info__block--phone"
           contenteditable
+          onlyNumbers
           [autocomplete]="['info', 'customerPhoneNumber']"
           [(contenteditableModel)]="order['customerPhoneNumber']"
           (selectedAutocomplete)="onAutocompleteInfo(order.orderId, $event)"

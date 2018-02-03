@@ -54,7 +54,7 @@ export class Autocomplete {
 
     }
 
-    if (STATIC_DATA.keycodesNotToAutocomplete.indexOf(e.which) === -1 ) {
+    if (STATIC_DATA.serviceKeys.indexOf(e.which) === -1 ) {
       setTimeout(() => this.onKeyUp(e), 0);
     }
   }
