@@ -10,7 +10,7 @@ export class OnlyNumbersDirective {
 
   @HostListener('keydown', ['$event'])
   onKey(event: KeyboardEvent) {
-    if (event.ctrlKey || event.altKey || event.which === 8 || STATIC_DATA.serviceKeys.indexOf(+event.which) > -1) {
+    if (event.ctrlKey || event.altKey || event.which === 8 || event.which === 46 || STATIC_DATA.serviceKeys.indexOf(+event.which) > -1) {
       return true;
     } else {
       const target = event.target as HTMLElement;
