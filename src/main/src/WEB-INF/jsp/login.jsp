@@ -49,7 +49,6 @@
             &nbsp;&nbsp;&nbsp;<a href="https://github.com/malikov-yurii/online-shop-management-system">Java based CRM
             web project</a> for <a href="https://gilder-shop.com.ua/potal-i-susal">online-shop 'Lavka Pozolotchika'</a> .
             Stack: Spring (IoC, DATA, MVC, Security), mapstruct, Gradle, Angular
-            <fmt:message key="app.footer"/>
         </div>
     </div>
 
