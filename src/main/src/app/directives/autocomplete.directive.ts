@@ -47,9 +47,6 @@ export class Autocomplete {
         case 'NumpadEnter' :
           this.listComponent.instance.selectedStream.next();
           return true;
-        case 'Tab' :
-          this.listComponent.instance.selectedStream.next();
-          return true;
         case 'Escape' :
           this.removeList();
           return false;
@@ -90,7 +87,7 @@ export class Autocomplete {
     this.isBlurred = true;
     setTimeout(() => {
       this.removeList();
-    }, 100);
+    }, 500);
   }
 
   private doSearch() {

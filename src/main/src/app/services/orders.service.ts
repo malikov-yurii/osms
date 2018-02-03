@@ -217,8 +217,8 @@ export class OrderService {
   }
   persistCustomer(orderId): Observable<any> {
     return this.api.post(`customer/from-order-data/${orderId}`)
-      .do(customerId => {
-        this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'customerId', customerId);
+      .do(customer => {
+        this.storeHelper.findAndUpdate(this.ordersPath, orderId, 'customerId', customer.customerId);
       });
   }
 
@@ -241,7 +241,7 @@ export class OrderService {
     } else if (types[1] === 'customerPhoneNumber') {
       url = `customer/autocomplete-by-phone-number-mask`;
 
-    } else if (types[1] === 'customerCity') {
+    } else if (types[1] === 'destinationCity') {
       url = `customer/autocomplete-by-city-mask`;
 
     } else if (types[0] === 'product') {
