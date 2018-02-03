@@ -13,7 +13,8 @@ export class OnlyNumbersDirective {
     if (event.ctrlKey || event.altKey || event.which === 8 || STATIC_DATA.serviceKeys.indexOf(+event.which) > -1) {
       return true;
     } else {
-      return new RegExp('^\\d{0,14}$').test(event.key);
+      const target = event.target as HTMLElement;
+      return new RegExp('^\\d$').test(event.key) && target.innerText.length < 14;
     }
   }
 
