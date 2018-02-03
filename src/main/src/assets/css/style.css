@@ -128,11 +128,9 @@ body {
     display: flex;
     align-items: center;
     align-content: center;
-    justify-content: center;
     padding: 6px 8px;
     border-right: 1px solid rgba(0, 188, 212, 0.49);
     font-size: 15px;
-    text-align: center;
     box-sizing: border-box;
     word-break: break-word;
 }
@@ -141,18 +139,21 @@ body {
 }
 .order-info__block--id {
     width: 57px;
+    text-align: center;
 }
 .order-info__block--last-name,
 .order-info__block--first-name,
 .order-info__block--city,
 .order-info__block--order-note {
-    width: calc((100% - 57px - 105px - 45px - 105px - 70px - 95px - 52px - 14px) / 4);
+    width: calc((100% - 57px - 105px - 48px - 105px - 70px - 95px - 52px - 14px) / 4);
 }
 .order-info__block--phone {
     width: 105px;
+    text-align: center;
 }
 .order-info__block--post-office {
-    width: 45px;
+    width: 48px;
+    text-align: center;
 }
 .order-info__block--date {
     width: 105px;
@@ -441,6 +442,12 @@ td.product-cell--image {
 .table-customers td {
     word-break: break-word;
 }
+
+[data-placeholder]:empty::before {
+    content: attr(data-placeholder);
+    color: #bbb;
+}
+
 @media only screen and (max-width: 1000px) {
     .order {
         padding-left: 2px;

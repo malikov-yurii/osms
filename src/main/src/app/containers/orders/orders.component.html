@@ -64,6 +64,7 @@
           [(contenteditableModel)]="order['customerLastName']"
           (selectedAutocomplete)="onAutocompleteInfo(order.orderId, $event)"
           (contentChanged)="onUpdateInfoField(order.orderId, 'customerLastName', $event)"
+          data-placeholder="Last name"
         ></div>
 
         <div
@@ -71,6 +72,7 @@
           contenteditable
           [(contenteditableModel)]="order['customerFirstName']"
           (contentChanged)="onUpdateInfoField(order.orderId, 'customerFirstName', $event)"
+          data-placeholder="First name"
         ></div>
 
         <div
@@ -80,6 +82,7 @@
           [(contenteditableModel)]="order['customerPhoneNumber']"
           (selectedAutocomplete)="onAutocompleteInfo(order.orderId, $event)"
           (contentChanged)="onUpdateInfoField(order.orderId, 'customerPhoneNumber', $event)"
+          data-placeholder="Phone"
         ></div>
 
         <div
@@ -89,6 +92,7 @@
           [(contenteditableModel)]="order['destinationCity']"
           (selectedAutocomplete)="onAutocompleteInfo(order.orderId, $event)"
           (contentChanged)="onUpdateInfoField(order.orderId, 'destinationCity', $event)"
+          data-placeholder="City"
         ></div>
 
         <div
@@ -96,6 +100,7 @@
           contenteditable
           [(contenteditableModel)]="order['destinationPostOffice']"
           (contentChanged)="onUpdateInfoField(order.orderId, 'destinationPostOffice', $event)"
+          data-placeholder="Post"
         ></div>
 
         <div class="order-info__block order-info__block--payment">
@@ -117,6 +122,7 @@
           contenteditable
           [(contenteditableModel)]="order['totalValue']"
           (contentChanged)="onUpdateInfoField(order.orderId, 'totalValue', $event)"
+          data-placeholder="Total"
         ></div>
 
         <div class="order-info__block order-info__block--createdDateTime">
@@ -142,6 +148,7 @@
           contenteditable
           [(contenteditableModel)]="order['orderNote']"
           (contentChanged)="onUpdateInfoField(order.orderId, 'orderNote', $event)"
+          data-placeholder="Order comment"
         ></div>
 
         <hr>
@@ -204,6 +211,7 @@
             [(contenteditableModel)]="product.orderLineProductName"
             (selectedAutocomplete)="onAutocompleteProduct(order.orderId, product.orderLineId, $event)"
             (contentChanged)="onUpdateProductField(order.orderId, product.orderLineId, 'orderLineProductName', $event)"
+            data-placeholder="Product name"
           ></div>
 
           <div class="order-product__block order-product__block--quantity">
