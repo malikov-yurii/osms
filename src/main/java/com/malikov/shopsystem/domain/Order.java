@@ -5,6 +5,8 @@ import com.malikov.shopsystem.enumtype.PaymentType;
 import com.malikov.shopsystem.domain.converter.LocalDateTimeAttributeConverter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -23,6 +25,7 @@ public class Order {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "customer_id", updatable = false, insertable = false)
     private Customer customer;
 
