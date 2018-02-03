@@ -65,8 +65,6 @@ public abstract class ProductMapper {
     @Mapping(source = "id", target = "productVariationId")
     public abstract ProductAutocompleteDto toAutocompleteDto(ProductVariation source);
 
-    public abstract List<ProductAutocompleteDto> toAutocompleteDto(List<ProductVariation> source);
-
     @AfterMapping
     protected void afterToDto(ProductVariation source, @MappingTarget ProductAutocompleteDto target) {
         final BigDecimal productVariationPrice = calculateProductVariationPrice(source);
@@ -76,20 +74,23 @@ public abstract class ProductMapper {
         target.setProductPrice(productVariationPrice);
     }
 
+    public abstract List<ProductAutocompleteDto> toAutocompleteDto(List<ProductVariation> source);
+
     @Mapping(target = "productVariationId", constant = "0")
     @Mapping(target = "productPrice", ignore = true)
     @Mapping(source = "id", target = "productId")
+    @Mapping(source = "name", target = "productName")
     public abstract ProductAutocompleteDto toAutocompleteDto(Product source);
-
-    public Collection<ProductAutocompleteDto> toAutocompleteDtoSingleton(Product product) {
-        return singleton(toAutocompleteDto(product));
-    }
 
     @AfterMapping
     protected void afterToDto(Product source, @MappingTarget ProductAutocompleteDto target) {
         final BigDecimal productPrice = calculateProductPrice(source);
         target.setLabel(source.getName() + " " + productPrice);
         target.setProductPrice(productPrice);
+    }
+
+    public Collection<ProductAutocompleteDto> toAutocompleteDtoSingleton(Product product) {
+        return singleton(toAutocompleteDto(product));
     }
 
     public ProductPage toPage(org.springframework.data.domain.Page<Product> source) {
