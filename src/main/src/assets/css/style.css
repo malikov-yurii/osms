@@ -449,7 +449,7 @@ td.product-cell--image {
 [data-placeholder]:empty::before {
     content: attr(data-placeholder);
     color: #bbb;
-    cursor: pointer;
+    cursor: text;
 }
 
 @media only screen and (max-width: 1000px) {

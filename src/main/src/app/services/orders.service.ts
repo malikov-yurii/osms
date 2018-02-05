@@ -120,10 +120,19 @@ export class OrderService {
     });
   }
 
-  autocompleteInfo(orderId, object): Observable<any> {
-    this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, object);
+  autocompleteInfo(orderId, data): Observable<any> {
+    const info = {
+      customerId: data.customerId,
+      customerFirstName: data.customerFirstName,
+      customerLastName: data.customerLastName,
+      customerPhoneNumber: data.customerPhoneNumber,
+      destinationCity: data.customerCityName,
+      destinationPostOffice: data.customerPostOffice
+    };
+
+    this.storeHelper.findAndUpdateWithObject(this.ordersPath, orderId, info);
     return this.api.put(`${this.ordersPath}/${orderId}`, {
-      customerId: object.customerId
+      customerId: data.customerId
     });
   }
 
