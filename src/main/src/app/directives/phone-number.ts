@@ -2,19 +2,19 @@ import { Directive, HostListener } from '@angular/core';
 import { STATIC_DATA } from '../models/index';
 
 @Directive({
-  selector: '[onlyNumbers]'
+  selector: '[phoneNumber]'
 })
-export class OnlyNumbersDirective {
+export class PhoneNumberDirective {
 
-  constructor() {}
+  constructor() { }
 
   @HostListener('keydown', ['$event'])
-  onKey(event: KeyboardEvent) {
+  onKey(event) {
     if (event.ctrlKey || event.altKey || event.which === 8 || event.which === 46 || STATIC_DATA.serviceKeys.indexOf(+event.which) > -1) {
       return true;
     } else {
-      const target = event.target as HTMLElement;
-      return new RegExp('^\\d$').test(event.key) && target.innerText.length < 14;
+      const value = event.target.value || event.target.innerText;
+      return new RegExp('^\\d$').test(event.key) && value.length < 14;
     }
   }
 

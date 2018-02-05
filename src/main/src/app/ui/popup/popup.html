@@ -34,14 +34,64 @@
           <div class="popup__input">{{ data.id || data.customerId }}</div>
         </div>
 
-        <div class="popup__formgroup" *ngFor="let key of data | keys:['id', 'customerId']">
-          <label class="popup__label" for="{{ key }}">{{ key }}</label>
-          <input class="input popup__input" id="{{ key }}" type="text" formControlName="{{ key }}">
+        <div class="popup__formgroup">
+          <label class="popup__label" for="customerFirstName">First name</label>
+          <input class="input popup__input"
+                 id="customerFirstName"
+                 formControlName="customerFirstName"
+                 type="text"
+          >
+        </div>
+
+        <div class="popup__formgroup">
+          <label class="popup__label" for="customerLastName">Last name</label>
+          <input class="input popup__input"
+                 id="customerLastName"
+                 formControlName="customerLastName"
+                 type="text"
+          >
+        </div>
+
+        <div class="popup__formgroup">
+          <label class="popup__label" for="customerPhoneNumber">Phone</label>
+          <input class="input popup__input"
+                 phoneNumber
+                 id="customerPhoneNumber"
+                 formControlName="customerPhoneNumber"
+                 type="text"
+          >
+        </div>
+
+        <div class="popup__formgroup">
+          <label class="popup__label" for="customerPostOffice">Post</label>
+          <input class="input popup__input"
+                 id="customerPostOffice"
+                 formControlName="customerPostOffice"
+                 type="text"
+          >
+        </div>
+
+        <div class="popup__formgroup">
+          <label class="popup__label" for="customerEmail">Email</label>
+          <input class="input popup__input"
+                 id="customerEmail"
+                 formControlName="customerEmail"
+                 type="text"
+          >
+        </div>
+
+        <div class="popup__formgroup">
+          <label class="popup__label" for="customerNote">Note</label>
+          <input class="input popup__input"
+                 id="customerNote"
+                 formControlName="customerNote"
+                 type="text"
+          >
         </div>
       </div>
 
       <div class="popup__btns">
-        <button class="btn btn--warning popup__btn popup__btn--reset" type="button" (click)="reset()">
+        <button class="btn btn--danger popup__btn popup__btn--reset" type="button" (click)="reset()">
           <i class="material-icons">restore</i> Reset
         </button>
         <button class="btn popup__btn popup__btn--submit" type="submit">

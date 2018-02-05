@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { App, routes, KeysPipe, SearchPipe, Store } from './index';
 import { OrdersComponent, ProductsComponent, CustomersComponent } from './containers/index';
 import { Header, AutocompleteList, Pagination, PopupComponent, DataFilter, FilterStatic, NotyComponent, ProgressBarComponent } from './ui/index';
-import { HotkeysDirective, Autocomplete, ContenteditableModel, OnlyNumbersDirective } from './directives/index';
+import { HotkeysDirective, Autocomplete, ContenteditableModel, PhoneNumberDirective } from './directives/index';
 import { ApiService, CustomerService, NotyService, OrderService, ProductService, SearchService, StoreHelper} from './services/index';
 import { ProgressBarService } from './ui/progress-bar/progress-bar.service';
 
@@ -30,7 +30,7 @@ import { ProgressBarService } from './ui/progress-bar/progress-bar.service';
     FilterStatic,
     NotyComponent,
     ProgressBarComponent,
-    OnlyNumbersDirective
+    PhoneNumberDirective
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "ru-RU" },

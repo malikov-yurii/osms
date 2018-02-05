@@ -46,17 +46,25 @@ export class PopupComponent {
   public submittedStream = new Subject();
   public imageUrl: string;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) { }
 
   provideWithData(data: any) {
     this.data = data;
     this.hasData = true;
   }
 
-  provideWithFormData(data: {any}) {
+  provideWithFormData(data: any) {
     this.data = data;
     this.hasFormData = true;
-    this.form = this.formBuilder.group(data);
+    this.form = this.formBuilder.group({
+      customerFirstName: data.customerFirstName || '',
+      customerLastName: data.customerLastName || '',
+      customerPhoneNumber: data.customerPhoneNumber || '',
+      customerCityName: data.customerCityName || '',
+      customerPostOffice: data.customerPostOffice || '',
+      customerEmail: data.customerEmail || '',
+      customerNote: data.customerNote || ''
+    });
   }
 
   provideWithImage(url: string) {
