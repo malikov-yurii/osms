@@ -115,7 +115,7 @@ export class StoreHelper {
     const collection = currentState[prop];
     this.store.setState(Object.assign({}, currentState, {[prop]: collection.map(item => {
       if ((item.id === id || item.orderId === id || item.orderLineId === id)) {
-        item[deepPropKey] = item[deepPropKey].filter(deepItem => deepItem.id !== deepId || deepItem.orderId !== deepId || deepItem.orderLineId !== deepId);
+        item[deepPropKey] = item[deepPropKey].filter(deepItem => deepItem.id !== deepId && deepItem.orderId !== deepId && deepItem.orderLineId !== deepId);
       }
       return item;
     })}));
