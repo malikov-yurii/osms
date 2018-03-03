@@ -67,6 +67,9 @@ public class Product {
     @Column(name = "image")
     private String imageFileName;
 
+    @Column(name = "product_weight")
+    private BigDecimal weight;
+
     public Long getId() {
         return id;
     }
@@ -162,4 +165,13 @@ public class Product {
     public void setImageFileName(String imageFileName) {
         this.imageFileName = imageFileName;
     }
+
+    public BigDecimal getWeight() {
+        return weight;
+    }
+
+    public void setWeight(BigDecimal weight) {
+        this.weight = weight;
+    }
+
 }

@@ -3,9 +3,6 @@ package com.malikov.shopsystem.config.listener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-/**
- * @author Yurii Malikov
- */
 public class SessionListener implements HttpSessionListener {
 
     private static final int SESSION_TIMEOUT_235_MINUTES = 235 * 60;

@@ -39,6 +39,9 @@ public class ProductVariation {
     @NotFound(action = NotFoundAction.IGNORE)
     private ProductAggregator productAggregator;
 
+    @Column(name = "weight")
+    private BigDecimal weight;
+
     public Long getId() {
         return id;
     }
@@ -93,5 +96,13 @@ public class ProductVariation {
 
     public void setProductAggregator(ProductAggregator productAggregator) {
         this.productAggregator = productAggregator;
+    }
+
+    public BigDecimal getWeight() {
+        return weight;
+    }
+
+    public void setWeight(BigDecimal weight) {
+        this.weight = weight;
     }
 }

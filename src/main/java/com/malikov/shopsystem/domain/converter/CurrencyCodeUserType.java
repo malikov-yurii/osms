@@ -11,9 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
-/**
- * @author Yurii Malikov
- */
 public class CurrencyCodeUserType implements UserType {
 
     private static final int[] SQL_TYPES = {Types.VARCHAR};

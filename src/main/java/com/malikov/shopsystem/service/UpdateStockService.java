@@ -15,9 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import static com.malikov.shopsystem.enumtype.DbOperation.DECREASE_STOCK;
@@ -27,35 +25,12 @@ import static com.malikov.shopsystem.enumtype.OrderStatus.SHP;
 import static com.malikov.shopsystem.enumtype.OrderStatus.WFP;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
-import static java.util.Optional.ofNullable;
 
 @Service
 public class UpdateStockService {
 
-    public static final Map<Integer, Integer> WIRE_PACKAGE_TYPE_WEIGHT_IN_MILLIGRAMS =
-            new HashMap<Integer, Integer>() {{
-                put(PACKING_100_ML, MILLIGRAMS_1500);
-                put(PACKING_500_ML, MILLIGRAMS_7500);
-            }};
-
-    public static final Map<Integer, Double> PG_PRODUCT_ID_TRANSFORMATIONAL_COEFFICIENT =
-            new HashMap<Integer, Double>() {{
-                put(PG_5_ID, 1d);
-                put(PG_7_ID, 0.95);
-                put(PG_10_ID, 0.66);
-                put(PG_14_ID, 0.55);
-            }};
-
-    public static final Set<OrderStatus> WITHDRAWAL_STATUSES = new HashSet<>(Arrays.asList(OK, SHP, WFP));
-    public static final int PG_5_ID = 2;
-    public static final int PG_7_ID = 8;
-    public static final int PG_10_ID = 6;
-    public static final int PG_14_ID = 5;
-    public static final int PACKING_100_ML = 100;
-    public static final int MILLIGRAMS_1500 = 1500;
-    public static final int PACKING_500_ML = 500;
-    public static final int MILLIGRAMS_7500 = 7500;
-    public static final int DECREASE = -1;
+    private static final Set<OrderStatus> WITHDRAWAL_STATUSES = new HashSet<>(Arrays.asList(OK, SHP, WFP));
+    private static final int DECREASE = -1;
 
     @Autowired
     private ProductRepository productRepository;
@@ -180,19 +155,15 @@ public class UpdateStockService {
     }
 
     private double pg5Coefficient(Product pgProduct) {
-        return ofNullable(PG_PRODUCT_ID_TRANSFORMATIONAL_COEFFICIENT.get(pgProduct.getId().intValue()))
-                .orElseThrow(() -> new RuntimeException("PG stock update failed. " +
-                        "I told you to get rid of linking business logic to ID's, you dummy!"));
+        return pgProduct.getWeight().doubleValue();
     }
 
     private int calcWireAggregatorStock(OrderLine orderLine, Integer productQuantityDelta) {
 
         ProductVariation productVariation = orderLine.getProductVariation();
-        Integer wirePackageType = productVariation.getVariationValue().getValueAmount();
-        Integer wireInMilligrams = ofNullable(WIRE_PACKAGE_TYPE_WEIGHT_IN_MILLIGRAMS.get(wirePackageType))
-                .orElseThrow(() -> new RuntimeException("Wire stock update failed. Not found provided wire type."));
+        Integer productWireWeight = productVariation.getWeight().intValue();
 
-        return productVariation.getProductAggregator().getQuantity() + wireInMilligrams * productQuantityDelta;
+        return productVariation.getProductAggregator().getQuantity() + productWireWeight * productQuantityDelta;
     }
 
     private int calcSimpleAggregatorStock(OrderLine orderLine, Integer productQuantityDelta) {

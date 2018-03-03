@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@SuppressWarnings("JpaQlInspection")
 @Entity
 @Table(name = "osms_orders")
 public class Order {
