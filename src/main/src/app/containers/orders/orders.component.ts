@@ -34,7 +34,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     public totalOrders: number = 0;
     public preloadedOrders: number = 0;
     public page: number = 1;
-    public pageLength: number = 10;
+    public pageLength: number = 20;
     public pageStream: Subject<IPageStream> = new Subject();
 
     public subs: Subscription[] = [];
