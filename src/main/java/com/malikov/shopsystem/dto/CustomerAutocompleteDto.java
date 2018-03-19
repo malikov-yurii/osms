@@ -9,6 +9,7 @@ public class CustomerAutocompleteDto {
     private String customerPhoneNumber;
     private String customerCityName;
     private String customerPostOffice;
+    private String customerNote;
 
     public String getLabel() {
         return label;
@@ -66,4 +67,11 @@ public class CustomerAutocompleteDto {
         this.customerPostOffice = customerPostOffice;
     }
 
+    public String getCustomerNote() {
+        return customerNote;
+    }
+
+    public void setCustomerNote(String customerNote) {
+        this.customerNote = customerNote;
+    }
 }

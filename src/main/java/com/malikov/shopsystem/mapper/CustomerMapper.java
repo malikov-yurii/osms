@@ -66,6 +66,7 @@ public interface CustomerMapper {
     @Mapping(source = "phoneNumber", target = "customerPhoneNumber")
     @Mapping(source = "city", target = "customerCityName")
     @Mapping(source = "postOffice", target = "customerPostOffice")
+    @Mapping(source = "note", target = "customerNote")
     CustomerAutocompleteDto toAutocompleteDto(Customer customer);
 
     List<CustomerAutocompleteDto> toAutocompleteDto(List<Customer> customer);
@@ -74,7 +75,7 @@ public interface CustomerMapper {
     default void afterToCustomerAutocompleteDto(Customer source, @MappingTarget CustomerAutocompleteDto target)  {
 
         target.setLabel(source.getName() + " " + source.getLastName() + " " +
-                source.getCity() + " " + source.getPhoneNumber());
+                source.getCity() + " " + source.getPhoneNumber() + " " + source.getNote());
     }
 
     default CustomerPage toDtoPage(Page<Customer> source) {
