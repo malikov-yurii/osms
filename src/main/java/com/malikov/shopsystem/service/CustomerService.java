@@ -18,12 +18,18 @@ import java.util.List;
 @Service
 public class CustomerService {
 
+    private final CustomerRepository customerRepository;
+    private final OrderRepository orderRepository;
+    private final CustomerMapper mapper;
+
     @Autowired
-    private CustomerRepository customerRepository;
-    @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
-    private CustomerMapper mapper;
+    public CustomerService(CustomerRepository customerRepository,
+                           OrderRepository orderRepository,
+                           CustomerMapper mapper) {
+        this.customerRepository = customerRepository;
+        this.orderRepository = orderRepository;
+        this.mapper = mapper;
+    }
 
     public CustomerDto get(Long id) {
         return mapper.toDto(customerRepository.findOne(id));

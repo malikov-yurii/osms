@@ -6,6 +6,7 @@ import com.malikov.shopsystem.domain.ProductVariation;
 import com.malikov.shopsystem.dto.ProductAutocompleteDto;
 import com.malikov.shopsystem.dto.ProductDto;
 import com.malikov.shopsystem.dto.ProductPage;
+import org.apache.commons.collections.CollectionUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -115,7 +116,7 @@ public abstract class ProductMapper {
 
         List<ProductDto> products = new ArrayList<>();
 
-        if (product.getHasVariations()) {
+        if (CollectionUtils.isNotEmpty(product.getVariations())) {
             products.addAll(product.getVariations()
                     .stream()
                     .map(this::toDto)

@@ -43,10 +43,6 @@ public class Product {
     )
     private Set<ProductCategory> categories;
 
-    @Column(name = "different_prices")
-    @Type(type = "org.hibernate.type.NumericBooleanType")
-    private Boolean hasVariations;
-
     @Column(name = "unlimited")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean unlimited;
@@ -116,14 +112,6 @@ public class Product {
 
     public void setCategories(Set<ProductCategory> categories) {
         this.categories = categories;
-    }
-
-    public Boolean getHasVariations() {
-        return hasVariations;
-    }
-
-    public void setHasVariations(Boolean hasVariations) {
-        this.hasVariations = hasVariations;
     }
 
     public Boolean isUnlimited() {

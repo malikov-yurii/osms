@@ -1,10 +1,10 @@
 package com.malikov.shopsystem.service.reporting;
 
-import com.malikov.shopsystem.dto.OrderLineReportDto;
 import com.malikov.shopsystem.domain.Order;
 import com.malikov.shopsystem.domain.OrderLine;
+import com.malikov.shopsystem.dto.OrderLineReportDto;
 import com.malikov.shopsystem.repository.OrderRepository;
-import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +24,6 @@ import static net.sf.jasperreports.engine.JasperCompileManager.compileReport;
 import static net.sf.jasperreports.engine.JasperExportManager.exportReportToPdf;
 import static net.sf.jasperreports.engine.JasperFillManager.fillReport;
 
-/**
- * @author Yurii Malikov
- */
 @Service
 public class PrintOrderReportService {
 
@@ -37,8 +34,12 @@ public class PrintOrderReportService {
     private static final String TOTAL_ORDER_AMOUNT = "totalOrderAmount";
     private static final String PAYMENT_TYPE = "paymentType";
 
+    private final OrderRepository orderRepository;
+
     @Autowired
-    private OrderRepository orderRepository;
+    public PrintOrderReportService(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 
     public byte[] printOrder(Long orderId) throws IOException, JRException {
         Order order = orderRepository.findOne(orderId);

@@ -1,17 +1,18 @@
 package com.malikov.shopsystem.service;
 
-import com.malikov.shopsystem.dto.OrderLineDto;
-import com.malikov.shopsystem.dto.ProductAutocompleteDto;
-import com.malikov.shopsystem.mapper.OrderLineMapper;
-import com.malikov.shopsystem.mapper.ProductMapper;
 import com.malikov.shopsystem.domain.Order;
 import com.malikov.shopsystem.domain.OrderLine;
 import com.malikov.shopsystem.domain.Product;
 import com.malikov.shopsystem.domain.ProductVariation;
+import com.malikov.shopsystem.dto.OrderLineDto;
+import com.malikov.shopsystem.dto.ProductAutocompleteDto;
+import com.malikov.shopsystem.mapper.OrderLineMapper;
+import com.malikov.shopsystem.mapper.ProductMapper;
 import com.malikov.shopsystem.repository.OrderLineRepository;
 import com.malikov.shopsystem.repository.OrderRepository;
 import com.malikov.shopsystem.repository.ProductRepository;
 import com.malikov.shopsystem.repository.ProductVariationRepository;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,7 +63,7 @@ public class OrderLineService {
 
     private Collection<ProductAutocompleteDto> toAutocompleteDto(Product product) {
 
-        return product.getHasVariations()
+        return CollectionUtils.isNotEmpty(product.getVariations())
                 ? productMapper.toAutocompleteDto(product.getVariations())
                 : productMapper.toAutocompleteDtoSingleton(product);
     }
