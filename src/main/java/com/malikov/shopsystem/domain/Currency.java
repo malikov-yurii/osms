@@ -1,6 +1,8 @@
 package com.malikov.shopsystem.domain;
 
 import com.malikov.shopsystem.enumtype.CurrencyCodeIso;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -14,6 +16,8 @@ import java.math.BigInteger;
 
 @Entity
 @Table(name = "jos_jshopping_currencies")
+@Getter
+@Setter
 public class Currency {
 
     @Id
@@ -27,29 +31,5 @@ public class Currency {
 
     @Column(name = "currency_value")
     private BigDecimal currencyRate;
-
-    public BigInteger getCurrencyId() {
-        return currencyId;
-    }
-
-    public void setCurrencyId(BigInteger currencyId) {
-        this.currencyId = currencyId;
-    }
-
-    public BigDecimal getCurrencyRate() {
-        return currencyRate;
-    }
-
-    public void setCurrencyRate(BigDecimal currencyRate) {
-        this.currencyRate = currencyRate;
-    }
-
-    public CurrencyCodeIso getCurrencyCodeIso() {
-        return currencyCodeIso;
-    }
-
-    public void setCurrencyCodeIso(CurrencyCodeIso currencyCodeIso) {
-        this.currencyCodeIso = currencyCodeIso;
-    }
 
 }

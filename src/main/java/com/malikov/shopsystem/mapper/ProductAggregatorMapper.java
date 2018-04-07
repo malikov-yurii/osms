@@ -5,9 +5,6 @@ import com.malikov.shopsystem.domain.ProductAggregator;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-/**
- * @author Yurii Malikov
- */
 @Mapper(componentModel = "spring")
 public interface ProductAggregatorMapper {
 

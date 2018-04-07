@@ -1,14 +1,24 @@
 package com.malikov.shopsystem.domain;
 
 import com.malikov.shopsystem.enumtype.ProductAggregatorType;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-/**
- * @author Yurii Malikov
- */
 @Entity
 @Table(name = "osms_product_aggregator")
+@Getter
+@Setter
 public class ProductAggregator {
 
     @Id
@@ -27,35 +37,4 @@ public class ProductAggregator {
     @Column(name = "product_aggregator_type")
     private ProductAggregatorType productAggregatorType;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public ProductAggregatorType getProductAggregatorType() {
-        return productAggregatorType;
-    }
-
-    public void setProductAggregatorType(ProductAggregatorType productAggregatorType) {
-        this.productAggregatorType = productAggregatorType;
-    }
 }

@@ -1,19 +1,37 @@
 package com.malikov.shopsystem.domain;
 
-import org.hibernate.annotations.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 
-@SuppressWarnings("JpaQlInspection")
 @Entity
 @Table(name = "jos_jshopping_products")
+@Getter
+@Setter
 public class Product {
 
     @Id
@@ -65,101 +83,5 @@ public class Product {
 
     @Column(name = "product_weight")
     private BigDecimal weight;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Integer getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Integer discount) {
-        this.discount = discount;
-    }
-
-    public Set<ProductCategory> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<ProductCategory> categories) {
-        this.categories = categories;
-    }
-
-    public Boolean isUnlimited() {
-        return unlimited;
-    }
-
-    public void setUnlimited(Boolean unlimited) {
-        this.unlimited = unlimited;
-    }
-
-    public List<ProductVariation> getVariations() {
-        return variations;
-    }
-
-    public void setVariations(List<ProductVariation> variations) {
-        this.variations = variations;
-    }
-
-    public String getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(String supplier) {
-        this.supplier = supplier;
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
-
-    public String getImageFileName() {
-        return imageFileName;
-    }
-
-    public void setImageFileName(String imageFileName) {
-        this.imageFileName = imageFileName;
-    }
-
-    public BigDecimal getWeight() {
-        return weight;
-    }
-
-    public void setWeight(BigDecimal weight) {
-        this.weight = weight;
-    }
 
 }

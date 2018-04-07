@@ -1,5 +1,7 @@
 package com.malikov.shopsystem.domain;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -20,6 +22,8 @@ import javax.persistence.UniqueConstraint;
         name = "osms_customers",
         uniqueConstraints = {@UniqueConstraint(columnNames = "phone_number", name = "customers_phone_number_idx")}
 )
+@Getter
+@Setter
 public class Customer {
 
     @Id
@@ -53,77 +57,5 @@ public class Customer {
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "parent_id")
     private Customer parent;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getPostOffice() {
-        return postOffice;
-    }
-
-    public void setPostOffice(String postOffice) {
-        this.postOffice = postOffice;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public Customer getParent() {
-        return parent;
-    }
-
-    public void setParent(Customer parent) {
-        this.parent = parent;
-    }
 
 }

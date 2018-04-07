@@ -1,9 +1,25 @@
 package com.malikov.shopsystem.domain;
 
-import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "jos_jshopping_attr_values")
+@Getter
+@Setter
 public class VariationValue {
 
     @Id
@@ -21,37 +37,5 @@ public class VariationValue {
 
     @Column(name = "value_amount")
     private Integer valueAmount;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public VariationType getVariationType() {
-        return variationType;
-    }
-
-    public void setVariationType(VariationType variationType) {
-        this.variationType = variationType;
-    }
-
-    public Integer getValueAmount() {
-        return valueAmount;
-    }
-
-    public void setValueAmount(Integer valueAmount) {
-        this.valueAmount = valueAmount;
-    }
 
 }

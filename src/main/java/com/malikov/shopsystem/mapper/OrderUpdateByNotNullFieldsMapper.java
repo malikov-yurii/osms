@@ -8,9 +8,6 @@ import org.mapstruct.MappingTarget;
 
 import static org.mapstruct.NullValueCheckStrategy.ALWAYS;
 
-/**
- * @author Yurii Malikov
- */
 @Mapper(componentModel = "spring", nullValueCheckStrategy = ALWAYS)
 public interface OrderUpdateByNotNullFieldsMapper {
 

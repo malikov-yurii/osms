@@ -10,9 +10,6 @@ import org.mapstruct.MappingTarget;
 import java.math.RoundingMode;
 import java.util.List;
 
-/**
- * @author Yurii Malikov
- */
 @Mapper(componentModel = "spring")
 public abstract class OrderLineMapper {
 
