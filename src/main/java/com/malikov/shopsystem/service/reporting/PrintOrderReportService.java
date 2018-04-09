@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import static java.util.Collections.emptyList;
 import static java.util.Objects.nonNull;
@@ -50,22 +51,36 @@ public class PrintOrderReportService {
 
     private Map<String, Object> parameters(Order order) {
         Map<String, Object> parameters = new HashMap<>();
-
-        parameters.put(CUSTOMER_NAME, ofNullable(order.getCustomerFirstName())
-                                        .map(firstName -> order.getCustomerLastName() + " " + firstName)
-                                        .orElse(order.getCustomerLastName()));
-        parameters.put(CUSTOMER_PHONE_NUMBER, ofNullable(order.getCustomerPhoneNumber())
-                                    .filter(StringUtils::isNotBlank)
-                                    .map(phone -> "+38(" + phone.substring(0,3) + ")" + phone.substring(3,5) + "-" +
-                                            phone.substring(5,7) + "-" + phone.substring(7))
-                                    .orElse(""));
-        parameters.put(DESTINATION, ofNullable(order.getDestinationPostOffice())
-                                        .map(postOffice -> order.getDestinationCity() + ", " + postOffice)
-                                        .orElse(order.getDestinationCity()));
+        parameters.put(CUSTOMER_NAME, customerName(order));
+        parameters.put(CUSTOMER_PHONE_NUMBER, customerPhoneNumber(order));
+        parameters.put(DESTINATION, shippingDestination(order));
         parameters.put(TOTAL_ORDER_AMOUNT, order.getTotalSum());
         parameters.put(PAYMENT_TYPE, order.getPaymentType().toString());
-
         return parameters;
+    }
+
+    private String customerName(Order order) {
+        return ofNullable(order.getCustomerFirstName())
+                .map(firstName -> order.getCustomerLastName() + " " + firstName)
+                .orElse(order.getCustomerLastName());
+    }
+
+    private String customerPhoneNumber(Order order) {
+        return ofNullable(order.getCustomerPhoneNumber())
+                .filter(StringUtils::isNotBlank)
+                .map(formatPhoneNumber())
+                .orElse(StringUtils.EMPTY);
+    }
+
+    private Function<String, String> formatPhoneNumber() {
+        return phoneNumber -> "+38(" + phoneNumber.substring(0,3) + ")" + phoneNumber.substring(3,5) + "-"
+                + phoneNumber.substring(5,7) + "-" + phoneNumber.substring(7);
+    }
+
+    private String shippingDestination(Order order) {
+        return ofNullable(order.getDestinationPostOffice())
+                .map(postOffice -> order.getDestinationCity() + ", " + postOffice)
+                .orElse(order.getDestinationCity());
     }
 
     private List<OrderLineReportDto> prepareOrderLines(Order order) {
