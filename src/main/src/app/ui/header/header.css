@@ -161,4 +161,7 @@ a.active {
     .header__nav a.logout {
         color: #9e0202;
     }
+    .currency-info__help:hover + .tooltip {
+        display: none;
+    }
 }
