@@ -14,6 +14,6 @@ public class CurrencyDto {
     CurrencyCode code;
     BigDecimal exchangeRate;
     LocalDateTime lastUpdated;
-    LocalDateTime lastAutoUpdated;
+    LocalDateTime lastAutoUpdateAttempt;
 
 }

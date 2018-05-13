@@ -37,7 +37,7 @@ public class Currency {
     @Column(name = "currency_last_updated", columnDefinition = "timestamp")
     private LocalDateTime lastUpdated;
 
-    @Column(name = "currency_last_auto_updated", columnDefinition = "timestamp")
-    private LocalDateTime lastAutoUpdated;
+    @Column(name = "currency_last_auto_update_attempt", columnDefinition = "timestamp")
+    private LocalDateTime lastAutoUpdateAttempt;
 
 }

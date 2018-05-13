@@ -7,10 +7,10 @@ import com.malikov.shopsystem.enumtype.CurrencyCode;
 import com.malikov.shopsystem.exception.NotSupportedCurrencyException;
 import com.malikov.shopsystem.mapper.CurrencyMapper;
 import com.malikov.shopsystem.repository.CurrencyRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class CurrencyService {
 
     private static final int SCALE = 6;
@@ -58,21 +59,21 @@ public class CurrencyService {
 
     private List<Currency> getUpdatedCurrencies() {
         Currency euro = getCurrency(CurrencyCode.EUR);
-        BigDecimal newEuroExchangeRate = requestEuroExchangeRate();
-        setExchangeRate(euro, newEuroExchangeRate);
+        Optional.ofNullable(requestEuroExchangeRate())
+            .ifPresent(newEuroExchangeRate -> setExchangeRate(euro, newEuroExchangeRate));
         return Collections.singletonList(euro);
     }
 
     private BigDecimal requestEuroExchangeRate() {
+        BigDecimal result = null;
         try {
             MinFinResponseDto responseBody =
                     restTemplate.getForEntity(URI.create(AUCTION_EXCHANGE_RATE_URL), MinFinResponseDto.class).getBody();
-            return responseBody.getEur().getBid();
-        } catch (RestClientException ex) {
-            throw new RestClientException("currency server is not available", ex);
+            result = responseBody.getEur().getBid();
         } catch (Exception ex) {
-            throw new RuntimeException("refreshing currency rate failed");
+            log.error("Refreshing currency rate failed.");
         }
+        return result;
     }
 
     public void setExchangeRate(Currency euro, BigDecimal newEuroExchangeRate) {
@@ -97,7 +98,9 @@ public class CurrencyService {
     @Transactional
     public void scheduledCurrenciesUpdate() {
         for (Currency currency : getUpdatedCurrencies()) {
-            currency.setLastAutoUpdated(LocalDateTime.now());
+            LocalDateTime now = LocalDateTime.now();
+            currency.setLastUpdated(now);
+            currency.setLastAutoUpdateAttempt(now);
         }
     }
 
