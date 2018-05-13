@@ -95,13 +95,12 @@ public abstract class ProductMapper {
     }
 
     public ProductPage toPage(org.springframework.data.domain.Page<Product> source) {
-
         ProductPage target = new ProductPage();
         List<ProductDto> allProducts = new ArrayList<>();
 
         for (Product product : source.getContent()) {
             if (product.getCategories().size() != 0) {
-                allProducts.addAll(getDtosFrom(product));
+                allProducts.addAll(toDtos(product));
             }
         }
 
@@ -112,20 +111,22 @@ public abstract class ProductMapper {
         return target;
     }
 
-    protected List<ProductDto> getDtosFrom(Product product) {
-
+    protected List<ProductDto> toDtos(Product product) {
         List<ProductDto> products = new ArrayList<>();
-
         if (CollectionUtils.isNotEmpty(product.getVariations())) {
-            products.addAll(product.getVariations()
-                    .stream()
-                    .map(this::toDto)
-                    .collect(Collectors.toList()));
+            products.addAll(toDtos(product.getVariations()));
         } else {
-            products.add(this.toDto(product));
+            products.add(toDto(product));
         }
 
         return products;
+    }
+
+    private List<ProductDto> toDtos(List<ProductVariation> productVariations) {
+        return productVariations
+                .stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 
     protected String toString(ProductCategory category) {

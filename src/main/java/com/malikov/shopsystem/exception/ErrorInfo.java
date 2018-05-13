@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.util.exception;
+package com.malikov.shopsystem.exception;
 
 public class ErrorInfo {
 

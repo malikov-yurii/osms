@@ -1,7 +1,7 @@
 package com.malikov.shopsystem.web;
 
-import com.malikov.shopsystem.util.exception.ErrorInfo;
-import com.malikov.shopsystem.util.exception.NotFoundException;
+import com.malikov.shopsystem.exception.ErrorInfo;
+import com.malikov.shopsystem.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
