@@ -2,15 +2,12 @@ package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.domain.Currency;
 import com.malikov.shopsystem.dto.CurrencyDto;
+import com.malikov.shopsystem.dto.minfin.MinFinResponseDto;
 import com.malikov.shopsystem.enumtype.CurrencyCode;
 import com.malikov.shopsystem.exception.NotSupportedCurrencyException;
 import com.malikov.shopsystem.mapper.CurrencyMapper;
 import com.malikov.shopsystem.repository.CurrencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
@@ -23,8 +20,6 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
-import static org.springframework.http.HttpMethod.GET;
 
 @Service
 public class CurrencyService {
@@ -71,11 +66,9 @@ public class CurrencyService {
 
     private BigDecimal requestEuroExchangeRate() {
         try {
-            return restTemplate.exchange(URI.create(AUCTION_EXCHANGE_RATE_URL), GET, new HttpEntity<>(headers()),
-                    new ParameterizedTypeReference<MinFinResponseDto>() {
-
-                    }).getBody().eur.bid;
-
+            MinFinResponseDto responseBody =
+                    restTemplate.getForEntity(URI.create(AUCTION_EXCHANGE_RATE_URL), MinFinResponseDto.class).getBody();
+            return responseBody.getEur().getBid();
         } catch (RestClientException ex) {
             throw new RestClientException("currency server is not available", ex);
         } catch (Exception ex) {
@@ -105,24 +98,6 @@ public class CurrencyService {
     @Transactional
     public void scheduledCurrenciesUpdate() {
         getUpdatedCurrencies().stream().peek(currency -> currency.setLastAutoUpdated(LocalDateTime.now()));
-    }
-
-    private HttpHeaders headers() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        return headers;
-    }
-
-    private class MinFinResponseDto {
-
-        CurrencyExchangeInfo eur;
-
-        private class CurrencyExchangeInfo {
-
-            BigDecimal bid;
-
-        }
-
     }
 
 }
