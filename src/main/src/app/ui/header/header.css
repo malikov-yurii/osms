@@ -8,12 +8,12 @@
     justify-content: space-between;
     align-items: center;
 }
-ul {
+.header__nav ul {
     display: flex;
     align-items: center;
     list-style: none;
 }
-li {
+.header__nav li {
     display: inline-block;
     vertical-align: top;
 }
@@ -26,12 +26,92 @@ a {
     line-height: 48px;
 }
 a:hover,
-.active {
+a.active {
     background: #00807d;
 }
 .header__nav-toggle {
     display: none;
 }
+
+.header__currency {
+    position: relative;
+    margin: 0 20px 0 auto;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    line-height: 48px;
+}
+
+.currency__code {
+    margin: 0 4px 0 0;
+}
+
+.currency__value {
+    padding: 0 4px;
+}
+.currency__value.editable {
+    background: rgba(255, 255, 255, 0.9);
+    color: #000;
+}
+
+.currency-info {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -8px;
+    line-height: 1;
+    list-style: none;
+    background: #3fb0ac;
+    z-index: 20;
+}
+
+.header__currency:hover .currency-info {
+    display: block;
+}
+
+.currency-info__item {
+    display: block;
+    padding: 10px 8px;
+    white-space: nowrap;
+}
+
+.currency-info__item.clickable {
+    cursor: pointer;
+}
+.currency-info__item.clickable:hover {
+    background: #00807d;
+}
+
+.currency-info__help {
+    font-size: 15px;
+    vertical-align: top;
+    margin-left: 10px;
+    cursor: help;
+}
+
+.currency-info__help:hover + .tooltip {
+    display: block;
+    width: 340px;
+}
+
+.currency__loading {
+    width: 12px;
+    height: 12px;
+    margin: 0 0 0 5px;
+}
+
+.currency__loading circle {
+    stroke-dasharray: 5px 5px 11px;
+}
+.currency-info__tooltip {
+    top: -15px;
+    transform: none;
+    animation: unset;
+}
+.currency-info__tooltip::after {
+    top: 32px;
+}
+
 @media only screen and (max-width: 500px) {
     .header__nav-toggle {
         display: block;

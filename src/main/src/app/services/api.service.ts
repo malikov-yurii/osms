@@ -29,14 +29,16 @@ export class ApiService {
 
   constructor(private http: Http, private progressBar: ProgressBarService) {}
 
-  get(path: string): Observable<any> {
-    this.progressBar.show();
+  get(path: string, showProgressBar = true): Observable<any> {
+    if (showProgressBar) {
+      this.progressBar.show();
+    }
 
     return this.http.get(path, {headers: this.headersForm})
-      .finally(() => this.onRequestEnd())
+      .finally(() => this.onRequestEnd(showProgressBar))
       .map(this.checkForError)
       .catch(err => Observable.throw(err))
-      .map(this.getJson)
+      .map(this.getJson);
   }
 
   post(path: string): Observable<any> {
@@ -46,7 +48,7 @@ export class ApiService {
       .finally(() => this.onRequestEnd())
       .map(this.checkForError)
       .catch(err => Observable.throw(err))
-      .map(this.getJson)
+      .map(this.getJson);
   }
 
   put(path: string, body: any): Observable<any> {
@@ -56,21 +58,24 @@ export class ApiService {
       .finally(() => this.onRequestEnd())
       .map(this.checkForError)
       .catch(err => Observable.throw(err))
-      .map(this.getJson)
+      .map(this.getJson);
   }
 
   apiDelete(path: string): Observable<any> {
     this.progressBar.show();
 
+
     return this.http.delete(path, {headers: this.headersForm})
       .finally(() => this.onRequestEnd())
       .map(this.checkForError)
-      .catch(err => Observable.throw(err))
+      .catch(err => Observable.throw(err));
   }
 
-  private onRequestEnd() {
+  private onRequestEnd(hideProgressBar = true) {
     this.updateSession();
-    this.progressBar.hide();
+    if (hideProgressBar) {
+      this.progressBar.hide();
+    }
   }
 
   private getJson(resp: Response) {

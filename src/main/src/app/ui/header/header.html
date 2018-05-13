@@ -3,6 +3,47 @@
     <div class="header__logo">
       <a [routerLink]="['']" class="logo">OSMS</a>
     </div>
+
+    <div class="header__currency"
+         *ngFor="let currency of currencies"
+    >
+
+      <div class="currency__code">
+        {{ currency.code }}:
+      </div>
+
+      <div class="currency__value">
+        {{ currency.exchangeRate | currency:currency.code:'symbol':'1.0-2' }}
+      </div>
+
+      <svg class="circle-preloader currency__loading" [class.vis-hidden]="!currency.isLoading">
+        <circle r="5" cx="6" cy="6"></circle>
+      </svg>
+
+      <ul class="currency-info">
+        <li class="currency-info__item">
+          Last updated: {{ currency.lastUpdated | date:'dd MMM HH:mm' }}
+          <i class="material-icons currency-info__help" *ngIf="currency.lastAutoUpdateAttempt > currency.lastUpdated">
+            help_outline
+          </i>
+
+          <div class="currency-info__tooltip tooltip tooltip-right">
+            Похоже, что серверу не удалось автоматически обновить значения курсов ({{ currency.lastAutoUpdateAttempt | date:'dd MMM HH:mm' }}). Нажмите "Update rates" для принудительного обновления сервером, или "Set rate" для установки значения вручную
+          </div>
+
+        </li>
+
+        <li class="currency-info__item clickable" (click)="getCurrencies(true)">
+          Update rates
+        </li>
+
+
+        <li class="currency-info__item clickable" (click)="setRate(currency)">
+          Set rate
+        </li>
+      </ul>
+    </div>
+
     <div class="header__nav-toggle">
       <i
         class="material-icons"
