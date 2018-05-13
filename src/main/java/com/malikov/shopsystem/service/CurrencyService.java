@@ -56,8 +56,7 @@ public class CurrencyService {
         return currencyMapper.toDtos(getUpdatedCurrencies());
     }
 
-    @Transactional
-    public List<Currency> getUpdatedCurrencies() {
+    private List<Currency> getUpdatedCurrencies() {
         Currency euro = getCurrency(CurrencyCode.EUR);
         BigDecimal newEuroExchangeRate = requestEuroExchangeRate();
         setExchangeRate(euro, newEuroExchangeRate);
@@ -97,7 +96,9 @@ public class CurrencyService {
 
     @Transactional
     public void scheduledCurrenciesUpdate() {
-        getUpdatedCurrencies().stream().peek(currency -> currency.setLastAutoUpdated(LocalDateTime.now()));
+        for (Currency currency : getUpdatedCurrencies()) {
+            currency.setLastAutoUpdated(LocalDateTime.now());
+        }
     }
 
 }
