@@ -1,14 +1,13 @@
 package com.malikov.shopsystem.controller;
 
-import com.malikov.shopsystem.dto.filter.GenericFilter;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
 import com.malikov.shopsystem.dto.OrderPage;
 import com.malikov.shopsystem.dto.OrderUpdateDto;
+import com.malikov.shopsystem.dto.filter.GenericFilter;
 import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.enumtype.PaymentType;
 import com.malikov.shopsystem.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/order", produces = MediaType.APPLICATION_JSON_VALUE)
 public class OrderController {
 
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
+
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @PutMapping(value = "/filter", consumes = MediaType.APPLICATION_JSON_VALUE)
     public  OrderPage getFilteredPage(@RequestBody GenericFilter<OrderFilterDto, OrderDto> orderFilterDto) {

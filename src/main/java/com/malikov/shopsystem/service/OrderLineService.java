@@ -13,7 +13,6 @@ import com.malikov.shopsystem.repository.OrderRepository;
 import com.malikov.shopsystem.repository.ProductRepository;
 import com.malikov.shopsystem.repository.ProductVariationRepository;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,20 +33,26 @@ public class OrderLineService {
 
     private static final int DEFAULT_NEW_PRODUCT_QUANTITY = 1;
 
-    @Autowired
-    private OrderLineRepository orderLineRepository;
-    @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private ProductVariationRepository productVariationRepository;
-    @Autowired
-    private UpdateStockService updateStockService;
-    @Autowired
-    private ProductMapper productMapper;
-    @Autowired
-    private OrderLineMapper orderLineMapper;
+    private final OrderLineRepository orderLineRepository;
+    private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
+    private final ProductVariationRepository productVariationRepository;
+    private final UpdateStockService updateStockService;
+    private final ProductMapper productMapper;
+    private final OrderLineMapper orderLineMapper;
+
+    public OrderLineService(OrderLineRepository orderLineRepository, OrderRepository orderRepository,
+                            ProductRepository productRepository, ProductVariationRepository productVariationRepository,
+                            UpdateStockService updateStockService, ProductMapper productMapper,
+                            OrderLineMapper orderLineMapper) {
+        this.orderLineRepository = orderLineRepository;
+        this.orderRepository = orderRepository;
+        this.productRepository = productRepository;
+        this.productVariationRepository = productVariationRepository;
+        this.updateStockService = updateStockService;
+        this.productMapper = productMapper;
+        this.orderLineMapper = orderLineMapper;
+    }
 
     public OrderLine get(Long orderLineId) {
         return orderLineRepository.findOne(orderLineId);

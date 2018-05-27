@@ -22,7 +22,6 @@ public class CustomerService {
     private final OrderRepository orderRepository;
     private final CustomerMapper mapper;
 
-    @Autowired
     public CustomerService(CustomerRepository customerRepository,
                            OrderRepository orderRepository,
                            CustomerMapper mapper) {

@@ -4,7 +4,6 @@ import com.malikov.shopsystem.domain.ProductAggregator;
 import com.malikov.shopsystem.dto.ProductAggregatorDto;
 import com.malikov.shopsystem.mapper.ProductAggregatorMapper;
 import com.malikov.shopsystem.repository.ProductAggregatorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,10 +15,14 @@ import static com.google.common.collect.Streams.stream;
 @Service
 public class ProductAggregatorService {
 
-    @Autowired
-    private ProductAggregatorRepository productAggregatorRepository;
-    @Autowired
-    private ProductAggregatorMapper productAggregatorMapper;
+    private final ProductAggregatorRepository productAggregatorRepository;
+    private final ProductAggregatorMapper productAggregatorMapper;
+
+    public ProductAggregatorService(ProductAggregatorRepository productAggregatorRepository,
+                                    ProductAggregatorMapper productAggregatorMapper) {
+        this.productAggregatorRepository = productAggregatorRepository;
+        this.productAggregatorMapper = productAggregatorMapper;
+    }
 
     public List<ProductAggregatorDto> findAll() {
 
@@ -30,7 +33,6 @@ public class ProductAggregatorService {
 
     @Transactional
     public void update(ProductAggregatorDto dto) {
-
         ProductAggregator productAggregator = productAggregatorRepository.findOne(dto.getAggregatorId());
         productAggregator.setQuantity(dto.getAggregatorQuantity());
         productAggregatorRepository.save(productAggregator);

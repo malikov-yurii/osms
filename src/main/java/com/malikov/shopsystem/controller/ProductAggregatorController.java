@@ -2,7 +2,6 @@ package com.malikov.shopsystem.controller;
 
 import com.malikov.shopsystem.dto.ProductAggregatorDto;
 import com.malikov.shopsystem.service.ProductAggregatorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,8 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/product-aggregator", consumes = MediaType.APPLICATION_JSON_VALUE)
 public class ProductAggregatorController {
 
-    @Autowired
-    private ProductAggregatorService productAggregatorService;
+    private final ProductAggregatorService productAggregatorService;
+
+    public ProductAggregatorController(ProductAggregatorService productAggregatorService) {
+        this.productAggregatorService = productAggregatorService;
+    }
 
     @PutMapping("/{aggregatorId}")
     public void update(@PathVariable Long aggregatorId, @RequestBody ProductAggregatorDto aggregatorDto) {

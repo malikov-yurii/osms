@@ -2,7 +2,6 @@ package com.malikov.shopsystem.controller;
 
 import com.malikov.shopsystem.dto.CurrencyDto;
 import com.malikov.shopsystem.service.CurrencyService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,9 +15,8 @@ import java.util.List;
 @RequestMapping(value = "/currencies", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CurrencyController {
 
-    private CurrencyService currencyService;
+    private final CurrencyService currencyService;
 
-    @Autowired
     public CurrencyController(CurrencyService currencyService) {
         this.currencyService = currencyService;
     }

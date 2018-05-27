@@ -2,7 +2,6 @@ package com.malikov.shopsystem.service;
 
 import com.malikov.shopsystem.domain.ProductCategory;
 import com.malikov.shopsystem.repository.ProductCategoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +12,11 @@ import static com.google.common.collect.Streams.stream;
 @Service
 public class ProductCategoryService {
 
-    @Autowired
-    private ProductCategoryRepository productCategoryRepository;
+    private final ProductCategoryRepository productCategoryRepository;
+
+    public ProductCategoryService(ProductCategoryRepository productCategoryRepository) {
+        this.productCategoryRepository = productCategoryRepository;
+    }
 
     public List<String> getAllNames() {
 

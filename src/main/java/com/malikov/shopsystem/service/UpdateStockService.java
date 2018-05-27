@@ -10,7 +10,6 @@ import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.repository.ProductAggregatorRepository;
 import com.malikov.shopsystem.repository.ProductRepository;
 import com.malikov.shopsystem.repository.ProductVariationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,12 +31,17 @@ public class UpdateStockService {
     private static final Set<OrderStatus> WITHDRAWAL_STATUSES = new HashSet<>(Arrays.asList(OK, SHP, WFP));
     private static final int DECREASE = -1;
 
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private ProductVariationRepository productVariationRepository;
-    @Autowired
-    private ProductAggregatorRepository productAggregatorRepository;
+    private final ProductRepository productRepository;
+    private final ProductVariationRepository productVariationRepository;
+    private final ProductAggregatorRepository productAggregatorRepository;
+
+    public UpdateStockService(ProductRepository productRepository,
+                              ProductVariationRepository productVariationRepository,
+                              ProductAggregatorRepository productAggregatorRepository) {
+        this.productRepository = productRepository;
+        this.productVariationRepository = productVariationRepository;
+        this.productAggregatorRepository = productAggregatorRepository;
+    }
 
     @Transactional
     public void updateStockDependingOnNewStatus(Order order, OrderStatus newStatus) {

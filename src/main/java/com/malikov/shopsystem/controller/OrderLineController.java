@@ -3,7 +3,6 @@ package com.malikov.shopsystem.controller;
 import com.malikov.shopsystem.dto.OrderLineDto;
 import com.malikov.shopsystem.dto.ProductAutocompleteDto;
 import com.malikov.shopsystem.service.OrderLineService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +19,11 @@ import java.util.List;
 @RequestMapping(value = "/order-line", produces = MediaType.APPLICATION_JSON_VALUE)
 public class OrderLineController {
 
-    @Autowired
-    private OrderLineService orderLineService;
+    private final OrderLineService orderLineService;
+
+    public OrderLineController(OrderLineService orderLineService) {
+        this.orderLineService = orderLineService;
+    }
 
     @GetMapping("/autocomplete-by-product-name-mask/{productNameMask}")
     public List<ProductAutocompleteDto> autocompleteOrderItemName(@PathVariable String productNameMask) {

@@ -1,10 +1,9 @@
 package com.malikov.shopsystem.controller;
 
+import com.malikov.shopsystem.domain.Product;
 import com.malikov.shopsystem.dto.ProductDto;
 import com.malikov.shopsystem.dto.ProductPage;
-import com.malikov.shopsystem.domain.Product;
 import com.malikov.shopsystem.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/product", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProductController {
 
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping
     public ProductPage getProductTablePage(@RequestParam int pageNumber, @RequestParam int pageCapacity) {

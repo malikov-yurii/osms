@@ -7,7 +7,6 @@ import com.malikov.shopsystem.repository.OrderRepository;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -37,7 +36,6 @@ public class PrintOrderReportService {
 
     private final OrderRepository orderRepository;
 
-    @Autowired
     public PrintOrderReportService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }

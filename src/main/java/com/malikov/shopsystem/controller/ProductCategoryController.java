@@ -1,7 +1,6 @@
 package com.malikov.shopsystem.controller;
 
 import com.malikov.shopsystem.service.ProductCategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +15,11 @@ import java.util.List;
 @RequestMapping(value = "/product-category", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProductCategoryController {
 
-    @Autowired
-    private ProductCategoryService productCategoryService;
+    private final ProductCategoryService productCategoryService;
+
+    public ProductCategoryController(ProductCategoryService productCategoryService) {
+        this.productCategoryService = productCategoryService;
+    }
 
     @GetMapping
     public List<String> getProductCategoryNames() {

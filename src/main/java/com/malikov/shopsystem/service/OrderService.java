@@ -15,7 +15,6 @@ import com.malikov.shopsystem.mapper.OrderUpdateByNotNullFieldsMapper;
 import com.malikov.shopsystem.repository.CustomerRepository;
 import com.malikov.shopsystem.repository.OrderRepository;
 import com.malikov.shopsystem.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -34,18 +33,23 @@ public class OrderService {
 
     private static final Sort DESC_ID = new Sort(new Sort.Order(Sort.Direction.DESC, "id"));
 
-    @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private CustomerRepository customerRepository;
-    @Autowired
-    private UpdateStockService updateStockService;
-    @Autowired
-    private OrderUpdateByNotNullFieldsMapper orderUpdateByNotNullFieldsMapper;
-    @Autowired
-    private OrderMapper orderMapper;
+    private final OrderRepository orderRepository;
+    private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
+    private final UpdateStockService updateStockService;
+    private final OrderUpdateByNotNullFieldsMapper orderUpdateByNotNullFieldsMapper;
+    private final OrderMapper orderMapper;
+
+    public OrderService(OrderRepository orderRepository, UserRepository userRepository,
+                        CustomerRepository customerRepository, UpdateStockService updateStockService,
+                        OrderUpdateByNotNullFieldsMapper orderUpdateByNotNullFieldsMapper, OrderMapper orderMapper) {
+        this.orderRepository = orderRepository;
+        this.userRepository = userRepository;
+        this.customerRepository = customerRepository;
+        this.updateStockService = updateStockService;
+        this.orderUpdateByNotNullFieldsMapper = orderUpdateByNotNullFieldsMapper;
+        this.orderMapper = orderMapper;
+    }
 
     public OrderPage getFilteredPage(GenericFilter<OrderFilterDto, OrderDto> filter) {
         return orderMapper.toPage(getOrderPageFilteredBy(filter));

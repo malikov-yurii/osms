@@ -29,11 +29,10 @@ public class CurrencyService {
     private static final String AUCTION_EXCHANGE_RATE_URL =
             "http://api.minfin.com.ua/auction/info/58ec1c89d7ea9221853cf7b777a02c686c455a03/";
 
-    private RestTemplate restTemplate;
-    private CurrencyRepository currencyRepository;
-    private CurrencyMapper currencyMapper;
+    private final RestTemplate restTemplate;
+    private final CurrencyRepository currencyRepository;
+    private final CurrencyMapper currencyMapper;
 
-    @Autowired
     public CurrencyService(RestTemplate restTemplate,
                            CurrencyRepository currencyRepository,
                            CurrencyMapper currencyMapper) {
