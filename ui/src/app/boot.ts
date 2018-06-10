@@ -10,8 +10,7 @@ import { HotkeysDirective, Autocomplete, ContenteditableModel, PhoneNumberDirect
 import { ApiService, CustomerService, NotyService, OrderService, ProductService, SearchService, StoreHelper} from './services/index';
 import { ProgressBarService } from './ui/progress-bar/progress-bar.service';
 
-import { AppModuleNgFactory } from '../aot/ui/src/app/boot.ngfactory';
-
+import { AppModuleNgFactory } from '../../../build/ui/aot/ui/src/app/boot.ngfactory';
 
 @NgModule({
   declarations: [

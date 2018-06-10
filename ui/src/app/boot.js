@@ -15,7 +15,7 @@ import { Header, AutocompleteList, Pagination, PopupComponent, DataFilter, Filte
 import { HotkeysDirective, Autocomplete, ContenteditableModel, PhoneNumberDirective } from './directives/index';
 import { ApiService, CustomerService, NotyService, OrderService, ProductService, SearchService, StoreHelper } from './services/index';
 import { ProgressBarService } from './ui/progress-bar/progress-bar.service';
-import { AppModuleNgFactory } from '../aot/ui/src/app/boot.ngfactory';
+import { AppModuleNgFactory } from '../../../build/ui/aot/ui/src/app/boot.ngfactory';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }

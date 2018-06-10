@@ -49,7 +49,7 @@ bootJar {
     baseName = 'osms'
     version =  '0.1.0'
 
-    from(fileTree("build/ui")) {
+    from(fileTree("build/ui/public")) {
         into "resources"
     }
 }

@@ -27,7 +27,7 @@
   "buildOnSave": false,
 
   "angularCompilerOptions": {
-    "genDir": "ui/src/aot",
+    "genDir": "build/ui/aot",
     "skipMetadataEmit" : true
   }
 }

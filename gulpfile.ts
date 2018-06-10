@@ -9,7 +9,7 @@ const sync         = require('gulp-sync')(gulp);
 const tsProject    = tsc.createProject('tsconfig.json');
 
 const srcDirectory    = './ui/src';
-const buildDirectory  = './build/ui';
+const buildDirectory  = './build/ui/public';
 
 
 gulp.task('templates', () => {
