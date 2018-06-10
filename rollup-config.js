@@ -5,7 +5,7 @@ import uglify      from 'rollup-plugin-uglify';
 export default {
   input: 'src/main/src/app/boot.js',
   output: {
-    file: 'src/main/webapp/app.js',
+    file: 'ui/app.js',
     format: 'iife',
     name: 'osms'
   },

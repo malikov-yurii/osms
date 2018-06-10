@@ -55,7 +55,7 @@ public class OrderLineService {
     }
 
     public OrderLine get(Long orderLineId) {
-        return orderLineRepository.findOne(orderLineId);
+        return orderLineRepository.findById(orderLineId).orElse(null);
     }
 
     public List<ProductAutocompleteDto> getByProductMask(String productNameMask) {
@@ -79,16 +79,14 @@ public class OrderLineService {
 
     @Transactional
     public OrderLineDto create(Long orderId) {
-
         OrderLine orderLine = new OrderLine();
-        orderLine.setOrder(orderRepository.findOne(orderId));
+        orderLine.setOrder(orderRepository.findById(orderId).orElse(null));
 
         return orderLineMapper.toDto(orderLineRepository.save(orderLine));
     }
 
     @Transactional
     public void update(OrderLineDto orderLineDto) {
-
         OrderLine orderLine = get(orderLineDto.getOrderLineId());
 
         boolean isProductNameUpdated = updateOrderLineProductName(orderLineDto, orderLine);
@@ -112,13 +110,13 @@ public class OrderLineService {
     }
 
     private boolean setProductVariation(OrderLineDto orderLineDto, OrderLine orderLine) {
-
         if (isNull(orderLineDto.getProductVariationId())) {
             return false;
         }
 
         updateStockService.returnToStock(orderLine);
-        ProductVariation productVariation = productVariationRepository.findOne(orderLineDto.getProductVariationId());
+        ProductVariation productVariation = productVariationRepository
+                .findById(orderLineDto.getProductVariationId()).orElse(null);
         setProductVariationToOrderLine(orderLine, productVariation);
         orderLine.setProductQuantity(DEFAULT_NEW_PRODUCT_QUANTITY);
 
@@ -132,7 +130,7 @@ public class OrderLineService {
         }
 
         updateStockService.returnToStock(orderLine);
-        setProductToOrderLine(orderLine, productRepository.findOne(orderLineDto.getProductId()));
+        setProductToOrderLine(orderLine, productRepository.findById(orderLineDto.getProductId()).orElse(null));
         decreaseStockForProductJustBeenSet(orderLine);
         orderLine.setProductQuantity(DEFAULT_NEW_PRODUCT_QUANTITY);
 

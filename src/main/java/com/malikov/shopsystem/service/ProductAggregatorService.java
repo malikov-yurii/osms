@@ -33,7 +33,7 @@ public class ProductAggregatorService {
 
     @Transactional
     public void update(ProductAggregatorDto dto) {
-        ProductAggregator productAggregator = productAggregatorRepository.findOne(dto.getAggregatorId());
+        ProductAggregator productAggregator = productAggregatorRepository.findById(dto.getAggregatorId()).orElse(null);
         productAggregator.setQuantity(dto.getAggregatorQuantity());
         productAggregatorRepository.save(productAggregator);
     }

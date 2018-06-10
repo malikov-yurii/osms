@@ -41,7 +41,7 @@ public class PrintOrderReportService {
     }
 
     public byte[] printOrder(Long orderId) throws IOException, JRException {
-        Order order = orderRepository.findOne(orderId);
+        Order order = orderRepository.findById(orderId).orElse(null);
         JRBeanCollectionDataSource source = new JRBeanCollectionDataSource(prepareOrderLines(order));
         String template = getClass().getClassLoader().getResource(PRINT_ORDER_TEMPLATE_PATH).getFile();
         return exportReportToPdf(fillReport(compileReport(template), parameters(order), source));

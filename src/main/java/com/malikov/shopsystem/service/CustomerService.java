@@ -8,7 +8,6 @@ import com.malikov.shopsystem.dto.CustomerPage;
 import com.malikov.shopsystem.mapper.CustomerMapper;
 import com.malikov.shopsystem.repository.CustomerRepository;
 import com.malikov.shopsystem.repository.OrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,8 +29,12 @@ public class CustomerService {
         this.mapper = mapper;
     }
 
-    public CustomerDto get(Long id) {
-        return mapper.toDto(customerRepository.findOne(id));
+    public CustomerDto get(Long customerId) {
+        return mapper.toDto(getCustomer(customerId));
+    }
+
+    private Customer getCustomer(Long customerId) {
+        return customerRepository.findById(customerId).orElse(null);
     }
 
     public CustomerPage getPage(int pageNumber, int pageCapacity) {
@@ -45,13 +48,14 @@ public class CustomerService {
 
     @Transactional
     public CustomerDto update(CustomerDto customerDto) {
-        Customer customer = customerRepository.findOne(customerDto.getCustomerId());
-        return mapper.toDto(customerRepository.save(mapper.updateCustomer(customerDto, customer)));
+        Customer customer = getCustomer(customerDto.getCustomerId());
+        mapper.updateCustomer(customerDto, customer);
+        return mapper.toDto(customerRepository.save(customer));
     }
 
     @Transactional
     public void delete(Long id) {
-        customerRepository.delete(id);
+        customerRepository.deleteById(id);
     }
 
     public List<CustomerAutocompleteDto> getByLastNameMask(String lastNameMask) {
@@ -72,8 +76,7 @@ public class CustomerService {
 
     @Transactional
     public CustomerDto createCustomerFromOrderData(Long orderId) {
-
-        Order order = orderRepository.findOne(orderId);
+        Order order = orderRepository.findById(orderId).orElse(null);
         Customer customer = customerRepository.save(mapper.toCustomer(order));
 
         order.setCustomerId(customer.getId());

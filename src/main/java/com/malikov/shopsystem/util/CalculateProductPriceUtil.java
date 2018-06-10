@@ -8,7 +8,10 @@ import java.math.RoundingMode;
 
 import static java.math.RoundingMode.HALF_UP;
 
-public class CalculateProductPriceUtil {
+public final class CalculateProductPriceUtil {
+
+    private CalculateProductPriceUtil() {
+    }
 
     public static BigDecimal calculateProductVariationPrice(ProductVariation productVariation) {
         return calcPrice(productVariation.getPrice(), productVariation.getProduct().getCurrency().getCurrencyRate())

@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset=UTF-8>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,10 +27,10 @@
   </div>
 </app>
 
-<script>
+<script th:inline="javascript">
     var dbOrders = {
-        content: ${orders || null},
-        totalElements: ${ordersTotal || null}
+        content: /*[[${orders}]]*/ null,
+        totalElements: /*[[${ordersTotal}]]*/ null
     }
     window.module = 'aot';
 </script>

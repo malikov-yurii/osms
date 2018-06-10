@@ -34,30 +34,28 @@ public class ProductService {
     }
 
     public Product get(Long id) {
-        return productRepository.findOne(id);
+        return productRepository.findById(id).orElse(null);
     }
 
     public ProductPage getPage(int pageNumber, int pageCapacity) {
-        ProductPage productPage = mapper.toPage(productRepository.findAll(new PageRequest(pageNumber, pageCapacity)));
+        ProductPage productPage = mapper.toPage(productRepository.findAll(PageRequest.of(pageNumber, pageCapacity)));
         productPage.setProductAggregators(productAggregatorService.findAll());
         return productPage;
     }
 
     @Transactional
     public void delete(Long id) {
-        productRepository.delete(id);
+        productRepository.deleteById(id);
     }
 
     @Transactional
     public void update(ProductDto dto) {
-
         if (requiredDataToUpdateProductIsPresent(dto)) {
             updateProductOrProductVariation(dto);
         }
     }
 
     private void updateProductOrProductVariation(ProductDto dto) {
-
         if (nonNull(dto.getProductVariationId())) {
             updateProductVariation(dto);
         } else {
@@ -67,18 +65,17 @@ public class ProductService {
 
     private void updateProduct(ProductDto dto) {
 
-        Product product = productRepository.findOne(dto.getProductId());
+        Product product = get(dto.getProductId());
         productUpdateByNotNullFieldsMapper.update(dto, product);
     }
 
     private void updateProductVariation(ProductDto dto) {
-
-        ProductVariation productVariation = productVariationRepository.findOne(dto.getProductVariationId());
+        Long productVariationId = dto.getProductVariationId();
+        ProductVariation productVariation = productVariationRepository.findById(productVariationId).orElse(null);
         productUpdateByNotNullFieldsMapper.update(dto, productVariation);
     }
 
     private boolean requiredDataToUpdateProductIsPresent(ProductDto dto) {
-
         return (nonNull(dto.getProductPrice()) || nonNull(dto.getProductQuantity()))
                 && (nonNull(dto.getProductId()) || nonNull(dto.getProductVariationId()));
     }

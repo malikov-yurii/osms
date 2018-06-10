@@ -63,15 +63,21 @@ public class OrderService {
         return new PageRequest(paging.getPage(), paging.getSize(), DESC_ID);
     }
 
-    public OrderDto get(Long id) {
-        return orderMapper.toDto(orderRepository.findOne(id));
+    public OrderDto get(Long orderId) {
+        return orderMapper.toDto(getOrder(orderId));
+    }
+
+    private Order getOrder(Long id) {
+        return orderRepository.findById(id).orElse(null);
     }
 
     @Transactional
     public void delete(Long id) {
-        Order order = orderRepository.findOne(id);
-        updateStockService.updateStockForDeletedOrder(order);
-        orderRepository.delete(order);
+        orderRepository.findById(id)
+            .ifPresent(order -> {
+                updateStockService.updateStockForDeletedOrder(order);
+                orderRepository.delete(order);
+            });
     }
 
     @Transactional
@@ -91,7 +97,7 @@ public class OrderService {
     @Transactional
     public void update(OrderUpdateDto orderUpdateDto) {
 
-        Order order = orderRepository.findOne(orderUpdateDto.getOrderId());
+        Order order = getOrder(orderUpdateDto.getOrderId());
 
         setCustomerInfoToOrder(order, orderUpdateDto);
         orderUpdateByNotNullFieldsMapper.updateByNonCustomerRelatedInfo(orderUpdateDto, order);
@@ -117,11 +123,11 @@ public class OrderService {
 
     @Transactional
     public void changeOrderCustomer(Long customerId, Order order) {
-        orderMapper.updateByCustomer(customerRepository.findOne(customerId), order);
+        orderMapper.updateByCustomer(customerRepository.findById(customerId).orElse(null), order);
     }
 
     public OrderPage getPage(int pageNumber, int pageCapacity) {
-        return orderMapper.toPage(orderRepository.findAll(new PageRequest(pageNumber, pageCapacity, DESC_ID)));
+        return orderMapper.toPage(orderRepository.findAll(PageRequest.of(pageNumber, pageCapacity, DESC_ID)));
     }
 
 }

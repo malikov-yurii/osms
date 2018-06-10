@@ -12,11 +12,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class SpringSecurity extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthorizedUserService userService;
 
-    public SpringSecurity(AuthorizedUserService userService) {
+    public SecurityConfig(AuthorizedUserService userService) {
         this.userService = userService;
     }
 

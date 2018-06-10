@@ -1,0 +1,14 @@
+server:
+  port: 9987
+spring:
+  application:
+    name: osms
+  datasource:
+    url: jdbc:mysql://malikovs.mysql.ukraine.com.ua:3306/malikovs_gilder
+    username: malikovs_gilder
+    password: tele230786
+  jpa:
+    hibernate:
+      ddl-auto: none
+  thymeleaf:
+    prefix: classpath:ui/templates/

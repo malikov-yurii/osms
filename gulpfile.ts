@@ -9,22 +9,9 @@ const sync         = require('gulp-sync')(gulp);
 const tsProject    = tsc.createProject('tsconfig.json');
 
 const srcDirectory    = './src/main/src';
-const buildDirectory  = './src/main/webapp';
+const buildDirectory  = './ui';
 const targetDirectory = './build/libs/exploded/shopsystem';
 
-
-// Handle HTML files
-gulp.task('html-index:dev', () => {
-  return gulp.src(`${srcDirectory}/index-jit.jsp`)
-    .pipe(rename('index.jsp'))
-    .pipe(gulp.dest(`${buildDirectory}/WEB-INF/jsp/`));
-});
-
-gulp.task('html-index:prod', () => {
-  return gulp.src(`${srcDirectory}/index-aot.jsp`)
-    .pipe(rename('index.jsp'))
-    .pipe(gulp.dest(`${buildDirectory}/WEB-INF/jsp/`));
-});
 
 gulp.task('templates', () => {
   return gulp.src(`${srcDirectory}/app/**/*.html`, {base: srcDirectory})
@@ -141,6 +128,6 @@ gulp.task('resources', ['css', 'images', 'web-inf', 'js:polyfills']);
 
 gulp.task('build', ['resources', 'templates', 'ts', 'js:libs']);
 
-gulp.task('build-dev',  sync.sync(['clean', 'html-index:dev', 'build']));
+gulp.task('build-dev',  sync.sync(['clean', 'build']));
 
-gulp.task('build-prod', sync.sync(['clean', 'html-index:prod', 'resources']));
+gulp.task('build-prod', sync.sync(['clean', 'resources']));
