@@ -3,12 +3,9 @@ git/nbproject
 .idea/
 *.iml
 node_modules
-src/main/webapp/
-src/main/src/aot/
-src/main/src/**/*.js
+ui/src/aot/
 log
 *.log
 package-lock.json
 build/
 .gradle/
-ui

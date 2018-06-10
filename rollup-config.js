@@ -3,9 +3,9 @@ import commonjs    from 'rollup-plugin-commonjs';
 import uglify      from 'rollup-plugin-uglify';
 
 export default {
-  input: 'src/main/src/app/boot.js',
+  input: 'ui/src/app/boot.js',
   output: {
-    file: 'ui/app.js',
+    file: 'build/ui/app.js',
     format: 'iife',
     name: 'osms'
   },

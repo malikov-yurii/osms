@@ -24,15 +24,6 @@ description = """Online Shop Management System"""
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-bootJar {
-    baseName = 'osms'
-    version =  '0.1.0'
-
-    from(fileTree("ui")) {
-        into "resources"
-    }
-}
-
 gulp {
     colors = true
     bufferOutput = true
@@ -53,6 +44,15 @@ compileJava {
 }
 
 bootJar.dependsOn(npm_run_start)
+
+bootJar {
+    baseName = 'osms'
+    version =  '0.1.0'
+
+    from(fileTree("build/ui")) {
+        into "resources"
+    }
+}
 
 configurations {
     providedRuntime

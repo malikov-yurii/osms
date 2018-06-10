@@ -17,17 +17,17 @@
     ]
   },
   "include": [
-    "src/main/src/app/**/*.ts"
+    "ui/src/app/**/*.ts"
   ],
   "exclude": [
-    "src/main/src/app/boot-jit.ts",
+    "ui/src/app/boot-jit.ts",
     "node_modules"
   ],
   "compileOnSave": false,
   "buildOnSave": false,
 
   "angularCompilerOptions": {
-    "genDir": "src/main/src/aot",
+    "genDir": "ui/src/aot",
     "skipMetadataEmit" : true
   }
 }

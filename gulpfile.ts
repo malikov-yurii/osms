@@ -8,9 +8,8 @@ const del          = require('del');
 const sync         = require('gulp-sync')(gulp);
 const tsProject    = tsc.createProject('tsconfig.json');
 
-const srcDirectory    = './src/main/src';
-const buildDirectory  = './ui';
-const targetDirectory = './build/libs/exploded/shopsystem';
+const srcDirectory    = './ui/src';
+const buildDirectory  = './build/ui';
 
 
 gulp.task('templates', () => {
@@ -31,13 +30,6 @@ gulp.task('images', () => {
   return gulp.src(`${srcDirectory}/assets/images/**/*`, {base: srcDirectory})
     .pipe(gulp.dest(buildDirectory));
 });
-
-
-// Copy required server files
-gulp.task('web-inf', () => gulp.src(`${srcDirectory}/WEB-INF/**`, {base: srcDirectory})
-  .pipe(gulp.dest(buildDirectory))
-);
-
 
 // Handle TypeScript files
 // Lint
@@ -61,7 +53,6 @@ gulp.task('ts', () => {
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(`${buildDirectory}/app`));
 });
-
 
 // Copy required core libraries
 gulp.task('js:libs', () => {
@@ -92,39 +83,7 @@ gulp.task('js:polyfills', () => {
 
 gulp.task('clean', () => del(buildDirectory));
 
-
-gulp.task('update:html', () => {
-  return gulp.src(`${srcDirectory}/app/**/*.html`, {base: srcDirectory})
-    .pipe(gulp.dest(targetDirectory));
-});
-
-gulp.task('update:css', () => {
-  return gulp.src(`${srcDirectory}/**/*.css`)
-    .pipe(gulp.dest(targetDirectory));
-});
-
-gulp.task('update:ts', ['ts'], () => {
-  return gulp.src(`${buildDirectory}/**/*.js`)
-    .pipe(gulp.dest(targetDirectory));
-});
-
-gulp.task('watch', () => {
-
-  gulp.watch([`${srcDirectory}/**/*.html`], ['update:html']).on('change', e => {
-    console.log(`HTML ${e.path.slice(e.path.indexOf('app'))} has been ${e.type}. Copying...`);
-  });
-
-  gulp.watch([`${srcDirectory}/**/*.css`], ['update:css']).on('change', e => {
-    console.log(`CSS ${e.path.slice(e.path.indexOf('app'))} has been ${e.type}. Copying...`);
-  });
-
-  gulp.watch([`${srcDirectory}/**/*.ts`], ['update:ts']).on('change', e => {
-    console.log(`TypeScript ${e.path.slice(e.path.indexOf('app'))} has been ${e.type}. Compiling...`);
-  });
-
-});
-
-gulp.task('resources', ['css', 'images', 'web-inf', 'js:polyfills']);
+gulp.task('resources', ['css', 'images', 'js:polyfills']);
 
 gulp.task('build', ['resources', 'templates', 'ts', 'js:libs']);
 
