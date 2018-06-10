@@ -52,6 +52,10 @@ bootJar {
     from(fileTree("build/ui/public")) {
         into "resources"
     }
+
+    from(fileTree("ui/src/assets")) {
+        into "resources/assets"
+    }
 }
 
 configurations {

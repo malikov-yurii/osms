@@ -18,19 +18,6 @@ gulp.task('templates', () => {
 });
 
 
-// Copy CSS files
-gulp.task('css', () => {
-  return gulp.src(`${srcDirectory}/**/*.css`)
-    .pipe(gulp.dest(buildDirectory));
-});
-
-
-// Copy images
-gulp.task('images', () => {
-  return gulp.src(`${srcDirectory}/assets/images/**/*`, {base: srcDirectory})
-    .pipe(gulp.dest(buildDirectory));
-});
-
 // Handle TypeScript files
 // Lint
 gulp.task('tslint', () => {
@@ -83,7 +70,7 @@ gulp.task('js:polyfills', () => {
 
 gulp.task('clean', () => del(buildDirectory));
 
-gulp.task('resources', ['css', 'images', 'js:polyfills']);
+gulp.task('resources', ['js:polyfills']);
 
 gulp.task('build', ['resources', 'templates', 'ts', 'js:libs']);
 
