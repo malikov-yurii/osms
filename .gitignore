@@ -8,3 +8,4 @@ log
 package-lock.json
 build/
 .gradle/
+src/main/resources/application-db.yml
