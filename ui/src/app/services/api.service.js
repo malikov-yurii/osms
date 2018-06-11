@@ -32,18 +32,27 @@ var ApiService = /** @class */ (function () {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         });
+        this.headersText = new Headers({
+            'Content-Type': 'text/plain',
+            'Accept': 'text/plain'
+        });
     }
-    ApiService.prototype.get = function (path, showProgressBar) {
+    ApiService.prototype.get = function (path, showProgressBar, isRespJson) {
         var _this = this;
         if (showProgressBar === void 0) { showProgressBar = true; }
+        if (isRespJson === void 0) { isRespJson = true; }
         if (showProgressBar) {
             this.progressBar.show();
         }
-        return this.http.get(path, { headers: this.headersForm })
+        var requestText = this.http.get(path, { headers: this.headersText })
+            .finally(function () { return _this.onRequestEnd(showProgressBar); })
+            .map(function (resp) { return resp.text(); });
+        var requestJson = this.http.get(path, { headers: this.headersForm })
             .finally(function () { return _this.onRequestEnd(showProgressBar); })
             .map(this.checkForError)
             .catch(function (err) { return Observable.throw(err); })
             .map(this.getJson);
+        return isRespJson ? requestJson : requestText;
     };
     ApiService.prototype.post = function (path) {
         var _this = this;

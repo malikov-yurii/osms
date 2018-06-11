@@ -60,7 +60,7 @@ public class OrderService {
     }
 
     private PageRequest pageRequest(Paging paging) {
-        return new PageRequest(paging.getPage(), paging.getSize(), DESC_ID);
+        return PageRequest.of(paging.getPage(), paging.getSize(), DESC_ID);
     }
 
     public OrderDto get(Long orderId) {

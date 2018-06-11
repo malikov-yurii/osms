@@ -64,7 +64,7 @@ export class OrderService {
   }
 
   printOrder(orderId: any) {
-    return this.api.get(`print-order/${orderId}`);
+    return this.api.get(`print-order/${orderId}`, true, false);
   }
 
   filterOrders(page, pageLength, filters): Observable<any> {

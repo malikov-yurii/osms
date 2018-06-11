@@ -59,7 +59,7 @@ var OrderService = /** @class */ (function () {
         return this.api.apiDelete(this.ordersPath + "/" + orderId);
     };
     OrderService.prototype.printOrder = function (orderId) {
-        return this.api.get("print-order/" + orderId);
+        return this.api.get("print-order/" + orderId, true, false);
     };
     OrderService.prototype.filterOrders = function (page, pageLength, filters) {
         var _this = this;

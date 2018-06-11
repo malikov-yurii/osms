@@ -27,18 +27,29 @@ export class ApiService {
     'Accept': 'application/json'
   });
 
+  private headersText: Headers = new Headers({
+    'Content-Type': 'text/plain',
+    'Accept': 'text/plain'
+  });
+
   constructor(private http: Http, private progressBar: ProgressBarService) {}
 
-  get(path: string, showProgressBar = true): Observable<any> {
+  get(path: string, showProgressBar = true, isRespJson = true): Observable<any> {
     if (showProgressBar) {
       this.progressBar.show();
     }
 
-    return this.http.get(path, {headers: this.headersForm})
-      .finally(() => this.onRequestEnd(showProgressBar))
-      .map(this.checkForError)
-      .catch(err => Observable.throw(err))
-      .map(this.getJson);
+    const requestText = this.http.get(path, {headers: this.headersText})
+        .finally(() => this.onRequestEnd(showProgressBar))
+        .map(resp => resp.text());
+
+    const requestJson = this.http.get(path, {headers: this.headersForm})
+        .finally(() => this.onRequestEnd(showProgressBar))
+        .map(this.checkForError)
+        .catch(err => Observable.throw(err))
+        .map(this.getJson);
+
+    return isRespJson ? requestJson : requestText;
   }
 
   post(path: string): Observable<any> {

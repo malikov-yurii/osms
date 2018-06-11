@@ -31,7 +31,6 @@ public class OrderController {
 
     @PutMapping(value = "/filter", consumes = MediaType.APPLICATION_JSON_VALUE)
     public  OrderPage getFilteredPage(@RequestBody GenericFilter<OrderFilterDto, OrderDto> orderFilterDto) {
-
         return orderService.getFilteredPage(orderFilterDto);
     }
 
