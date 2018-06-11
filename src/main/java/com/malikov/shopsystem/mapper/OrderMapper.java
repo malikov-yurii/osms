@@ -1,9 +1,9 @@
 package com.malikov.shopsystem.mapper;
 
-import com.malikov.shopsystem.dto.OrderDto;
-import com.malikov.shopsystem.dto.OrderPage;
 import com.malikov.shopsystem.domain.Customer;
 import com.malikov.shopsystem.domain.Order;
+import com.malikov.shopsystem.dto.OrderDto;
+import com.malikov.shopsystem.dto.OrderPage;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -11,7 +11,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {OrderLineMapper.class})
+@Mapper(uses = {OrderLineMapper.class})
 public interface OrderMapper {
 
     @Mapping(source = "id", target = "orderId")

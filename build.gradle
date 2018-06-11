@@ -16,22 +16,9 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-apply plugin: 'maven'
 
-group = 'com.malikov'
-version = '1.0-SNAPSHOT'
-description = """Online Shop Management System"""
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-
-gulp {
-    colors = true
-    bufferOutput = true
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
 
 repositories {
     mavenCentral()
@@ -39,11 +26,10 @@ repositories {
 
 compileJava {
     options.compilerArgs = [
-            '-Amapstruct.defaultComponentModel=spring'
+            '-Amapstruct.defaultComponentModel=spring',
+            '-Amapstruct.unmappedTargetPolicy=IGNORE'
     ]
 }
-
-bootJar.dependsOn(npm_run_start)
 
 bootJar {
     baseName = 'osms'
@@ -58,27 +44,28 @@ bootJar {
     }
 }
 
-configurations {
-    providedRuntime
+task buildAll {
+    dependsOn npm_run_start
+    dependsOn bootJar
+    tasks.findByName('bootJar').mustRunAfter 'npm_run_start'
 }
 
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-starter-security'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.springframework.boot:spring-boot-starter-security'
     compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
     compile 'mysql:mysql-connector-java'
 
-    compile group: 'net.sf.jasperreports', name: 'jasperreports-fonts', version: '6.0.0'
-    compile group: 'com.lowagie', name: 'itext', version: '2.1.7'
-    compile group: 'net.sourceforge.dynamicreports', name: 'dynamicreports-core', version: '5.0.0'
+    compile 'net.sf.jasperreports:jasperreports-fonts:6.0.0'
+    compile 'com.lowagie:itext:2.1.7'
+    compile 'net.sourceforge.dynamicreports:dynamicreports-core:5.0.0'
 
     compile 'org.mapstruct:mapstruct-jdk8:1.2.0.Final'
     compile 'org.mapstruct:mapstruct-processor:1.2.0.Final'
+    compile 'org.projectlombok:lombok:1.16.20'
 
-    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
-    compile group: 'com.google.guava', name: 'guava', version: '23.0'
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
-
+    compile 'com.google.guava:guava:23.0'
+    compile 'org.apache.commons:commons-lang3:3.6'
 }

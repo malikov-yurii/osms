@@ -22,7 +22,7 @@ import static com.malikov.shopsystem.util.CalculateProductPriceUtil.calculatePro
 import static com.malikov.shopsystem.util.CalculateProductPriceUtil.calculateProductVariationPrice;
 import static java.util.Collections.singleton;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public abstract class ProductMapper {
 
     @Mapping(target = "productAggregated", expression = "java( source.getProductAggregator() != null )")

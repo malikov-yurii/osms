@@ -1,7 +1,7 @@
 package com.malikov.shopsystem.mapper;
 
-import com.malikov.shopsystem.dto.OrderLineDto;
 import com.malikov.shopsystem.domain.OrderLine;
+import com.malikov.shopsystem.dto.OrderLineDto;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -10,7 +10,7 @@ import org.mapstruct.MappingTarget;
 import java.math.RoundingMode;
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public abstract class OrderLineMapper {
 
     @Mapping(source = "id", target = "orderLineId")

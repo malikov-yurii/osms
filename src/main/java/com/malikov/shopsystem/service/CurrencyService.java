@@ -53,6 +53,8 @@ public class CurrencyService {
 
     @Transactional
     public List<CurrencyDto> getUpdated() {
+        String ss = "asdf";
+        String s123asdf4s = "asdf";
         return currencyMapper.toDtos(getUpdatedCurrencies());
     }
 

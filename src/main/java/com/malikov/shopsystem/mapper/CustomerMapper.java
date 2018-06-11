@@ -1,10 +1,10 @@
 package com.malikov.shopsystem.mapper;
 
+import com.malikov.shopsystem.domain.Customer;
+import com.malikov.shopsystem.domain.Order;
 import com.malikov.shopsystem.dto.CustomerAutocompleteDto;
 import com.malikov.shopsystem.dto.CustomerDto;
 import com.malikov.shopsystem.dto.CustomerPage;
-import com.malikov.shopsystem.domain.Customer;
-import com.malikov.shopsystem.domain.Order;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -13,7 +13,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface CustomerMapper {
 
     @Mapping(source = "customerId", target = "id")

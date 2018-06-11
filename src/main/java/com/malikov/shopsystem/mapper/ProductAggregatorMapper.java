@@ -1,11 +1,11 @@
 package com.malikov.shopsystem.mapper;
 
-import com.malikov.shopsystem.dto.ProductAggregatorDto;
 import com.malikov.shopsystem.domain.ProductAggregator;
+import com.malikov.shopsystem.dto.ProductAggregatorDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface ProductAggregatorMapper {
 
     @Mapping(source = "id", target = "aggregatorId")

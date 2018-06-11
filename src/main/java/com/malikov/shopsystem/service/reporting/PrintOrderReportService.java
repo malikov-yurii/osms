@@ -27,7 +27,7 @@ import static net.sf.jasperreports.engine.JasperFillManager.fillReport;
 @Service
 public class PrintOrderReportService {
 
-    private static final String PRINT_ORDER_TEMPLATE_PATH = "template/printOrder.jrxml";
+    private static final String PRINT_ORDER_TEMPLATE_PATH = "reporting/template/printOrder.jrxml";
     private static final String CUSTOMER_NAME = "customerName";
     private static final String CUSTOMER_PHONE_NUMBER = "customerPhoneNumber";
     private static final String DESTINATION = "destination";

@@ -1,14 +1,14 @@
 package com.malikov.shopsystem.mapper;
 
-import com.malikov.shopsystem.dto.OrderUpdateDto;
 import com.malikov.shopsystem.domain.Order;
+import com.malikov.shopsystem.dto.OrderUpdateDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import static org.mapstruct.NullValueCheckStrategy.ALWAYS;
 
-@Mapper(componentModel = "spring", nullValueCheckStrategy = ALWAYS)
+@Mapper(nullValueCheckStrategy = ALWAYS)
 public interface OrderUpdateByNotNullFieldsMapper {
 
     @Mapping(target = "id", ignore = true)
