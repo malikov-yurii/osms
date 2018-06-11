@@ -1,6 +1,4 @@
 spring:
- application:
-  name: osms
  datasource:
   url: jdbc:mysql://${database.host}:${database.port}/${database.schema.name}
   username: ${database.user}
