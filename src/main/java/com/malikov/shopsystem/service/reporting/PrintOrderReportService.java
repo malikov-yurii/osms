@@ -7,9 +7,11 @@ import com.malikov.shopsystem.repository.OrderRepository;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +29,7 @@ import static net.sf.jasperreports.engine.JasperFillManager.fillReport;
 @Service
 public class PrintOrderReportService {
 
-    private static final String PRINT_ORDER_TEMPLATE_PATH = "reporting/template/printOrder.jrxml";
+    private static final String PRINT_ORDER_TEMPLATE_PATH = "classpath:reporting/template/printOrder.jrxml";
     private static final String CUSTOMER_NAME = "customerName";
     private static final String CUSTOMER_PHONE_NUMBER = "customerPhoneNumber";
     private static final String DESTINATION = "destination";
@@ -35,15 +37,17 @@ public class PrintOrderReportService {
     private static final String PAYMENT_TYPE = "paymentType";
 
     private final OrderRepository orderRepository;
+    private final ResourceLoader resourceLoader;
 
-    public PrintOrderReportService(OrderRepository orderRepository) {
+    public PrintOrderReportService(OrderRepository orderRepository, ResourceLoader resourceLoader) {
         this.orderRepository = orderRepository;
+        this.resourceLoader = resourceLoader;
     }
 
     public byte[] printOrder(Long orderId) throws IOException, JRException {
         Order order = orderRepository.findById(orderId).orElse(null);
         JRBeanCollectionDataSource source = new JRBeanCollectionDataSource(prepareOrderLines(order));
-        String template = getClass().getClassLoader().getResource(PRINT_ORDER_TEMPLATE_PATH).getFile();
+        InputStream template = resourceLoader.getResource(PRINT_ORDER_TEMPLATE_PATH).getInputStream();
         return exportReportToPdf(fillReport(compileReport(template), parameters(order), source));
     }
 

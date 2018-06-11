@@ -6,9 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * @author Yurii Malikov
- */
 @RestController
 @RequestMapping(value = "/print-order")
 public class PrintOrderController {
