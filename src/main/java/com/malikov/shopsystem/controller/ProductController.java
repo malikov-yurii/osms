@@ -3,7 +3,7 @@ package com.malikov.shopsystem.controller;
 import com.malikov.shopsystem.domain.Product;
 import com.malikov.shopsystem.dto.ProductDto;
 import com.malikov.shopsystem.dto.ProductPage;
-import com.malikov.shopsystem.service.ProductService;
+import com.malikov.shopsystem.service.product.ProductService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

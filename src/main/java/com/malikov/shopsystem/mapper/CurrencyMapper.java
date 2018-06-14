@@ -19,7 +19,7 @@ public interface CurrencyMapper {
     @Mapping(source = "currencyCode", target = "code")
     CurrencyDto toDto(Currency source);
 
-    List<CurrencyDto> toDtos(List<Currency> source);
+    List<CurrencyDto> toDtos(Iterable<Currency> source);
 
     @AfterMapping
     default void afterToDto(Currency source, @MappingTarget CurrencyDto target) {

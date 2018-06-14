@@ -19,10 +19,10 @@ public interface OrderMapper {
     @Mapping(source = "customer.note", target = "customerNote")
     @Mapping(source = "dateTimeCreated", target = "createdDateTime")
     @Mapping(source = "comment", target = "orderNote")
-    @Mapping(source = "totalSum", target = "totalValue", defaultValue = "0")
+    @Mapping(target = "calculableItems", ignore = true)
     OrderDto toDto(Order order);
 
-    List<OrderDto> toDto(List<Order> order);
+    List<OrderDto> toDtos(List<Order> order);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "id", target = "customerId")
@@ -33,13 +33,11 @@ public interface OrderMapper {
     @Mapping(source = "postOffice", target = "destinationPostOffice")
     void updateByCustomer(Customer source, @MappingTarget Order target);
 
-    default OrderPage toPage(Page<Order> source) {
-
+    default OrderPage toOrderPage(Page<Order> source) {
         OrderPage target = new OrderPage();
 
-        target.setContent(toDto(source.getContent()));
+        target.setContent(toDtos(source.getContent()));
         target.setTotalElements(source.getTotalElements());
-        target.setTotalPages(source.getTotalPages());
 
         return target;
     }

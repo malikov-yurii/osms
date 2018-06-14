@@ -1,9 +1,9 @@
-package com.malikov.shopsystem.reporting;
+package com.malikov.shopsystem.core.reporting;
 
-import com.malikov.shopsystem.domain.Order;
-import com.malikov.shopsystem.domain.OrderLine;
+import com.malikov.shopsystem.dto.OrderDto;
+import com.malikov.shopsystem.dto.OrderLineDto;
 import com.malikov.shopsystem.dto.OrderLineReportDto;
-import com.malikov.shopsystem.exception.ApplicationException;
+import com.malikov.shopsystem.error.exception.ApplicationException;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -48,11 +48,11 @@ public class OrderBase64PdfPrinter {
         }
     }
 
-    public String print(Order order) {
+    public String print(OrderDto order) {
         return Base64.getEncoder().encodeToString(generatePdfReport(order));
     }
 
-    private byte[] generatePdfReport(Order order) {
+    private byte[] generatePdfReport(OrderDto order) {
         try {
             return JasperExportManager.exportReportToPdf(generateReport(order));
         } catch (JRException e) {
@@ -60,7 +60,7 @@ public class OrderBase64PdfPrinter {
         }
     }
 
-    private JasperPrint generateReport(Order order) {
+    private JasperPrint generateReport(OrderDto order) {
         Map<String, Object> orderData = orderData(order);
         JRBeanCollectionDataSource orderLinesData = orderLinesData(order.getOrderLines());
         try {
@@ -70,28 +70,28 @@ public class OrderBase64PdfPrinter {
         }
     }
 
-    private Map<String, Object> orderData(Order order) {
+    private Map<String, Object> orderData(OrderDto order) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put(CUSTOMER_NAME, customerName(order));
         parameters.put(CUSTOMER_PHONE_NUMBER, customerPhoneNumber(order));
         parameters.put(DESTINATION, shippingDestination(order));
-        parameters.put(TOTAL_ORDER_AMOUNT, order.getTotalSum());
+        parameters.put(TOTAL_ORDER_AMOUNT, order.getTotalValue());
         parameters.put(PAYMENT_TYPE, order.getPaymentType().toString());
         return parameters;
     }
 
-    private JRBeanCollectionDataSource orderLinesData(List<OrderLine> orderLines) {
+    private JRBeanCollectionDataSource orderLinesData(List<OrderLineDto> orderLines) {
         List<OrderLineReportDto> orderLineReportDtos = toOrderLineReportDtos(orderLines);
         return new JRBeanCollectionDataSource(orderLineReportDtos);
     }
 
-    private String customerName(Order order) {
+    private String customerName(OrderDto order) {
         return Optional.ofNullable(order.getCustomerFirstName())
                 .map(firstName -> order.getCustomerLastName() + " " + firstName)
                 .orElse(order.getCustomerLastName());
     }
 
-    private String customerPhoneNumber(Order order) {
+    private String customerPhoneNumber(OrderDto order) {
         return Optional.ofNullable(order.getCustomerPhoneNumber())
                 .filter(StringUtils::isNotBlank)
                 .map(formatPhoneNumber())
@@ -103,35 +103,37 @@ public class OrderBase64PdfPrinter {
                                                                phoneNumber.substring(5,7), phoneNumber.substring(7));
     }
 
-    private String shippingDestination(Order order) {
+    private String shippingDestination(OrderDto order) {
         return Optional.ofNullable(order.getDestinationPostOffice())
                 .map(postOffice -> order.getDestinationCity() + ", " + postOffice)
                 .orElse(order.getDestinationCity());
     }
 
-    private List<OrderLineReportDto> toOrderLineReportDtos(List<OrderLine> orderLines) {
+    private List<OrderLineReportDto> toOrderLineReportDtos(List<OrderLineDto> orderLines) {
         List<OrderLineReportDto> result = new ArrayList<>();
-        List<OrderLine> listOrderLines = Optional.ofNullable(orderLines).orElse(Collections.emptyList());
+        List<OrderLineDto> listOrderLines = Optional.ofNullable(orderLines).orElse(Collections.emptyList());
         for (int i = 0; i < listOrderLines.size(); i++) {
             result.add(toOrderLineReportDto(i, listOrderLines.get(i)));
         }
         return result;
     }
 
-    private OrderLineReportDto toOrderLineReportDto(int i, OrderLine orderLine) {
+    private OrderLineReportDto toOrderLineReportDto(int i, OrderLineDto orderLine) {
         OrderLineReportDto orderLineReportDto = new OrderLineReportDto();
         orderLineReportDto.setOrderLineIndex(i + 1);
-        orderLineReportDto.setName(orderLine.getProductName());
-        orderLineReportDto.setQuantity(orderLine.getProductQuantity());
-        orderLineReportDto.setItemValue(orderLine.getProductPrice());
+        orderLineReportDto.setName(orderLine.getOrderLineProductName());
+        orderLineReportDto.setQuantity(orderLine.getOrderLineProductQuantity());
+        orderLineReportDto.setItemValue(orderLine.getOrderLineProductPrice());
         orderLineReportDto.setOrderLineValue(orderLineTotalValue(orderLine));
 
         return orderLineReportDto;
     }
 
-    private BigDecimal orderLineTotalValue(OrderLine orderLine) {
-        return Objects.nonNull(orderLine.getProductPrice()) && Objects.nonNull(orderLine.getProductQuantity())
-                ? orderLine.getProductPrice().multiply(BigDecimal.valueOf(orderLine.getProductQuantity()))
+    private BigDecimal orderLineTotalValue(OrderLineDto orderLine) {
+        Integer productQuantity = orderLine.getOrderLineProductQuantity();
+        BigDecimal productPrice = orderLine.getOrderLineProductPrice();
+        return Objects.nonNull(productPrice) && Objects.nonNull(productQuantity)
+                ? productPrice.multiply(BigDecimal.valueOf(productQuantity))
                 : null;
     }
 

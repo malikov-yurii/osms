@@ -1,7 +1,7 @@
 package com.malikov.shopsystem.controller;
 
 import com.malikov.shopsystem.dto.ProductAggregatorDto;
-import com.malikov.shopsystem.service.ProductAggregatorService;
+import com.malikov.shopsystem.service.product.ProductAggregatorService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;

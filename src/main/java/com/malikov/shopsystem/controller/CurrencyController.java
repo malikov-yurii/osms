@@ -1,7 +1,8 @@
 package com.malikov.shopsystem.controller;
 
 import com.malikov.shopsystem.dto.CurrencyDto;
-import com.malikov.shopsystem.service.CurrencyService;
+import com.malikov.shopsystem.service.currency.CurrencyService;
+import com.malikov.shopsystem.service.currency.UpdateCurrencyExchangeRateService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,19 +17,22 @@ import java.util.List;
 public class CurrencyController {
 
     private final CurrencyService currencyService;
+    private final UpdateCurrencyExchangeRateService updateCurrencyExchangeRateService;
 
-    public CurrencyController(CurrencyService currencyService) {
+    public CurrencyController(CurrencyService currencyService,
+                              UpdateCurrencyExchangeRateService updateCurrencyExchangeRateService) {
         this.currencyService = currencyService;
-    }
-
-    @GetMapping
-    public List<CurrencyDto> getCurrencies() {
-        return currencyService.get();
+        this.updateCurrencyExchangeRateService = updateCurrencyExchangeRateService;
     }
 
     @GetMapping("/updated")
     public List<CurrencyDto> getUpdatedCurrencies() {
-        return currencyService.getUpdated();
+        return updateCurrencyExchangeRateService.getUpdatedCurrencies();
+    }
+
+    @GetMapping
+    public List<CurrencyDto> getCurrencies() {
+        return currencyService.getAll();
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

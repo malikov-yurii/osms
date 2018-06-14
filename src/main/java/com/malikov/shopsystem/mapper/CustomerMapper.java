@@ -80,7 +80,6 @@ public interface CustomerMapper {
         CustomerPage target = new CustomerPage();
         target.setContent(toDto(source.getContent()));
         target.setTotalElements(source.getTotalElements());
-        target.setTotalPages(source.getTotalPages());
 
         return target;
     }

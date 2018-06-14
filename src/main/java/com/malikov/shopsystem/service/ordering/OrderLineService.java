@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.service;
+package com.malikov.shopsystem.service.ordering;
 
 import com.malikov.shopsystem.domain.Order;
 import com.malikov.shopsystem.domain.OrderLine;
@@ -6,23 +6,28 @@ import com.malikov.shopsystem.domain.Product;
 import com.malikov.shopsystem.domain.ProductVariation;
 import com.malikov.shopsystem.dto.OrderLineDto;
 import com.malikov.shopsystem.dto.ProductAutocompleteDto;
+import com.malikov.shopsystem.error.exception.NotFoundException;
 import com.malikov.shopsystem.mapper.OrderLineMapper;
 import com.malikov.shopsystem.mapper.ProductMapper;
 import com.malikov.shopsystem.repository.OrderLineRepository;
-import com.malikov.shopsystem.repository.OrderRepository;
 import com.malikov.shopsystem.repository.ProductRepository;
 import com.malikov.shopsystem.repository.ProductVariationRepository;
+import com.malikov.shopsystem.core.strategy.collection.AddOrderLineStrategy;
+import com.malikov.shopsystem.core.strategy.collection.DeleteOrderLineStrategy;
+import com.malikov.shopsystem.service.UpdateStockService;
+import com.malikov.shopsystem.service.caching.RefreshLastOrdersCacheService;
+import com.malikov.shopsystem.core.strategy.collection.UpdateOrderLineStrategy;
+import com.malikov.shopsystem.core.calculation.ValueCalculator;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.BiFunction;
 
-import static com.malikov.shopsystem.util.CalculateProductPriceUtil.calculateProductPrice;
-import static com.malikov.shopsystem.util.CalculateProductPriceUtil.calculateProductVariationPrice;
+import static com.malikov.shopsystem.core.calculation.ValueCalculator.calculate;
+import static com.malikov.shopsystem.core.calculation.ValueCalculator.calculate;
 import static java.math.BigDecimal.valueOf;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -32,30 +37,29 @@ import static java.util.stream.Collectors.toList;
 public class OrderLineService {
 
     private static final int DEFAULT_NEW_PRODUCT_QUANTITY = 1;
+    private static final String ANY_CHAR_SEQUENCE = "%";
 
     private final OrderLineRepository orderLineRepository;
-    private final OrderRepository orderRepository;
+    private final OrderService orderService;
     private final ProductRepository productRepository;
     private final ProductVariationRepository productVariationRepository;
     private final UpdateStockService updateStockService;
     private final ProductMapper productMapper;
     private final OrderLineMapper orderLineMapper;
+    private final RefreshLastOrdersCacheService orderCacheService;
 
-    public OrderLineService(OrderLineRepository orderLineRepository, OrderRepository orderRepository,
+    public OrderLineService(OrderLineRepository orderLineRepository, OrderService orderService,
                             ProductRepository productRepository, ProductVariationRepository productVariationRepository,
                             UpdateStockService updateStockService, ProductMapper productMapper,
-                            OrderLineMapper orderLineMapper) {
+                            OrderLineMapper orderLineMapper, RefreshLastOrdersCacheService orderCacheService) {
         this.orderLineRepository = orderLineRepository;
-        this.orderRepository = orderRepository;
+        this.orderService = orderService;
         this.productRepository = productRepository;
         this.productVariationRepository = productVariationRepository;
         this.updateStockService = updateStockService;
         this.productMapper = productMapper;
         this.orderLineMapper = orderLineMapper;
-    }
-
-    public OrderLine get(Long orderLineId) {
-        return orderLineRepository.findById(orderLineId).orElse(null);
+        this.orderCacheService = orderCacheService;
     }
 
     public List<ProductAutocompleteDto> getByProductMask(String productNameMask) {
@@ -74,15 +78,40 @@ public class OrderLineService {
     }
 
     private String atAnyPositionIgnoreCommas(String mask) {
-        return "%" + (nonNull(mask) ? mask.replaceAll(",", "") : "") + "%";
+        return ANY_CHAR_SEQUENCE + removeCommas(mask) + ANY_CHAR_SEQUENCE;
+    }
+
+    private String removeCommas(String mask) {
+        return nonNull(mask) ? mask.replaceAll(",", StringUtils.EMPTY) : StringUtils.EMPTY;
     }
 
     @Transactional
     public OrderLineDto create(Long orderId) {
         OrderLine orderLine = new OrderLine();
-        orderLine.setOrder(orderRepository.findById(orderId).orElse(null));
+        orderLine.setOrderId(orderId);
+        OrderLineDto orderLineDto = orderLineMapper.toDto(orderLineRepository.save(orderLine));
+        orderCacheService.updateLastOrdersCache(orderLineDto, AddOrderLineStrategy.INSTANCE);
+        return orderLineDto;
+    }
 
-        return orderLineMapper.toDto(orderLineRepository.save(orderLine));
+    @Transactional
+    public void delete(Long orderLineId) {
+        OrderLine orderLine = get(orderLineId);
+
+        updateStockService.returnToStock(orderLine);
+
+        Order order = orderLine.getOrder();
+        order.getOrderLines().remove(orderLine);
+        order.setTotalValue(ValueCalculator.calculate(order));
+
+        orderLineRepository.delete(orderLine);
+        OrderLineDto orderLineDto = orderLineMapper.toDto(orderLine);
+        orderCacheService.updateLastOrdersCache(orderLineDto, DeleteOrderLineStrategy.INSTANCE);
+    }
+
+    private OrderLine get(Long orderLineId) {
+        return orderLineRepository.findById(orderLineId)
+                .orElseThrow(() -> new NotFoundException(OrderLine.class, orderLineId));
     }
 
     @Transactional
@@ -91,17 +120,18 @@ public class OrderLineService {
 
         boolean isProductNameUpdated = updateOrderLineProductName(orderLineDto, orderLine);
 
-        boolean orderTotalSumChanged = setProductToOrderLine(orderLineDto, orderLine);
-        orderTotalSumChanged |= updateOrderLineProductPrice(orderLineDto, orderLine);
-        orderTotalSumChanged |= updateOrderLineProductQuantity(orderLineDto, orderLine);
-        if (orderTotalSumChanged) {
+        boolean orderTotalValueChanged = setProductToOrderLine(orderLineDto, orderLine);
+        orderTotalValueChanged |= updateOrderLineProductPrice(orderLineDto, orderLine);
+        orderTotalValueChanged |= updateOrderLineProductQuantity(orderLineDto, orderLine);
+        if (orderTotalValueChanged) {
             Order order = orderLine.getOrder();
-            order.setTotalSum(calcTotalSum(order));
+            order.setTotalValue(ValueCalculator.calculate(order));
         }
 
-        boolean orderLineChanged = isProductNameUpdated || orderTotalSumChanged;
+        boolean orderLineChanged = isProductNameUpdated || orderTotalValueChanged;
         if (orderLineChanged) {
-            orderLineRepository.save(orderLine);
+            OrderLineDto updatedOrderLineDto = orderLineMapper.toDto(orderLineRepository.save(orderLine));
+            orderCacheService.updateLastOrdersCache(updatedOrderLineDto, UpdateOrderLineStrategy.INSTANCE);
         }
     }
 
@@ -145,7 +175,7 @@ public class OrderLineService {
 
         orderLine.setProduct(product);
         orderLine.setProductName(product.getName());
-        orderLine.setProductPrice(calculateProductPrice(product));
+        orderLine.setProductPrice(ValueCalculator.calculate(product));
     }
 
     private void setProductVariationToOrderLine(OrderLine orderLine, ProductVariation productVariation) {
@@ -153,13 +183,13 @@ public class OrderLineService {
         orderLine.setProduct(productVariation.getProduct());
         orderLine.setProductVariation(productVariation);
         orderLine.setProductName(orderLineProductName(productVariation));
-        orderLine.setProductPrice(calculateProductVariationPrice(productVariation));
+        orderLine.setProductPrice(calculate(productVariation));
 
         decreaseStockForProductJustBeenSet(orderLine);
     }
 
-    private String orderLineProductName(ProductVariation productVariation) {
-        return productVariation.getProduct().getName() + " " + productVariation.getVariationValue().getName();
+    private String orderLineProductName(ProductVariation variation) {
+        return variation.getProduct().getName() + StringUtils.SPACE + variation.getVariationValue().getName();
     }
 
     private boolean updateOrderLineProductName(OrderLineDto orderLineDto, OrderLine orderLine) {
@@ -196,28 +226,6 @@ public class OrderLineService {
         orderLineRepository.save(orderLine);
 
         return true;
-    }
-
-    private BigDecimal calcTotalSum(Order order) {
-        return order.getOrderLines().stream().reduce(BigDecimal.ZERO, calcAndAddOrderLineTotal(), BigDecimal::add);
-    }
-
-    private BiFunction<BigDecimal, OrderLine, BigDecimal> calcAndAddOrderLineTotal() {
-        return (sum, ordLine) -> sum.add(ordLine.getProductPrice().multiply(valueOf(ordLine.getProductQuantity())));
-    }
-
-    @Transactional
-    public void delete(Long orderLineId) {
-
-        OrderLine orderLine = get(orderLineId);
-
-        updateStockService.returnToStock(orderLine);
-
-        Order order = orderLine.getOrder();
-        order.getOrderLines().remove(orderLine);
-        order.setTotalSum(calcTotalSum(order));
-
-        orderLineRepository.delete(orderLine);
     }
 
 }

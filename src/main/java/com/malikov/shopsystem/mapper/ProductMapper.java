@@ -1,5 +1,6 @@
 package com.malikov.shopsystem.mapper;
 
+import com.malikov.shopsystem.core.calculation.ValueCalculator;
 import com.malikov.shopsystem.domain.Product;
 import com.malikov.shopsystem.domain.ProductCategory;
 import com.malikov.shopsystem.domain.ProductVariation;
@@ -15,12 +16,9 @@ import org.mapstruct.MappingTarget;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.malikov.shopsystem.util.CalculateProductPriceUtil.calculateProductPrice;
-import static com.malikov.shopsystem.util.CalculateProductPriceUtil.calculateProductVariationPrice;
-import static java.util.Collections.singleton;
 
 @Mapper
 public abstract class ProductMapper {
@@ -38,7 +36,7 @@ public abstract class ProductMapper {
     @AfterMapping
     protected void afterToDto(ProductVariation source, @MappingTarget ProductDto target) {
         target.setProductName(productVariationFullName(source));
-        target.setProductPrice(calculateProductVariationPrice(source));
+        target.setProductPrice(ValueCalculator.calculate(source));
     }
 
     protected String productVariationFullName(ProductVariation source) {
@@ -58,7 +56,7 @@ public abstract class ProductMapper {
 
     @AfterMapping
     protected void afterToDto(Product source, @MappingTarget ProductDto target) {
-        target.setProductPrice(calculateProductPrice(source));
+        target.setProductPrice(ValueCalculator.calculate(source));
     }
 
     @Mapping(target = "productPrice", ignore = true)
@@ -68,7 +66,7 @@ public abstract class ProductMapper {
 
     @AfterMapping
     protected void afterToDto(ProductVariation source, @MappingTarget ProductAutocompleteDto target) {
-        final BigDecimal productVariationPrice = calculateProductVariationPrice(source);
+        final BigDecimal productVariationPrice = ValueCalculator.calculate(source);
         final String productVariationFullName = productVariationFullName(source);
         target.setLabel(productVariationFullName + " " + productVariationPrice);
         target.setProductName(productVariationFullName);
@@ -85,13 +83,13 @@ public abstract class ProductMapper {
 
     @AfterMapping
     protected void afterToDto(Product source, @MappingTarget ProductAutocompleteDto target) {
-        final BigDecimal productPrice = calculateProductPrice(source);
+        final BigDecimal productPrice = ValueCalculator.calculate(source);
         target.setLabel(source.getName() + " " + productPrice);
         target.setProductPrice(productPrice);
     }
 
     public Collection<ProductAutocompleteDto> toAutocompleteDtoSingleton(Product product) {
-        return singleton(toAutocompleteDto(product));
+        return Collections.singleton(toAutocompleteDto(product));
     }
 
     public ProductPage toPage(org.springframework.data.domain.Page<Product> source) {
@@ -106,7 +104,6 @@ public abstract class ProductMapper {
 
         target.setContent(allProducts);
         target.setTotalElements(source.getTotalElements());
-        target.setTotalPages(source.getTotalPages());
 
         return target;
     }

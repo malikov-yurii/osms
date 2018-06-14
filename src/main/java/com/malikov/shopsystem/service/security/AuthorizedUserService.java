@@ -2,7 +2,8 @@ package com.malikov.shopsystem.service.security;
 
 import com.malikov.shopsystem.domain.User;
 import com.malikov.shopsystem.repository.UserRepository;
-import com.malikov.shopsystem.security.AuthorizedUser;
+import com.malikov.shopsystem.core.security.AuthorizedUser;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,11 @@ public class AuthorizedUserService implements UserDetailsService {
         }
 
         return user;
+    }
+
+    public User getAuthorizedUser() {
+        String authenticatedUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.getByLogin(authenticatedUserName);
     }
 
 }

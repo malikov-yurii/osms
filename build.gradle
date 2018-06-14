@@ -55,6 +55,9 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'org.springframework.boot:spring-boot-starter-security'
     compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    compile 'org.springframework.boot:spring-boot-starter-cache'
+
+    compile 'net.sf.ehcache:ehcache'
 
     compile 'mysql:mysql-connector-java'
 

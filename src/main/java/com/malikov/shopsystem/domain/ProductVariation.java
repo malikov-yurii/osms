@@ -1,5 +1,6 @@
 package com.malikov.shopsystem.domain;
 
+import com.malikov.shopsystem.core.calculation.Exchangeable;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.NotFound;
@@ -23,7 +24,7 @@ import java.math.BigDecimal;
 @Table(name = "jos_jshopping_products_attr")
 @Getter
 @Setter
-public class ProductVariation {
+public class ProductVariation implements Exchangeable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,4 +57,8 @@ public class ProductVariation {
     @Column(name = "weight")
     private BigDecimal weight;
 
+    @Override
+    public BigDecimal getExchangeRate() {
+        return getProduct().getCurrency().getCurrencyRate();
+    }
 }

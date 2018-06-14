@@ -1,8 +1,10 @@
 package com.malikov.shopsystem.domain;
 
+import com.malikov.shopsystem.core.calculation.Calculable;
 import com.malikov.shopsystem.domain.converter.LocalDateTimeAttributeConverter;
 import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.enumtype.PaymentType;
+import com.malikov.shopsystem.core.calculation.CalculableContainer;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
@@ -29,13 +31,14 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "osms_orders")
 @Getter
 @Setter
-public class Order {
+public class Order implements CalculableContainer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,13 +91,18 @@ public class Order {
     private List<OrderLine> orderLines;
 
     @Column(name = "total_sum")
-    private BigDecimal totalSum = BigDecimal.ZERO;
+    private BigDecimal totalValue = BigDecimal.ZERO;
 
     @Column(name = "comment")
     private String comment;
 
     @Column(name = "status_sort_order")
     private Integer statusSortOrder;
+
+    @Override
+    public Collection<? extends Calculable> getCalculableItems() {
+        return getOrderLines();
+    }
 
 }
 

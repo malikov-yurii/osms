@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.security;
+package com.malikov.shopsystem.core.security;
 
 import com.malikov.shopsystem.domain.User;
 import com.malikov.shopsystem.dto.UserDto;

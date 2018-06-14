@@ -1,3 +1,7 @@
+server:
+  servlet:
+    session:
+      timeout: 14100s
 spring:
  datasource:
   url: jdbc:mysql://${database.host}:${database.port}/${database.schema.name}
@@ -10,3 +14,5 @@ spring:
   prefix: classpath:ui/templates/
  profiles:
    include: db
+cache:
+ initial-size: 100

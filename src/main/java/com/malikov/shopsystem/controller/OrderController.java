@@ -3,11 +3,10 @@ package com.malikov.shopsystem.controller;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderFilterDto;
 import com.malikov.shopsystem.dto.OrderPage;
-import com.malikov.shopsystem.dto.OrderUpdateDto;
 import com.malikov.shopsystem.dto.filter.GenericFilter;
 import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.enumtype.PaymentType;
-import com.malikov.shopsystem.service.OrderService;
+import com.malikov.shopsystem.service.ordering.OrderService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,13 +60,13 @@ public class OrderController {
 
     @PostMapping
     public OrderDto createEmpty() {
-        return orderService.create();
+        return orderService.createEmpty();
     }
 
     @PutMapping(value = "/{orderId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateOrder(@PathVariable Long orderId, @RequestBody OrderUpdateDto orderUpdateDto) {
-        orderUpdateDto.setOrderId(orderId);
-        orderService.update(orderUpdateDto);
+    public void updateOrder(@PathVariable Long orderId, @RequestBody OrderDto orderDto) {
+        orderDto.setOrderId(orderId);
+        orderService.update(orderDto);
     }
 
 }

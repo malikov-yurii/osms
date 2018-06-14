@@ -1,6 +1,9 @@
 package com.malikov.shopsystem.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.malikov.shopsystem.core.calculation.Calculable;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -8,8 +11,10 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class OrderLineDto implements Serializable {
+@NoArgsConstructor
+public class OrderLineDto implements Serializable, Calculable {
 
+    private Long orderId;
     private Long orderLineId;
     private Long productId;
     private Long productVariationId;
@@ -17,5 +22,21 @@ public class OrderLineDto implements Serializable {
     private Integer orderLineProductQuantity;
     private BigDecimal orderLineProductPrice;
     private String supplier;
+
+    public OrderLineDto(Long orderLineId) {
+        this.orderLineId = orderLineId;
+    }
+
+    @Override
+    @JsonIgnore
+    public BigDecimal getPrice() {
+        return getOrderLineProductPrice();
+    }
+
+    @Override
+    @JsonIgnore
+    public Integer getQuantity() {
+        return getOrderLineProductQuantity();
+    }
 
 }

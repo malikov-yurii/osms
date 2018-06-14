@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.util;
+package com.malikov.shopsystem.core;
 
 import org.springframework.util.StringUtils;
 
@@ -10,9 +10,10 @@ import java.time.format.DateTimeFormatter;
 public final class DateTimeUtil {
 
     public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm";
-    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
     public static final LocalDateTime MIN = LocalDateTime.of(2000, 1, 1, 1, 1);
-    public static final LocalDateTime MAX = LocalDateTime.of(2030, 1, 1, 1, 1);
+    public static final LocalDateTime MAX = LocalDateTime.of(2038, 1, 1, 1, 1);
+
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
 
     private DateTimeUtil() {
         // util class

@@ -1,7 +1,7 @@
 package com.malikov.shopsystem.mapper;
 
 import com.malikov.shopsystem.domain.Order;
-import com.malikov.shopsystem.dto.OrderUpdateDto;
+import com.malikov.shopsystem.dto.OrderDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -13,10 +13,13 @@ public interface OrderUpdateByNotNullFieldsMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "paymentType", ignore = true)
-    @Mapping(target = "totalSum", ignore = true)
+    @Mapping(target = "totalValue", ignore = true)
     @Mapping(target = "customerId", ignore = true)
     @Mapping(target = "status", ignore = true)
-    void updateByCustomerRelatedInfo(OrderUpdateDto source, @MappingTarget Order target);
+    @Mapping(target = "dateTimeCreated", ignore = true)
+    @Mapping(target = "orderLines", ignore = true)
+    @Mapping(target = "calculableItems", ignore = true)
+    void updateByCustomerRelatedInfo(OrderDto source, @MappingTarget Order target);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "customerId", ignore = true)
@@ -26,7 +29,10 @@ public interface OrderUpdateByNotNullFieldsMapper {
     @Mapping(target = "destinationCity", ignore = true)
     @Mapping(target = "destinationPostOffice", ignore = true)
     @Mapping(target = "status", ignore = true)
+    @Mapping(target = "dateTimeCreated", ignore = true)
     @Mapping(source = "orderNote", target = "comment")
-    void updateByNonCustomerRelatedInfo(OrderUpdateDto source, @MappingTarget Order target);
+    @Mapping(target = "orderLines", ignore = true)
+    @Mapping(target = "calculableItems", ignore = true)
+    void updateByNonCustomerRelatedInfo(OrderDto source, @MappingTarget Order target);
 
 }

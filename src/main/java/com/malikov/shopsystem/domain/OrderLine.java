@@ -1,5 +1,6 @@
 package com.malikov.shopsystem.domain;
 
+import com.malikov.shopsystem.core.calculation.Calculable;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
@@ -24,7 +25,7 @@ import java.math.BigDecimal;
 @Table(name = "osms_order_items")
 @Getter
 @Setter
-public class OrderLine {
+public class OrderLine implements Calculable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,8 +35,11 @@ public class OrderLine {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SELECT)
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id", updatable = false, insertable = false)
     private Order order;
+
+    @Column(name = "order_id")
+    private Long orderId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
@@ -58,4 +62,13 @@ public class OrderLine {
     @Column(name = "product_quantity")
     private Integer productQuantity = 0;
 
+    @Override
+    public BigDecimal getPrice() {
+        return getProductPrice();
+    }
+
+    @Override
+    public Integer getQuantity() {
+        return getProductQuantity();
+    }
 }

@@ -11,6 +11,13 @@ public class Page<T> {
 
     List<T> content;
     long totalElements;
-    int totalPages;
+
+    public Page() {
+    }
+
+    public Page(List<T> content, long totalElements) {
+        this.content = content;
+        this.totalElements = totalElements;
+    }
 
 }

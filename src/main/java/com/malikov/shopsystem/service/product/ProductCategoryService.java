@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.service;
+package com.malikov.shopsystem.service.product;
 
 import com.malikov.shopsystem.domain.ProductCategory;
 import com.malikov.shopsystem.repository.ProductCategoryRepository;

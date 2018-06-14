@@ -1,21 +1,24 @@
-package com.malikov.shopsystem.web;
+package com.malikov.shopsystem.error;
 
-import com.malikov.shopsystem.exception.ErrorInfo;
-import com.malikov.shopsystem.exception.NotFoundException;
+import com.malikov.shopsystem.error.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice(annotations = RestController.class)
-public class ExceptionInfoHandler {
+public class RestControllerExceptionHandler {
 
-    Logger LOG = LoggerFactory.getLogger(ExceptionInfoHandler.class);
+    Logger LOG = LoggerFactory.getLogger(RestControllerExceptionHandler.class);
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)

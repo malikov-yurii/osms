@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.service;
+package com.malikov.shopsystem.service.product;
 
 import com.malikov.shopsystem.domain.Product;
 import com.malikov.shopsystem.domain.ProductVariation;
