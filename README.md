@@ -1,13 +1,10 @@
-ONLINE SHOP MANAGEMENT SYSTEM (CRM)
+ONLINE SHOP MANAGEMENT SYSTEM (OSMS)
 ===============================
 
 Stack:
-Spring (IoC, DATA, MVC, Security), mapstruct, Gradle, Angular
+Spring (Boot, MVC, DATA, Cache, Security), JasperReports, mapstruct, Gradle, Angular
 
-Web application is CRM system used by managers of [online shop https://gilder-shop.com.ua](https://gilder-shop.com.ua)
-to handle online shop data.
-
-Application deployed at AWS Elastic Beanstalk (Tomcat), available at [http://osms.pro](http://osms.pro)
+Web application is CRM system to manage online shop.
 
 To build project:
 ./gradlew buildAll
