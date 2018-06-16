@@ -1,13 +1,12 @@
 package com.malikov.shopsystem.service.product;
 
+import com.google.common.collect.Streams;
 import com.malikov.shopsystem.domain.ProductCategory;
 import com.malikov.shopsystem.repository.ProductCategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.google.common.collect.Streams.stream;
 
 @Service
 public class ProductCategoryService {
@@ -19,8 +18,7 @@ public class ProductCategoryService {
     }
 
     public List<String> getAllNames() {
-
-        return stream(productCategoryRepository.findAll())
+        return Streams.stream(productCategoryRepository.findAll())
                 .map(ProductCategory::getName)
                 .collect(Collectors.toList());
     }

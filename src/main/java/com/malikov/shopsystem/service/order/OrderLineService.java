@@ -20,8 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.malikov.shopsystem.core.calculation.ValueCalculator.calculate;
-import static java.util.Objects.isNull;
+import java.util.Objects;
 
 @Service
 public class OrderLineService {
@@ -102,7 +101,7 @@ public class OrderLineService {
     }
 
     private boolean setProductVariation(OrderLineDto orderLineDto, OrderLine orderLine) {
-        if (isNull(orderLineDto.getProductVariationId())) {
+        if (Objects.isNull(orderLineDto.getProductVariationId())) {
             return false;
         }
 
@@ -142,7 +141,7 @@ public class OrderLineService {
         orderLine.setProduct(productVariation.getProduct());
         orderLine.setProductVariation(productVariation);
         orderLine.setProductName(orderLineProductName(productVariation));
-        orderLine.setProductPrice(calculate(productVariation));
+        orderLine.setProductPrice(ValueCalculator.calculate(productVariation));
 
         decreaseStockForProductJustBeenSet(orderLine);
     }
@@ -152,7 +151,7 @@ public class OrderLineService {
     }
 
     private boolean updateOrderLineProductName(OrderLineDto orderLineDto, OrderLine orderLine) {
-        if (isNull(orderLineDto.getOrderLineProductName())) {
+        if (Objects.isNull(orderLineDto.getOrderLineProductName())) {
             return false;
         }
 
@@ -162,7 +161,7 @@ public class OrderLineService {
     }
 
     private boolean updateOrderLineProductPrice(OrderLineDto orderLineDto, OrderLine orderLine) {
-        if (isNull(orderLineDto.getOrderLineProductPrice())) {
+        if (Objects.isNull(orderLineDto.getOrderLineProductPrice())) {
             return false;
         }
 
@@ -172,7 +171,7 @@ public class OrderLineService {
     }
 
     private boolean updateOrderLineProductQuantity(OrderLineDto orderLineDto, OrderLine orderLine) {
-        if (isNull(orderLineDto.getOrderLineProductQuantity() )) {
+        if (Objects.isNull(orderLineDto.getOrderLineProductQuantity() )) {
             return false;
         }
 

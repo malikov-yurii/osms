@@ -1,5 +1,6 @@
 package com.malikov.shopsystem.service.product.cache;
 
+import com.google.common.collect.Streams;
 import com.malikov.shopsystem.domain.Product;
 import com.malikov.shopsystem.dto.ProductAutocompleteDto;
 import com.malikov.shopsystem.mapper.ProductMapper;
@@ -21,10 +22,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 @CacheConfig(cacheNames = CachedProductAutocompleteDtosService.PRODUCT_AUTOCOMPLETE_DTOS_CACHE)
@@ -57,7 +56,7 @@ public class CachedProductAutocompleteDtosService {
         return getAllCachedProductElements()
                 .filter(cacheElement -> ((String) cacheElement.getObjectKey()).contains(format(productNameMask)))
                 .map(cacheElement -> (ProductAutocompleteDto) cacheElement.getObjectValue())
-                .collect(toList());
+                .collect(Collectors.toList());
     }
 
     private Stream<Element> getAllCachedProductElements() {
@@ -85,10 +84,10 @@ public class CachedProductAutocompleteDtosService {
     }
 
     private List<ProductAutocompleteDto> findAllProductAutocompleteDtos() {
-        return StreamSupport.stream(productRepository.findAll().spliterator(), false)
+        return Streams.stream(productRepository.findAll())
                 .map(this::toAutocompleteDto)
                 .flatMap(Collection::stream)
-                .collect(toList());
+                .collect(Collectors.toList());
     }
 
     private void retainInCache(Set queriedDtoKeys) {

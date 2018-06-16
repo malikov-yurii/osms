@@ -2,10 +2,11 @@ package com.malikov.shopsystem.core.security;
 
 import com.malikov.shopsystem.domain.User;
 import com.malikov.shopsystem.dto.UserDto;
+import com.malikov.shopsystem.error.exception.NotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import static java.util.Objects.requireNonNull;
+import java.util.Optional;
 
 public class AuthorizedUser extends org.springframework.security.core.userdetails.User {
 
@@ -28,9 +29,8 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
     }
 
     public static AuthorizedUser get() {
-        AuthorizedUser user = safeGet();
-        requireNonNull(user, "No authorized user found");
-        return user;
+        return Optional.ofNullable(safeGet())
+                .orElseThrow(() -> new NotFoundException("No authorized user found."));
     }
 
     public static Long id() {

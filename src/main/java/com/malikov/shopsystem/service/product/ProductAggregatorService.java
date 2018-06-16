@@ -1,5 +1,6 @@
 package com.malikov.shopsystem.service.product;
 
+import com.google.common.collect.Streams;
 import com.malikov.shopsystem.domain.ProductAggregator;
 import com.malikov.shopsystem.dto.ProductAggregatorDto;
 import com.malikov.shopsystem.mapper.ProductAggregatorMapper;
@@ -9,8 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.google.common.collect.Streams.stream;
 
 @Service
 public class ProductAggregatorService {
@@ -26,7 +25,7 @@ public class ProductAggregatorService {
 
     public List<ProductAggregatorDto> findAll() {
 
-        return stream(productAggregatorRepository.findAll())
+        return Streams.stream(productAggregatorRepository.findAll())
                 .map(productAggregatorMapper::toDto)
                 .collect(Collectors.toList());
     }
