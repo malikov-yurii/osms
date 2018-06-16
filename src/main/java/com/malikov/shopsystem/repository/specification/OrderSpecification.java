@@ -5,12 +5,9 @@ import com.malikov.shopsystem.domain.Order;
 import com.malikov.shopsystem.dto.OrderFilterDto;
 import org.hibernate.criterion.MatchMode;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.domain.Specifications;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-
-import static org.springframework.data.jpa.domain.Specifications.where;
 
 public class OrderSpecification {
 
@@ -19,7 +16,7 @@ public class OrderSpecification {
     }
 
     @SuppressWarnings("unchecked assignments")
-    public static Specifications of(OrderFilterDto filter) {
+    public static Specification<Order> of(OrderFilterDto filter) {
 
         return initSpecification()
                 .and(orderOfCustomer(filter))
@@ -27,10 +24,10 @@ public class OrderSpecification {
                 .and(containsProduct(filter));
     }
 
-    private static Specifications orderOfCustomer(OrderFilterDto filter) {
+    private static Specification orderOfCustomer(OrderFilterDto filter) {
 
         return Objects.nonNull(filter.getCustomerId())
-                ? where(customerIdEquals(filter.getCustomerId()))
+                ? Specification.where(customerIdEquals(filter.getCustomerId()))
                 : initSpecification()
                 .and(customerFirstNameLike(filter.getCustomerFirstNameMask()))
                 .and(customerLastNameLike(filter.getCustomerLastNameMask()))
@@ -38,8 +35,8 @@ public class OrderSpecification {
                 .and(customerPhoneNumberLike(filter.getCustomerPhoneMask()));
     }
 
-    private static Specifications<Order> initSpecification() {
-        return where(null);
+    private static Specification<Order> initSpecification() {
+        return Specification.where(null);
     }
 
     private static Specification<Order> customerIdEquals(Long customerId) {
