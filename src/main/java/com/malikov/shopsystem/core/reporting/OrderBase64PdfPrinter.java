@@ -75,7 +75,7 @@ public class OrderBase64PdfPrinter {
         parameters.put(CUSTOMER_NAME, customerName(order));
         parameters.put(CUSTOMER_PHONE_NUMBER, customerPhoneNumber(order));
         parameters.put(DESTINATION, shippingDestination(order));
-        parameters.put(TOTAL_ORDER_AMOUNT, order.getTotalValue());
+        parameters.put(TOTAL_ORDER_AMOUNT, order.totalValue());
         parameters.put(PAYMENT_TYPE, order.getPaymentType().toString());
         return parameters;
     }

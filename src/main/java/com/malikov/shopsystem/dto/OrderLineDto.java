@@ -23,19 +23,15 @@ public class OrderLineDto implements Serializable, Calculable {
     private BigDecimal orderLineProductPrice;
     private String supplier;
 
-    public OrderLineDto(Long orderLineId) {
-        this.orderLineId = orderLineId;
-    }
-
     @Override
     @JsonIgnore
-    public BigDecimal getPrice() {
+    public BigDecimal price() {
         return getOrderLineProductPrice();
     }
 
     @Override
     @JsonIgnore
-    public Integer getQuantity() {
+    public Integer quantity() {
         return getOrderLineProductQuantity();
     }
 

@@ -5,7 +5,7 @@ import java.util.Collection;
 
 public interface CalculableContainer {
 
-    Collection<? extends Calculable> getCalculableItems();
-    BigDecimal getTotalValue();
+    Collection<? extends Calculable> calculableItems();
+    BigDecimal totalValue();
 
 }

@@ -15,16 +15,16 @@ public final class ValueCalculator {
     }
 
     public static BigDecimal calculate(Exchangeable exchangeable) {
-        return calculateValue(exchangeable.getPrice(), exchangeable.getExchangeRate()).setScale(0, HALF_UP);
+        return calculateValue(exchangeable.price(), exchangeable.exchangeRate()).setScale(0, HALF_UP);
     }
 
     public static BigDecimal calculate(CalculableContainer calculableItemContainer) {
-        return calculableItemContainer.getCalculableItems().stream()
+        return calculableItemContainer.calculableItems().stream()
                 .reduce(BigDecimal.ZERO, calcAndAddOrderLineTotal(), BigDecimal::add);
     }
 
     private static BiFunction<BigDecimal, Calculable, BigDecimal> calcAndAddOrderLineTotal() {
-        return (sum, ordLine) -> sum.add(ordLine.getPrice().multiply(valueOf(ordLine.getQuantity())));
+        return (sum, ordLine) -> sum.add(ordLine.price().multiply(valueOf(ordLine.quantity())));
     }
 
     private static BigDecimal calculateValue(BigDecimal price, BigDecimal currencyRate) {

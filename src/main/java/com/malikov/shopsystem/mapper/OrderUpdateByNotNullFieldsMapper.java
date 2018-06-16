@@ -18,7 +18,6 @@ public interface OrderUpdateByNotNullFieldsMapper {
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "dateTimeCreated", ignore = true)
     @Mapping(target = "orderLines", ignore = true)
-    @Mapping(target = "calculableItems", ignore = true)
     void updateByCustomerRelatedInfo(OrderDto source, @MappingTarget Order target);
 
     @Mapping(target = "id", ignore = true)
@@ -32,7 +31,6 @@ public interface OrderUpdateByNotNullFieldsMapper {
     @Mapping(target = "dateTimeCreated", ignore = true)
     @Mapping(source = "orderNote", target = "comment")
     @Mapping(target = "orderLines", ignore = true)
-    @Mapping(target = "calculableItems", ignore = true)
     void updateByNonCustomerRelatedInfo(OrderDto source, @MappingTarget Order target);
 
 }

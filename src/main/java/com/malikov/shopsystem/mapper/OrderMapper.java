@@ -19,7 +19,6 @@ public interface OrderMapper {
     @Mapping(source = "customer.note", target = "customerNote")
     @Mapping(source = "dateTimeCreated", target = "createdDateTime")
     @Mapping(source = "comment", target = "orderNote")
-    @Mapping(target = "calculableItems", ignore = true)
     OrderDto toDto(Order order);
 
     List<OrderDto> toDtos(List<Order> order);

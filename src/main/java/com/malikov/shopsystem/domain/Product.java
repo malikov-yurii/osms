@@ -27,6 +27,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -86,7 +87,14 @@ public class Product implements Exchangeable {
     private BigDecimal weight;
 
     @Override
-    public BigDecimal getExchangeRate() {
-        return getCurrency().getCurrencyRate();
+    public BigDecimal exchangeRate() {
+        Currency currency = getCurrency();
+        return Objects.nonNull(currency) ? currency.getCurrencyRate() : BigDecimal.ONE;
     }
+
+    @Override
+    public BigDecimal price() {
+        return getPrice();
+    }
+
 }

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public interface Calculable {
 
-    BigDecimal getPrice();
-    Integer getQuantity();
+    BigDecimal price();
+    Integer quantity();
 
 }

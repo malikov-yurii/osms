@@ -58,7 +58,13 @@ public class ProductVariation implements Exchangeable {
     private BigDecimal weight;
 
     @Override
-    public BigDecimal getExchangeRate() {
+    public BigDecimal exchangeRate() {
         return getProduct().getCurrency().getCurrencyRate();
     }
+
+    @Override
+    public BigDecimal price() {
+        return getPrice();
+    }
+
 }

@@ -63,12 +63,12 @@ public class OrderLine implements Calculable {
     private Integer productQuantity = 0;
 
     @Override
-    public BigDecimal getPrice() {
+    public BigDecimal price() {
         return getProductPrice();
     }
 
     @Override
-    public Integer getQuantity() {
+    public Integer quantity() {
         return getProductQuantity();
     }
 }

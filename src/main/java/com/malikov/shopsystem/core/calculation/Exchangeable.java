@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public interface Exchangeable {
 
-    BigDecimal getPrice();
-    BigDecimal getExchangeRate();
+    BigDecimal price();
+    BigDecimal exchangeRate();
 
 }

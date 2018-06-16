@@ -1,88 +1,50 @@
 package com.malikov.shopsystem.service.ordering;
 
+import com.malikov.shopsystem.core.calculation.ValueCalculator;
+import com.malikov.shopsystem.core.strategy.collection.AddOrderLineStrategy;
+import com.malikov.shopsystem.core.strategy.collection.DeleteOrderLineStrategy;
+import com.malikov.shopsystem.core.strategy.collection.UpdateOrderLineStrategy;
 import com.malikov.shopsystem.domain.Order;
 import com.malikov.shopsystem.domain.OrderLine;
 import com.malikov.shopsystem.domain.Product;
 import com.malikov.shopsystem.domain.ProductVariation;
 import com.malikov.shopsystem.dto.OrderLineDto;
-import com.malikov.shopsystem.dto.ProductAutocompleteDto;
 import com.malikov.shopsystem.error.exception.NotFoundException;
 import com.malikov.shopsystem.mapper.OrderLineMapper;
-import com.malikov.shopsystem.mapper.ProductMapper;
 import com.malikov.shopsystem.repository.OrderLineRepository;
 import com.malikov.shopsystem.repository.ProductRepository;
 import com.malikov.shopsystem.repository.ProductVariationRepository;
-import com.malikov.shopsystem.core.strategy.collection.AddOrderLineStrategy;
-import com.malikov.shopsystem.core.strategy.collection.DeleteOrderLineStrategy;
 import com.malikov.shopsystem.service.UpdateStockService;
 import com.malikov.shopsystem.service.caching.RefreshLastOrdersCacheService;
-import com.malikov.shopsystem.core.strategy.collection.UpdateOrderLineStrategy;
-import com.malikov.shopsystem.core.calculation.ValueCalculator;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.List;
-
 import static com.malikov.shopsystem.core.calculation.ValueCalculator.calculate;
-import static com.malikov.shopsystem.core.calculation.ValueCalculator.calculate;
-import static java.math.BigDecimal.valueOf;
 import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
-import static java.util.stream.Collectors.toList;
 
 @Service
 public class OrderLineService {
 
     private static final int DEFAULT_NEW_PRODUCT_QUANTITY = 1;
-    private static final String ANY_CHAR_SEQUENCE = "%";
 
     private final OrderLineRepository orderLineRepository;
-    private final OrderService orderService;
     private final ProductRepository productRepository;
     private final ProductVariationRepository productVariationRepository;
     private final UpdateStockService updateStockService;
-    private final ProductMapper productMapper;
     private final OrderLineMapper orderLineMapper;
     private final RefreshLastOrdersCacheService orderCacheService;
 
-    public OrderLineService(OrderLineRepository orderLineRepository, OrderService orderService,
-                            ProductRepository productRepository, ProductVariationRepository productVariationRepository,
-                            UpdateStockService updateStockService, ProductMapper productMapper,
-                            OrderLineMapper orderLineMapper, RefreshLastOrdersCacheService orderCacheService) {
+    public OrderLineService(OrderLineRepository orderLineRepository, ProductRepository productRepository,
+                            ProductVariationRepository productVariationRepository,
+                            UpdateStockService updateStockService, OrderLineMapper orderLineMapper,
+                            RefreshLastOrdersCacheService orderCacheService) {
         this.orderLineRepository = orderLineRepository;
-        this.orderService = orderService;
         this.productRepository = productRepository;
         this.productVariationRepository = productVariationRepository;
         this.updateStockService = updateStockService;
-        this.productMapper = productMapper;
         this.orderLineMapper = orderLineMapper;
         this.orderCacheService = orderCacheService;
-    }
-
-    public List<ProductAutocompleteDto> getByProductMask(String productNameMask) {
-
-        return productRepository.getByNameLike(atAnyPositionIgnoreCommas(productNameMask)).stream()
-                .map(this::toAutocompleteDto)
-                .flatMap(Collection::stream)
-                .collect(toList());
-    }
-
-    private Collection<ProductAutocompleteDto> toAutocompleteDto(Product product) {
-
-        return CollectionUtils.isNotEmpty(product.getVariations())
-                ? productMapper.toAutocompleteDto(product.getVariations())
-                : productMapper.toAutocompleteDtoSingleton(product);
-    }
-
-    private String atAnyPositionIgnoreCommas(String mask) {
-        return ANY_CHAR_SEQUENCE + removeCommas(mask) + ANY_CHAR_SEQUENCE;
-    }
-
-    private String removeCommas(String mask) {
-        return nonNull(mask) ? mask.replaceAll(",", StringUtils.EMPTY) : StringUtils.EMPTY;
     }
 
     @Transactional
@@ -154,7 +116,6 @@ public class OrderLineService {
     }
 
     private boolean setProduct(OrderLineDto orderLineDto, OrderLine orderLine) {
-
         if (orderLineDto.getProductId() == null) {
             return false;
         }
@@ -172,14 +133,12 @@ public class OrderLineService {
     }
 
     private void setProductToOrderLine(OrderLine orderLine, Product product) {
-
         orderLine.setProduct(product);
         orderLine.setProductName(product.getName());
         orderLine.setProductPrice(ValueCalculator.calculate(product));
     }
 
     private void setProductVariationToOrderLine(OrderLine orderLine, ProductVariation productVariation) {
-
         orderLine.setProduct(productVariation.getProduct());
         orderLine.setProductVariation(productVariation);
         orderLine.setProductName(orderLineProductName(productVariation));
@@ -193,7 +152,6 @@ public class OrderLineService {
     }
 
     private boolean updateOrderLineProductName(OrderLineDto orderLineDto, OrderLine orderLine) {
-
         if (isNull(orderLineDto.getOrderLineProductName())) {
             return false;
         }
@@ -204,7 +162,6 @@ public class OrderLineService {
     }
 
     private boolean updateOrderLineProductPrice(OrderLineDto orderLineDto, OrderLine orderLine) {
-
         if (isNull(orderLineDto.getOrderLineProductPrice())) {
             return false;
         }
@@ -215,12 +172,12 @@ public class OrderLineService {
     }
 
     private boolean updateOrderLineProductQuantity(OrderLineDto orderLineDto, OrderLine orderLine) {
-
         if (isNull(orderLineDto.getOrderLineProductQuantity() )) {
             return false;
         }
 
-        updateStockService.updateStock(orderLine, orderLine.getProductQuantity() - orderLineDto.getOrderLineProductQuantity());
+        int productQuantityDelta = orderLine.getProductQuantity() - orderLineDto.getOrderLineProductQuantity();
+        updateStockService.updateStock(orderLine, productQuantityDelta);
         orderLine.setProductQuantity(orderLineDto.getOrderLineProductQuantity());
 
         orderLineRepository.save(orderLine);

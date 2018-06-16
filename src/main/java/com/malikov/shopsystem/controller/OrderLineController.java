@@ -2,6 +2,7 @@ package com.malikov.shopsystem.controller;
 
 import com.malikov.shopsystem.dto.OrderLineDto;
 import com.malikov.shopsystem.dto.ProductAutocompleteDto;
+import com.malikov.shopsystem.service.caching.CachedProductAutocompleteDtosService;
 import com.malikov.shopsystem.service.ordering.OrderLineService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,14 +21,17 @@ import java.util.List;
 public class OrderLineController {
 
     private final OrderLineService orderLineService;
+    private final CachedProductAutocompleteDtosService cachedProductAutocompleteDtosService;
 
-    public OrderLineController(OrderLineService orderLineService) {
+    public OrderLineController(OrderLineService orderLineService,
+                               CachedProductAutocompleteDtosService cachedProductAutocompleteDtosService) {
         this.orderLineService = orderLineService;
+        this.cachedProductAutocompleteDtosService = cachedProductAutocompleteDtosService;
     }
 
     @GetMapping("/autocomplete-by-product-name-mask/{productNameMask}")
     public List<ProductAutocompleteDto> autocompleteOrderItemName(@PathVariable String productNameMask) {
-        return orderLineService.getByProductMask(productNameMask);
+        return cachedProductAutocompleteDtosService.getByProductNameMask(productNameMask);
     }
 
     @PostMapping("/create-empty-for-order/{orderId}")

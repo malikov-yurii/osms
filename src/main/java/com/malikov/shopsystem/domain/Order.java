@@ -100,9 +100,13 @@ public class Order implements CalculableContainer {
     private Integer statusSortOrder;
 
     @Override
-    public Collection<? extends Calculable> getCalculableItems() {
+    public Collection<? extends Calculable> calculableItems() {
         return getOrderLines();
     }
 
+    @Override
+    public BigDecimal totalValue() {
+        return getTotalValue();
+    }
 }
 

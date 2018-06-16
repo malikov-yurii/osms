@@ -41,7 +41,13 @@ public class OrderDto  implements Serializable, CalculableContainer {
     private List<OrderLineDto> orderLines = new ArrayList<>();
 
     @Override
-    public Collection<? extends Calculable> getCalculableItems() {
+    public Collection<? extends Calculable> calculableItems() {
         return getOrderLines();
     }
+
+    @Override
+    public BigDecimal totalValue() {
+        return getTotalValue();
+    }
+
 }
