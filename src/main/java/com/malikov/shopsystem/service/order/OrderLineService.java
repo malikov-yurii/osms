@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.service.ordering;
+package com.malikov.shopsystem.service.order;
 
 import com.malikov.shopsystem.core.calculation.ValueCalculator;
 import com.malikov.shopsystem.core.strategy.collection.AddOrderLineStrategy;
@@ -15,7 +15,7 @@ import com.malikov.shopsystem.repository.OrderLineRepository;
 import com.malikov.shopsystem.repository.ProductRepository;
 import com.malikov.shopsystem.repository.ProductVariationRepository;
 import com.malikov.shopsystem.service.UpdateStockService;
-import com.malikov.shopsystem.service.caching.RefreshLastOrdersCacheService;
+import com.malikov.shopsystem.service.order.cache.RefreshLastOrdersCacheService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

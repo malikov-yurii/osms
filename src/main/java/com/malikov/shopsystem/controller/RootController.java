@@ -1,7 +1,7 @@
 package com.malikov.shopsystem.controller;
 
 import com.malikov.shopsystem.dto.Page;
-import com.malikov.shopsystem.service.ordering.OrderService;
+import com.malikov.shopsystem.service.order.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

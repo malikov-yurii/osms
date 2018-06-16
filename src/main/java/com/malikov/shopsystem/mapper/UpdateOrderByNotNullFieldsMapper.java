@@ -5,11 +5,10 @@ import com.malikov.shopsystem.dto.OrderDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValueCheckStrategy;
 
-import static org.mapstruct.NullValueCheckStrategy.ALWAYS;
-
-@Mapper(nullValueCheckStrategy = ALWAYS)
-public interface OrderUpdateByNotNullFieldsMapper {
+@Mapper(nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+public interface UpdateOrderByNotNullFieldsMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "paymentType", ignore = true)

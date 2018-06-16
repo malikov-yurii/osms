@@ -92,7 +92,7 @@ public abstract class ProductMapper {
         return Collections.singleton(toAutocompleteDto(product));
     }
 
-    public ProductPage toPage(org.springframework.data.domain.Page<Product> source) {
+    public ProductPage toProductPage(org.springframework.data.domain.Page<Product> source) {
         ProductPage target = new ProductPage();
         List<ProductDto> allProducts = new ArrayList<>();
 

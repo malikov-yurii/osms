@@ -57,9 +57,8 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
     compile 'org.springframework.boot:spring-boot-starter-cache'
 
-    compile 'net.sf.ehcache:ehcache'
-
     compile 'mysql:mysql-connector-java'
+    compile 'net.sf.ehcache:ehcache'
 
     compile 'net.sf.jasperreports:jasperreports-fonts:6.0.0'
     compile 'com.lowagie:itext:2.1.7'

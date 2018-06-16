@@ -4,9 +4,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.function.BiFunction;
 
-import static java.math.BigDecimal.valueOf;
-import static java.math.RoundingMode.HALF_UP;
-
 public final class ValueCalculator {
 
     private static final int SCALE = 6;
@@ -15,7 +12,7 @@ public final class ValueCalculator {
     }
 
     public static BigDecimal calculate(Exchangeable exchangeable) {
-        return calculateValue(exchangeable.price(), exchangeable.exchangeRate()).setScale(0, HALF_UP);
+        return calculateValue(exchangeable.price(), exchangeable.exchangeRate()).setScale(0, RoundingMode.HALF_UP);
     }
 
     public static BigDecimal calculate(CalculableContainer calculableItemContainer) {
@@ -24,7 +21,7 @@ public final class ValueCalculator {
     }
 
     private static BiFunction<BigDecimal, Calculable, BigDecimal> calcAndAddOrderLineTotal() {
-        return (sum, ordLine) -> sum.add(ordLine.price().multiply(valueOf(ordLine.quantity())));
+        return (sum, ordLine) -> sum.add(ordLine.price().multiply(BigDecimal.valueOf(ordLine.quantity())));
     }
 
     private static BigDecimal calculateValue(BigDecimal price, BigDecimal currencyRate) {

@@ -1,11 +1,11 @@
-package com.malikov.shopsystem.service.caching;
+package com.malikov.shopsystem.service.order.cache;
 
 import com.malikov.shopsystem.core.calculation.ValueCalculator;
 import com.malikov.shopsystem.core.strategy.collection.ModifyCollectionStrategy;
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.dto.OrderLineDto;
 import com.malikov.shopsystem.dto.OrderPage;
-import com.malikov.shopsystem.service.ordering.OrderService;
+import com.malikov.shopsystem.service.order.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;

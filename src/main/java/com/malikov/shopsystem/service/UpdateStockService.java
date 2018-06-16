@@ -5,8 +5,8 @@ import com.malikov.shopsystem.domain.OrderLine;
 import com.malikov.shopsystem.domain.Product;
 import com.malikov.shopsystem.domain.ProductAggregator;
 import com.malikov.shopsystem.domain.ProductVariation;
-import com.malikov.shopsystem.enumtype.DbOperation;
 import com.malikov.shopsystem.enumtype.OrderStatus;
+import com.malikov.shopsystem.enumtype.StockUpdateOperation;
 import com.malikov.shopsystem.repository.ProductAggregatorRepository;
 import com.malikov.shopsystem.repository.ProductRepository;
 import com.malikov.shopsystem.repository.ProductVariationRepository;
@@ -15,20 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
-
-import static com.malikov.shopsystem.enumtype.DbOperation.DECREASE_STOCK;
-import static com.malikov.shopsystem.enumtype.DbOperation.INCREASE_STOCK;
-import static com.malikov.shopsystem.enumtype.OrderStatus.OK;
-import static com.malikov.shopsystem.enumtype.OrderStatus.SHP;
-import static com.malikov.shopsystem.enumtype.OrderStatus.WFP;
-import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
 
 @Service
 public class UpdateStockService {
 
-    private static final Set<OrderStatus> WITHDRAWAL_STATUSES = new HashSet<>(Arrays.asList(OK, SHP, WFP));
+    private static final Set<OrderStatus> WITHDRAWAL_STATUSES =
+            new HashSet<>(Arrays.asList(OrderStatus.OK, OrderStatus.SHP, OrderStatus.WFP));
     private static final int DECREASE = -1;
 
     private final ProductRepository productRepository;
@@ -45,7 +39,6 @@ public class UpdateStockService {
 
     @Transactional
     public void updateStockDependingOnNewStatus(Order order, OrderStatus newStatus) {
-
         OrderStatus oldStatus = order.getStatus();
         if (stockShouldBeUpdated(newStatus, oldStatus)) {
             updateStock(order, newStatus, oldStatus);
@@ -61,11 +54,10 @@ public class UpdateStockService {
     }
 
     private void updateStock(Order order, OrderStatus newStatus, OrderStatus oldStatus) {
-
         if (stockShouldBeDecreased(newStatus, oldStatus)) {
-            updateAllProductsBoundedToOrderLinesStock(order, DECREASE_STOCK);
+            updateAllProductsBoundedToOrderLinesStock(order, StockUpdateOperation.DECREASE_STOCK);
         } else {
-            updateAllProductsBoundedToOrderLinesStock(order, INCREASE_STOCK);
+            updateAllProductsBoundedToOrderLinesStock(order, StockUpdateOperation.INCREASE_STOCK);
         }
     }
 
@@ -77,8 +69,7 @@ public class UpdateStockService {
         return !isWithdrawalStatus(status);
     }
 
-    private void updateAllProductsBoundedToOrderLinesStock(Order order, DbOperation dbOperation) {
-
+    private void updateAllProductsBoundedToOrderLinesStock(Order order, StockUpdateOperation dbOperation) {
         for (OrderLine orderLine : order.getOrderLines()) {
             if (noProductIsBoundToOrderLine(orderLine)) {
                 continue;
@@ -88,27 +79,27 @@ public class UpdateStockService {
     }
 
     private boolean noProductIsBoundToOrderLine(OrderLine orderLine) {
-        return isNull(orderLine.getProduct());
+        return Objects.isNull(orderLine.getProduct());
     }
 
-    private int productQuantityDelta(DbOperation dbOperation, OrderLine orderLine) {
-        return dbOperation == INCREASE_STOCK ? orderLine.getProductQuantity() : (-1) * orderLine.getProductQuantity();
+    private int productQuantityDelta(StockUpdateOperation dbOperation, OrderLine orderLine) {
+        return dbOperation == StockUpdateOperation.INCREASE_STOCK
+                ? orderLine.getProductQuantity()
+                : orderLine.getProductQuantity() * (-1);
     }
 
     private void updaterProductBoundedToOrderLineStock(OrderLine orderLine, Integer productQuantityDelta) {
-
-        if (nonNull(orderLine.getProductVariation())) {
+        if (Objects.nonNull(orderLine.getProductVariation())) {
             updateProductVariationStock(orderLine, productQuantityDelta);
-        } else if (nonNull(orderLine.getProduct())) {
+        } else if (Objects.nonNull(orderLine.getProduct())) {
             updateProductStock(orderLine, productQuantityDelta);
         }
     }
 
     private void updateProductVariationStock(OrderLine orderLine, Integer productQuantityDelta) {
-
         ProductVariation productVariation = orderLine.getProductVariation();
 
-        if (isNull(productVariation.getProductAggregator())) {
+        if (Objects.isNull(productVariation.getProductAggregator())) {
             updateNotAggregatedProductVariationStock(productQuantityDelta, productVariation);
         } else {
             updateProductAggregatorStock(productQuantityDelta, orderLine);
@@ -117,20 +108,17 @@ public class UpdateStockService {
 
     private void updateNotAggregatedProductVariationStock(Integer productQuantityDelta,
                                                           ProductVariation productVariation) {
-
         productVariation.setQuantity(productVariation.getQuantity() + productQuantityDelta);
         productVariationRepository.save(productVariation);
     }
 
     private void updateProductAggregatorStock(Integer productQuantityDelta, OrderLine orderLine) {
-
         ProductAggregator aggregator = orderLine.getProductVariation().getProductAggregator();
         aggregator.setQuantity(calcAggregatorStock(orderLine, productQuantityDelta));
         productAggregatorRepository.save(aggregator);
     }
 
     private int calcAggregatorStock(OrderLine orderLine, Integer productQuantityDelta) {
-
         switch (orderLine.getProductVariation().getProductAggregator().getProductAggregatorType()) {
             case SIMPLE:
                 return calcSimpleAggregatorStock(orderLine, productQuantityDelta);
@@ -144,13 +132,11 @@ public class UpdateStockService {
     }
 
     private int calcPG5AggregatorStock(OrderLine orderLine, Integer productQuantityDelta) {
-
         return orderLine.getProductVariation().getProductAggregator().getQuantity()
                 + calcPG5AggregatorDelta(orderLine) * productQuantityDelta;
     }
 
     private Integer calcPG5AggregatorDelta(OrderLine orderLine) {
-
         Integer result = orderLine.getProductVariation().getVariationValue().getValueAmount();
         Product pgProduct = orderLine.getProduct();
         double pg5Coefficient = pg5Coefficient(pgProduct);
@@ -163,7 +149,6 @@ public class UpdateStockService {
     }
 
     private int calcWireAggregatorStock(OrderLine orderLine, Integer productQuantityDelta) {
-
         ProductVariation productVariation = orderLine.getProductVariation();
         Integer productWireWeight = productVariation.getWeight().intValue();
 
@@ -171,7 +156,6 @@ public class UpdateStockService {
     }
 
     private int calcSimpleAggregatorStock(OrderLine orderLine, Integer productQuantityDelta) {
-
         ProductVariation productVariation = orderLine.getProductVariation();
         ProductAggregator aggregator = productVariation.getProductAggregator();
 
@@ -179,7 +163,6 @@ public class UpdateStockService {
     }
 
     private void updateProductStock(OrderLine orderLine, Integer productQuantityDelta) {
-
         Product product = orderLine.getProduct();
         product.setQuantity(product.getQuantity() + productQuantityDelta);
         productRepository.save(product);
@@ -187,7 +170,6 @@ public class UpdateStockService {
 
     @Transactional
     public void updateStock(OrderLine orderLine, int productQuantityDelta) {
-
         if (isWithdrawalStatus(orderLine.getOrder().getStatus())) {
             updaterProductBoundedToOrderLineStock(orderLine, productQuantityDelta);
         }
@@ -200,9 +182,8 @@ public class UpdateStockService {
 
     @Transactional
     public void updateStockForDeletedOrder(Order order) {
-
         if (isWithdrawalStatus(order.getStatus())) {
-            updateAllProductsBoundedToOrderLinesStock(order, INCREASE_STOCK);
+            updateAllProductsBoundedToOrderLinesStock(order, StockUpdateOperation.INCREASE_STOCK);
         }
     }
 

@@ -2,8 +2,8 @@ package com.malikov.shopsystem.controller;
 
 import com.malikov.shopsystem.dto.OrderLineDto;
 import com.malikov.shopsystem.dto.ProductAutocompleteDto;
-import com.malikov.shopsystem.service.caching.CachedProductAutocompleteDtosService;
-import com.malikov.shopsystem.service.ordering.OrderLineService;
+import com.malikov.shopsystem.service.product.cache.CachedProductAutocompleteDtosService;
+import com.malikov.shopsystem.service.order.OrderLineService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

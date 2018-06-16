@@ -5,31 +5,32 @@ import com.malikov.shopsystem.domain.ProductVariation;
 import com.malikov.shopsystem.dto.ProductDto;
 import com.malikov.shopsystem.dto.ProductPage;
 import com.malikov.shopsystem.mapper.ProductMapper;
-import com.malikov.shopsystem.mapper.ProductUpdateByNotNullFieldsMapper;
+import com.malikov.shopsystem.mapper.UpdateProductByNotNullFieldsMapper;
 import com.malikov.shopsystem.repository.ProductRepository;
 import com.malikov.shopsystem.repository.ProductVariationRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static java.util.Objects.nonNull;
+import java.util.Objects;
 
 @Service
 public class ProductService {
 
     private final ProductRepository productRepository;
     private final ProductVariationRepository productVariationRepository;
-    private final ProductUpdateByNotNullFieldsMapper productUpdateByNotNullFieldsMapper;
-    private final ProductMapper mapper;
+    private final UpdateProductByNotNullFieldsMapper updateProductByNotNullFieldsMapper;
+    private final ProductMapper productMapper;
     private final ProductAggregatorService productAggregatorService;
 
     public ProductService(ProductRepository productRepository, ProductVariationRepository productVariationRepository,
-                          ProductUpdateByNotNullFieldsMapper productUpdateByNotNullFieldsMapper, ProductMapper mapper,
-                          ProductAggregatorService productAggregatorService) {
+                          UpdateProductByNotNullFieldsMapper updateProductByNotNullFieldsMapper,
+                          ProductMapper productMapper, ProductAggregatorService productAggregatorService) {
         this.productRepository = productRepository;
         this.productVariationRepository = productVariationRepository;
-        this.productUpdateByNotNullFieldsMapper = productUpdateByNotNullFieldsMapper;
-        this.mapper = mapper;
+        this.updateProductByNotNullFieldsMapper = updateProductByNotNullFieldsMapper;
+        this.productMapper = productMapper;
         this.productAggregatorService = productAggregatorService;
     }
 
@@ -38,7 +39,8 @@ public class ProductService {
     }
 
     public ProductPage getPage(int pageNumber, int pageCapacity) {
-        ProductPage productPage = mapper.toPage(productRepository.findAll(PageRequest.of(pageNumber, pageCapacity)));
+        Page<Product> page = productRepository.findAll(PageRequest.of(pageNumber, pageCapacity));
+        ProductPage productPage = productMapper.toProductPage(page);
         productPage.setProductAggregators(productAggregatorService.findAll());
         return productPage;
     }
@@ -56,7 +58,7 @@ public class ProductService {
     }
 
     private void updateProductOrProductVariation(ProductDto dto) {
-        if (nonNull(dto.getProductVariationId())) {
+        if (Objects.nonNull(dto.getProductVariationId())) {
             updateProductVariation(dto);
         } else {
             updateProduct(dto);
@@ -64,20 +66,19 @@ public class ProductService {
     }
 
     private void updateProduct(ProductDto dto) {
-
         Product product = get(dto.getProductId());
-        productUpdateByNotNullFieldsMapper.update(dto, product);
+        updateProductByNotNullFieldsMapper.update(dto, product);
     }
 
     private void updateProductVariation(ProductDto dto) {
         Long productVariationId = dto.getProductVariationId();
         ProductVariation productVariation = productVariationRepository.findById(productVariationId).orElse(null);
-        productUpdateByNotNullFieldsMapper.update(dto, productVariation);
+        updateProductByNotNullFieldsMapper.update(dto, productVariation);
     }
 
     private boolean requiredDataToUpdateProductIsPresent(ProductDto dto) {
-        return (nonNull(dto.getProductPrice()) || nonNull(dto.getProductQuantity()))
-                && (nonNull(dto.getProductId()) || nonNull(dto.getProductVariationId()));
+        return (Objects.nonNull(dto.getProductPrice()) || Objects.nonNull(dto.getProductQuantity()))
+                && (Objects.nonNull(dto.getProductId()) || Objects.nonNull(dto.getProductVariationId()));
     }
 
 }

@@ -6,7 +6,8 @@ import com.malikov.shopsystem.dto.OrderPage;
 import com.malikov.shopsystem.dto.filter.GenericFilter;
 import com.malikov.shopsystem.enumtype.OrderStatus;
 import com.malikov.shopsystem.enumtype.PaymentType;
-import com.malikov.shopsystem.service.ordering.OrderService;
+import com.malikov.shopsystem.service.order.OrderService;
+import com.malikov.shopsystem.service.order.UpdateOrderService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
 
     private final OrderService orderService;
+    private final UpdateOrderService updateOrderService;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, UpdateOrderService updateOrderService) {
         this.orderService = orderService;
+        this.updateOrderService = updateOrderService;
     }
 
     @PutMapping(value = "/filter", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -66,7 +69,7 @@ public class OrderController {
     @PutMapping(value = "/{orderId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateOrder(@PathVariable Long orderId, @RequestBody OrderDto orderDto) {
         orderDto.setOrderId(orderId);
-        orderService.update(orderDto);
+        updateOrderService.update(orderDto);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.malikov.shopsystem.enumtype;
 
-public enum DbOperation {
+public enum StockUpdateOperation {
 
     INCREASE_STOCK, DECREASE_STOCK
 }

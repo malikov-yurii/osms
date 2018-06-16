@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.service.caching;
+package com.malikov.shopsystem.service.order.cache;
 
 public final class TotalOrderQuantityHolder {
 

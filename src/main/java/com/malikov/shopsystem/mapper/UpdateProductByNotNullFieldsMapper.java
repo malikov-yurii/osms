@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper
-public interface ProductUpdateByNotNullFieldsMapper {
+public interface UpdateProductByNotNullFieldsMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "productPrice", target = "price")

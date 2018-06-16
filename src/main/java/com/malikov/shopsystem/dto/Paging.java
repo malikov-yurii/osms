@@ -18,7 +18,7 @@ public class Paging implements Serializable {
     public static final int DEFAULT_PAGE_NUMBER = 0;
     public static final int DEFAULT_SIZE = Integer.MAX_VALUE;
 
-    private int page = DEFAULT_PAGE_NUMBER;
-    private int size = DEFAULT_SIZE;
+    private int pageNumber = DEFAULT_PAGE_NUMBER;
+    private int pageSize = DEFAULT_SIZE;
 
 }

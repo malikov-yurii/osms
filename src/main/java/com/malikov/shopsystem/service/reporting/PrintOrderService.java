@@ -2,7 +2,7 @@ package com.malikov.shopsystem.service.reporting;
 
 import com.malikov.shopsystem.dto.OrderDto;
 import com.malikov.shopsystem.core.reporting.OrderBase64PdfPrinter;
-import com.malikov.shopsystem.service.ordering.OrderService;
+import com.malikov.shopsystem.service.order.OrderService;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;

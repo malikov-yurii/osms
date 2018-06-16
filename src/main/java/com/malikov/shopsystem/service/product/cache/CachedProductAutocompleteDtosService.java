@@ -1,4 +1,4 @@
-package com.malikov.shopsystem.service.caching;
+package com.malikov.shopsystem.service.product.cache;
 
 import com.malikov.shopsystem.domain.Product;
 import com.malikov.shopsystem.dto.ProductAutocompleteDto;
