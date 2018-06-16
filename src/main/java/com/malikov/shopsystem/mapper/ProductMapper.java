@@ -36,7 +36,7 @@ public abstract class ProductMapper {
     @AfterMapping
     protected void afterToDto(ProductVariation source, @MappingTarget ProductDto target) {
         target.setProductName(productVariationFullName(source));
-        target.setProductPrice(ValueCalculator.calculate(source));
+        target.setProductPrice(ValueCalculator.calculateValue(source));
     }
 
     protected String productVariationFullName(ProductVariation source) {
@@ -56,7 +56,7 @@ public abstract class ProductMapper {
 
     @AfterMapping
     protected void afterToDto(Product source, @MappingTarget ProductDto target) {
-        target.setProductPrice(ValueCalculator.calculate(source));
+        target.setProductPrice(ValueCalculator.calculateValue(source));
     }
 
     @Mapping(target = "productPrice", ignore = true)
@@ -66,7 +66,7 @@ public abstract class ProductMapper {
 
     @AfterMapping
     protected void afterToDto(ProductVariation source, @MappingTarget ProductAutocompleteDto target) {
-        final BigDecimal productVariationPrice = ValueCalculator.calculate(source);
+        final BigDecimal productVariationPrice = ValueCalculator.calculateValue(source);
         final String productVariationFullName = productVariationFullName(source);
         target.setLabel(productVariationFullName + " " + productVariationPrice);
         target.setProductName(productVariationFullName);
@@ -83,7 +83,7 @@ public abstract class ProductMapper {
 
     @AfterMapping
     protected void afterToDto(Product source, @MappingTarget ProductAutocompleteDto target) {
-        final BigDecimal productPrice = ValueCalculator.calculate(source);
+        final BigDecimal productPrice = ValueCalculator.calculateValue(source);
         target.setLabel(source.getName() + " " + productPrice);
         target.setProductPrice(productPrice);
     }

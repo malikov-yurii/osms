@@ -79,7 +79,7 @@ public class RefreshLastOrdersCacheService {
                     OrderDto order = (OrderDto) element.getObjectValue();
                     List<OrderLineDto> orderLines = order.getOrderLines();
                     strategy.execute(orderLines, orderLineDto);
-                    order.setTotalValue(ValueCalculator.calculate(order));
+                    order.setTotalValue(ValueCalculator.calculateValue(order));
                     return order;
                 })
                 .orElse(null);

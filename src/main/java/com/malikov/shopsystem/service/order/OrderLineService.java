@@ -63,7 +63,7 @@ public class OrderLineService {
 
         Order order = orderLine.getOrder();
         order.getOrderLines().remove(orderLine);
-        order.setTotalValue(ValueCalculator.calculate(order));
+        order.setTotalValue(ValueCalculator.calculateValue(order));
 
         orderLineRepository.delete(orderLine);
         OrderLineDto orderLineDto = orderLineMapper.toDto(orderLine);
@@ -86,7 +86,7 @@ public class OrderLineService {
         orderTotalValueChanged |= updateOrderLineProductQuantity(orderLineDto, orderLine);
         if (orderTotalValueChanged) {
             Order order = orderLine.getOrder();
-            order.setTotalValue(ValueCalculator.calculate(order));
+            order.setTotalValue(ValueCalculator.calculateValue(order));
         }
 
         boolean orderLineChanged = isProductNameUpdated || orderTotalValueChanged;
@@ -134,14 +134,14 @@ public class OrderLineService {
     private void setProductToOrderLine(OrderLine orderLine, Product product) {
         orderLine.setProduct(product);
         orderLine.setProductName(product.getName());
-        orderLine.setProductPrice(ValueCalculator.calculate(product));
+        orderLine.setProductPrice(ValueCalculator.calculateValue(product));
     }
 
     private void setProductVariationToOrderLine(OrderLine orderLine, ProductVariation productVariation) {
         orderLine.setProduct(productVariation.getProduct());
         orderLine.setProductVariation(productVariation);
         orderLine.setProductName(orderLineProductName(productVariation));
-        orderLine.setProductPrice(ValueCalculator.calculate(productVariation));
+        orderLine.setProductPrice(ValueCalculator.calculateValue(productVariation));
 
         decreaseStockForProductJustBeenSet(orderLine);
     }
