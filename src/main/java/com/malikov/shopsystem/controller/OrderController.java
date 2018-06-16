@@ -62,8 +62,8 @@ public class OrderController {
     }
 
     @PostMapping
-    public OrderDto createEmpty() {
-        return orderService.createEmpty();
+    public OrderDto create() {
+        return orderService.create();
     }
 
     @PutMapping(value = "/{orderId}", consumes = MediaType.APPLICATION_JSON_VALUE)

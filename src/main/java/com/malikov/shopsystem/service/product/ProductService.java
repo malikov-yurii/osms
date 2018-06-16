@@ -4,6 +4,7 @@ import com.malikov.shopsystem.domain.Product;
 import com.malikov.shopsystem.domain.ProductVariation;
 import com.malikov.shopsystem.dto.ProductDto;
 import com.malikov.shopsystem.dto.ProductPage;
+import com.malikov.shopsystem.error.exception.NotFoundException;
 import com.malikov.shopsystem.mapper.ProductMapper;
 import com.malikov.shopsystem.mapper.UpdateProductByNotNullFieldsMapper;
 import com.malikov.shopsystem.repository.ProductRepository;
@@ -72,7 +73,8 @@ public class ProductService {
 
     private void updateProductVariation(ProductDto dto) {
         Long productVariationId = dto.getProductVariationId();
-        ProductVariation productVariation = productVariationRepository.findById(productVariationId).orElse(null);
+        ProductVariation productVariation = productVariationRepository.findById(productVariationId)
+                .orElseThrow(() -> new NotFoundException(ProductVariation.class, productVariationId));
         updateProductByNotNullFieldsMapper.update(dto, productVariation);
     }
 

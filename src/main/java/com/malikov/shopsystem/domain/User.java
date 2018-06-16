@@ -19,8 +19,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -47,13 +45,5 @@ public class User {
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
-
-    public User(Long id, String name, String password, Role... roles) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.roles = new HashSet<>();
-        Collections.addAll(this.roles, roles);
-    }
 
 }

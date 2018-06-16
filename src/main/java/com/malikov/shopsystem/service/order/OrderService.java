@@ -94,20 +94,19 @@ public class OrderService {
 
     @Transactional
     @CachePut(key = "#result.orderId")
-    public OrderDto createEmpty() {
-        Order emptyOrder = prepareEmptyOrder();
+    public OrderDto create() {
+        Order emptyOrder = prepareNewOrder();
         Order savedOrder = orderRepository.save(emptyOrder);
         savedOrder.getOrderLines().get(0).setOrderId(savedOrder.getId());
         return orderMapper.toDto(savedOrder);
     }
 
-    private Order prepareEmptyOrder() {
+    private Order prepareNewOrder() {
         Order order = new Order();
         order.setUser(authorizedUserService.getAuthorizedUser());
         order.setPaymentType(PaymentType.NP);
         order.setStatus(OrderStatus.NEW);
         OrderLine orderLine = new OrderLine();
-        orderLine.setOrderId(order.getId());
         order.setOrderLines(Collections.singletonList(orderLine));
         return order;
     }
