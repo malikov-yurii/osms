@@ -16,7 +16,6 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -36,16 +35,9 @@ public class RefreshLastOrdersCacheService {
     @Value("${cache.initial-size}")
     private Integer initialCacheSize;
 
-    private Ehcache lastOrdersCache;
-
     public RefreshLastOrdersCacheService(CacheManager cacheManager, OrderService orderService) {
         this.cacheManager = cacheManager;
         this.orderService = orderService;
-    }
-
-    @PostConstruct
-    private final void init() {
-        lastOrdersCache = cacheManager.getEhcache(OrderService.LAST_ORDERS_CACHE);
     }
 
     @Scheduled(fixedDelay = FIVE_MINUTES)
@@ -60,11 +52,16 @@ public class RefreshLastOrdersCacheService {
                     queriedOrderKeys.add(orderId);
                 });
         retainInLastOrdersCache(queriedOrderKeys);
-        lastOrdersCache.putAll(queriedOrders);
+        lastOrdersCache().putAll(queriedOrders);
         TotalOrderQuantityHolder.cachedOrderQuantity = orderPage.getTotalElements();
     }
 
+    private Ehcache lastOrdersCache() {
+        return cacheManager.getEhcache(OrderService.LAST_ORDERS_CACHE);
+    }
+
     private void retainInLastOrdersCache(Set queriedOrderKeys) {
+        Ehcache lastOrdersCache = lastOrdersCache();
         List ordersToEvictFromCache = lastOrdersCache.getKeys();
         ordersToEvictFromCache.removeAll(queriedOrderKeys);
         lastOrdersCache.removeAll(ordersToEvictFromCache);
@@ -74,7 +71,7 @@ public class RefreshLastOrdersCacheService {
     public OrderDto updateLastOrdersCache(OrderLineDto orderLineDto,
                                           ModifyCollectionStrategy<OrderLineDto> strategy) {
         Long orderId = orderLineDto.getOrderId();
-        return Optional.ofNullable(lastOrdersCache.get(orderId))
+        return Optional.ofNullable(lastOrdersCache().get(orderId))
                 .map(element -> {
                     OrderDto order = (OrderDto) element.getObjectValue();
                     List<OrderLineDto> orderLines = order.getOrderLines();

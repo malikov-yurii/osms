@@ -8,7 +8,6 @@ import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -19,15 +18,8 @@ public class GetCachedOrdersPageService {
 
     private final CacheManager cacheManager;
 
-    private Ehcache lastOrdersCache;
-
     public GetCachedOrdersPageService(CacheManager cacheManager) {
         this.cacheManager = cacheManager;
-    }
-
-    @PostConstruct
-    private final void init() {
-        lastOrdersCache = cacheManager.getEhcache(OrderService.LAST_ORDERS_CACHE);
     }
 
     public OrderPage getCachedOrdersPage(int pageNumber, int pageSize) {
@@ -35,6 +27,7 @@ public class GetCachedOrdersPageService {
     }
 
     private List<OrderDto> pageContentFromCache(int pageNumber, int pageSize) {
+        Ehcache lastOrdersCache = lastOrdersCache();
         Collection<Element> elements = lastOrdersCache.getAll(lastOrdersCache.getKeys()).values();
         return elements.stream()
                 .map(element -> (OrderDto) element.getObjectValue())
@@ -44,8 +37,12 @@ public class GetCachedOrdersPageService {
                 .collect(Collectors.toList());
     }
 
+    private Ehcache lastOrdersCache() {
+        return cacheManager.getEhcache(OrderService.LAST_ORDERS_CACHE);
+    }
+
     public boolean isPageInLastOrdersCache(int pageNumber, int pageCapacity) {
-        return ((pageNumber + 1) * pageCapacity) <= lastOrdersCache.getSize();
+        return ((pageNumber + 1) * pageCapacity) <= lastOrdersCache().getSize();
     }
 
 }

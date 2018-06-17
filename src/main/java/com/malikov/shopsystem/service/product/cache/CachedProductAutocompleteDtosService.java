@@ -11,13 +11,12 @@ import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +25,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-@CacheConfig(cacheNames = CachedProductAutocompleteDtosService.PRODUCT_AUTOCOMPLETE_DTOS_CACHE)
 @Slf4j
 public class CachedProductAutocompleteDtosService {
 
@@ -37,8 +35,6 @@ public class CachedProductAutocompleteDtosService {
     private final ProductMapper productMapper;
     private final CacheManager cacheManager;
 
-    private Ehcache allProductAutocompleteDtosCache;
-
     public CachedProductAutocompleteDtosService(ProductRepository productRepository,
                                                 ProductMapper productMapper,
                                                 CacheManager cacheManager) {
@@ -47,20 +43,24 @@ public class CachedProductAutocompleteDtosService {
         this.cacheManager = cacheManager;
     }
 
-    @PostConstruct
-    private final void init() {
-        allProductAutocompleteDtosCache = cacheManager.getEhcache(PRODUCT_AUTOCOMPLETE_DTOS_CACHE);
-    }
-
     public List<ProductAutocompleteDto> getByProductNameMask(String productNameMask) {
         return getAllCachedProductElements()
                 .filter(cacheElement -> ((String) cacheElement.getObjectKey()).contains(format(productNameMask)))
                 .map(cacheElement -> (ProductAutocompleteDto) cacheElement.getObjectValue())
+                .sorted(Comparator.comparing(ProductAutocompleteDto::getLabel))
                 .collect(Collectors.toList());
     }
 
     private Stream<Element> getAllCachedProductElements() {
-        return allProductAutocompleteDtosCache.getAll(allProductAutocompleteDtosCache.getKeys()).values().stream();
+        Ehcache allProductAutocompleteDtosCache = allProductAutocompleteDtosCache();
+        return allProductAutocompleteDtosCache
+                .getAll(allProductAutocompleteDtosCache.getKeys())
+                .values()
+                .stream();
+    }
+
+    private Ehcache allProductAutocompleteDtosCache() {
+        return cacheManager.getEhcache(PRODUCT_AUTOCOMPLETE_DTOS_CACHE);
     }
 
     private static String format(String mask) {
@@ -80,7 +80,7 @@ public class CachedProductAutocompleteDtosService {
                     queriedProductKeys.add(productNameWithoutCommas);
                 });
         retainInCache(queriedProductKeys);
-        allProductAutocompleteDtosCache.putAll(queriedProductAutocompleteDtos);
+        allProductAutocompleteDtosCache().putAll(queriedProductAutocompleteDtos);
     }
 
     private List<ProductAutocompleteDto> findAllProductAutocompleteDtos() {
@@ -91,6 +91,7 @@ public class CachedProductAutocompleteDtosService {
     }
 
     private void retainInCache(Set queriedDtoKeys) {
+        Ehcache allProductAutocompleteDtosCache = allProductAutocompleteDtosCache();
         List productsToEvictFromCache = allProductAutocompleteDtosCache.getKeys();
         productsToEvictFromCache.removeAll(queriedDtoKeys);
         allProductAutocompleteDtosCache.removeAll(productsToEvictFromCache);

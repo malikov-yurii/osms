@@ -10,6 +10,7 @@ import com.malikov.shopsystem.mapper.UpdateOrderByNotNullFieldsMapper;
 import com.malikov.shopsystem.repository.CustomerRepository;
 import com.malikov.shopsystem.repository.OrderRepository;
 import com.malikov.shopsystem.service.UpdateStockService;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Objects;
 
 @Service
+@CacheConfig(cacheNames = OrderService.LAST_ORDERS_CACHE)
 public class UpdateOrderService {
 
     private final OrderRepository orderRepository;
