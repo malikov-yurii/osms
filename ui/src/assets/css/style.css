@@ -128,9 +128,10 @@ body {
     display: flex;
     align-items: center;
     align-content: center;
+    flex-shrink: 0;
     padding: 6px 8px;
     border-right: 1px solid rgba(0, 188, 212, 0.49);
-    font-size: 15px;
+    font-size: 16px;
     box-sizing: border-box;
     word-break: break-word;
 }
@@ -144,8 +145,7 @@ body {
 }
 .order-info__block--last-name,
 .order-info__block--first-name,
-.order-info__block--city,
-.order-info__block--order-note {
+.order-info__block--city {
     width: calc((100% - 57px - 105px - 48px - 105px - 70px - 95px - 52px - 14px) / 4);
 }
 .order-info__block--phone {
@@ -177,6 +177,7 @@ body {
     border-right-width: 0;
     justify-content: left;
     text-align: left;
+    flex-grow: 2;
 }
 .order-info__block select {
     width: 100%;
